@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Sql
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database.
             /// </param>
-            public static IPage<DatabaseRestorePoint> ListByDatabase(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static IEnumerable<RestorePoint> ListByDatabase(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
@@ -61,7 +63,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DatabaseRestorePoint>> ListByDatabaseAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<RestorePoint>> ListByDatabaseAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -88,7 +90,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The definition for creating the restore point of this database.
             /// </param>
-            public static DatabaseRestorePoint Create(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters)
+            public static RestorePoint Create(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters)
             {
                 return operations.CreateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -115,7 +117,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DatabaseRestorePoint> CreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePoint> CreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -142,7 +144,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='restorePointName'>
             /// The name of the restore point.
             /// </param>
-            public static DatabaseRestorePoint Get(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, string restorePointName)
+            public static RestorePoint Get(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, string restorePointName)
             {
                 return operations.GetAsync(resourceGroupName, serverName, databaseName, restorePointName).GetAwaiter().GetResult();
             }
@@ -169,7 +171,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DatabaseRestorePoint> GetAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, string restorePointName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePoint> GetAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, string restorePointName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, restorePointName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -196,7 +198,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The definition for creating the restore point of this database.
             /// </param>
-            public static DatabaseRestorePoint BeginCreate(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters)
+            public static RestorePoint BeginCreate(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters)
             {
                 return operations.BeginCreateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -223,43 +225,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DatabaseRestorePoint> BeginCreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePoint> BeginCreateAsync(this IRestorePointsOperations operations, string resourceGroupName, string serverName, string databaseName, CreateDatabaseRestorePointDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets a collection of restore points that belongs to the database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<DatabaseRestorePoint> ListByDatabaseNext(this IRestorePointsOperations operations, string nextPageLink)
-            {
-                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a collection of restore points that belongs to the database.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<DatabaseRestorePoint>> ListByDatabaseNextAsync(this IRestorePointsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

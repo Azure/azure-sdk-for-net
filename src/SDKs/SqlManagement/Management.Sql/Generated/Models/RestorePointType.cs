@@ -10,13 +10,51 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RestorePointType.
     /// </summary>
-    public static class RestorePointType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum RestorePointType
     {
-        public const string CONTINUOUS = "CONTINUOUS";
-        public const string DISCRETE = "DISCRETE";
+        [EnumMember(Value = "CONTINUOUS")]
+        CONTINUOUS,
+        [EnumMember(Value = "DISCRETE")]
+        DISCRETE
+    }
+    internal static class RestorePointTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this RestorePointType? value)
+        {
+            return value == null ? null : ((RestorePointType)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this RestorePointType value)
+        {
+            switch( value )
+            {
+                case RestorePointType.CONTINUOUS:
+                    return "CONTINUOUS";
+                case RestorePointType.DISCRETE:
+                    return "DISCRETE";
+            }
+            return null;
+        }
+
+        internal static RestorePointType? ParseRestorePointType(this string value)
+        {
+            switch( value )
+            {
+                case "CONTINUOUS":
+                    return RestorePointType.CONTINUOUS;
+                case "DISCRETE":
+                    return RestorePointType.DISCRETE;
+            }
+            return null;
+        }
     }
 }

@@ -19,18 +19,18 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// Database restore points.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DatabaseRestorePoint : ProxyResource
+    public partial class RestorePoint : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the DatabaseRestorePoint class.
+        /// Initializes a new instance of the RestorePoint class.
         /// </summary>
-        public DatabaseRestorePoint()
+        public RestorePoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DatabaseRestorePoint class.
+        /// Initializes a new instance of the RestorePoint class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// taken</param>
         /// <param name="restorePointLabel">The label of restore point for
         /// backup request by user</param>
-        public DatabaseRestorePoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string restorePointType = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), System.DateTime? restorePointCreationDate = default(System.DateTime?), string restorePointLabel = default(string))
+        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), string location = default(string), RestorePointType? restorePointType = default(RestorePointType?), System.DateTime? earliestRestoreDate = default(System.DateTime?), System.DateTime? restorePointCreationDate = default(System.DateTime?), string restorePointLabel = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'CONTINUOUS', 'DISCRETE'
         /// </summary>
         [JsonProperty(PropertyName = "properties.restorePointType")]
-        public string RestorePointType { get; private set; }
+        public RestorePointType? RestorePointType { get; private set; }
 
         /// <summary>
         /// Gets the earliest time to which this database can be restored

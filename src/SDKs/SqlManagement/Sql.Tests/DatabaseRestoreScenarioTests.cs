@@ -324,7 +324,7 @@ namespace Sql.Tests
 
                 CreateDatabaseRestorePointDefinition restoreDefinition = new CreateDatabaseRestorePointDefinition { RestorePointLabel = restoreLabel };
 
-                AzureOperationResponse<DatabaseRestorePoint> postResponse = sqlClient.RestorePoints.CreateWithHttpMessagesAsync(
+                AzureOperationResponse<RestorePoint> postResponse = sqlClient.RestorePoints.CreateWithHttpMessagesAsync(
                         resourceGroup.Name,
                         server.Name,
                         db.Name,
@@ -333,7 +333,7 @@ namespace Sql.Tests
                 Assert.True(postResponse.Response.StatusCode == System.Net.HttpStatusCode.OK ||
                     postResponse.Response.StatusCode == System.Net.HttpStatusCode.Accepted, "Expect success in creating new restore point.");
 
-                AzureOperationResponse<IPage<DatabaseRestorePoint>> listResponse =
+                AzureOperationResponse<IEnumerable<RestorePoint>> listResponse =
                     sqlClient.RestorePoints.ListByDatabaseWithHttpMessagesAsync(
                         resourceGroup.Name,
                         server.Name,
@@ -341,11 +341,11 @@ namespace Sql.Tests
 
                 Assert.True(listResponse.Response.StatusCode == System.Net.HttpStatusCode.OK, "Expect success in getting restore points.");
 
-                IEnumerable<DatabaseRestorePoint> restorePointList = listResponse.Body.ToList<DatabaseRestorePoint>();
+                IEnumerable<RestorePoint> restorePointList = listResponse.Body.ToList<RestorePoint>();
 
                 Assert.True(restorePointList.Any());
 
-                AzureOperationResponse<DatabaseRestorePoint> getresponse =
+                AzureOperationResponse<RestorePoint> getresponse =
                     sqlClient.RestorePoints.GetWithHttpMessagesAsync(
                         resourceGroup.Name,
                         server.Name,
