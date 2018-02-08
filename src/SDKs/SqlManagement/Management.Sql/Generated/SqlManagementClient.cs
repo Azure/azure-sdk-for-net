@@ -272,9 +272,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerDnsAliasesOperations ServerDnsAliases { get; private set; }
 
         /// <summary>
-        /// Gets the IDatabaseRestorePointsOperations.
+        /// Gets the IRestorePointsOperations.
         /// </summary>
-        public virtual IDatabaseRestorePointsOperations DatabaseRestorePoints { get; private set; }
+        public virtual IRestorePointsOperations RestorePoints { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -517,7 +517,7 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseOperations = new DatabaseOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
-            DatabaseRestorePoints = new DatabaseRestorePointsOperations(this);
+            RestorePoints = new RestorePointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

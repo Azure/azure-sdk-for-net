@@ -267,9 +267,9 @@ namespace Microsoft.Azure.Management.Sql
         IServerDnsAliasesOperations ServerDnsAliases { get; }
 
         /// <summary>
-        /// Gets the IDatabaseRestorePointsOperations.
+        /// Gets the IRestorePointsOperations.
         /// </summary>
-        IDatabaseRestorePointsOperations DatabaseRestorePoints { get; }
+        IRestorePointsOperations RestorePoints { get; }
 
     }
 }
