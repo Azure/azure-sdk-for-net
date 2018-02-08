@@ -4,7 +4,7 @@
 
 ### Feature Additions
   * Enable AAD auth via service principal and management service identity for Azure SQL DB/DW linked service types
-  * Enable Azure Key Vault support for all computed linked service
+  * Enable Azure Key Vault support for all compute linked service
 
 ## Version 0.4.0-preview
 
