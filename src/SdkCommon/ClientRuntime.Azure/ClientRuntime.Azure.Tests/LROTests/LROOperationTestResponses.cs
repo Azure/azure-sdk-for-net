@@ -9,7 +9,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
     using System.Net.Http;
     using System.Text;
 
-    static class LROOpertionTestResponses
+    static class LROOperationTestResponses
     {
         #region Async Operations
         static internal IEnumerable<HttpResponseMessage> MockLROAsyncOperationFailedWith200()
