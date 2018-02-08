@@ -395,6 +395,21 @@
             return asyncTask;
         }
 
+        public Task<AzureOperationResponse<Models.TaskCounts, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        {
+            var request = new JobGetTaskCountsBatchRequest(this._client, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.GetTaskCountsWithHttpMessagesAsync(
+                jobId,
+                request.Options,
+                request.CustomHeaders,
+                lambdaCancelToken);
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
         public Task<AzureOperationHeaderResponse<Models.JobUpdateHeaders>> UpdateJob(
             string jobId,
             int? priority,

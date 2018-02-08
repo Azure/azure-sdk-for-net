@@ -5,12 +5,10 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Test.HttpRecorder;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -326,8 +324,8 @@ namespace Compute.Tests
                     // multi CA Assertions
                     Assert.Equal(2, getNicResponse1.IpConfigurations.Count);
                     Assert.Equal(2, getNicResponse2.IpConfigurations.Count);
-                    Assert.Equal(1, getNicResponse1.IpConfigurations.Where(x => x.Primary == true).Count());
-                    Assert.Equal(1, getNicResponse2.IpConfigurations.Where(x => x.Primary == true).Count());
+                    Assert.Single(getNicResponse1.IpConfigurations.Where(x => x.Primary == true));
+                    Assert.Single(getNicResponse2.IpConfigurations.Where(x => x.Primary == true));
                 }
                 finally
                 {

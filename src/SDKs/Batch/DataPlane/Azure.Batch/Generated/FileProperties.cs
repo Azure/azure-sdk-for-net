@@ -22,21 +22,15 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class FileProperties : IPropertyMetadata
     {
-        private readonly long contentLength;
-        private readonly string contentType;
-        private readonly DateTime? creationTime;
-        private readonly string fileMode;
-        private readonly DateTime lastModified;
-
         #region Constructors
 
         internal FileProperties(Models.FileProperties protocolObject)
         {
-            this.contentLength = protocolObject.ContentLength;
-            this.contentType = protocolObject.ContentType;
-            this.creationTime = protocolObject.CreationTime;
-            this.fileMode = protocolObject.FileMode;
-            this.lastModified = protocolObject.LastModified;
+            this.ContentLength = protocolObject.ContentLength;
+            this.ContentType = protocolObject.ContentType;
+            this.CreationTime = protocolObject.CreationTime;
+            this.FileMode = protocolObject.FileMode;
+            this.LastModified = protocolObject.LastModified;
         }
 
         #endregion Constructors
@@ -46,26 +40,17 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the length of the file.
         /// </summary>
-        public long ContentLength
-        {
-            get { return this.contentLength; }
-        }
+        public long ContentLength { get; }
 
         /// <summary>
         /// Gets the content type of the file.
         /// </summary>
-        public string ContentType
-        {
-            get { return this.contentType; }
-        }
+        public string ContentType { get; }
 
         /// <summary>
         /// Gets the file creation time.
         /// </summary>
-        public DateTime? CreationTime
-        {
-            get { return this.creationTime; }
-        }
+        public DateTime? CreationTime { get; }
 
         /// <summary>
         /// Gets the permission attribute for the file.
@@ -73,18 +58,12 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// This property will be returned only for Linux nodes.
         /// </remarks>
-        public string FileMode
-        {
-            get { return this.fileMode; }
-        }
+        public string FileMode { get; }
 
         /// <summary>
         /// Gets the time at which the file was last modified.
         /// </summary>
-        public DateTime LastModified
-        {
-            get { return this.lastModified; }
-        }
+        public DateTime LastModified { get; }
 
         #endregion // FileProperties
 

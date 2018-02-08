@@ -22,10 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SessionRecords\AnalysisServices.Tests.ScenarioTests.ServerOperationsTests\CreateGetUpdateDeleteTest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SessionRecords\AnalysisServices.Tests.ScenarioTests.ServerOperationsTests\ScaleUpTest.json">
+    <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,0 +1,48 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "linkedServiceName": "exampleLinkedService",
+    "ifMatch": null,
+    "linkedService": {
+      "properties": {
+        "type": "AzureStorage",
+        "typeProperties": {
+          "connectionString": {
+            "value": "DefaultEndpointsProtocol=https;AccountName=examplestorageaccount;AccountKey=<storage key>",
+            "type": "SecureString"
+          }
+        },
+        "description": "Example description"
+      }
+    },
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:55:53 GMT",
+        "x-ms-request-id": "1b67d903-bb60-42b1-a91a-3aec5ab6f3a5",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1185",
+        "x-ms-correlation-request-id": "5fe435da-a93c-498d-aee3-8118de9ef4aa"
+      },
+      "body": {
+        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/linkedservices/exampleLinkedService",
+        "name": "exampleLinkedService",
+        "properties": {
+          "type": "AzureStorage",
+          "typeProperties": {
+            "connectionString": {
+              "value": "**********",
+              "type": "SecureString"
+            }
+          },
+          "description": "Example description"
+        },
+        "etag": "28031da7-0000-0000-0000-59b971290000"
+      }
+    }
+  }
+}

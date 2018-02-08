@@ -1,3 +1,0 @@
-﻿{
-  "projects": [ "../../ClientRuntime", "../../TestFramework", "Microsoft.Azure.Management.OperationalInsights", "OperationalInsights.Tests" ]
-}

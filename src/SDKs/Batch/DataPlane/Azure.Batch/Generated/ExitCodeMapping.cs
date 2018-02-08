@@ -22,9 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ExitCodeMapping : ITransportObjectProvider<Models.ExitCodeMapping>, IPropertyMetadata
     {
-        private readonly int code;
-        private readonly ExitOptions exitOptions;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="ExitCodeMapping"/> class.
@@ -35,14 +32,14 @@ namespace Microsoft.Azure.Batch
             int code,
             ExitOptions exitOptions)
         {
-            this.code = code;
-            this.exitOptions = exitOptions;
+            this.Code = code;
+            this.ExitOptions = exitOptions;
         }
 
         internal ExitCodeMapping(Models.ExitCodeMapping protocolObject)
         {
-            this.code = protocolObject.Code;
-            this.exitOptions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExitOptions, o => new ExitOptions(o).Freeze());
+            this.Code = protocolObject.Code;
+            this.ExitOptions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExitOptions, o => new ExitOptions(o).Freeze());
         }
 
         #endregion Constructors
@@ -52,18 +49,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the process exit code.
         /// </summary>
-        public int Code
-        {
-            get { return this.code; }
-        }
+        public int Code { get; }
 
         /// <summary>
         /// Gets how the Batch service should respond if the task exits with this exit code.
         /// </summary>
-        public ExitOptions ExitOptions
-        {
-            get { return this.exitOptions; }
-        }
+        public ExitOptions ExitOptions { get; }
 
         #endregion // ExitCodeMapping
 

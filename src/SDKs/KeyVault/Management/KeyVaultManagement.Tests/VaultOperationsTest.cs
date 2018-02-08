@@ -56,6 +56,7 @@ namespace KeyVault.Management.Tests
                 createdVault.Properties.Sku.Name = SkuName.Premium;
                 testBase.accPol.Permissions.Secrets = new string[] { "get", "set" };
                 testBase.accPol.Permissions.Keys = null;
+                testBase.accPol.Permissions.Storage = new string[] { "get", "regenerateKey" };
                 createdVault.Properties.AccessPolicies = new[] { testBase.accPol };
 
                 var updateVault = testBase.client.Vaults.CreateOrUpdate(
@@ -519,9 +520,13 @@ namespace KeyVault.Management.Tests
                     e.ObjectId == a.ObjectId &&
                     e.ApplicationId == a.ApplicationId &&
                     ((a.Permissions.Secrets == null && e.Permissions.Secrets == null) ||
-                        Enumerable.SequenceEqual(e.Permissions.Secrets, a.Permissions.Secrets)) &&
+                        Enumerable.SequenceEqual(a.Permissions.Secrets, e.Permissions.Secrets)) &&
                     ((a.Permissions.Keys == null && e.Permissions.Keys == null) ||
-                        Enumerable.SequenceEqual(a.Permissions.Keys, a.Permissions.Keys))
+                        Enumerable.SequenceEqual(a.Permissions.Keys, e.Permissions.Keys)) &&
+                     ((a.Permissions.Certificates == null && e.Permissions.Certificates == null) ||
+                      Enumerable.SequenceEqual(a.Permissions.Certificates, e.Permissions.Certificates)) &&
+                    ((a.Permissions.Storage == null && e.Permissions.Storage == null) ||
+                        Enumerable.SequenceEqual(a.Permissions.Storage, e.Permissions.Storage))
                     ).FirstOrDefault();
                 if (match == null)
                     return false;

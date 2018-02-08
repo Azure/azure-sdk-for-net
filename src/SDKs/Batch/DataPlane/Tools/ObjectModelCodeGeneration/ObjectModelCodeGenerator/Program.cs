@@ -70,7 +70,7 @@ namespace ObjectModelCodeGenerator
 
         private static void GenerateSomeRoslynFiles()
         {
-            var projectFile = @"..\..\..\src\Azure.Batch\Azure.Batch.csproj";
+            var projectFile = @"..\..\..\Azure.Batch\Azure.Batch.csproj";
             IEnumerable<BatchRequestGroup> batchRequests = BatchRequestTemplateBuilder.GetBatchRequestTemplatesAsync(projectFile).Result;
 
             NamedBatchRequests generator = new NamedBatchRequests(batchRequests);

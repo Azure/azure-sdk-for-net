@@ -100,6 +100,7 @@ Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName `
 	-PermissionsToKeys all `
 	-PermissionsToSecrets all `
 	-PermissionsToCertificate all `
+	-PermissionsToStorage all
 
 # **********************************************************************************************
 # Print the XML settings that should be copied into the app.config file

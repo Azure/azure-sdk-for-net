@@ -1,22 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Text;
 using Xunit;
 
 namespace Compute.Tests
@@ -86,7 +73,11 @@ namespace Compute.Tests
         protected void ValidateVMScaleSetVMInstanceView(VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView, bool hasManagedDisks = false)
         {
             Assert.NotNull(vmScaleSetVMInstanceView);
+#if NET46
             Assert.True(vmScaleSetVMInstanceView.Statuses.Any(s => !string.IsNullOrEmpty(s.Code)));
+#else
+            Assert.Contains(vmScaleSetVMInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
+#endif
 
             if (!hasManagedDisks)
             {
@@ -100,6 +91,26 @@ namespace Compute.Tests
                 Assert.NotNull(diskInstanceView.Statuses[0].Code);
                 Assert.NotNull(diskInstanceView.Statuses[0].Level);
             }
+        }
+
+        /// <summary>
+        /// Validate if encryption settings are populated in DiskInstanceView as part of VM instance view
+        /// </summary>
+        protected void ValidateEncryptionSettingsInVMScaleSetVMInstanceView(
+            VirtualMachineScaleSetVMInstanceView vmScaleSetVMInstanceView,
+            bool hasManagedDisks)
+        {
+            Assert.True(hasManagedDisks); // VMSS disk encryption is supported only with managed disks
+            Assert.NotNull(vmScaleSetVMInstanceView);
+            Assert.NotNull(vmScaleSetVMInstanceView.Disks);
+            Assert.True(vmScaleSetVMInstanceView.Disks.Any());
+
+            DiskInstanceView diskInstanceView = vmScaleSetVMInstanceView.Disks.First();
+            Assert.NotNull(diskInstanceView.EncryptionSettings);
+            Assert.True(diskInstanceView.EncryptionSettings.Any());
+
+            DiskEncryptionSettings encryptionSettings = diskInstanceView.EncryptionSettings.First();
+            Assert.NotNull(encryptionSettings.Enabled);
         }
 
         protected VirtualMachineScaleSetVM GenerateVMScaleSetVMModel(VirtualMachineScaleSet inputVMScaleSet, string instanceId, bool hasManagedDisks = false)

@@ -22,9 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class OutputFileBlobContainerDestination : ITransportObjectProvider<Models.OutputFileBlobContainerDestination>, IPropertyMetadata
     {
-        private readonly string containerUrl;
-        private readonly string path;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="OutputFileBlobContainerDestination"/> class.
@@ -35,14 +32,14 @@ namespace Microsoft.Azure.Batch
             string containerUrl,
             string path = default(string))
         {
-            this.containerUrl = containerUrl;
-            this.path = path;
+            this.ContainerUrl = containerUrl;
+            this.Path = path;
         }
 
         internal OutputFileBlobContainerDestination(Models.OutputFileBlobContainerDestination protocolObject)
         {
-            this.containerUrl = protocolObject.ContainerUrl;
-            this.path = protocolObject.Path;
+            this.ContainerUrl = protocolObject.ContainerUrl;
+            this.Path = protocolObject.Path;
         }
 
         #endregion Constructors
@@ -55,10 +52,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The URL must include a Shared Access Signature (SAS) granting write permissions to the container.
         /// </remarks>
-        public string ContainerUrl
-        {
-            get { return this.containerUrl; }
-        }
+        public string ContainerUrl { get; }
 
         /// <summary>
         /// Gets the destination blob or virtual directory within the Azure Storage container to which to upload the file(s).
@@ -70,10 +64,7 @@ namespace Microsoft.Azure.Batch
         /// directory (which is prepended to each blob name) to which to upload the file(s).</para><para>If omitted, file(s) 
         /// are uploaded to the root of the container with a blob name matching their file name.</para>
         /// </remarks>
-        public string Path
-        {
-            get { return this.path; }
-        }
+        public string Path { get; }
 
         #endregion // OutputFileBlobContainerDestination
 

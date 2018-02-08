@@ -44,9 +44,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 string recordSetName,
                 uint ttl = 42)
             {
-                return new RecordSet
+                return new RecordSet(name: recordSetName)
                 {
-                    Name = recordSetName,
                     Etag = null,
                     TTL = ttl,
                 };
@@ -59,11 +58,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             var testContext = new SingleRecordSetTestContext();
             testContext.ResourcesHandler = new RecordedDelegatingHandler
             {
-                StatusCodeToReturn = HttpStatusCode.OK
+                StatusCodeToReturn = System.Net.HttpStatusCode.OK
             };
             testContext.DnsHandler = new RecordedDelegatingHandler
             {
-                StatusCodeToReturn = HttpStatusCode.OK
+                StatusCodeToReturn = System.Net.HttpStatusCode.OK
             };
             testContext.DnsClient = ResourceGroupHelper.GetDnsClient(
                 context,
@@ -218,15 +217,13 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     RecordType.A,
-                    ifMatch: null,
-                    ifNoneMatch: null);
+                    ifMatch: null);
 
                 // Delete the zone
-                var deleteResponse = testContext.DnsClient.Zones.Delete(
+                testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    ifMatch: null,
-                    ifNoneMatch: null);
+                    ifMatch: null);
             }
         }
 
@@ -362,6 +359,23 @@ namespace Microsoft.Azure.Management.Dns.Testing
         }
 
         [Fact]
+        public void CreateGetCaa()
+        {
+            Action<RecordSet> setTestRecords = createParams =>
+            {
+                createParams.CaaRecords = new List<CaaRecord>
+                {
+                    new CaaRecord() { Flags = 0, Tag = "issue", Value = "contoso.com" },
+                    new CaaRecord() { Flags = 0, Tag = "issue", Value = "fabrikam.com" },
+                };
+
+                return;
+            };
+
+            this.RecordSetCreateGet(RecordType.CAA, setTestRecords);
+        }
+
+        [Fact]
         public void CreateGetCname()
         {
             Action<RecordSet> setTestRecords = createParams =>
@@ -436,8 +450,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    ifMatch: null,
-                    ifNoneMatch: null);
+                    ifMatch: null);
             }
         }
 
@@ -452,6 +465,19 @@ namespace Microsoft.Azure.Management.Dns.Testing
         {
             ListRecordsInZone(isCrossType: true);
         }
+
+        [Fact(Skip = "needs re-recording. XUnit released version will not support overloaded test names")]
+        public void ListRecordsInZoneWithSuffixAcrossTypes()
+        {
+            ListRecordsInZoneWithSuffixCrossType(isCrossType: true);
+        }
+
+        [Fact(Skip ="needs re-recording. XUnit released version will not support overloaded test names")]
+        public void ListRecordsInZoneWithSuffix()
+        {
+            ListRecordsInZoneWithSuffixCrossType(isCrossType: false);
+        }
+
 
         private void ListRecordsInZone(
             bool isCrossType,
@@ -480,7 +506,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 if (isCrossType)
                 {
                     var listresponse = testContext.DnsClient.RecordSets
-                        .ListAllInResourceGroup(
+                        .ListByDnsZone(
                             testContext.ResourceGroup.Name,
                             testContext.ZoneName);
 
@@ -536,6 +562,94 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     recordSetNames);
             }
         }
+        private void ListRecordsInZoneWithSuffixCrossType(
+            bool isCrossType,
+            [System.Runtime.CompilerServices.CallerMemberName] string methodName
+                = "testframework_failed")
+        {
+            using (
+                MockContext context = MockContext.Start(
+                    this.GetType().FullName,
+                    methodName))
+            {
+                SingleRecordSetTestContext testContext =
+                    SetupSingleRecordSetTest(context);
+
+                string subzoneName = "contoso";
+
+                var recordSetNames = new[]
+                {
+                    TestUtilities.GenerateName("hydratestrec"),
+                    TestUtilities.GenerateName("hydratestrec"),
+                    TestUtilities.GenerateName("hydratestrec")
+                }.Select(x => x + "." + subzoneName).ToArray();
+
+                RecordSetScenarioTests.CreateRecordSets(
+                    testContext,
+                    recordSetNames);
+
+                if (isCrossType)
+                {
+                    var listresponse = testContext.DnsClient.RecordSets
+                        .ListByDnsZone(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            recordsetnamesuffix: subzoneName);
+
+                    Assert.NotNull(listresponse);
+                    Assert.Equal(listresponse.Count(), recordSetNames.Length);
+                    Assert.True(
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[0],
+                                    recordSetReturned.Name))
+                        &&
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[1],
+                                    recordSetReturned.Name))
+                        &&
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[2],
+                                    recordSetReturned.Name)),
+                        "The returned records do not meet expectations");
+                }
+                else
+                {
+                    var listresponse = testContext.DnsClient.RecordSets
+                        .ListByType(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            RecordType.TXT,
+                            recordsetnamesuffix: subzoneName);
+
+                    Assert.NotNull(listresponse);
+                    Assert.Equal(2, listresponse.Count());
+                    Assert.True(
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[0],
+                                    recordSetReturned.Name))
+                        &&
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[1],
+                                    recordSetReturned.Name)),
+                        "The returned records do not meet expectations");
+                }
+
+                RecordSetScenarioTests.DeleteRecordSetsAndZone(
+                    testContext,
+                    recordSetNames);
+            }
+        }
+
 
         [Fact]
         public void ListRecordsInZoneOneTypeWithTop()
@@ -579,10 +693,10 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 {
                     // Using top = 3, it will pick up SOA, NS and the first TXT
                     listResponse = testContext.DnsClient.RecordSets
-                        .ListAllInResourceGroup(
+                        .ListByDnsZone(
                             testContext.ResourceGroup.Name,
                             testContext.ZoneName,
-                            "3");
+                            3);
                     // verify if TXT is in the list
                     Assert.True(
                         listResponse.Where(rs => rs.Type == "TXT")
@@ -600,7 +714,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         RecordType.TXT,
-                        "3");
+                        3);
                     Assert.True(
                         listResponse.All(
                             listedRecordSet =>
@@ -662,8 +776,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         RecordType.CNAME,
-                        ifMatch: "somegibberish",
-                        ifNoneMatch: null),
+                        ifMatch: "somegibberish"),
                     exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
 
                 testContext.DnsClient.RecordSets.Delete(
@@ -671,14 +784,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     RecordType.CNAME,
-                    ifMatch: null,
-                    ifNoneMatch: null);
+                    ifMatch: null);
 
                 testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    ifMatch: null,
-                    ifNoneMatch: null);
+                    ifMatch: null);
             }
         }
 
@@ -735,14 +846,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     recordType,
-                    ifMatch: null,
-                    ifNoneMatch: null);
+                    ifMatch: null);
 
-                var deleteResponse = testContext.DnsClient.Zones.Delete(
+                testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    ifMatch: null,
-                    ifNoneMatch: null);
+                    ifMatch: null);
             }
         }
 
@@ -808,30 +917,26 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 testContext.ZoneName,
                 recordSetNames[0],
                 RecordType.TXT,
-                ifMatch: null,
-                ifNoneMatch: null);
+                ifMatch: null);
 
             testContext.DnsClient.RecordSets.Delete(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
                 recordSetNames[1],
                 RecordType.TXT,
-                ifMatch: null,
-                ifNoneMatch: null);
+                ifMatch: null);
 
             testContext.DnsClient.RecordSets.Delete(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
                 recordSetNames[2],
                 RecordType.AAAA,
-                ifMatch: null,
-                ifNoneMatch: null);
+                ifMatch: null);
 
             testContext.DnsClient.Zones.Delete(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
-                ifMatch: null,
-                ifNoneMatch: null);
+                ifMatch: null);
         }
 
         #endregion

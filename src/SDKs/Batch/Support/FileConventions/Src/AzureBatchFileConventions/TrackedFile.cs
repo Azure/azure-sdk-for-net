@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
                 using (var stm = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     stm.Seek(_flushPointer, SeekOrigin.Begin);
-                    _blob.AppendFromStream(stm, uploadPointer - _flushPointer);
+                    _blob.AppendFromStreamAsync(stm, uploadPointer - _flushPointer).GetAwaiter().GetResult();
                     _flushPointer = uploadPointer;
                 }
             }

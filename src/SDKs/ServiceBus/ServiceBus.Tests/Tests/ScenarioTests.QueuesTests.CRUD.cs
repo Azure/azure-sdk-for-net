@@ -14,6 +14,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using Xunit;
+    using System.Threading;
     public partial class ScenarioTests 
     {
         [Fact]
@@ -36,13 +37,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new SBNamespace()
                     {
                         Location = location,
-                        Sku = new Sku
+                        Sku = new SBSku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
                         }
                     });
 
@@ -54,10 +55,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create Queue
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
                 var createQueueResponse = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName,
-                new QueueCreateOrUpdateParameters()
-                {
-                    Location = location
-                });
+                new SBQueue() { EnableExpress = true});
 
                 Assert.NotNull(createQueueResponse);
                 Assert.Equal(createQueueResponse.Name, queueName);
@@ -69,36 +67,40 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(getQueueResponse.Name, queueName);
                   
                 // Get all Queues
-                var getQueueListAllResponse = ServiceBusManagementClient.Queues.ListAll(resourceGroup, namespaceName);
+                var getQueueListAllResponse = ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceName);
                 Assert.NotNull(getQueueListAllResponse);
                 Assert.True(getQueueListAllResponse.Count() >= 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
-                
+
+
+                // Create Queue1
+                var queueName1 = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
+                var createQueueResponse1 = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName1,
+                new SBQueue() { EnableExpress = true });
+
+
                 // Update Queue. 
-                var updateQueuesParameter = new QueueCreateOrUpdateParameters()
+                var updateQueuesParameter = new SBQueue()
                 {
-                    Location = location,
-                    EnableExpress = true,                   
-                    IsAnonymousAccessible = true,
+                    EnableExpress = true,
                     MaxDeliveryCount = 5,
-                    MaxSizeInMegabytes = 1024
-            };
+                    MaxSizeInMegabytes = 1024,
+                    ForwardTo = queueName1,
+                    ForwardDeadLetteredMessagesTo = queueName1
+                    
+                };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
                 Assert.NotNull(updateQueueResponse);
                 Assert.True(updateQueueResponse.EnableExpress);
-                Assert.True(updateQueueResponse.IsAnonymousAccessible);
+                Assert.Equal(updateQueueResponse.ForwardTo, queueName1);
+                Assert.Equal(updateQueueResponse.ForwardDeadLetteredMessagesTo, queueName1);
 
-                // Delete Created Queue  and check for the NotFound exception 
+                // Delete Created Queue 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);
-                try
-                {
-                    var getQueueResponse1 = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
-                }
-                catch (Exception ex)
-                {
-                    Assert.Equal(ex.Message, "The requested resource " + queueName + " does not exist.");
-                }                
+
+                //Delete Namespace Async
+                ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
             }
         }
     }

@@ -12,8 +12,9 @@
 5. nuget.org (https://www.nuget.org/api/v2/) should be an available package source in Visual Studio NuGet Package Manager settings
 6. Active Azure subscription
 
-
-> Please read the [documentation about Key Vault][2] to familiarize yourself with the basic concepts of Key Vault before running this sample application.
+> Notes: 
+>* This sample depends on an older way of manually provisioning AAD Identities. Currently, there is a new feature in preview called Managed Service Identity (MSI), which can automatically provision AAD Identities. Please refer to the following [link](https://docs.microsoft.com/azure/active-directory/msi-overview) for further details.
+>* Please read the [documentation about Key Vault][2] to familiarize yourself with the basic concepts of Key Vault before running this sample application.
 
 ## Sample #1 - HelloKeyVault
 A console application that walks through the key scenarios supported by Key Vault:

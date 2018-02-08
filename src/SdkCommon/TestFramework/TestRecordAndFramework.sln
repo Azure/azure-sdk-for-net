@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Azure.Authentication", "..\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj", "{FBF4BD4B-447D-442B-A2C1-46DB2F00AAC8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.Net45Tests", "TestFramework.Net45Tests\TestFramework.Net45Tests.csproj", "{BF15E4C6-C018-4F42-B315-5841DB505FE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,22 @@ Global
 		{FBF4BD4B-447D-442B-A2C1-46DB2F00AAC8}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
 		{FBF4BD4B-447D-442B-A2C1-46DB2F00AAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBF4BD4B-447D-442B-A2C1-46DB2F00AAC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net40-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net40-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net40-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net40-Release|Any CPU.Build.0 = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net45-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net45-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net45-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Net45-Release|Any CPU.Build.0 = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Portable-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Portable-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Portable-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Portable-Release|Any CPU.Build.0 = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,5 +173,6 @@ Global
 		{6A242C2E-019F-4300-B874-5E365EB43041} = {BF007157-DF27-4FDC-849C-1F0E19D630B2}
 		{4432CB88-1E91-4F61-8F74-D792A7919898} = {DAFBDA03-D3BB-4ADB-8A0E-D2D60E99FFB8}
 		{FBF4BD4B-447D-442B-A2C1-46DB2F00AAC8} = {DAFBDA03-D3BB-4ADB-8A0E-D2D60E99FFB8}
+		{BF15E4C6-C018-4F42-B315-5841DB505FE4} = {BF007157-DF27-4FDC-849C-1F0E19D630B2}
 	EndGlobalSection
 EndGlobal

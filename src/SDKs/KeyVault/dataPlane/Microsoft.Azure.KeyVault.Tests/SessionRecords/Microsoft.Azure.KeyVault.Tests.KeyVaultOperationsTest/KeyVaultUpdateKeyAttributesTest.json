@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/keys/UpdateKeyAttributesTest/create?api-version=2016-10-01",
-      "EncodedRequestUri": "L2tleXMvVXBkYXRlS2V5QXR0cmlidXRlc1Rlc3QvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestUri": "//keys/UpdateKeyAttributesTest/create?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0L2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_size\": 2048,\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -13,20 +13,20 @@
           "156"
         ],
         "x-ms-client-request-id": [
-          "d42e66d1-60db-411e-ab35-06ed01806302"
+          "d89e660c-d504-42fe-9aa6-81049d861efc"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24709.01",
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://testvault1021.vault.azure.net/keys/UpdateKeyAttributesTest/90bd15698c554d408355a1dadfd364b1\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"u097XtTHAAfrwqQXRfy4DQBt7VmvZQ9FvlBKua1BJ-CfO22fCzphLFJzF4gyTtwv501jCxWxIxwVDd047ahH_8cz0Fy-LaqRZey4YV-wAl1HqyVrIiChxCL7HCFWe99BRoYnM4EbYp-KVbpd8nmlIG7mInfKFNhRKGBmnAPHPGfqWJJYH4BJRzqiqiwmkctZ59Beu49rLN-YeVkSxIyIPBsdwOtFkmbGum8qimnY02vlVKPIOC0Rr8JgdVDQNA62bAmlDilPZyBKIKps_8c8u6B9IGpV-uHb4g80E6GNk8ktwX8fNVnfG92YTrorXpn6DbEl4wkv5FZT1vKDT6DNbw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482188986,\r\n    \"updated\": 1482188986\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/UpdateKeyAttributesTest/3d31e6e5c4c14eaf9be8d42c00225088\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"tHCSyq1FqGHXIFHs1m4riKYgPFNSTlJGPzxwfUyZJUxxZsFWMxmZRzbM3kcXC5N40AJfeqDOMs0gY0LZEfhw8kJHBf2GEH2Sz923E4OQjLk_ECdAiKPW_8t22cqD_pGIuB7uibjLZgFFRv7oe0t8cTXKn7IwAH5gQBLs8NNV7hx1Ozy82ekCgOovFldmD3c3P1oZQ_v_-jOP6O202aEfDcZut42J6zI8eYwvGiDKmo2fCPPeth1LYBOeUMnrEZGT_f_w3yAgqvuSkHCL0x4MjZzc2EoNI_3ooAHZohDaPHLRfz8neDPADZzbHA6SDn3GgvC1K_Je5GBmqjTH3aIMlw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1493860275,\r\n    \"updated\": 1493860275,\r\n    \"recoverylevel\": \"Recoverable+Purgeable\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "631"
+          "677"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Dec 2016 23:09:45 GMT"
+          "Thu, 04 May 2017 01:11:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,13 +47,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "eastus"
+          "eastus2"
         ],
         "x-ms-request-id": [
-          "aa71abd2-d8ec-471f-b0bb-dbc762889a5e"
+          "06e350d1-54e4-4ccb-9f86-8fae76d90d56"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.793"
+          "1.0.0.1184"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -71,8 +71,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/UpdateKeyAttributesTest/create?api-version=2016-10-01",
-      "EncodedRequestUri": "L2tleXMvVXBkYXRlS2V5QXR0cmlidXRlc1Rlc3QvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestUri": "//keys/UpdateKeyAttributesTest/create?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0L2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_size\": 2048,\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ]\r\n}",
       "RequestHeaders": {
@@ -83,20 +83,20 @@
           "156"
         ],
         "x-ms-client-request-id": [
-          "a5cfa253-530e-43b4-a196-4161493d9790"
+          "c338c113-906a-4a4f-a5e6-f924cdd2a281"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24709.01",
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://testvault1021.vault.azure.net/keys/UpdateKeyAttributesTest/e6d589d94db5418596e47e974f6ab1a3\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"l8CT0WrSLrNTTbyBYvuUFkv3Yy0qhxnNX6N_SZ389Qlq3wpvbNHuDPFvqviFq_JrLrC5ZnstT0lv09gM0RvcQjmLfF6eZenb5tC0uSrkKxHFt4hX1hr8jn1EeC9CHVq3GkA82SAS-KtL4Z6K8mE3quzQ4Ax3Z0bW9yXrDLrJY9CB-yQnWdJPbzXx1pS7nH6lD5MWityC8JcmEiV0Tgw5_Mt9Mms9ln8WntwOiwk-me5N7OvIb0-xm_MnPcf5sxwsEzVmHEy72hFqxGzW30TeidOruqtI6lgou3J6PkwFWdCX5l7OnTRDjxyPhTS4uJwEFsOfDbmMDDun-dke-IZbYQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482188986,\r\n    \"updated\": 1482188986\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/UpdateKeyAttributesTest/b3abd6fad423434e9e92f69800d7c14f\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"1dVjntvcwHw_aRnwmeSQgjeJuQE6RVBJNxt0EaaQ0GxJq4G2Q07Tze2W16TgtluJuuTQi5hYE4H3tohvbBgdLsf1w-rWDdvFQef_c3dwyTODAMRr7bayMec3jPw5uyfjP_Oxz025jSebczY_tsLvPFNQ2m5C7blrBivESEPdeT8nZwSOKx6kz17dLKqHf4onZlj5BqO4hW5MwlUmcbbGZPP7_yDHPYOuOE8m-VV9J2kZGFS4hI_GTk2I-VsFwTUhzXYvxmT22SZsZ2huJ9QZYp2EdP-78XonYhVOdJOzUMq42BjbzK-7qWumvfv5M0548NcN6Xc8Afw049WyiWKj8Q\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1493860276,\r\n    \"updated\": 1493860276,\r\n    \"recoverylevel\": \"Recoverable+Purgeable\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "631"
+          "677"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,7 +108,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Dec 2016 23:09:45 GMT"
+          "Thu, 04 May 2017 01:11:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -117,13 +117,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "eastus"
+          "eastus2"
         ],
         "x-ms-request-id": [
-          "14060771-e3f3-4b83-9880-aeba8105c587"
+          "07500ef0-5032-40bb-9288-df44454cadd1"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.793"
+          "1.0.0.1184"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -141,8 +141,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/UpdateKeyAttributesTest/?api-version=2016-10-01",
-      "EncodedRequestUri": "L2tleXMvVXBkYXRlS2V5QXR0cmlidXRlc1Rlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
+      "RequestUri": "//keys/UpdateKeyAttributesTest/?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0Lz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"key_ops\": [\r\n    \"decrypt\",\r\n    \"encrypt\"\r\n  ],\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 315561600,\r\n    \"exp\": 347184000\r\n  }\r\n}",
       "RequestHeaders": {
@@ -153,20 +153,20 @@
           "148"
         ],
         "x-ms-client-request-id": [
-          "2c627ab1-652f-452b-9fcd-025bb14fcb8a"
+          "d25f2831-3a17-4ea0-bcc8-8fb92523ac07"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24709.01",
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://testvault1021.vault.azure.net/keys/UpdateKeyAttributesTest/90bd15698c554d408355a1dadfd364b1\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"decrypt\",\r\n      \"encrypt\"\r\n    ],\r\n    \"n\": \"u097XtTHAAfrwqQXRfy4DQBt7VmvZQ9FvlBKua1BJ-CfO22fCzphLFJzF4gyTtwv501jCxWxIxwVDd047ahH_8cz0Fy-LaqRZey4YV-wAl1HqyVrIiChxCL7HCFWe99BRoYnM4EbYp-KVbpd8nmlIG7mInfKFNhRKGBmnAPHPGfqWJJYH4BJRzqiqiwmkctZ59Beu49rLN-YeVkSxIyIPBsdwOtFkmbGum8qimnY02vlVKPIOC0Rr8JgdVDQNA62bAmlDilPZyBKIKps_8c8u6B9IGpV-uHb4g80E6GNk8ktwX8fNVnfG92YTrorXpn6DbEl4wkv5FZT1vKDT6DNbw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 315561600,\r\n    \"exp\": 347184000,\r\n    \"created\": 1482188986,\r\n    \"updated\": 1482188986\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/UpdateKeyAttributesTest/3d31e6e5c4c14eaf9be8d42c00225088\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"decrypt\",\r\n      \"encrypt\"\r\n    ],\r\n    \"n\": \"tHCSyq1FqGHXIFHs1m4riKYgPFNSTlJGPzxwfUyZJUxxZsFWMxmZRzbM3kcXC5N40AJfeqDOMs0gY0LZEfhw8kJHBf2GEH2Sz923E4OQjLk_ECdAiKPW_8t22cqD_pGIuB7uibjLZgFFRv7oe0t8cTXKn7IwAH5gQBLs8NNV7hx1Ozy82ekCgOovFldmD3c3P1oZQ_v_-jOP6O202aEfDcZut42J6zI8eYwvGiDKmo2fCPPeth1LYBOeUMnrEZGT_f_w3yAgqvuSkHCL0x4MjZzc2EoNI_3ooAHZohDaPHLRfz8neDPADZzbHA6SDn3GgvC1K_Je5GBmqjTH3aIMlw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 315561600,\r\n    \"exp\": 347184000,\r\n    \"created\": 1493860275,\r\n    \"updated\": 1493860276,\r\n    \"recoverylevel\": \"Recoverable+Purgeable\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "625"
+          "671"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -178,7 +178,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Dec 2016 23:09:45 GMT"
+          "Thu, 04 May 2017 01:11:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -187,13 +187,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "eastus"
+          "eastus2"
         ],
         "x-ms-request-id": [
-          "a94696a3-a7cd-43d2-8d75-91e9e64d3799"
+          "9d316056-d9ad-4c1e-8a3f-814b423aeaa1"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.793"
+          "1.0.0.1184"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -211,8 +211,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/UpdateKeyAttributesTest/90bd15698c554d408355a1dadfd364b1?api-version=2016-10-01",
-      "EncodedRequestUri": "L2tleXMvVXBkYXRlS2V5QXR0cmlidXRlc1Rlc3QvOTBiZDE1Njk4YzU1NGQ0MDgzNTVhMWRhZGZkMzY0YjE/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestUri": "/keys/UpdateKeyAttributesTest/3d31e6e5c4c14eaf9be8d42c00225088?api-version=2016-10-01",
+      "EncodedRequestUri": "L2tleXMvVXBkYXRlS2V5QXR0cmlidXRlc1Rlc3QvM2QzMWU2ZTVjNGMxNGVhZjliZThkNDJjMDAyMjUwODg/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"key_ops\": [\r\n    \"decrypt\",\r\n    \"encrypt\"\r\n  ],\r\n  \"attributes\": {\r\n    \"enabled\": false,\r\n    \"nbf\": 631180800,\r\n    \"exp\": 662716800\r\n  }\r\n}",
       "RequestHeaders": {
@@ -223,20 +223,20 @@
           "149"
         ],
         "x-ms-client-request-id": [
-          "514e8a4f-8ec7-4247-8bd5-9eb4036ddb04"
+          "608dd66b-54ef-4990-b1ef-9660838714ae"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24709.01",
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://testvault1021.vault.azure.net/keys/UpdateKeyAttributesTest/90bd15698c554d408355a1dadfd364b1\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"decrypt\",\r\n      \"encrypt\"\r\n    ],\r\n    \"n\": \"u097XtTHAAfrwqQXRfy4DQBt7VmvZQ9FvlBKua1BJ-CfO22fCzphLFJzF4gyTtwv501jCxWxIxwVDd047ahH_8cz0Fy-LaqRZey4YV-wAl1HqyVrIiChxCL7HCFWe99BRoYnM4EbYp-KVbpd8nmlIG7mInfKFNhRKGBmnAPHPGfqWJJYH4BJRzqiqiwmkctZ59Beu49rLN-YeVkSxIyIPBsdwOtFkmbGum8qimnY02vlVKPIOC0Rr8JgdVDQNA62bAmlDilPZyBKIKps_8c8u6B9IGpV-uHb4g80E6GNk8ktwX8fNVnfG92YTrorXpn6DbEl4wkv5FZT1vKDT6DNbw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": false,\r\n    \"nbf\": 631180800,\r\n    \"exp\": 662716800,\r\n    \"created\": 1482188986,\r\n    \"updated\": 1482188986\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/UpdateKeyAttributesTest/3d31e6e5c4c14eaf9be8d42c00225088\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"decrypt\",\r\n      \"encrypt\"\r\n    ],\r\n    \"n\": \"tHCSyq1FqGHXIFHs1m4riKYgPFNSTlJGPzxwfUyZJUxxZsFWMxmZRzbM3kcXC5N40AJfeqDOMs0gY0LZEfhw8kJHBf2GEH2Sz923E4OQjLk_ECdAiKPW_8t22cqD_pGIuB7uibjLZgFFRv7oe0t8cTXKn7IwAH5gQBLs8NNV7hx1Ozy82ekCgOovFldmD3c3P1oZQ_v_-jOP6O202aEfDcZut42J6zI8eYwvGiDKmo2fCPPeth1LYBOeUMnrEZGT_f_w3yAgqvuSkHCL0x4MjZzc2EoNI_3ooAHZohDaPHLRfz8neDPADZzbHA6SDn3GgvC1K_Je5GBmqjTH3aIMlw\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": false,\r\n    \"nbf\": 631180800,\r\n    \"exp\": 662716800,\r\n    \"created\": 1493860275,\r\n    \"updated\": 1493860277,\r\n    \"recoverylevel\": \"Recoverable+Purgeable\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "626"
+          "672"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -248,7 +248,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Dec 2016 23:09:46 GMT"
+          "Thu, 04 May 2017 01:11:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -257,13 +257,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "eastus"
+          "eastus2"
         ],
         "x-ms-request-id": [
-          "5068dbab-f76a-49b6-963f-46116a1144a0"
+          "e8d6292c-7632-457c-8701-9f4ff3ff6ed5"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.793"
+          "1.0.0.1184"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -281,26 +281,26 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/UpdateKeyAttributesTest?api-version=2016-10-01",
-      "EncodedRequestUri": "L2tleXMvVXBkYXRlS2V5QXR0cmlidXRlc1Rlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
+      "RequestUri": "//keys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "63e010de-2316-4609-a1b1-706be01a6acd"
+          "84312a7a-2861-4bc1-aa73-1463d10037a7"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24709.01",
-          "Microsoft.Azure.KeyVault.KeyVaultClient/2.0.6"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"key\": {\r\n    \"kid\": \"https://testvault1021.vault.azure.net/keys/UpdateKeyAttributesTest/e6d589d94db5418596e47e974f6ab1a3\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"l8CT0WrSLrNTTbyBYvuUFkv3Yy0qhxnNX6N_SZ389Qlq3wpvbNHuDPFvqviFq_JrLrC5ZnstT0lv09gM0RvcQjmLfF6eZenb5tC0uSrkKxHFt4hX1hr8jn1EeC9CHVq3GkA82SAS-KtL4Z6K8mE3quzQ4Ax3Z0bW9yXrDLrJY9CB-yQnWdJPbzXx1pS7nH6lD5MWityC8JcmEiV0Tgw5_Mt9Mms9ln8WntwOiwk-me5N7OvIb0-xm_MnPcf5sxwsEzVmHEy72hFqxGzW30TeidOruqtI6lgou3J6PkwFWdCX5l7OnTRDjxyPhTS4uJwEFsOfDbmMDDun-dke-IZbYQ\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1482188986,\r\n    \"updated\": 1482188986\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/UpdateKeyAttributesTest\",\r\n  \"deletedDate\": 1493860277,\r\n  \"scheduledPurgeDate\": 1501636277,\r\n  \"key\": {\r\n    \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/UpdateKeyAttributesTest/b3abd6fad423434e9e92f69800d7c14f\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"1dVjntvcwHw_aRnwmeSQgjeJuQE6RVBJNxt0EaaQ0GxJq4G2Q07Tze2W16TgtluJuuTQi5hYE4H3tohvbBgdLsf1w-rWDdvFQef_c3dwyTODAMRr7bayMec3jPw5uyfjP_Oxz025jSebczY_tsLvPFNQ2m5C7blrBivESEPdeT8nZwSOKx6kz17dLKqHf4onZlj5BqO4hW5MwlUmcbbGZPP7_yDHPYOuOE8m-VV9J2kZGFS4hI_GTk2I-VsFwTUhzXYvxmT22SZsZ2huJ9QZYp2EdP-78XonYhVOdJOzUMq42BjbzK-7qWumvfv5M0548NcN6Xc8Afw049WyiWKj8Q\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1493860276,\r\n    \"updated\": 1493860276,\r\n    \"recoverylevel\": \"Recoverable+Purgeable\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "631"
+          "829"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -312,7 +312,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 19 Dec 2016 23:09:46 GMT"
+          "Thu, 04 May 2017 01:11:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -321,13 +321,13 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-keyvault-region": [
-          "eastus"
+          "eastus2"
         ],
         "x-ms-request-id": [
-          "5cb732d1-3b3d-476b-b066-834a8b93caba"
+          "f569c4d7-c2f0-46d3-be0c-7b2957fe0df4"
         ],
         "x-ms-keyvault-service-version": [
-          "1.0.0.793"
+          "1.0.0.1184"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -343,12 +343,327 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2507a60a-ddd2-4820-9d01-1d3b087df6f0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: UpdateKeyAttributesTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "91"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 04 May 2017 01:11:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "214f910f-4ce8-40d1-b0b4-cbbe368cb3fe"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1184"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b4869434-ca28-4e58-af97-e44c7b8e91f4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: UpdateKeyAttributesTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "91"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 04 May 2017 01:11:17 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "a61ce0a3-37eb-4cc2-9310-05a31e4782fe"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1184"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "011a7580-6a3e-4066-8741-10a39a1e659e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"KeyNotFound\",\r\n    \"message\": \"Deleted Key not found: UpdateKeyAttributesTest\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "91"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 04 May 2017 01:11:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "bc109b64-9a5a-49db-9123-9da882455575"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1184"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d4e3a0dd-a039-413a-aa79-abae29fc32e6"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/UpdateKeyAttributesTest\",\r\n  \"deletedDate\": 1493860277,\r\n  \"scheduledPurgeDate\": 1501636277,\r\n  \"key\": {\r\n    \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/UpdateKeyAttributesTest/b3abd6fad423434e9e92f69800d7c14f\",\r\n    \"kty\": \"RSA\",\r\n    \"key_ops\": [\r\n      \"encrypt\",\r\n      \"decrypt\",\r\n      \"sign\",\r\n      \"verify\",\r\n      \"wrapKey\",\r\n      \"unwrapKey\"\r\n    ],\r\n    \"n\": \"1dVjntvcwHw_aRnwmeSQgjeJuQE6RVBJNxt0EaaQ0GxJq4G2Q07Tze2W16TgtluJuuTQi5hYE4H3tohvbBgdLsf1w-rWDdvFQef_c3dwyTODAMRr7bayMec3jPw5uyfjP_Oxz025jSebczY_tsLvPFNQ2m5C7blrBivESEPdeT8nZwSOKx6kz17dLKqHf4onZlj5BqO4hW5MwlUmcbbGZPP7_yDHPYOuOE8m-VV9J2kZGFS4hI_GTk2I-VsFwTUhzXYvxmT22SZsZ2huJ9QZYp2EdP-78XonYhVOdJOzUMq42BjbzK-7qWumvfv5M0548NcN6Xc8Afw049WyiWKj8Q\",\r\n    \"e\": \"AQAB\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"created\": 1493860276,\r\n    \"updated\": 1493860276,\r\n    \"recoverylevel\": \"Recoverable+Purgeable\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "829"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 04 May 2017 01:11:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "553415cd-c8b9-454c-861f-f0549c714256"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1184"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "883a1188-6749-4a24-ab49-25a29321f78e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 04 May 2017 01:11:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-keyvault-region": [
+          "eastus2"
+        ],
+        "x-ms-request-id": [
+          "334df077-44a0-4693-9753-98b3ff2725b4"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.0.1184"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000;includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
     }
   ],
   "Names": {},
   "Variables": {
-    "VaultAddress": "https://testvault1021.vault.azure.net",
+    "VaultAddress": "https://kv-sdk-test.vault-int.azure-int.net/",
     "KeyName": "sdktestkey",
-    "KeyVersion": "4eb68492b5f6421e835d961ad2be3155"
+    "KeyVersion": "11ba3746c4964af39f3d377069a759c1",
+    "SoftDeleteEnabled": "True"
   }
 }

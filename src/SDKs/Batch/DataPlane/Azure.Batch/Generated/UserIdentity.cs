@@ -22,15 +22,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class UserIdentity : ITransportObjectProvider<Models.UserIdentity>, IPropertyMetadata
     {
-        private readonly AutoUserSpecification autoUser;
-        private readonly string userName;
-
         #region Constructors
 
         internal UserIdentity(Models.UserIdentity protocolObject)
         {
-            this.autoUser = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AutoUser, o => new AutoUserSpecification(o).Freeze());
-            this.userName = protocolObject.UserName;
+            this.AutoUser = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AutoUser, o => new AutoUserSpecification(o).Freeze());
+            this.UserName = protocolObject.UserName;
         }
 
         #endregion Constructors
@@ -44,10 +41,7 @@ namespace Microsoft.Azure.Batch
         /// The <see cref="UserName"/> and <see cref="AutoUser"/> properties are mutually exclusive; you must specify one 
         /// but not both.
         /// </remarks>
-        public AutoUserSpecification AutoUser
-        {
-            get { return this.autoUser; }
-        }
+        public AutoUserSpecification AutoUser { get; }
 
         /// <summary>
         /// Gets the name of the user identity under which the task is run.
@@ -56,10 +50,7 @@ namespace Microsoft.Azure.Batch
         /// The <see cref="UserName"/> and <see cref="AutoUser"/> properties are mutually exclusive; you must specify one 
         /// but not both.
         /// </remarks>
-        public string UserName
-        {
-            get { return this.userName; }
-        }
+        public string UserName { get; }
 
         #endregion // UserIdentity
 

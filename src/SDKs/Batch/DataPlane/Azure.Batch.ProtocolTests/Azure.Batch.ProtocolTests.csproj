@@ -54,4 +54,9 @@
     <ProjectReference Include="..\TestCommon\Common\Common.csproj" />
     <ProjectReference Include="..\TestCommon\IntegrationTestCommon\IntegrationTestCommon.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
 </Project>

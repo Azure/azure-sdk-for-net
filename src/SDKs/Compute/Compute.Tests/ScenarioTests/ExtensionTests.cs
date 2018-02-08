@@ -3,8 +3,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,11 +53,11 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM);
+                    var vm = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM);
 
                     // Delete an extension that does not exist in the VM. A http status code of NoContent should be returned which translates to operation success.
                     m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, "VMExtensionDoesNotExist");
-                    
+
                     // Add an extension to the VM
                     var vmExtension = GetTestVMExtension();
                     var response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension.Name, vmExtension);

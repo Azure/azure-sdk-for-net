@@ -1,0 +1,31 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "datasetName": "exampleDataset",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 18:04:27 GMT",
+        "x-ms-request-id": "70d3cf1f-bf14-40f5-bb56-1550a317ce8b",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1183",
+        "x-ms-correlation-request-id": "d56bf687-df32-4313-87ec-ff22ba9bd192"
+      },
+      "body": null
+    },
+    "204": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 18:04:27 GMT",
+        "x-ms-request-id": "a2347ff3-4018-4815-b58a-9fbe3cdcab52",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1182",
+        "x-ms-correlation-request-id": "9b926944-88d9-4d77-b1a8-5540c803f933"
+      },
+      "body": null
+    }
+  }
+}

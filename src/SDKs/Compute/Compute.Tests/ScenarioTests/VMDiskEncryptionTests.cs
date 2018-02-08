@@ -3,12 +3,8 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -26,7 +22,7 @@ namespace Compute.Tests
         /// Delete RG
         /// TODO: Add negative test case validation
         /// </summary>
-        [Fact(Skip = "For AutoRest")]
+        [Fact]
         [Trait("Name", "TestDiskEncryption")]
         public void TestVMDiskEncryption()
         {
@@ -47,20 +43,20 @@ namespace Compute.Tests
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     //Create VM with encryptionKey
                     VirtualMachine inputVM1;
-                    CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM1,
+                    CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM1,
                         (vm) =>
                         {
                             vm.StorageProfile.OsDisk.EncryptionSettings = GetEncryptionSettings();
-                            vm.HardwareProfile.VmSize = "Standard_D1";
-                        });
+                            vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardD1;
+                        }, waitForCompletion: false);
                     //Create VM with encryptionKey and KEK
                     VirtualMachine inputVM2;
-                    CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM2,
+                    CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM2,
                         (vm) =>
                         {
                             vm.StorageProfile.OsDisk.EncryptionSettings = GetEncryptionSettings(addKek:true);
-                            vm.HardwareProfile.VmSize = "Standard_D1";
-                        });
+                            vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardD1;
+                        }, waitForCompletion: false);
                     
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM1.Name);
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM2.Name);

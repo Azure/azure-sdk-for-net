@@ -66,6 +66,17 @@ namespace Sample.Microsoft.HelloKeyVault
                 keyOperations.Add( KeyOperationType.LIST_CERTIFICATEVERSIONS );
                 keyOperations.Add( KeyOperationType.LIST_CERTIFICATES );
                 keyOperations.Add( KeyOperationType.DELETE_CERTIFICATE );
+                keyOperations.Add(KeyOperationType.CREATE_STORAGE_ACCOUNT);
+                keyOperations.Add(KeyOperationType.GET_STORAGE_ACCOUNT);
+                keyOperations.Add(KeyOperationType.UPDATE_STORAGE_ACCOUNT);
+                keyOperations.Add(KeyOperationType.LIST_STORAGE_ACCOUNT);
+                keyOperations.Add(KeyOperationType.REGENERATE_STORAGE_ACCOUNT_KEY);
+                keyOperations.Add(KeyOperationType.CREATE_STORAGE_SAS_DEFINITION);
+                keyOperations.Add(KeyOperationType.GET_STORAGE_SAS_DEFINITION);
+                keyOperations.Add(KeyOperationType.UPDATE_STORAGE_SAS_DEFINITION);
+                keyOperations.Add(KeyOperationType.LIST_STORAGE_SAS_DEFINITION);
+                keyOperations.Add(KeyOperationType.DELETE_STORAGE_SAS_DEFINITION);
+                keyOperations.Add(KeyOperationType.DELETE_STORAGE_ACCOUNT);
             }
             return keyOperations;
         }
@@ -294,6 +305,58 @@ namespace Sample.Microsoft.HelloKeyVault
                     Console.Out.WriteLine(tag + " is not provided. Using default value: " + name);
                 }
             }
+            return name;
+        }
+
+        /// <summary>
+        /// Get storage account name from argument list.
+        /// </summary>
+        /// <param name="mandatory">Whether the cli parameter is mandatory or not </param>
+        /// <returns>The name of the storage account.</returns>
+        public string GetStorageAccountName(bool mandatory = false, bool allowDefault = true)
+        {
+            var tag = "-storageaccountname";
+            string name = GetArgumentValue(tag);
+
+            if (name == string.Empty)
+            {
+                if (mandatory == true)
+                {
+                    throw new Exception(tag + " argument is missing");
+                }
+                if (allowDefault)
+                {
+                    name = "storage" + new Random().Next(0, 9999);
+                    Console.Out.WriteLine(tag + " is not provided. Using default value: " + name);
+                }
+            }
+
+            return name;
+        }
+
+        /// <summary>
+        /// Get sas definition name from argument list.
+        /// </summary>
+        /// <param name="mandatory">Whether the cli parameter is mandatory or not </param>
+        /// <returns>The name of the sas definition.</returns>
+        public string GetSasDefinitionName(bool mandatory = false, bool allowDefault = true)
+        {
+            var tag = "-sasdefinitionname";
+            string name = GetArgumentValue(tag);
+
+            if (name == string.Empty)
+            {
+                if (mandatory == true)
+                {
+                    throw new Exception(tag + " argument is missing");
+                }
+                if (allowDefault)
+                {
+                    name = "storagesas" + new Random().Next(0, 9999);
+                    Console.Out.WriteLine(tag + " is not provided. Using default value: " + name);
+                }
+            }
+
             return name;
         }
 

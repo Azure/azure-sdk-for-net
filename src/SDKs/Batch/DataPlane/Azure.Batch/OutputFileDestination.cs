@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="container">A location in Azure blob storage to which files are uploaded.</param>
         public OutputFileDestination(OutputFileBlobContainerDestination container)
         {
-            this.container = container;
+            this.Container = container;
         }
     }
 }

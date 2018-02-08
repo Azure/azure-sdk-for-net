@@ -3,12 +3,8 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -37,7 +33,7 @@ namespace Compute.Tests
                 {
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
                     {
                         vm.StorageProfile.OsDisk.DiskSizeGB = 150;
                     });

@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ApplicationSummary : IPropertyMetadata
     {
-        private readonly string displayName;
-        private readonly string id;
-        private readonly IReadOnlyList<string> versions;
-
         #region Constructors
 
         internal ApplicationSummary(Models.ApplicationSummary protocolObject)
         {
-            this.displayName = protocolObject.DisplayName;
-            this.id = protocolObject.Id;
-            this.versions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Versions, o => o.ToList().AsReadOnly());
+            this.DisplayName = protocolObject.DisplayName;
+            this.Id = protocolObject.Id;
+            this.Versions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Versions, o => o.ToList().AsReadOnly());
         }
 
         #endregion Constructors
@@ -42,26 +38,17 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the display name of the application.
         /// </summary>
-        public string DisplayName
-        {
-            get { return this.displayName; }
-        }
+        public string DisplayName { get; }
 
         /// <summary>
         /// Gets the id of the application.
         /// </summary>
-        public string Id
-        {
-            get { return this.id; }
-        }
+        public string Id { get; }
 
         /// <summary>
         /// Gets a readonly list of available versions of the application.
         /// </summary>
-        public IReadOnlyList<string> Versions
-        {
-            get { return this.versions; }
-        }
+        public IReadOnlyList<string> Versions { get; }
 
         #endregion // ApplicationSummary
 

@@ -18,13 +18,13 @@
     <ProjectReference Include="..\..\ClientRuntime.Azure.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />   
     <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
     -->
-     
+    <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" /> 
     <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
   </ItemGroup>
   
   <ItemGroup>    
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.2.12,3.0.0)" />
-    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.8.0,2.0.0)" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="[2.3.1,3.0.0)" />
+    <!--<PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.8.0,2.0.0)" />-->
     <!--
       <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
       <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.6,4.0.0)" />

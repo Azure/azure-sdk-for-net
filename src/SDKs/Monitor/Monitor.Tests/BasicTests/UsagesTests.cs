@@ -16,6 +16,7 @@ namespace Monitor.Tests.BasicTests
     public class UsagesTests : TestBase
     {
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListUsageTest()
         {
             string resourceUri = "/subscriptions/123456789/resourceGroups/rg/providers/rp/rUri";
@@ -89,7 +90,7 @@ namespace Monitor.Tests.BasicTests
                 Assert.Equal(exp.NextResetTime, act.NextResetTime);
                 Assert.Equal(exp.QuotaPeriod, act.QuotaPeriod);
                 Assert.Equal(exp.Unit, act.Unit);
-                AreEqual(exp.Name, act.Name);
+                Utilities.AreEqual(exp.Name, act.Name);
             }
         }
     }

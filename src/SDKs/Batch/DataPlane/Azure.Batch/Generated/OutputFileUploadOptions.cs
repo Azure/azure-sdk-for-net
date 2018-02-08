@@ -22,8 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class OutputFileUploadOptions : ITransportObjectProvider<Models.OutputFileUploadOptions>, IPropertyMetadata
     {
-        private readonly Common.OutputFileUploadCondition uploadCondition;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="OutputFileUploadOptions"/> class.
@@ -32,12 +30,12 @@ namespace Microsoft.Azure.Batch
         public OutputFileUploadOptions(
             Common.OutputFileUploadCondition uploadCondition)
         {
-            this.uploadCondition = uploadCondition;
+            this.UploadCondition = uploadCondition;
         }
 
         internal OutputFileUploadOptions(Models.OutputFileUploadOptions protocolObject)
         {
-            this.uploadCondition = UtilitiesInternal.MapEnum<Models.OutputFileUploadCondition, Common.OutputFileUploadCondition>(protocolObject.UploadCondition);
+            this.UploadCondition = UtilitiesInternal.MapEnum<Models.OutputFileUploadCondition, Common.OutputFileUploadCondition>(protocolObject.UploadCondition);
         }
 
         #endregion Constructors
@@ -47,10 +45,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the conditions under which the file(s) should be uploaded.
         /// </summary>
-        public Common.OutputFileUploadCondition UploadCondition
-        {
-            get { return this.uploadCondition; }
-        }
+        public Common.OutputFileUploadCondition UploadCondition { get; }
 
         #endregion // OutputFileUploadOptions
 

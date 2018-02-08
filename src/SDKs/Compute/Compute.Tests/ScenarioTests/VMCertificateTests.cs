@@ -3,8 +3,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -45,7 +44,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, AddCertificateInfo);
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, AddCertificateInfo);
 
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }
@@ -56,7 +55,7 @@ namespace Compute.Tests
             }
         }
 
-        public void SetCertificateInfo(VirtualMachine vm)
+        private void SetCertificateInfo(VirtualMachine vm)
         {
             SubResource vault = GetDefaultSourceVault();
 

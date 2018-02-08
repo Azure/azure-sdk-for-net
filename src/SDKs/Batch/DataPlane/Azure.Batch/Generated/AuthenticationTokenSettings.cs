@@ -28,14 +28,14 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.AccessProperty = this.CreatePropertyAccessor<Common.AccessScope>("Access", BindingAccess.Read | BindingAccess.Write);
+                this.AccessProperty = this.CreatePropertyAccessor<Common.AccessScope>(nameof(Access), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.AuthenticationTokenSettings protocolObject) : base(BindingState.Bound)
             {
                 this.AccessProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.ParseAccessScope(protocolObject.Access),
-                    "Access",
+                    nameof(Access),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

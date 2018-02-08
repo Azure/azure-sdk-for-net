@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Enables tracing of event messages for AutoRest generated client libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to the "Microsoft.Rest" event source.</Description>    
     <AssemblyTitle>ETW Logger for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <VersionPrefix>2.1.2</VersionPrefix>
+    <VersionPrefix>2.1.3</VersionPrefix>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Etw</AssemblyName>
     <PackageId>Microsoft.Rest.ClientRuntime.Etw</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime REST ETW $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>

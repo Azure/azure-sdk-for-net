@@ -168,5 +168,33 @@ namespace Microsoft.Azure.KeyVault.Tests
             Assert.True(CertificateIssuerIdentifier.IsIssuerIdentifier(baseId));
             Assert.False(CertificateIssuerIdentifier.IsIssuerIdentifier(baseId + "/version"));
         }
+
+        [Fact]
+        public void StorageAccountIdentifierTest()
+        {
+            string baseId = string.Format("{0}/storage/{1}", vault, name);
+
+            var id = new StorageAccountIdentifier(baseId);
+            Assert.Equal(baseId, id.BaseIdentifier);
+            Assert.Equal(baseId, id.Identifier);
+            Assert.Equal(vault, id.Vault);
+            Assert.Equal(name, id.Name);
+            Assert.True(StorageAccountIdentifier.IsStorageAccountIdentifier(baseId));
+        }
+
+        [Fact]
+        public void SasDefinitionIdentifierTest()
+        {
+            var storageName = "mystorage";
+            string baseId = string.Format("{0}/storage/{1}/sas/{2}", vault, storageName, name);
+
+            var id = new SasDefinitionIdentifier(baseId);
+            Assert.Equal(baseId, id.BaseIdentifier);
+            Assert.Equal(baseId, id.Identifier);
+            Assert.Equal(vault, id.Vault);
+            Assert.Equal(name, id.Name);
+            Assert.Equal(storageName, id.StorageAccount);
+            Assert.True(SasDefinitionIdentifier.IsSasDefinitionIdentifier(baseId));
+        }
     }
 }

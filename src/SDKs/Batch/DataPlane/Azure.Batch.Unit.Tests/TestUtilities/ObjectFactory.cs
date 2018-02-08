@@ -35,9 +35,7 @@
                 Type wrappedType = objectType.GetGenericArguments()[0];
                 return this.GenerateNew(wrappedType);
             }
-            else if (objectType.GetTypeInfo().IsGenericType &&
-                (objectType.GetGenericTypeDefinition() == typeof(IEnumerable<>) ||
-                objectType.GetGenericTypeDefinition() == typeof(IList<>)))
+            else if (objectType.GetTypeInfo().IsGenericType && typeof(IEnumerable).IsAssignableFrom(objectType))
             {
                 Type listType = typeof (List<>);
                 Type wrappedType = objectType.GetGenericArguments()[0];

@@ -32,34 +32,34 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.DefaultProperty = this.CreatePropertyAccessor<ExitOptions>("Default", BindingAccess.Read | BindingAccess.Write);
-                this.ExitCodeRangesProperty = this.CreatePropertyAccessor<IList<ExitCodeRangeMapping>>("ExitCodeRanges", BindingAccess.Read | BindingAccess.Write);
-                this.ExitCodesProperty = this.CreatePropertyAccessor<IList<ExitCodeMapping>>("ExitCodes", BindingAccess.Read | BindingAccess.Write);
-                this.FileUploadErrorProperty = this.CreatePropertyAccessor<ExitOptions>("FileUploadError", BindingAccess.Read | BindingAccess.Write);
-                this.PreProcessingErrorProperty = this.CreatePropertyAccessor<ExitOptions>("PreProcessingError", BindingAccess.Read | BindingAccess.Write);
+                this.DefaultProperty = this.CreatePropertyAccessor<ExitOptions>(nameof(Default), BindingAccess.Read | BindingAccess.Write);
+                this.ExitCodeRangesProperty = this.CreatePropertyAccessor<IList<ExitCodeRangeMapping>>(nameof(ExitCodeRanges), BindingAccess.Read | BindingAccess.Write);
+                this.ExitCodesProperty = this.CreatePropertyAccessor<IList<ExitCodeMapping>>(nameof(ExitCodes), BindingAccess.Read | BindingAccess.Write);
+                this.FileUploadErrorProperty = this.CreatePropertyAccessor<ExitOptions>(nameof(FileUploadError), BindingAccess.Read | BindingAccess.Write);
+                this.PreProcessingErrorProperty = this.CreatePropertyAccessor<ExitOptions>(nameof(PreProcessingError), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ExitConditions protocolObject) : base(BindingState.Bound)
             {
                 this.DefaultProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.DefaultProperty, o => new ExitOptions(o).Freeze()),
-                    "Default",
+                    nameof(Default),
                     BindingAccess.Read);
                 this.ExitCodeRangesProperty = this.CreatePropertyAccessor(
                     ExitCodeRangeMapping.ConvertFromProtocolCollectionAndFreeze(protocolObject.ExitCodeRanges),
-                    "ExitCodeRanges",
+                    nameof(ExitCodeRanges),
                     BindingAccess.Read);
                 this.ExitCodesProperty = this.CreatePropertyAccessor(
                     ExitCodeMapping.ConvertFromProtocolCollectionAndFreeze(protocolObject.ExitCodes),
-                    "ExitCodes",
+                    nameof(ExitCodes),
                     BindingAccess.Read);
                 this.FileUploadErrorProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.FileUploadError, o => new ExitOptions(o).Freeze()),
-                    "FileUploadError",
+                    nameof(FileUploadError),
                     BindingAccess.Read);
                 this.PreProcessingErrorProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.PreProcessingError, o => new ExitOptions(o).Freeze()),
-                    "PreProcessingError",
+                    nameof(PreProcessingError),
                     BindingAccess.Read);
             }
         }

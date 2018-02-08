@@ -22,21 +22,15 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class JobExecutionInformation : IPropertyMetadata
     {
-        private readonly DateTime? endTime;
-        private readonly string poolId;
-        private readonly JobSchedulingError schedulingError;
-        private readonly DateTime startTime;
-        private readonly string terminateReason;
-
         #region Constructors
 
         internal JobExecutionInformation(Models.JobExecutionInformation protocolObject)
         {
-            this.endTime = protocolObject.EndTime;
-            this.poolId = protocolObject.PoolId;
-            this.schedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new JobSchedulingError(o).Freeze());
-            this.startTime = protocolObject.StartTime;
-            this.terminateReason = protocolObject.TerminateReason;
+            this.EndTime = protocolObject.EndTime;
+            this.PoolId = protocolObject.PoolId;
+            this.SchedulingError = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SchedulingError, o => new JobSchedulingError(o).Freeze());
+            this.StartTime = protocolObject.StartTime;
+            this.TerminateReason = protocolObject.TerminateReason;
         }
 
         #endregion Constructors
@@ -46,42 +40,27 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the completion time of this job.
         /// </summary>
-        public DateTime? EndTime
-        {
-            get { return this.endTime; }
-        }
+        public DateTime? EndTime { get; }
 
         /// <summary>
         /// Gets the pool Id of this job.
         /// </summary>
-        public string PoolId
-        {
-            get { return this.poolId; }
-        }
+        public string PoolId { get; }
 
         /// <summary>
         /// Gets the error encountered by the Batch service in scheduling the job.
         /// </summary>
-        public JobSchedulingError SchedulingError
-        {
-            get { return this.schedulingError; }
-        }
+        public JobSchedulingError SchedulingError { get; }
 
         /// <summary>
         /// Gets the creation time of the job.
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+        public DateTime StartTime { get; }
 
         /// <summary>
         /// Gets the reason for job moving to completed state.
         /// </summary>
-        public string TerminateReason
-        {
-            get { return this.terminateReason; }
-        }
+        public string TerminateReason { get; }
 
         #endregion // JobExecutionInformation
 

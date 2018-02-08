@@ -42,7 +42,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan()
                     {
-                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -53,7 +52,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                     {
-                        Name = webSiteName,
                         Location = location,
                         Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
                         ServerFarmId = serverFarmId
@@ -62,7 +60,6 @@ namespace WebSites.Tests.ScenarioTests
                 string siteSlotResourceName = webSiteName + "/" + slotName;
                 webSitesClient.WebApps.CreateOrUpdateSlot(resourceGroupName, webSiteName, new Site()
                     {
-                        Name = siteSlotResourceName,
                         Location = location,
                         ServerFarmId = serverFarmId
                     }, slotName);
@@ -99,7 +96,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName, new AppServicePlan()
                     {
-                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -111,7 +107,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    Name = webSiteName,
                     Location = location,
                     ServerFarmId = serverFarmId
                 });
@@ -120,7 +115,6 @@ namespace WebSites.Tests.ScenarioTests
                 webSitesClient.WebApps.CreateOrUpdateSlot(resourceGroupName, webSiteName, slot: slotName, siteEnvelope:
                     new Site
                     {
-                        Name = siteSlotResourceName,
                         Location = location,
                         ServerFarmId = serverFarmId
                     });
@@ -159,7 +153,6 @@ namespace WebSites.Tests.ScenarioTests
                 webSitesClient.AppServicePlans.CreateOrUpdate(resourceGroupName, whpName,
                     new AppServicePlan
                     {
-                        Name = whpName,
                         Location = location,
                         Sku = new SkuDescription
                         {
@@ -171,7 +164,6 @@ namespace WebSites.Tests.ScenarioTests
 
                 webSitesClient.WebApps.CreateOrUpdate(resourceGroupName, webSiteName, new Site
                 {
-                    Name = webSiteName,
                     Location = location,
                     ServerFarmId = serverFarmId
                 });
@@ -179,7 +171,6 @@ namespace WebSites.Tests.ScenarioTests
                 webSitesClient.WebApps.CreateOrUpdateSlot(resourceGroupName, webSiteName, slot: slotName, siteEnvelope:
                     new Site
                     {
-                        Name = webSiteName + "/" + slotName,
                         Location = location,
                         ServerFarmId = serverFarmId
                     });

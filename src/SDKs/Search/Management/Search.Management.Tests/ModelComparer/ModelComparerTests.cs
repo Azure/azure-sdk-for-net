@@ -80,13 +80,17 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEqual(maybePi, maybeE, new ModelComparer<double?>());
             Assert.NotEqual(maybeTrue, maybeFalse, new ModelComparer<bool?>());
 
+#pragma warning disable xUnit2003 // Do not use equality check to test for null value
             Assert.NotEqual(null, maybeSeven, new ModelComparer<int?>());
             Assert.NotEqual(null, maybePi, new ModelComparer<double?>());
             Assert.NotEqual(null, maybeTrue, new ModelComparer<bool?>());
+#pragma warning restore xUnit2003 // Do not use equality check to test for null value
 
+#pragma warning disable xUnit2000 // Literal or constant should be the first argument to Assert.NotEqual
             Assert.NotEqual(maybeSeven, null, new ModelComparer<int?>());
             Assert.NotEqual(maybePi, null, new ModelComparer<double?>());
             Assert.NotEqual(maybeTrue, null, new ModelComparer<bool?>());
+#pragma warning restore xUnit2000 // Literal or constant should be the first argument to Assert.NotEqual
         }
 
         [Fact]

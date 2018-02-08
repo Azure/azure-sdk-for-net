@@ -15,8 +15,8 @@ namespace IotHub.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Azure.Management.IotHub;
     using Microsoft.Azure.Management.IotHub.Models;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using IotHub.Tests.Helpers;
 
     using Xunit;
@@ -183,8 +183,6 @@ namespace IotHub.Tests.ScenarioTests
                 createIotHubDescription);
         }
 
-
-
         protected IotHubDescription UpdateIotHub(ResourceGroup resourceGroup, IotHubDescription iotHubDescription, string iotHubName)
         {
             return this.iotHubClient.IotHubResource.CreateOrUpdate(
@@ -200,6 +198,32 @@ namespace IotHub.Tests.ScenarioTests
                 {
                     Location = IotHubTestUtilities.DefaultLocation
                 });
+        }
+
+        protected CertificateDescription CreateCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string certificateBodyDescriptionContent)
+        {
+            var createCertificateBodyDescription = new CertificateBodyDescription(certificateBodyDescriptionContent);
+
+            return this.iotHubClient.Certificates.CreateOrUpdate(
+                resourceGroup.Name,
+                iotHubName,
+                certificateName,
+                createCertificateBodyDescription);
+        }
+
+        protected CertificateListDescription GetCertificates(ResourceGroup resourceGroup, string iotHubName)
+        {
+            return this.iotHubClient.Certificates.ListByIotHub(resourceGroup.Name, iotHubName);
+        }
+
+        protected CertificateDescription GetCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName)
+        {
+            return this.iotHubClient.Certificates.Get(resourceGroup.Name, iotHubName, certificateName);
+        }
+
+        protected void DeleteCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string Etag)
+        {
+            this.iotHubClient.Certificates.Delete(resourceGroup.Name, iotHubName, certificateName, Etag);
         }
     }
 }

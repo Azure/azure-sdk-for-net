@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using System;
@@ -17,9 +18,13 @@ namespace Sql.Tests
         public void TestGetAndListFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestGetAndListFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create Firewall Rules
                 //
                 Dictionary<string, FirewallRule> rules = new Dictionary<string, FirewallRule>();
@@ -54,19 +59,21 @@ namespace Sql.Tests
                 {
                     SqlManagementTestUtilities.ValidateFirewallRule(rule.Value, listResponse.Single(r => r.Name == rule.Key), rule.Key);
                 }
-            });
+            }
         }
 
         [Fact]
-        public void TestCreateAndDropFirewallRule()
+        public void TestCreateUpdateDropFirewallRule()
         {
-            string testPrefix = "firewallrulecrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateUpdateDropFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create and validate Firewall Rule
                 //
-                string firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                string firewallRuleName = SqlManagementTestUtilities.GenerateName();
 
                 FirewallRule toCreate = new FirewallRule()
                 {
@@ -78,7 +85,7 @@ namespace Sql.Tests
 
                 // Create and validate Firewall Rule
                 //
-                firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                firewallRuleName = SqlManagementTestUtilities.GenerateName();
                 toCreate = new FirewallRule()
                 {
                     StartIpAddress = "1.1.1.1",
@@ -89,7 +96,7 @@ namespace Sql.Tests
 
                 // Create and validate Firewall Rule
                 //
-                firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
+                firewallRuleName = SqlManagementTestUtilities.GenerateName();
                 toCreate = new FirewallRule()
                 {
                     StartIpAddress = "0.0.0.0",
@@ -101,16 +108,20 @@ namespace Sql.Tests
                 sqlClient.FirewallRules.Delete(resourceGroup.Name, server.Name, fr1.Name);
                 sqlClient.FirewallRules.Delete(resourceGroup.Name, server.Name, fr2.Name);
                 sqlClient.FirewallRules.Delete(resourceGroup.Name, server.Name, fr3.Name);
-            });
+            }
         }
 
         [Fact]
         public void TestCreateAndUpdateFirewallRule()
         {
             string testPrefix = "firewallrulecrudtest-";
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, "TestCreateAndUpdateFirewallRule", testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
                 // Create Firewall Rule and Validate
                 //
                 string firewallRuleName = SqlManagementTestUtilities.GenerateName(testPrefix);
@@ -131,7 +142,7 @@ namespace Sql.Tests
                 };
                 fr1 = sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, firewallRuleName, toCreate);
                 SqlManagementTestUtilities.ValidateFirewallRule(toCreate, fr1, firewallRuleName);
-            });
+            }
         }
     }
 }

@@ -13,6 +13,190 @@ namespace Networks.Tests
 
     public class TestHelper
     {
+        public static ExpressRouteCircuit CreateDefaultExpressRouteCircuit(string resourceGroupName, string circuitName, string location,
+            NetworkManagementClient nrpClient)
+        {
+            ExpressRouteCircuitSku sku = new ExpressRouteCircuitSku
+            {
+                Name = "Premium_MeteredData",
+                Tier = "Premium",
+                Family = "MeteredData"
+            };
+
+            ExpressRouteCircuitServiceProviderProperties provider = new ExpressRouteCircuitServiceProviderProperties
+            {
+                BandwidthInMbps = Convert.ToInt32(ExpressRouteTests.Circuit_BW),
+                PeeringLocation = ExpressRouteTests.Circuit_Location,
+                ServiceProviderName = ExpressRouteTests.Circuit_Provider
+            };
+
+            var circuit = new ExpressRouteCircuit()
+            {
+                Location = location,
+                Tags = new Dictionary<string, string>()
+                    {
+                       {"key","value"}
+                    } ,
+                Sku = sku,
+                ServiceProviderProperties = provider
+            };
+
+            // Put circuit
+            var circuitResponse = nrpClient.ExpressRouteCircuits.CreateOrUpdate(resourceGroupName, circuitName, circuit);
+            Assert.Equal("Succeeded", circuitResponse.ProvisioningState);
+            var getCircuitResponse = nrpClient.ExpressRouteCircuits.Get(resourceGroupName, circuitName);
+
+            return getCircuitResponse;
+        }
+
+        public static ExpressRouteCircuit UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName,
+            NetworkManagementClient nrpClient)
+        {
+                var peering = new ExpressRouteCircuitPeering()
+                {
+                    Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
+                    PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
+                    PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
+                    VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
+                    PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
+                    SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix,
+                    MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
+                    {
+                        AdvertisedPublicPrefixes = new List<string>
+                    {
+                        ExpressRouteTests.MS_PublicPrefix
+                    },
+                        LegacyMode = Convert.ToInt32(true)
+                    },
+                };
+
+            var peerResponse = nrpClient.ExpressRouteCircuitPeerings.CreateOrUpdate(resourceGroupName, circuitName, 
+                ExpressRouteTests.Peering_Microsoft, peering);
+            Assert.Equal("Succeeded", peerResponse.ProvisioningState);
+            var getCircuitResponse = nrpClient.ExpressRouteCircuits.Get(resourceGroupName, circuitName);
+
+            return getCircuitResponse;
+        }
+
+        public static ExpressRouteCircuit UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(string resourceGroupName, string circuitName,
+            NetworkManagementClient nrpClient)
+        {
+            var ipv6Peering = new Ipv6ExpressRouteCircuitPeeringConfig()
+            {
+                PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix_V6,
+                SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix_V6,
+                MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
+                {
+                    AdvertisedPublicPrefixes = new List<string>
+                    {
+                        ExpressRouteTests.MS_PublicPrefix_V6
+                    },
+                    LegacyMode = Convert.ToInt32(true)
+                },
+            };
+
+            var peering = new ExpressRouteCircuitPeering()
+            {
+                Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
+                PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
+                PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
+                VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
+                Ipv6PeeringConfig = ipv6Peering
+            };
+
+            var peerResponse = nrpClient.ExpressRouteCircuitPeerings.CreateOrUpdate(resourceGroupName, circuitName,
+                ExpressRouteTests.Peering_Microsoft, peering);
+            Assert.Equal("Succeeded", peerResponse.ProvisioningState);
+            var getCircuitResponse = nrpClient.ExpressRouteCircuits.Get(resourceGroupName, circuitName);
+
+            return getCircuitResponse;
+        }
+
+        public static ExpressRouteCircuit UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(string resourceGroupName, string circuitName, RouteFilter filter,
+            NetworkManagementClient nrpClient)
+        {
+
+            var peering = new ExpressRouteCircuitPeering()
+            {
+                Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
+                PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
+                PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
+                PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
+                SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix,
+                VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
+                MicrosoftPeeringConfig = new ExpressRouteCircuitPeeringConfig()
+                {
+                    AdvertisedPublicPrefixes = new List<string>
+                    {
+                        ExpressRouteTests.MS_PublicPrefix
+                    },
+                    LegacyMode = Convert.ToInt32(true)
+                },
+                RouteFilter = filter
+            };
+
+            var peerResponse = nrpClient.ExpressRouteCircuitPeerings.CreateOrUpdate(resourceGroupName, circuitName,
+                ExpressRouteTests.Peering_Microsoft, peering);
+            Assert.Equal("Succeeded", peerResponse.ProvisioningState);
+            var getCircuitResponse = nrpClient.ExpressRouteCircuits.Get(resourceGroupName, circuitName);
+
+            return getCircuitResponse;
+        }
+
+
+        public static RouteFilter CreateDefaultRouteFilter(string resourceGroupName, string filterName, string location, 
+            NetworkManagementClient nrpClient, bool containsRule = false)
+        {
+            var filter = new RouteFilter()
+            {
+                Location = location,
+                Tags = new Dictionary<string, string>()
+                    {
+                       {"key","value"}
+                    }
+            };
+
+            if (containsRule)
+            {
+                var rule = new RouteFilterRule()
+                {
+                    Name = "test",
+                    Access = ExpressRouteTests.Filter_Access,
+                    Communities = new List<string> { ExpressRouteTests.Filter_Commmunity },
+                    Location = location
+                };
+
+                var rules = new List<RouteFilterRule>();
+                rules.Add(rule);
+                filter.Rules = rules;                
+            }
+
+            // Put route filter 
+            var filterResponse = nrpClient.RouteFilters.CreateOrUpdate(resourceGroupName, filterName, filter);
+            Assert.Equal("Succeeded", filterResponse.ProvisioningState);
+            var getFilterResponse = nrpClient.RouteFilters.Get(resourceGroupName, filterName);
+
+            return getFilterResponse;
+        }
+
+        public static RouteFilter CreateDefaultRouteFilterRule(string resourceGroupName, string filterName, string ruleName, string location,
+            NetworkManagementClient nrpClient)
+        {
+            var rule = new RouteFilterRule()
+            {
+                Access = ExpressRouteTests.Filter_Access,
+                Communities = new List<string> { ExpressRouteTests.Filter_Commmunity },
+                Location = location
+            };                      
+
+            // Put route filter rule
+            var ruleResponse = nrpClient.RouteFilterRules.CreateOrUpdate(resourceGroupName, filterName, ruleName, rule);
+            Assert.Equal("Succeeded", ruleResponse.ProvisioningState);
+            var getFilterResponse = nrpClient.RouteFilters.Get(resourceGroupName, filterName);
+
+            return getFilterResponse;
+        }
+
         public static PublicIPAddress CreateDefaultPublicIpAddress(string name, string resourceGroupName, string domainNameLabel, string location,
             NetworkManagementClient nrpClient)
         {

@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using Microsoft.Rest.ClientRuntime.Azure.Properties;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 namespace Microsoft.Rest.Azure
 {
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using Microsoft.Rest.ClientRuntime.Azure.Properties;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using System;
     /// <summary>
     /// Defines long running operation polling state.
     /// </summary>
@@ -18,6 +18,21 @@ namespace Microsoft.Rest.Azure
     /// <typeparam name="THeader">Type of resource header.</typeparam>
     internal class PollingState<TBody, THeader> where TBody : class where THeader : class
     {
+#if DEBUG
+        const int TEST_MIN_DELAY_SECONDS = 0;
+        const int DEFAULT_MIN_DELAY_SECONDS = 0;
+        const int DEFAULT_MAX_DELAY_SECONDS = 40;
+#else
+        // Delay values are in seconds
+        const int TEST_MIN_DELAY_SECONDS = 0;
+        const int DEFAULT_MIN_DELAY_SECONDS = 10;
+        const int DEFAULT_MAX_DELAY_SECONDS = 600;
+#endif
+
+        private int _retryAfterInSeconds;
+        private int _clientLongRunningOperationRetryTimeout;
+
+
         /// <summary>
         /// Initializes an instance of PollingState.
         /// </summary>
@@ -25,7 +40,11 @@ namespace Microsoft.Rest.Azure
         /// <param name="retryTimeout">Default timeout.</param>
         public PollingState(HttpOperationResponse<TBody, THeader> response, int? retryTimeout)
         {
-            _retryTimeout = retryTimeout;
+            // Due to test/playback scenario, we prioritze retryTimeout set by Client (client.LongRunningOperationRetryTimeout property)
+            // So LROTimeoutsetbyClient needs to be set first before we set the generic RetryAfterInSeconds value
+
+            LROTimeoutSetByClient = retryTimeout.HasValue ? retryTimeout.Value : AzureAsyncOperation.DefaultDelay;
+            RetryAfterInSeconds = retryTimeout.HasValue ? retryTimeout.Value : AzureAsyncOperation.DefaultDelay;
             Response = response.Response;
             Request = response.Request;
             Resource = response.Body;
@@ -84,6 +103,8 @@ namespace Microsoft.Rest.Azure
 
         private string _status;
 
+        private CloudException _cloudException;
+
         /// <summary>
         /// Gets or sets polling status.
         /// </summary>
@@ -129,10 +150,28 @@ namespace Microsoft.Rest.Azure
                     {
                         AzureAsyncOperationHeaderLink = _response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
+                    //else
+                    //{
+                    //    AzureAsyncOperationHeaderLink = string.Empty;
+                    //}
 
                     if (_response.Headers.Contains("Location"))
                     {
                         LocationHeaderLink = _response.Headers.GetValues("Location").FirstOrDefault();
+                    }
+                    //else
+                    //{
+                    //    LocationHeaderLink = string.Empty;
+                    //}
+
+                    if (_response.Headers.Contains("Retry-After"))
+                    {
+                        string retryValue = _response.Headers.GetValues("Retry-After").FirstOrDefault();
+                        RetryAfterInSeconds = int.Parse(retryValue, CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        RetryAfterInSeconds = LROTimeoutSetByClient;
                     }
                 }
             }
@@ -158,27 +197,101 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         public THeader ResourceHeaders { get; set; }
 
-        private int? _retryTimeout;
+        /// <summary>
+        /// This timeout is set by client during client construction
+        /// This is useful to detect if we are running in test/playback mode
+        /// </summary>
+        private int LROTimeoutSetByClient
+        {
+            get
+            {
+                return _clientLongRunningOperationRetryTimeout;
+            }
+            set
+            {
+                _clientLongRunningOperationRetryTimeout = value;
+            }
+        }
 
         /// <summary>
         /// Gets long running operation delay in milliseconds.
         /// </summary>
+        [Obsolete("DelayInMilliseconds property will be deprecated in future releases. You should start using DelayBetweenPolling")]
         public int DelayInMilliseconds
         {
             get
             {
-                if (_retryTimeout != null)
-                {
-                    return _retryTimeout.Value * 1000;
-                }
-                if (Response != null && Response.Headers.Contains("Retry-After"))
-                {
-                    return int.Parse(Response.Headers.GetValues("Retry-After").FirstOrDefault(),
-                        CultureInfo.InvariantCulture) * 1000;
-                }
-                return AzureAsyncOperation.DefaultDelay * 1000;
+                return RetryAfterInSeconds * 1000;
             }
         }
+
+        /// <summary>
+        /// Long running operation polling delay
+        /// </summary>
+        public TimeSpan DelayBetweenPolling
+        {
+            get
+            {
+                return TimeSpan.FromSeconds(RetryAfterInSeconds);
+            }
+        }
+
+        /// <summary>
+        /// Initially this is initialized with LongRunningOperationRetryTimeout value
+        /// Verify min/max allowed value according to ARM spec (especially minimum value for throttling at ARM level)
+        /// We want this to be int value and not int? because this value will always have a default non-zero/non-null value
+        /// </summary>
+        internal int RetryAfterInSeconds
+        {
+            get
+            {
+                return _retryAfterInSeconds;
+            }
+
+            set
+            {
+                _retryAfterInSeconds = ValidateRetryAfterValue(value);
+            }
+        }
+
+
+        private int ValidateRetryAfterValue(int? currentValue)
+        {
+            if (currentValue.HasValue)
+            {
+                if (currentValue <= TEST_MIN_DELAY_SECONDS)
+                    currentValue = TEST_MIN_DELAY_SECONDS;
+                else if (currentValue < DEFAULT_MIN_DELAY_SECONDS)
+                    currentValue = DEFAULT_MIN_DELAY_SECONDS;
+                else if (currentValue > DEFAULT_MAX_DELAY_SECONDS)
+                    currentValue = DEFAULT_MAX_DELAY_SECONDS;
+
+                if (LROTimeoutSetByClient == TEST_MIN_DELAY_SECONDS)
+                {
+                    if(currentValue == LROTimeoutSetByClient)
+                    {
+                        currentValue = TEST_MIN_DELAY_SECONDS;
+                    }
+                }   
+            }
+            else
+            {
+                currentValue = AzureAsyncOperation.DefaultDelay;
+            }
+
+            return currentValue.Value;
+        }
+        
+        //internal int GetRetryAfterValueFromHeader(HttpResponseMessage responseMessage)
+        //{
+        //    int retryAfter = 0;
+        //    if (responseMessage != null && responseMessage.Headers.Contains("Retry-After"))
+        //    {
+        //        retryAfter = int.Parse(responseMessage.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+        //    }
+
+        //    return retryAfter;
+        //}
 
         /// <summary>
         /// Gets CloudException from current instance.  
@@ -187,13 +300,23 @@ namespace Microsoft.Rest.Azure
         {
             get
             {
-                return new CloudException(string.Format(CultureInfo.InvariantCulture, 
-                    Resources.LongRunningOperationFailed, Status))
+                if(_cloudException == null)
                 {
-                    Body = Error,
-                    Request = new HttpRequestMessageWrapper(Request, Request.Content.AsString()),
-                    Response = new HttpResponseMessageWrapper(Response, Response.Content.AsString())
-                };
+                    _cloudException = new CloudException(string.Format(CultureInfo.InvariantCulture,
+                                            Resources.LongRunningOperationFailed, Status))
+                    {
+                        Body = Error,
+                        Request = new HttpRequestMessageWrapper(Request, Request.Content.AsString()),
+                        Response = new HttpResponseMessageWrapper(Response, Response.Content.AsString())
+                    };
+                }
+
+                return _cloudException;
+            }
+
+            internal set
+            {
+                _cloudException = value;
             }
         }
 

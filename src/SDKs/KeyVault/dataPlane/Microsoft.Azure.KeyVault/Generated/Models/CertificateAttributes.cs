@@ -10,6 +10,7 @@ namespace Microsoft.Azure.KeyVault.Models
 {
     using Azure;
     using KeyVault;
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -31,10 +32,30 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="expires">Expiry date in UTC.</param>
         /// <param name="created">Creation time in UTC.</param>
         /// <param name="updated">Last updated time in UTC.</param>
-        public CertificateAttributes(bool? enabled = default(bool?), System.DateTime? notBefore = default(System.DateTime?), System.DateTime? expires = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?))
+        /// <param name="recoveryLevel">Reflects the deletion recovery level
+        /// currently in effect for certificates in the current vault. If it
+        /// contains 'Purgeable', the certificate can be permanently deleted by
+        /// a privileged user; otherwise, only the system can purge the
+        /// certificate, at the end of the retention interval. Possible values
+        /// include: 'Purgeable', 'Recoverable+Purgeable', 'Recoverable',
+        /// 'Recoverable+ProtectedSubscription'</param>
+        public CertificateAttributes(bool? enabled = default(bool?), System.DateTime? notBefore = default(System.DateTime?), System.DateTime? expires = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string recoveryLevel = default(string))
             : base(enabled, notBefore, expires, created, updated)
         {
+            RecoveryLevel = recoveryLevel;
         }
+
+        /// <summary>
+        /// Gets reflects the deletion recovery level currently in effect for
+        /// certificates in the current vault. If it contains 'Purgeable', the
+        /// certificate can be permanently deleted by a privileged user;
+        /// otherwise, only the system can purge the certificate, at the end of
+        /// the retention interval. Possible values include: 'Purgeable',
+        /// 'Recoverable+Purgeable', 'Recoverable',
+        /// 'Recoverable+ProtectedSubscription'
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryLevel")]
+        public string RecoveryLevel { get; protected set; }
 
     }
 }

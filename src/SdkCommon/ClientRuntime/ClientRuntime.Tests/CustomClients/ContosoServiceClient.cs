@@ -14,10 +14,11 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
     /// </summary>
     public class ContosoServiceClient : ServiceClient<ContosoServiceClient>
     {
+        const int defaultDelaySeconds = 3;
         /// <summary>
         /// Initializes with default contosomessage handler
         /// </summary>
-        public ContosoServiceClient():base()
+        public ContosoServiceClient() : base()
         {
             HttpClient = new HttpClient(new ContosoMessageHandler());
         }
@@ -28,7 +29,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
         /// <param name="overRideDefaultHandler"></param>
         public ContosoServiceClient(bool overRideDefaultHandler)
         {
-            if(overRideDefaultHandler)
+            if (overRideDefaultHandler)
             {
                 HttpClient = new HttpClient(new DelayedHandler("Delayed User Provided HttpClient after initialization"));
             }
@@ -42,12 +43,12 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
         /// Constructor that accepts HttpClient
         /// </summary>
         /// <param name="httpClient"></param>
-        public ContosoServiceClient(HttpClient httpClient) : base (httpClient)
+        public ContosoServiceClient(HttpClient httpClient, bool disposeHttpClient = true) : base(httpClient, disposeHttpClient)
         {
 
         }
 
-        public ContosoServiceClient(HttpClientHandler rootHandler, DelegatingHandler[] handlers) 
+        public ContosoServiceClient(HttpClientHandler rootHandler, DelegatingHandler[] handlers)
             : base(rootHandler, handlers)
         { }
 
@@ -62,6 +63,11 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
             {
                 return DoStuff(content);
             }).Unwrap().GetAwaiter().GetResult();
+        }
+
+        public async Task<HttpResponseMessage> DoAsyncWork(string content = null)
+        {
+            return await DoStuff(content, TimeSpan.FromSeconds(defaultDelaySeconds));
         }
 
         /// <summary>
@@ -89,8 +95,14 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
 
             // Set Headers
             _httpRequest.Headers.Add("x-ms-version", "2013-11-01");
-            
+
             return await this.HttpClient.SendAsync(_httpRequest, new CancellationToken()).ConfigureAwait(false);
+        }
+
+        private async Task<HttpResponseMessage> DoStuff(string content = null, TimeSpan delayTask = new TimeSpan())
+        {
+            await Task.Delay(delayTask);
+            return await DoStuff(content);
         }
     }
     
@@ -120,14 +132,19 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
     }
 
     /// <summary>
-    /// Yet another delegating handler for tests    
+    /// Yet another delegating handler for tests.
+    /// Delays the response by 5 seconds (by default)
     /// </summary>
     public class DelayedHandler : DelegatingHandler
     {
+        const int DEFAULT_DELAY_SECONDS = 2;
+        int _delaySeconds;
+
         string _handlerData;
         private DelayedHandler() : base()
         {
             InnerHandler = new HttpClientHandler();
+            _delaySeconds = DEFAULT_DELAY_SECONDS;
         }
 
         public DelayedHandler(string handlerData)
@@ -136,11 +153,18 @@ namespace Microsoft.Rest.ClientRuntime.Tests.CustomClients
             _handlerData = handlerData;
         }
 
+        public DelayedHandler(string handlerData, TimeSpan delay) : this()
+        {
+            _delaySeconds = delay.Seconds;
+            _handlerData = handlerData;
+        }
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             StringContent contosoContent = new StringContent(_handlerData);
             HttpResponseMessage response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             response.Content = contosoContent;
+            await Task.Delay(new TimeSpan(0, 0, _delaySeconds));
             return await Task.Run(() => response);
         }
     }

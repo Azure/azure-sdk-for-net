@@ -13,6 +13,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 {
     public class ODataTests
     {
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void DefaultODataQueryTest()
         {
@@ -29,6 +32,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(expected, result);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void ParenthesisAreIgnoredInExpression()
         {
@@ -36,6 +42,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("foo eq 'bar' and foo eq 'foo' or Val lt 20", result);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void NullParametersAreIgnoredInTheBeginningOfExpression()
         {
@@ -44,6 +53,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("Val eq 10", result);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void NullParametersAreIgnoredInTheMiddleOfExpression()
         {
@@ -51,6 +63,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("foo eq 'bar' or Val eq 10", result);
         }
 
+        /// <summary>
+        /// Test
+        /// </summary>
         [Fact]
         public void NullParametersAreIgnoredInTheEndOfExpression()
         {

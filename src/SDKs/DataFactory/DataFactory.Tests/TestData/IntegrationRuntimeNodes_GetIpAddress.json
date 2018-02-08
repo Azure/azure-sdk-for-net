@@ -1,0 +1,22 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "nodeName": "Node_1",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Tue, 14 Nov 2017 03:29:46 GMT",
+        "x-ms-request-id": "6ba794e4-da5a-4760-afa8-1c68a2c9f487",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "body": {
+        "ipAddress": "***"
+      }
+    }
+  }
+}

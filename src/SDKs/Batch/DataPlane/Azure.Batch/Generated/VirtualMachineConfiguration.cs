@@ -24,36 +24,54 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<ContainerConfiguration> ContainerConfigurationProperty;
+            public readonly PropertyAccessor<IList<DataDisk>> DataDisksProperty;
             public readonly PropertyAccessor<ImageReference> ImageReferenceProperty;
+            public readonly PropertyAccessor<string> LicenseTypeProperty;
             public readonly PropertyAccessor<string> NodeAgentSkuIdProperty;
             public readonly PropertyAccessor<OSDisk> OSDiskProperty;
             public readonly PropertyAccessor<WindowsConfiguration> WindowsConfigurationProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>("ImageReference", BindingAccess.Read | BindingAccess.Write);
-                this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>("NodeAgentSkuId", BindingAccess.Read | BindingAccess.Write);
-                this.OSDiskProperty = this.CreatePropertyAccessor<OSDisk>("OSDisk", BindingAccess.Read | BindingAccess.Write);
-                this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>("WindowsConfiguration", BindingAccess.Read | BindingAccess.Write);
+                this.ContainerConfigurationProperty = this.CreatePropertyAccessor<ContainerConfiguration>(nameof(ContainerConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.DataDisksProperty = this.CreatePropertyAccessor<IList<DataDisk>>(nameof(DataDisks), BindingAccess.Read | BindingAccess.Write);
+                this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>(nameof(ImageReference), BindingAccess.Read | BindingAccess.Write);
+                this.LicenseTypeProperty = this.CreatePropertyAccessor<string>(nameof(LicenseType), BindingAccess.Read | BindingAccess.Write);
+                this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>(nameof(NodeAgentSkuId), BindingAccess.Read | BindingAccess.Write);
+                this.OSDiskProperty = this.CreatePropertyAccessor<OSDisk>(nameof(OSDisk), BindingAccess.Read | BindingAccess.Write);
+                this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>(nameof(WindowsConfiguration), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.VirtualMachineConfiguration protocolObject) : base(BindingState.Bound)
             {
+                this.ContainerConfigurationProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerConfiguration, o => new ContainerConfiguration(o)),
+                    nameof(ContainerConfiguration),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.DataDisksProperty = this.CreatePropertyAccessor(
+                    DataDisk.ConvertFromProtocolCollection(protocolObject.DataDisks),
+                    nameof(DataDisks),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.ImageReferenceProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ImageReference, o => new ImageReference(o)),
-                    "ImageReference",
+                    nameof(ImageReference),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.LicenseTypeProperty = this.CreatePropertyAccessor(
+                    protocolObject.LicenseType,
+                    nameof(LicenseType),
                     BindingAccess.Read | BindingAccess.Write);
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor(
                     protocolObject.NodeAgentSKUId,
-                    "NodeAgentSkuId",
+                    nameof(NodeAgentSkuId),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OSDiskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.OsDisk, o => new OSDisk(o)),
-                    "OSDisk",
+                    nameof(OSDisk),
                     BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.WindowsConfiguration, o => new WindowsConfiguration(o)),
-                    "WindowsConfiguration",
+                    nameof(WindowsConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -65,22 +83,15 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineConfiguration"/> class.
         /// </summary>
+        /// <param name='imageReference'>A reference to the Azure Virtual Machines Marketplace Image or the custom Virtual Machine Image to use.</param>
         /// <param name='nodeAgentSkuId'>The SKU of Batch Node Agent to be provisioned on the compute node.</param>
-        /// <param name='imageReference'>A reference to the Azure Virtual Machines Marketplace image to use.</param>
-        /// <param name='osDisk'>A reference to the OS disk image to use.</param>
-        /// <param name='windowsConfiguration'>Windows operating system settings on the virtual machine. This property must not be specified if the ImageReference 
-        /// property specifies a Linux OS image.</param>
         public VirtualMachineConfiguration(
-            string nodeAgentSkuId,
-            ImageReference imageReference = default(ImageReference),
-            OSDisk osDisk = default(OSDisk),
-            WindowsConfiguration windowsConfiguration = default(WindowsConfiguration))
+            ImageReference imageReference,
+            string nodeAgentSkuId)
         {
             this.propertyContainer = new PropertyContainer();
-            this.NodeAgentSkuId = nodeAgentSkuId;
             this.ImageReference = imageReference;
-            this.OSDisk = osDisk;
-            this.WindowsConfiguration = windowsConfiguration;
+            this.NodeAgentSkuId = nodeAgentSkuId;
         }
 
         internal VirtualMachineConfiguration(Models.VirtualMachineConfiguration protocolObject)
@@ -93,15 +104,58 @@ namespace Microsoft.Azure.Batch
         #region VirtualMachineConfiguration
 
         /// <summary>
-        /// Gets or sets a reference to the Azure Virtual Machines Marketplace image to use.
+        /// Gets or sets the container configuration for the pool.
         /// </summary>
         /// <remarks>
-        /// This property and <see cref="OSDisk"/> are mutually exclusive and one of the properties must be specified.
+        /// If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks 
+        /// and job manager tasks run on this pool must specify <see cref="TaskContainerSettings" />, and all other tasks 
+        /// may specify it.
         /// </remarks>
+        public ContainerConfiguration ContainerConfiguration
+        {
+            get { return this.propertyContainer.ContainerConfigurationProperty.Value; }
+            set { this.propertyContainer.ContainerConfigurationProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the configuration for data disks attached to the Comptue Nodes in the pool.
+        /// </summary>
+        /// <remarks>
+        /// This property must be specified if the Compute Nodes in the pool need to have empty data disks attached to them. 
+        /// This cannot be updated.
+        /// </remarks>
+        public IList<DataDisk> DataDisks
+        {
+            get { return this.propertyContainer.DataDisksProperty.Value; }
+            set
+            {
+                this.propertyContainer.DataDisksProperty.Value = ConcurrentChangeTrackedModifiableList<DataDisk>.TransformEnumerableToConcurrentModifiableList(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a reference to the Azure Virtual Machines Marketplace Image or the custom Virtual Machine Image 
+        /// to use.
+        /// </summary>
         public ImageReference ImageReference
         {
             get { return this.propertyContainer.ImageReferenceProperty.Value; }
             set { this.propertyContainer.ImageReferenceProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the type of on-premises license to be used when deploying the operating system.
+        /// </summary>
+        /// <remarks>
+        /// This only applies to images that contain the Windows operating system, and should only be used when you hold 
+        /// valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount 
+        /// is applied. Values are: 'Windows_Server' - The on-premises license is for Windows Server. 'Windows_Client' - 
+        /// The on-premises license is for Windows Client.
+        /// </remarks>
+        public string LicenseType
+        {
+            get { return this.propertyContainer.LicenseTypeProperty.Value; }
+            set { this.propertyContainer.LicenseTypeProperty.Value = value; }
         }
 
         /// <summary>
@@ -119,13 +173,8 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets or sets a reference to the OS disk image to use.
+        /// Gets or sets settings for the operating system disk of the Virtual Machine.
         /// </summary>
-        /// <remarks>
-        /// This property can be specified only if the Batch account was created with its poolAllocationMode property set 
-        /// to 'UserSubscription'. This property and <see cref="ImageReference"/> are mutually exclusive and one of the properties 
-        /// must be specified.
-        /// </remarks>
         public OSDisk OSDisk
         {
             get { return this.propertyContainer.OSDiskProperty.Value; }
@@ -168,7 +217,10 @@ namespace Microsoft.Azure.Batch
         {
             Models.VirtualMachineConfiguration result = new Models.VirtualMachineConfiguration()
             {
+                ContainerConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerConfiguration, (o) => o.GetTransportObject()),
+                DataDisks = UtilitiesInternal.ConvertToProtocolCollection(this.DataDisks),
                 ImageReference = UtilitiesInternal.CreateObjectWithNullCheck(this.ImageReference, (o) => o.GetTransportObject()),
+                LicenseType = this.LicenseType,
                 NodeAgentSKUId = this.NodeAgentSkuId,
                 OsDisk = UtilitiesInternal.CreateObjectWithNullCheck(this.OSDisk, (o) => o.GetTransportObject()),
                 WindowsConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.WindowsConfiguration, (o) => o.GetTransportObject()),

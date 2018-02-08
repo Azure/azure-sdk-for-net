@@ -27,19 +27,46 @@ namespace Batch.Tests.ScenarioTests
             string methodName = "")
         {
             MockContext context = MockContext.Start(className, methodName);
-            Initialize(context);
+            this.Location = FindLocation(context);
 
+            this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
+            this.BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
             return context;
         }
 
-        private void Initialize(MockContext context)
+        private static string FindLocation(MockContext context)
         {
-            this.ResourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
-            this.BatchManagementClient = context.GetServiceClient<BatchManagementClient>();
+            var resourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
+            Provider provider = resourceManagementClient.Providers.Get("Microsoft.Batch");
+            IList <string> locations = provider.ResourceTypes.First(resType => resType.ResourceType == "batchAccounts").Locations;
+            return locations.First(location => location == "East US");
+        }
 
-            Provider provider = this.ResourceManagementClient.Providers.Get("Microsoft.Batch");
-            IList<string> locations = provider.ResourceTypes.Where((resType) => resType.ResourceType == "batchAccounts").First().Locations;
-            this.Location = locations.DefaultIfEmpty("westus").First();
+        // Can be used to find a region to test against, but probably shouldn't record tests that use this as it will leave your subscription account details in the 
+        // logs
+        private static string FindLocationWithQuotaCheck(MockContext context)
+        {
+            var resourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
+            var batchManagementClient = context.GetServiceClient<BatchManagementClient>();
+
+            Provider provider = resourceManagementClient.Providers.Get("Microsoft.Batch");
+            IEnumerable<string> locations = provider.ResourceTypes.First(resType => resType.ResourceType == "batchAccounts").Locations.DefaultIfEmpty("westus");
+
+            var locationQuotaInUse = batchManagementClient.BatchAccount.List().GroupBy(acct => acct.Location).ToDictionary(a => a.Key, x => x.Count());
+            
+            foreach(var location in locations)
+            {
+                var transformedLocation = location.Replace(" ", "").ToLower();
+                var quotas = batchManagementClient.Location.GetQuotas(location);
+                int accountsInUse;
+                locationQuotaInUse.TryGetValue(transformedLocation, out accountsInUse);
+                if (quotas.AccountQuota - accountsInUse > 0)
+                {
+                    return location;
+                }
+            }
+
+            throw new ArgumentException("No location found that satisfies quota requirements");
         }
     }
 }

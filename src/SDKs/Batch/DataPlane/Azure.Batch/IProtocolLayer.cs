@@ -65,6 +65,8 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationResponse<Models.CloudJob, Models.JobGetHeaders>> GetJob(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
+        Task<AzureOperationResponse<Models.TaskCounts, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken);
+
         Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId, 
             int? priority,

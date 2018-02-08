@@ -40,6 +40,11 @@ namespace Microsoft.Rest
         private bool _disposed;
 
         /// <summary>
+        /// Flag to track if provided httpClient needs to disposed
+        /// </summary>
+        private bool _disposeHttpClient;
+
+        /// <summary>
         /// Field used for ClientVersion property
         /// </summary>
         private string _clientVersion;
@@ -245,13 +250,15 @@ namespace Microsoft.Rest
         /// <summary>
         /// Initializes a new instance of the ServiceClient class.
         /// </summary>
-        /// <param name="httpClient">HttpClient</param>
+        /// <param name="httpClient">HttpClient to be used</param>
+        /// <param name="disposeHttpClient">true: Will dispose the supplied httpClient on calling Dispose(). False: will not dispose</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Reliability",
             "CA2000:Dispose objects before losing scope",
             Justification = "The created objects should be disposed on caller's side")]
-        protected ServiceClient(HttpClient httpClient)
+        protected ServiceClient(HttpClient httpClient, bool disposeHttpClient = true)
         {
+            _disposeHttpClient = disposeHttpClient;
             InitializeHttpClient(httpClient, null);
         }
         
@@ -373,12 +380,17 @@ namespace Microsoft.Rest
                 _disposed = true;
 
                 // Dispose the client
-                HttpClient.Dispose();
-                HttpClient = null;
+                if(_disposeHttpClient)
+                {
+                    HttpClient.Dispose();
+                    HttpClient = null;
+                }                
+                
                 FirstMessageHandler = null;
                 HttpClientHandler = null;
             }
         }
+        
 
         /// <summary>
         /// Initializes HttpClient using HttpClientHandler.

@@ -7,9 +7,8 @@ using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Rest;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
@@ -19,38 +18,42 @@ namespace Compute.Tests.DiskRPTests
     public class DiskRPTestsBase : VMTestBase
     {
         protected const string DiskNamePrefix = "diskrp";
-        private static string DiskRPLocation = "westus";
+        private string DiskRPLocation = ComputeManagementTestUtilities.DefaultLocation.ToLower();
 
         #region Execution
-        protected void Disk_CRUD_Execute(DiskCreateOption diskCreateOption, int? diskSizeGB = null)
+        protected void Disk_CRUD_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
 
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk = GenerateDefaultDisk(diskCreateOption, diskSizeGB);
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones);
 
                 try
                 {
                     // **********
                     // SETUP
                     // **********
-                    // Create resource group
-                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    // Create resource group, unless create option is import in which case resource group will be created with vm
+                    if (diskCreateOption != DiskCreateOption.Import)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
 
                     // **********
                     // TEST
                     // **********
                     // Put
                     Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
-                    Validate(disk, diskOut);
+                    Validate(disk, diskOut, DiskRPLocation);
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
-                    Validate(disk, diskOut);
+                    Validate(disk, diskOut, DiskRPLocation);
 
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
@@ -58,18 +61,22 @@ namespace Compute.Tests.DiskRPTests
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
-                    Validate(disk, diskOut);
+                    Validate(disk, diskOut, DiskRPLocation);
 
                     // Patch
-                    const string tagKey = "tageKey";
-                    var updatedisk = new DiskUpdate();
-                    updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
-                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
-                    Validate(disk, diskOut);
+                    // TODO: Bug 9865640 - DiskRP doesn't follow patch semantics for zones: skip this for zones
+                    if (zones == null)
+                    {
+                        const string tagKey = "tageKey";
+                        var updatedisk = new DiskUpdate();
+                        updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+                        diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                        Validate(disk, diskOut, DiskRPLocation);
+                    }
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
-                    Validate(disk, diskOut);
+                    Validate(disk, diskOut, DiskRPLocation);
 
                     // End disk access
                     m_CrpClient.Disks.RevokeAccess(rgName, diskName);
@@ -96,17 +103,18 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Snapshot_CRUD_Execute(DiskCreateOption diskCreateOption, int? diskSizeGB = null)
+        protected void Snapshot_CRUD_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
 
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 var snapshotName = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk sourceDisk = GenerateDefaultDisk(diskCreateOption, diskSizeGB);
+                Disk sourceDisk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB);
 
                 try
                 {
@@ -118,7 +126,7 @@ namespace Compute.Tests.DiskRPTests
 
                     // Put disk
                     Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, sourceDisk);
-                    Validate(sourceDisk, diskOut);
+                    Validate(sourceDisk, diskOut, DiskRPLocation);
 
                     // Generate snapshot using disk info
                     Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id);
@@ -178,9 +186,9 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Disk_List_Execute(DiskCreateOption diskCreateOption, int? diskSizeGB = null)
+        protected void Disk_List_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 EnsureClientsInitialized(context);
 
@@ -189,17 +197,20 @@ namespace Compute.Tests.DiskRPTests
                 var rgName2 = TestUtilities.GenerateName(TestPrefix);
                 var diskName1 = TestUtilities.GenerateName(DiskNamePrefix);
                 var diskName2 = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk1 = GenerateDefaultDisk(diskCreateOption, diskSizeGB);
-                Disk disk2 = GenerateDefaultDisk(diskCreateOption, diskSizeGB);
+                Disk disk1 = GenerateDefaultDisk(diskCreateOption, rgName1, diskSizeGB);
+                Disk disk2 = GenerateDefaultDisk(diskCreateOption, rgName2, diskSizeGB);
 
                 try
                 {
                     // **********
                     // SETUP
                     // **********
-                    // Create resource groups
-                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName1, new ResourceGroup {Location = DiskRPLocation});
-                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName2, new ResourceGroup {Location = DiskRPLocation});
+                    // Create resource groups, unless create option is import in which case resource group will be created with vm
+                    if (diskCreateOption != DiskCreateOption.Import)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName1, new ResourceGroup { Location = DiskRPLocation });
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName2, new ResourceGroup { Location = DiskRPLocation });
+                    }
 
                     // Put 4 disks, 2 in each resource group
                     m_CrpClient.Disks.CreateOrUpdate(rgName1, diskName1, disk1);
@@ -238,9 +249,9 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
-        protected void Snapshot_List_Execute(DiskCreateOption diskCreateOption, int? diskSizeGB = null)
+        protected void Snapshot_List_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
                 EnsureClientsInitialized(context);
 
@@ -251,8 +262,8 @@ namespace Compute.Tests.DiskRPTests
                 var diskName2 = TestUtilities.GenerateName(DiskNamePrefix);
                 var snapshotName1 = TestUtilities.GenerateName(DiskNamePrefix);
                 var snapshotName2 = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk1 = GenerateDefaultDisk(diskCreateOption, diskSizeGB);
-                Disk disk2 = GenerateDefaultDisk(diskCreateOption, diskSizeGB);
+                Disk disk1 = GenerateDefaultDisk(diskCreateOption, rgName1, diskSizeGB);
+                Disk disk2 = GenerateDefaultDisk(diskCreateOption, rgName2, diskSizeGB);
 
                 try
                 {
@@ -317,19 +328,58 @@ namespace Compute.Tests.DiskRPTests
         #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
-        protected Disk GenerateDefaultDisk(DiskCreateOption diskCreateOption, int? diskSizeGB = null)
+        protected Disk GenerateDefaultDisk(DiskCreateOption diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null)
         {
-            Disk disk = GenerateBaseDisk(diskCreateOption);
+            Disk disk;
 
             switch (diskCreateOption)
             {
                 case DiskCreateOption.Empty:
+                    disk = GenerateBaseDisk(diskCreateOption);
                     disk.DiskSizeGB = diskSizeGB;
+                    disk.Zones = zones;
+                    break;
+                case DiskCreateOption.Import:
+                    disk = GenerateImportDisk(diskCreateOption, rgName);
+                    disk.DiskSizeGB = diskSizeGB;
+                    disk.Zones = zones;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("diskCreateOption", diskCreateOption, "Unsupported option provided.");
             }
 
+            return disk;
+        }
+
+        /// <summary>
+        /// Generates a disk used when the DiskCreateOption is Import
+        /// </summary>
+        /// <returns></returns>
+        private Disk GenerateImportDisk(DiskCreateOption diskCreateOption, string rgName)
+        {
+            // Create a VM, so we can use its OS disk for creating the image
+            string storageAccountName = ComputeManagementTestUtilities.GenerateName(DiskNamePrefix);
+            string asName = ComputeManagementTestUtilities.GenerateName("as");
+            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+            VirtualMachine inputVM = null;
+
+            // Create Storage Account
+            var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+            // Create the VM, whose OS disk will be used in creating the image
+            var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM);
+            var listResponse = m_CrpClient.VirtualMachines.ListAll();
+            Assert.True(listResponse.Count() >= 1);
+            string[] id = createdVM.Id.Split('/');
+            string subscription = id[2];
+            var uri = createdVM.StorageProfile.OsDisk.Vhd.Uri;
+
+            m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+            m_CrpClient.VirtualMachines.Delete(rgName, createdVM.Name);
+
+            Disk disk = GenerateBaseDisk(diskCreateOption);
+            disk.CreationData.SourceUri = uri;
+            disk.CreationData.StorageAccountId = "subscriptions/" + subscription + "/resourceGroups/" + rgName + "/providers/Microsoft.Storage/storageAccounts/" + storageAccountName;
             return disk;
         }
 
@@ -339,11 +389,13 @@ namespace Compute.Tests.DiskRPTests
             {
                 Location = DiskRPLocation,
             };
-
-            disk.AccountType =  StorageAccountTypes.StandardLRS;
+            disk.Sku = new DiskSku()
+            {
+                Name = StorageAccountTypes.StandardLRS
+            };
             disk.CreationData = new CreationData()
             {
-                CreateOption = diskCreateOption
+                CreateOption = diskCreateOption,
             };
             disk.OsType = OperatingSystemTypes.Windows;
 
@@ -362,12 +414,14 @@ namespace Compute.Tests.DiskRPTests
             {
                 Location = DiskRPLocation
             };
-
-            snapshot.AccountType = StorageAccountTypes.StandardLRS;
+            snapshot.Sku = new DiskSku()
+            {
+                Name = StorageAccountTypes.StandardLRS
+            };
             snapshot.CreationData = new CreationData()
             {
                 CreateOption = DiskCreateOption.Copy,
-                SourceUri = sourceDiskId,
+                SourceResourceId = sourceDiskId,
             };
 
             return snapshot;
@@ -376,31 +430,37 @@ namespace Compute.Tests.DiskRPTests
 
         #region Validation
 
-        private void Validate(Snapshot snapshotExpexted, Snapshot snapshotActual, bool diskHydrated = false)
+        private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false)
         {
             // snapshot resource
             Assert.Equal(string.Format("{0}/{1}", ApiConstants.ResourceProviderNamespace, "snapshots"), snapshotActual.Type);
             Assert.NotNull(snapshotActual.Name);
             Assert.Equal(DiskRPLocation, snapshotActual.Location);
 
-            // disk properties
-            Assert.Equal(snapshotExpexted.AccountType, snapshotActual.AccountType);
+            // snapshot properties
+            Assert.Equal(snapshotExpected.Sku.Name, snapshotActual.Sku.Name);
+            Assert.True(snapshotActual.ManagedBy == null);
             Assert.NotNull(snapshotActual.ProvisioningState);
-            Assert.Equal(snapshotExpexted.OsType, snapshotActual.OsType);
+            if (snapshotExpected.OsType != null) //these properties are not mandatory for the client
+            {
+                Assert.Equal(snapshotExpected.OsType, snapshotActual.OsType);
+            }
 
-            if (snapshotExpexted.DiskSizeGB != null)
+            if (snapshotExpected.DiskSizeGB != null)
             {
                 // Disk resizing
-                Assert.Equal(snapshotExpexted.DiskSizeGB, snapshotActual.DiskSizeGB);
+                Assert.Equal(snapshotExpected.DiskSizeGB, snapshotActual.DiskSizeGB);
             }
 
 
             // Creation data
-            CreationData creationDataExp = snapshotExpexted.CreationData;
+            CreationData creationDataExp = snapshotExpected.CreationData;
             CreationData creationDataAct = snapshotActual.CreationData;
 
             Assert.Equal(creationDataExp.CreateOption, creationDataAct.CreateOption);
             Assert.Equal(creationDataExp.SourceUri, creationDataAct.SourceUri);
+            Assert.Equal(creationDataExp.SourceResourceId, creationDataAct.SourceResourceId);
+            Assert.Equal(creationDataExp.StorageAccountId, creationDataAct.StorageAccountId);
 
             // Image reference
             ImageDiskReference imgRefExp = creationDataExp.ImageReference;
@@ -414,34 +474,35 @@ namespace Compute.Tests.DiskRPTests
             {
                 Assert.Null(imgRefAct);
             }
-
         }
 
-        private void Validate(Disk diskExpexted, Disk diskActual, bool diskHydrated = false)
+        protected void Validate(Disk diskExpected, Disk diskActual, string location, bool diskHydrated = false)
         {
             // disk resource
             Assert.Equal(string.Format("{0}/{1}", ApiConstants.ResourceProviderNamespace, "disks"), diskActual.Type);
             Assert.NotNull(diskActual.Name);
-            Assert.Equal(DiskRPLocation, diskActual.Location);
+            Assert.Equal(location, diskActual.Location);
 
             // disk properties
-            Assert.Equal(diskExpexted.AccountType, diskActual.AccountType);
+            Assert.Equal(diskExpected.Sku.Name, diskActual.Sku.Name);
             Assert.NotNull(diskActual.ProvisioningState);
-            Assert.Equal(diskExpexted.OsType, diskActual.OsType);
+            Assert.Equal(diskExpected.OsType, diskActual.OsType);
 
-            if (diskExpexted.DiskSizeGB != null)
+            if (diskExpected.DiskSizeGB != null)
             {
                 // Disk resizing
-                Assert.Equal(diskExpexted.DiskSizeGB, diskActual.DiskSizeGB);
+                Assert.Equal(diskExpected.DiskSizeGB, diskActual.DiskSizeGB);
             }
 
 
             // Creation data
-            CreationData creationDataExp = diskExpexted.CreationData;
+            CreationData creationDataExp = diskExpected.CreationData;
             CreationData creationDataAct = diskActual.CreationData;
 
             Assert.Equal(creationDataExp.CreateOption, creationDataAct.CreateOption);
             Assert.Equal(creationDataExp.SourceUri, creationDataAct.SourceUri);
+            Assert.Equal(creationDataExp.SourceResourceId, creationDataAct.SourceResourceId);
+            Assert.Equal(creationDataExp.StorageAccountId, creationDataAct.StorageAccountId);
 
             // Image reference
             ImageDiskReference imgRefExp = creationDataExp.ImageReference;
@@ -454,6 +515,22 @@ namespace Compute.Tests.DiskRPTests
             else
             {
                 Assert.Null(imgRefAct);
+            }
+
+            // Zones
+            IList<string> zonesExp = diskExpected.Zones;
+            IList<string> zonesAct = diskActual.Zones;
+            if (zonesExp != null)
+            {
+                Assert.Equal(zonesExp.Count, zonesAct.Count);
+                foreach (string zone in zonesExp)
+                {
+                    Assert.Contains(zone, zonesAct, StringComparer.OrdinalIgnoreCase);
+                }
+            }
+            else
+            {
+                Assert.Null(zonesAct);
             }
         }
         #endregion

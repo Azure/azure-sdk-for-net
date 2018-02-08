@@ -5,6 +5,8 @@
 namespace Microsoft.Azure.Search
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Search.Models;
@@ -34,8 +36,13 @@ namespace Microsoft.Azure.Search
         {
             // Argument checking is done by the SearchIndexClient constructor. Note that HttpClient can't be shared in
             // case it has already been used (SearchIndexClient will attempt to set the Timeout property on it).
-            var indexClient = new SearchIndexClient(Client.SearchServiceName, indexName, Client.SearchCredentials);
-            indexClient.SearchDnsSuffix = Client.SearchDnsSuffix;
+            var rootHandler = Client.HttpMessageHandlers.OfType<HttpClientHandler>().SingleOrDefault();
+            var indexClient =
+                new SearchIndexClient(Client.SearchServiceName, indexName, Client.SearchCredentials, rootHandler)
+                {
+                    SearchDnsSuffix = Client.SearchDnsSuffix
+                };
+
             indexClient.HttpClient.Timeout = Client.HttpClient.Timeout;
             return indexClient;
         }

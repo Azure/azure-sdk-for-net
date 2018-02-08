@@ -6,13 +6,13 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
     using System.Collections.Generic;
     using System.Linq;
     using global::TrafficManager.Tests.Helpers;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.TrafficManager.Models;
     using Microsoft.Azure.Management.TrafficManager.Testing.Helpers;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
-    public class ProfileScenarioTests : TestBase
+    public partial class ProfileScenarioTests : TestBase
     {
         [Fact]
         public void CrudProfileFullCycle()
@@ -141,6 +141,61 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 Assert.True(5 <= listResponse.Count());
 
                 this.DeleteResourceGroup(context, resourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void NameAvailabilityTest_NameAvailable()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
+
+                string relativeName = TestUtilities.GenerateName();
+
+                var parameters = new CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+                {
+                    Name = relativeName,
+                    Type = "microsoft.network/trafficmanagerprofiles"
+                };
+
+                TrafficManagerNameAvailability response = trafficManagerClient.Profiles.CheckTrafficManagerRelativeDnsNameAvailability(parameters);
+
+                Assert.True(response.NameAvailable);
+            }
+        }
+
+        [Fact]
+        public void NameAvailabilityTest_NameNotAvailable()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
+
+                string relativeName = TestUtilities.GenerateName();
+                string profileName = TestUtilities.GenerateName();
+
+                string resourceGroupName = TestUtilities.GenerateName();
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
+
+                Profile profile = TrafficManagerHelper.GenerateDefaultEmptyProfile(profileName);
+                profile.DnsConfig.RelativeName = relativeName;
+
+                // Create the profile
+                trafficManagerClient.Profiles.CreateOrUpdate(
+                    resourceGroup.Name,
+                    profileName,
+                    parameters: profile);
+
+                var parameters = new CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+                {
+                    Name = relativeName,
+                    Type = "microsoft.network/trafficmanagerprofiles"
+                };
+
+                TrafficManagerNameAvailability response = trafficManagerClient.Profiles.CheckTrafficManagerRelativeDnsNameAvailability(parameters);
+
+                Assert.False(response.NameAvailable);
             }
         }
     }

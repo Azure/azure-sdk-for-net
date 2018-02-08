@@ -32,20 +32,29 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="expires">Expiry date in UTC.</param>
         /// <param name="created">Creation time in UTC.</param>
         /// <param name="updated">Last updated time in UTC.</param>
-        /// <param name="purgeDisabled">Reflects the purge protection status of
-        /// the key. If true, purge is disabled, false, otherwise.</param>
-        public KeyAttributes(bool? enabled = default(bool?), System.DateTime? notBefore = default(System.DateTime?), System.DateTime? expires = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), bool purgeDisabled = default(bool))
+        /// <param name="recoveryLevel">Reflects the deletion recovery level
+        /// currently in effect for keys in the current vault. If it contains
+        /// 'Purgeable' the key can be permanently deleted by a privileged
+        /// user; otherwise, only the system can purge the key, at the end of
+        /// the retention interval. Possible values include: 'Purgeable',
+        /// 'Recoverable+Purgeable', 'Recoverable',
+        /// 'Recoverable+ProtectedSubscription'</param>
+        public KeyAttributes(bool? enabled = default(bool?), System.DateTime? notBefore = default(System.DateTime?), System.DateTime? expires = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string recoveryLevel = default(string))
             : base(enabled, notBefore, expires, created, updated)
         {
-            PurgeDisabled = purgeDisabled;
+            RecoveryLevel = recoveryLevel;
         }
 
         /// <summary>
-        /// Gets reflects the purge protection status of the key. If true,
-        /// purge is disabled, false, otherwise.
+        /// Gets reflects the deletion recovery level currently in effect for
+        /// keys in the current vault. If it contains 'Purgeable' the key can
+        /// be permanently deleted by a privileged user; otherwise, only the
+        /// system can purge the key, at the end of the retention interval.
+        /// Possible values include: 'Purgeable', 'Recoverable+Purgeable',
+        /// 'Recoverable', 'Recoverable+ProtectedSubscription'
         /// </summary>
-        [JsonProperty(PropertyName = "purgeDisabled")]
-        public bool PurgeDisabled { get; protected set; }
+        [JsonProperty(PropertyName = "recoveryLevel")]
+        public string RecoveryLevel { get; protected set; }
 
     }
 }

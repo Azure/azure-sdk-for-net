@@ -24,17 +24,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class NodeAgentSku : IPropertyMetadata
     {
-        private readonly string id;
-        private readonly Common.OSType? osType;
-        private readonly IReadOnlyList<ImageReference> verifiedImageReferences;
-
         #region Constructors
 
         internal NodeAgentSku(Models.NodeAgentSku protocolObject)
         {
-            this.id = protocolObject.Id;
-            this.osType = UtilitiesInternal.MapNullableEnum<Models.OSType, Common.OSType>(protocolObject.OsType);
-            this.verifiedImageReferences = ImageReference.ConvertFromProtocolCollectionReadOnly(protocolObject.VerifiedImageReferences);
+            this.Id = protocolObject.Id;
+            this.OSType = UtilitiesInternal.MapNullableEnum<Models.OSType, Common.OSType>(protocolObject.OsType);
+            this.VerifiedImageReferences = ImageReference.ConvertFromProtocolCollectionReadOnly(protocolObject.VerifiedImageReferences);
         }
 
         #endregion Constructors
@@ -44,27 +40,20 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the id of the node agent SKU.
         /// </summary>
-        public string Id
-        {
-            get { return this.id; }
-        }
+        public string Id { get; }
 
         /// <summary>
         /// Gets the type of operating system compatible with the node agent SKU.
         /// </summary>
-        public Common.OSType? OSType
-        {
-            get { return this.osType; }
-        }
+        public Common.OSType? OSType { get; }
 
         /// <summary>
-        /// Gets the list of images verified to be compatible with this node agent SKU. This collection is not exhaustive 
-        /// (the node agent may be compatible with other images).
+        /// Gets the list of Azure Marketplace images verified to be compatible with this node agent SKU.
         /// </summary>
-        public IReadOnlyList<ImageReference> VerifiedImageReferences
-        {
-            get { return this.verifiedImageReferences; }
-        }
+        /// <remarks>
+        /// This collection is not exhaustive (the node agent may be compatible with other images).
+        /// </remarks>
+        public IReadOnlyList<ImageReference> VerifiedImageReferences { get; }
 
         #endregion // NodeAgentSku
 

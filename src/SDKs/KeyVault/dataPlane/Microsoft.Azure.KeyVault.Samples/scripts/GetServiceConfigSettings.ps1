@@ -101,7 +101,9 @@ Write-Host "Setting access policy"
 Set-AzureRmKeyVaultAccessPolicy -VaultName $vaultName `
 	-ObjectId $servicePrincipal.Id `
 	-PermissionsToKeys all `
-	-PermissionsToSecrets all
+	-PermissionsToSecrets all `
+	-PermissionsToCertificate all `
+	-PermissionsToStorage all
 
 # **********************************************************************************************
 # Create a storage account if needed

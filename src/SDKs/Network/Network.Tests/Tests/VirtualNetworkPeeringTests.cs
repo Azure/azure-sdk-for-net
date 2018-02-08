@@ -20,7 +20,7 @@ namespace Networks.Tests
 
     public class VirtualNetworkPeeringTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkPeeringApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

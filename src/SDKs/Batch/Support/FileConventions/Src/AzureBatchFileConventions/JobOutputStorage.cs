@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             string relativePath,
             CancellationToken cancellationToken = default(CancellationToken)
         )
-            => await SaveAsyncImpl(kind, new DirectoryInfo(Environment.CurrentDirectory), relativePath, cancellationToken);
+            => await SaveAsyncImpl(kind, new DirectoryInfo(Directory.GetCurrentDirectory()), relativePath, cancellationToken);
 
         internal async Task SaveAsyncImpl(
             JobOutputKind kind,

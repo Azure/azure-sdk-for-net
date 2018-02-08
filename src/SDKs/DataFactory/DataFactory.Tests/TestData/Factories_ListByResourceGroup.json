@@ -1,0 +1,50 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:33:56 GMT",
+        "x-ms-request-id": "85e53e59-e56e-4878-a1ff-aaa27f52b466",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14992",
+        "x-ms-correlation-request-id": "471c3c55-1293-47bf-9662-33bb20f4b75c"
+      },
+      "body": {
+        "value": [
+          {
+            "name": "exampleFactoryName",
+            "tags": {
+              "exampleTag": "exampleValue"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2017-09-13T17:33:54.0294655Z",
+              "version": "2017-09-01-preview"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+            "type": "Microsoft.DataFactory/factories",
+            "location": "East US"
+          },
+          {
+            "name": "yitzhangFactoryV2",
+            "tags": {
+              "exampleTag": "exampleValue"
+            },
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2017-05-08T21:03:32.7865115Z",
+              "version": "2017-03-01-preview"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/yitzhangFactoryV2",
+            "type": "Microsoft.DataFactory/factories",
+            "location": "East US"
+          }
+        ]
+      }
+    }
+  }
+}

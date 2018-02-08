@@ -1,25 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
-using Microsoft.Rest;
-using Microsoft.Rest.Serialization;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     public partial class RecoveryServicesBackupClient
     {
-        partial void CustomInitialize()
+        public bool DisableDispose { get; set; } = false;
+
+        public void SetHttpClient(HttpClient client)
         {
-            var iso8601TimeSpanConverter = DeserializationSettings.Converters.First(conv => conv is Iso8601TimeSpanConverter);
-            if (iso8601TimeSpanConverter != null)
+            HttpClient = client;
+        }
+
+        public new void Dispose()
+        {
+            if (!DisableDispose)
             {
-                DeserializationSettings.Converters.Remove(iso8601TimeSpanConverter);
+                base.Dispose();
             }
         }
     }

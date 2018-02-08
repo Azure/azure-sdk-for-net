@@ -6,6 +6,8 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
@@ -16,6 +18,8 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Storage.Tests.Helpers
@@ -35,6 +39,7 @@ namespace Storage.Tests.Helpers
 
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? null : "eastus2euap";
+        public static string DefaultRGLocation = IsTestTenant ? null : "eastus2";
         public static SkuName DefaultSkuName = SkuName.StandardGRS;
         public static Kind DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
@@ -55,6 +60,128 @@ namespace Storage.Tests.Helpers
                 ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
                 return resourcesClient;
             }
+        }
+
+        public static Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient GetKeyVaultManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient keyVaultMgmtClient;
+            if (IsTestTenant)
+            {
+                keyVaultMgmtClient = new Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient(new TokenCredentials("xyz"), GetHandler());
+                keyVaultMgmtClient.SubscriptionId = testSubscription;
+                keyVaultMgmtClient.BaseUri = testUri;
+            }
+            else
+            {
+                handler.IsPassThrough = true;
+                keyVaultMgmtClient = context.GetServiceClient<Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient>(handlers: handler);
+            }
+            return keyVaultMgmtClient;
+        }
+
+        public static string GetTanentId()
+        {
+            string tenantId = null;
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                HttpMockServer.Variables[ConnectionStringKeys.AADTenantKey] = environment.Tenant;
+                tenantId = environment.Tenant;
+            }
+            else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                tenantId = HttpMockServer.Variables[ConnectionStringKeys.AADTenantKey];
+            }
+            return tenantId;
+        }
+
+        public static string GetServicePrincipalId()
+        {
+            string servicePrincipalId = null;
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey] = environment.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.ServicePrincipalKey);
+                servicePrincipalId = HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey];
+            }
+            else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                servicePrincipalId = HttpMockServer.Variables[ConnectionStringKeys.ServicePrincipalKey];
+            }
+            return servicePrincipalId;
+        }
+
+        public static string GetServicePrincipalSecret()
+        {
+            string servicePrincipalSecret = null;
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                servicePrincipalSecret = environment.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.ServicePrincipalSecretKey);
+            }
+            else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                servicePrincipalSecret = "xyz";
+            }
+            return servicePrincipalSecret;
+        }
+
+        public static string GetServicePrincipalObjectId()
+        {
+            string servicePrincipalObjectId = null;
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var environment = TestEnvironmentFactory.GetTestEnvironment();
+                HttpMockServer.Variables[ConnectionStringKeys.AADClientIdKey] = environment.ConnectionString.KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.AADClientIdKey);
+                servicePrincipalObjectId = HttpMockServer.Variables[ConnectionStringKeys.AADClientIdKey];
+            }
+            else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+            {
+                servicePrincipalObjectId = HttpMockServer.Variables[ConnectionStringKeys.AADClientIdKey];
+            }
+            return servicePrincipalObjectId;
+        }
+
+        private class TestKeyVaultCredential : Microsoft.Azure.KeyVault.KeyVaultCredential
+        {
+            public TestKeyVaultCredential(Microsoft.Azure.KeyVault.KeyVaultClient.AuthenticationCallback authenticationCallback) : base(authenticationCallback)
+            {
+            }
+
+            public override Task ProcessHttpRequestAsync(HttpRequestMessage request,
+                CancellationToken cancellationToken)
+            {
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    return base.ProcessHttpRequestAsync(request, cancellationToken);
+                }
+                else
+                {
+                    return Task.Run(() => { return; });
+                }
+            }
+        }
+
+        public static async Task<string> GetAccessToken(string authority, string resource, string scope)
+        {
+            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
+            string authClientId = GetServicePrincipalId();
+            string authSecret = GetServicePrincipalSecret();
+            var clientCredential = new ClientCredential(authClientId, authSecret);
+            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
+            return result.AccessToken;
+        }
+
+        public static DelegatingHandler[] GetHandlers()
+        {
+            HttpMockServer server = HttpMockServer.CreateInstance();
+            return new DelegatingHandler[] { server };
+        }
+
+        public static Microsoft.Azure.KeyVault.KeyVaultClient CreateKeyVaultClient()
+        {
+            var myclient = new Microsoft.Azure.KeyVault.KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
+            return myclient;
         }
 
         public static StorageManagementClient GetStorageManagementClient(MockContext context, RecordedDelegatingHandler handler)
@@ -113,7 +240,7 @@ namespace Storage.Tests.Helpers
                     rgname,
                     new ResourceGroup
                     {
-                        Location = DefaultLocation
+                        Location = DefaultRGLocation
                     });
             }
 
@@ -149,7 +276,7 @@ namespace Storage.Tests.Helpers
             Assert.NotNull(account.PrimaryEndpoints);
             Assert.NotNull(account.PrimaryEndpoints.Blob);
 
-            if (account.Kind == Kind.Storage)
+            if (account.Kind == Kind.Storage || account.Kind == Kind.StorageV2)
             {
                 if (account.Sku.Name != SkuName.StandardZRS && account.Sku.Name != SkuName.PremiumLRS)
                 {

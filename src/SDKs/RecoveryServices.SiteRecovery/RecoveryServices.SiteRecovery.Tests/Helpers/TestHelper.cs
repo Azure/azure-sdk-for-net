@@ -10,9 +10,9 @@ using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Tests
+namespace RecoveryServices.SiteRecovery.Tests
 {
-    public class TestHelper: IDisposable
+    public class TestHelper : IDisposable
     {
         private const string resourceNamespace = "Microsoft.RecoveryServices";
         private const string resourceGroupName = "siterecoveryprod1";
@@ -26,6 +26,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Tests
             this.SiteRecoveryClient = this.GetSiteRecoveryClient(context);
             this.SiteRecoveryClient.ResourceGroupName = resourceGroupName;
             this.SiteRecoveryClient.ResourceName = vaultName;
+        }
+
+        public void Initialize(MockContext context, string rgName, string vault)
+        {
+            this.SiteRecoveryClient = this.GetSiteRecoveryClient(context);
+            this.SiteRecoveryClient.ResourceGroupName = rgName;
+            this.SiteRecoveryClient.ResourceName = vault;
         }
 
         public void Dispose()

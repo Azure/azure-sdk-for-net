@@ -19,12 +19,14 @@ using Microsoft.Rest;
 using Microsoft.Rest.Serialization;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using System.Xml;
 
 namespace Sample.Microsoft.HelloKeyVault
 {
     class Program
     {
         static KeyVaultClient keyVaultClient;
+        static KeyVaultClient userKeyVaultClient;
         static InputValidator inputValidator;
 
         static void Main(string[] args)
@@ -37,6 +39,8 @@ namespace Sample.Microsoft.HelloKeyVault
             string secretName = string.Empty;
             string certificateName = string.Empty;
             string certificateCreateName = string.Empty;
+            string storageAccountName = string.Empty;
+            string sasDefinitionName = string.Empty;
 
             inputValidator = new InputValidator(args);
 
@@ -45,12 +49,17 @@ namespace Sample.Microsoft.HelloKeyVault
 
             var clientId = ConfigurationManager.AppSettings["AuthClientId"];
             var cerificateThumbprint = ConfigurationManager.AppSettings["AuthCertThumbprint"];
+            var nativeClientId = "fc35ecf8-76f1-4e2c-a075-60d01dc4698f";
 
             var certificate = FindCertificateByThumbprint(cerificateThumbprint);
             var assertionCert = new ClientAssertionCertificate(clientId, certificate);
 
             keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback( 
-                   (authority, resource, scope) => GetAccessToken(authority, resource, scope, assertionCert)), 
+                   (authority, resource, scope) => GetAccessToken(authority, resource, scope, assertionCert)),
+                   new InjectHostHeaderHttpMessageHandler());
+
+            userKeyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(
+                   (authority, resource, scope) => GetUserAccessToken(authority, resource, nativeClientId)),
                    new InjectHostHeaderHttpMessageHandler());
 
             // SECURITY: DO NOT USE IN PRODUCTION CODE; FOR TEST PURPOSES ONLY
@@ -154,7 +163,52 @@ namespace Sample.Microsoft.HelloKeyVault
                             certificateBundle = DeleteCertificate(certificateName);
                             certificateBundle = DeleteCertificate(certificateCreateName);
                             break;
+
+                        case KeyOperationType.CREATE_STORAGE_ACCOUNT:
+                            CreateStorageAccount(out storageAccountName);
+                            break;
+
+                        case KeyOperationType.GET_STORAGE_ACCOUNT:
+                            GetStorageAccount(storageAccountName);
+                            break;
+
+                        case KeyOperationType.UPDATE_STORAGE_ACCOUNT:
+                            UpdateStorageAccount(storageAccountName);
+                            break;
+
+                        case KeyOperationType.LIST_STORAGE_ACCOUNT:
+                            ListStorageAccounts();
+                            break;
+
+                        case KeyOperationType.REGENERATE_STORAGE_ACCOUNT_KEY:
+                            RegenerateStorageAccountKey(storageAccountName);
+                            break;
+
+                        case KeyOperationType.CREATE_STORAGE_SAS_DEFINITION:
+                            CreateSasDefinition(storageAccountName, out sasDefinitionName);
+                            break;
+
+                        case KeyOperationType.GET_STORAGE_SAS_DEFINITION:
+                            GetSasDefinition(storageAccountName, sasDefinitionName);
+                            break;
+
+                        case KeyOperationType.UPDATE_STORAGE_SAS_DEFINITION:
+                            UpdateSasDefinition(storageAccountName, sasDefinitionName);
+                            break;
+
+                        case KeyOperationType.LIST_STORAGE_SAS_DEFINITION:
+                            ListSasDefinitions(storageAccountName);
+                            break;
+
+                        case KeyOperationType.DELETE_STORAGE_SAS_DEFINITION:
+                            DeleteSasDefinition(storageAccountName, sasDefinitionName);
+                            break;
+
+                        case KeyOperationType.DELETE_STORAGE_ACCOUNT:
+                            DeleteStorageAccount(storageAccountName);
+                            break;
                     }
+
                     successfulOperations.Add(operation);
                 }
                 catch (KeyVaultErrorException exception)
@@ -650,7 +704,7 @@ namespace Sample.Microsoft.HelloKeyVault
             // Create a self-signed certificate backed by a 2048 bit RSA key
             var policy = new CertificatePolicy
             {
-                IssuerReference = new IssuerReference
+                IssuerParameters = new IssuerParameters
                 {
                     Name = "Self",
                 },
@@ -879,6 +933,261 @@ namespace Sample.Microsoft.HelloKeyVault
         }
 
         /// <summary>
+        /// Creates a storage account.
+        /// </summary>
+        /// <returns> The created storage account. </returns>
+        private static StorageBundle CreateStorageAccount(out string storageAccountName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            storageAccountName = inputValidator.GetStorageAccountName();
+
+            var name = storageAccountName;
+            var armStorageResourceId = ConfigurationManager.AppSettings["ArmStorageAccountResourceId"];
+            var keyName = "key1";
+            var storageAccount = Task.Run(
+                () => userKeyVaultClient.SetStorageAccountAsync(vaultAddress, name, armStorageResourceId, keyName, false))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Created storage account:---------------");
+            PrintoutStorageAccount(storageAccount);
+
+            return storageAccount;
+        }
+
+        /// <summary>
+        /// Retrieves a storage account.
+        /// </summary>
+        /// <returns> Retrieved Storage account. </returns>
+        private static StorageBundle GetStorageAccount(string storageAccountName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+
+            var storageAccount = Task.Run(
+                () => userKeyVaultClient.GetStorageAccountAsync(vaultAddress, storageAccountName))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Retrieved storage account:---------------");
+            PrintoutStorageAccount(storageAccount);
+
+            return storageAccount;
+        }
+
+        /// <summary>
+        /// Updates a storage account.
+        /// </summary>
+        /// <returns> The updated storage account. </returns>
+        private static StorageBundle UpdateStorageAccount(string storageAccountName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+
+            var keyName = "key2";
+            var regenerationPeriod = XmlConvert.ToString(TimeSpan.FromDays(5));
+            var storageAccount = Task.Run(
+                () => userKeyVaultClient.UpdateStorageAccountAsync(vaultAddress, storageAccountName, keyName, false, regenerationPeriod))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Updated storage account:---------------");
+            PrintoutStorageAccount(storageAccount);
+
+            return storageAccount;
+        }
+
+        /// <summary>
+        /// Regenerates a storage account key.
+        /// </summary>
+        /// <returns> The updated storage account. </returns>
+        private static StorageBundle RegenerateStorageAccountKey(string storageAccountName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+
+            var keyName = "key1";
+            var storageAccount = Task.Run(
+                () => userKeyVaultClient.RegenerateStorageAccountKeyAsync(vaultAddress, storageAccountName, keyName))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Updated storage account:---------------");
+            PrintoutStorageAccount(storageAccount);
+
+            return storageAccount;
+        }
+
+        /// <summary>
+        /// Lists storage accounts in a vault
+        /// </summary>
+        private static void ListStorageAccounts()
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            var numStorageAccounts = 0;
+            var maxResults = 1;
+
+            Console.Out.WriteLine("List storage accounts:---------------");
+            var results = Task.Run(() => userKeyVaultClient.GetStorageAccountsAsync(vaultAddress, maxResults)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            if (results != null)
+            {
+                numStorageAccounts += results.Count();
+                foreach (var m in results)
+                    Console.Out.WriteLine("\t{0}", m.Identifier.Name);
+            }
+
+            while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
+            {
+                results = Task.Run(() => userKeyVaultClient.GetStorageAccountsNextAsync(results.NextPageLink)).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (results != null && results != null)
+                {
+                    numStorageAccounts += results.Count();
+                    foreach (var m in results)
+                        Console.Out.WriteLine("\t{0}", m.Identifier.Name);
+                }
+            }
+
+            Console.Out.WriteLine("\n\tNumber of storage accounts in the vault: {0}", numStorageAccounts);
+        }
+
+        /// <summary>
+        /// Deletes a storage account.
+        /// </summary>
+        /// <returns> Delteted Storage account. </returns>
+        private static StorageBundle DeleteStorageAccount(string storageAccountName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+
+            var storageAccount = Task.Run(
+                () => userKeyVaultClient.DeleteStorageAccountAsync(vaultAddress, storageAccountName))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Delted storage account:---------------");
+            PrintoutStorageAccount(storageAccount);
+
+            return storageAccount;
+        }
+
+        /// <summary>
+        /// Creates a storage sas definition.
+        /// </summary>
+        /// <returns> The created storage sas definition. </returns>
+        private static SasDefinitionBundle CreateSasDefinition(string storageAccountName, out string sasDefinitionName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            sasDefinitionName = inputValidator.GetSasDefinitionName();
+
+            var name = sasDefinitionName;
+            var fields = new Dictionary<string, string>() {
+                {"sasType", "account"},
+                {"signedProtocols", "https"},
+                {"signedServices", "bq"},
+                {"signedResourceTypes", "sco"},
+                {"signedPermissions", "rw"},
+                {"signedVersion", "2016-05-31"},
+                {"validityPeriod", "PT10H"}
+            };
+            var sasDefinition = Task.Run(
+                () => userKeyVaultClient.SetSasDefinitionAsync(vaultAddress, storageAccountName, name, fields))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Created storage sas definition:---------------");
+            PrintoutStorageSasDefinition(sasDefinition);
+
+            return sasDefinition;
+        }
+
+        /// <summary>
+        /// Retrieves a storage sas definition.
+        /// </summary>
+        /// <returns> Retrieved Storage sas definition. </returns>
+        private static SasDefinitionBundle GetSasDefinition(string storageAccountName, string sasDefinitionName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+
+            var sasDefinition = Task.Run(
+                () => userKeyVaultClient.GetSasDefinitionAsync(vaultAddress, storageAccountName, sasDefinitionName))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Retrieved storage sas definition:---------------");
+            PrintoutStorageSasDefinition(sasDefinition);
+
+            return sasDefinition;
+        }
+
+        /// <summary>
+        /// Updates a storage sas definition.
+        /// </summary>
+        /// <returns> The updated storage sas definition. </returns>
+        private static SasDefinitionBundle UpdateSasDefinition(string storageAccountName, string sasDefinitionName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+
+            var fields = new Dictionary<string, string>() {
+                {"sasType", "account"},
+                {"signedProtocols", "https"},
+                {"signedServices", "t"},
+                {"signedResourceTypes", "s"},
+                {"signedPermissions", "rl"},
+                {"signedVersion", "2016-05-31"},
+                {"validityPeriod", "P1D"}
+            };
+            var sasDefinition = Task.Run(
+                () => userKeyVaultClient.UpdateSasDefinitionAsync(vaultAddress, storageAccountName, sasDefinitionName, fields))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Updated storage sas definition:---------------");
+            PrintoutStorageSasDefinition(sasDefinition);
+
+            return sasDefinition;
+        }
+
+        /// <summary>
+        /// Lists storage sas definitions under given storage account in a vault.
+        /// </summary>
+        private static void ListSasDefinitions(string storageAccountName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+            var numSasDefinitions = 0;
+            var maxResults = 1;
+
+            Console.Out.WriteLine("List storage sas definitions:---------------");
+            var results = Task.Run(() => keyVaultClient.GetSasDefinitionsAsync(vaultAddress, storageAccountName, maxResults)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            if (results != null)
+            {
+                numSasDefinitions += results.Count();
+                foreach (var m in results)
+                    Console.Out.WriteLine("\t{0}", m.Identifier.Name);
+            }
+
+            while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
+            {
+                results = Task.Run(() => userKeyVaultClient.GetSasDefinitionsNextAsync(results.NextPageLink)).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (results != null && results != null)
+                {
+                    numSasDefinitions += results.Count();
+                    foreach (var m in results)
+                        Console.Out.WriteLine("\t{0}", m.Identifier.Name);
+                }
+            }
+
+            Console.Out.WriteLine("\n\tNumber of storage sas definitions in the vault: {0}", numSasDefinitions);
+        }
+
+        /// <summary>
+        /// Deletes a storage sas definition.
+        /// </summary>
+        /// <returns> Delteted Storage sas definition. </returns>
+        private static SasDefinitionBundle DeleteSasDefinition(string storageAccountName, string sasDefinitionName)
+        {
+            var vaultAddress = inputValidator.GetVaultAddress();
+
+            var sasDefinition = Task.Run(
+                () => keyVaultClient.DeleteSasDefinitionAsync(vaultAddress, storageAccountName, sasDefinitionName))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Console.Out.WriteLine("Delted storage sas definition:---------------");
+            PrintoutStorageSasDefinition(sasDefinition);
+
+            return sasDefinition;
+        }
+
+        /// <summary>
         /// Prints out key bundle values
         /// </summary>
         /// <param name="keyBundle"> key bundle </param>
@@ -963,6 +1272,37 @@ namespace Sample.Microsoft.HelloKeyVault
         }
 
         /// <summary>
+        /// Prints out Storage bundle values.
+        /// </summary>
+        /// <param name="storageBundle">Storage bundle.</param>
+        private static void PrintoutStorageAccount(StorageBundle storageBundle)
+        {
+            Console.Out.WriteLine("\n\tStorage Account ID: {0}", storageBundle.Id);
+            Console.Out.WriteLine("Arm Storage Account resource Id: {0}", storageBundle.ResourceId);
+            Console.Out.WriteLine("Storage Account active key name: {0}", storageBundle.ActiveKeyName);
+            Console.Out.WriteLine("Storage Account regeneration period: {0} days", XmlConvert.ToTimeSpan(storageBundle.RegenerationPeriod).TotalDays);
+            Console.Out.WriteLine("Storage Account Auto regeneration Enabled?: {0}", storageBundle.AutoRegenerateKey);
+            Console.Out.WriteLine("Storage Account attributes: \n\tIs enabled: {0}", storageBundle.Attributes.Enabled);
+
+            PrintoutTags(storageBundle.Tags);
+
+        }
+
+        /// <summary>
+        /// Prints out Storage sas definition bundle values.
+        /// </summary>
+        private static void PrintoutStorageSasDefinition(SasDefinitionBundle sasDefinitionBundle)
+        {
+            Console.Out.WriteLine("\n\tStorage Sas Definition ID: {0}", sasDefinitionBundle.Id);
+            Console.Out.WriteLine("Storage Sas token secret: {0}", sasDefinitionBundle.SecretId);
+            Console.Out.WriteLine("Storage Sas Definition parameters: {{ {0} }}", string.Join(", ", sasDefinitionBundle.Parameters.Select(kvp => kvp.Key + ":" + kvp.Value.ToString())));
+            Console.Out.WriteLine("Storage Sas Definition attributes: \n\tIs enabled: {0}", sasDefinitionBundle.Attributes.Enabled);
+
+            PrintoutTags(sasDefinitionBundle.Tags);
+
+        }
+
+        /// <summary>
         /// Prints out certificate operation values
         /// </summary>
         /// <param name="certificateBundle"> certificate bundle </param>
@@ -971,7 +1311,7 @@ namespace Sample.Microsoft.HelloKeyVault
             Console.Out.WriteLine("\n\tCertificate ID: {0}", certificateOperation.Id);
 
             Console.Out.WriteLine("Certificate Opeation: \n\tStatus: {0}\n\tStatus Detail: {1}\n\tTarget: {2}\n\tIssuer reference name: {3}",
-                certificateOperation.Status, certificateOperation.StatusDetails, certificateOperation.Target, certificateOperation.IssuerReference.Name);
+                certificateOperation.Status, certificateOperation.StatusDetails, certificateOperation.Target, certificateOperation.IssuerParameters.Name);
 
         }
 
@@ -987,6 +1327,20 @@ namespace Sample.Microsoft.HelloKeyVault
             var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
             var result = await context.AcquireTokenAsync(resource, assertionCert).ConfigureAwait(false);
 
+            return result.AccessToken;
+        }
+
+        /// <summary>
+        /// Gets the access token
+        /// </summary>
+        /// <param name="authority"> Authority </param>
+        /// <param name="resource"> Resource </param>
+        /// <param name="nativeClientId"> client Id </param>
+        /// <returns> token </returns>
+        public static async Task<string> GetUserAccessToken(string authority, string resource, string nativeClientId)
+        {
+            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
+            var result  = await context.AcquireTokenAsync(resource, nativeClientId, new UserCredential()).ConfigureAwait(false);
             return result.AccessToken;
         }
 

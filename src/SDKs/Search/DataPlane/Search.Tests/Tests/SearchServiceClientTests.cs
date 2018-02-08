@@ -5,10 +5,12 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
+    using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
 
@@ -75,6 +77,29 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void IndexClientHasSameHandlerPipelineAsSearchClient()
+        {
+            var testClientHandler = new HttpClientHandler();
+
+            var serviceClient =
+                new SearchServiceClient(
+                    "azs-test-service", 
+                    new SearchCredentials("abc"),
+                    testClientHandler,
+                    new FakeDelegatingHandler());
+
+            SearchIndexClient indexClient = (SearchIndexClient)serviceClient.Indexes.GetClient("test");
+
+            // Delegating handlers don't propagate to the index client because they can't be cloned, and
+            // therefore they can't be safely shared since the client constructors mutate each handler to
+            // set its inner handler.
+            Assert.Collection(
+                indexClient.HttpMessageHandlers,
+                h => Assert.IsType<RetryDelegatingHandler>(h),
+                h => Assert.Same(testClientHandler, h));
+        }
+
+        [Fact]
         public void CanGetAnIndexClientAfterUsingServiceClient()
         {
             Run(() =>
@@ -124,6 +149,11 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Throws<ArgumentNullException>(
                 "credentials",
                 () => new SearchServiceClient(searchServiceName, credentials: null, rootHandler: handler));
+        }
+
+        private class FakeDelegatingHandler : DelegatingHandler
+        {
+            // Do nothing.
         }
     }
 }

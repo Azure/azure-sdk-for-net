@@ -1,0 +1,84 @@
+## .NET SDK Packages
+
+Below are the packages maintained in this repository.
+
+### Management Libraries
+
+| Azure Management Library      | Package Name                                                | NuGet Download |
+| ----------------------------- | ----------------------------------------------------------- | -------------- |
+| Analysis Services             | `Microsoft.Azure.Management.Analysis`                       | [![Analysis Services](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Analysis.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Analysis) |
+| Authorization                 | `Microsoft.Azure.Management.Authorization`                  | [![Authorization](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Authorization.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Authorization) |
+| Automation                    | `Microsoft.Azure.Management.Auotmation`                     | [![Automation](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Automation.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Automation/) |
+| Batch                         | `Microsoft.Azure.Management.Batch`                          | [![Batch](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Batch.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Batch/) |
+| Billing                       | `Microsoft.Azure.Management.Billing`                        | [![Billing](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Billing.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Billing) |
+| Cdn                           | `Microsoft.Azure.Management.Cdn`                            | [![Cdn](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Cdn.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Cdn) |
+| Cognitive Services            | `Microsoft.Azure.Management.CognitiveServices`              | [![Cognitive Services](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.CognitiveServices.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.CognitiveServices) |
+| Compute                       | `Microsoft.Azure.Management.Compute`                        | [![Compute](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Compute.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Compute) |
+| Consumption                       | `Microsoft.Azure.Management.Consumption`                | [![Consumption](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Consumption.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Consumption) |
+| Container Registry            | `Microsoft.Azure.Management.ContainerRegistry`              | [![Container Registry](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.ContainerRegistry.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.ContainerRegistry) |
+| Customer Insights             | `Microsoft.Azure.Management.CustomerInsights`               | [![Customer Insights](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.CustomerInsights.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.CustomerInsights) |
+| Data Lake Analytics           | `Microsoft.Azure.Management.DataLakeAnalytics`              | [![Data Lake Analytics](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.DataLake.Analytics.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.Analytics) |
+| Data Lake Store               | `Microsoft.Azure.Management.DataLakeStore`                  | [![Data Lake Store](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.DataLake.Store.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.Store) |
+| DevTest Labs                  | `Microsoft.Azure.Management.DevTestLabs`                    | [![DevTest Labs](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.DevTestLabs.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.DevTestLabs) |
+| Dns                           | `Microsoft.Azure.Management.Dns`                            | [![Dns](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Dns.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Dns) |
+| Event Grid                    | `Microsoft.Azure.Management.EventGrid`                      | [![Event Grid](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.EventGrid.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.EventGrid) |
+| Event Hub                     | `Microsoft.Azure.Management.EventHub`                       | [![Event Hub](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.EventHub.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.EventHub) |
+| Insights                      | `Microsoft.Azure.Management.Insights`                       | [![Insights](https://img.shields.io/nuget/vpre/Microsoft.Azure.Insights.svg)](https://www.nuget.org/packages/Microsoft.Azure.Insights) |
+| Intune                        | `Microsoft.Azure.Management.Intune`                         | [![Intune](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Intune.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Intune) |
+| IoT Hub                       | `Microsoft.Azure.Management.IotHub`                         | [![IoT Hub](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.IotHub.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.IotHub) |
+| Key Vault                     | `Microsoft.Azure.Management.KeyVault`                       | [![Key Vault](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.KeyVault.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.KeyVault) |
+| Logic                         | `Microsoft.Azure.Management.Logic`                          | [![Logic](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Logic.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Logic) |
+| Machine Learning              | `Microsoft.Azure.Management.MachineLearning`                | [![Machine Learning](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.MachineLearning.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.MachineLearning) |
+| Machine Learning Compute      | `Microsoft.Azure.Management.MachineLearningCompute`         | [![Machine Learning Compute](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.MachineLearningCompute.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.MachineLearningCompute) |
+| Media                         | `Microsoft.Azure.Management.Media`                          | [![Media](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Media.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Media) |
+| Monitor                       | `Microsoft.Azure.Management.Monitor`                        | [![Monitor](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Monitor.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Monitor) |
+| Network                       | `Microsoft.Azure.Management.Network`                        | [![Network](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Network.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Network) |
+| Notification Hubs             | `Microsoft.Azure.Management.NotificationHubs`               | [![Notification Hubs](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.NotificationHubs.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.NotificationHubs) |
+| Operational Insights          | `Microsoft.Azure.Management.OperationalInsights`            | [![Operational Insights](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.OperationalInsights.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.OperationalInsights) |
+| Power BI Embedded             | `Microsoft.Azure.Management.PowerBIEmbedded`                | [![Power BI Embedded](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.PowerBIEmbedded.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.PowerBIEmbedded) |
+| RecoveryServices              | `Microsoft.Azure.Management.RecoveryServices`               | [![RecoveryServices](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.RecoveryServices.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.RecoveryServices) |
+| RecoveryServices.Backup       | `Microsoft.Azure.Management.RecoveryServices.Backup`        | [![RecoveryServices.Backup](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.RecoveryServices.Backup.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.RecoveryServices.Backup) |
+| RecoveryServices.SiteRecovery | `Microsoft.Azure.Management.RecoveryServices.SiteRecovery`  | [![RecoveryServices.SiteRecovery](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.RecoveryServices.SiteRecovery.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.RecoveryServices.SiteRecovery) |
+| Redis Cache                   | `Microsoft.Azure.Management.RedisCache`                     | [![Redis Cache](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Redis.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Redis) |
+| Relay                         | `Microsoft.Azure.Management.Relay`                          | [![Relay](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Relay.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Relay) |
+| Resources                     | `Microsoft.Azure.Management.ResourceManager`                | [![Resources](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.ResourceManager.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.ResourceManager) |
+| Scheduler                     | `Microsoft.Azure.Management.Scheduler`                      | [![Scheduler](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Scheduler.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Scheduler) |
+| Search                        | `Microsoft.Azure.Management.Search`                         | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Search.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Search) |
+| Server Management             | `Microsoft.Azure.Management.ServerManagement`               | [![Server Management](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.ServerManagement.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.ServerManagement) |
+| Service Bus                   | `Microsoft.Azure.Management.ServiceBus`                     | [![Service Bus](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.ServiceBus.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.ServiceBus) |
+| Service Fabric                | `Microsoft.Azure.Management.ServiceFabric`                  | [![Service Fabric](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.ServiceFabric.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.ServiceFabric) |
+| Sql                           | `Microsoft.Azure.Management.Sql`                            | [![Sql](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Sql.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Sql) |
+| Storage                       | `Microsoft.Azure.Management.Storage`                        | [![Storage](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Storage.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage) |
+| Stream Analytics              | `Microsoft.Azure.Management.StreamAnalytics`                | [![Stream Analytics](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.StreamAnalytics.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.StreamAnalytics) |
+| Traffic Manager               | `Microsoft.Azure.Management.TrafficManager`                 | [![Traffic Manager](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.TrafficManager.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.TrafficManager) |
+| Websites                      | `Microsoft.Azure.Management.Websites`                       | [![Websites](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Websites.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Websites) |
+
+### Data Plane Libraries
+
+| Azure Data Plane Library | Package Name                            | NuGet Download |
+| ------------------------ | --------------------------------------- | -------------- |
+| Batch                    | `Azure.Batch`                           | [![Search](https://img.shields.io/nuget/vpre/Azure.Batch.svg)](https://www.nuget.org/packages/Azure.Batch) |
+| Graph.RBAC               | `Microsoft.Azure.Graph.RBAC`            | [![Graph.RBAC](https://img.shields.io/nuget/vpre/Microsoft.Azure.Graph.RBAC.svg)](https://www.nuget.org/packages/Microsoft.Azure.Graph.RBAC) |
+| KeyVault                 | `Microsoft.Azure.KeyVault`              | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault) |
+| KeyVault Core            | `Microsoft.Azure.KeyVault.Core`         | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Core.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Core) |
+| KeyVault Cryptography    | `Microsoft.Azure.KeyVault.Cryptography` | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Cryptography.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Cryptography) |
+| KeyVault Extensions      | `Microsoft.Azure.KeyVault.Extensions`   | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Extensions.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Extensions) |
+| KeyVault WebKey          | `Microsoft.Azure.KeyVault.WebKey`       | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.WebKey.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.WebKey) |
+| Search                   | `Microsoft.Azure.Search`                | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Search.svg)](https://www.nuget.org/packages/Microsoft.Azure.Search) |
+
+### Common Libraries
+
+| Azure Common Library               | Package Name                                        | NuGet Download |
+| ---------------------------------- | --------------------------------------------------- | -------------- |
+| ClientRuntime                      | `Microsoft.Rest.ClientRuntime`                      | [![ClientRuntime](https://img.shields.io/nuget/vpre/Microsoft.Rest.ClientRuntime.svg)](https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime) |
+| ClientRuntime.Azure                | `Microsoft.Rest.ClientRuntime.Azure`                | [![ClientRuntime.Azure](https://img.shields.io/nuget/vpre/Microsoft.Rest.ClientRuntime.Azure.svg)](https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure) |
+| ClientRuntime.Azure.Authentication | `Microsoft.Rest.ClientRuntime.Azure.Authentication` | [![ClientRuntime.Azure.Authentication](https://img.shields.io/nuget/vpre/Microsoft.Rest.ClientRuntime.Azure.Authentication.svg)](https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure.Authentication) |
+| HttpRecorder                       | `Microsoft.Azure.Test.HttpRecorder`                 | [![HttpRecorder](https://img.shields.io/nuget/vpre/Microsoft.Azure.Test.HttpRecorder.svg)](https://www.nuget.org/packages/Microsoft.Azure.Test.HttpRecorder) |
+| TestFramework                      | `Microsoft.Rest.ClientRuntime.Azure.TestFramework`  | [![TestFramework](https://img.shields.io/nuget/vpre/Microsoft.Rest.ClientRuntime.Azure.TestFramework.svg)](https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure.TestFramework) |
+
+### Other Libraries
+
+| Library                  | Package Name                              | NuGet Download |
+| ------------------------ | ----------------------------------------- | -------------- |
+| Batch File Staging       | `Azure.Batch.FileStaging`                 | [![Search](https://img.shields.io/nuget/vpre/Azure.Batch.FileStaging.svg)](https://www.nuget.org/packages/Azure.Batch.FileStaging) |
+| Batch File Conventions   | `Microsoft.Azure.Batch.Conventions.Files` | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.Conventions.Files.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch.Conventions.Files) |

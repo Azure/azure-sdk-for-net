@@ -14,10 +14,17 @@
 
     public static class BatchRequestTemplateBuilder
     {
+        static void OnWorkspaceFailed(object sender, WorkspaceDiagnosticEventArgs e)
+        {
+            System.Console.WriteLine(e.Diagnostic.Message);
+        }
+
         public static async Task<IEnumerable<BatchRequestGroup>> GetBatchRequestTemplatesAsync(string projectFilePath)
         {
             using (MSBuildWorkspace workspace = MSBuildWorkspace.Create())
             {
+                workspace.WorkspaceFailed += OnWorkspaceFailed;
+                workspace.SkipUnrecognizedProjects = false;
                 Project p = await workspace.OpenProjectAsync(projectFilePath);
 
                 IDictionary<string, HashSet<MethodDeclarationSyntax>> methods = await GetOperationsMethods(p);

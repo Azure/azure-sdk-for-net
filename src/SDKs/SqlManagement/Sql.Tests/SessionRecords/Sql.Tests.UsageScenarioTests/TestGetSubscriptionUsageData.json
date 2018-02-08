@@ -1,0 +1,131 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmU3ZmU0YmQtOTBjNy00NTRlLThiYjYtZGM0NDY0OWYyN2IyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy93ZXN0dXMvdXNhZ2VzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3842aaba-ccd2-4922-938b-d4051ee08290"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Regional Server Quota for westus\",\r\n        \"currentValue\": 3.0,\r\n        \"limit\": 20.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/ServerQuota\",\r\n      \"name\": \"ServerQuota\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Free Database Count per Subscription for westus\",\r\n        \"currentValue\": 0.0,\r\n        \"limit\": 1.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/SubscriptionFreeDatabaseCount\",\r\n      \"name\": \"SubscriptionFreeDatabaseCount\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Free to Basic Database Upgrade count-down in westus\",\r\n        \"currentValue\": 365.0,\r\n        \"limit\": 365.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/SubscriptionFreeDatabaseDaysLeft\",\r\n      \"name\": \"SubscriptionFreeDatabaseDaysLeft\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Nov 2017 17:51:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "715c0e83-e51e-4428-8d05-6b8d05ee857c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "8f44bd38-5c38-43e3-91fd-d3382719dbc8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171102T175126Z:8f44bd38-5c38-43e3-91fd-d3382719dbc8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/ServerQuota?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmU3ZmU0YmQtOTBjNy00NTRlLThiYjYtZGM0NDY0OWYyN2IyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy93ZXN0dXMvdXNhZ2VzL1NlcnZlclF1b3RhP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ca058d6c-f3e3-4510-ab49-c98f13e961f1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Regional Server Quota for westus\",\r\n    \"currentValue\": 3.0,\r\n    \"limit\": 20.0,\r\n    \"unit\": \"Count\"\r\n  },\r\n  \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/ServerQuota\",\r\n  \"name\": \"ServerQuota\",\r\n  \"type\": \"Microsoft.Sql/locations/usages\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Nov 2017 17:51:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "374e917d-07e3-4576-b521-2a4d01c95bfe"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "7a13a25a-cf04-4010-8b84-de7a2844647e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20171102T175126Z:7a13a25a-cf04-4010-8b84-de7a2844647e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "2e7fe4bd-90c7-454e-8bb6-dc44649f27b2",
+    "DefaultLocation": "westus"
+  }
+}

@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+
+namespace BatchClientIntegrationTests
 {
     using System;
     using System.Collections;
@@ -13,8 +14,10 @@
     using Fixtures;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Common;
+    using IntegrationTestCommon;
     using IntegrationTestUtilities;
     using Microsoft.Azure.Batch.Protocol.BatchRequests;
+    using Microsoft.Azure.Batch.Auth;
     using Microsoft.Rest.Azure;
     using Xunit;
     using Xunit.Abstractions;
@@ -823,37 +826,130 @@
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
-        public void TestPoolCreatedOSDiskFailsWithExpectedError()
+        public void TestPoolCreatedOSDiskSucceeds()
         {
             Action test = () =>
             {
                 using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
                 {
-                    string poolId = "TestPoolCreatedWithOSDisk" + TestUtilities.GetMyName();
+                    string poolId = nameof(TestPoolCreatedOSDiskSucceeds) + TestUtilities.GetMyName();
                     const int targetDedicated = 0;
                     try
                     {
                         var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
-                        var imageUris = new List<string> { "https://example.test" };
 
                         //Create a pool
                         CloudPool pool = batchCli.PoolOperations.CreatePool(
                             poolId,
                             PoolFixture.VMSize,
                             new VirtualMachineConfiguration(
-                                imageDetails.NodeAgentSku.Id,
-                                osDisk: new OSDisk(imageUris)),
+                                imageDetails.ImageReference,
+                                imageDetails.NodeAgentSku.Id)
+                            {
+                                OSDisk = new OSDisk(CachingType.None),
+                                LicenseType = "Windows_Server"
+                            },
                             targetDedicated);
-                        var exception = Assert.Throws<BatchException>(() => pool.Commit());
-                        Assert.Equal(BatchErrorCodeStrings.InvalidPropertyValue, exception.RequestInformation.BatchError.Code);
-                        Assert.Equal(
-                            "Property osDisk is allowed only for Batch accounts created with poolAllocationMode of BatchService",
-                            exception.RequestInformation.BatchError.Values[1].Value);
+                        pool.Commit();
+
+                        pool.Refresh();
+
+                        Assert.Equal(CachingType.None, pool.VirtualMachineConfiguration.OSDisk.Caching);
                     }
                     finally
                     {
                         //Delete the pool
                         TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TestPoolCreatedDataDiskSucceeds()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    string poolId = nameof(TestPoolCreatedDataDiskSucceeds) + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    try
+                    {
+                        var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+                        const int lun = 50;
+                        const int diskSizeGB = 50;
+
+                        //Create a pool
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new VirtualMachineConfiguration(
+                                imageDetails.ImageReference,
+                                imageDetails.NodeAgentSku.Id)
+                            {
+                                DataDisks =  new List<DataDisk>
+                                {
+                                    new DataDisk(lun, diskSizeGB)
+                                }
+                            },
+                            targetDedicated);
+                        pool.Commit();
+                        pool.Refresh();
+
+                        Assert.Equal(lun, pool.VirtualMachineConfiguration.DataDisks.Single().Lun);
+                        Assert.Equal(diskSizeGB, pool.VirtualMachineConfiguration.DataDisks.Single().DiskSizeGB);
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void TestPoolCreatedCustomImageExpectedError()
+        {
+            Action test = () =>
+            {
+                Func<Task<string>> tokenProvider = () => IntegrationTestCommon.GetAuthenticationTokenAsync("https://batch.core.windows.net/");
+
+                using (var client = BatchClient.Open(new BatchTokenCredentials(TestCommon.Configuration.BatchAccountUrl, tokenProvider)))
+                {
+                    string poolId = "TestPoolCreatedWithCustomImage" + TestUtilities.GetMyName();
+                    const int targetDedicated = 0;
+                    try
+                    {
+                        var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(client);
+
+                        //Create a pool
+                        CloudPool pool = client.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new VirtualMachineConfiguration(
+                                new ImageReference(
+                                    $"/subscriptions/{TestCommon.Configuration.BatchSubscription}/resourceGroups/{TestCommon.Configuration.BatchAccountResourceGroup}/providers/Microsoft.Compute/images/FakeImage"),
+                                imageDetails.NodeAgentSku.Id),
+                            targetDedicated);
+                        var exception = Assert.Throws<BatchException>(() => pool.Commit());
+
+                        Assert.Equal("InsufficientPermissions", exception.RequestInformation.BatchError.Code);
+                        Assert.Contains(
+                            "The user identity used for this operation does not have the required privelege Microsoft.Compute/images/read on the specified resource",
+                            exception.RequestInformation.BatchError.Values.Single().Value);
+                    }
+                    finally
+                    {
+                        //Delete the pool
+                        TestUtilities.DeletePoolIfExistsAsync(client, poolId).Wait();
                     }
                 }
             };
