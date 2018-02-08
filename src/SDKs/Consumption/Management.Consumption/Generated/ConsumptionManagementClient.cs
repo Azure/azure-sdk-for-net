@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Consumption
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
-        /// is 2017-11-30.
+        /// is 2018-01-31.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -81,6 +81,11 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IUsageDetailsOperations UsageDetails { get; private set; }
 
         /// <summary>
+        /// Gets the IMarketplacesOperations.
+        /// </summary>
+        public virtual IMarketplacesOperations Marketplaces { get; private set; }
+
+        /// <summary>
         /// Gets the IReservationsSummariesOperations.
         /// </summary>
         public virtual IReservationsSummariesOperations ReservationsSummaries { get; private set; }
@@ -91,9 +96,19 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IReservationsDetailsOperations ReservationsDetails { get; private set; }
 
         /// <summary>
+        /// Gets the IBudgetsOperations.
+        /// </summary>
+        public virtual IBudgetsOperations Budgets { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPriceSheetOperations.
+        /// </summary>
+        public virtual IPriceSheetOperations PriceSheet { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ConsumptionManagementClient class.
@@ -297,11 +312,14 @@ namespace Microsoft.Azure.Management.Consumption
         private void Initialize()
         {
             UsageDetails = new UsageDetailsOperations(this);
+            Marketplaces = new MarketplacesOperations(this);
             ReservationsSummaries = new ReservationsSummariesOperations(this);
             ReservationsDetails = new ReservationsDetailsOperations(this);
+            Budgets = new BudgetsOperations(this);
             Operations = new Operations(this);
+            PriceSheet = new PriceSheetOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-11-30";
+            ApiVersion = "2018-01-31";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

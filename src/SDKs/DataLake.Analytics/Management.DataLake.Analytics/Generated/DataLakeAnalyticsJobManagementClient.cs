@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IJobOperations.
+        /// </summary>
+        public virtual IJobOperations Job { get; private set; }
+
+        /// <summary>
         /// Gets the IPipelineOperations.
         /// </summary>
         public virtual IPipelineOperations Pipeline { get; private set; }
@@ -83,11 +88,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Gets the IRecurrenceOperations.
         /// </summary>
         public virtual IRecurrenceOperations Recurrence { get; private set; }
-
-        /// <summary>
-        /// Gets the IJobOperations.
-        /// </summary>
-        public virtual IJobOperations Job { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataLakeAnalyticsJobManagementClient class.
@@ -176,9 +176,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         private void Initialize()
         {
+            Job = new JobOperations(this);
             Pipeline = new PipelineOperations(this);
             Recurrence = new RecurrenceOperations(this);
-            Job = new JobOperations(this);
             BaseUri = "https://{accountName}.{adlaJobDnsSuffix}";
             ApiVersion = "2017-09-01-preview";
             AdlaJobDnsSuffix = "azuredatalakeanalytics.net";

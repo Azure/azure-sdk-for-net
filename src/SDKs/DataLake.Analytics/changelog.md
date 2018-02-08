@@ -1,5 +1,45 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
+### Changes in 3.3.0-preview
+
+**Breaking changes**
+
+- The `Account` operations object has been changed from `Account` to `Accounts`
+    - E.g., `Account.Get(...)` to `Accounts.Get(...)`
+- When creating or updating resources (`accounts`, `compute policies`, etc.), explicit parameter objects are now required:
+    - Account creation:
+        - `DataLakeAnalyticsAccount` to `CreateDataLakeAnalyticsAccountParameters`
+            - List of `DataLakeStoreInfo` to `AddDataLakeStoreWithAccountParameters`
+            - List of `StorageAccountInfo` to `AddStorageAccountWithAccountParameters`
+            - List of `FirewallRule` to `CreateFirewallRuleWithAccountParameters`
+            - List of `ComputePolicy` to `CreateComputePolicyWithAccountParameters`
+    - Account update:
+        - `DataLakeAnalyticsUpdateParameters` to `UpdateDataLakeAnalyticsParameters`
+            - List of `DataLakeStoreInfo` to `UpdateDataLakeStoreWithAccountParameters`
+            - List of `StorageAccountInfo` to `UpdateStorageAccountWithAccountParameters`
+            - List of `FirewallRule` to `UpdateFirewallRuleWithAccountParameters`
+            - List of `ComputePolicy` to `UpdateComputePolicyWithAccountParameters`
+    - Data Lake Store account addition:
+        - `DataLakeStoreAccountInfo` to `AddDataLakeStoreParameters`
+    - Storage account addition and update:
+        - `StorageAccountInfo` to `AddStorageAccountParameters`
+        - `StorageAccountInfo` to `UpdateStorageAccountParameters`
+    - Compute policy creation and update:
+        - `ComputePolicy` to `CreateOrUpdateComputePolicyParameters`
+        - `ComputePolicy` to `UpdateComputePolicyParameters`
+    - Firewall rule creation and update:
+        - `FirewallRule` to `CreateOrUpdateFirewallRuleParameters`
+        - `FirewallRule` to `UpdateFirewallRuleParameters`
+- When retrieving resources, all the properties are now read-only and the following object names have been changed:
+    - Changed `DataLakeStoreAccountInfo` to `DataLakeStoreAccountInformation`
+    - Changed `StorageAccountInfo` to `StorageAccountInformation`
+- Changed the `ODataQuery` parameter type from `JobInformation` to `JobInformationBasic` for the Job_List API
+- Changed the `ODataQuery` parameter type from `DataLakeStoreAccountInfo` to `DataLakeStoreAccountInformation` for the DataLakeStoreAccounts_ListByAccount API
+- Changed the `ODataQuery` parameter type from `StorageAccountInfo` to `StorageAccountInformation` for the StorageAccounts_ListByAccount API
+- Changed the return type from `AclList` to `IPage\<Acl>` for these APIs:
+    - Catalog_ListAclsByDatabase
+    - Catalog_ListAcls
+
 ### Changes in 3.2.3-preview
 
 **Breaking changes**
