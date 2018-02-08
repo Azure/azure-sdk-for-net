@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecureString clusterPassword = default(SecureString), object clusterSshUserName = default(object), SecureString clusterSshPassword = default(SecureString), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object))
+        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecretBase clusterPassword = default(SecretBase), object clusterSshUserName = default(object), SecretBase clusterSshPassword = default(SecretBase), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             ClusterSize = clusterSize;
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the key for the service principal id.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
-        public SecureString ServicePrincipalKey { get; set; }
+        public SecretBase ServicePrincipalKey { get; set; }
 
         /// <summary>
         /// Gets or sets the Tenant id/name to which the service principal
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the password to access the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.clusterPassword")]
-        public SecureString ClusterPassword { get; set; }
+        public SecretBase ClusterPassword { get; set; }
 
         /// <summary>
         /// Gets or sets the username to SSH remotely connect to cluster’s node
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// (for Linux).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.clusterSshPassword")]
-        public SecureString ClusterSshPassword { get; set; }
+        public SecretBase ClusterSshPassword { get; set; }
 
         /// <summary>
         /// Gets or sets specifies additional storage accounts for the
@@ -387,18 +387,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (LinkedServiceName != null)
             {
                 LinkedServiceName.Validate();
-            }
-            if (ServicePrincipalKey != null)
-            {
-                ServicePrincipalKey.Validate();
-            }
-            if (ClusterPassword != null)
-            {
-                ClusterPassword.Validate();
-            }
-            if (ClusterSshPassword != null)
-            {
-                ClusterSshPassword.Validate();
             }
             if (AdditionalLinkedServiceNames != null)
             {

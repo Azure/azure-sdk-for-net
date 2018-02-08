@@ -31,14 +31,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="name">The name of the linked integration
         /// runtime.</param>
-        /// <param name="dataFactoryName">The data factory name for which the
+        /// <param name="subscriptionId">The subscription ID for which the
         /// linked integration runtime belong to.</param>
+        /// <param name="dataFactoryName">The name of the data factory for
+        /// which the linked integration runtime belong to.</param>
+        /// <param name="dataFactoryLocation">The location of the data factory
+        /// for which the linked integration runtime belong to.</param>
         /// <param name="createTime">The creating time of the linked
         /// integration runtime.</param>
-        public LinkedIntegrationRuntime(string name = default(string), string dataFactoryName = default(string), System.DateTime? createTime = default(System.DateTime?))
+        public LinkedIntegrationRuntime(string name = default(string), string subscriptionId = default(string), string dataFactoryName = default(string), string dataFactoryLocation = default(string), System.DateTime? createTime = default(System.DateTime?))
         {
             Name = name;
+            SubscriptionId = subscriptionId;
             DataFactoryName = dataFactoryName;
+            DataFactoryLocation = dataFactoryLocation;
             CreateTime = createTime;
             CustomInit();
         }
@@ -55,11 +61,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the data factory name for which the linked integration runtime
+        /// Gets the subscription ID for which the linked integration runtime
         /// belong to.
+        /// </summary>
+        [JsonProperty(PropertyName = "subscriptionId")]
+        public string SubscriptionId { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the data factory for which the linked integration
+        /// runtime belong to.
         /// </summary>
         [JsonProperty(PropertyName = "dataFactoryName")]
         public string DataFactoryName { get; private set; }
+
+        /// <summary>
+        /// Gets the location of the data factory for which the linked
+        /// integration runtime belong to.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataFactoryLocation")]
+        public string DataFactoryLocation { get; private set; }
 
         /// <summary>
         /// Gets the creating time of the linked integration runtime.
