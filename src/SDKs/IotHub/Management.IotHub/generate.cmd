@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd provisioningservices/resource-manager %*
+call %~dp0..\..\..\..\tools\generate.cmd iothub/resource-manager %*
