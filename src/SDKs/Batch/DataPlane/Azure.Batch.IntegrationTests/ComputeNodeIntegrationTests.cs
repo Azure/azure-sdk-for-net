@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace BatchClientIntegrationTests
+namespace BatchClientIntegrationTests
 {
     using System;
     using System.Collections.Generic;
@@ -13,6 +13,9 @@
     using Fixtures;
     using Microsoft.Azure.Batch;
     using Microsoft.Azure.Batch.Common;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Auth;
+    using Microsoft.WindowsAzure.Storage.Blob;
     using IntegrationTestUtilities;
     using Microsoft.Azure.Batch.Protocol.BatchRequests;
     using Microsoft.Rest.Azure;
@@ -675,6 +678,77 @@
                     }
                 },
                 TestTimeout);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void ComputeNodeUploadLogs()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    var node = batchCli.PoolOperations.ListComputeNodes(this.poolFixture.PoolId).First();
+
+                    // Generate a storage container URL
+                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
+                    CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(
+                        new StorageCredentials(storageAccount.StorageAccount, storageAccount.StorageAccountKey),
+                        blobEndpoint: storageAccount.BlobUri,
+                        queueEndpoint: null,
+                        tableEndpoint: null,
+                        fileEndpoint: null);
+                    CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
+                    const string containerName = "computenodelogscontainer";
+                    var container = blobClient.GetContainerReference(containerName);
+
+                    try
+                    {
+                        container.CreateIfNotExists();
+
+                        // Ensure that there are no items in the container to begin with
+                        var blobs = container.ListBlobs();
+                        Assert.Empty(blobs);
+
+                        var sas = container.GetSharedAccessSignature(new SharedAccessBlobPolicy()
+                        {
+                            Permissions = SharedAccessBlobPermissions.Write,
+                            SharedAccessExpiryTime = DateTime.UtcNow.AddDays(1)
+                        });
+                        var fullSas = container.Uri + sas;
+
+                        var startTime = DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(5));
+
+                        var result = batchCli.PoolOperations.UploadComputeNodeBatchServiceLogs(
+                            this.poolFixture.PoolId,
+                            node.Id,
+                            fullSas,
+                            startTime);
+
+                        Assert.NotEqual(0, result.UploadSetSize);
+                        Assert.NotEmpty(result.VirtualDirectoryName);
+
+                        // Allow up to 2m for files to get uploaded
+                        DateTime timeoutAt = DateTime.UtcNow.AddMinutes(2);
+                        while (DateTime.UtcNow < timeoutAt)
+                        {
+                            blobs = container.ListBlobs();
+                            if (blobs.Any())
+                            {
+                                break;
+                            }
+                        }
+
+                        Assert.NotEmpty(blobs);
+                    }
+                    finally
+                    {
+                        container.DeleteIfExists();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
         #region Test helpers
