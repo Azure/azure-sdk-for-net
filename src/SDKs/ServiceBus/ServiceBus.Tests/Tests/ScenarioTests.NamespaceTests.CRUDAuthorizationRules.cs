@@ -36,9 +36,14 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create a namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
                 var createNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new SBNamespace()
                     {
                         Location = location,
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
+                        }
                     });
 
                 Assert.NotNull(createNamespaceResponse);
@@ -54,15 +59,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create a namespace AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new SBAuthorizationRule()
                 {
-                    Name = authorizationRuleName,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 
@@ -103,7 +106,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // Update namespace authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
+                SBAuthorizationRule updateNamespaceAuthorizationRuleParameter = new SBAuthorizationRule();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
 
                 var updateNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
@@ -118,7 +121,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 }
 
                 // Get the updated namespace AuthorizationRule
-                var getNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName,                     authorizationRuleName);
+                var getNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRuleResponse);
                 Assert.Equal(authorizationRuleName, getNamespaceAuthorizationRuleResponse.Name);
                 Assert.True(getNamespaceAuthorizationRuleResponse.Rights.Count == updateNamespaceAuthorizationRuleParameter.Rights.Count);
@@ -134,37 +137,32 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
                 // Regenerate AuthorizationRules
-                var regenerateKeysParameters = new RegenerateKeysParameters();
-                regenerateKeysParameters.Policykey = Policykey.PrimaryKey;
+                //Primary
+                var regenerateKeysParameters = new RegenerateAccessKeyParameters();
+                regenerateKeysParameters.KeyType = KeyType.PrimaryKey;
 
                 var regenerateKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
                 Assert.NotNull(regenerateKeysResponse);
                 Assert.NotEqual(regenerateKeysResponse.PrimaryKey, listKeysResponse.PrimaryKey);
                 Assert.Equal(regenerateKeysResponse.SecondaryKey, listKeysResponse.SecondaryKey);
 
+                //Secondary
+                regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
+
+                var regenerateSecondaryKeyResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
+                Assert.NotNull(regenerateSecondaryKeyResponse);
+                Assert.NotEqual(regenerateSecondaryKeyResponse.SecondaryKey, listKeysResponse.SecondaryKey);
+                Assert.Equal(regenerateSecondaryKeyResponse.PrimaryKey, regenerateKeysResponse.PrimaryKey);
+
+
                 // Delete namespace authorizationRule
                 ServiceBusManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                try
-                {
-                    ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
-                    Assert.True(false, "this step should have failed");
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
-
-                try
-                {
-                    // Delete namespace
-                    ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName); 
-                }
-                catch (Exception ex)
-                {
-                    Assert.True(ex.Message.Contains("NotFound"));
-                }
+                
+                // Delete namespace
+                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName); 
+                
             }
         }
     }

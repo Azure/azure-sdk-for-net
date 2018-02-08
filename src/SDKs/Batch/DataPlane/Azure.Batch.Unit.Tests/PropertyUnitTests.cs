@@ -74,12 +74,19 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(JobPreparationAndReleaseTaskExecutionInformation), typeof(Protocol.Models.JobPreparationAndReleaseTaskExecutionInformation), "JobReleaseTaskExecutionInformation", "JobReleaseTaskExecutionInfo"),
 
                 new ComparerPropertyMapping(typeof(JobPreparationTaskExecutionInformation), typeof(Protocol.Models.JobPreparationTaskExecutionInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(JobPreparationTaskExecutionInformation), typeof(Protocol.Models.JobPreparationTaskExecutionInformation), "ContainerInformation", "ContainerInfo"),
 
                 new ComparerPropertyMapping(typeof(JobReleaseTaskExecutionInformation), typeof(Protocol.Models.JobReleaseTaskExecutionInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(JobReleaseTaskExecutionInformation), typeof(Protocol.Models.JobReleaseTaskExecutionInformation), "ContainerInformation", "ContainerInfo"),
 
                 new ComparerPropertyMapping(typeof(TaskExecutionInformation), typeof(Protocol.Models.TaskExecutionInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(TaskExecutionInformation), typeof(Protocol.Models.TaskExecutionInformation), "ContainerInformation", "ContainerInfo"),
+
                 new ComparerPropertyMapping(typeof(SubtaskInformation), typeof(Protocol.Models.SubtaskInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(SubtaskInformation), typeof(Protocol.Models.SubtaskInformation), "ContainerInformation", "ContainerInfo"),
+
                 new ComparerPropertyMapping(typeof(StartTaskInformation), typeof(Protocol.Models.StartTaskInformation), "FailureInformation", "FailureInfo"),
+                new ComparerPropertyMapping(typeof(StartTaskInformation), typeof(Protocol.Models.StartTaskInformation), "ContainerInformation", "ContainerInfo"),
 
                 new ComparerPropertyMapping(typeof(PoolStatistics), typeof(Protocol.Models.PoolStatistics), "UsageStatistics", "UsageStats"),
                 new ComparerPropertyMapping(typeof(PoolStatistics), typeof(Protocol.Models.PoolStatistics), "ResourceStatistics", "ResourceStats"),
@@ -141,6 +148,9 @@ namespace Azure.Batch.Unit.Tests
                 new ComparerPropertyMapping(typeof(VirtualMachineConfiguration), typeof(Protocol.Models.VirtualMachineConfiguration), "OSDisk", "OsDisk"),
 
                 new ComparerPropertyMapping(typeof(TaskSchedulingPolicy), typeof(Protocol.Models.TaskSchedulingPolicy), "ComputeNodeFillType", "NodeFillType"),
+
+                new ComparerPropertyMapping(typeof(PoolEndpointConfiguration), typeof(Protocol.Models.PoolEndpointConfiguration), "InboundNatPools", "InboundNATPools"),
+                new ComparerPropertyMapping(typeof(InboundEndpoint), typeof(Protocol.Models.InboundEndpoint), "PublicFqdn", "PublicFQDN"),
             };
 
             Random rand = new Random();
@@ -196,7 +206,7 @@ namespace Azure.Batch.Unit.Tests
                     taskRangeSpecification,
                     omTaskRangeSpecification,
                     fileStagingProviderSpecification,
-                    batchClientBehaviorSpecification
+                    batchClientBehaviorSpecification,
                 });
 
             // We need a custom comparison rule for certificate references because they are a different type in the proxy vs
@@ -230,7 +240,6 @@ namespace Azure.Batch.Unit.Tests
                 },
                 type1PropertyName: "Access",
                 type2PropertyName: "Access");
-
 
             this.objectComparer = new ObjectComparer(
                 comparisonRules: new List<ComparisonRule>() { certificateReferenceComparisonRule, accessScopeComparisonRule },
@@ -273,7 +282,6 @@ namespace Azure.Batch.Unit.Tests
             reference.Visibility = visibility == null ? null : UtilitiesInternal.CertificateVisibilityToList(visibility.Value);
 
             return reference;
-
         }
 
         private Protocol.Models.AuthenticationTokenSettings BuildAuthenticationTokenSettings(Random rand)

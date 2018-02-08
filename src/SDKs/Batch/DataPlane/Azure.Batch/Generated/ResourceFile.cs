@@ -22,10 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ResourceFile : ITransportObjectProvider<Models.ResourceFile>, IPropertyMetadata
     {
-        private readonly string blobSource;
-        private readonly string fileMode;
-        private readonly string filePath;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceFile"/> class.
@@ -38,16 +34,16 @@ namespace Microsoft.Azure.Batch
             string filePath,
             string fileMode = default(string))
         {
-            this.blobSource = blobSource;
-            this.filePath = filePath;
-            this.fileMode = fileMode;
+            this.BlobSource = blobSource;
+            this.FilePath = filePath;
+            this.FileMode = fileMode;
         }
 
         internal ResourceFile(Models.ResourceFile protocolObject)
         {
-            this.blobSource = protocolObject.BlobSource;
-            this.fileMode = protocolObject.FileMode;
-            this.filePath = protocolObject.FilePath;
+            this.BlobSource = protocolObject.BlobSource;
+            this.FileMode = protocolObject.FileMode;
+            this.FilePath = protocolObject.FilePath;
         }
 
         #endregion Constructors
@@ -60,10 +56,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// This URL should include a shared access signature if the blob is not publicly readable.
         /// </remarks>
-        public string BlobSource
-        {
-            get { return this.blobSource; }
-        }
+        public string BlobSource { get; }
 
         /// <summary>
         /// Gets the file permission mode attribute in octal format.
@@ -73,18 +66,12 @@ namespace Microsoft.Azure.Batch
         /// be ignored if it is specified for a <see cref="ResourceFile"/> which will be downloaded to a Windows node. If 
         /// this property is not specified for a Linux node, then the default value is 0770.</para>
         /// </remarks>
-        public string FileMode
-        {
-            get { return this.fileMode; }
-        }
+        public string FileMode { get; }
 
         /// <summary>
         /// Gets the location to which to download the file, relative to the task's working directory.
         /// </summary>
-        public string FilePath
-        {
-            get { return this.filePath; }
-        }
+        public string FilePath { get; }
 
         #endregion // ResourceFile
 

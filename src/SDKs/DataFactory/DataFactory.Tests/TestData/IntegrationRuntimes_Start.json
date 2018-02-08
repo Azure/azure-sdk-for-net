@@ -1,0 +1,60 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleManagedIntegrationRuntime",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "202": {
+      "headers": {
+        "Date": "Tue, 28 Nov 2017 07:17:56 GMT",
+        "Location": "https://adfrpnightly.svc.datafactory-test.azure.com/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationRuntimes/exampleManagedIntegrationRuntime/start/operationresults/9a070152cddb4c839d482ccfb76a7537?api-version=2017-09-01-preview",
+        "Retry-After": "15",
+        "x-ms-request-id": "aa8a8ed1-7b2e-40eb-b734-9b7a5f393aed",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "body": null
+    },
+    "200": {
+      "headers": {
+        "Date": "Tue, 28 Nov 2017 07:39:18 GMT",
+        "x-ms-request-id": "a0190274-060e-43a0-84ea-403d1c0c4a06",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "body": {
+        "name": "exampleManagedIntegrationRuntime",
+        "properties": {
+          "state": "Started",
+          "type": "Managed",
+          "typeProperties": {
+            "nodes": [
+              {
+                "nodeId": "tvm-1650185656_1-20171128t071919z",
+                "status": "Unavailable",
+                "errors": [
+                  {
+                    "time": "2017-11-28T07:38:41.50199Z",
+                    "code": "AzureSqlConnectionFailure",
+                    "parameters": [],
+                    "message": "Sql Error Number: 18456"
+                  }
+                ]
+              }
+            ],
+            "otherErrors": [],
+            "lastOperation": {
+              "type": "Start",
+              "startTime": "2017-11-28T07:17:58.6556933Z",
+              "result": "Succeeded",
+              "parameters": []
+            },
+            "state": "Started",
+            "createTime": "2017-11-28T07:17:56.5930407Z"
+          }
+        }
+      }
+    }
+  }
+}

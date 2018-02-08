@@ -1,23 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
+using Newtonsoft.Json.Linq;
 using Xunit;
+using CM = Microsoft.Azure.Management.Compute.Models;
 
 namespace Compute.Tests
 {
@@ -38,12 +37,71 @@ namespace Compute.Tests
 
             return vmExtension;
         }
+
+        protected VirtualMachineScaleSetExtension GetVmssServiceFabricExtension()
+        {
+            VirtualMachineScaleSetExtension sfExtension = new VirtualMachineScaleSetExtension
+            {
+                Name = "vmsssfext01",
+                Publisher = "Microsoft.Azure.ServiceFabric",
+                Type = "ServiceFabricNode",
+                TypeHandlerVersion = "1.0",
+                AutoUpgradeMinorVersion = true,
+                Settings = "{}",
+                ProtectedSettings = "{}"
+            };
+
+            return sfExtension;
+        }
+
+        protected VirtualMachineScaleSetExtension GetAzureDiskEncryptionExtension()
+        {
+            // NOTE: Replace dummy values for AAD credentials and KeyVault urls below by running DiskEncryptionPreRequisites.ps1.
+            // There is no ARM client implemented for key-vault in swagger test framework yet. These changes need to go sooner to
+            // unblock powershell cmdlets/API for disk encryption on scale set. So recorded this test by creating required resources
+            // in prod and replaced them with dummy value before check-in.
+            //
+            // Follow below steps to run this test again:
+            //   Step 1: Execute DiskEncryptionPreRequisites.ps1. Use same subscription and region as you are running test in.
+            //   Step 2: Replace aadClientId, aadClientSecret, keyVaultUrl, and keyVaultId values below with the values returned
+            //           by above PS script
+            //   Step 3: Run test and record session
+            //   Step 4: Delete KeyVault, AAD app created by above PS script
+            //   Step 5: Replace values for AAD credentials and KeyVault urls by dummy values before check-in
+            string aadClientId = Guid.NewGuid().ToString();
+            string aadClientSecret = Guid.NewGuid().ToString();
+            string keyVaultUrl = "https://adetestkv1.vault.azure.net/";
+            string keyVaultId =
+                "/subscriptions/d0d8594d-65c5-481c-9a58-fea6f203f1e2/resourceGroups/adetest/providers/Microsoft.KeyVault/vaults/adetestkv1";
+
+            string settings =
+                string.Format("\"AADClientID\": \"{0}\", \"KeyVaultURL\": \"{1}\", \"KeyEncryptionKeyURL\": \"\", \"KeyVaultResourceId\":\"{2}\", \"KekVaultResourceId\": \"\", \"KeyEncryptionAlgorithm\": \"{3}\", \"VolumeType\": \"{4}\", \"EncryptionOperation\": \"{5}\"",
+                                aadClientId, keyVaultUrl, keyVaultId, "", "All", "DisableEncryption");
+
+            string protectedSettings = string.Format("\"AADClientSecret\": \"{0}\"", aadClientSecret);
+
+            var vmExtension = new VirtualMachineScaleSetExtension
+            {
+                Name = "adeext1",
+                Publisher = "Microsoft.Azure.Security",
+                Type = "ADETest",
+                TypeHandlerVersion = "2.0",
+                Settings = new JRaw("{ " + settings + " }"),
+                ProtectedSettings = new JRaw("{ " + protectedSettings + " }")
+            };
+
+            return vmExtension;
+        }
+
         protected VirtualMachineScaleSet CreateDefaultVMScaleSetInput(
             string rgName,
             string storageAccountName,
             ImageReference imageRef,
             string subnetId,
-            bool hasManagedDisks = false)
+            bool hasManagedDisks = false,
+            string healthProbeId = null,
+            string loadBalancerBackendPoolId = null,
+            IList<string> zones = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
@@ -54,11 +112,12 @@ namespace Compute.Tests
             {
                 Location = m_location,
                 Tags = new Dictionary<string, string>() { { "RG", "rg" }, { "testTag", "1" } },
-                Sku = new Sku()
+                Sku = new CM.Sku()
                 {
                     Capacity = 2,
-                    Name = VirtualMachineSizeTypes.StandardA0,
+                    Name = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2,
                 },
+                Zones = zones,
                 Overprovision = false,
                 UpgradePolicy = new UpgradePolicy()
                 {
@@ -90,11 +149,15 @@ namespace Compute.Tests
                     {
                         ComputerNamePrefix = "test",
                         AdminUsername = "Foo12",
-                        AdminPassword = "BaR@123" + rgName,
+                        AdminPassword = PLACEHOLDER,
                         CustomData = Convert.ToBase64String(Encoding.UTF8.GetBytes("Custom data"))
                     },
                     NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
                     {
+                        HealthProbe = healthProbeId == null ? null : new ApiEntityReference
+                        {
+                            Id = healthProbeId
+                        },
                         NetworkInterfaceConfigurations = new List<VirtualMachineScaleSetNetworkConfiguration>()
                         {
                             new VirtualMachineScaleSetNetworkConfiguration()
@@ -110,6 +173,10 @@ namespace Compute.Tests
                                         {
                                             Id = subnetId
                                         },
+                                        LoadBalancerBackendAddressPools = (loadBalancerBackendPoolId != null) ? 
+                                            new List<Microsoft.Azure.Management.Compute.Models.SubResource> {
+                                                new Microsoft.Azure.Management.Compute.Models.SubResource(loadBalancerBackendPoolId)
+                                            } : null,
                                         ApplicationGatewayBackendAddressPools = new List<Microsoft.Azure.Management.Compute.Models.SubResource>(),
                                     }
                                 }
@@ -131,7 +198,9 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool createWithManagedDisks = false,
-            Subnet subnet = null)
+            bool createWithHealthProbe = false,
+            Subnet subnet = null,
+            IList<string> zones = null)
         {
             try
             {
@@ -144,7 +213,9 @@ namespace Compute.Tests
                                                                                      vmScaleSetCustomizer,
                                                                                      createWithPublicIpAddress,
                                                                                      createWithManagedDisks,
-                                                                                     subnet);
+                                                                                     createWithHealthProbe,
+                                                                                     subnet,
+                                                                                     zones);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -199,6 +270,13 @@ namespace Compute.Tests
             var createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
         }
 
+        // This method is used to Update VM Scale Set but it internally calls PATCH verb instead of PUT.
+        // PATCH verb is more relaxed and does not puts constraint to specify full parameters.
+        protected void PatchVMScaleSet(string rgName, string vmssName, VirtualMachineScaleSetUpdate inputVMScaleSet)
+        {
+            var patchResponse = m_CrpClient.VirtualMachineScaleSets.Update(rgName, vmssName, inputVMScaleSet);
+        }
+
         private VirtualMachineScaleSet CreateVMScaleSetAndGetOperationResponse(
             string rgName,
             string vmssName,
@@ -209,7 +287,9 @@ namespace Compute.Tests
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
             bool createWithPublicIpAddress = false,
             bool createWithManagedDisks = false,
-            Subnet subnet = null)
+            bool createWithHealthProbe = false,
+            Subnet subnet = null,
+            IList<string> zones = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -228,7 +308,12 @@ namespace Compute.Tests
                 subnetResponse,
                 getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
 
-            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks);
+            var loadBalancer = (getPublicIpAddressResponse != null && createWithHealthProbe) ?
+                CreatePublicLoadBalancerWithProbe(rgName, getPublicIpAddressResponse) : null;
+
+            inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
+                healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
+                loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones);
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);
@@ -252,10 +337,12 @@ namespace Compute.Tests
         {
             Assert.NotNull(vmScaleSetInstanceView.Statuses);
             Assert.NotNull(vmScaleSetInstanceView);
-            // TODO: AutoRest
-            Assert.NotNull(vmScaleSetInstanceView.Extensions);
-            int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            if (vmScaleSet.VirtualMachineProfile.ExtensionProfile != null)
+            {
+                Assert.NotNull(vmScaleSetInstanceView.Extensions);
+                int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
+                Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            }
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false)

@@ -32,7 +32,7 @@ namespace TestFramework.Net45Tests
 
 
         [Theory(Skip = "Interactive Tests, needs to be run manually")]
-        [InlineData("AADTenant=<GetMsftTenantId>;SubscriptionId=<GetAnySubIdUnderYourAlias>;Environment=Prod")]
+        [InlineData(@"AADTenant=<GetMsftTenantId>;SubscriptionId=<GetAnySubIdUnderYourAlias>;Environment=Prod;")]
         public void InteractiveLoginKnownUserName(string connStr)
         {
             // Log in for this test case using your alias
@@ -91,6 +91,22 @@ namespace TestFramework.Net45Tests
         public void InteractiveGermanLoginNoSubscription(string connStr)
         {
             // Log in for this test case using your alias
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
+            HttpMockServer.Mode = HttpRecorderMode.Record;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string subscriptionId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.SubscriptionIdKey];
+            Assert.False(string.IsNullOrEmpty(subscriptionId));
+        }
+
+        [Theory(Skip = "Interactive Test")]
+        [InlineData("SubscriptionId=<subId>;RawToken=<rawToken_ciOiJSUzI1NiIsIng1dCI6InowMzl6ZHNGdWl6cEJmQlZLMVRuMjVRSFciOiJSUzI1NiIsIng1dCWl6cEJmQlZLMVRuMjVRSFlPMCJ9.1hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NDgyNmIyMi0zOGQ2LTRmYjItYmFkOS1iN2I5M2EzZTljNWEvIiwiaWF0IjoxNDk1NTY4NDcyLCJuYmYiOjE0OTU1Njg0NzIsImV4cCI6MTQ5NTU3MjM3MiwiYWNyIjoiMSIsImFpbyI6IlkyWmdZSERKVEJBNEVwZTJjZnNqcVEwWmRuZjkvcktMMXNZdzhSOXk4bFBXV2FhVWZ3Z0EiLCJhbXIiOlsicHdkIl0sImFwcGlkIjoiMTk1MGEyNTgtMjI3Yi00ZTMxLWE5Y2YtNzE3NDk1OTQ1ZmMyIiwiYXBwaWRhY3IiOiIwIiwiZV9leHAiOjI2MjgwMCwiZ2l2ZW5fbmFtZSI6IkFkbWluIiwiZ3JvdXBzIjpbImU0YmIwYjU2LTEwMTQtNDBmOC04OGFiLTNkOGE4Y2IwZTA4NiIsImQ3NThhMDY5LTUyY2MtNDdmNi1iYzAwLTk2MWNlYTE3YmUzOSJdLCJpcGFkZHIiOiIxNjcuMjIwLjEuMTM4IiwibmFtZSI6IkFkbWluIiwib2lkIjoiN2E5MzhhMzAtNDIyNi00MjBlLTk5NmYtNGQ0OGJjYTZkNTM3IiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMzRkZGOTU5NzY4MzEiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJaaXFkNnA1OVNPQlJMbzdXalotaERHcUM2YVJhbDhpY1NFb2t0dGZsMmljIiwidGlkIjoiNTQ4MjZiMjItMzhkNi00ZmIyLWJhZDktYjdiOTNhM2U5YzVhIiwidW5pcXVlX25hbWUiOiJhZG1pbkBBenVyZVNES1RlYW0ub25taWNyb3NvZnQuY29tIiwidXBuIjoiYWRtaW5AQXp1cmVTREtUZWFtLm9ubWljcm9zb2Z0LmNvbSIsInZlciI6IjEuMCIsIndpZHMiOlsiNjJlOTAzOTQtNjlmNS00MjM3LTkxOTAtMDEyMTc3MTQ1ZTEwIl19.Eb_YXz_mY3Mcec04sTsvT7-wvmQuJlHibTDr7wlrj__8riP3FNXiRi_tb0yGWVQkKCkGwJHTrBPi1aD2Gd_3j542OlgOJ4ETb2Gr_froo44eCHv1Z-84h3s9v_K6A-aaNbRC4NOZIbd2dqJJ6CDcVu_ow6hPzhTo1_VNkZ5OygBUii-yKizRcFPGbiVlj2IbOMFA9TN9NtPm8lVPI8hjbEpeXWqFVPuPiJUpkn3XXKrgpNZTsy-o_TG4GcP2ETnyPS0gYTJHQRC-11vIx0DRXMSF_q1H7hdcj174jL6WveZellXrD6e39iNuTToHTY>")]
+        //[InlineData("SubscriptionId=<subId>;AADTenant=<tenantId>;UserId=<uid.onmicrosoft.com;Password=<pwd>")]
+        public void LoginUsingRawToken(string connStr)
+        {
+            // Use the commented out InlineData to get RawToken by first logging in using the username/password. Once you get the RawToken, then use the other
+            // Inline data connection string to inject your raw token to run this test.
+            // We use the subscription Id to verify if the RawToken can get the subscription information and hence verifies if the RawToken can be used for Auth purpose
+
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connStr);
             HttpMockServer.Mode = HttpRecorderMode.Record;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();

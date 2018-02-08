@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ResizeError : IPropertyMetadata
     {
-        private readonly string code;
-        private readonly string message;
-        private readonly IReadOnlyList<NameValuePair> values;
-
         #region Constructors
 
         internal ResizeError(Models.ResizeError protocolObject)
         {
-            this.code = protocolObject.Code;
-            this.message = protocolObject.Message;
-            this.values = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.Values);
+            this.Code = protocolObject.Code;
+            this.Message = protocolObject.Message;
+            this.Values = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.Values);
         }
 
         #endregion Constructors
@@ -42,26 +38,17 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets a code for the pool resize error. See <see cref="Common.PoolResizeErrorCodes"/> for possible values.
         /// </summary>
-        public string Code
-        {
-            get { return this.code; }
-        }
+        public string Code { get; }
 
         /// <summary>
         /// Gets a message describing the pool resize error, intended to be suitable for display in a user interface.
         /// </summary>
-        public string Message
-        {
-            get { return this.message; }
-        }
+        public string Message { get; }
 
         /// <summary>
         /// Gets a list of additional error details related to the pool resize error.
         /// </summary>
-        public IReadOnlyList<NameValuePair> Values
-        {
-            get { return this.values; }
-        }
+        public IReadOnlyList<NameValuePair> Values { get; }
 
         #endregion // ResizeError
 

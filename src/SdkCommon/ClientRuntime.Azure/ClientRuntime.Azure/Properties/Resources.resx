@@ -172,6 +172,9 @@ Parameter name: {0}</value>
   <data name="LongRunningOperationFailed" xml:space="preserve">
     <value>Long running operation failed with status '{0}'.</value>
   </data>
+  <data name="LROOperationFailedAdditionalInfo" xml:space="preserve">
+    <value>Long running operation failed with status '{0}'. Additional Info:'{1}'</value>
+  </data>
   <data name="NoBody" xml:space="preserve">
     <value>The response from long running operation does not contain a body.</value>
   </data>
@@ -201,5 +204,14 @@ Parameter name: {0}</value>
   </data>
   <data name="UnexpectedPollingStatus" xml:space="preserve">
     <value>Unexpected polling status code from long running operation '{0}' for method '{1}'.</value>
+  </data>
+  <data name="HeaderAndStatusCode" xml:space="preserve">
+    <value>In long running operation '{0}' header requires initial response status code to be '{1}'</value>
+  </data>
+  <data name="BodyDeserializationError" xml:space="preserve">
+    <value>Unable to deserilize body '{0}'</value>
+  </data>
+  <data name="InValidUri" xml:space="preserve">
+    <value>Provided URI '{0}' is not a valid URI.</value>
   </data>
 </root>

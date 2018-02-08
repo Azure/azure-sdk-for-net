@@ -4,14 +4,4 @@
 ::
 
 @echo off
-set autoRestVersion=1.0.0-Nightly20170202
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/fb9b0cc66ee580cdfadc03ab6a981bf5bd066f86/arm-network/compositeNetworkClient.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
-
-if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.composite.gen.cmd" %specFile% Microsoft.Azure.Management.Network %autoRestVersion% %generateFolder%
+call %~dp0..\..\..\..\tools\generate.cmd network/resource-manager %*

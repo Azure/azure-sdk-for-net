@@ -19,7 +19,7 @@ namespace Network.Tests.Tests
 
     public class NextHopTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void NextHopApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

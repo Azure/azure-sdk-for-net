@@ -1,14 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Management.Storage;
+using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Globalization;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -18,28 +24,30 @@ namespace Sql.Tests
         [Fact]
         public void TestImportExistingDatabase()
         {
-            string testPrefix = "sqlcrudtest-";
-            TestImportExport(true, testPrefix, "TestImportExistingDatabase");
+            TestImportExport(true, "TestImportExistingDatabase");
         }
 
         [Fact]
         public void TestImportNewDatabase()
         {
-            string testPrefix = "sqlcrudtest-";
-            TestImportExport(false, testPrefix, "TestImportNewDatabase");
+            TestImportExport(false, "TestImportNewDatabase");
         }
-        
-        public void TestImportExport(bool preexistingDatabase, string testPrefix, string testName)
+
+        public void TestImportExport(bool preexistingDatabase, string testName)
         {
-            string suiteName = this.GetType().FullName;
-            SqlManagementTestUtilities.RunTestInNewV12Server(suiteName, testName, testPrefix, (resClient, sqlClient, resourceGroup, server) =>
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this, testName))
             {
-                string serverNameV12 = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string login = "dummylogin";
-                string password = "Un53cuRE!";
-                string version12 = "12.0";
-                string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
-                string dbName2 = SqlManagementTestUtilities.GenerateName(testPrefix);
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Begin creating storage account and container
+                Task<StorageContainerInfo> storageContainerTask = CreateStorageContainer(context, resourceGroup);
+
+                string login = SqlManagementTestUtilities.DefaultLogin;
+                string password = SqlManagementTestUtilities.DefaultPassword;
+                string dbName = SqlManagementTestUtilities.GenerateName();
+                string dbName2 = SqlManagementTestUtilities.GenerateName();
                 string storageAccountName = SqlManagementTestUtilities.GenerateName("sqlcrudstorage");
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -47,7 +55,7 @@ namespace Sql.Tests
                     };
 
                 // set server firewall rule
-                sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(testPrefix), new FirewallRule()
+                sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(), new FirewallRule()
                 {
                     StartIpAddress = "0.0.0.0",
                     EndIpAddress = "255.255.255.255"
@@ -71,20 +79,11 @@ namespace Sql.Tests
                 }
 
                 // Get Storage container credentials
-                HttpRecorderMode testMode = HttpMockServer.GetCurrentMode();
-                string storageKey = "StorageKey";
-                string storageKeyType = "StorageAccessKey";
-                string exportBacpacLink = string.Format(CultureInfo.InvariantCulture, "http://test.blob.core.windows.net/databases/{0}.bacpac", dbName);
-
-                if (testMode == HttpRecorderMode.Record)
-                {
-                    string importBacpacContainer = Environment.GetEnvironmentVariable("TEST_IMPORT_CONTAINER");
-                    storageKey = Environment.GetEnvironmentVariable("TEST_STORAGE_KEY");
-                    exportBacpacLink = string.Format(CultureInfo.InvariantCulture, "{0}/{1}.bacpac", importBacpacContainer, dbName);
-
-                    Assert.False(string.IsNullOrWhiteSpace(storageKey), "Environment variable TEST_STORAGE_KEY has not been set.  Set it to storage account key.");
-                    Assert.False(string.IsNullOrWhiteSpace(importBacpacContainer), "Environment variable TEST_IMPORT_CONTAINER has not been set.  Set it to a valid storage container URL.");
-                }
+                StorageContainerInfo storageContainerInfo = storageContainerTask.Result;
+                string exportBacpacLink = string.Format(
+                    CultureInfo.InvariantCulture,
+                    "{0}/{1}.bacpac",
+                    storageContainerInfo.StorageContainerUri, dbName);
 
                 // Export database to bacpac
                 sqlClient.Databases.Export(resourceGroup.Name, server.Name, dbName, new ExportRequest()
@@ -92,7 +91,7 @@ namespace Sql.Tests
                     AdministratorLogin = login,
                     AdministratorLoginPassword = password,
                     AuthenticationType = AuthenticationType.SQL,
-                    StorageKey = storageKey,
+                    StorageKey = storageContainerInfo.StorageAccountKey,
                     StorageKeyType = StorageKeyType.StorageAccessKey,
                     StorageUri = exportBacpacLink
                 });
@@ -106,7 +105,7 @@ namespace Sql.Tests
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
                         AuthenticationType = AuthenticationType.SQL,
-                        StorageKey = storageKey,
+                        StorageKey = storageContainerInfo.StorageAccountKey,
                         StorageKeyType = StorageKeyType.StorageAccessKey,
                         StorageUri = exportBacpacLink
                     });
@@ -118,7 +117,7 @@ namespace Sql.Tests
                         AdministratorLogin = login,
                         AdministratorLoginPassword = password,
                         AuthenticationType = AuthenticationType.SQL,
-                        StorageKey = storageKey,
+                        StorageKey = storageContainerInfo.StorageAccountKey,
                         StorageKeyType = StorageKeyType.StorageAccessKey,
                         StorageUri = exportBacpacLink,
                         DatabaseName = dbName2,
@@ -127,7 +126,54 @@ namespace Sql.Tests
                         MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
                     });
                 }
-            });
+            }
+        }
+
+        private struct StorageContainerInfo
+        {
+            public string StorageAccountKey;
+            public Uri StorageContainerUri;
+        }
+
+        private async Task<StorageContainerInfo> CreateStorageContainer(SqlManagementTestContext context, ResourceGroup resourceGroup)
+        {
+            StorageManagementClient storageClient = context.GetClient<StorageManagementClient>();
+            StorageAccount storageAccount = await storageClient.StorageAccounts.CreateAsync(
+                resourceGroup.Name,
+                accountName: SqlManagementTestUtilities.GenerateName(prefix: "sqlcrudtest"), // '-' is not allowed
+                parameters: new StorageAccountCreateParameters(
+                    new Microsoft.Azure.Management.Storage.Models.Sku(SkuName.StandardLRS, SkuTier.Standard),
+                    Kind.BlobStorage,
+                    resourceGroup.Location,
+                    accessTier: AccessTier.Cool));
+
+            StorageAccountListKeysResult keys =
+                storageClient.StorageAccounts.ListKeys(resourceGroup.Name, storageAccount.Name);
+            string key = keys.Keys.First().Value;
+
+            string containerName = "container";
+
+            // Create container
+            // Since this is a data-plane client and not an ARM client it's harder to inject
+            // HttpMockServer into it to record/playback, but that's fine because we don't need
+            // any of the response data to continue with the test.
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                CloudStorageAccount storageAccountClient = new CloudStorageAccount(
+                    new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(
+                        storageAccount.Name,
+                        key),
+                    useHttps: true);
+                CloudBlobClient blobClient = storageAccountClient.CreateCloudBlobClient();
+                CloudBlobContainer containerReference = blobClient.GetContainerReference(containerName);
+                await containerReference.CreateIfNotExistsAsync();
+            }
+
+            return new StorageContainerInfo
+            {
+                StorageAccountKey = key,
+                StorageContainerUri = new Uri(storageAccount.PrimaryEndpoints.Blob + containerName)
+            };
         }
     }
 }

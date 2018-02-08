@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="userName">The user name of the user identity.</param>
         public UserIdentity(string userName)
         {
-            this.userName = userName;
+            this.UserName = userName;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="autoUserSpecification">The auto user under which the task is run.</param>
         public UserIdentity(AutoUserSpecification autoUserSpecification)
         {
-            this.autoUser = autoUserSpecification;
+            this.AutoUser = autoUserSpecification;
         }
     }
 }

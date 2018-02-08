@@ -136,10 +136,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 KeyValuePairs[ConnectionStringKeys.AADTenantKey] = DEFAULT_TENANTID;
             }
-
-            //Initialize raw tokens to a non-null/non-empty strings
-            KeyValuePairs[ConnectionStringKeys.RawTokenKey] = ConnectionStringKeys.RawTokenKey;
-            KeyValuePairs[ConnectionStringKeys.RawGraphTokenKey] = ConnectionStringKeys.RawGraphTokenKey;
         }
 
         /// <summary>

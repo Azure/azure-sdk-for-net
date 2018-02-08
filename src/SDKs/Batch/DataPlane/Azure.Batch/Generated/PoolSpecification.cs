@@ -47,109 +47,109 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ApplicationLicensesProperty = this.CreatePropertyAccessor<IList<string>>("ApplicationLicenses", BindingAccess.Read | BindingAccess.Write);
-                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
-                this.AutoScaleEnabledProperty = this.CreatePropertyAccessor<bool?>("AutoScaleEnabled", BindingAccess.Read | BindingAccess.Write);
-                this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>("AutoScaleEvaluationInterval", BindingAccess.Read | BindingAccess.Write);
-                this.AutoScaleFormulaProperty = this.CreatePropertyAccessor<string>("AutoScaleFormula", BindingAccess.Read | BindingAccess.Write);
-                this.CertificateReferencesProperty = this.CreatePropertyAccessor<IList<CertificateReference>>("CertificateReferences", BindingAccess.Read | BindingAccess.Write);
-                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>("CloudServiceConfiguration", BindingAccess.Read | BindingAccess.Write);
-                this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
-                this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>("InterComputeNodeCommunicationEnabled", BindingAccess.Read | BindingAccess.Write);
-                this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>("MaxTasksPerComputeNode", BindingAccess.Read | BindingAccess.Write);
-                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
-                this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>("NetworkConfiguration", BindingAccess.Read | BindingAccess.Write);
-                this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>("ResizeTimeout", BindingAccess.Read | BindingAccess.Write);
-                this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>("StartTask", BindingAccess.Read | BindingAccess.Write);
-                this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>("TargetDedicatedComputeNodes", BindingAccess.Read | BindingAccess.Write);
-                this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>("TargetLowPriorityComputeNodes", BindingAccess.Read | BindingAccess.Write);
-                this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>("TaskSchedulingPolicy", BindingAccess.Read | BindingAccess.Write);
-                this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>("UserAccounts", BindingAccess.Read | BindingAccess.Write);
-                this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>("VirtualMachineConfiguration", BindingAccess.Read | BindingAccess.Write);
-                this.VirtualMachineSizeProperty = this.CreatePropertyAccessor<string>("VirtualMachineSize", BindingAccess.Read | BindingAccess.Write);
+                this.ApplicationLicensesProperty = this.CreatePropertyAccessor<IList<string>>(nameof(ApplicationLicenses), BindingAccess.Read | BindingAccess.Write);
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>(nameof(ApplicationPackageReferences), BindingAccess.Read | BindingAccess.Write);
+                this.AutoScaleEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(AutoScaleEnabled), BindingAccess.Read | BindingAccess.Write);
+                this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(AutoScaleEvaluationInterval), BindingAccess.Read | BindingAccess.Write);
+                this.AutoScaleFormulaProperty = this.CreatePropertyAccessor<string>(nameof(AutoScaleFormula), BindingAccess.Read | BindingAccess.Write);
+                this.CertificateReferencesProperty = this.CreatePropertyAccessor<IList<CertificateReference>>(nameof(CertificateReferences), BindingAccess.Read | BindingAccess.Write);
+                this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor<CloudServiceConfiguration>(nameof(CloudServiceConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
+                this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(InterComputeNodeCommunicationEnabled), BindingAccess.Read | BindingAccess.Write);
+                this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor<int?>(nameof(MaxTasksPerComputeNode), BindingAccess.Read | BindingAccess.Write);
+                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
+                this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(ResizeTimeout), BindingAccess.Read | BindingAccess.Write);
+                this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>(nameof(StartTask), BindingAccess.Read | BindingAccess.Write);
+                this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetDedicatedComputeNodes), BindingAccess.Read | BindingAccess.Write);
+                this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor<int?>(nameof(TargetLowPriorityComputeNodes), BindingAccess.Read | BindingAccess.Write);
+                this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor<TaskSchedulingPolicy>(nameof(TaskSchedulingPolicy), BindingAccess.Read | BindingAccess.Write);
+                this.UserAccountsProperty = this.CreatePropertyAccessor<IList<UserAccount>>(nameof(UserAccounts), BindingAccess.Read | BindingAccess.Write);
+                this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor<VirtualMachineConfiguration>(nameof(VirtualMachineConfiguration), BindingAccess.Read | BindingAccess.Write);
+                this.VirtualMachineSizeProperty = this.CreatePropertyAccessor<string>(nameof(VirtualMachineSize), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.PoolSpecification protocolObject) : base(BindingState.Bound)
             {
                 this.ApplicationLicensesProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CollectionToThreadSafeCollection(protocolObject.ApplicationLicenses, o => o),
-                    "ApplicationLicenses",
+                    nameof(ApplicationLicenses),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
-                    "ApplicationPackageReferences",
+                    nameof(ApplicationPackageReferences),
                     BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEnabledProperty = this.CreatePropertyAccessor(
                     protocolObject.EnableAutoScale,
-                    "AutoScaleEnabled",
+                    nameof(AutoScaleEnabled),
                     BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleEvaluationIntervalProperty = this.CreatePropertyAccessor(
                     protocolObject.AutoScaleEvaluationInterval,
-                    "AutoScaleEvaluationInterval",
+                    nameof(AutoScaleEvaluationInterval),
                     BindingAccess.Read | BindingAccess.Write);
                 this.AutoScaleFormulaProperty = this.CreatePropertyAccessor(
                     protocolObject.AutoScaleFormula,
-                    "AutoScaleFormula",
+                    nameof(AutoScaleFormula),
                     BindingAccess.Read | BindingAccess.Write);
                 this.CertificateReferencesProperty = this.CreatePropertyAccessor(
                     CertificateReference.ConvertFromProtocolCollection(protocolObject.CertificateReferences),
-                    "CertificateReferences",
+                    nameof(CertificateReferences),
                     BindingAccess.Read | BindingAccess.Write);
                 this.CloudServiceConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.CloudServiceConfiguration, o => new CloudServiceConfiguration(o)),
-                    "CloudServiceConfiguration",
+                    nameof(CloudServiceConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
-                    "DisplayName",
+                    nameof(DisplayName),
                     BindingAccess.Read | BindingAccess.Write);
                 this.InterComputeNodeCommunicationEnabledProperty = this.CreatePropertyAccessor(
                     protocolObject.EnableInterNodeCommunication,
-                    "InterComputeNodeCommunicationEnabled",
+                    nameof(InterComputeNodeCommunicationEnabled),
                     BindingAccess.Read);
                 this.MaxTasksPerComputeNodeProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxTasksPerNode,
-                    "MaxTasksPerComputeNode",
+                    nameof(MaxTasksPerComputeNode),
                     BindingAccess.Read | BindingAccess.Write);
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
-                    "Metadata",
+                    nameof(Metadata),
                     BindingAccess.Read | BindingAccess.Write);
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.NetworkConfiguration, o => new NetworkConfiguration(o).Freeze()),
-                    "NetworkConfiguration",
+                    nameof(NetworkConfiguration),
                     BindingAccess.Read);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor(
                     protocolObject.ResizeTimeout,
-                    "ResizeTimeout",
+                    nameof(ResizeTimeout),
                     BindingAccess.Read | BindingAccess.Write);
                 this.StartTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.StartTask, o => new StartTask(o)),
-                    "StartTask",
+                    nameof(StartTask),
                     BindingAccess.Read | BindingAccess.Write);
                 this.TargetDedicatedComputeNodesProperty = this.CreatePropertyAccessor(
                     protocolObject.TargetDedicatedNodes,
-                    "TargetDedicatedComputeNodes",
+                    nameof(TargetDedicatedComputeNodes),
                     BindingAccess.Read | BindingAccess.Write);
                 this.TargetLowPriorityComputeNodesProperty = this.CreatePropertyAccessor(
                     protocolObject.TargetLowPriorityNodes,
-                    "TargetLowPriorityComputeNodes",
+                    nameof(TargetLowPriorityComputeNodes),
                     BindingAccess.Read | BindingAccess.Write);
                 this.TaskSchedulingPolicyProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskSchedulingPolicy, o => new TaskSchedulingPolicy(o)),
-                    "TaskSchedulingPolicy",
+                    nameof(TaskSchedulingPolicy),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserAccountsProperty = this.CreatePropertyAccessor(
                     UserAccount.ConvertFromProtocolCollection(protocolObject.UserAccounts),
-                    "UserAccounts",
+                    nameof(UserAccounts),
                     BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.VirtualMachineConfiguration, o => new VirtualMachineConfiguration(o)),
-                    "VirtualMachineConfiguration",
+                    nameof(VirtualMachineConfiguration),
                     BindingAccess.Read | BindingAccess.Write);
                 this.VirtualMachineSizeProperty = this.CreatePropertyAccessor(
                     protocolObject.VmSize,
-                    "VirtualMachineSize",
+                    nameof(VirtualMachineSize),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

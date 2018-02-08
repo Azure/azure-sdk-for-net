@@ -50,124 +50,124 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("CommonEnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
-                this.ConstraintsProperty = this.CreatePropertyAccessor<JobConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
-                this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>("CreationTime", BindingAccess.None);
-                this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
-                this.ETagProperty = this.CreatePropertyAccessor<string>("ETag", BindingAccess.None);
-                this.ExecutionInformationProperty = this.CreatePropertyAccessor<JobExecutionInformation>("ExecutionInformation", BindingAccess.None);
-                this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
-                this.JobManagerTaskProperty = this.CreatePropertyAccessor<JobManagerTask>("JobManagerTask", BindingAccess.Read | BindingAccess.Write);
-                this.JobPreparationTaskProperty = this.CreatePropertyAccessor<JobPreparationTask>("JobPreparationTask", BindingAccess.Read | BindingAccess.Write);
-                this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>("JobReleaseTask", BindingAccess.Read | BindingAccess.Write);
-                this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>("LastModified", BindingAccess.None);
-                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>("Metadata", BindingAccess.Read | BindingAccess.Write);
-                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>("OnAllTasksComplete", BindingAccess.Read | BindingAccess.Write);
-                this.OnTaskFailureProperty = this.CreatePropertyAccessor<Common.OnTaskFailure?>("OnTaskFailure", BindingAccess.Read | BindingAccess.Write);
-                this.PoolInformationProperty = this.CreatePropertyAccessor<PoolInformation>("PoolInformation", BindingAccess.Read | BindingAccess.Write);
-                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.JobState?>("PreviousState", BindingAccess.None);
-                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
-                this.PriorityProperty = this.CreatePropertyAccessor<int?>("Priority", BindingAccess.Read | BindingAccess.Write);
-                this.StateProperty = this.CreatePropertyAccessor<Common.JobState?>("State", BindingAccess.None);
-                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("StateTransitionTime", BindingAccess.None);
-                this.StatisticsProperty = this.CreatePropertyAccessor<JobStatistics>("Statistics", BindingAccess.None);
-                this.UrlProperty = this.CreatePropertyAccessor<string>("Url", BindingAccess.None);
-                this.UsesTaskDependenciesProperty = this.CreatePropertyAccessor<bool?>("UsesTaskDependencies", BindingAccess.Read | BindingAccess.Write);
+                this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(CommonEnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
+                this.ConstraintsProperty = this.CreatePropertyAccessor<JobConstraints>(nameof(Constraints), BindingAccess.Read | BindingAccess.Write);
+                this.CreationTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(CreationTime), BindingAccess.None);
+                this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
+                this.ETagProperty = this.CreatePropertyAccessor<string>(nameof(ETag), BindingAccess.None);
+                this.ExecutionInformationProperty = this.CreatePropertyAccessor<JobExecutionInformation>(nameof(ExecutionInformation), BindingAccess.None);
+                this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.JobManagerTaskProperty = this.CreatePropertyAccessor<JobManagerTask>(nameof(JobManagerTask), BindingAccess.Read | BindingAccess.Write);
+                this.JobPreparationTaskProperty = this.CreatePropertyAccessor<JobPreparationTask>(nameof(JobPreparationTask), BindingAccess.Read | BindingAccess.Write);
+                this.JobReleaseTaskProperty = this.CreatePropertyAccessor<JobReleaseTask>(nameof(JobReleaseTask), BindingAccess.Read | BindingAccess.Write);
+                this.LastModifiedProperty = this.CreatePropertyAccessor<DateTime?>(nameof(LastModified), BindingAccess.None);
+                this.MetadataProperty = this.CreatePropertyAccessor<IList<MetadataItem>>(nameof(Metadata), BindingAccess.Read | BindingAccess.Write);
+                this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor<Common.OnAllTasksComplete?>(nameof(OnAllTasksComplete), BindingAccess.Read | BindingAccess.Write);
+                this.OnTaskFailureProperty = this.CreatePropertyAccessor<Common.OnTaskFailure?>(nameof(OnTaskFailure), BindingAccess.Read | BindingAccess.Write);
+                this.PoolInformationProperty = this.CreatePropertyAccessor<PoolInformation>(nameof(PoolInformation), BindingAccess.Read | BindingAccess.Write);
+                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.JobState?>(nameof(PreviousState), BindingAccess.None);
+                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(PreviousStateTransitionTime), BindingAccess.None);
+                this.PriorityProperty = this.CreatePropertyAccessor<int?>(nameof(Priority), BindingAccess.Read | BindingAccess.Write);
+                this.StateProperty = this.CreatePropertyAccessor<Common.JobState?>(nameof(State), BindingAccess.None);
+                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(StateTransitionTime), BindingAccess.None);
+                this.StatisticsProperty = this.CreatePropertyAccessor<JobStatistics>(nameof(Statistics), BindingAccess.None);
+                this.UrlProperty = this.CreatePropertyAccessor<string>(nameof(Url), BindingAccess.None);
+                this.UsesTaskDependenciesProperty = this.CreatePropertyAccessor<bool?>(nameof(UsesTaskDependencies), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.CloudJob protocolObject) : base(BindingState.Bound)
             {
                 this.CommonEnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollectionAndFreeze(protocolObject.CommonEnvironmentSettings),
-                    "CommonEnvironmentSettings",
+                    nameof(CommonEnvironmentSettings),
                     BindingAccess.Read);
                 this.ConstraintsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Constraints, o => new JobConstraints(o)),
-                    "Constraints",
+                    nameof(Constraints),
                     BindingAccess.Read | BindingAccess.Write);
                 this.CreationTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.CreationTime,
-                    "CreationTime",
+                    nameof(CreationTime),
                     BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
-                    "DisplayName",
+                    nameof(DisplayName),
                     BindingAccess.Read);
                 this.ETagProperty = this.CreatePropertyAccessor(
                     protocolObject.ETag,
-                    "ETag",
+                    nameof(ETag),
                     BindingAccess.Read);
                 this.ExecutionInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExecutionInfo, o => new JobExecutionInformation(o).Freeze()),
-                    "ExecutionInformation",
+                    nameof(ExecutionInformation),
                     BindingAccess.Read);
                 this.IdProperty = this.CreatePropertyAccessor(
                     protocolObject.Id,
-                    "Id",
+                    nameof(Id),
                     BindingAccess.Read);
                 this.JobManagerTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobManagerTask, o => new JobManagerTask(o).Freeze()),
-                    "JobManagerTask",
+                    nameof(JobManagerTask),
                     BindingAccess.Read);
                 this.JobPreparationTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobPreparationTask, o => new JobPreparationTask(o).Freeze()),
-                    "JobPreparationTask",
+                    nameof(JobPreparationTask),
                     BindingAccess.Read);
                 this.JobReleaseTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.JobReleaseTask, o => new JobReleaseTask(o).Freeze()),
-                    "JobReleaseTask",
+                    nameof(JobReleaseTask),
                     BindingAccess.Read);
                 this.LastModifiedProperty = this.CreatePropertyAccessor(
                     protocolObject.LastModified,
-                    "LastModified",
+                    nameof(LastModified),
                     BindingAccess.Read);
                 this.MetadataProperty = this.CreatePropertyAccessor(
                     MetadataItem.ConvertFromProtocolCollection(protocolObject.Metadata),
-                    "Metadata",
+                    nameof(Metadata),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OnAllTasksCompleteProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.OnAllTasksComplete, Common.OnAllTasksComplete>(protocolObject.OnAllTasksComplete),
-                    "OnAllTasksComplete",
+                    nameof(OnAllTasksComplete),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OnTaskFailureProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.OnTaskFailure, Common.OnTaskFailure>(protocolObject.OnTaskFailure),
-                    "OnTaskFailure",
+                    nameof(OnTaskFailure),
                     BindingAccess.Read);
                 this.PoolInformationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.PoolInfo, o => new PoolInformation(o)),
-                    "PoolInformation",
+                    nameof(PoolInformation),
                     BindingAccess.Read | BindingAccess.Write);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.JobState, Common.JobState>(protocolObject.PreviousState),
-                    "PreviousState",
+                    nameof(PreviousState),
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.PreviousStateTransitionTime,
-                    "PreviousStateTransitionTime",
+                    nameof(PreviousStateTransitionTime),
                     BindingAccess.Read);
                 this.PriorityProperty = this.CreatePropertyAccessor(
                     protocolObject.Priority,
-                    "Priority",
+                    nameof(Priority),
                     BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.JobState, Common.JobState>(protocolObject.State),
-                    "State",
+                    nameof(State),
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.StateTransitionTime,
-                    "StateTransitionTime",
+                    nameof(StateTransitionTime),
                     BindingAccess.Read);
                 this.StatisticsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Stats, o => new JobStatistics(o).Freeze()),
-                    "Statistics",
+                    nameof(Statistics),
                     BindingAccess.Read);
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
-                    "Url",
+                    nameof(Url),
                     BindingAccess.Read);
                 this.UsesTaskDependenciesProperty = this.CreatePropertyAccessor(
                     protocolObject.UsesTaskDependencies,
-                    "UsesTaskDependencies",
+                    nameof(UsesTaskDependencies),
                     BindingAccess.Read);
             }
         }

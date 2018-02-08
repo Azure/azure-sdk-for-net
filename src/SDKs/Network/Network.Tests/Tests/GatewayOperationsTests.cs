@@ -4,7 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
@@ -13,6 +16,8 @@ using ResourceGroups.Tests;
 using Xunit;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
+using Microsoft.Rest.Azure;
+using Newtonsoft.Json;
 
 namespace Networks.Tests
 {
@@ -27,13 +32,29 @@ namespace Networks.Tests
 
     public class GatewayOperationsTests
     {
+        private TestEnvironment _testEnvironment;
+
+        private enum TestEnvironmentSettings
+        {
+            ClientRootCertName,
+            SamplePublicCertData,
+            SampleCertThumbprint
+        }
+
         public GatewayOperationsTests()
         {
             HttpMockServer.RecordsDirectory = "SessionRecords";
+            this._testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+
+            // Initialize your custom data here
+            // The following need to be populated if the test needs it - CertName, CertData, CertThumbprint
+            // this._testEnvironment.ConnectionString.KeyValuePairs.Add(TestEnvironmentSettings.ClientRootCertName.ToString(), "CertificateName");
+            // this._testEnvironment.ConnectionString.KeyValuePairs.Add(TestEnvironmentSettings.SamplePublicCertData.ToString(), "Base64 encoded certificate data");
+            // this._testEnvironment.ConnectionString.KeyValuePairs.Add(TestEnvironmentSettings.SampleCertThumbprint.ToString(), "Certificate Thumbprint");
         }
 
         // Tests Resource:-VirtualNetworkGateway 6 APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -166,7 +187,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-LocalNetworkGateway 5 APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void LocalNettworkGatewayOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -256,7 +277,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionWithBgpTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -424,7 +445,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGatewayConnection with Ipsec Policies
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionWithIpsecPoliciesTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -659,7 +680,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGatewayConnection 5 APIs & Set-Remove default site
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -827,10 +848,15 @@ namespace Networks.Tests
                 Assert.Equal(4, getVirtualNetworkGatewayConnectionResponse.RoutingWeight);
                 Assert.Equal("xyz", getVirtualNetworkGatewayConnectionResponse.SharedKey);
 
-                // 4. ListVitualNetworkGatewayConnections API
+                // 4A. ListVirtualNetworkGatewayConnections API
                 var listVirtualNetworkGatewayConectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.List(resourceGroupName);
                 Console.WriteLine("ListVirtualNetworkGatewayConnections count ={0} ", listVirtualNetworkGatewayConectionResponse.Count());
                 Assert.Equal(1, listVirtualNetworkGatewayConectionResponse.Count());
+
+                // 4B. VirtualNetworkGateway ListConnections API
+                var virtualNetworkGatewayListConnectionsResponse = networkManagementClient.VirtualNetworkGateways.ListConnections(resourceGroupName, virtualNetworkGatewayName);
+                Assert.Equal(1, virtualNetworkGatewayListConnectionsResponse.Count());
+                Assert.Equal(VirtualNetworkGatewayConnectionName, virtualNetworkGatewayListConnectionsResponse.First().Name);
 
                 // 5A. DeleteVirtualNetworkGatewayConnection API
                 networkManagementClient.VirtualNetworkGatewayConnections.Delete(resourceGroupName, VirtualNetworkGatewayConnectionName);
@@ -844,7 +870,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGatewayConnectionSharedKey 3 APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayConnectionSharedKeyOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -997,7 +1023,7 @@ namespace Networks.Tests
         }
 
         // Tests Resource:-VirtualNetworkGateway P2S APIs:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayP2SOperationsApisTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1149,9 +1175,8 @@ namespace Networks.Tests
                     getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes[0].Equals(newAddressPrefixes), "P2S client Address Pool Update is Failed!");
 
                 // 3.Add client Root certificate
-                string clientRootCertName = "BrkLiteTestMSFTRootCA.cer";
-                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
-                string samplePublicCertData = "MIIDUzCCAj+gAwIBAgIQRggGmrpGj4pCblTanQRNUjAJBgUrDgMCHQUAMDQxEjAQBgNVBAoTCU1pY3Jvc29mdDEeMBwGA1UEAxMVQnJrIExpdGUgVGVzdCBSb290IENBMB4XDTEzMDExOTAwMjQxOFoXDTIxMDExOTAwMjQxN1owNDESMBAGA1UEChMJTWljcm9zb2Z0MR4wHAYDVQQDExVCcmsgTGl0ZSBUZXN0IFJvb3QgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC7SmE+iPULK0Rs7mQBO/6a6B6/G9BaMxHgDGzAmSG0Qsyt5e08aqgFnPdkMl3zRJw3lPKGha/JCvHRNrO8UpeAfc4IXWaqxx2iBipHjwmHPHh7+VB8lU0EJcUe7WBAI2n/sgfCwc+xKtuyRVlOhT6qw/nAi8e5don/iHPU6q7GCcnqoqtceQ/pJ8m66cvAnxwJlBFOTninhb2VjtvOfMQ07zPP+ZuYDPxvX5v3nd6yDa98yW4dZPuiGO2s6zJAfOPT2BrtyvLekItnSgAw3U5C0bOb+8XVKaDZQXbGEtOw6NZvD4L2yLd47nGkN2QXloiPLGyetrj3Z2pZYcrZBo8hAgMBAAGjaTBnMGUGA1UdAQReMFyAEOncRAPNcvJDoe4WP/gH2U+hNjA0MRIwEAYDVQQKEwlNaWNyb3NvZnQxHjAcBgNVBAMTFUJyayBMaXRlIFRlc3QgUm9vdCBDQYIQRggGmrpGj4pCblTanQRNUjAJBgUrDgMCHQUAA4IBAQCGyHhMdygS0g2tEUtRT4KFM+qqUY5HBpbIXNAav1a1dmXpHQCziuuxxzu3iq4XwnWUF1OabdDE2cpxNDOWxSsIxfEBf9ifaoz/O1ToJ0K757q2Rm2NWqQ7bNN8ArhvkNWa95S9gk9ZHZLUcjqanf0F8taJCYgzcbUSp+VBe9DcN89sJpYvfiBiAsMVqGPc/fHJgTScK+8QYrTRMubtFmXHbzBSO/KTAP5rBTxse88EGjK5F8wcedvge2Ksk6XjL3sZ19+Oj8KTQ72wihN900p1WQldHrrnbixSpmHBXbHr9U0NQigrJp5NphfuU5j81C8ixvfUdwyLmTv7rNA7GTAD";
+                string clientRootCertName = this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.ClientRootCertName.ToString()];
+                string samplePublicCertData = this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.SamplePublicCertData.ToString()];
                 VpnClientRootCertificate clientRootCert = new VpnClientRootCertificate()
                 {
                     Name = clientRootCertName,
@@ -1191,7 +1216,7 @@ namespace Networks.Tests
                 Assert.True(getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientRevokedCertificates.Count() == 0);
 
                 // 8. Try to revoke Vpn client certificate which is not there and verify proper error comes back
-                string sampleCertThumpprint = "5405D9A8AB2A303D4E772C444BC88C3B97F55F78";
+                string sampleCertThumpprint = this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.SampleCertThumbprint.ToString()];
                 VpnClientRevokedCertificate sampleClientCert = new VpnClientRevokedCertificate()
                 {
                     Name = "sampleClientCert.cer",
@@ -1216,7 +1241,7 @@ namespace Networks.Tests
 
 
         // Tests Resource:-VirtualNetworkGateway ActiveActive Feature Test:-
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayActiveActiveFeatureTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1357,7 +1382,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void VirtualNetworkGatewayBgpRouteApiTest()
         {
             RecordedDelegatingHandler handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1550,6 +1575,346 @@ namespace Networks.Tests
                 Assert.True(learnedRoutes.Count() > 0, "At least one route should be advertised to gw2");
                 IEnumerable<BgpPeerStatus> gw1Peers = networkManagementClient.VirtualNetworkGateways.GetBgpPeerStatus(resourceGroupName, gw1Name).Value;
                 Assert.True(gw1Peers.Count() > 0, "At least one peer should be connected");
+            }
+        }
+
+        [Fact(Skip = "Disable tests")]
+        public void VirtualNetworkGatewayGenerateVpnProfileTest()
+        {
+            var handler1 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
+            var handler2 = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient =
+                    ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient =
+                    NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location =
+                    NetworkManagementTestUtilities.GetResourceLocation(resourcesClient,
+                        "Microsoft.Network/virtualnetworkgateways");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+
+                // 1.CreateVirtualNetworkGateway
+                // A.Prerequisite:-Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
+                string publicIpName = TestUtilities.GenerateName();
+                string domainNameLabel = TestUtilities.GenerateName();
+                var nic1publicIp = TestHelper.CreateDefaultPublicIpAddress(publicIpName, resourceGroupName,
+                    domainNameLabel, location, networkManagementClient);
+                Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+
+
+                // B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = "GatewaySubnet";
+
+                var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location,
+                    networkManagementClient);
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
+
+                // C.CreateVirtualNetworkGateway API with P2S client Address Pool defined
+                string virtualNetworkGatewayName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+                string addressPrefixes = "192.168.0.0/16";
+                string clientRootCertName = this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.ClientRootCertName.ToString()];
+                string samplePublicCertData = this._testEnvironment.ConnectionString.KeyValuePairs[TestEnvironmentSettings.SamplePublicCertData.ToString()];
+                VpnClientRootCertificate clientRootCert = new VpnClientRootCertificate()
+                {
+                    Name = clientRootCertName,
+                    PublicCertData = samplePublicCertData
+                };
+
+                var virtualNetworkGateway = new VirtualNetworkGateway()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                    {
+                        {"key", "value"}
+                    },
+                    EnableBgp = false,
+                    GatewayType = VirtualNetworkGatewayType.Vpn,
+                    VpnType = VpnType.RouteBased,
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                    {
+                        new VirtualNetworkGatewayIPConfiguration()
+                        {
+                            Name = ipConfigName,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                            PublicIPAddress = new SubResource()
+                            {
+                                Id = nic1publicIp.Id
+                            },
+                            Subnet = new SubResource()
+                            {
+                                Id = getSubnetResponse.Id
+                            }
+                        }
+                    },
+                    VpnClientConfiguration = new VpnClientConfiguration()
+                    {
+                        VpnClientAddressPool = new AddressSpace()
+                        {
+                            AddressPrefixes = new List<string>()
+                            {
+                                addressPrefixes
+                            },
+                        }
+                    },
+                    Sku = new VirtualNetworkGatewaySku()
+                    {
+                        Name = VirtualNetworkGatewaySkuName.VpnGw2,
+                        Tier = VirtualNetworkGatewaySkuTier.VpnGw2
+                    }
+                };
+
+                var putVirtualNetworkGatewayResponse =
+                    networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName,
+                        virtualNetworkGatewayName, virtualNetworkGateway);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+
+                // 2.GetVirtualNetworkGateway API
+                var getVirtualNetworkGatewayResponse =
+                    networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
+                Console.WriteLine(
+                    "Gateway details:- GatewayLocation:{0}, GatewayId:{1}, GatewayName:{2}, GatewayType:{3}, VpnType={4} GatewaySku: name-{5} Tier-{6}",
+                    getVirtualNetworkGatewayResponse.Location,
+                    getVirtualNetworkGatewayResponse.Id, getVirtualNetworkGatewayResponse.Name,
+                    getVirtualNetworkGatewayResponse.GatewayType, getVirtualNetworkGatewayResponse.VpnType,
+                    getVirtualNetworkGatewayResponse.Sku.Name, getVirtualNetworkGatewayResponse.Sku.Tier);
+                Assert.Equal(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.GatewayType);
+                Assert.Equal(VpnType.RouteBased, getVirtualNetworkGatewayResponse.VpnType);
+                Assert.Equal(VirtualNetworkGatewaySkuTier.VpnGw2, getVirtualNetworkGatewayResponse.Sku.Tier);
+                Assert.NotNull(getVirtualNetworkGatewayResponse.VpnClientConfiguration);
+                Assert.NotNull(getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientAddressPool);
+                Assert.True(getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes
+                                .Count == 1 &&
+                            getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientAddressPool
+                                .AddressPrefixes[0].Equals(addressPrefixes),
+                    "P2S client Address Pool is not set on Gateway!");
+
+                // Update P2S VPNClient Address Pool and add radius settings
+                string newAddressPrefixes = "200.168.0.0/16";
+                getVirtualNetworkGatewayResponse.VpnClientConfiguration = new VpnClientConfiguration()
+                {
+                    VpnClientAddressPool = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            newAddressPrefixes
+                        }
+                    },
+                    RadiusServerAddress = @"8.8.8.8",
+                    RadiusServerSecret = @"TestRadiusSecret",
+                };
+                getVirtualNetworkGatewayResponse.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes = new List<string>() { newAddressPrefixes };
+                putVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+
+                // 5.Generate P2S Vpnclient package
+                var vpnClientParameters = new VpnClientParameters()
+                {
+                    RadiusServerAuthCertificate = samplePublicCertData,
+                    AuthenticationMethod = AuthenticationMethod.EAPTLS
+                };
+
+                string packageUrl =
+                    networkManagementClient.VirtualNetworkGateways.GenerateGatewayVpnProfile(resourceGroupName,
+                        virtualNetworkGatewayName, vpnClientParameters);
+
+                Assert.NotNull(packageUrl);
+                Assert.NotEmpty(packageUrl);
+                Console.WriteLine("Vpn client package Url from GENERATE operation = {0}", packageUrl);
+
+                // Retry to get the package url using the get profile API
+                string packageUrlFromGetOperation = networkManagementClient.VirtualNetworkGateways.GetGatewayVpnProfile(resourceGroupName, virtualNetworkGatewayName);
+                Assert.NotNull(packageUrlFromGetOperation);
+                Assert.NotEmpty(packageUrlFromGetOperation);
+                Console.WriteLine("Vpn client package Url from GET operation = {0}", packageUrlFromGetOperation);
+            }
+        }
+
+        [Fact(Skip = "Disable tests")]
+        public void VirtualNetworkGatewayVpnDeviceConfigurationApisTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/connections");
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                // CreateVirtualNetworkGatewayConnection API
+                // Create LocalNetworkGateway2
+                string localNetworkGatewayName = TestUtilities.GenerateName();
+                string gatewayIp = "192.168.3.4";
+
+                var localNetworkGateway = new LocalNetworkGateway()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                    {
+                        {"test","value"}
+                    },
+                    GatewayIpAddress = gatewayIp,
+                    LocalNetworkAddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "192.168.0.0/16",
+                        }
+                    }
+                };
+
+                var putLocalNetworkGatewayResponse = networkManagementClient.LocalNetworkGateways.CreateOrUpdate(resourceGroupName, localNetworkGatewayName, localNetworkGateway);
+                Assert.Equal("Succeeded", putLocalNetworkGatewayResponse.ProvisioningState);
+                var getLocalNetworkGatewayResponse = networkManagementClient.LocalNetworkGateways.Get(resourceGroupName, localNetworkGatewayName);
+
+                // B. Prerequisite:- Create VirtualNetworkGateway1
+                // a. Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
+                string publicIpName = TestUtilities.GenerateName();
+                string domainNameLabel = TestUtilities.GenerateName();
+
+                var nic1publicIp = TestHelper.CreateDefaultPublicIpAddress(publicIpName, resourceGroupName, domainNameLabel, location, networkManagementClient);
+                Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp.Id);
+
+                // b. Create Virtual Network using Put VirtualNetwork API
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = "GatewaySubnet";
+
+                var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkManagementClient);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
+
+                //c. CreateVirtualNetworkGateway API (Also, Set Default local network site)
+                string virtualNetworkGatewayName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                var virtualNetworkGateway = new VirtualNetworkGateway()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                    {
+                        {"key","value"}
+                    },
+                    EnableBgp = false,
+                    GatewayType = VirtualNetworkGatewayType.Vpn,
+                    VpnType = VpnType.RouteBased,
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                    {
+                        new VirtualNetworkGatewayIPConfiguration()
+                        {
+                            Name = ipConfigName,
+                            PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                            PublicIPAddress = new SubResource()
+                            {
+                                Id = nic1publicIp.Id
+                            },
+                            Subnet = new SubResource()
+                            {
+                                Id = getSubnetResponse.Id
+                            }
+                        }
+                    },
+                    Sku = new VirtualNetworkGatewaySku()
+                    {
+                        Name = VirtualNetworkGatewaySkuName.Standard,
+                        Tier = VirtualNetworkGatewaySkuTier.Standard
+                    }
+                };
+
+                var putVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+                Console.WriteLine("Virtual Network Gateway is deployed successfully.");
+                var getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
+
+                // C. CreaetVirtualNetworkGatewayConnection API - Ipsec policy and policybased TS enabled
+                string virtualNetworkGatewayConnectionName = TestUtilities.GenerateName();
+                var virtualNetworkGatewayConnection = new VirtualNetworkGatewayConnection()
+                {
+                    Location = location,
+                    VirtualNetworkGateway1 = getVirtualNetworkGatewayResponse,
+                    LocalNetworkGateway2 = getLocalNetworkGatewayResponse,
+                    ConnectionType = VirtualNetworkGatewayConnectionType.IPsec,
+                    RoutingWeight = 3,
+                    SharedKey = "abc"
+                };
+
+                virtualNetworkGatewayConnection.IpsecPolicies = new List<IpsecPolicy>()
+                {
+                    new IpsecPolicy()
+                    {
+                        IpsecEncryption = IpsecEncryption.AES128,
+                        IpsecIntegrity = IpsecIntegrity.SHA256,
+                        IkeEncryption = IkeEncryption.AES192,
+                        IkeIntegrity = IkeIntegrity.SHA1,
+                        DhGroup = DhGroup.DHGroup2,
+                        PfsGroup = PfsGroup.PFS1,
+                        SaDataSizeKilobytes = 1024,
+                        SaLifeTimeSeconds = 300
+                    }
+                };
+
+                virtualNetworkGatewayConnection.UsePolicyBasedTrafficSelectors = true;
+
+                var putVirtualNetworkGatewayConnectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayConnectionName, virtualNetworkGatewayConnection);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayConnectionResponse.ProvisioningState);
+
+                // 2. GetVirtualNetworkGatewayConnection API
+                var getVirtualNetworkGatewayConnectionResponse = networkManagementClient.VirtualNetworkGatewayConnections.Get(resourceGroupName, virtualNetworkGatewayConnectionName);
+                Console.WriteLine("GatewayConnection details:- GatewayLocation: {0}, GatewayConnectionId:{1}, VirtualNetworkGateway1 name={2} & Id={3}, LocalNetworkGateway2 name={4} & Id={5}, " +
+                                  "IpsecPolicies Count={6}, UsePolicyBasedTS={7}",
+                    getVirtualNetworkGatewayConnectionResponse.Location, getVirtualNetworkGatewayConnectionResponse.Id,
+                    getVirtualNetworkGatewayConnectionResponse.Name,
+                    getVirtualNetworkGatewayConnectionResponse.VirtualNetworkGateway1.Name, getVirtualNetworkGatewayConnectionResponse.VirtualNetworkGateway1.Id,
+                    getVirtualNetworkGatewayConnectionResponse.LocalNetworkGateway2.Name, getVirtualNetworkGatewayConnectionResponse.LocalNetworkGateway2.Id,
+                    getVirtualNetworkGatewayConnectionResponse.IpsecPolicies.Count, getVirtualNetworkGatewayConnectionResponse.UsePolicyBasedTrafficSelectors);
+
+                // List supported Vpn Devices
+                var supportedVpnDevices = networkManagementClient.VirtualNetworkGateways.SupportedVpnDevices(resourceGroupName, virtualNetworkGatewayName);
+                Assert.NotNull(supportedVpnDevices);
+                Assert.NotEmpty(supportedVpnDevices);
+
+                // Parse the supported devices list
+                // Then use the first device to get the configuration
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.LoadXml(supportedVpnDevices);
+                XmlNode vendorNode = xmldoc.SelectSingleNode("//Vendor");
+                XmlNode deviceNode = vendorNode.FirstChild;
+                string vendorName = vendorNode.Attributes["name"].Value;
+                string deviceName = deviceNode.Attributes["name"].Value;
+                string firmwareVersion = deviceNode.FirstChild.Attributes["name"].Value;
+
+                VpnDeviceScriptParameters scriptParams = new VpnDeviceScriptParameters()
+                {
+                    DeviceFamily = deviceName,
+                    FirmwareVersion = firmwareVersion,
+                    Vendor = vendorName
+                };
+
+                var vpnDeviceConfiguration =
+                    networkManagementClient.VirtualNetworkGateways.VpnDeviceConfigurationScript(resourceGroupName, virtualNetworkGatewayConnectionName, scriptParams);
+
+                Assert.NotNull(vpnDeviceConfiguration);
+                Assert.NotEmpty(vpnDeviceConfiguration);
             }
         }
     }

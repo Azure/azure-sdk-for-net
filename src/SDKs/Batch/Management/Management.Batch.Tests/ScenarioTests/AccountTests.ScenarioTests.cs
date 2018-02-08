@@ -30,9 +30,19 @@ namespace Batch.Tests.ScenarioTests
 
                 try
                 {
+                    // Check if the account exists
+                    var checkAvailabilityResult = await this.BatchManagementClient.Location.CheckNameAvailabilityAsync(this.Location, batchAccountName);
+                    Assert.True(checkAvailabilityResult.NameAvailable);
+
                     // Create an account
                     BatchAccountCreateParameters createParams = new BatchAccountCreateParameters(this.Location);
                     await this.BatchManagementClient.BatchAccount.CreateAsync(resourceGroupName, batchAccountName, createParams);
+
+                    // Check if the account exists now
+                    checkAvailabilityResult = await this.BatchManagementClient.Location.CheckNameAvailabilityAsync(this.Location, batchAccountName);
+                    Assert.False(checkAvailabilityResult.NameAvailable);
+                    Assert.NotNull(checkAvailabilityResult.Message);
+                    Assert.NotNull(checkAvailabilityResult.Reason);
 
                     // Get the account and verify some properties
                     BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
@@ -57,7 +67,7 @@ namespace Batch.Tests.ScenarioTests
                         nextLink = listResponse.NextPageLink;
                     }
 
-                    Assert.Equal(1, accounts.Count);
+                    Assert.Single(accounts);
                     Assert.Equal(batchAccountName, accounts.First().Name);
 
                     // Delete the account
@@ -116,9 +126,10 @@ namespace Batch.Tests.ScenarioTests
                         "",
                         "vaults",
                         keyvaultName,
-                        "2015-06-01",
-                        new GenericResource(this.Location)
+                        "2016-10-01",
+                        new GenericResource()
                         {
+                            Location = this.Location,
                             Properties = new Dictionary<string, object>
                             {
                                 {"tenantId", "72f988bf-86f1-41af-91ab-2d7cd011db47"},

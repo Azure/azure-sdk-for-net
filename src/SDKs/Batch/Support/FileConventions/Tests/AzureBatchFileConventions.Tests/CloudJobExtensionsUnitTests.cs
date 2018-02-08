@@ -27,14 +27,14 @@ using Xunit;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
 {
-    [Arbitrary(typeof(BatchIdGenerator))]
+    [Properties(Arbitrary = new [] { typeof(BatchIdGenerator) })]
     public class CloudJobExtensionsUnitTests
     {
         [Fact]
         public void CannotCreateOutputStorageForNullJob()
         {
             CloudJob job = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
             var ex = Assert.Throws<ArgumentNullException>(() => job.OutputStorage(storageAccount));
             Assert.Equal("job", ex.ParamName);
         }
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         public async Task CannotPrepareOutputStorageForNullJob()
         {
             CloudJob job = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
             var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => job.PrepareOutputStorageAsync(storageAccount));
             Assert.Equal("job", ex.ParamName);
         }
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         public void CannotGetOutputStorageUrlForNullJob()
         {
             CloudJob job = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
             var ex = Assert.Throws<ArgumentNullException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(5)));
             Assert.Equal("job", ex.ParamName);
         }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
-                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
                 var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(0)));
                 Assert.Equal("expiryTime", ex.ParamName);
             }
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
-                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
                 var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(-5)));
                 Assert.Equal("expiryTime", ex.ParamName);
             }

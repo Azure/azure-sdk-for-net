@@ -18,7 +18,7 @@ namespace Network.Tests.Tests
 
     public class RouteTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void RoutesApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -174,7 +174,7 @@ namespace Network.Tests.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void RoutesHopTypeTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

@@ -2,8 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.Azure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -42,29 +43,10 @@ namespace Compute.Tests
             }
         }
 
-        public static void ValidateVirtualMachineSizeListResponse(IEnumerable<VirtualMachineSize> vmSizeListResponse)
+        public static void ValidateVirtualMachineSizeListResponse(IEnumerable<VirtualMachineSize> vmSizeListResponse, bool hasAZ = false,
+            bool? writeAcceleratorEnabled = null)
         {
-            var expectedVMSizePropertiesList = new List<VirtualMachineSize>()
-            {
-                new VirtualMachineSize()
-                {
-                    Name = "Standard_A0",
-                    MemoryInMB = 768,
-                    NumberOfCores = 1,
-                    OsDiskSizeInMB = 130048,
-                    ResourceDiskSizeInMB = 20480,
-                    MaxDataDiskCount = 1
-                },
-                new VirtualMachineSize()
-                {
-                    Name = "Standard_A1",
-                    MemoryInMB = 1792,
-                    NumberOfCores = 1,
-                    OsDiskSizeInMB = 130048,
-                    ResourceDiskSizeInMB = 71680,
-                    MaxDataDiskCount = 2
-                }
-            };
+            var expectedVMSizePropertiesList = GetExpectedVirtualMachineSize(hasAZ, writeAcceleratorEnabled);
 
             IEnumerable<VirtualMachineSize> vmSizesPropertyList = vmSizeListResponse;
             Assert.NotNull(vmSizesPropertyList);
@@ -77,9 +59,81 @@ namespace Compute.Tests
             CompareVMSizes(expectedVMSizeProperties, vmSizeProperties);
 
             expectedVMSizeProperties = expectedVMSizePropertiesList[1];
-            vmSizeProperties = vmSizesPropertyList.FirstOrDefault(x => x.Name == expectedVMSizeProperties.Name);
+            vmSizeProperties = vmSizesPropertyList.FirstOrDefault(x => x.Name.Equals(expectedVMSizeProperties.Name, StringComparison.Ordinal));
             Assert.NotNull(vmSizeProperties);
             CompareVMSizes(expectedVMSizeProperties, vmSizeProperties);
+        }
+
+        private static List<VirtualMachineSize> GetExpectedVirtualMachineSize(bool hasAZ, bool? writeAcceleratorEnabled = null)
+        {
+            var expectedVMSizePropertiesList = new List<VirtualMachineSize>();
+            if (writeAcceleratorEnabled.HasValue && writeAcceleratorEnabled.Value)
+            {
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                {
+                    Name = VirtualMachineSizeTypes.StandardM64s,
+                    MemoryInMB = 1024000,
+                    NumberOfCores = 64,
+                    OsDiskSizeInMB = 1047552,
+                    ResourceDiskSizeInMB = 2048000,
+                    MaxDataDiskCount = 64
+                });
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                {
+                    Name = VirtualMachineSizeTypes.StandardM6416ms,
+                    MemoryInMB = 1792000,
+                    NumberOfCores = 64,
+                    OsDiskSizeInMB = 1047552,
+                    ResourceDiskSizeInMB = 2048000,
+                    MaxDataDiskCount = 64
+                });
+            }
+            else if (hasAZ)
+            {
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                {
+                    Name = VirtualMachineSizeTypes.StandardD1V2,
+                    MemoryInMB = 3584,
+                    NumberOfCores = 1,
+                    OsDiskSizeInMB = 1047552,
+                    ResourceDiskSizeInMB = 51200,
+                    MaxDataDiskCount = 4
+                });
+
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                {
+                    Name = VirtualMachineSizeTypes.StandardD2V2,
+                    MemoryInMB = 7168,
+                    NumberOfCores = 2,
+                    OsDiskSizeInMB = 102400,
+                    ResourceDiskSizeInMB = 102400,
+                    MaxDataDiskCount = 8
+                });
+            }
+            else
+            {
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                    {
+                        Name = VirtualMachineSizeTypes.StandardA0,
+                        MemoryInMB = 768,
+                        NumberOfCores = 1,
+                        OsDiskSizeInMB = 130048,
+                        ResourceDiskSizeInMB = 20480,
+                        MaxDataDiskCount = 1
+                    });
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                    {
+                        Name = VirtualMachineSizeTypes.StandardA1,
+                        MemoryInMB = 1792,
+                        NumberOfCores = 1,
+                        OsDiskSizeInMB = 130048,
+                        ResourceDiskSizeInMB = 71680,
+                        MaxDataDiskCount = 2
+                    });
+            }
+
+
+            return expectedVMSizePropertiesList;
         }
 
         private static void CompareVMSizes(VirtualMachineSize expectedVMSize, VirtualMachineSize vmSize)

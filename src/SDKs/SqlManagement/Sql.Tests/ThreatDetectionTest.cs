@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -17,16 +14,18 @@ namespace Sql.Tests
     public class ThreatDetectionTest
     {
         [Fact]
-        public void TestThreatDetectionApis()
+        public void TestThreatDetection()
         {
             string testPrefix = "server-security-alert-test-";
-            string testName = this.GetType().FullName;
 
-            SqlManagementTestUtilities.RunTestInNewV12Server(testName, "TestThreatDetection", testPrefix,
-                 (resClient, sqlClient, resourceGroup, server) =>
-                 {
-                     // create some databases in server
-                     Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // create some databases in server
+                Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
                         sqlClient, resourceGroup.Name, server, testPrefix, 2).Result;
 
 #if false // Commented out due to issues with async operation response
@@ -59,33 +58,33 @@ namespace Sql.Tests
 
 #endif
 
-                     // ******* Database threat detection *******
+                // ******* Database threat detection *******
 
-                     string dbName = databases[0].Name;
-                     DatabaseSecurityAlertPolicy defaultDatabasePolicyResponse = sqlClient.Databases.GetThreatDetectionPolicy(resourceGroup.Name, server.Name, dbName);
+                string dbName = databases[0].Name;
+                DatabaseSecurityAlertPolicy defaultDatabasePolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName);
 
-                     // Verify that the initial Get request contains the default policy.
-                     VerifyDatabaseSecurityAlertPolicyInformation(GetDefaultDatabaseSecurityAlertProperties(), defaultDatabasePolicyResponse);
+                // Verify that the initial Get request contains the default policy.
+                VerifyDatabaseSecurityAlertPolicyInformation(GetDefaultDatabaseSecurityAlertProperties(), defaultDatabasePolicyResponse);
 
-                     // Modify the policy properties, send and receive and see it its still ok
-                     DatabaseSecurityAlertPolicy updatedDatabasePolicy = new DatabaseSecurityAlertPolicy
-                     {
-                         State = SecurityAlertPolicyState.Disabled,
-                         EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
-                         EmailAddresses = "testSecurityAlert@microsoft.com",
-                         DisabledAlerts = "Access_Anomaly; Usage_Anomaly",
-                         RetentionDays = 5,
-                         StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                         StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                         UseServerDefault = SecurityAlertPolicyUseServerDefault.Disabled,
-                     };
-                     sqlClient.Databases.CreateOrUpdateThreatDetectionPolicy(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
+                // Modify the policy properties, send and receive and see it its still ok
+                DatabaseSecurityAlertPolicy updatedDatabasePolicy = new DatabaseSecurityAlertPolicy
+                {
+                    State = SecurityAlertPolicyState.Disabled,
+                    EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
+                    EmailAddresses = "testSecurityAlert@microsoft.com",
+                    DisabledAlerts = "Access_Anomaly; Usage_Anomaly",
+                    RetentionDays = 5,
+                    StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                    StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
+                    UseServerDefault = SecurityAlertPolicyUseServerDefault.Disabled,
+                };
+                sqlClient.DatabaseThreatDetectionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, updatedDatabasePolicy);
 
-                     var getUpdatedDatabasePolicyResponse = sqlClient.Databases.GetThreatDetectionPolicy(resourceGroup.Name, server.Name, dbName);
+                var getUpdatedDatabasePolicyResponse = sqlClient.DatabaseThreatDetectionPolicies.Get(resourceGroup.Name, server.Name, dbName);
 
-                     // Verify that the Get request contains the updated policy.
-                     VerifyDatabaseSecurityAlertPolicyInformation(updatedDatabasePolicy, getUpdatedDatabasePolicyResponse);
-                 });
+                // Verify that the Get request contains the updated policy.
+                VerifyDatabaseSecurityAlertPolicyInformation(updatedDatabasePolicy, getUpdatedDatabasePolicyResponse);
+            }
         }
 
 #if false // Commented out due to issues with async operation response

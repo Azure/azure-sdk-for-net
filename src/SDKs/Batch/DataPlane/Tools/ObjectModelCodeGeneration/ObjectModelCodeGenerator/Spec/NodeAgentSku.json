@@ -19,8 +19,8 @@
           "Key": {
             "Type": "IReadOnlyList<ImageReference>",
             "Name": "VerifiedImageReferences",
-            "SummaryComment": "The list of images verified to be compatible with this node agent SKU. This collection is not exhaustive (the node agent may be compatible with other images).",
-            "RemarksComment": null,
+            "SummaryComment": "The list of Azure Marketplace images verified to be compatible with this node agent SKU.",
+            "RemarksComment": "This collection is not exhaustive (the node agent may be compatible with other images).",
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },

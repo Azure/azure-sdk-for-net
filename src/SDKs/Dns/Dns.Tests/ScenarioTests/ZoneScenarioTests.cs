@@ -27,11 +27,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsClient = ResourceGroupHelper.GetDnsClient(
                     context,
@@ -182,11 +182,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     resourceManagementClient);
 
                 var listresponse =
-                    dnsClient.Zones.ListInResourceGroup(resourceGroup.Name);
+                    dnsClient.Zones.ListByResourceGroup(resourceGroup.Name);
 
                 Assert.NotNull(listresponse);
                 Assert.Equal(2, listresponse.Count());
@@ -240,11 +240,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     zoneNames,
                     resourceManagementClient);
 
-                var listresponse = dnsClient.Zones.ListInSubscription();
+                var listresponse = dnsClient.Zones.List();
 
                 Assert.NotNull(listresponse);
                 Assert.True(listresponse.Count() > 2);
@@ -297,11 +297,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     resourceManagementClient);
 
                 var listresponse =
-                    dnsClient.Zones.ListInResourceGroup(resourceGroup.Name, "1");
+                    dnsClient.Zones.ListByResourceGroup(resourceGroup.Name, 1);
 
                 Assert.NotNull(listresponse);
                 Assert.Equal(1, listresponse.Count());
@@ -349,11 +349,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -377,12 +377,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     resourceManagementClient);
 
                 var listresponse =
-                    dnsClient.Zones.ListInResourceGroup(resourceGroup.Name, "1");
+                    dnsClient.Zones.ListByResourceGroup(resourceGroup.Name,1);
 
                 Assert.NotNull(listresponse.NextPageLink);
 
                 listresponse =
-                    dnsClient.Zones.ListInResourceGroupNext(
+                    dnsClient.Zones.ListByResourceGroupNext(
                         (listresponse.NextPageLink));
 
                 Assert.Equal(1, listresponse.Count());
@@ -403,11 +403,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -443,19 +443,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
                             null),
                     ex => ex.Body.Code == "PreconditionFailed");
 
-                var result = dnsClient.Zones.Delete(
+                dnsClient.Zones.Delete(
                     resourceGroup.Name,
                     zoneName,
-                    ifMatch: null,
-                    ifNoneMatch: null);
-                Assert.Equal(result.Status, OperationStatus.Succeeded);
+                    ifMatch: null);
 
-                result = dnsClient.Zones.Delete(
+                dnsClient.Zones.Delete(
                     resourceGroup.Name,
                     "hiya.com",
-                    ifMatch: null,
-                    ifNoneMatch: null);
-                Assert.Null(result);
+                    ifMatch: null);
+                //Assert.Null(result);
             }
         }
 
@@ -468,11 +465,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -507,11 +504,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -538,10 +535,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     new Zone
                     {
                         Location = location,
-                        MaxNumberOfRecordSets = 42,
-                        // Test that specifying this value does not break Create (it must be ignored on server side).
-                        NumberOfRecordSets = 65,
-                        // Test that specifying this value does not break Create (it must be ignored on server side).
                     });
 
                 // Retrieve the zone after create
@@ -556,8 +549,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 {
                     {"tag1", "value1"}
                 };
-                retrievedZone.NumberOfRecordSets = null;
-                retrievedZone.MaxNumberOfRecordSets = null;
 
                 // Delete the zone
                 DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
@@ -594,10 +585,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
         {
             foreach (string zoneName in zoneNames)
             {
-                var response = dnsClient.Zones.Delete(
+                dnsClient.Zones.Delete(
                     resourceGroup.Name,
                     zoneName);
-                Assert.True(response.Status == OperationStatus.Succeeded);
             }
         }
 

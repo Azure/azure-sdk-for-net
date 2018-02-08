@@ -2,16 +2,17 @@
       "Name": "VirtualMachineConfiguration",
       "ProtocolName": "Models.VirtualMachineConfiguration",
       "Comment": "The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure.",
+      "ForceConstructorOrder":  true,
       "Properties": [
         {
           "Key": {
             "Type": "ImageReference",
             "Name": "ImageReference",
-            "SummaryComment": "A reference to the Azure Virtual Machines Marketplace image to use.",
-            "RemarksComment": "This property and <see cref=\"OSDisk\"/> are mutually exclusive and one of the properties must be specified.",
+            "SummaryComment": "A reference to the Azure Virtual Machines Marketplace Image or the custom Virtual Machine Image to use.",
+            "RemarksComment": null,
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional"
+            "ConstructorArgumentType": "Required"
           },
           "Value": null
         },
@@ -34,11 +35,10 @@
           "Key": {
             "Type": "OSDisk",
             "Name": "OSDisk",
-            "SummaryComment": "A reference to the OS disk image to use.",
-            "RemarksComment": "This property can be specified only if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. This property and <see cref=\"ImageReference\"/> are mutually exclusive and one of the properties must be specified.",
+            "SummaryComment": "Settings for the operating system disk of the Virtual Machine.",
+            "RemarksComment": null,
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional"
+            "UnboundAccess": "read,write"
           },
           "Value": {
             "Type": "Models.OsDisk",
@@ -47,13 +47,45 @@
         },
         {
           "Key": {
+            "Type": "IList<DataDisk>",
+            "Name": "DataDisks",
+            "SummaryComment": "The configuration for data disks attached to the Comptue Nodes in the pool.",
+            "RemarksComment": "This property must be specified if the Compute Nodes in the pool need to have empty data disks attached to them. This cannot be updated.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "LicenseType",
+            "SummaryComment": "The type of on-premises license to be used when deploying the operating system.",
+            "RemarksComment": "This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are: 'Windows_Server' - The on-premises license is for Windows Server. 'Windows_Client' - The on-premises license is for Windows Client.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
             "Type": "WindowsConfiguration",
             "Name": "WindowsConfiguration",
             "SummaryComment": "Windows operating system settings on the virtual machine. This property must not be specified if the ImageReference property specifies a Linux OS image.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
-            "UnboundAccess": "read,write",
-            "ConstructorArgumentType": "Optional"
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "ContainerConfiguration",
+            "Name": "ContainerConfiguration",
+            "SummaryComment": "The container configuration for the pool.",
+            "RemarksComment": "If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify <see cref=\"TaskContainerSettings\" />, and all other tasks may specify it.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
           },
           "Value": null
         }

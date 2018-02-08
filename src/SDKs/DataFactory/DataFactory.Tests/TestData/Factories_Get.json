@@ -1,0 +1,33 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:33:55 GMT",
+        "x-ms-request-id": "8e58266a-de42-40d5-b3c4-c6a7e159cfba",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14993",
+        "x-ms-correlation-request-id": "5d862c55-4de9-4a46-969d-cf1ed3e235ed"
+      },
+      "body": {
+        "name": "exampleFactoryName",
+        "tags": {
+          "exampleTag": "exampleValue"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "createTime": "2017-09-13T17:33:54.0294655Z",
+          "version": "2017-09-01-preview"
+        },
+        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+        "type": "Microsoft.DataFactory/factories",
+        "location": "East US"
+      }
+    }
+  }
+}

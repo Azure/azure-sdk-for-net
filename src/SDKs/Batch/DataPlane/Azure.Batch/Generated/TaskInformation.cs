@@ -22,23 +22,16 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskInformation : IPropertyMetadata
     {
-        private readonly TaskExecutionInformation executionInformation;
-        private readonly string jobId;
-        private readonly int? subtaskId;
-        private readonly string taskId;
-        private readonly Common.TaskState taskState;
-        private readonly string taskUrl;
-
         #region Constructors
 
         internal TaskInformation(Models.TaskInformation protocolObject)
         {
-            this.executionInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExecutionInfo, o => new TaskExecutionInformation(o).Freeze());
-            this.jobId = protocolObject.JobId;
-            this.subtaskId = protocolObject.SubtaskId;
-            this.taskId = protocolObject.TaskId;
-            this.taskState = UtilitiesInternal.MapEnum<Models.TaskState, Common.TaskState>(protocolObject.TaskState);
-            this.taskUrl = protocolObject.TaskUrl;
+            this.ExecutionInformation = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ExecutionInfo, o => new TaskExecutionInformation(o).Freeze());
+            this.JobId = protocolObject.JobId;
+            this.SubtaskId = protocolObject.SubtaskId;
+            this.TaskId = protocolObject.TaskId;
+            this.TaskState = UtilitiesInternal.MapEnum<Models.TaskState, Common.TaskState>(protocolObject.TaskState);
+            this.TaskUrl = protocolObject.TaskUrl;
         }
 
         #endregion Constructors
@@ -48,50 +41,32 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the execution information for the task.
         /// </summary>
-        public TaskExecutionInformation ExecutionInformation
-        {
-            get { return this.executionInformation; }
-        }
+        public TaskExecutionInformation ExecutionInformation { get; }
 
         /// <summary>
         /// Gets the job id.
         /// </summary>
-        public string JobId
-        {
-            get { return this.jobId; }
-        }
+        public string JobId { get; }
 
         /// <summary>
         /// Gets the subtask id.
         /// </summary>
-        public int? SubtaskId
-        {
-            get { return this.subtaskId; }
-        }
+        public int? SubtaskId { get; }
 
         /// <summary>
         /// Gets the task id.
         /// </summary>
-        public string TaskId
-        {
-            get { return this.taskId; }
-        }
+        public string TaskId { get; }
 
         /// <summary>
         /// Gets the task state.
         /// </summary>
-        public Common.TaskState TaskState
-        {
-            get { return this.taskState; }
-        }
+        public Common.TaskState TaskState { get; }
 
         /// <summary>
         /// Gets the task URL.
         /// </summary>
-        public string TaskUrl
-        {
-            get { return this.taskUrl; }
-        }
+        public string TaskUrl { get; }
 
         #endregion // TaskInformation
 

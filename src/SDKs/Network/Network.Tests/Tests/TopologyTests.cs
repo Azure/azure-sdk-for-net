@@ -18,7 +18,7 @@ namespace Network.Tests.Tests
 
     public class TopologyTests
     {
-        [Fact]
+        [Fact(Skip="Disable tests")]
         public void TopologyApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

@@ -4,14 +4,4 @@
 ::
 
 @echo off
-set autoRestVersion=0.17.0-Nightly20161012
-if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-redis/2016-04-01/swagger/redis.json"
-) else (
-    set specFile="%1"
-)
-set repoRoot=%~dp0..\..\..\..
-set generateFolder=%~dp0Generated
-
-if exist %generateFolder% rd /S /Q  %generateFolder%
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.Redis %autoRestVersion% %generateFolder% 
+call %~dp0..\..\..\..\tools\generate.cmd redis/resource-manager %*

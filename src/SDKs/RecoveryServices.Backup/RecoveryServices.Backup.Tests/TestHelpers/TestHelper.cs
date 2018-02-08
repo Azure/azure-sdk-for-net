@@ -6,20 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Management.RecoveryServices.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.Azure.OData;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using HttpStatusCode = System.Net.HttpStatusCode;
+using Sku = Microsoft.Azure.Management.RecoveryServices.Models.Sku;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 {
     public class TestHelper : IDisposable
     {
         public string ResourceGroup = "SwaggerTestRg";
-        public string VaultName = "SDKTestRsVault";
-        public string Location = "westus";
+        public string VaultName = "NetSDKTestRsVault";
+        public string Location = "southeastasia";
         public string FabricName = "Azure";
 
         public RecoveryServicesClient VaultClient { get; private set; }
@@ -118,7 +120,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
 
             BackupClient.ProtectionContainers.Refresh(VaultName, ResourceGroup, FabricName);
 
-            IPage<WorkloadProtectableItemResource> protectableItems = BackupClient.BackupProtectableItems.List(VaultName, ResourceGroup);
+            ODataQuery<BMSPOQueryObject> query = new ODataQuery<BMSPOQueryObject>(po => po.BackupManagementType == BackupManagementType.AzureIaasVM);
+
+            IPage<WorkloadProtectableItemResource> protectableItems = BackupClient.BackupProtectableItems.List(VaultName, ResourceGroup, odataQuery: query);
 
             var desiredProtectedItem = (AzureIaaSComputeVMProtectableItem) protectableItems.First(
                 protectableItem => containerName.ToLower().Contains(protectableItem.Name.ToLower())
@@ -175,6 +179,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
             Assert.NotNull(jobResponse.JobId);
 
             return jobResponse.JobId;
+        }
+
+        public IPage<JobResource> ListBackupJobs()
+        {
+           return BackupClient.BackupJobs.List(VaultName, ResourceGroup);
         }
 
         public void WaitForJobCompletion(string jobId)

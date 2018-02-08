@@ -100,7 +100,8 @@ namespace KeyVault.Management.Tests
                 {
                     Keys = new string[] { "all" },
                     Secrets = new string[] { "all" },
-                    Certificates = new string[] { "all" }
+                    Certificates = new string[] { "all" },
+                    Storage = new string[] { "all" },
                 }
             };
 

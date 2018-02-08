@@ -23,15 +23,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskDependencies : ITransportObjectProvider<Models.TaskDependencies>, IPropertyMetadata
     {
-        private readonly IReadOnlyList<TaskIdRange> taskIdRanges;
-        private readonly IReadOnlyList<string> taskIds;
-
         #region Constructors
 
         internal TaskDependencies(Models.TaskDependencies protocolObject)
         {
-            this.taskIdRanges = TaskIdRange.ConvertFromProtocolCollectionReadOnly(protocolObject.TaskIdRanges);
-            this.taskIds = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskIds, o => o.ToList().AsReadOnly());
+            this.TaskIdRanges = TaskIdRange.ConvertFromProtocolCollectionReadOnly(protocolObject.TaskIdRanges);
+            this.TaskIds = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.TaskIds, o => o.ToList().AsReadOnly());
         }
 
         #endregion Constructors
@@ -42,19 +39,13 @@ namespace Microsoft.Azure.Batch
         /// Gets the list of task IDs that this task depends on. All tasks in this list must complete successfully before 
         /// the dependent task can be scheduled.
         /// </summary>
-        public IReadOnlyList<TaskIdRange> TaskIdRanges
-        {
-            get { return this.taskIdRanges; }
-        }
+        public IReadOnlyList<TaskIdRange> TaskIdRanges { get; }
 
         /// <summary>
         /// Gets the list of task ID ranges that this task depends on. All tasks in all ranges must complete successfully 
         /// before the dependent task can be scheduled.
         /// </summary>
-        public IReadOnlyList<string> TaskIds
-        {
-            get { return this.taskIds; }
-        }
+        public IReadOnlyList<string> TaskIds { get; }
 
         #endregion // TaskDependencies
 

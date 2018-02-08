@@ -3,8 +3,8 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -76,7 +76,7 @@ namespace Compute.Tests
                 },
                 OrchestratorProfile = new ContainerServiceOrchestratorProfile
                 {
-                    OrchestratorType = ContainerServiceOchestratorTypes.DCOS
+                    OrchestratorType = ContainerServiceOrchestratorTypes.DCOS
                 }
             };
         }
@@ -183,8 +183,8 @@ namespace Compute.Tests
             for (var i = 0; i < containerService.LinuxProfile.Ssh.PublicKeys.Count; i++)
             {
                 // Remove key data validation because it is caught by cred scan.
-                //Assert.Equal(containerService.LinuxProfile.Ssh.PublicKeys[i].KeyData,
-                //    containerServiceOut.LinuxProfile.Ssh.PublicKeys[i].KeyData);
+                Assert.Equal(containerService.LinuxProfile.Ssh.PublicKeys[i].KeyData,
+                    containerServiceOut.LinuxProfile.Ssh.PublicKeys[i].KeyData);
             }
 
             // Verify WindowsProfile

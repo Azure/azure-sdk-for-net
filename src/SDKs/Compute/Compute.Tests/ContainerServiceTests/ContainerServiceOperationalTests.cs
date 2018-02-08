@@ -3,7 +3,7 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
@@ -41,7 +41,7 @@ namespace Compute.Tests
                         masterDnsPrefixName,
                         agentPoolDnsPrefixName,
                         out inputContainerService,
-                        cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOchestratorTypes.DCOS);
+                        cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOrchestratorTypes.DCOS);
                     m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
                 }
                 finally
@@ -83,7 +83,7 @@ namespace Compute.Tests
                         masterDnsPrefixName,
                         agentPoolDnsPrefixName,
                         out inputContainerService,
-                        cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOchestratorTypes.Swarm);
+                        cs => cs.OrchestratorProfile.OrchestratorType = ContainerServiceOrchestratorTypes.Swarm);
                     m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
                 }
                 finally

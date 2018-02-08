@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         public void CannotCreateOutputStorageForNullTask()
         {
             CloudTask task = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", new byte[] { 65, 66, 67, 68 }), true);
+            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
             var ex = Assert.Throws<ArgumentNullException>(() => task.OutputStorage(storageAccount));
             Assert.Equal("task", ex.ParamName);
         }

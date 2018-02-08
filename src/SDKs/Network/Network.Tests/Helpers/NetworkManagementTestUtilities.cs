@@ -142,5 +142,14 @@ namespace Networks.Tests.Helpers
 
             return null;
         }
+
+        /// <summary>
+        /// Get randomly generated password
+        /// </summary>
+        /// <returns>Randomly generated password string</returns>
+        public static string GetRandomPassword()
+        {
+            return "AzureSDKNetworkTest#" + Guid.NewGuid().ToString().Replace("-", "@");
+        }
     }
 }

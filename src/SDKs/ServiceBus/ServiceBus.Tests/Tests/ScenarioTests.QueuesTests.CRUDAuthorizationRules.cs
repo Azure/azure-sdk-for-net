@@ -37,13 +37,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new SBNamespace()
                     {
                         Location = location,
-                        Sku = new Sku
+                        Sku = new SBSku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
                         }
                     });
 
@@ -60,17 +60,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create Queue
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
                 
                 var createQueueResponse = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName,
-                new QueueCreateOrUpdateParameters()
-                {
-                    Location = location
-                });
+                new SBQueue() { EnablePartitioning = true });
 
                 Assert.NotNull(createQueueResponse);
                 Assert.Equal(createQueueResponse.Name, queueName);
@@ -84,9 +80,8 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create a queue AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new SBAuthorizationRule()
                 {
-                    Name = authorizationRuleName,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 
@@ -118,7 +113,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // Update queues authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateQueuesAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
+                SBAuthorizationRule updateQueuesAuthorizationRuleParameter = new SBAuthorizationRule();
                 updateQueuesAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
 
                 var updateQueueAuthorizationRuleResponse = ServiceBusManagementClient.Queues.CreateOrUpdateAuthorizationRule(resourceGroup,
@@ -150,15 +145,15 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
                 
                 // Regenerate Keys for the create Authorization rules
-                var regenerateKeysParameters = new RegenerateKeysParameters();
-                regenerateKeysParameters.Policykey = Policykey.PrimaryKey;
+                var regenerateKeysParameters = new RegenerateAccessKeyParameters();
+                regenerateKeysParameters.KeyType = KeyType.PrimaryKey;
                 
                 var regenerateKeysResposnse = ServiceBusManagementClient.Queues.RegenerateKeys(resourceGroup, namespaceName, queueName, authorizationRuleName, regenerateKeysParameters);
                 Assert.NotEqual(listKeysResponse.PrimaryKey, regenerateKeysResposnse.PrimaryKey);
                 Assert.NotNull(regenerateKeysResposnse.SecondaryConnectionString);
                 Assert.NotNull(regenerateKeysResposnse.SecondaryKey);
 
-                regenerateKeysParameters.Policykey = Policykey.SecondaryKey;
+                regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
 
                 regenerateKeysResposnse = ServiceBusManagementClient.Queues.RegenerateKeys(resourceGroup, namespaceName, queueName, authorizationRuleName, regenerateKeysParameters);
                 Assert.NotEqual(listKeysResponse.SecondaryKey, regenerateKeysResposnse.SecondaryKey);
@@ -170,37 +165,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 ServiceBusManagementClient.Queues.DeleteAuthorizationRule(resourceGroup, namespaceName, queueName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                try
-                {
-                    ServiceBusManagementClient.Queues.GetAuthorizationRule(resourceGroup, namespaceName, queueName, authorizationRuleName);
-                    Assert.True(false, "this step should have failed");
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
-
-                // Delete queue and check for the NotFound exception 
+                
+                // Delete queue  
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);
-                try
-                {
-                    var getQueueResponse_chkDelete = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound,ex.Response.StatusCode);
-                }
-
-                // Delete namespace and check for the NotFound exception 
+                
+                // Delete namespace
                 ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                try
-                {
-                    var getNamespaceResponse_chkDelete = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
-                }
+                
             }
         }
     }

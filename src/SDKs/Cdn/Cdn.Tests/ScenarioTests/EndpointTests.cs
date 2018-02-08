@@ -125,6 +125,78 @@ namespace Cdn.Tests.ScenarioTests
                 endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
                 Assert.NotNull(endpoint);
 
+                // Create a cdn endpoint with DSA should succeed
+                endpointName = TestUtilities.GenerateName("endpoint");
+                endpointCreateParameters = new Endpoint
+                {
+                    Location = "WestUs",
+                    IsHttpAllowed = true,
+                    IsHttpsAllowed = true,
+                    IsCompressionEnabled = false,
+                    OriginHostHeader = "azurecdn-files.azureedge.net",
+                    OriginPath = "/dsa-test",
+                    QueryStringCachingBehavior = QueryStringCachingBehavior.NotSet,
+                    OptimizationType = OptimizationType.DynamicSiteAcceleration,
+                    ProbePath = "/probe-v.txt",
+                    ContentTypesToCompress = new List<string>(),
+                    Tags = new Dictionary<string, string> { { "kay1", "value1" } },
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    },
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Block,
+                            CountryCodes = new List<string>
+                            {
+                                "AT"
+                            }
+                        }
+                    }
+                };
+
+                endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                Assert.NotNull(endpoint);
+
+                // Create a cdn endpoint with Large File Download should succeed
+                endpointName = TestUtilities.GenerateName("endpoint");
+                endpointCreateParameters = new Endpoint
+                {
+                    Location = "WestUs",
+                    IsHttpAllowed = true,
+                    IsHttpsAllowed = true,
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    },
+                    OptimizationType = OptimizationType.LargeFileDownload,
+                    Tags = new Dictionary<string, string> { { "kay1", "value1" } },
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Block,
+                            CountryCodes = new List<string>
+                            {
+                                "AT"
+                            }
+                        }
+                    }
+                };
+
+                endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                Assert.NotNull(endpoint);
+
                 // Create a cdn endpoint with no origins should fail
                 endpointName = TestUtilities.GenerateName("endpoint");
                 endpointCreateParameters = new Endpoint
@@ -141,7 +213,8 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ValidationException>(() => {
-                    cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters); });
+                    cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                });
 
                 // Create a cdn endpoint with both http and https disallowed should fail
                 endpointName = TestUtilities.GenerateName("endpoint");
@@ -236,7 +309,8 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters); });
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+                });
 
                 // Update endpoint to enable compression without specifying compression types should fail
                 endpointUpdateParameters = new EndpointUpdateParameters
@@ -249,7 +323,8 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters); });
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+                });
 
                 // Update endpoint with invalid geo filter should fail
                 endpointUpdateParameters = new EndpointUpdateParameters
@@ -259,6 +334,30 @@ namespace Cdn.Tests.ScenarioTests
                     OriginHostHeader = "www.bing.com",
                     IsCompressionEnabled = true,
                     QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString,
+                    GeoFilters = new List<GeoFilter>
+                    {
+                        new GeoFilter {
+                            RelativePath = "/mycar",
+                            Action = GeoFilterActions.Allow,
+                            CountryCodes = new List<string>()
+                        }
+                    }
+                };
+
+                Assert.ThrowsAny<ErrorResponseException>(() => {
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+                });
+
+                // Update endpoint with DSA and no probe path should fail
+                endpointUpdateParameters = new EndpointUpdateParameters
+                {
+                    IsHttpAllowed = false,
+                    OriginHostHeader = "azurecdn-files.azureedge.net",
+                    OriginPath = "/dsa-test",
+                    IsCompressionEnabled = false,
+                    QueryStringCachingBehavior = QueryStringCachingBehavior.NotSet,
+                    OptimizationType = OptimizationType.DynamicSiteAcceleration,
+                    ContentTypesToCompress = new List<string>(),
                     GeoFilters = new List<GeoFilter>
                     {
                         new GeoFilter {
@@ -425,7 +524,8 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Delete endpoint in creating state should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName); });
+                    cdnMgmtClient.Endpoints.Delete(resourceGroupName, profileName, endpointName);
+                });
 
                 // Wait for second endpoint to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
@@ -714,7 +814,8 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         endpointName,
-                        invalidPurgeContentPaths); });
+                        invalidPurgeContentPaths);
+                });
 
                 // Load content on endpoint should succeed
                 var loadContentPaths = new List<string>
@@ -856,7 +957,8 @@ namespace Cdn.Tests.ScenarioTests
                         resourceGroupName,
                         profileName,
                         endpointName,
-                        "invalid\\custom/domain"); });
+                        "invalid\\custom/domain");
+                });
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);

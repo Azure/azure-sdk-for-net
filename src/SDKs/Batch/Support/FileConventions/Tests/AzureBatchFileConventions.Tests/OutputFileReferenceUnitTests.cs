@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
 
             await reference.DeleteAsync();
 
-            await fakeBlob.Received().DeleteAsync(CancellationToken.None);
+            await fakeBlob.Received().DeleteAsync();
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             byte[] target = new byte[0];
             await reference.DownloadToByteArrayAsync(target, 0);
 
-            await fakeBlob.Received().DownloadToByteArrayAsync(target, 0, CancellationToken.None);
+            await fakeBlob.Received().DownloadToByteArrayAsync(target, 0);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
 
             await reference.DownloadToFileAsync("file", FileMode.Create);
 
-            await fakeBlob.Received().DownloadToFileAsync("file", FileMode.Create, CancellationToken.None);
+            await fakeBlob.Received().DownloadToFileAsync("file", FileMode.Create);
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             {
                 await reference.DownloadToStreamAsync(stream);
 
-                await fakeBlob.Received().DownloadToStreamAsync(stream, CancellationToken.None);
+                await fakeBlob.Received().DownloadToStreamAsync(stream);
             }
         }
 
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
 
             await reference.OpenReadAsync();
 
-            await fakeBlob.Received().OpenReadAsync(CancellationToken.None);
+            await fakeBlob.Received().OpenReadAsync(null, null, null);
         }
     }
 }

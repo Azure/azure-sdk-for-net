@@ -48,6 +48,7 @@ namespace Monitor.Tests.BasicTests
         /// Test for the ListEvents API method
         /// </summary>
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListEventsTest()
         {
             List<EventData> expectedEventDataCollection = GetEventDataCollection();
@@ -75,6 +76,7 @@ namespace Monitor.Tests.BasicTests
         /// Test for the ListEventsNext method
         /// </summary>
         [Fact]
+        [Trait("Category", "Mock")]
         public void ListEventsNextTest()
         {
             List<EventData> expectedEventDataCollection = GetEventDataCollection();
@@ -123,21 +125,21 @@ namespace Monitor.Tests.BasicTests
             if (exp != null)
             {
                 AreEqual(exp.Authorization, act.Authorization);
-                AreEqual(exp.Claims, act.Claims);
+                Utilities.AreEqual(exp.Claims, act.Claims);
                 Assert.Equal(exp.CorrelationId, act.CorrelationId);
                 Assert.Equal(exp.Description, act.Description);
                 Assert.Equal(exp.EventDataId, act.EventDataId);
-                AreEqual(exp.EventName, act.EventName);
+                Utilities.AreEqual(exp.EventName, act.EventName);
                 Assert.Equal(exp.EventTimestamp.ToUniversalTime(), act.EventTimestamp.ToUniversalTime());
                 AreEqual(exp.HttpRequest, act.HttpRequest);
                 Assert.Equal(exp.Level, act.Level);
                 Assert.Equal(exp.OperationId, act.OperationId);
-                AreEqual(exp.OperationName, act.OperationName);
-                AreEqual(exp.Properties, act.Properties);
+                Utilities.AreEqual(exp.OperationName, act.OperationName);
+                Utilities.AreEqual(exp.Properties, act.Properties);
                 Assert.Equal(exp.ResourceGroupName, act.ResourceGroupName);
-                AreEqual(exp.ResourceProviderName, act.ResourceProviderName);
-                AreEqual(exp.Status, act.Status);
-                AreEqual(exp.SubStatus, act.SubStatus);
+                Utilities.AreEqual(exp.ResourceProviderName, act.ResourceProviderName);
+                Utilities.AreEqual(exp.Status, act.Status);
+                Utilities.AreEqual(exp.SubStatus, act.SubStatus);
                 Assert.Equal(exp.SubmissionTimestamp.ToUniversalTime(), act.SubmissionTimestamp.ToUniversalTime());
                 Assert.Equal(exp.SubscriptionId, act.SubscriptionId);
 

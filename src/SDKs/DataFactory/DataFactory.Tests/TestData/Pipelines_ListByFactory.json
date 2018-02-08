@@ -1,0 +1,86 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:55:56 GMT",
+        "x-ms-request-id": "a8129560-dc5c-4312-9c3e-22fc00f9033f",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14909",
+        "x-ms-correlation-request-id": "fa5fe506-baa4-4974-9d0a-0d79da341bd8"
+      },
+      "body": {
+        "value": [
+          {
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
+            "name": "examplePipeline",
+            "properties": {
+              "description": "Example description",
+              "activities": [
+                {
+                  "type": "ForEach",
+                  "typeProperties": {
+                    "isSequential": true,
+                    "items": {
+                      "value": "@pipeline().parameters.OutputBlobNameList",
+                      "type": "Expression"
+                    },
+                    "activities": [
+                      {
+                        "type": "Copy",
+                        "typeProperties": {
+                          "source": {
+                            "type": "BlobSource"
+                          },
+                          "sink": {
+                            "type": "BlobSink"
+                          }
+                        },
+                        "inputs": [
+                          {
+                            "referenceName": "exampleDataset",
+                            "parameters": {
+                              "MyFolderPath": "examplecontainer",
+                              "MyFileName": "examplecontainer.csv"
+                            },
+                            "type": "DatasetReference"
+                          }
+                        ],
+                        "outputs": [
+                          {
+                            "referenceName": "exampleDataset",
+                            "parameters": {
+                              "MyFolderPath": "examplecontainer",
+                              "MyFileName": {
+                                "value": "@item()",
+                                "type": "Expression"
+                              }
+                            },
+                            "type": "DatasetReference"
+                          }
+                        ],
+                        "name": "ExampleCopyActivity"
+                      }
+                    ]
+                  },
+                  "name": "ExampleForeachActivity"
+                }
+              ],
+              "parameters": {
+                "OutputBlobNameList": {
+                  "type": "Array"
+                }
+              }
+            },
+            "etag": "280324a7-0000-0000-0000-59b9712b0000"
+          }
+        ]
+      }
+    }
+  }
+}

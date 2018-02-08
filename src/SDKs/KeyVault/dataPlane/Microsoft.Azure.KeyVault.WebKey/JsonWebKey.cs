@@ -268,7 +268,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
 
         private bool AreEqual<T>(IList<T> item1, IList<T> item2)
         {
-            return item1 == item2 || item1 == null ? item2 == null : item1.SequenceEqual(item2);
+            return (item1 == item2) || (item1 != null && item2 != null && item1.SequenceEqual(item2));
         }
 
         public override int GetHashCode()

@@ -30,24 +30,24 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.GidProperty = this.CreatePropertyAccessor<int?>("Gid", BindingAccess.Read | BindingAccess.Write);
-                this.SshPrivateKeyProperty = this.CreatePropertyAccessor<string>("SshPrivateKey", BindingAccess.Read | BindingAccess.Write);
-                this.UidProperty = this.CreatePropertyAccessor<int?>("Uid", BindingAccess.Read | BindingAccess.Write);
+                this.GidProperty = this.CreatePropertyAccessor<int?>(nameof(Gid), BindingAccess.Read | BindingAccess.Write);
+                this.SshPrivateKeyProperty = this.CreatePropertyAccessor<string>(nameof(SshPrivateKey), BindingAccess.Read | BindingAccess.Write);
+                this.UidProperty = this.CreatePropertyAccessor<int?>(nameof(Uid), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.LinuxUserConfiguration protocolObject) : base(BindingState.Bound)
             {
                 this.GidProperty = this.CreatePropertyAccessor(
                     protocolObject.Gid,
-                    "Gid",
+                    nameof(Gid),
                     BindingAccess.Read);
                 this.SshPrivateKeyProperty = this.CreatePropertyAccessor(
                     protocolObject.SshPrivateKey,
-                    "SshPrivateKey",
+                    nameof(SshPrivateKey),
                     BindingAccess.Read);
                 this.UidProperty = this.CreatePropertyAccessor(
                     protocolObject.Uid,
-                    "Uid",
+                    nameof(Uid),
                     BindingAccess.Read);
             }
         }

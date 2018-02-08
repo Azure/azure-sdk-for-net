@@ -235,7 +235,7 @@ namespace Batch.Tests.InMemoryTests
             Assert.Equal(HttpStatusCode.OK, result.Response.StatusCode);
 
             Assert.Equal("foo", result.Body.Id);
-            Assert.Equal(true, result.Body.AllowUpdates);
+            Assert.True(result.Body.AllowUpdates);
             Assert.Equal("beta", result.Body.DefaultVersion);
             Assert.Equal("displayName", result.Body.DisplayName);
             Assert.Equal(1, result.Body.Packages.Count);
@@ -338,7 +338,7 @@ namespace Batch.Tests.InMemoryTests
 
             Application application = result.Body.First();
             Assert.Equal("foo", application.Id);
-            Assert.Equal(true, application.AllowUpdates);
+            Assert.True(application.AllowUpdates);
             Assert.Equal("beta", application.DefaultVersion);
             Assert.Equal("DisplayName", application.DisplayName);
             Assert.Equal(2, application.Packages.Count);

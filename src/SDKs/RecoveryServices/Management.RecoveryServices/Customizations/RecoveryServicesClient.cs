@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
 {
     public partial class RecoveryServicesClient
     {
-        bool DisableDispose { get; set; }
+        public bool DisableDispose { get; set; } = false;
 
         protected RecoveryServicesClient(HttpClient httpClient, params DelegatingHandler[] handlers)
         {
@@ -39,9 +39,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
             DisableDispose = disableDispose;
         }
 
+        public void SetHttpClient(HttpClient client)
+        {
+            HttpClient = client;
+        }
+
         protected override void Dispose(bool disposing)
         {
-            if (DisableDispose)
+            if (!DisableDispose)
             {
                 base.Dispose(disposing);
             }

@@ -100,6 +100,73 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         }
 
         /// <summary>
+        /// Test verifies that HttpClient provided to ServiceClient can be resued even after Disposing ServiceClient
+        /// </summary>
+        [Fact]
+        public void UseHttpClientAfterServiceClientDispose()
+        {
+            HttpClient hc = new HttpClient(new ContosoMessageHandler());
+            hc.BaseAddress = new Uri(DEFAULT_URI);
+            HttpResponseMessage resMsg = SendAndReceiveResponse(hc);
+            Assert.Equal(HttpStatusCode.OK, resMsg.StatusCode);
+
+            ContosoServiceClient contosoClient = new ContosoServiceClient(hc, false);
+            HttpResponseMessage response = contosoClient.DoSyncWork();
+            string cont = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Assert.Equal("Contoso Rocks", cont);
+            Assert.Equal(new Uri(DEFAULT_URI), contosoClient.HttpClient.BaseAddress);
+
+            contosoClient.Dispose();
+
+            HttpResponseMessage secondTimeMsg = SendAndReceiveResponse(hc);
+            Assert.Equal(HttpStatusCode.OK, secondTimeMsg.StatusCode);
+        }
+
+        /// <summary>
+        /// Dispose ServiceClient while request is being processed
+        /// </summary>
+        [Fact]
+        public void DisposeServiceClientWhileProcessingRequest()
+        {
+            HttpClient hc = new HttpClient(new DelayedHandler("DelayingResponse", TimeSpan.FromSeconds(5)));
+            hc.BaseAddress = new Uri(DEFAULT_URI);
+            HttpResponseMessage resMsg = SendAndReceiveResponse(hc);
+            string resStr = resMsg.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Assert.Equal("DelayingResponse", resStr);
+
+            ContosoServiceClient contosoClient = new ContosoServiceClient(hc, false);
+
+            var result = Task.Run<HttpResponseMessage>(async () =>
+            {
+                return await contosoClient.DoAsyncWork();
+            });
+
+            contosoClient.Dispose();
+
+            HttpResponseMessage delayedResponse = result.ConfigureAwait(false).GetAwaiter().GetResult();
+            string delayedContent = delayedResponse.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Assert.Equal("DelayingResponse", delayedContent);
+        }
+
+        /// <summary>
+        /// This is to verify if a HttpClient is passed, we still add default userAgent information
+        /// inside defaultheaders of the passed in HttpClient
+        /// </summary>
+        [Fact]
+        public void NullReferenceExceptionAfterClientDispose()
+        {
+            ContosoServiceClient contosoClient = new ContosoServiceClient(null);
+            HttpResponseMessage response = contosoClient.DoSyncWork();
+            string cont = response.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            Assert.NotNull(response);
+
+            contosoClient.Dispose();
+
+            Assert.ThrowsAny<NullReferenceException>(() => SendAndReceiveResponse(contosoClient.HttpClient));
+        }
+
+
+        /// <summary>
         /// THe HttpClient that is provided to ServiceClient will have it's own set of UserAgent information
         /// inside default headers. This is to verify if we merge DefaultHeader information
         /// </summary>
@@ -140,12 +207,8 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal(defaultVersion.ToString(), "1.0.0.0");
         }
 
-
         private HttpResponseMessage SendAndReceiveResponse(HttpClient httpClient)
         {
-            // Construct URL
-            //string url = "http://www.microsoft.com";
-
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = null;
 
@@ -155,10 +218,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
 
             // Set Headers
             _httpRequest.Headers.Add("x-ms-version", "2013-11-01");
-
             return Task.Run<HttpResponseMessage>(async () => await httpClient.SendAsync(_httpRequest, new CancellationToken()).ConfigureAwait(false)).ConfigureAwait(false).GetAwaiter().GetResult();
-
         }
-
     }
 }

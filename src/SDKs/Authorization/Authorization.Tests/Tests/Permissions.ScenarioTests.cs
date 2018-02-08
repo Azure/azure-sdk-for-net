@@ -19,7 +19,6 @@ namespace Authorization.Tests
     {
         const string RESOURCE_TEST_LOCATION = "westus"; 
         const string WEBSITE_RP_VERSION = "2014-04-01";
-
         public static ResourceManagementClient GetResourceManagementClient(MockContext context)
         {
             var client = context.GetServiceClient<ResourceManagementClient>(); 
@@ -92,6 +91,7 @@ namespace Authorization.Tests
             }
         }
 
+        // Test fails when running with SPN auth method in Record mode
         [Fact]
         public void GetResourcePermissions()
         {

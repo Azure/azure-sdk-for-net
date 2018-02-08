@@ -3,10 +3,8 @@
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
     using Microsoft.Rest.Azure.Authentication;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Azure.Test.HttpRecorder;
     using Newtonsoft.Json.Linq;
-    using Rest.Azure.Authentication;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,6 +12,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
     /// <summary>
     /// Test Environment class
@@ -111,17 +110,24 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void InitTokenDictionary()
         {
-            //Not sure why we do it, but it seems we do it with some random string value
             this.TokenInfo = new Dictionary<TokenAudience, TokenCredentials>();
-            if (!string.IsNullOrEmpty(this.ConnectionString.GetValue(ConnectionStringKeys.RawTokenKey)))
+
+            this.ConnectionString.KeyValuePairs.TryGetValue(ConnectionStringKeys.RawTokenKey, out string rawTkn);
+            this.ConnectionString.KeyValuePairs.TryGetValue(ConnectionStringKeys.RawGraphTokenKey, out string graphRawTkn);
+
+            // We need TokenInfo to be non-empty as there are cases where have taken dependency on non-empty TokenInfo in MockContext
+            if(string.IsNullOrEmpty(rawTkn))
             {
-                this.TokenInfo[TokenAudience.Management] = new TokenCredentials(this.ConnectionString.GetValue(ConnectionStringKeys.RawTokenKey));
+                rawTkn = ConnectionStringKeys.RawTokenKey;
             }
 
-            if (!string.IsNullOrEmpty(this.ConnectionString.GetValue(ConnectionStringKeys.RawGraphTokenKey)))
+            if (string.IsNullOrEmpty(graphRawTkn))
             {
-                this.TokenInfo[TokenAudience.Graph] = new TokenCredentials(this.ConnectionString.GetValue(ConnectionStringKeys.RawGraphTokenKey));
+                graphRawTkn = ConnectionStringKeys.RawGraphTokenKey;
             }
+
+            this.TokenInfo[TokenAudience.Management] = new TokenCredentials(rawTkn);
+            this.TokenInfo[TokenAudience.Graph] = new TokenCredentials(graphRawTkn);
         }
 
         /// <summary>
@@ -217,17 +223,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     HttpMockServer.Variables.Add(ConnectionStringKeys.SubscriptionIdKey, this.SubscriptionId);
                 }
 
-                //We are not going to support custom key-value pairs in CustomeEnvValues
-                //If users wants to add new keyValue pairs, they can do it by using this.ConnectionString.KeyValuePairs.Add("foo", "bar");
-
-                //If User has provided Access Token in RawToken/GraphToken Key-Value, we don't need to authenticate
-                //So we check if tokenInfo has default values (which was initialized to default value when connection string was processed)
-                //then we need to authenticate and hence need to login
-                if ((!this.TokenInfo[TokenAudience.Graph].Equals(ConnectionStringKeys.RawTokenKey)) || (!this.TokenInfo[TokenAudience.Graph].Equals(ConnectionStringKeys.RawGraphTokenKey)))
-                {
+                // If User has provided Access Token in RawToken/GraphToken Key-Value, we don't need to authenticate
+                // We currently only check for RawToken and do not check if GraphToken is provided
+                if(string.IsNullOrEmpty(this.ConnectionString.GetValue(ConnectionStringKeys.RawTokenKey)))
+                { 
                     Login();
-                    VerifySubscription();
                 }
+
+                VerifySubscription();
             }
         }
 
@@ -249,8 +252,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             2) UserName / Password combination
             3) Interactive Login (where user will be presented with prompt to login)
            */
-#region Login
-#region aadSettings
+            #region Login
+            #region aadSettings
             ActiveDirectoryServiceSettings aadServiceSettings = new ActiveDirectoryServiceSettings()
             {
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
@@ -261,7 +264,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 AuthenticationEndpoint = new Uri(this.Endpoints.AADAuthUri.ToString() + this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey)),
                 TokenAudience = this.Endpoints.GraphTokenAudienceUri
             };
-#endregion
+            #endregion
 
             if ((!string.IsNullOrEmpty(spnClientId)) && (!string.IsNullOrEmpty(spnSecret)))
             {
@@ -291,7 +294,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 throw new NotSupportedException("Interactive Login is supported only in NET452 and above projects");
 #endif
             }
-#endregion
+            #endregion
         }
 
         /// <summary>
@@ -356,12 +359,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             string callerId = string.Empty;
             string subs = string.Empty;
 
+            List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
+
             if (this.TokenInfo[TokenAudience.Management] != null)
             {
                 try { callerId = this.TokenInfo[TokenAudience.Management].CallerId; } catch { }
             }
-
-            List<SubscriptionInfo> subscriptionList = ListSubscriptions(this.BaseUri.ToString(), this.TokenInfo[TokenAudience.Management]);
 
             if (!(string.IsNullOrEmpty(this.SubscriptionId)) && !(this.SubscriptionId.Equals("None", StringComparison.OrdinalIgnoreCase)))
             {   

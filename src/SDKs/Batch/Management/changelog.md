@@ -1,5 +1,17 @@
 ## Microsoft.Azure.Management.Batch release notes
 
+### Changes in 6.0.0
+#### REST API version
+- This version targets REST API version 2017-09-01.
+- Adding support for Certificate and Pool operations.
+
+### Changes in 5.1.0
+#### REST API version
+- This version targets REST API version 2017-05-01.
+
+#### Features
+- Added a new `CheckNameAvailability` API which allows you to check if an account name is available on a particular region.
+
 ### Changes in 5.0.0
 #### REST API version
 - This version targets REST API version 2017-05-01.

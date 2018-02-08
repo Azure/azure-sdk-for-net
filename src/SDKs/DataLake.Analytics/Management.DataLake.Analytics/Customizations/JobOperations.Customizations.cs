@@ -157,23 +157,22 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
                     {
                         ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
-
-                        if (_httpResponse.StatusCode == HttpStatusCode.NotFound && ex.Body.Code.Equals("JobNotFound", StringComparison.OrdinalIgnoreCase))
+                    }
+                    if (_httpResponse.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        var _toReturn = new AzureOperationResponse<bool>();
+                        _toReturn.Request = _httpRequest;
+                        _toReturn.Response = _httpResponse;
+                        if (_httpResponse.Headers.Contains("x-ms-request-id"))
                         {
-                            var _toReturn = new AzureOperationResponse<bool>();
-                            _toReturn.Request = _httpRequest;
-                            _toReturn.Response = _httpResponse;
-                            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                            {
-                                _toReturn.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                                _toReturn.Body = false;
+                            _toReturn.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                            _toReturn.Body = false;
 
-                                if (_shouldTrace)
-                                {
-                                    ServiceClientTracing.Exit(_invocationId, _toReturn);
-                                }
-                                return _toReturn;
+                            if (_shouldTrace)
+                            {
+                                ServiceClientTracing.Exit(_invocationId, _toReturn);
                             }
+                            return _toReturn;
                         }
                     }
                 }

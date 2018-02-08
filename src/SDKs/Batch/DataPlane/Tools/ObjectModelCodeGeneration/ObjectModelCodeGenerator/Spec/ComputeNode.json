@@ -230,6 +230,17 @@
             "UnboundAccess": "none"
           },
           "Value": null
+        },
+        {
+          "Key": {
+            "Type": "ComputeNodeEndpointConfiguration",
+            "Name": "EndpointConfiguration",
+            "SummaryComment": "The endpoint configuration for the compute node.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
         }
       ]
     }

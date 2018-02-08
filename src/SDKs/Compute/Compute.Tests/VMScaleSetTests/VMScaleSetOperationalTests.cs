@@ -4,19 +4,10 @@
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
 using Xunit;
 
 namespace Compute.Tests
@@ -67,7 +58,7 @@ namespace Compute.Tests
             }
         }
 
-        public void TestVMScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false)
+        private void TestVMScaleSetOperationsInternal(MockContext context, bool hasManagedDisks = false)
         {
             EnsureClientsInitialized(context);
 
@@ -123,6 +114,8 @@ namespace Compute.Tests
         /// Create Network Resources
         /// Create VMScaleSet
         /// Start VMScaleSet Instances
+        /// Reimage VMScaleSet Instances
+        /// ReimageAll VMScaleSet Instances
         /// Stop VMScaleSet Instance
         /// ManualUpgrade VMScaleSet Instance
         /// Restart VMScaleSet Instance
@@ -155,14 +148,18 @@ namespace Compute.Tests
                         vmssName: vmssName,
                         storageAccount: storageAccountOutput, 
                         imageRef: imageRef, 
-                        inputVMScaleSet: out inputVMScaleSet, 
+                        inputVMScaleSet: out inputVMScaleSet,
+                        createWithManagedDisks: true,
                         vmScaleSetCustomizer: 
-                            (virtualMachineScaleSet) => virtualMachineScaleSet.UpgradePolicy = new UpgradePolicy { Mode = UpgradeMode.Manual });
+                            (virtualMachineScaleSet) => virtualMachineScaleSet.UpgradePolicy = new UpgradePolicy { Mode = UpgradeMode.Manual }
+                    );
 
                     var virtualMachineScaleSetInstanceIDs = new List<string>() {"0", "1"};
 
                     m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "0" };
+                    m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    m_CrpClient.VirtualMachineScaleSets.ReimageAll(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.UpdateInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "1" };

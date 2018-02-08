@@ -32,14 +32,22 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create Namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
+                //Check namespace name available
+                var checknamespaceavailable = ServiceBusManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability() { Name = namespaceName });
+
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new SBNamespace()
                     {
                         Location = location,
-                        Sku = new Sku
+                        Sku = new SBSku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = SkuName.Standard,
+                            Tier = SkuTier.Standard
+                        },
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
                         }
                     });
 
@@ -56,7 +64,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active, getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Get all namespaces created within a resourceGroup
@@ -67,25 +74,23 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all namespaces created within the subscription irrespective of the resourceGroup
-                getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.ListBySubscriptionAsync().Result;
+                getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
                 Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
 
-                // Update namespace tags
-                var updateNamespaceParameter = new NamespaceCreateOrUpdateParameters()
+                //Update namespace tags
+                var updateNamespaceParameter = new SBNamespaceUpdateParameters()
                 {
                     Location = location,
                     Tags = new Dictionary<string, string>()
                         {
-                            {"tag1", "value1"},
-                            {"tag2", "value2"},
                             {"tag3", "value3"},
                             {"tag4", "value4"}
                         }
                 };
 
-                var updateNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, updateNamespaceParameter);
+                var updateNamespaceResponse = ServiceBusManagementClient.Namespaces.Update(resourceGroup, namespaceName, updateNamespaceParameter);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
@@ -94,22 +99,15 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(namespaceName, getNamespaceResponse.Name);
-                Assert.Equal(getNamespaceResponse.Tags.Count, 4);
+                Assert.Equal(getNamespaceResponse.Tags.Count, 2);
                 foreach (var tag in updateNamespaceParameter.Tags)
                 {
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
                 }
-                
-                try
-                {
-                    // Delete namespace
-                    ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                }
-                catch (Exception ex)
-                {
-                    Assert.True(ex.Message.Contains("NotFound"));
-                }
+                                
+                // Delete namespace
+                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);                
             }
         }
     }

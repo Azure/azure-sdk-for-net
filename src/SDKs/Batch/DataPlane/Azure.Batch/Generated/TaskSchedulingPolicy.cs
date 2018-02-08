@@ -22,8 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskSchedulingPolicy : ITransportObjectProvider<Models.TaskSchedulingPolicy>, IPropertyMetadata
     {
-        private readonly Common.ComputeNodeFillType computeNodeFillType;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskSchedulingPolicy"/> class.
@@ -32,12 +30,12 @@ namespace Microsoft.Azure.Batch
         public TaskSchedulingPolicy(
             Common.ComputeNodeFillType computeNodeFillType)
         {
-            this.computeNodeFillType = computeNodeFillType;
+            this.ComputeNodeFillType = computeNodeFillType;
         }
 
         internal TaskSchedulingPolicy(Models.TaskSchedulingPolicy protocolObject)
         {
-            this.computeNodeFillType = UtilitiesInternal.MapEnum<Models.ComputeNodeFillType, Common.ComputeNodeFillType>(protocolObject.NodeFillType);
+            this.ComputeNodeFillType = UtilitiesInternal.MapEnum<Models.ComputeNodeFillType, Common.ComputeNodeFillType>(protocolObject.NodeFillType);
         }
 
         #endregion Constructors
@@ -47,10 +45,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the fill type of scheduling policy.
         /// </summary>
-        public Common.ComputeNodeFillType ComputeNodeFillType
-        {
-            get { return this.computeNodeFillType; }
-        }
+        public Common.ComputeNodeFillType ComputeNodeFillType { get; }
 
         #endregion // TaskSchedulingPolicy
 

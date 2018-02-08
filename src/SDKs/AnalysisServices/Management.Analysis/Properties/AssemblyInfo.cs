@@ -5,12 +5,12 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-/*
+
 [assembly: AssemblyTitle("Microsoft Azure Analysis Services Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Azure Analysis Services Resources.")]
 
-[assembly: AssemblyVersion("1.0.3.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyVersion("2.0.3.0")]
+[assembly: AssemblyFileVersion("2.0.3.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
@@ -18,4 +18,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-*/

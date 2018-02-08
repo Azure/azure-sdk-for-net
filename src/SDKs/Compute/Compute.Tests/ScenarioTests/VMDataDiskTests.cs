@@ -3,12 +3,12 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Resources;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Compute.Tests
 {
@@ -106,7 +106,7 @@ namespace Compute.Tests
                         }; */
                     };
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addDataDiskToVM);
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imgageRef, out inputVM, addDataDiskToVM);
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");

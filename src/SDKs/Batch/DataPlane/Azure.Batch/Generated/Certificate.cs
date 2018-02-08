@@ -39,66 +39,66 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CertificateFormatProperty = this.CreatePropertyAccessor<Common.CertificateFormat?>("CertificateFormat", BindingAccess.Read | BindingAccess.Write);
-                this.DataProperty = this.CreatePropertyAccessor<string>("Data", BindingAccess.Read | BindingAccess.Write);
-                this.DeleteCertificateErrorProperty = this.CreatePropertyAccessor<DeleteCertificateError>("DeleteCertificateError", BindingAccess.None);
-                this.PasswordProperty = this.CreatePropertyAccessor<string>("Password", BindingAccess.Read | BindingAccess.Write);
-                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.CertificateState?>("PreviousState", BindingAccess.None);
-                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("PreviousStateTransitionTime", BindingAccess.None);
-                this.PublicDataProperty = this.CreatePropertyAccessor<string>("PublicData", BindingAccess.None);
-                this.StateProperty = this.CreatePropertyAccessor<Common.CertificateState?>("State", BindingAccess.None);
-                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>("StateTransitionTime", BindingAccess.None);
-                this.ThumbprintProperty = this.CreatePropertyAccessor<string>("Thumbprint", BindingAccess.Read | BindingAccess.Write);
-                this.ThumbprintAlgorithmProperty = this.CreatePropertyAccessor<string>("ThumbprintAlgorithm", BindingAccess.Read | BindingAccess.Write);
-                this.UrlProperty = this.CreatePropertyAccessor<string>("Url", BindingAccess.None);
+                this.CertificateFormatProperty = this.CreatePropertyAccessor<Common.CertificateFormat?>(nameof(CertificateFormat), BindingAccess.Read | BindingAccess.Write);
+                this.DataProperty = this.CreatePropertyAccessor<string>(nameof(Data), BindingAccess.Read | BindingAccess.Write);
+                this.DeleteCertificateErrorProperty = this.CreatePropertyAccessor<DeleteCertificateError>(nameof(DeleteCertificateError), BindingAccess.None);
+                this.PasswordProperty = this.CreatePropertyAccessor<string>(nameof(Password), BindingAccess.Read | BindingAccess.Write);
+                this.PreviousStateProperty = this.CreatePropertyAccessor<Common.CertificateState?>(nameof(PreviousState), BindingAccess.None);
+                this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(PreviousStateTransitionTime), BindingAccess.None);
+                this.PublicDataProperty = this.CreatePropertyAccessor<string>(nameof(PublicData), BindingAccess.None);
+                this.StateProperty = this.CreatePropertyAccessor<Common.CertificateState?>(nameof(State), BindingAccess.None);
+                this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(StateTransitionTime), BindingAccess.None);
+                this.ThumbprintProperty = this.CreatePropertyAccessor<string>(nameof(Thumbprint), BindingAccess.Read | BindingAccess.Write);
+                this.ThumbprintAlgorithmProperty = this.CreatePropertyAccessor<string>(nameof(ThumbprintAlgorithm), BindingAccess.Read | BindingAccess.Write);
+                this.UrlProperty = this.CreatePropertyAccessor<string>(nameof(Url), BindingAccess.None);
             }
 
             public PropertyContainer(Models.Certificate protocolObject) : base(BindingState.Bound)
             {
                 this.CertificateFormatProperty = this.CreatePropertyAccessor<Common.CertificateFormat?>(
-                    "CertificateFormat",
+                    nameof(CertificateFormat),
                     BindingAccess.None);
                 this.DataProperty = this.CreatePropertyAccessor<string>(
-                    "Data",
+                    nameof(Data),
                     BindingAccess.None);
                 this.DeleteCertificateErrorProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.DeleteCertificateError, o => new DeleteCertificateError(o).Freeze()),
-                    "DeleteCertificateError",
+                    nameof(DeleteCertificateError),
                     BindingAccess.Read);
                 this.PasswordProperty = this.CreatePropertyAccessor<string>(
-                    "Password",
+                    nameof(Password),
                     BindingAccess.None);
                 this.PreviousStateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.CertificateState, Common.CertificateState>(protocolObject.PreviousState),
-                    "PreviousState",
+                    nameof(PreviousState),
                     BindingAccess.Read);
                 this.PreviousStateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.PreviousStateTransitionTime,
-                    "PreviousStateTransitionTime",
+                    nameof(PreviousStateTransitionTime),
                     BindingAccess.Read);
                 this.PublicDataProperty = this.CreatePropertyAccessor(
                     protocolObject.PublicData,
-                    "PublicData",
+                    nameof(PublicData),
                     BindingAccess.Read);
                 this.StateProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.CertificateState, Common.CertificateState>(protocolObject.State),
-                    "State",
+                    nameof(State),
                     BindingAccess.Read);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.StateTransitionTime,
-                    "StateTransitionTime",
+                    nameof(StateTransitionTime),
                     BindingAccess.Read);
                 this.ThumbprintProperty = this.CreatePropertyAccessor(
                     protocolObject.Thumbprint,
-                    "Thumbprint",
+                    nameof(Thumbprint),
                     BindingAccess.Read);
                 this.ThumbprintAlgorithmProperty = this.CreatePropertyAccessor(
                     protocolObject.ThumbprintAlgorithm,
-                    "ThumbprintAlgorithm",
+                    nameof(ThumbprintAlgorithm),
                     BindingAccess.Read);
                 this.UrlProperty = this.CreatePropertyAccessor(
                     protocolObject.Url,
-                    "Url",
+                    nameof(Url),
                     BindingAccess.Read);
             }
         }

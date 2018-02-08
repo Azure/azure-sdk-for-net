@@ -1,0 +1,204 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 18:04:32 GMT",
+        "x-ms-request-id": "d5496da4-9c52-402f-b067-83cc9ddea888",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-tenant-reads": "14999",
+        "x-ms-correlation-request-id": "25c78f97-0b0a-4fe9-ad39-883a482265cd"
+      },
+      "body": {
+        "value": [
+          {
+            "origin": "system",
+            "name": "Microsoft.DataFactory/datafactories/providers/Microsoft.Insights/metricDefinitions/read",
+            "display": {
+              "provider": "Microsoft.DataFactory",
+              "resource": "datafactories",
+              "operation": "Read datafactories metric definitions",
+              "description": "Gets the available metrics for datafactories"
+            },
+            "properties": {
+              "serviceSpecification": {
+                "metricSpecifications": [
+                  {
+                    "name": "SuccessfulRuns",
+                    "displayName": "Successful Runs",
+                    "displayDescription": "Number of successful runs.",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "availabilities": [
+                      {
+                        "timeGrain": "PT1H",
+                        "blobDuration": "P1D"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "FailedRuns",
+                    "displayName": "Failed Runs",
+                    "displayDescription": "Number of failed runs.",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "availabilities": [
+                      {
+                        "timeGrain": "PT1H",
+                        "blobDuration": "P1D"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "origin": "system",
+            "name": "Microsoft.DataFactory/datafactories/providers/Microsoft.Insights/diagnosticSettings/read",
+            "display": {
+              "provider": "Microsoft.DataFactory",
+              "resource": "datafactories",
+              "operation": "Read diagnostic setting",
+              "description": "Gets the diagnostic setting for the resource"
+            }
+          },
+          {
+            "origin": "system",
+            "name": "Microsoft.DataFactory/datafactories/providers/Microsoft.Insights/diagnosticSettings/write",
+            "display": {
+              "provider": "Microsoft.DataFactory",
+              "resource": "datafactories",
+              "operation": "Write diagnostic setting",
+              "description": "Creates or updates the diagnostic setting for the resource"
+            }
+          },
+          {
+            "origin": "system",
+            "name": "Microsoft.DataFactory/factories/providers/Microsoft.Insights/logDefinitions/read",
+            "display": {
+              "provider": "Microsoft.DataFactory",
+              "resource": "The log definition of factories",
+              "operation": "Read factories log definitions",
+              "description": "Gets the available logs for factories"
+            },
+            "properties": {
+              "serviceSpecification": {
+                "logSpecifications": [
+                  {
+                    "name": "ActivityRuns",
+                    "displayName": "Pipeline activity runs log",
+                    "blobDuration": "PT1H"
+                  },
+                  {
+                    "name": "PipelineRuns",
+                    "displayName": "Pipeline runs log",
+                    "blobDuration": "PT1H"
+                  },
+                  {
+                    "name": "TriggerRuns",
+                    "displayName": "Trigger runs log",
+                    "blobDuration": "PT1H"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "origin": "system",
+            "name": "Microsoft.DataFactory/factories/providers/Microsoft.Insights/diagnosticSettings/read",
+            "display": {
+              "provider": "Microsoft.DataFactory",
+              "resource": "factories",
+              "operation": "Read diagnostic setting",
+              "description": "Gets the diagnostic setting for the resource"
+            }
+          },
+          {
+            "origin": "system",
+            "name": "Microsoft.DataFactory/factories/providers/Microsoft.Insights/diagnosticSettings/write",
+            "display": {
+              "provider": "Microsoft.DataFactory",
+              "resource": "factories",
+              "operation": "Write diagnostic setting",
+              "description": "Creates or updates the diagnostic setting for the resource"
+            }
+          },
+          {
+            "origin": "system",
+            "name": "Microsoft.DataFactory/factories/providers/Microsoft.Insights/metricDefinitions/read",
+            "display": {
+              "provider": "Microsoft.DataFactory",
+              "resource": "factories",
+              "operation": "Read metric definitions",
+              "description": "Gets the available metrics for factories"
+            },
+            "properties": {
+              "serviceSpecification": {
+                "metricSpecifications": [
+                  {
+                    "name": "PipelineFailedRuns",
+                    "displayName": "Failed pipeline runs metrics",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "enableRegionalMdmAccount": "false",
+                    "sourceMdmAccount": "MicrosoftDataFactoryProdShoebox",
+                    "sourceMdmNamespace": "ADFMetrics"
+                  },
+                  {
+                    "name": "PipelineSucceededRuns",
+                    "displayName": "Succeeded pipeline runs metrics",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "enableRegionalMdmAccount": "false",
+                    "sourceMdmAccount": "MicrosoftDataFactoryProdShoebox",
+                    "sourceMdmNamespace": "ADFMetrics"
+                  },
+                  {
+                    "name": "ActivityFailedRuns",
+                    "displayName": "Failed activity runs metrics",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "enableRegionalMdmAccount": "false",
+                    "sourceMdmAccount": "MicrosoftDataFactoryProdShoebox",
+                    "sourceMdmNamespace": "ADFMetrics"
+                  },
+                  {
+                    "name": "ActivitySucceededRuns",
+                    "displayName": "Succeeded activity runs metrics",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "enableRegionalMdmAccount": "false",
+                    "sourceMdmAccount": "MicrosoftDataFactoryProdShoebox",
+                    "sourceMdmNamespace": "ADFMetrics"
+                  },
+                  {
+                    "name": "TriggerFailedRuns",
+                    "displayName": "Failed trigger runs metrics",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "enableRegionalMdmAccount": "false",
+                    "sourceMdmAccount": "MicrosoftDataFactoryProdShoebox",
+                    "sourceMdmNamespace": "ADFMetrics"
+                  },
+                  {
+                    "name": "TriggerSucceededRuns",
+                    "displayName": "Succeeded trigger runs metrics",
+                    "unit": "Count",
+                    "aggregationType": "Total",
+                    "enableRegionalMdmAccount": "false",
+                    "sourceMdmAccount": "MicrosoftDataFactoryProdShoebox",
+                    "sourceMdmNamespace": "ADFMetrics"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -22,33 +22,21 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class TaskStatistics : IPropertyMetadata
     {
-        private readonly TimeSpan kernelCpuTime;
-        private readonly DateTime lastUpdateTime;
-        private readonly double readIOGiB;
-        private readonly long readIOps;
-        private readonly DateTime startTime;
-        private readonly string url;
-        private readonly TimeSpan userCpuTime;
-        private readonly TimeSpan waitTime;
-        private readonly TimeSpan wallClockTime;
-        private readonly double writeIOGiB;
-        private readonly long writeIOps;
-
         #region Constructors
 
         internal TaskStatistics(Models.TaskStatistics protocolObject)
         {
-            this.kernelCpuTime = protocolObject.KernelCPUTime;
-            this.lastUpdateTime = protocolObject.LastUpdateTime;
-            this.readIOGiB = protocolObject.ReadIOGiB;
-            this.readIOps = protocolObject.ReadIOps;
-            this.startTime = protocolObject.StartTime;
-            this.url = protocolObject.Url;
-            this.userCpuTime = protocolObject.UserCPUTime;
-            this.waitTime = protocolObject.WaitTime;
-            this.wallClockTime = protocolObject.WallClockTime;
-            this.writeIOGiB = protocolObject.WriteIOGiB;
-            this.writeIOps = protocolObject.WriteIOps;
+            this.KernelCpuTime = protocolObject.KernelCPUTime;
+            this.LastUpdateTime = protocolObject.LastUpdateTime;
+            this.ReadIOGiB = protocolObject.ReadIOGiB;
+            this.ReadIOps = protocolObject.ReadIOps;
+            this.StartTime = protocolObject.StartTime;
+            this.Url = protocolObject.Url;
+            this.UserCpuTime = protocolObject.UserCPUTime;
+            this.WaitTime = protocolObject.WaitTime;
+            this.WallClockTime = protocolObject.WallClockTime;
+            this.WriteIOGiB = protocolObject.WriteIOGiB;
+            this.WriteIOps = protocolObject.WriteIOps;
         }
 
         #endregion Constructors
@@ -58,93 +46,60 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the total kernel mode CPU time (per core) consumed by the task.
         /// </summary>
-        public TimeSpan KernelCpuTime
-        {
-            get { return this.kernelCpuTime; }
-        }
+        public TimeSpan KernelCpuTime { get; }
 
         /// <summary>
         /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
         /// cref="StartTime"/> and this value.
         /// </summary>
-        public DateTime LastUpdateTime
-        {
-            get { return this.lastUpdateTime; }
-        }
+        public DateTime LastUpdateTime { get; }
 
         /// <summary>
         /// Gets the total gibibytes of I/O read from disk by the task.
         /// </summary>
-        public double ReadIOGiB
-        {
-            get { return this.readIOGiB; }
-        }
+        public double ReadIOGiB { get; }
 
         /// <summary>
         /// Gets the total number of disk read operations made by the task.
         /// </summary>
-        public long ReadIOps
-        {
-            get { return this.readIOps; }
-        }
+        public long ReadIOps { get; }
 
         /// <summary>
         /// Gets the start time of the time range covered by the statistics.
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+        public DateTime StartTime { get; }
 
         /// <summary>
         /// Gets the URL of the task statistics.
         /// </summary>
-        public string Url
-        {
-            get { return this.url; }
-        }
+        public string Url { get; }
 
         /// <summary>
         /// Gets the total user mode CPU time (per core) consumed by the task.
         /// </summary>
-        public TimeSpan UserCpuTime
-        {
-            get { return this.userCpuTime; }
-        }
+        public TimeSpan UserCpuTime { get; }
 
         /// <summary>
         /// Gets the total wait time of the task. The wait time for a task is defined as the elapsed time between the creation 
         /// of the task and the start of task execution. (If the task is retried due to failures, the wait time is the time 
         /// to the most recent task execution.)
         /// </summary>
-        public TimeSpan WaitTime
-        {
-            get { return this.waitTime; }
-        }
+        public TimeSpan WaitTime { get; }
 
         /// <summary>
         /// Gets the wall clock time of the task execution.
         /// </summary>
-        public TimeSpan WallClockTime
-        {
-            get { return this.wallClockTime; }
-        }
+        public TimeSpan WallClockTime { get; }
 
         /// <summary>
         /// Gets the total gibibytes of I/O written to disk by the task.
         /// </summary>
-        public double WriteIOGiB
-        {
-            get { return this.writeIOGiB; }
-        }
+        public double WriteIOGiB { get; }
 
         /// <summary>
         /// Gets the total number of disk write operations made by the task.
         /// </summary>
-        public long WriteIOps
-        {
-            get { return this.writeIOps; }
-        }
+        public long WriteIOps { get; }
 
         #endregion // TaskStatistics
 

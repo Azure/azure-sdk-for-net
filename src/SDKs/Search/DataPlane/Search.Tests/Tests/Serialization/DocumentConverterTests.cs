@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Search.Tests
         {
             Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [] }", _settings);
 
-            Assert.Equal(1, doc.Count);
+            Assert.Single(doc);
             string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
-            Assert.Equal(0, fieldValues.Length);
+            Assert.Empty(fieldValues);
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [""hello"", ""goodbye""] }", _settings);
 
-            Assert.Equal(1, doc.Count);
+            Assert.Single(doc);
             string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
             Assert.Equal(2, fieldValues.Length);
             Assert.Equal("hello", fieldValues[0]);
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Search.Tests
             const string Json = @"{ ""field"": { ""type"": ""Point"", ""coordinates"": [-122.131577, 47.678581] } }";
             Document doc = JsonConvert.DeserializeObject<Document>(Json, _settings);
 
-            Assert.Equal(1, doc.Count);
+            Assert.Single(doc);
             GeographyPoint fieldValue = Assert.IsAssignableFrom<GeographyPoint>(doc["field"]);
             Assert.Equal(-122.131577, fieldValue.Longitude);
             Assert.Equal(47.678581, fieldValue.Latitude);
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Search.Tests
 
             Document doc = JsonConvert.DeserializeObject<Document>(json, _settings);
 
-            Assert.Equal(1, doc.Count);
+            Assert.Single(doc);
             Assert.Equal(TestDate, doc["field"]);
         }
 
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Search.Tests
             // Azure Search won't return payloads like this; This test is only for pinning purposes.
             Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [""hello"", 123, 3.14] }", _settings);
 
-            Assert.Equal(1, doc.Count);
+            Assert.Single(doc);
             object[] fieldValues = Assert.IsType<object[]>(doc["field"]);
             Assert.Equal(3, fieldValues.Length);
             Assert.Equal("hello", fieldValues[0]);
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Search.Tests
 
             Document doc = JsonConvert.DeserializeObject<Document>(json, _settings);
 
-            Assert.Equal(1, doc.Count);
+            Assert.Single(doc);
             object[] fieldValues = Assert.IsType<object[]>(doc["field"]);
             Assert.Equal(3, fieldValues.Length);
             Assert.Equal("hello", fieldValues[0]);

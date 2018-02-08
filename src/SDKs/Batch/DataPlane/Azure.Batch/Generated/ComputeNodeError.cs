@@ -22,17 +22,13 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ComputeNodeError : IPropertyMetadata
     {
-        private readonly string code;
-        private readonly IReadOnlyList<NameValuePair> errorDetails;
-        private readonly string message;
-
         #region Constructors
 
         internal ComputeNodeError(Models.ComputeNodeError protocolObject)
         {
-            this.code = protocolObject.Code;
-            this.errorDetails = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.ErrorDetails);
-            this.message = protocolObject.Message;
+            this.Code = protocolObject.Code;
+            this.ErrorDetails = NameValuePair.ConvertFromProtocolCollectionReadOnly(protocolObject.ErrorDetails);
+            this.Message = protocolObject.Message;
         }
 
         #endregion Constructors
@@ -42,26 +38,17 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets a code for the compute node error. See <see cref="Common.BatchErrorCodeStrings"/> for possible values.
         /// </summary>
-        public string Code
-        {
-            get { return this.code; }
-        }
+        public string Code { get; }
 
         /// <summary>
         /// Gets a list of additional error details related to the compute node error.
         /// </summary>
-        public IReadOnlyList<NameValuePair> ErrorDetails
-        {
-            get { return this.errorDetails; }
-        }
+        public IReadOnlyList<NameValuePair> ErrorDetails { get; }
 
         /// <summary>
         /// Gets a message describing the compute node error, intended to be suitable for display in a user interface.
         /// </summary>
-        public string Message
-        {
-            get { return this.message; }
-        }
+        public string Message { get; }
 
         #endregion // ComputeNodeError
 
