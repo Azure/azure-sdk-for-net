@@ -104,6 +104,14 @@ namespace Microsoft.Azure.Search.Models
         public AnalyzerName IndexAnalyzer { get; set; }
 
         /// <summary>
+        /// Gets or sets the names of the synonym maps for the field. This option enables 
+        /// query time synonym expansion for searches against the field 
+        /// and can be used only on searchable fields.
+        /// </summary>
+        [JsonProperty(PropertyName = "synonymMaps")]
+        public string[] SynonymMaps { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the field is the key of
         /// the index. Valid only for string fields. Every index must have
         /// exactly one key field.
@@ -113,7 +121,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether the field is included in
-        /// full-text searches. Valid only forstring or string collection
+        /// full-text searches. Valid only for string or string collection
         /// fields. Default is false.
         /// </summary>
         [JsonProperty("searchable")]

@@ -4,10 +4,7 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Rest;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines how the Suggest API should apply to a group of fields in the
@@ -20,11 +17,9 @@ namespace Microsoft.Azure.Search.Models
         /// arguments.
         /// </summary>
         /// <param name="name">The name of the suggester.</param>
-        /// <param name="searchMode">A value indicating the capabilities of the suggester.</param>
         /// <param name="sourceFields">The list of field names to which the suggester applies; Each field must be
         /// searchable.</param>
-        public Suggester(string name, SuggesterSearchMode searchMode, params string[] sourceFields)
-            : this(name, searchMode, sourceFields.ToList())
+        public Suggester(string name, params string[] sourceFields) : this(name, sourceFields.ToList())
         {
             // Do nothing.
         }
