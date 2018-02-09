@@ -3148,5 +3148,55 @@ namespace DataFactory.Tests.JsonSamples
         ]
     }
 }";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySapEccToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SAP ECC to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SapEccSource"",
+                        query: ""$top=1""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSapEcc"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
     }
 }

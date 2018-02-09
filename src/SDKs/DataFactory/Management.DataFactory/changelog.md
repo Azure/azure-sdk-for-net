@@ -1,5 +1,10 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.6.0-preview
+
+### Feature Additions
+  * Add SAP ECC Source
+
 ## Version 0.5.0-preview
 
 ### Feature Additions
