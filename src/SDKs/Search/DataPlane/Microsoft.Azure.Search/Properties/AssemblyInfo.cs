@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("Makes it easy to develop a .NET application that uses Azure Search.")]
 
 [assembly: AssemblyVersion("4.0.0.0")]
-[assembly: AssemblyFileVersion("4.0.1.0")]
+[assembly: AssemblyFileVersion("4.0.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
