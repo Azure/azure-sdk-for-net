@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="pfx">Base64-encoded contents of a PFX file.</param>
         /// <param name="password">Password for the PFX file.</param>
-        public WebClientCertificateAuthentication(object url, SecureString pfx, SecureString password)
+        public WebClientCertificateAuthentication(object url, SecretBase pfx, SecretBase password)
             : base(url)
         {
             Pfx = pfx;
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets base64-encoded contents of a PFX file.
         /// </summary>
         [JsonProperty(PropertyName = "pfx")]
-        public SecureString Pfx { get; set; }
+        public SecretBase Pfx { get; set; }
 
         /// <summary>
         /// Gets or sets password for the PFX file.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -82,14 +82,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Password == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-            if (Pfx != null)
-            {
-                Pfx.Validate();
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }
