@@ -7,14 +7,12 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Resource.Tests.Helpers;
 using Xunit;
+using Microsoft.Azure.Management.ResourceManager.Models;
 
 namespace ResourceGroups.Tests
 {
     public class LiveManagementGroupsTests : TestBase
     {
-
-
-
         [Fact]
         public void ListGroups()
         {
@@ -26,7 +24,7 @@ namespace ResourceGroups.Tests
                 var managementGroups = managementGroupsClient.ManagementGroups.List();
 
                 Assert.NotNull(managementGroups);
-                Assert.NotEqual(0, managementGroups.Count());
+                Assert.NotEmpty(managementGroups);
                 Assert.NotNull(managementGroups.First().Id);
                 Assert.NotNull(managementGroups.First().Type);
                 Assert.NotNull(managementGroups.First().Name);
@@ -43,16 +41,15 @@ namespace ResourceGroups.Tests
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var groupId = "e16c61d4-c2c9-444d-9ee0-2f89561e6ef9";
+                var groupId = "testGroup123";
 
-                managementGroupsClient.GroupId = new Guid(groupId);
-
-                var managementGroup = managementGroupsClient.ManagementGroups.Get();
+                var managementGroup = managementGroupsClient.ManagementGroups.Get(groupId, cacheControl: "no-cache");
 
                 Assert.NotNull(managementGroup);
-                Assert.NotNull(managementGroup.Id);
-                Assert.NotNull(managementGroup.Name);
-                Assert.NotNull(managementGroup.Type);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups/testGroup123", managementGroup.Id);
+                Assert.Equal("testGroup123", managementGroup.Name);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups", managementGroup.Type);
+
             }
 
         }
@@ -65,20 +62,16 @@ namespace ResourceGroups.Tests
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var groupId = "e16c61d4-c2c9-444d-9ee0-2f89561e6ef9";
+                var groupId = "testGroup123";
 
-                managementGroupsClient.GroupId = new Guid(groupId);
-
-                var managementGroup = managementGroupsClient.ManagementGroups.Get("children");
+                var managementGroup = managementGroupsClient.ManagementGroups.Get(groupId, "children", cacheControl: "no-cache");
 
                 Assert.NotNull(managementGroup);
-                Assert.NotNull(managementGroup.Id);
-                Assert.NotNull(managementGroup.Name);
-                Assert.NotNull(managementGroup.Type);
-                Assert.Equal(managementGroup.Details.ManagementGroupType, "Enrollment");
+                Assert.Equal("/providers/Microsoft.Management/managementGroups/testGroup123", managementGroup.Id);
+                Assert.Equal("testGroup123", managementGroup.Name);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups", managementGroup.Type);
 
                 Assert.NotNull(managementGroup.Children);
-                Assert.Equal("Department", managementGroup.Children.First().ChildType);
                 Assert.Null(managementGroup.Children.First().Children);
                 
             }
@@ -93,29 +86,81 @@ namespace ResourceGroups.Tests
                 var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                var groupId = "e16c61d4-c2c9-444d-9ee0-2f89561e6ef9";
+                var groupId = "testGroup123";
 
-                managementGroupsClient.GroupId = new Guid(groupId);
-
-                var managementGroup = managementGroupsClient.ManagementGroups.Get("children", true);
+                var managementGroup = managementGroupsClient.ManagementGroups.Get(groupId, "children", true, cacheControl: "no-cache");
 
                 Assert.NotNull(managementGroup);
-                Assert.NotNull(managementGroup.Id);
-                Assert.NotNull(managementGroup.Name);
-                Assert.NotNull(managementGroup.Type);
-                Assert.Equal(managementGroup.Details.ManagementGroupType, "Enrollment");
+                Assert.Equal("/providers/Microsoft.Management/managementGroups/testGroup123", managementGroup.Id);
+                Assert.Equal("testGroup123", managementGroup.Name);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups", managementGroup.Type);
 
                 Assert.NotNull(managementGroup.Children);
-                Assert.Equal("Department", managementGroup.Children.First().ChildType);
-
                 Assert.NotNull(managementGroup.Children.First().Children);
-                Assert.Equal("Account", managementGroup.Children.First().Children.First().ChildType);
-
-                Assert.NotNull(managementGroup.Children.First().Children.First().Children);
-                Assert.Equal("Subscription", managementGroup.Children.First().Children.First().Children.First().ChildType);
-
             }
+        }
 
+        [Fact]
+        public void CreateGroup()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var groupId = "testGroup123Child2";
+
+                var managementGroup = managementGroupsClient.ManagementGroups.CreateOrUpdate(groupId, new CreateGroupRequest("TestGroup123->Child2", "/providers/Microsoft.Management/managementGroups/testGroup123"), cacheControl: "no-cache");
+
+                Assert.NotNull(managementGroup);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups/testGroup123Child2", managementGroup.Id);
+                Assert.Equal("testGroup123Child2", managementGroup.Name);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups", managementGroup.Type);
+            }
+        }
+
+        [Fact]
+        public void CreateGroupSubscription()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.NoContent });
+
+                var groupId = "testGroup123Child2";
+                var subscriptionId = "2a418b54-7643-4d8f-982c-d0802205d12c";
+
+                managementGroupsClient.ManagementGroupSubscriptions.Create(groupId, subscriptionId, cacheControl: "no-cache");
+            }
+        }
+
+        [Fact]
+        public void DeleteGroupSubscription()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.NoContent });
+
+                var groupId = "testGroup123Child2";
+                var subscriptionId = "2a418b54-7643-4d8f-982c-d0802205d12c";
+
+                managementGroupsClient.ManagementGroupSubscriptions.Delete(groupId, subscriptionId, cacheControl: "no-cache");
+            }
+        }
+
+        [Fact]
+        public void DeleteGroup()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var groupId = "testGroup123Child2";
+
+                managementGroupsClient.ManagementGroups.Delete(groupId, cacheControl: "no-cache");
+            }
         }
 
     }

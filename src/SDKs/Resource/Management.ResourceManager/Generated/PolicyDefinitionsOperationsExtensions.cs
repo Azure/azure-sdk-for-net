@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.ResourceManager
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -128,17 +127,160 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions for a subscription.
+            /// Gets the built in policy definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='policyDefinitionName'>
+            /// The name of the built in policy definition to get.
             /// </param>
-            public static IPage<PolicyDefinition> List(this IPolicyDefinitionsOperations operations, ODataQuery<PolicyDefinition> odataQuery = default(ODataQuery<PolicyDefinition>))
+            public static PolicyDefinition GetBuiltIn(this IPolicyDefinitionsOperations operations, string policyDefinitionName)
             {
-                return operations.ListAsync(odataQuery).GetAwaiter().GetResult();
+                return operations.GetBuiltInAsync(policyDefinitionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the built in policy definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The name of the built in policy definition to get.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyDefinition> GetBuiltInAsync(this IPolicyDefinitionsOperations operations, string policyDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetBuiltInWithHttpMessagesAsync(policyDefinitionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a policy definition at management group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The name of the policy definition to create.
+            /// </param>
+            /// <param name='parameters'>
+            /// The policy definition properties.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            public static PolicyDefinition CreateOrUpdateAtManagementGroup(this IPolicyDefinitionsOperations operations, string policyDefinitionName, PolicyDefinition parameters, string managementGroupId)
+            {
+                return operations.CreateOrUpdateAtManagementGroupAsync(policyDefinitionName, parameters, managementGroupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a policy definition at management group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The name of the policy definition to create.
+            /// </param>
+            /// <param name='parameters'>
+            /// The policy definition properties.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyDefinition> CreateOrUpdateAtManagementGroupAsync(this IPolicyDefinitionsOperations operations, string policyDefinitionName, PolicyDefinition parameters, string managementGroupId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateAtManagementGroupWithHttpMessagesAsync(policyDefinitionName, parameters, managementGroupId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a policy definition at management group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The name of the policy definition to delete.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            public static void DeleteAtManagementGroup(this IPolicyDefinitionsOperations operations, string policyDefinitionName, string managementGroupId)
+            {
+                operations.DeleteAtManagementGroupAsync(policyDefinitionName, managementGroupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a policy definition at management group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The name of the policy definition to delete.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAtManagementGroupAsync(this IPolicyDefinitionsOperations operations, string policyDefinitionName, string managementGroupId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteAtManagementGroupWithHttpMessagesAsync(policyDefinitionName, managementGroupId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the policy definition at management group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The name of the policy definition to get.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            public static PolicyDefinition GetAtManagementGroup(this IPolicyDefinitionsOperations operations, string policyDefinitionName, string managementGroupId)
+            {
+                return operations.GetAtManagementGroupAsync(policyDefinitionName, managementGroupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the policy definition at management group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyDefinitionName'>
+            /// The name of the policy definition to get.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PolicyDefinition> GetAtManagementGroupAsync(this IPolicyDefinitionsOperations operations, string policyDefinitionName, string managementGroupId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAtManagementGroupWithHttpMessagesAsync(policyDefinitionName, managementGroupId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -147,15 +289,87 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            public static IPage<PolicyDefinition> List(this IPolicyDefinitionsOperations operations)
+            {
+                return operations.ListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the policy definitions for a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PolicyDefinition>> ListAsync(this IPolicyDefinitionsOperations operations, ODataQuery<PolicyDefinition> odataQuery = default(ODataQuery<PolicyDefinition>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PolicyDefinition>> ListAsync(this IPolicyDefinitionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the built in policy definitions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<PolicyDefinition> ListBuiltIn(this IPolicyDefinitionsOperations operations)
+            {
+                return operations.ListBuiltInAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the built in policy definitions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyDefinition>> ListBuiltInAsync(this IPolicyDefinitionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBuiltInWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the policy definitions for a subscription at management group
+            /// level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            public static IPage<PolicyDefinition> ListByManagementGroup(this IPolicyDefinitionsOperations operations, string managementGroupId)
+            {
+                return operations.ListByManagementGroupAsync(managementGroupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the policy definitions for a subscription at management group
+            /// level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='managementGroupId'>
+            /// The ID of the management group.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyDefinition>> ListByManagementGroupAsync(this IPolicyDefinitionsOperations operations, string managementGroupId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByManagementGroupWithHttpMessagesAsync(managementGroupId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -190,6 +404,76 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<PolicyDefinition>> ListNextAsync(this IPolicyDefinitionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the built in policy definitions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyDefinition> ListBuiltInNext(this IPolicyDefinitionsOperations operations, string nextPageLink)
+            {
+                return operations.ListBuiltInNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the built in policy definitions.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyDefinition>> ListBuiltInNextAsync(this IPolicyDefinitionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBuiltInNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the policy definitions for a subscription at management group
+            /// level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PolicyDefinition> ListByManagementGroupNext(this IPolicyDefinitionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByManagementGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the policy definitions for a subscription at management group
+            /// level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PolicyDefinition>> ListByManagementGroupNextAsync(this IPolicyDefinitionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByManagementGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

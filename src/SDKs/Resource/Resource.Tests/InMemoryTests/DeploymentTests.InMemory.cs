@@ -228,7 +228,7 @@ namespace ResourceGroups.Tests
                 Assert.True(result.Properties.Parameters.ToString().Contains("\"value\": \"tianotest04\""));
             }
         }
-
+        
         [Fact]
         public void ListDeploymentOperationsReturnsMultipleObjects()
         {
