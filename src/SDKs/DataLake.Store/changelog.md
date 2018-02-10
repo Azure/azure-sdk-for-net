@@ -1,5 +1,29 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
+### Changes in 2.4.0-preview
+
+**Breaking changes**
+
+- The `Account` operations object has been changed from `Account` to `Accounts`
+    - E.g., `Account.Get(...)` to `Accounts.Get(...)`
+- When creating or updating resources (`accounts`, `firewall rules`, etc.), explicit parameter objects are now required:
+    - Account creation:
+        - `DataLakeStoreAccount` to `CreateDataLakeStoreAccountParameters`
+            - List of `FirewallRule` to `CreateFirewallRuleWithAccountParameters`
+            - List of `TrustedIdProvider` to `CreateTrustedIdProviderWithAccountParameters`
+    - Account update:
+        - `DataLakeStoreUpdateParameters` to `UpdateDataLakeStoreParameters`
+            - List of `FirewallRule` to `UpdateFirewallRuleWithAccountParameters`
+            - List of `TrustedIdProvider` to `UpdateTrustedIdProviderWithAccountParameters`
+    - Firewall rule creation and update:
+        - `FirewallRule` to `CreateOrUpdateFirewallRuleParameters`
+        - `FirewallRule` to `UpdateFirewallRuleParameters`
+    - Trusted identity provider creation and update:
+        - `TrustedIdProvider` to `CreateOrUpdateTrustedIdProviderParameters`
+        - `TrustedIdProvider` to `UpdateTrustedIdProviderParameters`
+- Bugfix: Removed the `childrenNum` field from `FileStatusProperties` because it was not supported
+- Bugfix: Changed the data type of the `permission` field of `AclStatus` from `int` to `string`
+
 ### Changes in 2.3.3-preview
 
 **Breaking changes**

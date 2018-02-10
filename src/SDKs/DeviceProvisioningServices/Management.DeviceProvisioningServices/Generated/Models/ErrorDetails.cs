@@ -8,13 +8,13 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.DataLake.Store.Models
+namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store error details information
+    /// Error details.
     /// </summary>
     public partial class ErrorDetails
     {
@@ -29,17 +29,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the ErrorDetails class.
         /// </summary>
-        /// <param name="code">the HTTP status code or error code associated
-        /// with this error</param>
-        /// <param name="message">the error message localized based on
-        /// Accept-Language</param>
-        /// <param name="target">the target of the particular error (for
-        /// example, the name of the property in error).</param>
-        public ErrorDetails(string code = default(string), string message = default(string), string target = default(string))
+        /// <param name="code">The error code.</param>
+        /// <param name="httpStatusCode">The HTTP status code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="details">The error details.</param>
+        public ErrorDetails(string code = default(string), string httpStatusCode = default(string), string message = default(string), string details = default(string))
         {
             Code = code;
+            HttpStatusCode = httpStatusCode;
             Message = message;
-            Target = target;
+            Details = details;
             CustomInit();
         }
 
@@ -49,23 +48,28 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the HTTP status code or error code associated with this error
+        /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "Code")]
         public string Code { get; private set; }
 
         /// <summary>
-        /// Gets the error message localized based on Accept-Language
+        /// Gets the HTTP status code.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [JsonProperty(PropertyName = "HttpStatusCode")]
+        public string HttpStatusCode { get; private set; }
+
+        /// <summary>
+        /// Gets the error message.
+        /// </summary>
+        [JsonProperty(PropertyName = "Message")]
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets the target of the particular error (for example, the name of
-        /// the property in error).
+        /// Gets the error details.
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; private set; }
+        [JsonProperty(PropertyName = "Details")]
+        public string Details { get; private set; }
 
     }
 }

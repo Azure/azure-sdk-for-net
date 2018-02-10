@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets or sets the AclStatus object for a given file or directory.
         /// </summary>
-        [JsonProperty(PropertyName = "AclStatus")]
+        [JsonProperty(PropertyName = "aclStatus")]
         public AclStatus AclStatus { get; set; }
 
     }

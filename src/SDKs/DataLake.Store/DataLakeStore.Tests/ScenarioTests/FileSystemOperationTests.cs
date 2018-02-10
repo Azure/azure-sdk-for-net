@@ -1079,9 +1079,9 @@ namespace DataLakeStore.Tests
         #region helpers
         internal AclStatusResult GetFullAcl(AclStatusResult acl)
         {
-            if(acl.AclStatus.Entries != null && acl.AclStatus.Permission.HasValue && acl.AclStatus.Permission.Value.ToString().Length >= 3)
+            if (acl.AclStatus.Entries != null && !string.IsNullOrEmpty(acl.AclStatus.Permission) && acl.AclStatus.Permission.Length >= 3)
             {
-                var permissionString = acl.AclStatus.Permission.Value.ToString();
+                var permissionString = acl.AclStatus.Permission;
                 var permissionLength = permissionString.Length;
                 var ownerOctal = permissionString.ElementAt(permissionLength - 3).ToString();
                 var groupOctal = permissionString.ElementAt(permissionLength - 2).ToString();
