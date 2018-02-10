@@ -22,6 +22,48 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class FirewallRulesOperationsExtensions
     {
             /// <summary>
+            /// Lists the Data Lake Store firewall rules within the specified Data Lake
+            /// Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations, string resourceGroupName, string accountName)
+            {
+                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Store firewall rules within the specified Data Lake
+            /// Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<FirewallRule>> ListByAccountAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates the specified firewall rule. During update, the firewall
             /// rule with the specified name will be replaced with this new firewall rule.
             /// </summary>
@@ -29,12 +71,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to add or replace the firewall
-            /// rule.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to create or update.
@@ -42,7 +82,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to create or update the firewall rule.
             /// </param>
-            public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters)
+            public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
             }
@@ -55,12 +95,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to add or replace the firewall
-            /// rule.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to create or update.
@@ -71,9 +109,55 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, FirewallRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the specified Data Lake Store firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule to retrieve.
+            /// </param>
+            public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
+            {
+                return operations.GetAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified Data Lake Store firewall rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='firewallRuleName'>
+            /// The name of the firewall rule to retrieve.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FirewallRule> GetAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -86,12 +170,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to update the firewall
-            /// rule.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to update.
@@ -111,12 +193,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to update the firewall
-            /// rule.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to update.
@@ -143,12 +223,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the firewall
-            /// rule.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to delete.
@@ -166,12 +244,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the firewall
-            /// rule.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='firewallRuleName'>
             /// The name of the firewall rule to delete.
@@ -182,102 +258,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task DeleteAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
-            /// </param>
-            public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
-            {
-                return operations.GetAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rule.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<FirewallRule> GetAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rules.
-            /// </param>
-            public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the firewall
-            /// rules.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<FirewallRule>> ListByAccountAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

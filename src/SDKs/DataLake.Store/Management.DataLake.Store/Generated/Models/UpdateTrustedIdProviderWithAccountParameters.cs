@@ -16,28 +16,32 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters used to update a trusted identity provider.
+    /// The parameters used to update a trusted identity provider while
+    /// updating a Data Lake Store account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class UpdateTrustedIdProviderParameters
+    public partial class UpdateTrustedIdProviderWithAccountParameters
     {
         /// <summary>
-        /// Initializes a new instance of the UpdateTrustedIdProviderParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// UpdateTrustedIdProviderWithAccountParameters class.
         /// </summary>
-        public UpdateTrustedIdProviderParameters()
+        public UpdateTrustedIdProviderWithAccountParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UpdateTrustedIdProviderParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// UpdateTrustedIdProviderWithAccountParameters class.
         /// </summary>
+        /// <param name="name">The unique name of the trusted identity provider
+        /// to update.</param>
         /// <param name="idProvider">The URL of this trusted identity
         /// provider.</param>
-        public UpdateTrustedIdProviderParameters(string idProvider = default(string))
+        public UpdateTrustedIdProviderWithAccountParameters(string name, string idProvider = default(string))
         {
+            Name = name;
             IdProvider = idProvider;
             CustomInit();
         }
@@ -48,10 +52,30 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the unique name of the trusted identity provider to
+        /// update.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
         /// Gets or sets the URL of this trusted identity provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.idProvider")]
         public string IdProvider { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

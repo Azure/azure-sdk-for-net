@@ -32,8 +32,6 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="accessTime">the last access time as ticks since the
         /// epoch.</param>
         /// <param name="blockSize">the block size for the file.</param>
-        /// <param name="childrenNum">the number of children in the
-        /// directory.</param>
         /// <param name="expirationTime">Gets the expiration time, if any, as
         /// ticks since the epoch. If the value is 0 or DateTime.MaxValue there
         /// is no expiration.</param>
@@ -49,11 +47,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// include: 'FILE', 'DIRECTORY'</param>
         /// <param name="aclBit">flag to indicate if extended acls are enabled
         /// </param>
-        public FileStatusProperties(long? accessTime = default(long?), long? blockSize = default(long?), long? childrenNum = default(long?), long? expirationTime = default(long?), string group = default(string), long? length = default(long?), long? modificationTime = default(long?), string owner = default(string), string pathSuffix = default(string), string permission = default(string), FileType? type = default(FileType?), bool? aclBit = default(bool?))
+        public FileStatusProperties(long? accessTime = default(long?), long? blockSize = default(long?), long? expirationTime = default(long?), string group = default(string), long? length = default(long?), long? modificationTime = default(long?), string owner = default(string), string pathSuffix = default(string), string permission = default(string), FileType? type = default(FileType?), bool? aclBit = default(bool?))
         {
             AccessTime = accessTime;
             BlockSize = blockSize;
-            ChildrenNum = childrenNum;
             ExpirationTime = expirationTime;
             Group = group;
             Length = length;
@@ -82,12 +79,6 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "blockSize")]
         public long? BlockSize { get; private set; }
-
-        /// <summary>
-        /// Gets the number of children in the directory.
-        /// </summary>
-        [JsonProperty(PropertyName = "childrenNum")]
-        public long? ChildrenNum { get; private set; }
 
         /// <summary>
         /// Gets the expiration time, if any, as ticks since the epoch. If the

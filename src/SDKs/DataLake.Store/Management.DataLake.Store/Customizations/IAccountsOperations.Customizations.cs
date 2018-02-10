@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
     /// <summary>
     /// AccountOperations operations.
     /// </summary>
-    public partial interface IAccountOperations
+    public partial interface IAccountsOperations
     {
         /// <summary>
         /// Tests the existence of the specified Data Lake Store firewall rule.
