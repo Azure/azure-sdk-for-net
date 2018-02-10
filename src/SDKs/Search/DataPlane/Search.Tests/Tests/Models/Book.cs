@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search.Tests
                 },
                 Suggesters = new[] 
                 {
-                    new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, useCamelCase ? "title" : "Title")
+                    new Suggester("sg", useCamelCase ? "title" : "Title")
                 }
             };
         }
