@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     /// <summary>
     /// Exception thrown for an invalid response with AdlsError information.
     /// </summary>
-    public class AdlsErrorException : RestException
+    public partial class AdlsErrorException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.

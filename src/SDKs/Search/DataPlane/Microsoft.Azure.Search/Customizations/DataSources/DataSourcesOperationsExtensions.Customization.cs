@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Search
         /// </param>
         public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
-            return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).CreateOrUpdateAsync(dataSource, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.CreateOrUpdateAsync(dataSource, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Search
             string dataSourceName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).ExistsAsync(dataSourceName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.ExistsAsync(dataSourceName, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>

@@ -24,17 +24,41 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public partial interface ITrustedIdProvidersOperations
     {
         /// <summary>
+        /// Lists the Data Lake Store trusted identity providers within the
+        /// specified Data Lake Store account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TrustedIdProvider>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates or updates the specified trusted identity provider. During
         /// update, the trusted identity provider with the specified name will
         /// be replaced with this new provider
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
+        /// The name of the Azure resource group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account to add or replace the
-        /// trusted identity provider.
+        /// The name of the Data Lake Store account.
         /// </param>
         /// <param name='trustedIdProviderName'>
         /// The name of the trusted identity provider. This is used for
@@ -59,17 +83,43 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TrustedIdProvider>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TrustedIdProvider>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, CreateOrUpdateTrustedIdProviderParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the specified Data Lake Store trusted identity provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account.
+        /// </param>
+        /// <param name='trustedIdProviderName'>
+        /// The name of the trusted identity provider to retrieve.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<TrustedIdProvider>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the specified trusted identity provider.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
+        /// The name of the Azure resource group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account to which to update the
-        /// trusted identity provider.
+        /// The name of the Data Lake Store account.
         /// </param>
         /// <param name='trustedIdProviderName'>
         /// The name of the trusted identity provider. This is used for
@@ -99,12 +149,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Data Lake Store account
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
+        /// The name of the Azure resource group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to delete the
-        /// trusted identity provider.
+        /// The name of the Data Lake Store account.
         /// </param>
         /// <param name='trustedIdProviderName'>
         /// The name of the trusted identity provider to delete.
@@ -122,64 +170,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the specified Data Lake Store trusted identity provider.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the
-        /// trusted identity provider.
-        /// </param>
-        /// <param name='trustedIdProviderName'>
-        /// The name of the trusted identity provider to retrieve.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<TrustedIdProvider>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string trustedIdProviderName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the Data Lake Store trusted identity providers within the
-        /// specified Data Lake Store account.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the Azure resource group that contains the Data Lake
-        /// Store account.
-        /// </param>
-        /// <param name='accountName'>
-        /// The name of the Data Lake Store account from which to get the
-        /// trusted identity providers.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TrustedIdProvider>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the Data Lake Store trusted identity providers within the
         /// specified Data Lake Store account.

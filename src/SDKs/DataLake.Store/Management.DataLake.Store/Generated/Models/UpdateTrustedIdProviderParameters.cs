@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store Trusted Identity Provider update parameters
+    /// The parameters used to update a trusted identity provider.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class UpdateTrustedIdProviderParameters
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// class.
         /// </summary>
         /// <param name="idProvider">The URL of this trusted identity
-        /// provider</param>
+        /// provider.</param>
         public UpdateTrustedIdProviderParameters(string idProvider = default(string))
         {
             IdProvider = idProvider;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the URL of this trusted identity provider
+        /// Gets or sets the URL of this trusted identity provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.idProvider")]
         public string IdProvider { get; set; }
