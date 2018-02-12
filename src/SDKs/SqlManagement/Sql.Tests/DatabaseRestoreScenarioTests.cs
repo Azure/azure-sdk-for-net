@@ -330,6 +330,10 @@ namespace Sql.Tests
                         db.Name,
                         restoreDefinition);
 
+                Assert.True(postResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(postResponse.RestorePointLabel == restoreLabel);
+                Assert.True(!string.IsNullOrWhiteSpace(postResponse.RestorePointCreationDate.ToString()));
+
                 IEnumerable<RestorePoint> listResponse =
                     sqlClient.RestorePoints.ListByDatabase(
                         resourceGroup.Name,
@@ -347,6 +351,8 @@ namespace Sql.Tests
                         db.Name,
                         postResponse.Name);
 
+                Assert.True(getResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(!string.IsNullOrWhiteSpace(getResponse.RestorePointCreationDate.ToString()));
                 Assert.True(getResponse.Name == postResponse.Name);
             }
         }
