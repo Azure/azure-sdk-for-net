@@ -36,7 +36,7 @@
 - Changed the `ODataQuery` parameter type from `JobInformation` to `JobInformationBasic` for the Job_List API
 - Changed the `ODataQuery` parameter type from `DataLakeStoreAccountInfo` to `DataLakeStoreAccountInformation` for the DataLakeStoreAccounts_ListByAccount API
 - Changed the `ODataQuery` parameter type from `StorageAccountInfo` to `StorageAccountInformation` for the StorageAccounts_ListByAccount API
-- Changed the return type from `AclList` to `IPage\<Acl>` for these APIs:
+- Changed the return type from `AclList` to `IPage<Acl>` for these APIs:
     - Catalog_ListAclsByDatabase
     - Catalog_ListAcls
 
