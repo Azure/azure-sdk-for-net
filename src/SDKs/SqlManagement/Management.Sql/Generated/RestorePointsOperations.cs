@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a collection of restore points that belongs to the database.
+        /// Gets a list of database restore points.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain

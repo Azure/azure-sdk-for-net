@@ -317,43 +317,37 @@ namespace Sql.Tests
                     new Database
                     {
                         Location = server.Location,
-                        Edition = "DataWarehouse",
-                        RequestedServiceObjectiveName = "DW100"
+                        Edition = DatabaseEdition.DataWarehouse,
+                        RequestedServiceObjectiveName = ServiceObjectiveName.DW100
                     });
                 Assert.NotNull(db);
 
                 CreateDatabaseRestorePointDefinition restoreDefinition = new CreateDatabaseRestorePointDefinition { RestorePointLabel = restoreLabel };
 
-                AzureOperationResponse<RestorePoint> postResponse = sqlClient.RestorePoints.CreateWithHttpMessagesAsync(
+                RestorePoint postResponse = sqlClient.RestorePoints.Create(
                         resourceGroup.Name,
                         server.Name,
                         db.Name,
-                        restoreDefinition).Result;
+                        restoreDefinition);
 
-                Assert.True(postResponse.Response.StatusCode == System.Net.HttpStatusCode.OK ||
-                    postResponse.Response.StatusCode == System.Net.HttpStatusCode.Accepted, "Expect success in creating new restore point.");
-
-                AzureOperationResponse<IEnumerable<RestorePoint>> listResponse =
-                    sqlClient.RestorePoints.ListByDatabaseWithHttpMessagesAsync(
+                IEnumerable<RestorePoint> listResponse =
+                    sqlClient.RestorePoints.ListByDatabase(
                         resourceGroup.Name,
                         server.Name,
-                        db.Name).Result;
+                        db.Name);
 
-                Assert.True(listResponse.Response.StatusCode == System.Net.HttpStatusCode.OK, "Expect success in getting restore points.");
-
-                IEnumerable<RestorePoint> restorePointList = listResponse.Body.ToList<RestorePoint>();
+                IEnumerable<RestorePoint> restorePointList = listResponse.ToList<RestorePoint>();
 
                 Assert.True(restorePointList.Any());
 
-                AzureOperationResponse<RestorePoint> getresponse =
-                    sqlClient.RestorePoints.GetWithHttpMessagesAsync(
+                RestorePoint getResponse =
+                    sqlClient.RestorePoints.Get(
                         resourceGroup.Name,
                         server.Name,
                         db.Name,
-                        postResponse.Body.Name).Result;
+                        postResponse.Name);
 
-                Assert.True(getresponse.Response.StatusCode == System.Net.HttpStatusCode.OK);
-                Assert.True(getresponse.Body.Name == postResponse.Body.Name);
+                Assert.True(getResponse.Name == postResponse.Name);
             }
         }
     }

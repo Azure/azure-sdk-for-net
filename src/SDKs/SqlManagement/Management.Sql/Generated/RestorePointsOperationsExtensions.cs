@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class RestorePointsOperationsExtensions
     {
             /// <summary>
-            /// Gets a collection of restore points that belongs to the database.
+            /// Gets a list of database restore points.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a collection of restore points that belongs to the database.
+            /// Gets a list of database restore points.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
