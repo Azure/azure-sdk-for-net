@@ -826,5 +826,25 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string SapEccResourceDataset = @"
+{
+    name: ""SapEccResourceDataset"",
+    properties:
+    {
+        type: ""SapEccResource"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            path: ""dd04tentitySet""
+        }
+    }
+}
+";
     }
 }
