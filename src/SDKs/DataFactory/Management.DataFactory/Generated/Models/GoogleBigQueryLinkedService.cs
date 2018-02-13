@@ -55,6 +55,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Drive. The default value is false.</param>
         /// <param name="refreshToken">The refresh token obtained from Google
         /// for authorizing access to BigQuery for UserAuthentication.</param>
+        /// <param name="clientId">The client id of the google application used
+        /// to acquire the refresh token.</param>
+        /// <param name="clientSecret">The client secret of the google
+        /// application used to acquire the refresh token.</param>
         /// <param name="email">The service account email ID that is used for
         /// ServiceAuthentication and can only be used on self-hosted
         /// IR.</param>
@@ -73,7 +77,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public GoogleBigQueryLinkedService(object project, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object additionalProjects = default(object), object requestGoogleDriveScope = default(object), SecretBase refreshToken = default(SecretBase), object email = default(object), object keyFilePath = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object encryptedCredential = default(object))
+        public GoogleBigQueryLinkedService(object project, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object additionalProjects = default(object), object requestGoogleDriveScope = default(object), SecretBase refreshToken = default(SecretBase), SecretBase clientId = default(SecretBase), SecretBase clientSecret = default(SecretBase), object email = default(object), object keyFilePath = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             Project = project;
@@ -81,6 +85,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             RequestGoogleDriveScope = requestGoogleDriveScope;
             AuthenticationType = authenticationType;
             RefreshToken = refreshToken;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
             Email = email;
             KeyFilePath = keyFilePath;
             TrustedCertPath = trustedCertPath;
@@ -131,6 +137,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.refreshToken")]
         public SecretBase RefreshToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client id of the google application used to
+        /// acquire the refresh token.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.clientId")]
+        public SecretBase ClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client secret of the google application used to
+        /// acquire the refresh token.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.clientSecret")]
+        public SecretBase ClientSecret { get; set; }
 
         /// <summary>
         /// Gets or sets the service account email ID that is used for

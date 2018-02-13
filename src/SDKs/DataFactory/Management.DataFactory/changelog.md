@@ -4,6 +4,8 @@
 
 ### Feature Additions
   * Add SAP ECC Source
+  * GoogleBigQuery support clientId and clientSecret for UserAuthentication
+  * Add LinkedService, Dataset, CopySource for Vertica and Netezza
 
 ## Version 0.5.0-preview
 
