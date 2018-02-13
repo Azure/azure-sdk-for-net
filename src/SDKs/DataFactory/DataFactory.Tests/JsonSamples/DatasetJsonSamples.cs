@@ -872,31 +872,5 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
-        [JsonSample]
-        public const string NetezzaDataset = @"
-{
-    name: ""NetezzaDataset"",
-    properties: {
-        type: ""NetezzaTable"",
-        linkedServiceName: {
-            referenceName: ""ls"",
-            type: ""LinkedServiceReference""
-        }
-    }
-}
-";
-        [JsonSample]
-        public const string VerticaDataset = @"
-{
-    name: ""VerticaDataset"",
-    properties: {
-        type: ""VerticaTable"",
-        linkedServiceName: {
-            referenceName: ""ls"",
-            type: ""LinkedServiceReference""
-        }
-    }
-}
-";
     }
 }
