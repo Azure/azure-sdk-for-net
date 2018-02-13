@@ -379,6 +379,8 @@ namespace Sql.Tests
             });
 
             // Create a key
+            // This can be flaky if attempted immediately after creating the vault. Adding short sleep to improve robustness.
+            TestUtilities.Wait(TimeSpan.FromSeconds(3));
             string keyName = SqlManagementTestUtilities.GenerateName();
             return keyVaultClient.CreateKeyAsync(vault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa,
                 keyOps: JsonWebKeyOperation.AllOperations).GetAwaiter().GetResult();
