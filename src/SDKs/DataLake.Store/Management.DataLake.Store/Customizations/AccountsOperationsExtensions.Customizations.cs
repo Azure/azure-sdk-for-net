@@ -15,9 +15,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using Models;
 
     /// <summary>
-    /// Extension methods for AccountOperations.
+    /// Extension methods for AccountsOperations.
     /// </summary>
-    public static partial class AccountOperationsExtensions
+    public static partial class AccountsOperationsExtensions
     {
         /// <summary>
         /// Gets the specified Data Lake Store firewall rule.
@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='firewallRuleName'>
         /// The name of the firewall rule to retrieve.
         /// </param>
-        public static bool FirewallRuleExists(this IAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
+        public static bool FirewallRuleExists(this IAccountsOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
         {
-            return Task.Factory.StartNew(s => ((IAccountOperations)s).FirewallRuleExistsAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IAccountsOperations)s).FirewallRuleExistsAsync(resourceGroupName, accountName, firewallRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<bool> FirewallRuleExistsAsync(this IAccountOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<bool> FirewallRuleExistsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.FirewallRuleExistsWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
             {
@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The name of the Data Lake Store account to retrieve.
         /// </param>
-        public static bool Exists(this IAccountOperations operations, string resourceGroupName, string accountName)
+        public static bool Exists(this IAccountsOperations operations, string resourceGroupName, string accountName)
         {
-            return Task.Factory.StartNew(s => ((IAccountOperations)s).ExistsAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return Task.Factory.StartNew(s => ((IAccountsOperations)s).ExistsAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<bool> ExistsAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<bool> ExistsAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.ExistsWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
             {

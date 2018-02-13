@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store Trusted Identity Provider information
+    /// Data Lake Store trusted identity provider information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class TrustedIdProvider : SubResource
@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the TrustedIdProvider class.
         /// </summary>
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
         /// <param name="idProvider">The URL of this trusted identity
-        /// provider</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        public TrustedIdProvider(string idProvider, string id = default(string), string name = default(string), string type = default(string))
+        /// provider.</param>
+        public TrustedIdProvider(string id = default(string), string name = default(string), string type = default(string), string idProvider = default(string))
             : base(id, name, type)
         {
             IdProvider = idProvider;
@@ -50,23 +50,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the URL of this trusted identity provider
+        /// Gets the URL of this trusted identity provider.
         /// </summary>
         [JsonProperty(PropertyName = "properties.idProvider")]
-        public string IdProvider { get; set; }
+        public string IdProvider { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (IdProvider == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IdProvider");
-            }
-        }
     }
 }
