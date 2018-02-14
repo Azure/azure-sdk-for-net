@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets applicable policy.
         /// </summary>
-        [JsonProperty(PropertyName = "PolicyId")]
+        [JsonProperty(PropertyName = "policyId")]
         public string PolicyId { get; set; }
 
         /// <summary>

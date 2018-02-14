@@ -298,16 +298,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Updates the protection profile.
+        /// Updates the policy.
         /// </summary>
         /// <remarks>
         /// The operation to update a replication policy.
         /// </remarks>
         /// <param name='policyName'>
-        /// Protection profile Id.
+        /// Policy Id.
         /// </param>
         /// <param name='input'>
-        /// Update Protection Profile Input
+        /// Update Policy Input
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -907,16 +907,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         }
 
         /// <summary>
-        /// Updates the protection profile.
+        /// Updates the policy.
         /// </summary>
         /// <remarks>
         /// The operation to update a replication policy.
         /// </remarks>
         /// <param name='policyName'>
-        /// Protection profile Id.
+        /// Policy Id.
         /// </param>
         /// <param name='input'>
-        /// Update Protection Profile Input
+        /// Update Policy Input
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

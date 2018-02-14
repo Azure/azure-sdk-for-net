@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationProtectionContainerMappingsOperationsExtensions
     {
             /// <summary>
-            /// Remove protection container mapping.
+            /// Gets the list of protection container mappings for a protection container.
             /// </summary>
             /// <remarks>
-            /// The operation to delete or remove a protection container mapping.
+            /// Lists the protection container mappings for a protection container.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,22 +36,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='protectionContainerName'>
             /// Protection container name.
             /// </param>
-            /// <param name='mappingName'>
-            /// Protection container mapping name.
-            /// </param>
-            /// <param name='removalInput'>
-            /// Removal input.
-            /// </param>
-            public static void Delete(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput)
+            public static IPage<ProtectionContainerMapping> ListByReplicationProtectionContainers(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName)
             {
-                operations.DeleteAsync(fabricName, protectionContainerName, mappingName, removalInput).GetAwaiter().GetResult();
+                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Remove protection container mapping.
+            /// Gets the list of protection container mappings for a protection container.
             /// </summary>
             /// <remarks>
-            /// The operation to delete or remove a protection container mapping.
+            /// Lists the protection container mappings for a protection container.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,19 +55,50 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// </param>
             /// <param name='protectionContainerName'>
             /// Protection container name.
-            /// </param>
-            /// <param name='mappingName'>
-            /// Protection container mapping name.
-            /// </param>
-            /// <param name='removalInput'>
-            /// Removal input.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ProtectionContainerMapping>> ListByReplicationProtectionContainersAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, removalInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of all protection container mappings in a vault.
+            /// </summary>
+            /// <remarks>
+            /// Lists the protection container mappings in the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<ProtectionContainerMapping> List(this IReplicationProtectionContainerMappingsOperations operations)
+            {
+                return operations.ListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of all protection container mappings in a vault.
+            /// </summary>
+            /// <remarks>
+            /// Lists the protection container mappings in the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ProtectionContainerMapping>> ListAsync(this IReplicationProtectionContainerMappingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -236,86 +261,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Gets the list of protection container mappings for a protection container.
-            /// </summary>
-            /// <remarks>
-            /// Lists the protection container mappings for a protection container.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            public static IPage<ProtectionContainerMapping> ListByReplicationProtectionContainers(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName)
-            {
-                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of protection container mappings for a protection container.
-            /// </summary>
-            /// <remarks>
-            /// Lists the protection container mappings for a protection container.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ProtectionContainerMapping>> ListByReplicationProtectionContainersAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the list of all protection container mappings in a vault.
-            /// </summary>
-            /// <remarks>
-            /// Lists the protection container mappings in the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<ProtectionContainerMapping> List(this IReplicationProtectionContainerMappingsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of all protection container mappings in a vault.
-            /// </summary>
-            /// <remarks>
-            /// Lists the protection container mappings in the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ProtectionContainerMapping>> ListAsync(this IReplicationProtectionContainerMappingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Remove protection container mapping.
             /// </summary>
             /// <remarks>
@@ -336,9 +281,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='removalInput'>
             /// Removal input.
             /// </param>
-            public static void BeginDelete(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput)
+            public static void Delete(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput)
             {
-                operations.BeginDeleteAsync(fabricName, protectionContainerName, mappingName, removalInput).GetAwaiter().GetResult();
+                operations.DeleteAsync(fabricName, protectionContainerName, mappingName, removalInput).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -365,9 +310,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, removalInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, removalInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -475,6 +420,61 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task BeginPurgeAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginPurgeWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Remove protection container mapping.
+            /// </summary>
+            /// <remarks>
+            /// The operation to delete or remove a protection container mapping.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='mappingName'>
+            /// Protection container mapping name.
+            /// </param>
+            /// <param name='removalInput'>
+            /// Removal input.
+            /// </param>
+            public static void BeginDelete(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput)
+            {
+                operations.BeginDeleteAsync(fabricName, protectionContainerName, mappingName, removalInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove protection container mapping.
+            /// </summary>
+            /// <remarks>
+            /// The operation to delete or remove a protection container mapping.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='mappingName'>
+            /// Protection container mapping name.
+            /// </param>
+            /// <param name='removalInput'>
+            /// Removal input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, RemoveProtectionContainerMappingInput removalInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, removalInput, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -11,33 +11,29 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Health Error
+    /// Implements InnerHealthError class. HealthError object has a list of
+    /// InnerHealthErrors as child errors. InnerHealthError is used because
+    /// this will prevent an infinite loop of structures when Hydra tries to
+    /// auto-generate the contract. We are exposing the related health errors
+    /// as inner health errors and all API consumers can utilize this in the
+    /// same fashion as Exception -&amp;gt; InnerException.
     /// </summary>
-    public partial class HealthError
+    public partial class InnerHealthError
     {
         /// <summary>
-        /// Initializes a new instance of the HealthError class.
+        /// Initializes a new instance of the InnerHealthError class.
         /// </summary>
-        public HealthError()
+        public InnerHealthError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HealthError class.
+        /// Initializes a new instance of the InnerHealthError class.
         /// </summary>
-        /// <param name="innerHealthErrors">The inner health errors.
-        /// HealthError having a list of HealthError as child errors is
-        /// problematic. InnerHealthError is used because this will prevent an
-        /// infinite loop of structures when Hydra tries to auto-generate the
-        /// contract. We are exposing the related health errors as inner health
-        /// errors and all API consumers can utilize this in the same fashion
-        /// as Exception -&amp;gt; InnerException.</param>
         /// <param name="errorSource">Source of error.</param>
         /// <param name="errorType">Type of error.</param>
         /// <param name="errorLevel">Level of error.</param>
@@ -52,9 +48,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryProviderErrorMessage">DRA error
         /// message.</param>
         /// <param name="entityId">ID of the entity.</param>
-        public HealthError(IList<InnerHealthError> innerHealthErrors = default(IList<InnerHealthError>), string errorSource = default(string), string errorType = default(string), string errorLevel = default(string), string errorCategory = default(string), string errorCode = default(string), string summaryMessage = default(string), string errorMessage = default(string), string possibleCauses = default(string), string recommendedAction = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), string recoveryProviderErrorMessage = default(string), string entityId = default(string))
+        public InnerHealthError(string errorSource = default(string), string errorType = default(string), string errorLevel = default(string), string errorCategory = default(string), string errorCode = default(string), string summaryMessage = default(string), string errorMessage = default(string), string possibleCauses = default(string), string recommendedAction = default(string), System.DateTime? creationTimeUtc = default(System.DateTime?), string recoveryProviderErrorMessage = default(string), string entityId = default(string))
         {
-            InnerHealthErrors = innerHealthErrors;
             ErrorSource = errorSource;
             ErrorType = errorType;
             ErrorLevel = errorLevel;
@@ -74,18 +69,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the inner health errors. HealthError having a list of
-        /// HealthError as child errors is problematic. InnerHealthError is
-        /// used because this will prevent an infinite loop of structures when
-        /// Hydra tries to auto-generate the contract. We are exposing the
-        /// related health errors as inner health errors and all API consumers
-        /// can utilize this in the same fashion as Exception -&amp;amp;gt;
-        /// InnerException.
-        /// </summary>
-        [JsonProperty(PropertyName = "innerHealthErrors")]
-        public IList<InnerHealthError> InnerHealthErrors { get; set; }
 
         /// <summary>
         /// Gets or sets source of error.

@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Creates an Azure Site Recoery fabric.
+            /// Creates an Azure Site Recovery fabric.
             /// </summary>
             /// <remarks>
             /// The operation to create an Azure Site Recovery fabric (for e.g. Hyper-V
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Creates an Azure Site Recoery fabric.
+            /// Creates an Azure Site Recovery fabric.
             /// </summary>
             /// <remarks>
             /// The operation to create an Azure Site Recovery fabric (for e.g. Hyper-V
@@ -597,7 +597,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Creates an Azure Site Recoery fabric.
+            /// Creates an Azure Site Recovery fabric.
             /// </summary>
             /// <remarks>
             /// The operation to create an Azure Site Recovery fabric (for e.g. Hyper-V
@@ -618,7 +618,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Creates an Azure Site Recoery fabric.
+            /// Creates an Azure Site Recovery fabric.
             /// </summary>
             /// <remarks>
             /// The operation to create an Azure Site Recovery fabric (for e.g. Hyper-V

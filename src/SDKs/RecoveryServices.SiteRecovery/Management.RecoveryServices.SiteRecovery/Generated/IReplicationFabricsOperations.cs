@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<Fabric>> GetWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an Azure Site Recoery fabric.
+        /// Creates an Azure Site Recovery fabric.
         /// </summary>
         /// <remarks>
         /// The operation to create an Azure Site Recovery fabric (for e.g.
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an Azure Site Recoery fabric.
+        /// Creates an Azure Site Recovery fabric.
         /// </summary>
         /// <remarks>
         /// The operation to create an Azure Site Recovery fabric (for e.g.

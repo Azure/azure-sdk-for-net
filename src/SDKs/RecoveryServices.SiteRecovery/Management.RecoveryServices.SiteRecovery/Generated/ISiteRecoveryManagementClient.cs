@@ -79,14 +79,29 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
 
         /// <summary>
-        /// Gets the IReplicationVaultHealthOperations.
+        /// Gets the ITargetComputeSizesOperations.
         /// </summary>
-        IReplicationVaultHealthOperations ReplicationVaultHealth { get; }
+        ITargetComputeSizesOperations TargetComputeSizes { get; }
 
         /// <summary>
         /// Gets the IReplicationProtectedItemsOperations.
         /// </summary>
         IReplicationProtectedItemsOperations ReplicationProtectedItems { get; }
+
+        /// <summary>
+        /// Gets the IReplicationProtectionContainerMappingsOperations.
+        /// </summary>
+        IReplicationProtectionContainerMappingsOperations ReplicationProtectionContainerMappings { get; }
+
+        /// <summary>
+        /// Gets the IReplicationEventsOperations.
+        /// </summary>
+        IReplicationEventsOperations ReplicationEvents { get; }
+
+        /// <summary>
+        /// Gets the IReplicationVaultHealthOperations.
+        /// </summary>
+        IReplicationVaultHealthOperations ReplicationVaultHealth { get; }
 
         /// <summary>
         /// Gets the IReplicationNetworkMappingsOperations.
@@ -134,11 +149,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationProtectionContainersOperations ReplicationProtectionContainers { get; }
 
         /// <summary>
-        /// Gets the IReplicationProtectionContainerMappingsOperations.
-        /// </summary>
-        IReplicationProtectionContainerMappingsOperations ReplicationProtectionContainerMappings { get; }
-
-        /// <summary>
         /// Gets the IReplicationProtectableItemsOperations.
         /// </summary>
         IReplicationProtectableItemsOperations ReplicationProtectableItems { get; }
@@ -167,11 +177,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the IReplicationJobsOperations.
         /// </summary>
         IReplicationJobsOperations ReplicationJobs { get; }
-
-        /// <summary>
-        /// Gets the IReplicationEventsOperations.
-        /// </summary>
-        IReplicationEventsOperations ReplicationEvents { get; }
 
         /// <summary>
         /// Gets the IReplicationAlertSettingsOperations.

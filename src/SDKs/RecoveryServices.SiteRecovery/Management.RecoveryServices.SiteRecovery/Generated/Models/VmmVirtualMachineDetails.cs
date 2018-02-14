@@ -16,23 +16,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Single Host fabric provider specific VM settings.
+    /// VMM fabric provider specific VM settings.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("HyperVVirtualMachine")]
-    public partial class HyperVVirtualMachineDetails : ConfigurationSettings
+    [Newtonsoft.Json.JsonObject("VmmVirtualMachine")]
+    public partial class VmmVirtualMachineDetails : ConfigurationSettings
     {
         /// <summary>
-        /// Initializes a new instance of the HyperVVirtualMachineDetails
-        /// class.
+        /// Initializes a new instance of the VmmVirtualMachineDetails class.
         /// </summary>
-        public HyperVVirtualMachineDetails()
+        public VmmVirtualMachineDetails()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the HyperVVirtualMachineDetails
-        /// class.
+        /// Initializes a new instance of the VmmVirtualMachineDetails class.
         /// </summary>
         /// <param name="sourceItemId">The source id of the object.</param>
         /// <param name="generation">The id of the object in fabric.</param>
@@ -45,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// VM has a fibre channel adapter attached.</param>
         /// <param name="hasSharedVhd">A value indicating whether the VM has a
         /// shared VHD attached.</param>
-        public HyperVVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), bool? hasPhysicalDisk = default(bool?), bool? hasFibreChannelAdapter = default(bool?), bool? hasSharedVhd = default(bool?))
+        public VmmVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), bool? hasPhysicalDisk = default(bool?), bool? hasFibreChannelAdapter = default(bool?), bool? hasSharedVhd = default(bool?))
         {
             SourceItemId = sourceItemId;
             Generation = generation;

@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates the protection profile.
+            /// Updates the policy.
             /// </summary>
             /// <remarks>
             /// The operation to update a replication policy.
@@ -154,10 +154,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Protection profile Id.
+            /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Protection Profile Input
+            /// Update Policy Input
             /// </param>
             public static Policy Update(this IReplicationPoliciesOperations operations, string policyName, UpdatePolicyInput input)
             {
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates the protection profile.
+            /// Updates the policy.
             /// </summary>
             /// <remarks>
             /// The operation to update a replication policy.
@@ -174,10 +174,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Protection profile Id.
+            /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Protection Profile Input
+            /// Update Policy Input
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates the protection profile.
+            /// Updates the policy.
             /// </summary>
             /// <remarks>
             /// The operation to update a replication policy.
@@ -317,10 +317,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Protection profile Id.
+            /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Protection Profile Input
+            /// Update Policy Input
             /// </param>
             public static Policy BeginUpdate(this IReplicationPoliciesOperations operations, string policyName, UpdatePolicyInput input)
             {
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Updates the protection profile.
+            /// Updates the policy.
             /// </summary>
             /// <remarks>
             /// The operation to update a replication policy.
@@ -337,10 +337,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='policyName'>
-            /// Protection profile Id.
+            /// Policy Id.
             /// </param>
             /// <param name='input'>
-            /// Update Protection Profile Input
+            /// Update Policy Input
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

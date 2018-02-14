@@ -43,17 +43,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="onlineReplicationStartTime">The scheduled start time
         /// for the initial replication. If this parameter is Null, the initial
         /// replication starts immediately.</param>
-        /// <param name="encryption">A value indicating whether encryption
-        /// needs to be enabled for Vms in this cloud.</param>
         /// <param name="storageAccounts">The list of storage accounts to which
         /// the VMs in the primary cloud can replicate to.</param>
-        public HyperVReplicaAzurePolicyInput(int? recoveryPointHistoryDuration = default(int?), int? applicationConsistentSnapshotFrequencyInHours = default(int?), int? replicationInterval = default(int?), string onlineReplicationStartTime = default(string), string encryption = default(string), IList<string> storageAccounts = default(IList<string>))
+        public HyperVReplicaAzurePolicyInput(int? recoveryPointHistoryDuration = default(int?), int? applicationConsistentSnapshotFrequencyInHours = default(int?), int? replicationInterval = default(int?), string onlineReplicationStartTime = default(string), IList<string> storageAccounts = default(IList<string>))
         {
             RecoveryPointHistoryDuration = recoveryPointHistoryDuration;
             ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;
             ReplicationInterval = replicationInterval;
             OnlineReplicationStartTime = onlineReplicationStartTime;
-            Encryption = encryption;
             StorageAccounts = storageAccounts;
             CustomInit();
         }
@@ -90,13 +87,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "onlineReplicationStartTime")]
         public string OnlineReplicationStartTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether encryption needs to be
-        /// enabled for Vms in this cloud.
-        /// </summary>
-        [JsonProperty(PropertyName = "encryption")]
-        public string Encryption { get; set; }
 
         /// <summary>
         /// Gets or sets the list of storage accounts to which the VMs in the

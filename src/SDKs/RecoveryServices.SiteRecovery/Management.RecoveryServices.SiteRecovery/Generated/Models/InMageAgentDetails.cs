@@ -34,11 +34,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// installed agent needs to be updated.</param>
         /// <param name="postUpdateRebootStatus">A value indicating whether
         /// reboot is required after update is applied.</param>
-        public InMageAgentDetails(string agentVersion = default(string), string agentUpdateStatus = default(string), string postUpdateRebootStatus = default(string))
+        /// <param name="agentExpiryDate">Agent expiry date.</param>
+        public InMageAgentDetails(string agentVersion = default(string), string agentUpdateStatus = default(string), string postUpdateRebootStatus = default(string), System.DateTime? agentExpiryDate = default(System.DateTime?))
         {
             AgentVersion = agentVersion;
             AgentUpdateStatus = agentUpdateStatus;
             PostUpdateRebootStatus = postUpdateRebootStatus;
+            AgentExpiryDate = agentExpiryDate;
             CustomInit();
         }
 
@@ -66,6 +68,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "postUpdateRebootStatus")]
         public string PostUpdateRebootStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets agent expiry date.
+        /// </summary>
+        [JsonProperty(PropertyName = "agentExpiryDate")]
+        public System.DateTime? AgentExpiryDate { get; set; }
 
     }
 }
