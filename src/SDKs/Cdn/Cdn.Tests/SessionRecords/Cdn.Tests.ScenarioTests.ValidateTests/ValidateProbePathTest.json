@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-04-02",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0wNC0wMg==",
+      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-10-12",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0xMC0xMg==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"probeURL\": \"www.withoutHttp.com\"\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "41"
         ],
         "x-ms-client-request-id": [
-          "8abd3ec5-c939-4056-af5c-144422cc8568"
+          "fa1eb127-bda7-4b5a-8839-4ae74cf852d1"
         ],
         "accept-language": [
           "en-US"
@@ -41,7 +41,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Sep 2017 18:41:42 GMT"
+          "Tue, 13 Feb 2018 21:21:09 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -50,10 +50,10 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "6c8e847d-94fe-4257-9fb5-e0718b79427d"
+          "1033f859-eeb3-4e3b-b312-8a57f9a60bc3"
         ],
         "x-ms-client-request-id": [
-          "8abd3ec5-c939-4056-af5c-144422cc8568"
+          "fa1eb127-bda7-4b5a-8839-4ae74cf852d1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -68,17 +68,17 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "a840c12d-bce3-4435-8376-e6b905c2647f"
+          "9e7579a4-9e4e-4d2d-a4f6-4e89ae308f2c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170920T184142Z:a840c12d-bce3-4435-8376-e6b905c2647f"
+          "WESTUS2:20180213T212109Z:9e7579a4-9e4e-4d2d-a4f6-4e89ae308f2c"
         ]
       },
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-04-02",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0wNC0wMg==",
+      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-10-12",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0xMC0xMg==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"probeURL\": \"https://www.notexist.com/notexist/notexist.txt\"\r\n}",
       "RequestHeaders": {
@@ -89,7 +89,7 @@
           "68"
         ],
         "x-ms-client-request-id": [
-          "8c6ec9c4-6b33-47e7-823c-f6a01ad627bb"
+          "eae7e10c-f6f4-4d57-961e-e52fa9bee163"
         ],
         "accept-language": [
           "en-US"
@@ -111,7 +111,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Sep 2017 18:41:43 GMT"
+          "Tue, 13 Feb 2018 21:21:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -126,10 +126,10 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "f105fe1c-4314-49d8-959d-d0d54b39b61a"
+          "040a68cd-e6ed-42f4-8b00-704af600a7d0"
         ],
         "x-ms-client-request-id": [
-          "8c6ec9c4-6b33-47e7-823c-f6a01ad627bb"
+          "eae7e10c-f6f4-4d57-961e-e52fa9bee163"
         ],
         "OData-Version": [
           "4.0"
@@ -147,17 +147,17 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "128ef88e-f55b-419d-b865-a20ecb60d46d"
+          "71f49f3b-6857-4afa-b312-ba3b4426109a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170920T184143Z:128ef88e-f55b-419d-b865-a20ecb60d46d"
+          "WESTUS2:20180213T212110Z:71f49f3b-6857-4afa-b312-ba3b4426109a"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-04-02",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0wNC0wMg==",
+      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-10-12",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0xMC0xMg==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"probeURL\": \"https://azurecdn-files.azureedge.net/dsa-test/probe-v.txt\"\r\n}",
       "RequestHeaders": {
@@ -168,7 +168,7 @@
           "79"
         ],
         "x-ms-client-request-id": [
-          "d2afbf79-ee21-47a3-8922-6daa5251b584"
+          "472e6f2d-2bc2-4865-bc1d-7850cc4053a8"
         ],
         "accept-language": [
           "en-US"
@@ -190,7 +190,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Sep 2017 18:41:43 GMT"
+          "Tue, 13 Feb 2018 21:21:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -205,10 +205,10 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "1f5b595b-9a95-42dc-a4da-7486925cd21e"
+          "a5bae80b-3073-4a5d-a5b9-12fbe5a82474"
         ],
         "x-ms-client-request-id": [
-          "d2afbf79-ee21-47a3-8922-6daa5251b584"
+          "472e6f2d-2bc2-4865-bc1d-7850cc4053a8"
         ],
         "OData-Version": [
           "4.0"
@@ -226,17 +226,17 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "b1020ce4-1ff9-4a1d-906d-ea481e84531d"
+          "143e7dab-dd7b-4ac7-a9ce-b347503b1a78"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170920T184143Z:b1020ce4-1ff9-4a1d-906d-ea481e84531d"
+          "WESTUS2:20180213T212110Z:143e7dab-dd7b-4ac7-a9ce-b347503b1a78"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-04-02",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0wNC0wMg==",
+      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-10-12",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0xMC0xMg==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"probeURL\": \"http://999.999.999.999/nonexist.txt\"\r\n}",
       "RequestHeaders": {
@@ -247,7 +247,7 @@
           "57"
         ],
         "x-ms-client-request-id": [
-          "dc2dbc45-5da1-47cb-94f0-b0f6dad36f27"
+          "274a0de9-2308-4e46-ba42-c271f45afaa5"
         ],
         "accept-language": [
           "en-US"
@@ -275,7 +275,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Sep 2017 18:41:43 GMT"
+          "Tue, 13 Feb 2018 21:21:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -284,10 +284,10 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "213f5b81-5140-427a-bd30-15b42e514e48"
+          "5d092614-75bd-419a-a0d2-b00a4e71b088"
         ],
         "x-ms-client-request-id": [
-          "dc2dbc45-5da1-47cb-94f0-b0f6dad36f27"
+          "274a0de9-2308-4e46-ba42-c271f45afaa5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -302,17 +302,17 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "a3e45d75-1143-4cc4-859a-3b478a126cdc"
+          "3e9a950a-87d5-4e3b-ba37-e0b09f5c1033"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170920T184143Z:a3e45d75-1143-4cc4-859a-3b478a126cdc"
+          "WESTUS2:20180213T212111Z:3e9a950a-87d5-4e3b-ba37-e0b09f5c1033"
         ]
       },
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-04-02",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0wNC0wMg==",
+      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-10-12",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0xMC0xMg==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"probeURL\": \"http://192.168.1.1/nonexist.aspx\"\r\n}",
       "RequestHeaders": {
@@ -323,7 +323,7 @@
           "54"
         ],
         "x-ms-client-request-id": [
-          "c385ee73-3669-4a8b-b16c-8eaf68d81832"
+          "6541dc7c-b1e2-4c1d-a771-8c76f24f2e9f"
         ],
         "accept-language": [
           "en-US"
@@ -345,7 +345,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Sep 2017 18:41:54 GMT"
+          "Tue, 13 Feb 2018 21:21:21 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -360,10 +360,10 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "00fc764a-4ff2-4514-a760-877ae3faef5c"
+          "4b002b39-fb5f-403f-97a2-1a787723dd35"
         ],
         "x-ms-client-request-id": [
-          "c385ee73-3669-4a8b-b16c-8eaf68d81832"
+          "6541dc7c-b1e2-4c1d-a771-8c76f24f2e9f"
         ],
         "OData-Version": [
           "4.0"
@@ -381,17 +381,17 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "c54acfdc-8763-4414-a077-caa95f57647d"
+          "4cd066e2-4602-4738-92ed-191875e4ee65"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170920T184154Z:c54acfdc-8763-4414-a077-caa95f57647d"
+          "WESTUS2:20180213T212121Z:4cd066e2-4602-4738-92ed-191875e4ee65"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-04-02",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0wNC0wMg==",
+      "RequestUri": "/subscriptions/e2ee545b-783f-4634-a277-e35f55c90660/providers/Microsoft.Cdn/validateProbe?api-version=2017-10-12",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJlZTU0NWItNzgzZi00NjM0LWEyNzctZTM1ZjU1YzkwNjYwL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL3ZhbGlkYXRlUHJvYmU/YXBpLXZlcnNpb249MjAxNy0xMC0xMg==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"probeURL\": \"http://137.117.34.31/contact/contact.aspx\"\r\n}",
       "RequestHeaders": {
@@ -402,7 +402,7 @@
           "63"
         ],
         "x-ms-client-request-id": [
-          "086c5d54-cc2d-4314-8227-e13651a3ae4d"
+          "66363283-2efb-4d98-9e30-b8b254df0218"
         ],
         "accept-language": [
           "en-US"
@@ -424,7 +424,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 20 Sep 2017 18:41:54 GMT"
+          "Tue, 13 Feb 2018 21:21:21 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -439,10 +439,10 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "2aab31d0-d80d-42fa-8951-1fe51b7d6539"
+          "58261ae9-e7ba-45ed-b94c-7582b2953512"
         ],
         "x-ms-client-request-id": [
-          "086c5d54-cc2d-4314-8227-e13651a3ae4d"
+          "66363283-2efb-4d98-9e30-b8b254df0218"
         ],
         "OData-Version": [
           "4.0"
@@ -460,10 +460,10 @@
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "c3c2359d-8e03-47da-9d45-7dd889628c45"
+          "2bcd2372-7581-47c3-8680-bd84f59ce899"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170920T184154Z:c3c2359d-8e03-47da-9d45-7dd889628c45"
+          "WESTUS2:20180213T212121Z:2bcd2372-7581-47c3-8680-bd84f59ce899"
         ]
       },
       "StatusCode": 200

@@ -56,7 +56,7 @@ if "%7" == "" (call npm i -g autorest)
 
 :: code generation
 @echo on
-call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=%version% --reflect-api-versions
+call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=%version% --reflect-api-versions --tag=package-2017-10
 @echo off
 
 :: metadata
