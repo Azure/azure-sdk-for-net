@@ -533,8 +533,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             JsonConvert.DefaultSettings = () =>
                 new JsonSerializerSettings() 
                 {
-                    Converters = new[] { new InvalidJsonConverter() },
-                    ContractResolver = new InvalidContractResolver()
+                    Converters = new[] { new ModelConverter() }
                 };
 
             try
@@ -562,29 +561,72 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             public int Rating { get; set; }
         }
 
-        private class InvalidContractResolver : IContractResolver
+ 
+        private class ModelConverter : JsonConverter
         {
-            public JsonContract ResolveContract(Type type)
-            {
-                throw new InvalidOperationException(JsonErrorMessage);
-            }
-        }
+            public override bool CanConvert(Type objectType) => objectType == typeof(Model);
 
-        private class InvalidJsonConverter : JsonConverter
-        {
-            public override bool CanConvert(Type objectType)
+            public override object ReadJson(
+                JsonReader reader,
+                Type objectType,
+                object existingValue,
+                JsonSerializer serializer)
             {
-                throw new InvalidOperationException(JsonErrorMessage);
-            }
+                var model = new Model();
 
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                throw new InvalidOperationException(JsonErrorMessage);
+                ExpectAndAdvance(reader, JsonToken.StartObject);
+
+                ExpectProperty(reader, "Name");
+                model.Name = reader.ReadAsString().ToUpper();
+                reader.Read();
+
+                ExpectProperty(reader, "Rating");
+                model.Rating = reader.ReadAsInt32().Value;
+                reader.Read();
+
+                Expect(reader, JsonToken.EndObject);
+
+                return model;
             }
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                throw new InvalidOperationException(JsonErrorMessage);
+                var model = (Model)value;
+
+                writer.WriteStartObject();
+
+                writer.WritePropertyName("Name");
+                writer.WriteValue(model.Name.ToUpper());
+
+                writer.WritePropertyName("Rating");
+                writer.WriteValue(model.Rating);
+
+                writer.WriteEndObject();
+
+            }
+
+            private static void Expect(JsonReader reader, JsonToken tokenType)
+            {
+                if (reader.TokenType != tokenType)
+                {
+                    throw new JsonSerializationException($"Found unexpected token: {tokenType}.");
+                }
+            }
+
+            private static void ExpectAndAdvance(JsonReader reader, JsonToken tokenType)
+            {
+                Expect(reader, tokenType);
+                reader.Read();
+            }
+
+            private static void ExpectProperty(JsonReader reader, string name)
+            {
+                Expect(reader, JsonToken.PropertyName);
+                string propertyName = reader.Value as string;
+                if (propertyName != name)
+                {
+                    throw new JsonSerializationException($"Found unexpected property. Expected: {name}. Actual: {propertyName}.");
+                }
             }
         }
     }

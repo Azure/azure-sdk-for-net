@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureMLLinkedService(object mlEndpoint, SecureString apiKey, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object tenant = default(object), object encryptedCredential = default(object))
+        public AzureMLLinkedService(object mlEndpoint, SecretBase apiKey, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             MlEndpoint = mlEndpoint;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the API key for accessing the Azure ML model endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.apiKey")]
-        public SecureString ApiKey { get; set; }
+        public SecretBase ApiKey { get; set; }
 
         /// <summary>
         /// Gets or sets the Update Resource REST URL for an Azure ML Web
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// service.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
-        public SecureString ServicePrincipalKey { get; set; }
+        public SecretBase ServicePrincipalKey { get; set; }
 
         /// <summary>
         /// Gets or sets the name or ID of the tenant to which the service
@@ -149,14 +149,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ApiKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ApiKey");
-            }
-            if (ApiKey != null)
-            {
-                ApiKey.Validate();
-            }
-            if (ServicePrincipalKey != null)
-            {
-                ServicePrincipalKey.Validate();
             }
         }
     }

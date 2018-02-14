@@ -11,7 +11,7 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("DataLakeAnalytics", "Account", "2016-11-01"),
+                new Tuple<string, string, string>("DataLakeAnalytics", "Accounts", "2016-11-01"),
                 new Tuple<string, string, string>("DataLakeAnalytics", "ComputePolicies", "2016-11-01"),
                 new Tuple<string, string, string>("DataLakeAnalytics", "DataLakeStoreAccounts", "2016-11-01"),
                 new Tuple<string, string, string>("DataLakeAnalytics", "FirewallRules", "2016-11-01"),

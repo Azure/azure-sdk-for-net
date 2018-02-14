@@ -22,6 +22,48 @@ namespace Microsoft.Azure.Management.DataLake.Store
     public static partial class TrustedIdProvidersOperationsExtensions
     {
             /// <summary>
+            /// Lists the Data Lake Store trusted identity providers within the specified
+            /// Data Lake Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            public static IPage<TrustedIdProvider> ListByAccount(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName)
+            {
+                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Store trusted identity providers within the specified
+            /// Data Lake Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<TrustedIdProvider>> ListByAccountAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates or updates the specified trusted identity provider. During update,
             /// the trusted identity provider with the specified name will be replaced with
             /// this new provider
@@ -30,12 +72,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to add or replace the trusted
-            /// identity provider.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='trustedIdProviderName'>
             /// The name of the trusted identity provider. This is used for differentiation
@@ -44,7 +84,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='parameters'>
             /// Parameters supplied to create or replace the trusted identity provider.
             /// </param>
-            public static TrustedIdProvider CreateOrUpdate(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters)
+            public static TrustedIdProvider CreateOrUpdate(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, CreateOrUpdateTrustedIdProviderParameters parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, accountName, trustedIdProviderName, parameters).GetAwaiter().GetResult();
             }
@@ -58,12 +98,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to add or replace the trusted
-            /// identity provider.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='trustedIdProviderName'>
             /// The name of the trusted identity provider. This is used for differentiation
@@ -75,9 +113,55 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TrustedIdProvider> CreateOrUpdateAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, TrustedIdProvider parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TrustedIdProvider> CreateOrUpdateAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, CreateOrUpdateTrustedIdProviderParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the specified Data Lake Store trusted identity provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='trustedIdProviderName'>
+            /// The name of the trusted identity provider to retrieve.
+            /// </param>
+            public static TrustedIdProvider Get(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName)
+            {
+                return operations.GetAsync(resourceGroupName, accountName, trustedIdProviderName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified Data Lake Store trusted identity provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='trustedIdProviderName'>
+            /// The name of the trusted identity provider to retrieve.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TrustedIdProvider> GetAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -90,12 +174,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to update the trusted
-            /// identity provider.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='trustedIdProviderName'>
             /// The name of the trusted identity provider. This is used for differentiation
@@ -116,12 +198,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account to which to update the trusted
-            /// identity provider.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='trustedIdProviderName'>
             /// The name of the trusted identity provider. This is used for differentiation
@@ -149,12 +229,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the trusted
-            /// identity provider.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='trustedIdProviderName'>
             /// The name of the trusted identity provider to delete.
@@ -172,12 +250,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
+            /// The name of the Azure resource group.
             /// </param>
             /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to delete the trusted
-            /// identity provider.
+            /// The name of the Data Lake Store account.
             /// </param>
             /// <param name='trustedIdProviderName'>
             /// The name of the trusted identity provider to delete.
@@ -188,102 +264,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task DeleteAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store trusted identity provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider to retrieve.
-            /// </param>
-            public static TrustedIdProvider Get(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName)
-            {
-                return operations.GetAsync(resourceGroupName, accountName, trustedIdProviderName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the specified Data Lake Store trusted identity provider.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity provider.
-            /// </param>
-            /// <param name='trustedIdProviderName'>
-            /// The name of the trusted identity provider to retrieve.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TrustedIdProvider> GetAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, string trustedIdProviderName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, trustedIdProviderName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store trusted identity providers within the specified
-            /// Data Lake Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity providers.
-            /// </param>
-            public static IPage<TrustedIdProvider> ListByAccount(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName)
-            {
-                return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store trusted identity providers within the specified
-            /// Data Lake Store account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group that contains the Data Lake Store
-            /// account.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account from which to get the trusted
-            /// identity providers.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TrustedIdProvider>> ListByAccountAsync(this ITrustedIdProvidersOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

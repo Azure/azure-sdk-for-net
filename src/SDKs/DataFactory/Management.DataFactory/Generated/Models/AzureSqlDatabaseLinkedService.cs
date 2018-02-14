@@ -42,14 +42,25 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="servicePrincipalId">The ID of the service principal
+        /// used to authenticate against Azure SQL Database. Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="servicePrincipalKey">The key of the service principal
+        /// used to authenticate against Azure SQL Database.</param>
+        /// <param name="tenant">The name or ID of the tenant to which the
+        /// service principal belongs. Type: string (or Expression with
+        /// resultType string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureSqlDatabaseLinkedService(SecretBase connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
+        public AzureSqlDatabaseLinkedService(SecretBase connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             ConnectionString = connectionString;
+            ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
+            Tenant = tenant;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -64,6 +75,29 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
         public SecretBase ConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the service principal used to authenticate
+        /// against Azure SQL Database. Type: string (or Expression with
+        /// resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.servicePrincipalId")]
+        public object ServicePrincipalId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key of the service principal used to authenticate
+        /// against Azure SQL Database.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
+        public SecretBase ServicePrincipalKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name or ID of the tenant to which the service
+        /// principal belongs. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.tenant")]
+        public object Tenant { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.

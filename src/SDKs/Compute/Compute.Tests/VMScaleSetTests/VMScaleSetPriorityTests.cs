@@ -94,7 +94,7 @@ namespace Compute.Tests
                         {
                             vmScaleSet.Overprovision = true;
                             vmScaleSet.VirtualMachineProfile.Priority = priority;
-                            vmScaleSet.Sku.Name = "Standard_A1";
+                            vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1;
                             vmScaleSet.Sku.Tier = "Standard";
                             vmScaleSet.Sku.Capacity = 2;
                         },

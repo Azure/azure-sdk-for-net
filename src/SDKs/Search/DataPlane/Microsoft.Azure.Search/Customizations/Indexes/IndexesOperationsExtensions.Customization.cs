@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Search
         /// </param>
         public static Index CreateOrUpdate(this IIndexesOperations operations, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
-            return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(index, allowIndexDowntime, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.CreateOrUpdateAsync(index, allowIndexDowntime, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Search
             string indexName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IIndexesOperations)s).ExistsAsync(indexName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.ExistsAsync(indexName, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// An available operation for Data Lake Store
+    /// An available operation for Data Lake Store.
     /// </summary>
     public partial class Operation
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">the name of the operation.</param>
-        /// <param name="display">the display information for the
+        /// <param name="name">The name of the operation.</param>
+        /// <param name="display">The display information for the
         /// operation.</param>
-        /// <param name="origin">the intended executor of the operation.
+        /// <param name="origin">The intended executor of the operation.
         /// Possible values include: 'user', 'system', 'user,system'</param>
         public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string))
         {

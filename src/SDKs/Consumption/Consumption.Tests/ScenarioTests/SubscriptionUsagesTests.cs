@@ -16,8 +16,8 @@ namespace Consumption.Tests.ScenarioTests
     public class SubscriptionUsagesTests : TestBase
     {
         protected const int NumberOfItems = 100;
-        protected const string SubscriptionScope = "/subscriptions/a98d6dc5-eb8f-46cf-8938-f1fb08f03706";
-        protected const string SubscriptionBillingPeriodScope = "/subscriptions/a98d6dc5-eb8f-46cf-8938-f1fb08f03706/providers/Microsoft.Billing/billingPeriods/201710";
+        protected const string subscriptionId = "a98d6dc5-eb8f-46cf-8938-f1fb08f03706";
+        protected const string billingPeriodName = "201710";
 
         [Fact]
         public void ListUsagesTest()
@@ -26,7 +26,8 @@ namespace Consumption.Tests.ScenarioTests
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var usages = consumptionMgmtClient.UsageDetails.List(SubscriptionScope, top: NumberOfItems);
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
+                var usages = consumptionMgmtClient.UsageDetails.List(top: NumberOfItems);
                 Assert.NotNull(usages);
                 Assert.True(usages.Any());
                 Assert.True(NumberOfItems >= usages.Count());
@@ -45,8 +46,9 @@ namespace Consumption.Tests.ScenarioTests
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
                 var dateTimeFilter = "properties/usageStart ge '2017-10-02' and properties/usageEnd le '2017-10-03'";
-                var usages = consumptionMgmtClient.UsageDetails.List(SubscriptionScope, filter: dateTimeFilter, top: 10);
+                var usages = consumptionMgmtClient.UsageDetails.List(filter: dateTimeFilter, top: 10);
                 Assert.NotNull(usages);
                 foreach (var item in usages)
                 {
@@ -64,11 +66,12 @@ namespace Consumption.Tests.ScenarioTests
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
                     context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var usages = consumptionMgmtClient.UsageDetails.List(SubscriptionBillingPeriodScope, top: 10);
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
+                var usages = consumptionMgmtClient.UsageDetails.ListByBillingPeriod(billingPeriodName, top: 10);
                 Assert.NotNull(usages);
                 foreach (var item in usages)
                 {
-                    ValidateProperties(item, expectedBillingPeriodId: SubscriptionBillingPeriodScope.Substring(1));
+                    ValidateProperties(item, expectedBillingPeriodId: billingPeriodName);
                 }
             }
         }
@@ -79,8 +82,8 @@ namespace Consumption.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
                 var usages = consumptionMgmtClient.UsageDetails.List(
-                    SubscriptionScope, 
                     expand: "MeterDetails,AdditionalDetails",                     
                     top: NumberOfItems);
                 Assert.NotNull(usages);
@@ -101,8 +104,8 @@ namespace Consumption.Tests.ScenarioTests
                 var instanceName = "D1v2";
                 var filter = $"properties/instanceName eq '{instanceName}'";
                 var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionId;
                 var usages = consumptionMgmtClient.UsageDetails.List(
-                    SubscriptionScope,
                     filter: filter,
                     top: NumberOfItems);
                 Assert.NotNull(usages);

@@ -35,97 +35,96 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the DataLakeAnalyticsAccount class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="defaultDataLakeStoreAccount">the default data lake
-        /// storage account associated with this Data Lake Analytics
-        /// account.</param>
-        /// <param name="dataLakeStoreAccounts">the list of Data Lake storage
-        /// accounts associated with this account.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="provisioningState">the provisioning status of the Data
+        /// <param name="id">The resource identifer.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
+        /// <param name="location">The resource location.</param>
+        /// <param name="tags">The resource tags.</param>
+        /// <param name="accountId">The unique identifier associated with this
+        /// Data Lake Analytics account.</param>
+        /// <param name="provisioningState">The provisioning status of the Data
         /// Lake Analytics account. Possible values include: 'Failed',
         /// 'Creating', 'Running', 'Succeeded', 'Patching', 'Suspending',
         /// 'Resuming', 'Deleting', 'Deleted', 'Undeleting', 'Canceled'</param>
-        /// <param name="state">the state of the Data Lake Analytics account.
+        /// <param name="state">The state of the Data Lake Analytics account.
         /// Possible values include: 'Active', 'Suspended'</param>
-        /// <param name="creationTime">the account creation time.</param>
-        /// <param name="lastModifiedTime">the account last modified
+        /// <param name="creationTime">The account creation time.</param>
+        /// <param name="lastModifiedTime">The account last modified
         /// time.</param>
-        /// <param name="endpoint">the full CName endpoint for this
+        /// <param name="endpoint">The full CName endpoint for this
         /// account.</param>
-        /// <param name="accountId">The unique identifier associated with this
-        /// Data Lake Analytics account.</param>
-        /// <param name="maxDegreeOfParallelism">the maximum supported degree
-        /// of parallelism for this account.</param>
-        /// <param name="queryStoreRetention">the number of days that job
-        /// metadata is retained.</param>
-        /// <param name="maxJobCount">the maximum supported jobs running under
-        /// the account at the same time.</param>
-        /// <param name="systemMaxDegreeOfParallelism">the system defined
-        /// maximum supported degree of parallelism for this account, which
-        /// restricts the maximum value of parallelism the user can set for the
-        /// account.</param>
-        /// <param name="systemMaxJobCount">the system defined maximum
-        /// supported jobs running under the account at the same time, which
-        /// restricts the maximum number of running jobs the user can set for
-        /// the account.</param>
-        /// <param name="storageAccounts">the list of Azure Blob storage
+        /// <param name="defaultDataLakeStoreAccount">The default Data Lake
+        /// Store account associated with this account.</param>
+        /// <param name="dataLakeStoreAccounts">The list of Data Lake Store
         /// accounts associated with this account.</param>
-        /// <param name="newTier">the commitment tier for the next month.
+        /// <param name="storageAccounts">The list of Azure Blob Storage
+        /// accounts associated with this account.</param>
+        /// <param name="computePolicies">The list of compute policies
+        /// associated with this account.</param>
+        /// <param name="firewallRules">The list of firewall rules associated
+        /// with this account.</param>
+        /// <param name="firewallState">The current state of the IP address
+        /// firewall for this account. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="firewallAllowAzureIps">The current state of allowing
+        /// or disallowing IPs originating within Azure through the firewall.
+        /// If the firewall is disabled, this is not enforced. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="newTier">The commitment tier for the next month.
         /// Possible values include: 'Consumption', 'Commitment_100AUHours',
         /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
         /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
         /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
         /// 'Commitment_500000AUHours'</param>
-        /// <param name="currentTier">the commitment tier in use for the
+        /// <param name="currentTier">The commitment tier in use for the
         /// current month. Possible values include: 'Consumption',
         /// 'Commitment_100AUHours', 'Commitment_500AUHours',
         /// 'Commitment_1000AUHours', 'Commitment_5000AUHours',
         /// 'Commitment_10000AUHours', 'Commitment_50000AUHours',
         /// 'Commitment_100000AUHours', 'Commitment_500000AUHours'</param>
-        /// <param name="firewallState">The current state of the IP address
-        /// firewall for this Data Lake Analytics account. Possible values
-        /// include: 'Enabled', 'Disabled'</param>
-        /// <param name="firewallAllowAzureIps">The current state of allowing
-        /// or disallowing IPs originating within Azure through the firewall.
-        /// If the firewall is disabled, this is not enforced. Possible values
-        /// include: 'Enabled', 'Disabled'</param>
-        /// <param name="firewallRules">The list of firewall rules associated
-        /// with this Data Lake Analytics account.</param>
-        /// <param name="maxDegreeOfParallelismPerJob">the maximum supported
+        /// <param name="maxJobCount">The maximum supported jobs running under
+        /// the account at the same time.</param>
+        /// <param name="systemMaxJobCount">The system defined maximum
+        /// supported jobs running under the account at the same time, which
+        /// restricts the maximum number of running jobs the user can set for
+        /// the account.</param>
+        /// <param name="maxDegreeOfParallelism">The maximum supported degree
+        /// of parallelism for this account.</param>
+        /// <param name="systemMaxDegreeOfParallelism">The system defined
+        /// maximum supported degree of parallelism for this account, which
+        /// restricts the maximum value of parallelism the user can set for the
+        /// account.</param>
+        /// <param name="maxDegreeOfParallelismPerJob">The maximum supported
         /// degree of parallelism per job for this account.</param>
-        /// <param name="minPriorityPerJob">the minimum supported priority per
+        /// <param name="minPriorityPerJob">The minimum supported priority per
         /// job for this account.</param>
-        /// <param name="computePolicies">the list of compute policies to
-        /// create in this account.</param>
-        public DataLakeAnalyticsAccount(string location, string defaultDataLakeStoreAccount, IList<DataLakeStoreAccountInfo> dataLakeStoreAccounts, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), System.Guid? accountId = default(System.Guid?), int? maxDegreeOfParallelism = default(int?), int? queryStoreRetention = default(int?), int? maxJobCount = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? systemMaxJobCount = default(int?), IList<StorageAccountInfo> storageAccounts = default(IList<StorageAccountInfo>), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), IList<ComputePolicyAccountCreateParameters> computePolicies = default(IList<ComputePolicyAccountCreateParameters>))
-            : base(location, id, name, type, tags)
+        /// <param name="queryStoreRetention">The number of days that job
+        /// metadata is retained.</param>
+        public DataLakeAnalyticsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? accountId = default(System.Guid?), DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultDataLakeStoreAccount = default(string), IList<DataLakeStoreAccountInformation> dataLakeStoreAccounts = default(IList<DataLakeStoreAccountInformation>), IList<StorageAccountInformation> storageAccounts = default(IList<StorageAccountInformation>), IList<ComputePolicy> computePolicies = default(IList<ComputePolicy>), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), TierType? newTier = default(TierType?), TierType? currentTier = default(TierType?), int? maxJobCount = default(int?), int? systemMaxJobCount = default(int?), int? maxDegreeOfParallelism = default(int?), int? systemMaxDegreeOfParallelism = default(int?), int? maxDegreeOfParallelismPerJob = default(int?), int? minPriorityPerJob = default(int?), int? queryStoreRetention = default(int?))
+            : base(id, name, type, location, tags)
         {
+            AccountId = accountId;
             ProvisioningState = provisioningState;
             State = state;
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
             Endpoint = endpoint;
-            AccountId = accountId;
             DefaultDataLakeStoreAccount = defaultDataLakeStoreAccount;
-            MaxDegreeOfParallelism = maxDegreeOfParallelism;
-            QueryStoreRetention = queryStoreRetention;
-            MaxJobCount = maxJobCount;
-            SystemMaxDegreeOfParallelism = systemMaxDegreeOfParallelism;
-            SystemMaxJobCount = systemMaxJobCount;
             DataLakeStoreAccounts = dataLakeStoreAccounts;
             StorageAccounts = storageAccounts;
-            NewTier = newTier;
-            CurrentTier = currentTier;
+            ComputePolicies = computePolicies;
+            FirewallRules = firewallRules;
             FirewallState = firewallState;
             FirewallAllowAzureIps = firewallAllowAzureIps;
-            FirewallRules = firewallRules;
+            NewTier = newTier;
+            CurrentTier = currentTier;
+            MaxJobCount = maxJobCount;
+            SystemMaxJobCount = systemMaxJobCount;
+            MaxDegreeOfParallelism = maxDegreeOfParallelism;
+            SystemMaxDegreeOfParallelism = systemMaxDegreeOfParallelism;
             MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
             MinPriorityPerJob = minPriorityPerJob;
-            ComputePolicies = computePolicies;
+            QueryStoreRetention = queryStoreRetention;
             CustomInit();
         }
 
@@ -133,6 +132,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the unique identifier associated with this Data Lake Analytics
+        /// account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.accountId")]
+        public System.Guid? AccountId { get; private set; }
 
         /// <summary>
         /// Gets the provisioning status of the Data Lake Analytics account.
@@ -169,79 +175,64 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Endpoint { get; private set; }
 
         /// <summary>
-        /// Gets the unique identifier associated with this Data Lake Analytics
+        /// Gets the default Data Lake Store account associated with this
         /// account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.accountId")]
-        public System.Guid? AccountId { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the default data lake storage account associated with
-        /// this Data Lake Analytics account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultDataLakeStoreAccount")]
-        public string DefaultDataLakeStoreAccount { get; set; }
+        public string DefaultDataLakeStoreAccount { get; private set; }
 
         /// <summary>
-        /// Gets or sets the maximum supported degree of parallelism for this
+        /// Gets the list of Data Lake Store accounts associated with this
         /// account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.maxDegreeOfParallelism")]
-        public int? MaxDegreeOfParallelism { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of days that job metadata is retained.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.queryStoreRetention")]
-        public int? QueryStoreRetention { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum supported jobs running under the account
-        /// at the same time.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.maxJobCount")]
-        public int? MaxJobCount { get; set; }
-
-        /// <summary>
-        /// Gets the system defined maximum supported degree of parallelism for
-        /// this account, which restricts the maximum value of parallelism the
-        /// user can set for the account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.systemMaxDegreeOfParallelism")]
-        public int? SystemMaxDegreeOfParallelism { get; private set; }
-
-        /// <summary>
-        /// Gets the system defined maximum supported jobs running under the
-        /// account at the same time, which restricts the maximum number of
-        /// running jobs the user can set for the account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.systemMaxJobCount")]
-        public int? SystemMaxJobCount { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the list of Data Lake storage accounts associated with
-        /// this account.
-        /// </summary>
         [JsonProperty(PropertyName = "properties.dataLakeStoreAccounts")]
-        public IList<DataLakeStoreAccountInfo> DataLakeStoreAccounts { get; set; }
+        public IList<DataLakeStoreAccountInformation> DataLakeStoreAccounts { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of Azure Blob storage accounts associated
-        /// with this account.
+        /// Gets the list of Azure Blob Storage accounts associated with this
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageAccounts")]
-        public IList<StorageAccountInfo> StorageAccounts { get; set; }
+        public IList<StorageAccountInformation> StorageAccounts { get; private set; }
 
         /// <summary>
-        /// Gets or sets the commitment tier for the next month. Possible
-        /// values include: 'Consumption', 'Commitment_100AUHours',
+        /// Gets the list of compute policies associated with this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.computePolicies")]
+        public IList<ComputePolicy> ComputePolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the list of firewall rules associated with this account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallRules")]
+        public IList<FirewallRule> FirewallRules { get; private set; }
+
+        /// <summary>
+        /// Gets the current state of the IP address firewall for this account.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallState")]
+        public FirewallState? FirewallState { get; private set; }
+
+        /// <summary>
+        /// Gets the current state of allowing or disallowing IPs originating
+        /// within Azure through the firewall. If the firewall is disabled,
+        /// this is not enforced. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.firewallAllowAzureIps")]
+        public FirewallAllowAzureIpsState? FirewallAllowAzureIps { get; private set; }
+
+        /// <summary>
+        /// Gets the commitment tier for the next month. Possible values
+        /// include: 'Consumption', 'Commitment_100AUHours',
         /// 'Commitment_500AUHours', 'Commitment_1000AUHours',
         /// 'Commitment_5000AUHours', 'Commitment_10000AUHours',
         /// 'Commitment_50000AUHours', 'Commitment_100000AUHours',
         /// 'Commitment_500000AUHours'
         /// </summary>
         [JsonProperty(PropertyName = "properties.newTier")]
-        public TierType? NewTier { get; set; }
+        public TierType? NewTier { get; private set; }
 
         /// <summary>
         /// Gets the commitment tier in use for the current month. Possible
@@ -255,49 +246,52 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public TierType? CurrentTier { get; private set; }
 
         /// <summary>
-        /// Gets or sets the current state of the IP address firewall for this
-        /// Data Lake Analytics account. Possible values include: 'Enabled',
-        /// 'Disabled'
+        /// Gets the maximum supported jobs running under the account at the
+        /// same time.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.firewallState")]
-        public FirewallState? FirewallState { get; set; }
+        [JsonProperty(PropertyName = "properties.maxJobCount")]
+        public int? MaxJobCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets the current state of allowing or disallowing IPs
-        /// originating within Azure through the firewall. If the firewall is
-        /// disabled, this is not enforced. Possible values include: 'Enabled',
-        /// 'Disabled'
+        /// Gets the system defined maximum supported jobs running under the
+        /// account at the same time, which restricts the maximum number of
+        /// running jobs the user can set for the account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.firewallAllowAzureIps")]
-        public FirewallAllowAzureIpsState? FirewallAllowAzureIps { get; set; }
+        [JsonProperty(PropertyName = "properties.systemMaxJobCount")]
+        public int? SystemMaxJobCount { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of firewall rules associated with this Data
-        /// Lake Analytics account.
+        /// Gets the maximum supported degree of parallelism for this account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.firewallRules")]
-        public IList<FirewallRule> FirewallRules { get; set; }
+        [JsonProperty(PropertyName = "properties.maxDegreeOfParallelism")]
+        public int? MaxDegreeOfParallelism { get; private set; }
 
         /// <summary>
-        /// Gets or sets the maximum supported degree of parallelism per job
-        /// for this account.
+        /// Gets the system defined maximum supported degree of parallelism for
+        /// this account, which restricts the maximum value of parallelism the
+        /// user can set for the account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.systemMaxDegreeOfParallelism")]
+        public int? SystemMaxDegreeOfParallelism { get; private set; }
+
+        /// <summary>
+        /// Gets the maximum supported degree of parallelism per job for this
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxDegreeOfParallelismPerJob")]
-        public int? MaxDegreeOfParallelismPerJob { get; set; }
+        public int? MaxDegreeOfParallelismPerJob { get; private set; }
 
         /// <summary>
-        /// Gets or sets the minimum supported priority per job for this
-        /// account.
+        /// Gets the minimum supported priority per job for this account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.minPriorityPerJob")]
-        public int? MinPriorityPerJob { get; set; }
+        public int? MinPriorityPerJob { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of compute policies to create in this
-        /// account.
+        /// Gets the number of days that job metadata is retained.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.computePolicies")]
-        public IList<ComputePolicyAccountCreateParameters> ComputePolicies { get; set; }
+        [JsonProperty(PropertyName = "properties.queryStoreRetention")]
+        public int? QueryStoreRetention { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -305,36 +299,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (DefaultDataLakeStoreAccount == null)
+            if (ComputePolicies != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DefaultDataLakeStoreAccount");
-            }
-            if (DataLakeStoreAccounts == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DataLakeStoreAccounts");
-            }
-            if (MaxDegreeOfParallelism < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxDegreeOfParallelism", 1);
-            }
-            if (QueryStoreRetention > 180)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "QueryStoreRetention", 180);
-            }
-            if (QueryStoreRetention < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "QueryStoreRetention", 1);
-            }
-            if (MaxJobCount < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxJobCount", 1);
-            }
-            if (DataLakeStoreAccounts != null)
-            {
-                foreach (var element in DataLakeStoreAccounts)
+                foreach (var element in ComputePolicies)
                 {
                     if (element != null)
                     {
@@ -342,25 +311,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
                     }
                 }
             }
-            if (StorageAccounts != null)
+            if (MaxJobCount < 1)
             {
-                foreach (var element1 in StorageAccounts)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
-                    }
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxJobCount", 1);
             }
-            if (FirewallRules != null)
+            if (MaxDegreeOfParallelism < 1)
             {
-                foreach (var element2 in FirewallRules)
-                {
-                    if (element2 != null)
-                    {
-                        element2.Validate();
-                    }
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxDegreeOfParallelism", 1);
             }
             if (MaxDegreeOfParallelismPerJob < 1)
             {
@@ -370,15 +327,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MinPriorityPerJob", 1);
             }
-            if (ComputePolicies != null)
+            if (QueryStoreRetention > 180)
             {
-                foreach (var element3 in ComputePolicies)
-                {
-                    if (element3 != null)
-                    {
-                        element3.Validate();
-                    }
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "QueryStoreRetention", 180);
+            }
+            if (QueryStoreRetention < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "QueryStoreRetention", 1);
             }
         }
     }

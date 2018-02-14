@@ -18,7 +18,7 @@ namespace DataLakeStore.Tests
         private CommonTestFixture commonData;
 
         [Fact]
-        public void CreateGetUpdateDeleteTest()
+        public void AccountCRUDTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
@@ -31,14 +31,20 @@ namespace DataLakeStore.Tests
                     Name = commonData.DataLakeStoreAccountName
                 };
 
-                var responseNameCheck = clientToUse.Account.CheckNameAvailability("EastUS2", checkNameParam);
+                var responseNameCheck = 
+                    clientToUse.Accounts.CheckNameAvailability(
+                        commonData.Location.Replace(" ", ""), 
+                        checkNameParam
+                    );
 
                 Assert.True(responseNameCheck.NameAvailable);
 
                 // Create a test account
                 var responseCreate =
-                    clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: commonData.DataLakeStoreAccountName,
-                        parameters: new DataLakeStoreAccount
+                    clientToUse.Accounts.Create(
+                        resourceGroupName : commonData.ResourceGroupName, 
+                        accountName : commonData.DataLakeStoreAccountName,
+                        parameters : new CreateDataLakeStoreAccountParameters
                         {
                             Location = commonData.Location,
                             Tags = new Dictionary<string, string>
@@ -52,17 +58,26 @@ namespace DataLakeStore.Tests
                             },
                             EncryptionState = EncryptionState.Enabled,
                             NewTier = TierType.Commitment1TB
-                        });
+                        }
+                    );
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.ProvisioningState);
 
                 // Verify that the account name is no longer available
-                responseNameCheck = clientToUse.Account.CheckNameAvailability("EastUS2", checkNameParam);
+                responseNameCheck = 
+                    clientToUse.Accounts.CheckNameAvailability(
+                        commonData.Location.Replace(" ", ""), 
+                        checkNameParam
+                    );
 
                 Assert.False(responseNameCheck.NameAvailable);
 
                 // Get the account and ensure that all the values are properly set.
-                var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+                var responseGet = 
+                    clientToUse.Accounts.Get(
+                        commonData.ResourceGroupName, 
+                        commonData.DataLakeStoreAccountName
+                    );
 
                 // Validate the account creation process
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseGet.ProvisioningState);
@@ -80,11 +95,17 @@ namespace DataLakeStore.Tests
                 // We will wait a maximum of 15 minutes for this to happen and then report failures
                 int timeToWaitInMinutes = 15;
                 int minutesWaited = 0;
-                while (responseGet.ProvisioningState != DataLakeStoreAccountStatus.Succeeded && responseGet.ProvisioningState != DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
+                while (responseGet.ProvisioningState != DataLakeStoreAccountStatus.Succeeded && 
+                       responseGet.ProvisioningState != DataLakeStoreAccountStatus.Failed && 
+                       minutesWaited <= timeToWaitInMinutes)
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
                     minutesWaited++;
-                    responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+                    responseGet = 
+                        clientToUse.Accounts.Get(
+                            commonData.ResourceGroupName, 
+                            commonData.DataLakeStoreAccountName
+                        );
                 }
 
                 // Confirm that the account creation did succeed
@@ -97,62 +118,78 @@ namespace DataLakeStore.Tests
                 Assert.Equal(EncryptionConfigType.ServiceManaged, responseGet.EncryptionConfig.Type);
 
                 // Update the account and confirm the updates make it in.
-                var newAccount = responseGet;
-                newAccount.Tags = new Dictionary<string, string>
-                {
-                    { "updatedKey", "updatedValue" }
-                };
+                var responseUpdate = 
+                    clientToUse.Accounts.Update(
+                        commonData.ResourceGroupName, 
+                        commonData.DataLakeStoreAccountName,
+                        new UpdateDataLakeStoreAccountParameters
+                        {
+                            Tags = new Dictionary<string, string>
+                            {
+                                { "updatedKey", "updatedValue" }
+                            },
+                            NewTier = TierType.Consumption
+                        }
+                    );
 
-                var updateResponse = clientToUse.Account.Update(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName,
-                new DataLakeStoreAccountUpdateParameters
-                {
-                    Tags = new Dictionary<string, string>
-                    {
-                        { "updatedKey", "updatedValue" }
-                    },
-                    NewTier = TierType.Consumption
-                });
+                Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseUpdate.ProvisioningState);
 
-                Assert.Equal(DataLakeStoreAccountStatus.Succeeded, updateResponse.ProvisioningState);
+                var responseUpdateGet = 
+                    clientToUse.Accounts.Get(
+                        commonData.ResourceGroupName, 
+                        commonData.DataLakeStoreAccountName
+                    );
 
-                var updateResponseGet = clientToUse.Account.Get(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
-
-                Assert.NotNull(updateResponse.Id);
-                Assert.Contains(responseGet.Id, updateResponseGet.Id);
-                Assert.Equal(responseGet.Location, updateResponseGet.Location);
-                Assert.Equal(newAccount.Name, updateResponseGet.Name);
-                Assert.Equal(responseGet.Type, updateResponseGet.Type);
+                Assert.NotNull(responseUpdate.Id);
+                Assert.Contains(responseGet.Id, responseUpdateGet.Id);
+                Assert.Equal(responseGet.Location, responseUpdateGet.Location);
+                Assert.Equal(responseGet.Name, responseUpdateGet.Name);
+                Assert.Equal(responseGet.Type, responseUpdateGet.Type);
 
                 // Verify the new tags. NOTE: sequence equal is not ideal if we have more than 1 tag, since the ordering can change.
-                Assert.True(updateResponseGet.Tags.SequenceEqual(newAccount.Tags));
-
-                Assert.Equal(TierType.Commitment1TB, updateResponseGet.CurrentTier);
-                Assert.Equal(TierType.Consumption, updateResponseGet.NewTier);
+                Assert.True(responseUpdateGet.Tags.Count == 1);
+                Assert.True(responseUpdateGet.Tags.ContainsKey("updatedKey"));
+                Assert.True(responseUpdateGet.Tags.Values.Contains("updatedValue"));
+                Assert.Equal(TierType.Commitment1TB, responseUpdateGet.CurrentTier);
+                Assert.Equal(TierType.Consumption, responseUpdateGet.NewTier);
 
                 // Create another account and ensure that list account returns both
-                var accountToChange = updateResponseGet;
-                var newAcctName = accountToChange.Name + "acct2";
-                clientToUse.Account.Create(commonData.ResourceGroupName, newAcctName, new DataLakeStoreAccount
-                {
-                    Location = accountToChange.Location
-                });
+                clientToUse.Accounts.Create(
+                    commonData.ResourceGroupName, 
+                    commonData.DataLakeStoreAccountName + "acct2", 
+                    new CreateDataLakeStoreAccountParameters
+                    {
+                        Location = commonData.Location
+                    }
+                );
 
-                var listResponse = clientToUse.Account.List();
+                var listResponse = clientToUse.Accounts.List();
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
                 // Now list by resource group:
-                listResponse = clientToUse.Account.ListByResourceGroup(commonData.ResourceGroupName);
+                listResponse = 
+                    clientToUse.Accounts.ListByResourceGroup(
+                        commonData.ResourceGroupName
+                    );
 
                 // Assert that there are at least two accounts in the list
                 Assert.True(listResponse.Count() > 1);
 
                 // Test that the account exists
-                Assert.True(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
+                Assert.True(
+                    clientToUse.Accounts.Exists(
+                        commonData.ResourceGroupName, 
+                        commonData.DataLakeStoreAccountName + "acct2"
+                    )
+                );
 
                 // Check that Locations_GetCapability and Operations_List are functional
-                var responseGetCapability = clientToUse.Locations.GetCapability("EastUS2");
+                var responseGetCapability =
+                    clientToUse.Locations.GetCapability(
+                        commonData.Location.Replace(" ", "")
+                    );
 
                 Assert.NotNull(responseGetCapability);
 
@@ -161,20 +198,35 @@ namespace DataLakeStore.Tests
                 Assert.NotNull(responseListOps);
 
                 // Delete the account and confirm that it is deleted.
-                clientToUse.Account.Delete(commonData.ResourceGroupName, newAccount.Name);
+                clientToUse.Accounts.Delete(
+                    commonData.ResourceGroupName,
+                    commonData.DataLakeStoreAccountName + "acct2"
+                );
 
                 // Delete the account again and make sure it continues to result in a succesful code.
-                clientToUse.Account.Delete(commonData.ResourceGroupName, newAccount.Name);
+                clientToUse.Accounts.Delete(
+                    commonData.ResourceGroupName,
+                    commonData.DataLakeStoreAccountName + "acct2"
+                );
 
                 // Delete the account with its old name, which should also succeed.
-                clientToUse.Account.Delete(commonData.ResourceGroupName, commonData.DataLakeStoreAccountName);
+                clientToUse.Accounts.Delete(
+                    commonData.ResourceGroupName, 
+                    commonData.DataLakeStoreAccountName
+                );
 
                 // Test that the account is gone
-                Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
+                Assert.False(
+                    clientToUse.Accounts.Exists(
+                        commonData.ResourceGroupName,
+                        commonData.DataLakeStoreAccountName + "acct2"
+                    )
+                );
             }
         }
+
         [Fact]
-        public void FirewallAndTrustedProviderTest()
+        public void FirewallAndTrustedProviderCRUDTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
@@ -183,38 +235,55 @@ namespace DataLakeStore.Tests
 
                 // Create a an account with trusted ID provider and firewall rules.
                 var adlsAccountName = TestUtilities.GenerateName("adlsacct");
-
+                var firewallRuleName1 = TestUtilities.GenerateName("firerule1");
                 var firewallStart = "127.0.0.1";
                 var firewallEnd = "127.0.0.2";
-                var firewallRuleName1 = TestUtilities.GenerateName("firerule1");
-
                 var trustedId = TestUtilities.GenerateGuid();
-                var trustedUrl = string.Format("https://sts.windows.net/{0}", trustedId.ToString());
                 var trustedIdName = TestUtilities.GenerateName("trustedrule1");
+                var trustedUrl = 
+                    string.Format(
+                        "https://sts.windows.net/{0}", 
+                        trustedId.ToString()
+                    );
 
                 var responseCreate =
-                    clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: adlsAccountName,
-                        parameters: new DataLakeStoreAccount
+                    clientToUse.Accounts.Create(
+                        resourceGroupName : commonData.ResourceGroupName, 
+                        accountName : adlsAccountName,
+                        parameters : new CreateDataLakeStoreAccountParameters
                         {
                             Location = commonData.Location,
-                            FirewallRules = new List<FirewallRule>
+                            FirewallRules = new List<CreateFirewallRuleWithAccountParameters>
                             {
-                                new FirewallRule(firewallStart, firewallEnd, name: firewallRuleName1)
-                            },
-                            TrustedIdProviders = new List<TrustedIdProvider>
-                            {
-                                new TrustedIdProvider(trustedUrl, name: trustedIdName)
+                                new CreateFirewallRuleWithAccountParameters
+                                {
+                                    Name = firewallRuleName1,
+                                    StartIpAddress = firewallStart,
+                                    EndIpAddress = firewallEnd
+                                }
                             },
                             FirewallState = FirewallState.Enabled,
-                            TrustedIdProviderState = TrustedIdProviderState.Enabled,
-                            FirewallAllowAzureIps = FirewallAllowAzureIpsState.Enabled
-                            
-                        });
+                            FirewallAllowAzureIps = FirewallAllowAzureIpsState.Enabled,
+                            TrustedIdProviders = new List<CreateTrustedIdProviderWithAccountParameters>
+                            {
+                                new CreateTrustedIdProviderWithAccountParameters
+                                {
+                                    Name = trustedIdName,
+                                    IdProvider = trustedUrl
+                                }
+                            },
+                            TrustedIdProviderState = TrustedIdProviderState.Enabled
+                        }
+                    );
 
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.ProvisioningState);
 
                 // Get the account and ensure that all the values are properly set.
-                var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, adlsAccountName);
+                var responseGet = 
+                    clientToUse.Accounts.Get(
+                        commonData.ResourceGroupName, 
+                        adlsAccountName
+                    );
 
                 // Validate the account creation process
                 Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseGet.ProvisioningState);
@@ -228,7 +297,7 @@ namespace DataLakeStore.Tests
 
                 // Validate firewall state
                 Assert.Equal(FirewallState.Enabled, responseGet.FirewallState);
-                Assert.Equal(1, responseGet.FirewallRules.Count());
+                Assert.True(responseGet.FirewallRules.Count() == 1);
                 Assert.Equal(firewallStart, responseGet.FirewallRules[0].StartIpAddress);
                 Assert.Equal(firewallEnd, responseGet.FirewallRules[0].EndIpAddress);
                 Assert.Equal(firewallRuleName1, responseGet.FirewallRules[0].Name);
@@ -236,12 +305,17 @@ namespace DataLakeStore.Tests
 
                 // Validate trusted identity provider state
                 Assert.Equal(TrustedIdProviderState.Enabled, responseGet.TrustedIdProviderState);
-                Assert.Equal(1, responseGet.TrustedIdProviders.Count());
+                Assert.True(responseGet.TrustedIdProviders.Count() == 1);
                 Assert.Equal(trustedUrl, responseGet.TrustedIdProviders[0].IdProvider);
                 Assert.Equal(trustedIdName, responseGet.TrustedIdProviders[0].Name);
 
                 // Test getting the specific firewall rules
-                var firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
+                var firewallRule = 
+                    clientToUse.FirewallRules.Get(
+                        commonData.ResourceGroupName, 
+                        adlsAccountName, 
+                        firewallRuleName1
+                    );
 
                 Assert.Equal(firewallStart, firewallRule.StartIpAddress);
                 Assert.Equal(firewallEnd, firewallRule.EndIpAddress);
@@ -249,11 +323,19 @@ namespace DataLakeStore.Tests
 
                 var updatedFirewallStart = "192.168.0.0";
                 var updatedFirewallEnd = "192.168.0.1";
-                firewallRule.StartIpAddress = updatedFirewallStart;
-                firewallRule.EndIpAddress = updatedFirewallEnd;
 
                 // Update the firewall rule to change the start/end ip addresses
-                firewallRule = clientToUse.FirewallRules.CreateOrUpdate(commonData.ResourceGroupName, adlsAccountName,firewallRuleName1, firewallRule);
+                firewallRule = 
+                    clientToUse.FirewallRules.CreateOrUpdate(
+                        commonData.ResourceGroupName, 
+                        adlsAccountName,
+                        firewallRuleName1, 
+                        new CreateOrUpdateFirewallRuleParameters
+                        {
+                            StartIpAddress = updatedFirewallStart,
+                            EndIpAddress = updatedFirewallEnd 
+                        }
+                    );
 
                 Assert.Equal(updatedFirewallStart, firewallRule.StartIpAddress);
                 Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
@@ -267,18 +349,29 @@ namespace DataLakeStore.Tests
                     new UpdateFirewallRuleParameters
                     {
                         StartIpAddress = firewallStart
-                    });
+                    }
+                );
 
                 Assert.Equal(firewallStart, firewallRule.StartIpAddress);
                 Assert.Equal(updatedFirewallEnd, firewallRule.EndIpAddress);
                 Assert.Equal(firewallRuleName1, firewallRule.Name);
 
                 // Remove the firewall rule and verify it is gone.
-                clientToUse.FirewallRules.Delete(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
+                clientToUse.FirewallRules.Delete(
+                    commonData.ResourceGroupName, 
+                    adlsAccountName, 
+                    firewallRuleName1
+                );
 
                 try
                 {
-                    firewallRule = clientToUse.FirewallRules.Get(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
+                    firewallRule = 
+                        clientToUse.FirewallRules.Get(
+                            commonData.ResourceGroupName, 
+                            adlsAccountName, 
+                            firewallRuleName1
+                        );
+
                     Assert.True(false, "Attempting to retrieve a deleted firewall rule did not throw.");
                 }
                 catch (CloudException e)
@@ -287,16 +380,33 @@ namespace DataLakeStore.Tests
                 }
 
                 // Test getting the specific trusted identity provider
-                var trustedIdProvider = clientToUse.TrustedIdProviders.Get(commonData.ResourceGroupName, adlsAccountName, trustedIdName);
+                var trustedIdProvider = 
+                    clientToUse.TrustedIdProviders.Get(
+                        commonData.ResourceGroupName, 
+                        adlsAccountName, 
+                        trustedIdName
+                    );
 
                 Assert.Equal(trustedUrl, trustedIdProvider.IdProvider);
                 Assert.Equal(trustedIdName, trustedIdProvider.Name);
 
-                var updatedIdUrl = string.Format("https://sts.windows.net/{0}", TestUtilities.GenerateGuid().ToString());
-                trustedIdProvider.IdProvider = updatedIdUrl;
+                var updatedIdUrl = 
+                    string.Format(
+                        "https://sts.windows.net/{0}", 
+                        TestUtilities.GenerateGuid().ToString()
+                    );
 
                 // Update the trusted id provider
-                trustedIdProvider = clientToUse.TrustedIdProviders.CreateOrUpdate(commonData.ResourceGroupName, adlsAccountName, trustedIdName, trustedIdProvider);
+                trustedIdProvider = 
+                    clientToUse.TrustedIdProviders.CreateOrUpdate(
+                        commonData.ResourceGroupName, 
+                        adlsAccountName, 
+                        trustedIdName, 
+                        new CreateOrUpdateTrustedIdProviderParameters
+                        {
+                            IdProvider = updatedIdUrl
+                        }
+                    );
 
                 Assert.Equal(updatedIdUrl, trustedIdProvider.IdProvider);
                 Assert.Equal(trustedIdName, trustedIdProvider.Name);
@@ -309,17 +419,28 @@ namespace DataLakeStore.Tests
                     new UpdateTrustedIdProviderParameters
                     {
                         IdProvider = trustedUrl
-                    });
+                    }
+                );
 
                 Assert.Equal(trustedUrl, trustedIdProvider.IdProvider);
                 Assert.Equal(trustedIdName, trustedIdProvider.Name);
 
                 // Remove the firewall rule and verify it is gone.
-                clientToUse.TrustedIdProviders.Delete(commonData.ResourceGroupName, adlsAccountName, trustedIdName);
+                clientToUse.TrustedIdProviders.Delete(
+                    commonData.ResourceGroupName, 
+                    adlsAccountName, 
+                    trustedIdName
+                );
 
                 try
                 {
-                    trustedIdProvider = clientToUse.TrustedIdProviders.Get(commonData.ResourceGroupName, adlsAccountName, trustedIdName);
+                    trustedIdProvider = 
+                        clientToUse.TrustedIdProviders.Get(
+                            commonData.ResourceGroupName, 
+                            adlsAccountName, 
+                            trustedIdName
+                        );
+
                     Assert.True(false, "Attempting to retrieve a deleted trusted identity provider did not throw.");
                 }
                 catch (CloudException e)
