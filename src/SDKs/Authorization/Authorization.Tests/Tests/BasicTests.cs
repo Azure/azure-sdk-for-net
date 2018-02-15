@@ -29,8 +29,6 @@ namespace Authorization.Tests
         private TestExecutionContext testContext;
         private const int RoleAssignmentPageSize = 20;
         private const string RESOURCE_TEST_LOCATION = "westus";
-        private const string WEBSITE_RP_VERSION = "2014-04-01";
-        private const string API_VERSION = "2015-07-01";
 
         public BasicTests(TestExecutionContext context, ITestOutputHelper output)
         {
@@ -49,8 +47,8 @@ namespace Authorization.Tests
 
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
-
-                var allClassicAdmins = client.ClassicAdministrators.List("2015-06-01");
+                
+                var allClassicAdmins = client.ClassicAdministrators.List();
 
                 Assert.NotNull(allClassicAdmins);
 
@@ -494,7 +492,7 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Graph issue when adding user to group, needs investigation")]
+        [Fact]
         public void RoleAssignmentListWithAssignedToFilterTest()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -542,7 +540,7 @@ namespace Authorization.Tests
                     .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(user.ObjectId)));
 
                 Assert.NotNull(allRoleAssignments);
-                Assert.True(allRoleAssignments.Count() >= 2);
+                Assert.True(allRoleAssignments.Count() >= 1);
 
                 foreach (var assignment in allRoleAssignments)
                 {
@@ -555,6 +553,22 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Scope);
                 }
 
+                allRoleAssignments = client.RoleAssignments
+                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(group.ObjectId)));
+
+                Assert.NotNull(allRoleAssignments);
+                Assert.True(allRoleAssignments.Count() >= 1);
+
+                foreach (var assignment in allRoleAssignments)
+                {
+                    Assert.NotNull(assignment);
+                    Assert.NotNull(assignment.Id);
+                    Assert.NotNull(assignment.Name);
+                    Assert.NotNull(assignment.Type);
+                    Assert.NotNull(assignment.PrincipalId);
+                    Assert.NotNull(assignment.RoleDefinitionId);
+                    Assert.NotNull(assignment.Scope);
+                }
                 // Returned assignments contain assignment to group
                 Assert.True(allRoleAssignments.Count(a => a.PrincipalId.ToString() == group.ObjectId) >= 1);
             }
@@ -769,7 +783,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleDefinitionCreateTests()
         {
@@ -974,6 +987,66 @@ namespace Authorization.Tests
             }
         }
 
+        [Fact(Skip = "Unskip this test when storage or other RP exposes actions which are data actions")]
+        public void RoleDefinitionCreateWithDataActionTests()
+        {
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            const string RoleDefIdPrefix = "/providers/Microsoft.Authorization/roleDefinitions/";
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
+
+                RoleDefinition createOrUpdateParams;
+                var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
+                string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+
+                Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2");
+                string resourceGroupScope = currentSubscriptionId;
+                string fullRoleId = "/subscriptions/" + client.SubscriptionId + RoleDefIdPrefix + roleDefinitionId;
+                // Create a custom role definition
+                try
+                {
+                    createOrUpdateParams = new RoleDefinition()
+                    {
+                        RoleName = "NewRoleName_" + roleDefinitionId.ToString(),
+                        Description = "New Test Custom Role",
+                        Permissions = new List<Permission>()
+                                {
+                                    new Permission()
+                                    {
+                                        DataActions = new List<string> {"Microsoft.Storage/*/Read" }
+                                    }
+                                },
+                        AssignableScopes = new List<string>() { currentSubscriptionId }
+                    };
+
+                    var roleDefinition = client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
+                        roleDefinitionId.ToString(),
+                        createOrUpdateParams);
+
+                    // Validate the roleDefinition properties.
+                    Assert.NotNull(roleDefinition);
+                    Assert.Equal(fullRoleId, roleDefinition.Id);
+                    Assert.Equal(roleDefinitionId.ToString(), roleDefinition.Name);
+                    Assert.Equal("CustomRole", roleDefinition.RoleType);
+                    Assert.Equal("New Test Custom Role", roleDefinition.Description);
+                    Assert.NotEmpty(roleDefinition.AssignableScopes);
+                    Assert.Equal(currentSubscriptionId.ToLower(), roleDefinition.AssignableScopes.Single().ToLower());
+                    Assert.NotEmpty(roleDefinition.Permissions);
+                    Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.Permissions.Single().Actions.Single());
+                }
+                finally
+                {
+                    var deleteResult = client.RoleDefinitions.Delete(currentSubscriptionId, roleDefinitionId.ToString());
+                    Assert.NotNull(deleteResult);
+
+                    deleteResult = client.RoleDefinitions.Delete(resourceGroupScope, newRoleId.ToString());
+                    Assert.NotNull(deleteResult);
+                }
+            }
+        }
+
         [Fact]
         public void ProviderOperationsMetadataListGetTests()
         {
@@ -983,7 +1056,7 @@ namespace Authorization.Tests
 
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
-                var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List(API_VERSION);
+                var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List();
 
                 Assert.NotNull(allProviderOperationsMetadatas);
 
@@ -996,8 +1069,8 @@ namespace Authorization.Tests
                     Assert.NotNull(operationsMetadata.ResourceTypes);
                     Assert.NotNull(operationsMetadata.Type);
                 }
-
-                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web", API_VERSION);
+                
+                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Web");
                 Assert.NotNull(providerOperationsMetadata);
                 Assert.NotNull(providerOperationsMetadata.DisplayName);
                 Assert.NotNull(providerOperationsMetadata.Id);
@@ -1009,21 +1082,33 @@ namespace Authorization.Tests
         }
 
         [Fact]
-        public void GetProviderOperationsMetadataListWithInvalidAPIVersion()
+        public void ProviderOperationsMetadataListWithDataActionGetTests()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
+
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
-                try
+
+                var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("Microsoft.Storage");
+                Assert.NotNull(providerOperationsMetadata);
+                Assert.NotNull(providerOperationsMetadata.DisplayName);
+                Assert.NotNull(providerOperationsMetadata.Id);
+                Assert.NotNull(providerOperationsMetadata.Name);
+                Assert.NotNull(providerOperationsMetadata.Operations);
+                Assert.NotNull(providerOperationsMetadata.ResourceTypes);
+                Assert.NotNull(providerOperationsMetadata.Type);
+
+                foreach (var operationsMetadata in providerOperationsMetadata.Operations)
                 {
-                    var allProviderOperationsMetadatas = client.ProviderOperationsMetadata.List("0001-07-01");
+                    Assert.NotNull(operationsMetadata);
+                    Assert.NotNull(operationsMetadata.IsDataAction);
                 }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(ex.Message, "The resource type 'providerOperations' could not be found in the namespace 'Microsoft.Authorization' for api version '0001-07-01'. The supported api-versions are '2015-07-01-preview,2015-07-01,2016-07-01,2017-05-01'.");
-                }
+
+                // change it to >=1 when storage deploys actions with data action = true
+                Assert.True(providerOperationsMetadata.Operations.Count(a => a.IsDataAction == true) >= 0);
+                Assert.True(providerOperationsMetadata.ResourceTypes.Count(a => a.Operations.Count(op => op.IsDataAction == true) >= 0) >= 0);
             }
         }
 
@@ -1037,7 +1122,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
                 try
                 {
-                    var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("InvalidProvider", API_VERSION);
+                    var providerOperationsMetadata = client.ProviderOperationsMetadata.Get("InvalidProvider");
                 }
                 catch (CloudException ex)
                 {

@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "46d71dbf-f198-492b-93d6-96e31f1e65bb"
+          "c9195dd9-0596-4530-b5a6-f20174d3787e"
         ],
         "accept-language": [
           "en-US"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 27 Nov 2017 23:55:58 GMT"
+          "Thu, 15 Feb 2018 22:52:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -42,19 +42,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:e5e8dd49-b49a-4fb7-a270-047ecca6822b"
+          "centralus:9290be03-0223-4e5c-84a0-7ded010d8d09"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "1db6a75b-95be-4cd9-9167-b0d5bc5c2419"
+          "c898ebca-52fd-4b0b-8ead-71aed2055421"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20171127T235558Z:1db6a75b-95be-4cd9-9167-b0d5bc5c2419"
+          "CENTRALUSEUAP:20180215T225229Z:c898ebca-52fd-4b0b-8ead-71aed2055421"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200

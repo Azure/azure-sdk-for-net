@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-07-01";
+            string apiVersion = "2015-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
