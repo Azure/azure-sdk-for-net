@@ -25,9 +25,18 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Initializes a new instance of the Classification class.
         /// </summary>
+        /// <param name="category1">The category1 score details of the text.
+        /// &lt;a href="https://aka.ms/textClassifyCategories"&gt;Click
+        /// here&lt;/a&gt; for more details on category classification.</param>
+        /// <param name="category2">The category2 score details of the text.
+        /// &lt;a href="https://aka.ms/textClassifyCategories"&gt;Click
+        /// here&lt;/a&gt; for more details on category classification.</param>
+        /// <param name="category3">The category3 score details of the text.
+        /// &lt;a href="https://aka.ms/textClassifyCategories"&gt;Click
+        /// here&lt;/a&gt; for more details on category classification.</param>
         /// <param name="reviewRecommended">The review recommended
         /// flag.</param>
-        public Classification(Score category1 = default(Score), Score category2 = default(Score), Score category3 = default(Score), bool? reviewRecommended = default(bool?))
+        public Classification(ClassificationCategory1 category1 = default(ClassificationCategory1), ClassificationCategory2 category2 = default(ClassificationCategory2), ClassificationCategory3 category3 = default(ClassificationCategory3), bool? reviewRecommended = default(bool?))
         {
             Category1 = category1;
             Category2 = category2;
@@ -42,19 +51,28 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the category1 score details of the text. &amp;lt;a
+        /// href="https://aka.ms/textClassifyCategories"&amp;gt;Click
+        /// here&amp;lt;/a&amp;gt; for more details on category classification.
         /// </summary>
         [JsonProperty(PropertyName = "Category1")]
-        public Score Category1 { get; set; }
+        public ClassificationCategory1 Category1 { get; set; }
 
         /// <summary>
+        /// Gets or sets the category2 score details of the text. &amp;lt;a
+        /// href="https://aka.ms/textClassifyCategories"&amp;gt;Click
+        /// here&amp;lt;/a&amp;gt; for more details on category classification.
         /// </summary>
         [JsonProperty(PropertyName = "Category2")]
-        public Score Category2 { get; set; }
+        public ClassificationCategory2 Category2 { get; set; }
 
         /// <summary>
+        /// Gets or sets the category3 score details of the text. &amp;lt;a
+        /// href="https://aka.ms/textClassifyCategories"&amp;gt;Click
+        /// here&amp;lt;/a&amp;gt; for more details on category classification.
         /// </summary>
         [JsonProperty(PropertyName = "Category3")]
-        public Score Category3 { get; set; }
+        public ClassificationCategory3 Category3 { get; set; }
 
         /// <summary>
         /// Gets or sets the review recommended flag.

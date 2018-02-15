@@ -10,27 +10,27 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
     using System.Linq;
 
     /// <summary>
-    /// The classification score details of the text. &lt;a
+    /// The category3 score details of the text. &lt;a
     /// href="https://aka.ms/textClassifyCategories"&gt;Click here&lt;/a&gt;
     /// for more details on category classification.
     /// </summary>
-    public partial class Score
+    public partial class ClassificationCategory3
     {
         /// <summary>
-        /// Initializes a new instance of the Score class.
+        /// Initializes a new instance of the ClassificationCategory3 class.
         /// </summary>
-        public Score()
+        public ClassificationCategory3()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Score class.
+        /// Initializes a new instance of the ClassificationCategory3 class.
         /// </summary>
-        /// <param name="scoreProperty">The category score.</param>
-        public Score(double? scoreProperty = default(double?))
+        /// <param name="score">The category3 score.</param>
+        public ClassificationCategory3(double? score = default(double?))
         {
-            ScoreProperty = scoreProperty;
+            Score = score;
             CustomInit();
         }
 
@@ -40,10 +40,10 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the category score.
+        /// Gets or sets the category3 score.
         /// </summary>
         [JsonProperty(PropertyName = "Score")]
-        public double? ScoreProperty { get; set; }
+        public double? Score { get; set; }
 
     }
 }
