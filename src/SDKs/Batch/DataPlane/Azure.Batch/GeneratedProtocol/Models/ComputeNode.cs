@@ -50,16 +50,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="vmSize">The size of the virtual machine hosting the
         /// compute node.</param>
         /// <param name="totalTasksRun">The total number of job tasks completed
-        /// on the compute node. This includes Job Preparation, Job Release and
-        /// Job Manager tasks, but not the pool start task.</param>
+        /// on the compute node. This includes Job Manager tasks and normal
+        /// tasks, but not Job Preparation, Job Release or Start tasks.</param>
         /// <param name="runningTasksCount">The total number of currently
-        /// running job tasks on the compute node. This includes Job
-        /// Preparation, Job Release, and Job Manager tasks, but not the pool
-        /// start task.</param>
+        /// running job tasks on the compute node. This includes Job Manager
+        /// tasks and normal tasks, but not Job Preparation, Job Release or
+        /// Start tasks.</param>
         /// <param name="totalTasksSucceeded">The total number of job tasks
         /// which completed successfully (with exitCode 0) on the compute node.
-        /// This includes Job Preparation, Job Release, and Job Manager tasks,
-        /// but not the pool start task.</param>
+        /// This includes Job Manager tasks and normal tasks, but not Job
+        /// Preparation, Job Release or Start tasks.</param>
         /// <param name="recentTasks">A list of tasks whose state has recently
         /// changed.</param>
         /// <param name="startTask">The task specified to run on the compute
@@ -125,39 +125,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the compute node.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// idle - The node is not currently running a task.
-        /// rebooting - The node is rebooting.
-        /// reimaging - The node is reimaging.
-        /// running - The node is running one or more tasks (other than a start
-        /// task).
-        /// unusable - The node cannot be used for task execution due to
-        /// errors.
-        /// creating - The Batch service has obtained the underlying virtual
-        /// machine from Azure Compute, but it has not yet started to join the
-        /// pool.
-        /// starting - the Batch service is starting on the underlying virtual
-        /// machine.
-        /// waitingforstarttask - The start task has started running on the
-        /// compute node, but waitForSuccess is set and the start task has not
-        /// yet completed.
-        /// starttaskfailed - The start task has failed on the compute node
-        /// (and exhausted all retries), and waitForSuccess is set. The node is
-        /// not usable for running tasks.
-        /// unknown - The Batch service has lost contact with the node, and
-        /// does not know its true state.
-        /// leavingpool - The node is leaving the pool, either because the user
-        /// explicitly removed it or because the pool is resizing or
-        /// autoscaling down.
-        /// offline - The node is not currently running a task, and scheduling
-        /// of new tasks to the node is disabled.
-        /// preempted - The low-priority node has been preempted. Tasks which
-        /// were running on the node when it was pre-empted will be rescheduled
-        /// when another node becomes available. Possible values include:
-        /// 'idle', 'rebooting', 'reimaging', 'running', 'unusable',
-        /// 'creating', 'starting', 'waitingForStartTask', 'startTaskFailed',
-        /// 'unknown', 'leavingPool', 'offline', 'preempted'
+        /// The low-priority node has been preempted. Tasks which were running
+        /// on the node when it was pre-empted will be rescheduled when another
+        /// node becomes available. Possible values include: 'idle',
+        /// 'rebooting', 'reimaging', 'running', 'unusable', 'creating',
+        /// 'starting', 'waitingForStartTask', 'startTaskFailed', 'unknown',
+        /// 'leavingPool', 'offline', 'preempted'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }
@@ -167,13 +140,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// scheduling.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// enabled - Tasks can be scheduled on the node.
-        /// disabled - No new tasks will be scheduled on the node. Tasks
-        /// already running on the node may still run to completion. All nodes
-        /// start with scheduling enabled. Possible values include: 'enabled',
-        /// 'disabled'
+        /// Possible values include: 'enabled', 'disabled'
         /// </remarks>
         [JsonProperty(PropertyName = "schedulingState")]
         public SchedulingState? SchedulingState { get; set; }
@@ -251,16 +218,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the total number of job tasks completed on the compute
-        /// node. This includes Job Preparation, Job Release and Job Manager
-        /// tasks, but not the pool start task.
+        /// node. This includes Job Manager tasks and normal tasks, but not Job
+        /// Preparation, Job Release or Start tasks.
         /// </summary>
         [JsonProperty(PropertyName = "totalTasksRun")]
         public int? TotalTasksRun { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of currently running job tasks on the
-        /// compute node. This includes Job Preparation, Job Release, and Job
-        /// Manager tasks, but not the pool start task.
+        /// compute node. This includes Job Manager tasks and normal tasks, but
+        /// not Job Preparation, Job Release or Start tasks.
         /// </summary>
         [JsonProperty(PropertyName = "runningTasksCount")]
         public int? RunningTasksCount { get; set; }
@@ -268,8 +235,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the total number of job tasks which completed
         /// successfully (with exitCode 0) on the compute node. This includes
-        /// Job Preparation, Job Release, and Job Manager tasks, but not the
-        /// pool start task.
+        /// Job Manager tasks and normal tasks, but not Job Preparation, Job
+        /// Release or Start tasks.
         /// </summary>
         [JsonProperty(PropertyName = "totalTasksSucceeded")]
         public int? TotalTasksSucceeded { get; set; }

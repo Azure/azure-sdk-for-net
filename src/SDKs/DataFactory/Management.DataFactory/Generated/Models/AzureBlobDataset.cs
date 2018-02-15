@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzureBlobDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
@@ -51,8 +53,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="format">The format of the Azure Blob storage.</param>
         /// <param name="compression">The data compression method used for the
         /// blob storage.</param>
-        public AzureBlobDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object folderPath = default(object), object tableRootLocation = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
-            : base(linkedServiceName, description, structure, parameters)
+        public AzureBlobDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object folderPath = default(object), object tableRootLocation = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters)
         {
             FolderPath = folderPath;
             TableRootLocation = tableRootLocation;

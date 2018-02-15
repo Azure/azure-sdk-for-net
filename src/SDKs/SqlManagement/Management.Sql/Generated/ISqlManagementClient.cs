@@ -207,6 +207,11 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
 
         /// <summary>
+        /// Gets the IDatabaseAutomaticTuningOperations.
+        /// </summary>
+        IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; }
+
+        /// <summary>
         /// Gets the IEncryptionProtectorsOperations.
         /// </summary>
         IEncryptionProtectorsOperations EncryptionProtectors { get; }
@@ -255,6 +260,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseOperations.
         /// </summary>
         IDatabaseOperations DatabaseOperations { get; }
+
+        /// <summary>
+        /// Gets the IServerAutomaticTuningOperations.
+        /// </summary>
+        IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
 
         /// <summary>
         /// Gets the IServerDnsAliasesOperations.

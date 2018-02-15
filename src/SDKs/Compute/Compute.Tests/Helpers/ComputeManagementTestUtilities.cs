@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Net;
 
 namespace Compute.Tests
 {
@@ -55,6 +55,11 @@ namespace Compute.Tests
             {
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
             }
+        }
+
+        public static void WaitMinutes(double minutes)
+        {
+            WaitSeconds(minutes * 60);
         }
 
         public static string GenerateName(string prefix = null,

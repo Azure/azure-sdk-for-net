@@ -10,7 +10,7 @@ If you are regenerating your SDK based off of a new swagger spec, please add the
 ---
 
 This checklist is used to make sure that common guidelines for a pull request are followed.
-
+- [ ] Please add REST spec PR link to the SDK PR
 - [ ] **I have read the [contribution guidelines](https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/.github/CONTRIBUTING.md).**
 - [ ] **The pull request does not introduce [breaking changes](https://github.com/Azure/azure-sdk-for-net/blob/AutoRest/Documentation/breaking-changes.md).**
 

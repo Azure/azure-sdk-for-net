@@ -45,7 +45,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// state.</param>
         public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
-            PoolInfo = new PoolInformation();
             Priority = priority;
             Constraints = constraints;
             PoolInfo = poolInfo;

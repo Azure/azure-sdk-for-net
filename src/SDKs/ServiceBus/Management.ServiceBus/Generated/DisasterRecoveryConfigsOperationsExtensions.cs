@@ -22,6 +22,52 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class DisasterRecoveryConfigsOperationsExtensions
     {
             /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            public static CheckNameAvailabilityResult CheckNameAvailabilityMethod(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailability parameters)
+            {
+                return operations.CheckNameAvailabilityMethodAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Check the give namespace name availability.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters to check availability of the given namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityMethodAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, CheckNameAvailability parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityMethodWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all Alias(Disaster Recovery configurations)
             /// </summary>
             /// <param name='operations'>
@@ -295,6 +341,162 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
+            /// Gets the authorization rules for a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            public static IPage<SBAuthorizationRule> ListAuthorizationRules(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias)
+            {
+                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, alias).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the authorization rules for a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SBAuthorizationRule>> ListAuthorizationRulesAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets an authorization rule for a namespace by rule name.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639392.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorizationrule name.
+            /// </param>
+            public static SBAuthorizationRule GetAuthorizationRule(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
+            {
+                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, alias, authorizationRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an authorization rule for a namespace by rule name.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639392.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorizationrule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SBAuthorizationRule> GetAuthorizationRuleAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the primary and secondary connection strings for the namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639398.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorizationrule name.
+            /// </param>
+            public static AccessKeys ListKeys(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
+            {
+                return operations.ListKeysAsync(resourceGroupName, namespaceName, alias, authorizationRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the primary and secondary connection strings for the namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639398.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='alias'>
+            /// The Disaster Recovery configuration name
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The authorizationrule name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AccessKeys> ListKeysAsync(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, alias, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all Alias(Disaster Recovery configurations)
             /// </summary>
             /// <param name='operations'>
@@ -323,6 +525,42 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<IPage<ArmDisasterRecovery>> ListNextAsync(this IDisasterRecoveryConfigsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the authorization rules for a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SBAuthorizationRule> ListAuthorizationRulesNext(this IDisasterRecoveryConfigsOperations operations, string nextPageLink)
+            {
+                return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the authorization rules for a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SBAuthorizationRule>> ListAuthorizationRulesNextAsync(this IDisasterRecoveryConfigsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

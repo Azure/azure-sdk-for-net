@@ -7,8 +7,27 @@
     "ifMatch": null,
     "integrationRuntime": {
       "properties": {
-        "type": "SelfHosted",
-        "description": "A selfhosted integration runtime"
+        "type": "Managed",
+        "typeProperties": {
+          "computeProperties": {
+            "location": "West US",
+            "nodeSize": "Standard_D1_v2",
+            "numberOfNodes": 1,
+            "maxParallelExecutionsPerNode": 1
+          },
+          "ssisProperties": {
+            "catalogInfo": {
+              "catalogServerEndpoint": "yandongtestsvr.database.windows.net",
+              "catalogAdminUserName": "yanzhang",
+              "catalogAdminPassword": {
+                "type": "SecureString",
+                "value": "Passw0rd1"
+              },
+              "catalogPricingTier": "S1"
+            }
+          }
+        },
+        "description": "A managed reserved integration runtime"
       }
     },
     "api-version": "2017-09-01-preview"
@@ -16,20 +35,38 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:33:57 GMT",
-        "x-ms-request-id": "00343f86-8554-407b-973d-cd2aa88a97bd",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-correlation-request-id": "c12bfd3b-3ad8-4bc8-a8be-aa92193df946"
+        "Date": "Tue, 28 Nov 2017 07:05:28 GMT",
+        "x-ms-request-id": "ef607971-0494-480e-82e7-73df0c671d9e",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": {
         "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
         "name": "exampleIntegrationRuntime",
         "properties": {
-          "type": "SelfHosted",
-          "description": "A selfhosted integration runtime"
+          "type": "Managed",
+          "typeProperties": {
+            "computeProperties": {
+              "location": "West US",
+              "nodeSize": "Standard_D1_v2",
+              "numberOfNodes": 1,
+              "maxParallelExecutionsPerNode": 1
+            },
+            "ssisProperties": {
+              "catalogInfo": {
+                "catalogServerEndpoint": "yandongtestsvr.database.windows.net",
+                "catalogAdminUserName": "yanzhang",
+                "catalogAdminPassword": {
+                  "type": "SecureString",
+                  "value": "**********"
+                },
+                "catalogPricingTier": "S1"
+              }
+            }
+          },
+          "description": "A managed reserved integration runtime",
+          "state": "Initial"
         },
-        "etag": "2803f7a6-0000-0000-0000-59b96c050000"
+        "etag": "0100333d-0000-0000-0000-5a1d0ab80000"
       }
     }
   }

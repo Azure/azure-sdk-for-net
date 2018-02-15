@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the ScheduleTriggerRecurrence class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="frequency">The frequency. Possible values include:
         /// 'NotSpecified', 'Minute', 'Hour', 'Day', 'Week', 'Month',
         /// 'Year'</param>
@@ -37,8 +41,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="endTime">The end time.</param>
         /// <param name="timeZone">The time zone.</param>
         /// <param name="schedule">The recurrence schedule.</param>
-        public ScheduleTriggerRecurrence(string frequency = default(string), int? interval = default(int?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string timeZone = default(string), RecurrenceSchedule schedule = default(RecurrenceSchedule))
+        public ScheduleTriggerRecurrence(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string frequency = default(string), int? interval = default(int?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string timeZone = default(string), RecurrenceSchedule schedule = default(RecurrenceSchedule))
         {
+            AdditionalProperties = additionalProperties;
             Frequency = frequency;
             Interval = interval;
             StartTime = startTime;
@@ -52,6 +57,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the frequency. Possible values include:

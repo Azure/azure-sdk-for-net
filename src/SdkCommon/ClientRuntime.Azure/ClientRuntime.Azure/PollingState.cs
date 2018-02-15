@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using Microsoft.Rest.ClientRuntime.Azure.Properties;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-
 namespace Microsoft.Rest.Azure
 {
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using Microsoft.Rest.ClientRuntime.Azure.Properties;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using System;
     /// <summary>
     /// Defines long running operation polling state.
     /// </summary>
@@ -32,6 +31,7 @@ namespace Microsoft.Rest.Azure
 
         private int _retryAfterInSeconds;
         private int _clientLongRunningOperationRetryTimeout;
+        private bool _isRunningUnderPlaybackMode;
 
 
         /// <summary>
@@ -43,13 +43,14 @@ namespace Microsoft.Rest.Azure
         {
             // Due to test/playback scenario, we prioritze retryTimeout set by Client (client.LongRunningOperationRetryTimeout property)
             // So LROTimeoutsetbyClient needs to be set first before we set the generic RetryAfterInSeconds value
-
             LROTimeoutSetByClient = retryTimeout.HasValue ? retryTimeout.Value : AzureAsyncOperation.DefaultDelay;
             RetryAfterInSeconds = retryTimeout.HasValue ? retryTimeout.Value : AzureAsyncOperation.DefaultDelay;
             Response = response.Response;
             Request = response.Request;
             Resource = response.Body;
             ResourceHeaders = response.Headers;
+            _isRunningUnderPlaybackMode = false;
+            
 
             string raw = response.Response.Content == null ? null : response.Response.Content.AsString();
 
@@ -147,19 +148,22 @@ namespace Microsoft.Rest.Azure
                 _response = value;
                 if (_response != null)
                 {
+                    if (_response.Headers.Contains("azSdkTestPlayBackMode"))
+                    {
+                        _isRunningUnderPlaybackMode = bool.Parse(_response.Headers.GetValues("azSdkTestPlayBackMode").FirstOrDefault());
+                    }
                     if (_response.Headers.Contains("Azure-AsyncOperation"))
                     {
                         AzureAsyncOperationHeaderLink = _response.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
                     }
-
                     if (_response.Headers.Contains("Location"))
                     {
                         LocationHeaderLink = _response.Headers.GetValues("Location").FirstOrDefault();
                     }
-                    
                     if (_response.Headers.Contains("Retry-After"))
                     {
-                        RetryAfterInSeconds = int.Parse(_response.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
+                        string retryValue = _response.Headers.GetValues("Retry-After").FirstOrDefault();
+                        RetryAfterInSeconds = int.Parse(retryValue, CultureInfo.InvariantCulture);
                     }
                 }
             }
@@ -233,6 +237,7 @@ namespace Microsoft.Rest.Azure
         {
             get
             {
+                //return ValidateRetryAfterValue(_retryAfterInSeconds);
                 return _retryAfterInSeconds;
             }
 
@@ -242,6 +247,24 @@ namespace Microsoft.Rest.Azure
             }
         }
 
+        /// <summary>
+        /// Test hook to determine if running under Playback mode (test mode)
+        /// </summary>
+        internal bool IsRunningUnderPlaybackMode
+        {
+            get
+            {
+                if (Response != null)
+                {
+                    if (Response.Headers.Contains("azSdkTestPlayBackMode"))
+                    {
+                        _isRunningUnderPlaybackMode = bool.Parse(Response.Headers.GetValues("azSdkTestPlayBackMode").FirstOrDefault());
+                    }
+                }
+
+                return _isRunningUnderPlaybackMode;
+            }
+        }
 
         private int ValidateRetryAfterValue(int? currentValue)
         {
@@ -254,8 +277,20 @@ namespace Microsoft.Rest.Azure
                 else if (currentValue > DEFAULT_MAX_DELAY_SECONDS)
                     currentValue = DEFAULT_MAX_DELAY_SECONDS;
 
-                if (LROTimeoutSetByClient == TEST_MIN_DELAY_SECONDS)
+                if (IsRunningUnderPlaybackMode)
+                {
                     currentValue = TEST_MIN_DELAY_SECONDS;
+                }
+                else
+                {
+                    if (LROTimeoutSetByClient == TEST_MIN_DELAY_SECONDS)    // we assume playback mode (test mode)
+                    {
+                        if (currentValue != LROTimeoutSetByClient)  //Case where Retry-After is set to non zero, we set it to 0 in playback mode
+                        {
+                            currentValue = TEST_MIN_DELAY_SECONDS;
+                        }
+                    }
+                }
             }
             else
             {
@@ -264,17 +299,6 @@ namespace Microsoft.Rest.Azure
 
             return currentValue.Value;
         }
-        
-        //internal int GetRetryAfterValueFromHeader(HttpResponseMessage responseMessage)
-        //{
-        //    int retryAfter = 0;
-        //    if (responseMessage != null && responseMessage.Headers.Contains("Retry-After"))
-        //    {
-        //        retryAfter = int.Parse(responseMessage.Headers.GetValues("Retry-After").FirstOrDefault(), CultureInfo.InvariantCulture);
-        //    }
-
-        //    return retryAfter;
-        //}
 
         /// <summary>
         /// Gets CloudException from current instance.  

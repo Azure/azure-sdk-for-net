@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum InboundEndpointProtocol
     {
+        /// <summary>
+        /// Use TCP for the endpoint.
+        /// </summary>
         [EnumMember(Value = "tcp")]
         Tcp,
+        /// <summary>
+        /// Use UDP for the endpoint.
+        /// </summary>
         [EnumMember(Value = "udp")]
         Udp
     }

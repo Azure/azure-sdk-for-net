@@ -21,14 +21,41 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum JobScheduleState
     {
+        /// <summary>
+        /// The job schedule is active and will create jobs as per its
+        /// schedule.
+        /// </summary>
         [EnumMember(Value = "active")]
         Active,
+        /// <summary>
+        /// The schedule has terminated, either by reaching its end time or by
+        /// the user terminating it explicitly.
+        /// </summary>
         [EnumMember(Value = "completed")]
         Completed,
+        /// <summary>
+        /// The user has disabled the schedule. The scheduler will not initiate
+        /// any new jobs will on this schedule, but any existing active job
+        /// will continue to run.
+        /// </summary>
         [EnumMember(Value = "disabled")]
         Disabled,
+        /// <summary>
+        /// The schedule has no more work to do, or has been explicitly
+        /// terminated by the user, but the termination operation is still in
+        /// progress. The scheduler will not initiate any new jobs for this
+        /// schedule, nor is any existing job active.
+        /// </summary>
         [EnumMember(Value = "terminating")]
         Terminating,
+        /// <summary>
+        /// The user has requested that the schedule be deleted, but the delete
+        /// operation is still in progress. The scheduler will not initiate any
+        /// new jobs for this schedule, and will delete any existing jobs and
+        /// tasks under the schedule, including any active job. The schedule
+        /// will be deleted when all jobs and tasks under the schedule have
+        /// been deleted.
+        /// </summary>
         [EnumMember(Value = "deleting")]
         Deleting
     }

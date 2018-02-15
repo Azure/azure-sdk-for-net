@@ -34,15 +34,42 @@ namespace DataLakeStore.Tests
         public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.DataLakeStore")
         {
             var reg = resourceManagementClient.Providers.Register(providerName);
-            ThrowIfTrue(reg == null, "resourceManagementClient.Providers.Register returned null.");
+            ThrowIfTrue(
+                reg == null, 
+                "resourceManagementClient.Providers.Register returned null."
+            );
+
             var resultAfterRegister = resourceManagementClient.Providers.Get(providerName);
-            ThrowIfTrue(resultAfterRegister == null, "resourceManagementClient.Providers.Get returned null.");
-            ThrowIfTrue(string.IsNullOrEmpty(resultAfterRegister.Id), "Provider.Id is null or empty.");
-            ThrowIfTrue(!providerName.Equals(resultAfterRegister.NamespaceProperty), string.Format("Provider name: {0} is not equal to {1}.", resultAfterRegister.NamespaceProperty, providerName));
-            ThrowIfTrue(!resultAfterRegister.RegistrationState.Equals("Registered") &&
-                        !resultAfterRegister.RegistrationState.Equals("Registering"),
-                string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", resultAfterRegister.RegistrationState));
-            ThrowIfTrue(resultAfterRegister.ResourceTypes == null || resultAfterRegister.ResourceTypes.Count == 0, "Provider.ResourceTypes is empty.");
+
+            ThrowIfTrue(
+                resultAfterRegister == null, 
+                "resourceManagementClient.Providers.Get returned null."
+            );
+            ThrowIfTrue(
+                string.IsNullOrEmpty(resultAfterRegister.Id), 
+                "Provider.Id is null or empty."
+            );
+            ThrowIfTrue(
+                !providerName.Equals(resultAfterRegister.NamespaceProperty), 
+                string.Format(
+                    "Provider name: {0} is not equal to {1}.", 
+                    resultAfterRegister.NamespaceProperty, 
+                    providerName
+                )
+            );
+            ThrowIfTrue(
+                !resultAfterRegister.RegistrationState.Equals("Registered") && 
+                !resultAfterRegister.RegistrationState.Equals("Registering"),
+                string.Format(
+                    "Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", 
+                    resultAfterRegister.RegistrationState
+                )
+            );
+            ThrowIfTrue(
+                resultAfterRegister.ResourceTypes == null || 
+                resultAfterRegister.ResourceTypes.Count == 0, 
+                "Provider.ResourceTypes is empty."
+            );
         }
 
         public void TryCreateResourceGroup(string resourceGroupName, string location)
@@ -52,7 +79,10 @@ namespace DataLakeStore.Tests
             ResourceGroup newlyCreatedGroup = null;
             try
             {
-                newlyCreatedGroup = resourceManagementClient.ResourceGroups.Get(resourceGroupName);
+                newlyCreatedGroup = 
+                    resourceManagementClient.ResourceGroups.Get(
+                        resourceGroupName
+                    );
                 exists = true;
             }
             catch
@@ -63,14 +93,31 @@ namespace DataLakeStore.Tests
             if (!exists)
             {
                 var result =
-                    resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
-                        new ResourceGroup {Location = location});
-                newlyCreatedGroup = resourceManagementClient.ResourceGroups.Get(resourceGroupName);
+                    resourceManagementClient.ResourceGroups.CreateOrUpdate(
+                        resourceGroupName,
+                        new ResourceGroup
+                        {
+                            Location = location
+                        }
+                    );
+
+                newlyCreatedGroup = 
+                    resourceManagementClient.ResourceGroups.Get(
+                        resourceGroupName
+                    );
             }
 
-            ThrowIfTrue(newlyCreatedGroup == null, "resourceManagementClient.ResourceGroups.Get returned null.");
-            ThrowIfTrue(!resourceGroupName.Equals(newlyCreatedGroup.Name),
-                string.Format("resourceGroupName is not equal to {0}", resourceGroupName));
+            ThrowIfTrue(
+                newlyCreatedGroup == null, 
+                "resourceManagementClient.ResourceGroups.Get returned null."
+            );
+            ThrowIfTrue(
+                !resourceGroupName.Equals(newlyCreatedGroup.Name),
+                string.Format(
+                    "resourceGroupName is not equal to {0}", 
+                    resourceGroupName
+                )
+            );
         }
 
         public string TryCreateDataLakeStoreAccount(string resourceGroupName, string location, string accountName)
@@ -79,7 +126,12 @@ namespace DataLakeStore.Tests
             DataLakeStoreAccount accountGetResponse = null;
             try
             {
-                accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName, accountName);
+                accountGetResponse = 
+                    dataLakeStoreManagementClient.Accounts.Get(
+                        resourceGroupName, 
+                        accountName
+                    );
+
                 exists = true;
             }
             catch
@@ -90,11 +142,20 @@ namespace DataLakeStore.Tests
 
             if (!exists)
             {
-                dataLakeStoreManagementClient.Account.Create(resourceGroupName, accountName,
-                    new DataLakeStoreAccount {Location = location});
+                dataLakeStoreManagementClient.Accounts.Create(
+                    resourceGroupName, 
+                    accountName,
+                    new CreateDataLakeStoreAccountParameters
+                    {
+                        Location = location
+                    }
+                );
                 
-                accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
-                    accountName);
+                accountGetResponse = 
+                    dataLakeStoreManagementClient.Accounts.Get(
+                        resourceGroupName,
+                        accountName
+                    );
 
                 // wait for provisioning state to be Succeeded
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
@@ -107,17 +168,20 @@ namespace DataLakeStore.Tests
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
                     minutesWaited++;
-                    accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
-                        accountName);
+                    accountGetResponse = 
+                        dataLakeStoreManagementClient.Accounts.Get(
+                            resourceGroupName,
+                            accountName
+                        );
                 }
             }
 
             // Confirm that the account creation did succeed
             ThrowIfTrue(
-                accountGetResponse.ProvisioningState !=
-                DataLakeStoreAccountStatus.Succeeded,
+                accountGetResponse.ProvisioningState != DataLakeStoreAccountStatus.Succeeded,
                 "Account failed to be provisioned into the success state. Actual State: " +
-                accountGetResponse.ProvisioningState);
+                accountGetResponse.ProvisioningState
+            );
 
             return accountGetResponse.Endpoint;
         }

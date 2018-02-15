@@ -21,10 +21,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AllocationState
     {
+        /// <summary>
+        /// The pool is not resizing. There are no changes to the number of
+        /// nodes in the pool in progress. A pool enters this state when it is
+        /// created and when no operations are being performed on the pool to
+        /// change the number of nodes.
+        /// </summary>
         [EnumMember(Value = "steady")]
         Steady,
+        /// <summary>
+        /// The pool is resizing; that is, compute nodes are being added to or
+        /// removed from the pool.
+        /// </summary>
         [EnumMember(Value = "resizing")]
         Resizing,
+        /// <summary>
+        /// The pool was resizing, but the user has requested that the resize
+        /// be stopped, but the stop request has not yet been completed.
+        /// </summary>
         [EnumMember(Value = "stopping")]
         Stopping
     }

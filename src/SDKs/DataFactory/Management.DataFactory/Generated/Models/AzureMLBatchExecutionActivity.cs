@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// class.
         /// </summary>
         /// <param name="name">Activity name.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
@@ -57,8 +59,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// objects specifying the input Blob locations.. This information will
         /// be passed in the WebServiceInputs property of the Azure ML batch
         /// execution request.</param>
-        public AzureMLBatchExecutionActivity(string name, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> globalParameters = default(IDictionary<string, object>), IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default(IDictionary<string, AzureMLWebServiceFile>), IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default(IDictionary<string, AzureMLWebServiceFile>))
-            : base(name, description, dependsOn, linkedServiceName, policy)
+        public AzureMLBatchExecutionActivity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> globalParameters = default(IDictionary<string, object>), IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default(IDictionary<string, AzureMLWebServiceFile>), IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default(IDictionary<string, AzureMLWebServiceFile>))
+            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
         {
             GlobalParameters = globalParameters;
             WebServiceOutputs = webServiceOutputs;

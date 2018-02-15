@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Search
         /// </param>
         public static Indexer CreateOrUpdate(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
-            return Task.Factory.StartNew(s => ((IIndexersOperations)s).CreateOrUpdateAsync(indexer, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.CreateOrUpdateAsync(indexer, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Search
             string indexerName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return Task.Factory.StartNew(s => ((IIndexersOperations)s).ExistsAsync(indexerName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            return operations.ExistsAsync(indexerName, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
