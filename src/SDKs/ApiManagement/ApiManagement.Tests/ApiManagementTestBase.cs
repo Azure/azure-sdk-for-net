@@ -27,7 +27,7 @@ namespace ApiManagement.Tests
         private const string LocationKey = "Location";
         private const string TestCertificateKey = "TestCertificate";
         private const string TestCertificatePasswordKey = "TestCertificatePassword";
-        
+
         public string location { get; set; }
         public string subscriptionId { get; set; }
         public ApiManagementClient client { get; set; }
@@ -59,38 +59,48 @@ namespace ApiManagement.Tests
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                this.serviceName = testEnv.ConnectionString.KeyValuePairs[ServiceNameKey];
-                if (string.IsNullOrEmpty(this.serviceName))
+                if (!testEnv.ConnectionString.KeyValuePairs.TryGetValue(ServiceNameKey, out string apimServiceName))
                 {
                     this.serviceName = TestUtilities.GenerateName("sdktestapim");
                 }
+                else
+                {
+                    this.serviceName = apimServiceName;
+                }
 
-                this.location = testEnv.ConnectionString.KeyValuePairs[LocationKey];
-                if (string.IsNullOrEmpty(this.location))
+                if (!testEnv.ConnectionString.KeyValuePairs.TryGetValue(LocationKey, out string apimLocation))
                 {
                     this.location = GetLocation();
                 }
+                else
+                {
+                    this.location = apimLocation;
+                }
 
-                this.rgName = testEnv.ConnectionString.KeyValuePairs[ResourceGroupNameKey];
-                if (string.IsNullOrEmpty(this.rgName))
+                if (!testEnv.ConnectionString.KeyValuePairs.TryGetValue(ResourceGroupNameKey, out string resourceGroupName))
                 {
                     rgName = TestUtilities.GenerateName("sdktestrg");
                     resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = this.location });
                 }
-                                
-                this.base64EncodedTestCertificateData = testEnv.ConnectionString.KeyValuePairs[TestCertificateKey];
-                if (!string.IsNullOrEmpty(this.base64EncodedTestCertificateData))
+                else
                 {
+                    this.rgName = resourceGroupName;
+                }
+
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(TestCertificateKey, out string base64EncodedCertificate))
+                {
+                    this.base64EncodedTestCertificateData = base64EncodedCertificate;
                     HttpMockServer.Variables[TestCertificateKey] = base64EncodedTestCertificateData;
                 }
-                this.testCertificatePassword = testEnv.ConnectionString.KeyValuePairs[TestCertificatePasswordKey];
-                if(!string.IsNullOrEmpty(this.testCertificatePassword))
+
+                if (testEnv.ConnectionString.KeyValuePairs.TryGetValue(TestCertificatePasswordKey, out string testCertificatePassword))
                 {
+                    this.testCertificatePassword = testCertificatePassword;
                     HttpMockServer.Variables[TestCertificatePasswordKey] = testCertificatePassword;
                 }
-                
+
                 this.subscriptionId = testEnv.SubscriptionId;
-                HttpMockServer.Variables[SubIdKey] = subscriptionId;                
+                HttpMockServer.Variables[SubIdKey] = subscriptionId;
                 HttpMockServer.Variables[ServiceNameKey] = this.serviceName;
                 HttpMockServer.Variables[LocationKey] = this.location;
                 HttpMockServer.Variables[ResourceGroupNameKey] = this.rgName;
@@ -102,17 +112,17 @@ namespace ApiManagement.Tests
                 rgName = HttpMockServer.Variables[ResourceGroupNameKey];
                 serviceName = HttpMockServer.Variables[ServiceNameKey];
                 location = HttpMockServer.Variables[LocationKey];
-                HttpMockServer.Variables.TryGetValue(TestCertificateKey, out var testcertificate); 
-                if(!string.IsNullOrEmpty(testcertificate))
+                HttpMockServer.Variables.TryGetValue(TestCertificateKey, out var testcertificate);
+                if (!string.IsNullOrEmpty(testcertificate))
                 {
                     this.base64EncodedTestCertificateData = testcertificate;
                 }
                 HttpMockServer.Variables.TryGetValue(TestCertificatePasswordKey, out var testCertificatePwd);
-                if(!string.IsNullOrEmpty(testCertificatePwd))
+                if (!string.IsNullOrEmpty(testCertificatePwd))
                 {
                     this.testCertificatePassword = testCertificatePwd;
                 }
-            }            
+            }
 
             tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
@@ -153,6 +163,22 @@ namespace ApiManagement.Tests
                         return false;
                 }
                 ).First().Locations.Where(l => l.Contains(regionIn)).FirstOrDefault();
+        }
+
+        public static byte[] RandomBytes(int length)
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var bytes = new byte[length];
+                Random rnd = new Random();
+                rnd.NextBytes(bytes);
+                HttpMockServer.Variables["RandomBytes"] = Convert.ToBase64String(bytes);
+                return bytes;
+            }
+            else
+            {
+                return Convert.FromBase64String(HttpMockServer.Variables["RandomBytes"]);
+            }
         }
     }
 }

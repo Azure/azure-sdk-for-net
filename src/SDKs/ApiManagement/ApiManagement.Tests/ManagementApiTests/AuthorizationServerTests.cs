@@ -33,7 +33,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
 
                 Assert.NotNull(listResponse);
-                Assert.Equal(0, listResponse.Count());
+                Assert.Empty(listResponse);
 
                 // create server
                 string authsid = TestUtilities.GenerateName("authsid");
@@ -46,12 +46,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         AuthorizationEndpoint = "https://contoso.com/auth",
                         TokenEndpoint = "https://contoso.com/token",
                         ClientRegistrationEndpoint = "https://contoso.com/clients/reg",
-                        GrantTypes = new List<GrantType?> { GrantType.AuthorizationCode, GrantType.Implicit, GrantType.ResourceOwnerPassword },
+                        GrantTypes = new List<string> { GrantType.AuthorizationCode, GrantType.Implicit, GrantType.ResourceOwnerPassword },
                         AuthorizationMethods = new List<AuthorizationMethod?> { AuthorizationMethod.POST, AuthorizationMethod.GET },
-                        BearerTokenSendingMethods = new List<BearerTokenSendingMethod?> { BearerTokenSendingMethod.AuthorizationHeader, BearerTokenSendingMethod.Query },
+                        BearerTokenSendingMethods = new List<string> { BearerTokenSendingMethod.AuthorizationHeader, BearerTokenSendingMethod.Query },
                         ClientId = TestUtilities.GenerateName("clientid"),
                         Description = TestUtilities.GenerateName("authdescription"),
-                        ClientAuthenticationMethod = new List<ClientAuthenticationMethod?> { ClientAuthenticationMethod.Basic },
+                        ClientAuthenticationMethod = new List<string> { ClientAuthenticationMethod.Basic },
                         ClientSecret = TestUtilities.GenerateName("authclientsecret"),
                         ResourceOwnerPassword = TestUtilities.GenerateName("authresourceownerpwd"),
                         ResourceOwnerUsername = TestUtilities.GenerateName("authresourceownerusername"),
@@ -112,12 +112,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         null);
 
                     Assert.NotNull(listResponse);
-                    Assert.Equal(1, listResponse.Count());
+                    Assert.Single(listResponse);
 
                     // update                    
                     var updateParameters = new AuthorizationServerUpdateContract
                     {
-                        GrantTypes = new List<GrantType?> { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword }
+                        GrantTypes = new List<string> { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword }
                     };
 
                     testBase.client.AuthorizationServer.Update(

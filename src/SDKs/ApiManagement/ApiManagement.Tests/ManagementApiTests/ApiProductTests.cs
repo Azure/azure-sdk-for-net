@@ -54,7 +54,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     new Microsoft.Rest.Azure.OData.ODataQuery<ProductContract> { Top = 1 });
 
                 Assert.NotNull(listResponse);
-                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse);
                 Assert.Equal("Starter", listResponse.First().DisplayName);
                 Assert.NotEmpty(listResponse.NextPageLink);
 
@@ -65,7 +65,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     new Microsoft.Rest.Azure.OData.ODataQuery<ProductContract> { Skip = 1 });
 
                 Assert.NotNull(listByApiResponse);
-                Assert.Equal(1, listByApiResponse.Body.Count());
+                Assert.Single(listByApiResponse.Body);
                 Assert.Equal("Unlimited", listByApiResponse.Body.First().DisplayName);
                 Assert.NotNull(listByApiResponse.Body.NextPageLink);
             }

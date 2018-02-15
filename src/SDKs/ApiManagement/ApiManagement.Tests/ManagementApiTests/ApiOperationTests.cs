@@ -31,6 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName);
 
+                Assert.Single(apis);
                 var api = apis.Single();
 
                 // list operations
@@ -171,7 +172,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     }
                     };
 
-                    var createResponse = testBase.client.ApiOperation.CreateOrUpdate(
+                    OperationContract createResponse = testBase.client.ApiOperation.CreateOrUpdate(
                         testBase.rgName,
                         testBase.serviceName,
                         api.Name,
@@ -181,7 +182,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(createResponse);
 
                     // get the operation to check it was created
-                    var apiOperationResponse = await testBase.client.ApiOperation.GetWithHttpMessagesAsync(
+                    OperationContract apiOperationResponse = await testBase.client.ApiOperation.GetAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         api.Name,
@@ -189,49 +190,59 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(getResponse);
 
-                    Assert.Equal(api.Name, apiOperationResponse.Body.ApiIdentifier);
-                    Assert.Equal(newOperationId, apiOperationResponse.Body.Name);
-                    Assert.Equal(newOperationName, apiOperationResponse.Body.DisplayName);
-                    Assert.Equal(newOperationMethod, apiOperationResponse.Body.Method);
-                    Assert.Equal(newperationUrlTemplate, apiOperationResponse.Body.UrlTemplate);
-                    Assert.Equal(newOperationDescription, apiOperationResponse.Body.Description);
+                    Assert.Equal(api.Name, apiOperationResponse.ApiIdentifier);
+                    Assert.Equal(newOperationId, apiOperationResponse.Name);
+                    Assert.Equal(newOperationName, apiOperationResponse.DisplayName);
+                    Assert.Equal(newOperationMethod, apiOperationResponse.Method);
+                    Assert.Equal(newperationUrlTemplate, apiOperationResponse.UrlTemplate);
+                    Assert.Equal(newOperationDescription, apiOperationResponse.Description);
 
-                    Assert.NotNull(apiOperationResponse.Body.Request);
-                    Assert.Equal(newOperationRequestDescription, apiOperationResponse.Body.Request.Description);
+                    Assert.NotNull(apiOperationResponse.Request);
+                    Assert.Equal(newOperationRequestDescription, apiOperationResponse.Request.Description);
 
-                    Assert.NotNull(apiOperationResponse.Body.Request.Headers);
-                    Assert.Equal(1, apiOperationResponse.Body.Request.Headers.Count);
-                    Assert.Equal(newOperationRequestHeaderParamName, apiOperationResponse.Body.Request.Headers[0].Name);
-                    Assert.Equal(newOperationRequestHeaderParamDescr, apiOperationResponse.Body.Request.Headers[0].Description);
-                    Assert.Equal(newOperationRequestHeaderParamIsRequired, apiOperationResponse.Body.Request.Headers[0].Required);
-                    Assert.Equal(newOperationRequestHeaderParamDefaultValue, apiOperationResponse.Body.Request.Headers[0].DefaultValue);
-                    Assert.Equal(newOperationRequestHeaderParamType, apiOperationResponse.Body.Request.Headers[0].Type);
-                    Assert.NotNull(apiOperationResponse.Body.Request.Headers[0].Values);
-                    Assert.Equal(4, apiOperationResponse.Body.Request.Headers[0].Values.Count);
-                    Assert.True(newOperation.Request.Headers[0].Values.All(value => apiOperationResponse.Body.Request.Headers[0].Values.Contains(value)));
+                    Assert.NotNull(apiOperationResponse.Request.Headers);
+                    Assert.Equal(1, apiOperationResponse.Request.Headers.Count);
+                    Assert.Equal(newOperationRequestHeaderParamName, apiOperationResponse.Request.Headers[0].Name);
+                    Assert.Equal(newOperationRequestHeaderParamDescr, apiOperationResponse.Request.Headers[0].Description);
+                    Assert.Equal(newOperationRequestHeaderParamIsRequired, apiOperationResponse.Request.Headers[0].Required);
+                    Assert.Equal(newOperationRequestHeaderParamDefaultValue, apiOperationResponse.Request.Headers[0].DefaultValue);
+                    Assert.Equal(newOperationRequestHeaderParamType, apiOperationResponse.Request.Headers[0].Type);
+                    Assert.NotNull(apiOperationResponse.Request.Headers[0].Values);
+                    Assert.Equal(4, apiOperationResponse.Request.Headers[0].Values.Count);
+                    Assert.True(newOperation.Request.Headers[0].Values.All(value => apiOperationResponse.Request.Headers[0].Values.Contains(value)));
 
-                    Assert.NotNull(apiOperationResponse.Body.Request.QueryParameters);
-                    Assert.Equal(1, apiOperationResponse.Body.Request.QueryParameters.Count);
-                    Assert.Equal(newOperationRequestParmName, apiOperationResponse.Body.Request.QueryParameters[0].Name);
-                    Assert.Equal(newOperationRequestParamDescr, apiOperationResponse.Body.Request.QueryParameters[0].Description);
-                    Assert.Equal(newOperationRequestParamIsRequired, apiOperationResponse.Body.Request.QueryParameters[0].Required);
-                    Assert.Equal(newOperationRequestParamDefaultValue, apiOperationResponse.Body.Request.QueryParameters[0].DefaultValue);
-                    Assert.Equal(newOperationRequestParamType, apiOperationResponse.Body.Request.QueryParameters[0].Type);
-                    Assert.True(newOperation.Request.QueryParameters[0].Values.All(value => apiOperationResponse.Body.Request.QueryParameters[0].Values.Contains(value)));
+                    Assert.NotNull(apiOperationResponse.Request.QueryParameters);
+                    Assert.Equal(1, apiOperationResponse.Request.QueryParameters.Count);
+                    Assert.Equal(newOperationRequestParmName, apiOperationResponse.Request.QueryParameters[0].Name);
+                    Assert.Equal(newOperationRequestParamDescr, apiOperationResponse.Request.QueryParameters[0].Description);
+                    Assert.Equal(newOperationRequestParamIsRequired, apiOperationResponse.Request.QueryParameters[0].Required);
+                    Assert.Equal(newOperationRequestParamDefaultValue, apiOperationResponse.Request.QueryParameters[0].DefaultValue);
+                    Assert.Equal(newOperationRequestParamType, apiOperationResponse.Request.QueryParameters[0].Type);
+                    Assert.True(newOperation.Request.QueryParameters[0].Values.All(value => apiOperationResponse.Request.QueryParameters[0].Values.Contains(value)));
 
-                    Assert.NotNull(apiOperationResponse.Body.Request.Representations);
-                    Assert.Equal(1, apiOperationResponse.Body.Request.Representations.Count);
-                    Assert.Equal(newOperationRequestRepresentationContentType, apiOperationResponse.Body.Request.Representations[0].ContentType);
-                    Assert.Equal(newOperationRequestRepresentationSample, apiOperationResponse.Body.Request.Representations[0].Sample);
+                    Assert.NotNull(apiOperationResponse.Request.Representations);
+                    Assert.Equal(1, apiOperationResponse.Request.Representations.Count);
+                    Assert.Equal(newOperationRequestRepresentationContentType, apiOperationResponse.Request.Representations[0].ContentType);
+                    Assert.Equal(newOperationRequestRepresentationSample, apiOperationResponse.Request.Representations[0].Sample);
 
-                    Assert.NotNull(apiOperationResponse.Body.Responses);
-                    Assert.Equal(1, apiOperationResponse.Body.Responses.Count);
-                    Assert.Equal(newOperationResponseDescription, apiOperationResponse.Body.Responses[0].Description);
-                    Assert.Equal(newOperationResponseStatusCode, apiOperationResponse.Body.Responses[0].StatusCode);
-                    Assert.NotNull(apiOperationResponse.Body.Responses[0].Representations);
-                    Assert.Equal(1, apiOperationResponse.Body.Responses[0].Representations.Count);
-                    Assert.Equal(newOperationResponseRepresentationContentType, apiOperationResponse.Body.Responses[0].Representations[0].ContentType);
-                    Assert.Equal(newOperationResponseRepresentationSample, apiOperationResponse.Body.Responses[0].Representations[0].Sample);
+                    Assert.NotNull(apiOperationResponse.Responses);
+                    Assert.Equal(1, apiOperationResponse.Responses.Count);
+                    Assert.Equal(newOperationResponseDescription, apiOperationResponse.Responses[0].Description);
+                    Assert.Equal(newOperationResponseStatusCode, apiOperationResponse.Responses[0].StatusCode);
+                    Assert.NotNull(apiOperationResponse.Responses[0].Representations);
+                    Assert.Equal(1, apiOperationResponse.Responses[0].Representations.Count);
+                    Assert.Equal(newOperationResponseRepresentationContentType, apiOperationResponse.Responses[0].Representations[0].ContentType);
+                    Assert.Equal(newOperationResponseRepresentationSample, apiOperationResponse.Responses[0].Representations[0].Sample);
+
+                    // get the Api Operation Etag
+                    ApiOperationGetEntityTagHeaders operationTag = await testBase.client.ApiOperation.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        api.Name,
+                        newOperationId);
+
+                    Assert.NotNull(operationTag);
+                    Assert.NotNull(operationTag.ETag);
 
                     // patch the operation
                     string patchedName = TestUtilities.GenerateName("patchedName");
@@ -249,7 +260,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             Description = patchedDescription,
                             Method = patchedMethod
                         },
-                        apiOperationResponse.Headers.ETag);
+                        operationTag.ETag);
 
 
                     // get the operation to check it was patched
@@ -305,13 +316,22 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(newOperationResponseRepresentationContentType, getResponse.Responses[0].Representations[0].ContentType);
                     Assert.Equal(newOperationResponseRepresentationSample, getResponse.Responses[0].Representations[0].Sample);
 
+                    // get the tag again
+                    operationTag = await testBase.client.ApiOperation.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        api.Name,
+                        newOperationId);
+                    Assert.NotNull(operationTag);
+                    Assert.NotNull(operationTag.ETag);
+
                     // delete the operation
                     testBase.client.ApiOperation.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         api.Name,
                         newOperationId,
-                        "*");
+                        operationTag.ETag);
 
                     // get the deleted operation to make sure it was deleted
                     try
