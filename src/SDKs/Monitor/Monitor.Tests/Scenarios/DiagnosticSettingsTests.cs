@@ -27,7 +27,7 @@ namespace Monitor.Tests.Scenarios
         /// <summary>
         /// User needs several permissions before executing these commands. Otherwise it fails for some authorization issue.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "This feature is about to be changed.")]
         [Trait("Category", "Scenario")]
         public void CreateGetUpdateDiagnosticSetting()
         {
