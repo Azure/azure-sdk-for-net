@@ -376,11 +376,11 @@ namespace ContentModeratorTests.Helpers
                     else
                     {
                         if (s.Classification.Category1 == null)
-                            error += " Classification.Adult Score is null";
+                            error += " Classification.Category1 Score is null";
                         if (s.Classification.Category2 == null)
-                            error += " Classification.Racy Score is null";
+                            error += " Classification.Category2 Score is null";
                         if (s.Classification.Category3== null)
-                            error += " Classification.OffensiveScore is null";
+                            error += " Classification.Category3 Score is null";
                         if (s.Classification.ReviewRecommended == null)
                             error += " Classification.ReviewRecommended is null";
                     }
