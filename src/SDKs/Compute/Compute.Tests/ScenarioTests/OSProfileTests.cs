@@ -127,11 +127,19 @@ namespace Compute.Tests
                 Assert.Null(listeners[0].CertificateUrl);
 
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Https);
+#if NET46
+                Assert.True(listeners[1].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
+#else
                 Assert.Equal(listeners[1].CertificateUrl, winRMCertificateUrl, ignoreCase: true);
+#endif
             }
             else if (listeners[0].Protocol == ProtocolTypes.Https)
             {
+#if NET46
+                Assert.True(listeners[0].CertificateUrl.Equals(winRMCertificateUrl, StringComparison.OrdinalIgnoreCase));
+#else
                 Assert.Equal(listeners[0].CertificateUrl, winRMCertificateUrl, ignoreCase: true);
+#endif
 
                 Assert.True(listeners[1].Protocol == ProtocolTypes.Http);
                 Assert.Null(listeners[1].CertificateUrl);
@@ -267,7 +275,7 @@ namespace Compute.Tests
             {
                 StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                VirtualMachine vm = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmCustomizer);
+                VirtualMachine vm = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, vmCustomizer);
 
                 var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                 ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
@@ -279,19 +287,12 @@ namespace Compute.Tests
                     vmValidator(vm);
                 }
 
-                m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
-
-                // TODO: VM delete operation takes too long, disable it for now
-                // lroResponse = m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
-                // Assert.True(lroResponse.Status == ComputeOperationStatus.Succeeded);
+                m_CrpClient.VirtualMachines.BeginDelete(rgName, vm.Name);
             }
             finally
             {
                 if (m_ResourcesClient != null)
                 {
-                    // TODO: RG delete operation takes too long, disable it for now
-                    // var deleteResourceGroupResponse = m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    // Assert.True(deleteResourceGroupResponse.StatusCode == HttpStatusCode.OK);
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
@@ -302,16 +303,6 @@ namespace Compute.Tests
         public static string ReadFromEmbeddedResource(Type type, string resourceName)
         {
             throw new NotSupportedException("\'type.Assembly\' is not supported for cross platform");
-            //string result;
-            //using (Stream manifestResourceStream = type.Assembly.GetManifestResourceStream(type, resourceName) ?? type.Assembly.GetManifestResourceStream(resourceName))
-            //{
-            //    using (StreamReader streamReader = new StreamReader(manifestResourceStream))
-            //    {
-            //        result = streamReader.ReadToEnd();
-            //    }
-            //}
-
-            //return result;
         }
 
         private static string GetAutoLogonContent(uint logonCount, string userName, string password)

@@ -76,6 +76,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IAccountsOperations.
+        /// </summary>
+        public virtual IAccountsOperations Accounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IDataLakeStoreAccountsOperations.
+        /// </summary>
+        public virtual IDataLakeStoreAccountsOperations DataLakeStoreAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
+
+        /// <summary>
         /// Gets the IComputePoliciesOperations.
         /// </summary>
         public virtual IComputePoliciesOperations ComputePolicies { get; private set; }
@@ -86,29 +101,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
 
         /// <summary>
-        /// Gets the IStorageAccountsOperations.
+        /// Gets the IOperations.
         /// </summary>
-        public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
-
-        /// <summary>
-        /// Gets the IDataLakeStoreAccountsOperations.
-        /// </summary>
-        public virtual IDataLakeStoreAccountsOperations DataLakeStoreAccounts { get; private set; }
-
-        /// <summary>
-        /// Gets the IAccountOperations.
-        /// </summary>
-        public virtual IAccountOperations Account { get; private set; }
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataLakeAnalyticsAccountManagementClient class.
@@ -311,13 +311,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         private void Initialize()
         {
+            Accounts = new AccountsOperations(this);
+            DataLakeStoreAccounts = new DataLakeStoreAccountsOperations(this);
+            StorageAccounts = new StorageAccountsOperations(this);
             ComputePolicies = new ComputePoliciesOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
-            StorageAccounts = new StorageAccountsOperations(this);
-            DataLakeStoreAccounts = new DataLakeStoreAccountsOperations(this);
-            Account = new AccountOperations(this);
-            Locations = new LocationsOperations(this);
             Operations = new Operations(this);
+            Locations = new LocationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2016-11-01";
             AcceptLanguage = "en-US";

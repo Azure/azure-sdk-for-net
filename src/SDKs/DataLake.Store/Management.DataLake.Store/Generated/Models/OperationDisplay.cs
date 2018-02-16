@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// The display information for a particular operation
+    /// The display information for a particular operation.
     /// </summary>
     public partial class OperationDisplay
     {
@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the OperationDisplay class.
         /// </summary>
-        /// <param name="provider">the Resource provider of the
+        /// <param name="provider">The resource provider of the
         /// operation.</param>
-        /// <param name="resource">the Resource type of the operation.</param>
-        /// <param name="operation">a friendly name of the operation.</param>
-        /// <param name="description">a friendly description of the
+        /// <param name="resource">The resource type of the operation.</param>
+        /// <param name="operation">A friendly name of the operation.</param>
+        /// <param name="description">A friendly description of the
         /// operation.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the Resource provider of the operation.
+        /// Gets the resource provider of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets the Resource type of the operation.
+        /// Gets the resource type of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; private set; }

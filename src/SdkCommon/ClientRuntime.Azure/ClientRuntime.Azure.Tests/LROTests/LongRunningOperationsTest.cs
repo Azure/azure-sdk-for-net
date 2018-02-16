@@ -488,47 +488,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 
         }
 
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
-        public void TestCreateOrUpdateErrorHandling()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithImmediateServerError());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            try
-            {
-                fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-                Assert.False(true, "Expected exception was not thrown.");
-            }
-            catch(CloudException ex)
-            {
-                Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
-        public void TestCreateOrUpdateNoErrorBody()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithNoErrorBody());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            try
-            {
-                fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-                Assert.False(true, "Expected exception was not thrown.");
-            }
-            catch (CloudException ex)
-            {
-                Assert.Equal(HttpStatusCode.InternalServerError, ex.Response.StatusCode);
-            }
-        }
+        
 
 
         /// <summary>
@@ -577,28 +537,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         /// Test
         /// </summary>
         [Fact]
-        public void TestDeleteWithLocationHeaderErrorHandling()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithLocationHeaderError());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-
-            try
-            {
-                fakeClient.RedisOperations.Delete("rg", "redis", "1234");
-                Assert.False(true, "Expected exception was not thrown.");
-            }
-            catch (CloudException ex)
-            {
-                Assert.Null(ex.Body);
-            }
-        }
-
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
         public void TestDeleteWithLocationHeaderErrorHandlingSecondTime()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
@@ -610,66 +548,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("Long running operation failed with status 'InternalServerError'.", ex.Message);
         }
         
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
-        public void TestLROAsynOperationFailureWith200()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockLROAsyncOperationFailedWith200());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            try
-            {
-                var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-            }
-            catch(Exception ex)
-            {
-                Assert.Contains("DeploymentDocument", ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
-        public void TestLROWithLocationHeaderFailureWith200()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockLROLocationHeaderFailedWith200());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            try
-            {
-                var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-            }
-            catch (Exception ex)
-            {
-                // If the message changes in the response, this assert will also have to be updated.
-                Assert.Contains("DeploymentDocument", ex.Message);
-            }
-        }
-        
-        /// <summary>
-        /// Test
-        /// </summary>
-        [Fact]
-        public void TestLROPUTWithCanceledState()
-        {
-            var tokenCredentials = new TokenCredentials("123", "abc");
-            var handler = new PlaybackTestHandler(LROResponse.MockLROPUTWithCanceledStateResponse());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
-            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
-            try
-            {
-                var foo = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-            }
-            catch (Exception ex)
-            {
-                Assert.Contains("preempted", ex.Message);
-            }
-        }
 
         /// <summary>
         /// Test
@@ -718,6 +596,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithRetryAfterTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationRetryTimeout = 1;
             var now = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
 
@@ -733,6 +612,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithRetryAfterTwoTries());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var now = DateTime.Now;
             fakeClient.RedisOperations.Delete("rg", "redis", "1234");               
 
@@ -747,7 +627,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockPatchWithRetryAfterTwoTries());
-            var fakeClient = new RedisManagementClient(tokenCredentials, handler);            
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var now = DateTime.Now;
             fakeClient.RedisOperations.Patch("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.True(DateTime.Now - now >= TimeSpan.FromSeconds(2));
@@ -762,6 +643,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithDifferentRetryAfterValues());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var before = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(7));
@@ -776,6 +658,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockCreateWithRetryAfterDefaultMin());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var before = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(0));
@@ -790,6 +673,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROResponse.MockCreateWithRetryAfterDefaultMax());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var before = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
             Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(40));
@@ -876,11 +760,127 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     /// </summary>
     public class LRO_FailedTests
     {
+        /// <summary>
+        /// 
+        /// </summary>
         [Fact /*(Skip = "Potential scenario that will have to be supported")*/]
         public void TestLROAsynOperationFailureWith200()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
             var handler = new PlaybackTestHandler(LROFailedResponses.MockLROAsyncOperationFailedOnlyStatus());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            Assert.Throws<CloudException>(() =>
+            {
+                try
+                {
+                    fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                }
+                catch (Exception ex)
+                {
+                    Assert.Contains("Unable to deserilize body", ex.Message);
+                    throw ex;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestCreateOrUpdateErrorHandling()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithImmediateServerError());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            try
+            {
+                fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                Assert.False(true, "Expected exception was not thrown.");
+            }
+            catch (CloudException ex)
+            {
+                Assert.Equal("The provided database ‘foo’ has an invalid username.", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestCreateOrUpdateNoErrorBody()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockCreateOrUpdateWithNoErrorBody());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            try
+            {
+                fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                Assert.False(true, "Expected exception was not thrown.");
+            }
+            catch (CloudException ex)
+            {
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.Response.StatusCode);
+            }
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestDeleteWithLocationHeaderErrorHandling()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockDeleteWithLocationHeaderError());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+
+            try
+            {
+                fakeClient.RedisOperations.Delete("rg", "redis", "1234");
+                Assert.False(true, "Expected exception was not thrown.");
+            }
+            catch (CloudException ex)
+            {
+                Assert.Null(ex.Body);
+            }
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestLROWithLocationHeaderFailureWith200()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockLROLocationHeaderFailedWith200());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+
+            Assert.Throws<CloudException>(() =>
+            {
+                try
+                {
+                    fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+                }
+                catch(Exception ex)
+                {
+                    Assert.Contains("DeploymentDocument", ex.Message);
+                    throw ex;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
+        public void TestLROPUTWithCanceledState()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockLROPUTWithCanceledStateResponse());
             var fakeClient = new RedisManagementClient(tokenCredentials, handler);
             fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
             try
@@ -889,7 +889,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             }
             catch (Exception ex)
             {
-                Assert.Contains("Unable to deserilize body", ex.Message);
+                Assert.Contains("preempted", ex.Message);
             }
         }
     }
@@ -902,7 +902,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
+        [Fact(Skip ="Disabling this scenario for now")]
         public void TestPUT_WithMultipleHeaders()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
@@ -928,8 +928,5 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(HttpMethod.Get, handler.Requests[3].Method);
             Assert.Equal("https://management.azure.com/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Cache/Redis/redis", handler.Requests[3].RequestUri.ToString());
         }
-
-        
-
     }
 }

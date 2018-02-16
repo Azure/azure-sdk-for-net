@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets the file status object associated with the specified path.
         /// </summary>
-        [JsonProperty(PropertyName = "FileStatus")]
+        [JsonProperty(PropertyName = "fileStatus")]
         public FileStatusProperties FileStatus { get; private set; }
 
     }
