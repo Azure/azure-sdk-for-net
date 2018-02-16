@@ -509,7 +509,7 @@ namespace Authorization.Tests
                 // Get user and group and add the user to the group
                 var user = testContext.Users.First();
                 var group = testContext.Groups.First();
-                testContext.AddMemberToGroup(context, group, user);
+                // testContext.AddMemberToGroup(context, group, user);
 
                 // create assignment to group
                 var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
