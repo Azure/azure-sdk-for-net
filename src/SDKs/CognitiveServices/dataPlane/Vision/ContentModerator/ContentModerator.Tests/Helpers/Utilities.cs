@@ -375,11 +375,11 @@ namespace ContentModeratorTests.Helpers
                         error = " Classification is null";
                     else
                     {
-                        if (s.Classification.AdultScore == null)
+                        if (s.Classification.Category1 == null)
                             error += " Classification.Adult Score is null";
-                        if (s.Classification.RacyScore == null)
+                        if (s.Classification.Category2 == null)
                             error += " Classification.Racy Score is null";
-                        if (s.Classification.OffensiveScore== null)
+                        if (s.Classification.Category3== null)
                             error += " Classification.OffensiveScore is null";
                         if (s.Classification.ReviewRecommended == null)
                             error += " Classification.ReviewRecommended is null";

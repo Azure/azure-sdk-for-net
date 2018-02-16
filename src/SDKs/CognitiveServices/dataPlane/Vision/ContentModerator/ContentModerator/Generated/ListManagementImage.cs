@@ -994,8 +994,8 @@ namespace Microsoft.CognitiveServices.ContentModerator
             }
             if (imageStream != null && imageStream != Stream.Null)
             {
-              _httpRequest.Content = new StreamContent(imageStream);
-              _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("image/gif");
+                _httpRequest.Content = new StreamContent(imageStream);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("image/gif");
             }
             // Set Credentials
             if (Client.Credentials != null)
