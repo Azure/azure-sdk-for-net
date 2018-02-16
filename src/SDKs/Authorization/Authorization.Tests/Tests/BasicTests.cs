@@ -508,8 +508,8 @@ namespace Authorization.Tests
                 var roleDefinition = client.RoleDefinitions.List(scope, null).Where(r => r.RoleType == "BuiltInRole").Last();
 
                 // Get user and group and add the user to the group
-                var userId = testContext.Users.ElementAt(0).ObjectId;
-                var groupId = testContext.Groups.ElementAt(0).ObjectId;
+                var userId = GetValueFromTestContext(() => new Guid(testContext.Users.ElementAt(0).ObjectId), Guid.Parse, "UserId").ToString();
+                var groupId = GetValueFromTestContext(() => new Guid(testContext.Groups.ElementAt(0).ObjectId), Guid.Parse, "GroupId").ToString();
 
                 // create assignment to group
                 var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
