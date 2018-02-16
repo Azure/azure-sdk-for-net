@@ -504,20 +504,19 @@ namespace Authorization.Tests
                 Assert.NotNull(client.HttpClient);
 
                 var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-                var roleDefinition = client.RoleDefinitions.List(scope).First();
+                var roleDefinition = client.RoleDefinitions.List(scope, null).Where(r => r.RoleType == "BuiltInRole").Last();
 
                 // Get user and group and add the user to the group
-                var user = testContext.Users.First();
-                var group = testContext.Groups.First();
-                // testContext.AddMemberToGroup(context, group, user);
+                var userId = testContext.Users.ElementAt(0).ObjectId;
+                var groupId = testContext.Groups.ElementAt(0).ObjectId;
 
                 // create assignment to group
                 var newRoleAssignmentToGroupParams = new RoleAssignmentCreateParameters()
                 {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = group.ObjectId
+                        PrincipalId = groupId
                 };
-                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_Group");
+                var assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_GroupAssigned");
                 var assignmentToGroup = client.RoleAssignments.Create(
                     scope,
                     assignmentName.ToString(),
@@ -527,17 +526,17 @@ namespace Authorization.Tests
                 var newRoleAssignmentToUserParams = new RoleAssignmentCreateParameters()
                 {
                         RoleDefinitionId = roleDefinition.Id,
-                        PrincipalId = user.ObjectId
+                        PrincipalId = userId
                 };
 
-                assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_User");
+                assignmentName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "AssignmentName_UserAssigned");
                 var assignmentToUser = client.RoleAssignments.Create(scope,
                     assignmentName.ToString(),
                     newRoleAssignmentToUserParams);
 
                 // List role assignments with AssignedTo filter = user id
                 var allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(user.ObjectId)));
+                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(userId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 1);
@@ -554,7 +553,7 @@ namespace Authorization.Tests
                 }
 
                 allRoleAssignments = client.RoleAssignments
-                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(group.ObjectId)));
+                    .List(new ODataQuery<RoleAssignmentFilter>(f => f.AssignedTo(groupId)));
 
                 Assert.NotNull(allRoleAssignments);
                 Assert.True(allRoleAssignments.Count() >= 1);
@@ -570,7 +569,7 @@ namespace Authorization.Tests
                     Assert.NotNull(assignment.Scope);
                 }
                 // Returned assignments contain assignment to group
-                Assert.True(allRoleAssignments.Count(a => a.PrincipalId.ToString() == group.ObjectId) >= 1);
+                Assert.True(allRoleAssignments.Count(a => a.PrincipalId.ToString() == groupId) >= 1);
             }
         }
 
