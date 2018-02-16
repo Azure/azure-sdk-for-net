@@ -9,7 +9,7 @@
 		<Version>1.3.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-		<PackageReleaseNotes>Updated the version information to remote the preview suffix.</PackageReleaseNotes>
+		<PackageReleaseNotes>Updated the version information to remove the preview suffix.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
