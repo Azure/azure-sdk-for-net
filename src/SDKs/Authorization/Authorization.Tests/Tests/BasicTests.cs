@@ -495,7 +495,8 @@ namespace Authorization.Tests
         [Fact]
         public void RoleAssignmentListWithAssignedToFilterTest()
         {
-            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -573,7 +574,6 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleDefinitionsListGetTests()
         {
