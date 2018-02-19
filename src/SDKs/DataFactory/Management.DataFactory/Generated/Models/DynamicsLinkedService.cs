@@ -49,6 +49,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="hostName">The host name of the on-premises Dynamics
         /// server. The property is required for on-prem and not allowed for
         /// online. Type: string (or Expression with resultType
@@ -68,8 +71,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public DynamicsLinkedService(object deploymentType, object authenticationType, object username, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object hostName = default(object), object port = default(object), object organizationName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
-            : base(additionalProperties, connectVia, description)
+        public DynamicsLinkedService(object deploymentType, object authenticationType, object username, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object hostName = default(object), object port = default(object), object organizationName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             DeploymentType = deploymentType;
             HostName = hostName;
