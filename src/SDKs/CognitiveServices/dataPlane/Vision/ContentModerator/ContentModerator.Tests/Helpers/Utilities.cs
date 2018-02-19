@@ -345,8 +345,7 @@ namespace ContentModeratorTests.Helpers
             string error = "";
             try
             {
-                //if (s.Misrepresentation == null)
-                //    error += " Misrepresentation is null";
+               
 
                 if (isAutoCorrect)
                 {
@@ -375,12 +374,12 @@ namespace ContentModeratorTests.Helpers
                         error = " Classification is null";
                     else
                     {
-                        if (s.Classification.AdultScore == null)
-                            error += " Classification.Adult Score is null";
-                        if (s.Classification.RacyScore == null)
-                            error += " Classification.Racy Score is null";
-                        if (s.Classification.OffensiveScore== null)
-                            error += " Classification.OffensiveScore is null";
+                        if (s.Classification.Category1 == null)
+                            error += "Category1 Score is null";
+                        if (s.Classification.Category2 == null)
+                            error += "Category2 Score is null";
+                        if (s.Classification.Category3== null)
+                            error += "Category3 score is null";
                         if (s.Classification.ReviewRecommended == null)
                             error += " Classification.ReviewRecommended is null";
                     }
