@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Additional Data Lake Store parameters.
+    /// The parameters used to add a new Data Lake Store account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AddDataLakeStoreParameters
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the AddDataLakeStoreParameters class.
         /// </summary>
-        /// <param name="suffix">the optional suffix for the Data Lake Store
+        /// <param name="suffix">The optional suffix for the Data Lake Store
         /// account.</param>
         public AddDataLakeStoreParameters(string suffix = default(string))
         {

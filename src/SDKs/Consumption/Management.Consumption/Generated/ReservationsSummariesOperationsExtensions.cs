@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Consumption
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -30,10 +28,8 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// The scope of the reservation summaries. The scope can be
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}' or
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}/reservations/{ReservationId}'
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
             /// </param>
             /// <param name='grain'>
             /// Can be daily or monthly. Possible values include: 'DailyGrain',
@@ -43,9 +39,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// Required only for daily grain. The properties/UsageDate for start date and
             /// end date. The filter supports 'le' and  'ge'
             /// </param>
-            public static IEnumerable<ReservationSummaries> List(this IReservationsSummariesOperations operations, string scope, string grain, string filter = default(string))
+            public static IPage<ReservationSummaries> ListByReservationOrder(this IReservationsSummariesOperations operations, string reservationOrderId, string grain, string filter = default(string))
             {
-                return operations.ListAsync(scope, grain, filter).GetAwaiter().GetResult();
+                return operations.ListByReservationOrderAsync(reservationOrderId, grain, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,10 +51,8 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='scope'>
-            /// The scope of the reservation summaries. The scope can be
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}' or
-            /// 'providers/Microsoft.Capacity/reservationorders/{ReservationOrderId}/reservations/{ReservationId}'
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
             /// </param>
             /// <param name='grain'>
             /// Can be daily or monthly. Possible values include: 'DailyGrain',
@@ -71,9 +65,139 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<ReservationSummaries>> ListAsync(this IReservationsSummariesOperations operations, string scope, string grain, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ReservationSummaries>> ListByReservationOrderAsync(this IReservationsSummariesOperations operations, string reservationOrderId, string grain, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(scope, grain, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByReservationOrderWithHttpMessagesAsync(reservationOrderId, grain, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the reservations summaries for daily or monthly grain.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the reservation
+            /// </param>
+            /// <param name='grain'>
+            /// Can be daily or monthly. Possible values include: 'DailyGrain',
+            /// 'MonthlyGrain'
+            /// </param>
+            /// <param name='filter'>
+            /// Required only for daily grain. The properties/UsageDate for start date and
+            /// end date. The filter supports 'le' and  'ge'
+            /// </param>
+            public static IPage<ReservationSummaries> ListByReservationOrderAndReservation(this IReservationsSummariesOperations operations, string reservationOrderId, string reservationId, string grain, string filter = default(string))
+            {
+                return operations.ListByReservationOrderAndReservationAsync(reservationOrderId, reservationId, grain, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the reservations summaries for daily or monthly grain.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='reservationId'>
+            /// Id of the reservation
+            /// </param>
+            /// <param name='grain'>
+            /// Can be daily or monthly. Possible values include: 'DailyGrain',
+            /// 'MonthlyGrain'
+            /// </param>
+            /// <param name='filter'>
+            /// Required only for daily grain. The properties/UsageDate for start date and
+            /// end date. The filter supports 'le' and  'ge'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReservationSummaries>> ListByReservationOrderAndReservationAsync(this IReservationsSummariesOperations operations, string reservationOrderId, string reservationId, string grain, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReservationOrderAndReservationWithHttpMessagesAsync(reservationOrderId, reservationId, grain, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the reservations summaries for daily or monthly grain.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ReservationSummaries> ListByReservationOrderNext(this IReservationsSummariesOperations operations, string nextPageLink)
+            {
+                return operations.ListByReservationOrderNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the reservations summaries for daily or monthly grain.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReservationSummaries>> ListByReservationOrderNextAsync(this IReservationsSummariesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReservationOrderNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the reservations summaries for daily or monthly grain.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ReservationSummaries> ListByReservationOrderAndReservationNext(this IReservationsSummariesOperations operations, string nextPageLink)
+            {
+                return operations.ListByReservationOrderAndReservationNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the reservations summaries for daily or monthly grain.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ReservationSummaries>> ListByReservationOrderAndReservationNextAsync(this IReservationsSummariesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReservationOrderAndReservationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

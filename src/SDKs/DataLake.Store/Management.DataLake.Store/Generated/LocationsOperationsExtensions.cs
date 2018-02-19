@@ -23,13 +23,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
     {
             /// <summary>
             /// Gets subscription-level properties and limits for Data Lake Store specified
-            /// by Resource location.
+            /// by resource location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The Resource location without whitespace.
+            /// The resource location without whitespace.
             /// </param>
             public static CapabilityInformation GetCapability(this ILocationsOperations operations, string location)
             {
@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             /// <summary>
             /// Gets subscription-level properties and limits for Data Lake Store specified
-            /// by Resource location.
+            /// by resource location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='location'>
-            /// The Resource location without whitespace.
+            /// The resource location without whitespace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

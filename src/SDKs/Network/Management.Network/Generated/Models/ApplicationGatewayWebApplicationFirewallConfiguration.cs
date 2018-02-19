@@ -43,13 +43,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="ruleSetVersion">The version of the rule set
         /// type.</param>
         /// <param name="disabledRuleGroups">The disabled rule groups.</param>
-        public ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, string firewallMode, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default(IList<ApplicationGatewayFirewallDisabledRuleGroup>))
+        /// <param name="requestBodyCheck">Whether allow WAF to check request
+        /// Body.</param>
+        /// <param name="maxRequestBodySize">Maxium request body size for
+        /// WAF.</param>
+        public ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, string firewallMode, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallDisabledRuleGroup> disabledRuleGroups = default(IList<ApplicationGatewayFirewallDisabledRuleGroup>), bool? requestBodyCheck = default(bool?), int? maxRequestBodySize = default(int?))
         {
             Enabled = enabled;
             FirewallMode = firewallMode;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             DisabledRuleGroups = disabledRuleGroups;
+            RequestBodyCheck = requestBodyCheck;
+            MaxRequestBodySize = maxRequestBodySize;
             CustomInit();
         }
 
@@ -92,6 +98,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationGatewayFirewallDisabledRuleGroup> DisabledRuleGroups { get; set; }
 
         /// <summary>
+        /// Gets or sets whether allow WAF to check request Body.
+        /// </summary>
+        [JsonProperty(PropertyName = "requestBodyCheck")]
+        public bool? RequestBodyCheck { get; set; }
+
+        /// <summary>
+        /// Gets or sets maxium request body size for WAF.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxRequestBodySize")]
+        public int? MaxRequestBodySize { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -120,6 +138,14 @@ namespace Microsoft.Azure.Management.Network.Models
                         element.Validate();
                     }
                 }
+            }
+            if (MaxRequestBodySize > 128)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxRequestBodySize", 128);
+            }
+            if (MaxRequestBodySize < 8)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySize", 8);
             }
         }
     }

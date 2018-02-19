@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network;
@@ -11,10 +15,6 @@ using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 using CM = Microsoft.Azure.Management.Compute.Models;
 
@@ -36,6 +36,22 @@ namespace Compute.Tests
             };
 
             return vmExtension;
+        }
+
+        protected VirtualMachineScaleSetExtension GetVmssServiceFabricExtension()
+        {
+            VirtualMachineScaleSetExtension sfExtension = new VirtualMachineScaleSetExtension
+            {
+                Name = "vmsssfext01",
+                Publisher = "Microsoft.Azure.ServiceFabric",
+                Type = "ServiceFabricNode",
+                TypeHandlerVersion = "1.0",
+                AutoUpgradeMinorVersion = true,
+                Settings = "{}",
+                ProtectedSettings = "{}"
+            };
+
+            return sfExtension;
         }
 
         protected VirtualMachineScaleSetExtension GetAzureDiskEncryptionExtension()
@@ -481,6 +497,41 @@ namespace Compute.Tests
             else
             {
                 Assert.True((vmScaleSetOut.VirtualMachineProfile.NetworkProfile == null) || (vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count == 0));
+            }
+
+            if(vmScaleSet.Zones != null)
+            {
+                Assert.True(vmScaleSet.Zones.SequenceEqual(vmScaleSetOut.Zones), "Zones don't match");
+                if(vmScaleSet.ZoneBalance.HasValue)
+                {
+                    Assert.Equal(vmScaleSet.ZoneBalance, vmScaleSetOut.ZoneBalance);
+                }
+                else
+                {
+                    if (vmScaleSet.Zones.Count > 1)
+                    {
+                        Assert.True(vmScaleSetOut.ZoneBalance.HasValue);
+                    }
+                    else
+                    {
+                        Assert.False(vmScaleSetOut.ZoneBalance.HasValue);
+                    }    
+                }
+
+                if (vmScaleSet.PlatformFaultDomainCount.HasValue)
+                {
+                    Assert.Equal(vmScaleSet.PlatformFaultDomainCount, vmScaleSetOut.PlatformFaultDomainCount);
+                }
+                else
+                {
+                    Assert.True(vmScaleSetOut.PlatformFaultDomainCount.HasValue);
+                }
+            }
+            else
+            {
+                Assert.Null(vmScaleSetOut.Zones);
+                Assert.Null(vmScaleSetOut.ZoneBalance);
+                Assert.Null(vmScaleSetOut.PlatformFaultDomainCount);
             }
         }
 

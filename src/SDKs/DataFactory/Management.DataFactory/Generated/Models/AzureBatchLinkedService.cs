@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureBatchLinkedService(object accountName, object batchUri, object poolName, LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecureString accessKey = default(SecureString), object encryptedCredential = default(object))
+        public AzureBatchLinkedService(object accountName, object batchUri, object poolName, LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecretBase accessKey = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description)
         {
             AccountName = accountName;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the Azure Batch account access key.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.accessKey")]
-        public SecureString AccessKey { get; set; }
+        public SecretBase AccessKey { get; set; }
 
         /// <summary>
         /// Gets or sets the Azure Batch URI. Type: string (or Expression with
@@ -135,10 +135,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (LinkedServiceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "LinkedServiceName");
-            }
-            if (AccessKey != null)
-            {
-                AccessKey.Validate();
             }
             if (LinkedServiceName != null)
             {

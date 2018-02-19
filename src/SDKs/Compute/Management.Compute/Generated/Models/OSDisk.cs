@@ -62,12 +62,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// **ReadWrite** &lt;br&gt;&lt;br&gt; Default: **None for Standard
         /// storage. ReadOnly for Premium storage**. Possible values include:
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="writeAcceleratorEnabled">Specifies whether
+        /// writeAccelerator should be enabled or disabled on the disk.</param>
         /// <param name="diskSizeGB">Specifies the size of an empty data disk
         /// in gigabytes. This element can be used to overwrite the name of the
         /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
         /// cannot be larger than 1023 GB</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public OSDisk(DiskCreateOptionTypes createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters))
+        public OSDisk(DiskCreateOptionTypes createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters))
         {
             OsType = osType;
             EncryptionSettings = encryptionSettings;
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Vhd = vhd;
             Image = image;
             Caching = caching;
+            WriteAcceleratorEnabled = writeAcceleratorEnabled;
             CreateOption = createOption;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
@@ -138,6 +141,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether writeAccelerator should be enabled
+        /// or disabled on the disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "writeAcceleratorEnabled")]
+        public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets specifies how the virtual machine should be

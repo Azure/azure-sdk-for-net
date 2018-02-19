@@ -420,8 +420,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (streamContents != null && streamContents != Stream.Null)
             {
-              _httpRequest.Content = new StreamContent(streamContents);
-              _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
+                _httpRequest.Content = new StreamContent(streamContents);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             }
             // Set Credentials
             if (Client.Credentials != null)
@@ -1219,8 +1219,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (streamContents != null && streamContents != Stream.Null)
             {
-              _httpRequest.Content = new StreamContent(streamContents);
-              _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
+                _httpRequest.Content = new StreamContent(streamContents);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             }
             // Set Credentials
             if (Client.Credentials != null)
@@ -2333,8 +2333,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (streamContents != null && streamContents != Stream.Null)
             {
-              _httpRequest.Content = new StreamContent(streamContents);
-              _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
+                _httpRequest.Content = new StreamContent(streamContents);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             }
             // Set Credentials
             if (Client.Credentials != null)
@@ -2570,8 +2570,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
             string _requestContent = null;
             if (streamContents != null && streamContents != Stream.Null)
             {
-              _httpRequest.Content = new StreamContent(streamContents);
-              _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
+                _httpRequest.Content = new StreamContent(streamContents);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             }
             // Set Credentials
             if (Client.Credentials != null)
