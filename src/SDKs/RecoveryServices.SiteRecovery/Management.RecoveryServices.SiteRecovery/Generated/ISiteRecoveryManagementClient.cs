@@ -79,19 +79,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 
 
         /// <summary>
-        /// Gets the ITargetComputeSizesOperations.
+        /// Gets the IOperations.
         /// </summary>
-        ITargetComputeSizesOperations TargetComputeSizes { get; }
+        IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IReplicationProtectedItemsOperations.
+        /// Gets the IReplicationAlertSettingsOperations.
         /// </summary>
-        IReplicationProtectedItemsOperations ReplicationProtectedItems { get; }
-
-        /// <summary>
-        /// Gets the IReplicationProtectionContainerMappingsOperations.
-        /// </summary>
-        IReplicationProtectionContainerMappingsOperations ReplicationProtectionContainerMappings { get; }
+        IReplicationAlertSettingsOperations ReplicationAlertSettings { get; }
 
         /// <summary>
         /// Gets the IReplicationEventsOperations.
@@ -99,49 +94,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationEventsOperations ReplicationEvents { get; }
 
         /// <summary>
-        /// Gets the IReplicationVaultHealthOperations.
-        /// </summary>
-        IReplicationVaultHealthOperations ReplicationVaultHealth { get; }
-
-        /// <summary>
-        /// Gets the IReplicationNetworkMappingsOperations.
-        /// </summary>
-        IReplicationNetworkMappingsOperations ReplicationNetworkMappings { get; }
-
-        /// <summary>
         /// Gets the IReplicationFabricsOperations.
         /// </summary>
         IReplicationFabricsOperations ReplicationFabrics { get; }
 
         /// <summary>
-        /// Gets the IReplicationvCentersOperations.
+        /// Gets the IReplicationLogicalNetworksOperations.
         /// </summary>
-        IReplicationvCentersOperations ReplicationvCenters { get; }
+        IReplicationLogicalNetworksOperations ReplicationLogicalNetworks { get; }
 
         /// <summary>
-        /// Gets the IReplicationStorageClassificationMappingsOperations.
+        /// Gets the IReplicationNetworksOperations.
         /// </summary>
-        IReplicationStorageClassificationMappingsOperations ReplicationStorageClassificationMappings { get; }
+        IReplicationNetworksOperations ReplicationNetworks { get; }
 
         /// <summary>
-        /// Gets the IReplicationStorageClassificationsOperations.
+        /// Gets the IReplicationNetworkMappingsOperations.
         /// </summary>
-        IReplicationStorageClassificationsOperations ReplicationStorageClassifications { get; }
-
-        /// <summary>
-        /// Gets the IReplicationRecoveryServicesProvidersOperations.
-        /// </summary>
-        IReplicationRecoveryServicesProvidersOperations ReplicationRecoveryServicesProviders { get; }
-
-        /// <summary>
-        /// Gets the IRecoveryPointsOperations.
-        /// </summary>
-        IRecoveryPointsOperations RecoveryPoints { get; }
-
-        /// <summary>
-        /// Gets the IReplicationRecoveryPlansOperations.
-        /// </summary>
-        IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; }
+        IReplicationNetworkMappingsOperations ReplicationNetworkMappings { get; }
 
         /// <summary>
         /// Gets the IReplicationProtectionContainersOperations.
@@ -154,24 +124,44 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationProtectableItemsOperations ReplicationProtectableItems { get; }
 
         /// <summary>
-        /// Gets the IReplicationPoliciesOperations.
+        /// Gets the IReplicationProtectedItemsOperations.
         /// </summary>
-        IReplicationPoliciesOperations ReplicationPolicies { get; }
+        IReplicationProtectedItemsOperations ReplicationProtectedItems { get; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IRecoveryPointsOperations.
         /// </summary>
-        IOperations Operations { get; }
+        IRecoveryPointsOperations RecoveryPoints { get; }
 
         /// <summary>
-        /// Gets the IReplicationNetworksOperations.
+        /// Gets the ITargetComputeSizesOperations.
         /// </summary>
-        IReplicationNetworksOperations ReplicationNetworks { get; }
+        ITargetComputeSizesOperations TargetComputeSizes { get; }
 
         /// <summary>
-        /// Gets the IReplicationLogicalNetworksOperations.
+        /// Gets the IReplicationProtectionContainerMappingsOperations.
         /// </summary>
-        IReplicationLogicalNetworksOperations ReplicationLogicalNetworks { get; }
+        IReplicationProtectionContainerMappingsOperations ReplicationProtectionContainerMappings { get; }
+
+        /// <summary>
+        /// Gets the IReplicationRecoveryServicesProvidersOperations.
+        /// </summary>
+        IReplicationRecoveryServicesProvidersOperations ReplicationRecoveryServicesProviders { get; }
+
+        /// <summary>
+        /// Gets the IReplicationStorageClassificationsOperations.
+        /// </summary>
+        IReplicationStorageClassificationsOperations ReplicationStorageClassifications { get; }
+
+        /// <summary>
+        /// Gets the IReplicationStorageClassificationMappingsOperations.
+        /// </summary>
+        IReplicationStorageClassificationMappingsOperations ReplicationStorageClassificationMappings { get; }
+
+        /// <summary>
+        /// Gets the IReplicationvCentersOperations.
+        /// </summary>
+        IReplicationvCentersOperations ReplicationvCenters { get; }
 
         /// <summary>
         /// Gets the IReplicationJobsOperations.
@@ -179,9 +169,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationJobsOperations ReplicationJobs { get; }
 
         /// <summary>
-        /// Gets the IReplicationAlertSettingsOperations.
+        /// Gets the IReplicationPoliciesOperations.
         /// </summary>
-        IReplicationAlertSettingsOperations ReplicationAlertSettings { get; }
+        IReplicationPoliciesOperations ReplicationPolicies { get; }
+
+        /// <summary>
+        /// Gets the IReplicationRecoveryPlansOperations.
+        /// </summary>
+        IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; }
+
+        /// <summary>
+        /// Gets the IReplicationVaultHealthOperations.
+        /// </summary>
+        IReplicationVaultHealthOperations ReplicationVaultHealth { get; }
 
     }
 }

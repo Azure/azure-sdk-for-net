@@ -22,6 +22,40 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationPoliciesOperationsExtensions
     {
             /// <summary>
+            /// Gets the list of replication policies
+            /// </summary>
+            /// <remarks>
+            /// Lists the replication policies for a vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<Policy> List(this IReplicationPoliciesOperations operations)
+            {
+                return operations.ListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of replication policies
+            /// </summary>
+            /// <remarks>
+            /// Lists the replication policies for a vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Policy>> ListAsync(this IReplicationPoliciesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the requested policy.
             /// </summary>
             /// <remarks>
@@ -185,40 +219,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<Policy> UpdateAsync(this IReplicationPoliciesOperations operations, string policyName, UpdatePolicyInput input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(policyName, input, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the list of replication policies
-            /// </summary>
-            /// <remarks>
-            /// Lists the replication policies for a vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<Policy> List(this IReplicationPoliciesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of replication policies
-            /// </summary>
-            /// <remarks>
-            /// Lists the replication policies for a vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Policy>> ListAsync(this IReplicationPoliciesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

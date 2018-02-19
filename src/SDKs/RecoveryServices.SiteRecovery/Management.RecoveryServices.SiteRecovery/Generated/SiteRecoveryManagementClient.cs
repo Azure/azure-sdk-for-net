@@ -82,19 +82,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the ITargetComputeSizesOperations.
+        /// Gets the IOperations.
         /// </summary>
-        public virtual ITargetComputeSizesOperations TargetComputeSizes { get; private set; }
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationProtectedItemsOperations.
+        /// Gets the IReplicationAlertSettingsOperations.
         /// </summary>
-        public virtual IReplicationProtectedItemsOperations ReplicationProtectedItems { get; private set; }
-
-        /// <summary>
-        /// Gets the IReplicationProtectionContainerMappingsOperations.
-        /// </summary>
-        public virtual IReplicationProtectionContainerMappingsOperations ReplicationProtectionContainerMappings { get; private set; }
+        public virtual IReplicationAlertSettingsOperations ReplicationAlertSettings { get; private set; }
 
         /// <summary>
         /// Gets the IReplicationEventsOperations.
@@ -102,49 +97,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationEventsOperations ReplicationEvents { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationVaultHealthOperations.
-        /// </summary>
-        public virtual IReplicationVaultHealthOperations ReplicationVaultHealth { get; private set; }
-
-        /// <summary>
-        /// Gets the IReplicationNetworkMappingsOperations.
-        /// </summary>
-        public virtual IReplicationNetworkMappingsOperations ReplicationNetworkMappings { get; private set; }
-
-        /// <summary>
         /// Gets the IReplicationFabricsOperations.
         /// </summary>
         public virtual IReplicationFabricsOperations ReplicationFabrics { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationvCentersOperations.
+        /// Gets the IReplicationLogicalNetworksOperations.
         /// </summary>
-        public virtual IReplicationvCentersOperations ReplicationvCenters { get; private set; }
+        public virtual IReplicationLogicalNetworksOperations ReplicationLogicalNetworks { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationStorageClassificationMappingsOperations.
+        /// Gets the IReplicationNetworksOperations.
         /// </summary>
-        public virtual IReplicationStorageClassificationMappingsOperations ReplicationStorageClassificationMappings { get; private set; }
+        public virtual IReplicationNetworksOperations ReplicationNetworks { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationStorageClassificationsOperations.
+        /// Gets the IReplicationNetworkMappingsOperations.
         /// </summary>
-        public virtual IReplicationStorageClassificationsOperations ReplicationStorageClassifications { get; private set; }
-
-        /// <summary>
-        /// Gets the IReplicationRecoveryServicesProvidersOperations.
-        /// </summary>
-        public virtual IReplicationRecoveryServicesProvidersOperations ReplicationRecoveryServicesProviders { get; private set; }
-
-        /// <summary>
-        /// Gets the IRecoveryPointsOperations.
-        /// </summary>
-        public virtual IRecoveryPointsOperations RecoveryPoints { get; private set; }
-
-        /// <summary>
-        /// Gets the IReplicationRecoveryPlansOperations.
-        /// </summary>
-        public virtual IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; private set; }
+        public virtual IReplicationNetworkMappingsOperations ReplicationNetworkMappings { get; private set; }
 
         /// <summary>
         /// Gets the IReplicationProtectionContainersOperations.
@@ -157,24 +127,44 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationProtectableItemsOperations ReplicationProtectableItems { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationPoliciesOperations.
+        /// Gets the IReplicationProtectedItemsOperations.
         /// </summary>
-        public virtual IReplicationPoliciesOperations ReplicationPolicies { get; private set; }
+        public virtual IReplicationProtectedItemsOperations ReplicationProtectedItems { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IRecoveryPointsOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual IRecoveryPointsOperations RecoveryPoints { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationNetworksOperations.
+        /// Gets the ITargetComputeSizesOperations.
         /// </summary>
-        public virtual IReplicationNetworksOperations ReplicationNetworks { get; private set; }
+        public virtual ITargetComputeSizesOperations TargetComputeSizes { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationLogicalNetworksOperations.
+        /// Gets the IReplicationProtectionContainerMappingsOperations.
         /// </summary>
-        public virtual IReplicationLogicalNetworksOperations ReplicationLogicalNetworks { get; private set; }
+        public virtual IReplicationProtectionContainerMappingsOperations ReplicationProtectionContainerMappings { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationRecoveryServicesProvidersOperations.
+        /// </summary>
+        public virtual IReplicationRecoveryServicesProvidersOperations ReplicationRecoveryServicesProviders { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationStorageClassificationsOperations.
+        /// </summary>
+        public virtual IReplicationStorageClassificationsOperations ReplicationStorageClassifications { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationStorageClassificationMappingsOperations.
+        /// </summary>
+        public virtual IReplicationStorageClassificationMappingsOperations ReplicationStorageClassificationMappings { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationvCentersOperations.
+        /// </summary>
+        public virtual IReplicationvCentersOperations ReplicationvCenters { get; private set; }
 
         /// <summary>
         /// Gets the IReplicationJobsOperations.
@@ -182,9 +172,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationJobsOperations ReplicationJobs { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationAlertSettingsOperations.
+        /// Gets the IReplicationPoliciesOperations.
         /// </summary>
-        public virtual IReplicationAlertSettingsOperations ReplicationAlertSettings { get; private set; }
+        public virtual IReplicationPoliciesOperations ReplicationPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationRecoveryPlansOperations.
+        /// </summary>
+        public virtual IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; private set; }
+
+        /// <summary>
+        /// Gets the IReplicationVaultHealthOperations.
+        /// </summary>
+        public virtual IReplicationVaultHealthOperations ReplicationVaultHealth { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SiteRecoveryManagementClient class.
@@ -387,27 +387,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         private void Initialize()
         {
-            TargetComputeSizes = new TargetComputeSizesOperations(this);
-            ReplicationProtectedItems = new ReplicationProtectedItemsOperations(this);
-            ReplicationProtectionContainerMappings = new ReplicationProtectionContainerMappingsOperations(this);
+            Operations = new Operations(this);
+            ReplicationAlertSettings = new ReplicationAlertSettingsOperations(this);
             ReplicationEvents = new ReplicationEventsOperations(this);
-            ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
-            ReplicationNetworkMappings = new ReplicationNetworkMappingsOperations(this);
             ReplicationFabrics = new ReplicationFabricsOperations(this);
-            ReplicationvCenters = new ReplicationvCentersOperations(this);
-            ReplicationStorageClassificationMappings = new ReplicationStorageClassificationMappingsOperations(this);
-            ReplicationStorageClassifications = new ReplicationStorageClassificationsOperations(this);
-            ReplicationRecoveryServicesProviders = new ReplicationRecoveryServicesProvidersOperations(this);
-            RecoveryPoints = new RecoveryPointsOperations(this);
-            ReplicationRecoveryPlans = new ReplicationRecoveryPlansOperations(this);
+            ReplicationLogicalNetworks = new ReplicationLogicalNetworksOperations(this);
+            ReplicationNetworks = new ReplicationNetworksOperations(this);
+            ReplicationNetworkMappings = new ReplicationNetworkMappingsOperations(this);
             ReplicationProtectionContainers = new ReplicationProtectionContainersOperations(this);
             ReplicationProtectableItems = new ReplicationProtectableItemsOperations(this);
-            ReplicationPolicies = new ReplicationPoliciesOperations(this);
-            Operations = new Operations(this);
-            ReplicationNetworks = new ReplicationNetworksOperations(this);
-            ReplicationLogicalNetworks = new ReplicationLogicalNetworksOperations(this);
+            ReplicationProtectedItems = new ReplicationProtectedItemsOperations(this);
+            RecoveryPoints = new RecoveryPointsOperations(this);
+            TargetComputeSizes = new TargetComputeSizesOperations(this);
+            ReplicationProtectionContainerMappings = new ReplicationProtectionContainerMappingsOperations(this);
+            ReplicationRecoveryServicesProviders = new ReplicationRecoveryServicesProvidersOperations(this);
+            ReplicationStorageClassifications = new ReplicationStorageClassificationsOperations(this);
+            ReplicationStorageClassificationMappings = new ReplicationStorageClassificationMappingsOperations(this);
+            ReplicationvCenters = new ReplicationvCentersOperations(this);
             ReplicationJobs = new ReplicationJobsOperations(this);
-            ReplicationAlertSettings = new ReplicationAlertSettingsOperations(this);
+            ReplicationPolicies = new ReplicationPoliciesOperations(this);
+            ReplicationRecoveryPlans = new ReplicationRecoveryPlansOperations(this);
+            ReplicationVaultHealth = new ReplicationVaultHealthOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-01-10";
             AcceptLanguage = "en-US";
@@ -438,56 +438,56 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificDetails>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificCreationInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificCreationInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TaskTypeDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TaskTypeDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<GroupTaskDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<GroupTaskDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobDetails>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<NetworkMappingFabricSpecificSettings>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<NetworkMappingFabricSpecificSettings>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificCreateNetworkMappingInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificCreateNetworkMappingInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificUpdateNetworkMappingInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificUpdateNetworkMappingInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConfigurationSettings>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConfigurationSettings>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificCreateNetworkMappingInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificCreateNetworkMappingInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificContainerCreationInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificContainerCreationInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanActionDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EnableProtectionProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EnableProtectionProviderSpecificInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateReplicationProtectedItemProviderInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UpdateReplicationProtectedItemProviderInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DisableProtectionProviderSpecificInput>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DisableProtectionProviderSpecificInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProviderSpecificFailoverInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificFailoverInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ApplyRecoveryPointProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EnableProtectionProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EnableProtectionProviderSpecificInput>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventProviderSpecificDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventProviderSpecificDetails>("instanceType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSpecificDetails>("instanceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSpecificDetails>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificDetails>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificCreationInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificCreationInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FabricSpecificUpdateNetworkMappingInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FabricSpecificUpdateNetworkMappingInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobDetails>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<NetworkMappingFabricSpecificSettings>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<NetworkMappingFabricSpecificSettings>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProviderSpecificFailoverInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificFailoverInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PolicyProviderSpecificDetails>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ProviderSpecificRecoveryPointDetails>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RecoveryPlanProviderSpecificFailoverInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReplicationProviderSpecificSettings>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ReverseReplicationProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SwitchProtectionProviderSpecificInput>("instanceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<UpdateReplicationProtectedItemProviderInput>("instanceType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<UpdateReplicationProtectedItemProviderInput>("instanceType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
