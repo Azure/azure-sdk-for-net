@@ -4,7 +4,7 @@
 using System.Reflection;
 using System.Resources;
 
-// [assembly: AssemblyTitle("Microsoft Azure Monitor Library")]
+[assembly: AssemblyTitle("Microsoft Azure Monitor Library")]
 // [assembly: AssemblyDescription("Provides Microsoft Azure Monitor operations.")]
 
 // [assembly: AssemblyVersion("0.19.0.0")]

@@ -22,7 +22,7 @@
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
 		<Reference Include="System.Net.Http" />
-    <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
+        <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
