@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ApplicationInsights
             /// Retrieve metric data
             /// </summary>
             /// <remarks>
-            /// Gets metric values for a single metric
+            /// Gets data for a single metric.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.ApplicationInsights
             /// Retrieve metric data
             /// </summary>
             /// <remarks>
-            /// Gets metric values for a single metric
+            /// Gets data for a single metric.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.ApplicationInsights
             /// time period value.  This timespan is applied in addition to any that are
             /// specified in the Odata expression.
             /// </param>
-            public static EventsResults GetEvent(this IApplicationInsightsDataClient operations, EventType eventType, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            public static EventsResults GetEvent(this IApplicationInsightsDataClient operations, EventType eventType, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
             {
                 return operations.GetEventAsync(eventType, eventId, timespan).GetAwaiter().GetResult();
             }
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.ApplicationInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EventsResults> GetEventAsync(this IApplicationInsightsDataClient operations, EventType eventType, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EventsResults> GetEventAsync(this IApplicationInsightsDataClient operations, EventType eventType, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetEventWithHttpMessagesAsync(eventType, eventId, timespan, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -552,7 +552,7 @@ namespace Microsoft.Azure.ApplicationInsights
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static object GetQuerySchema(this IApplicationInsightsDataClient operations)
+            public static QueryResults GetQuerySchema(this IApplicationInsightsDataClient operations)
             {
                 return operations.GetQuerySchemaAsync().GetAwaiter().GetResult();
             }
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.ApplicationInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetQuerySchemaAsync(this IApplicationInsightsDataClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<QueryResults> GetQuerySchemaAsync(this IApplicationInsightsDataClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetQuerySchemaWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

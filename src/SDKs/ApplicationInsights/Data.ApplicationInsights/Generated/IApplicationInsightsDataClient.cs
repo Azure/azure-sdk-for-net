@@ -55,7 +55,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// Retrieve metric data
         /// </summary>
         /// <remarks>
-        /// Gets metric values for a single metric
+        /// Gets data for a single metric.
         /// </remarks>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<EventsResults>> GetEventWithHttpMessagesAsync(EventType eventType, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EventsResults>> GetEventWithHttpMessagesAsync(EventType eventType, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get OData metadata
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> GetQuerySchemaWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<QueryResults>> GetQuerySchemaWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

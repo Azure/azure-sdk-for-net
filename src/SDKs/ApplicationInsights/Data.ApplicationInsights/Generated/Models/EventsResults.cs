@@ -31,10 +31,13 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <summary>
         /// Initializes a new instance of the EventsResults class.
         /// </summary>
+        /// <param name="odatacontext">OData context metadata endpoint for this
+        /// response</param>
         /// <param name="aimessages">OData messages for this response.</param>
         /// <param name="value">Contents of the events query result.</param>
-        public EventsResults(IList<ErrorInfo> aimessages = default(IList<ErrorInfo>), IList<EventsResultData> value = default(IList<EventsResultData>))
+        public EventsResults(string odatacontext = default(string), IList<ErrorInfo> aimessages = default(IList<ErrorInfo>), IList<EventsResultData> value = default(IList<EventsResultData>))
         {
+            Odatacontext = odatacontext;
             Aimessages = aimessages;
             Value = value;
             CustomInit();
@@ -44,6 +47,12 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets oData context metadata endpoint for this response
+        /// </summary>
+        [JsonProperty(PropertyName = "@odata.context")]
+        public string Odatacontext { get; set; }
 
         /// <summary>
         /// Gets or sets oData messages for this response.

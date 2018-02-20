@@ -287,7 +287,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// Retrieve metric data
         /// </summary>
         /// <remarks>
-        /// Gets metric values for a single metric
+        /// Gets data for a single metric.
         /// </remarks>
         /// <param name='metricId'>
         /// ID of the metric. This is either a standard AI metric, or an
@@ -417,9 +417,9 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/metrics/{metric-id}").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
-            _url = _url.Replace("{metric-id}", System.Uri.EscapeDataString(metricId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/metrics/{metricId}").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
+            _url = _url.Replace("{metricId}", System.Uri.EscapeDataString(metricId));
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
@@ -616,8 +616,8 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/metrics").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/metrics").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -769,8 +769,8 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/metrics/metadata").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/metrics/metadata").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -969,9 +969,9 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/events/{event-type}").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
-            _url = _url.Replace("{event-type}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(eventType, SerializationSettings).Trim('"')));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/events/{eventType}").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
+            _url = _url.Replace("{eventType}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(eventType, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
@@ -1160,11 +1160,15 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EventsResults>> GetEventWithHttpMessagesAsync(EventType eventType, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EventsResults>> GetEventWithHttpMessagesAsync(EventType eventType, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (AppId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.AppId");
+            }
+            if (eventId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "eventId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1181,10 +1185,10 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/events/{event-type}/{event-id}").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
-            _url = _url.Replace("{event-type}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(eventType, SerializationSettings).Trim('"')));
-            _url = _url.Replace("{event-id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(eventId, SerializationSettings).Trim('"')));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/events/{eventType}/{eventId}").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
+            _url = _url.Replace("{eventType}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(eventType, SerializationSettings).Trim('"')));
+            _url = _url.Replace("{eventId}", System.Uri.EscapeDataString(eventId));
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
@@ -1339,8 +1343,8 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/events/$metadata").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/events/$metadata").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1517,8 +1521,8 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/query").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/query").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
             List<string> _queryParameters = new List<string>();
             if (timespan != null)
             {
@@ -1661,7 +1665,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetQuerySchemaWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<QueryResults>> GetQuerySchemaWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (AppId == null)
             {
@@ -1679,8 +1683,8 @@ namespace Microsoft.Azure.ApplicationInsights
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{app-id}/query/schema").ToString();
-            _url = _url.Replace("{app-id}", System.Uri.EscapeDataString(AppId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/query/schema").ToString();
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(AppId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1753,7 +1757,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<object>();
+            var _result = new HttpOperationResponse<QueryResults>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -1762,7 +1766,7 @@ namespace Microsoft.Azure.ApplicationInsights
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<QueryResults>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

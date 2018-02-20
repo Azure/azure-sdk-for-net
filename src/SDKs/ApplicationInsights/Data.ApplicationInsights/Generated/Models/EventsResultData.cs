@@ -44,7 +44,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// <param name="ai">AI info of the event</param>
         /// <param name="application">Application info of the event</param>
         /// <param name="client">Client info of the event</param>
-        public EventsResultData(System.Guid? id = default(System.Guid?), long? count = default(long?), System.DateTime? timestamp = default(System.DateTime?), EventsResultDataCustomDimensions customDimensions = default(EventsResultDataCustomDimensions), EventsResultDataCustomMeasurements customMeasurements = default(EventsResultDataCustomMeasurements), EventsOperationInfo operation = default(EventsOperationInfo), EventsSessionInfo session = default(EventsSessionInfo), EventsUserInfo user = default(EventsUserInfo), EventsCloudInfo cloud = default(EventsCloudInfo), EventsAiInfo ai = default(EventsAiInfo), EventsApplicationInfo application = default(EventsApplicationInfo), EventsClientInfo client = default(EventsClientInfo))
+        public EventsResultData(string id = default(string), long? count = default(long?), System.DateTime? timestamp = default(System.DateTime?), EventsResultDataCustomDimensions customDimensions = default(EventsResultDataCustomDimensions), EventsResultDataCustomMeasurements customMeasurements = default(EventsResultDataCustomMeasurements), EventsOperationInfo operation = default(EventsOperationInfo), EventsSessionInfo session = default(EventsSessionInfo), EventsUserInfo user = default(EventsUserInfo), EventsCloudInfo cloud = default(EventsCloudInfo), EventsAiInfo ai = default(EventsAiInfo), EventsApplicationInfo application = default(EventsApplicationInfo), EventsClientInfo client = default(EventsClientInfo))
         {
             Id = id;
             Count = count;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ApplicationInsights.Models
         /// Gets or sets the unique ID for this event.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets count of the event
