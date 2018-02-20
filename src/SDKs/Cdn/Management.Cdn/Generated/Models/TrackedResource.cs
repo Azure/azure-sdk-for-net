@@ -11,38 +11,37 @@
 namespace Microsoft.Azure.Management.Cdn.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Edgenode is a global Point of Presence (POP) location used to deliver
-    /// CDN content to end users.
+    /// The resource model definition for a ARM tracked top level resource.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class EdgeNode : ProxyResource
+    public partial class TrackedResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the EdgeNode class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        public EdgeNode()
+        public TrackedResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EdgeNode class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        /// <param name="ipAddressGroups">List of ip address groups.</param>
+        /// <param name="location">Resource location.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public EdgeNode(IList<IpAddressGroup> ipAddressGroups, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="tags">Resource tags.</param>
+        public TrackedResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type)
         {
-            IpAddressGroups = ipAddressGroups;
+            Location = location;
+            Tags = tags;
             CustomInit();
         }
 
@@ -52,10 +51,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of ip address groups.
+        /// Gets or sets resource location.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipAddressGroups")]
-        public IList<IpAddressGroup> IpAddressGroups { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -65,9 +70,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (IpAddressGroups == null)
+            if (Location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IpAddressGroups");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
         }
     }

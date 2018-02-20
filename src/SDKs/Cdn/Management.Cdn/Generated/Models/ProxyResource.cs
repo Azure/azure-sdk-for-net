@@ -10,31 +10,31 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The URI required to login to the supplemental portal from the Azure
-    /// portal.
+    /// The resource model definition for a ARM proxy resource. It will have
+    /// everything other than required location and tags
     /// </summary>
-    public partial class SsoUri
+    public partial class ProxyResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the SsoUri class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        public SsoUri()
+        public ProxyResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SsoUri class.
+        /// Initializes a new instance of the ProxyResource class.
         /// </summary>
-        /// <param name="ssoUriValue">The URI used to login to the supplemental
-        /// portal.</param>
-        public SsoUri(string ssoUriValue = default(string))
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type.</param>
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
+            : base(id, name, type)
         {
-            SsoUriValue = ssoUriValue;
             CustomInit();
         }
 
@@ -42,12 +42,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the URI used to login to the supplemental portal.
-        /// </summary>
-        [JsonProperty(PropertyName = "ssoUriValue")]
-        public string SsoUriValue { get; private set; }
 
     }
 }
