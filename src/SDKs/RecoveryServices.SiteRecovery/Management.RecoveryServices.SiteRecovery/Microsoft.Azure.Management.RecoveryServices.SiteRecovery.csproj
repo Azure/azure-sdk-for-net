@@ -9,7 +9,12 @@
 		<Version>2.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
 		<PackageTags>Recoveryservices;SiteRecovery;</PackageTags>
-		<PackageReleaseNotes>Additional event search, migration support and Replication Health for site recovery.</PackageReleaseNotes>
+		<PackageReleaseNotes>
+			<![CDATA[
+        Updates in this release:
+			- Fixes corresponding to ARM compliance in swagger introducing new API version (2018-01-10).
+      ]]>
+		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
