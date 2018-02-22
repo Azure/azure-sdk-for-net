@@ -798,7 +798,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsTraceResult> GetTraceEvent(this IApplicationInsightsDataClient operations,
-            System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetTraceEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -824,7 +824,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsTraceResult>> GetTraceEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetTraceEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsCustomEventResult> GetCustomEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetCustomEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -993,7 +993,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsCustomEventResult>> GetCustomEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetCustomEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -1136,7 +1136,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsPageViewResult> GetPageViewEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetPageViewEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -1162,7 +1162,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsPageViewResult>> GetPageViewEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetPageViewEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -1305,7 +1305,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsBrowserTimingResult> GetBrowserTimingEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetBrowserTimingEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -1331,7 +1331,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsBrowserTimingResult>> GetBrowserTimingEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetBrowserTimingEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -1474,7 +1474,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsRequestResult> GetRequestEvent(this IApplicationInsightsDataClient operations,
-            System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetRequestEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -1500,7 +1500,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsRequestResult>> GetRequestEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetRequestEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -1643,7 +1643,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsDependencyResult> GetDependencyEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetDependencyEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -1669,7 +1669,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsDependencyResult>> GetDependencyEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetDependencyEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -1812,7 +1812,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsExceptionResult> GetExceptionEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetExceptionEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -1838,7 +1838,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsExceptionResult>> GetExceptionEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetExceptionEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -1981,7 +1981,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsAvailabilityResultResult> GetAvailabilityResultEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetAvailabilityResultEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -2007,7 +2007,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsAvailabilityResultResult>> GetAvailabilityResultEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetAvailabilityResultEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -2150,7 +2150,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsPerformanceCounterResult> GetPerformanceCounterEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetPerformanceCounterEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -2176,7 +2176,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsPerformanceCounterResult>> GetPerformanceCounterEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetPerformanceCounterEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))
@@ -2319,7 +2319,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// any that are specified in the Odata expression.
         /// </param>
         public static EventsResults<EventsCustomMetricResult> GetCustomMetricEvent(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?))
         {
             return operations.GetCustomMetricEventAsync(eventId, timespan).GetAwaiter().GetResult();
         }
@@ -2345,7 +2345,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public static async Task<EventsResults<EventsCustomMetricResult>> GetCustomMetricEventAsync(
-            this IApplicationInsightsDataClient operations, System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            this IApplicationInsightsDataClient operations, string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var result = await operations.GetCustomMetricEventWithHttpMessagesAsync(eventId, timespan, null, cancellationToken).ConfigureAwait(false))

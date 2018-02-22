@@ -568,7 +568,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsTraceResult>>> GetTraceEventWithHttpMessagesAsync(
-            System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -678,7 +678,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsCustomEventResult>>>
-            GetCustomEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetCustomEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -788,7 +788,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsPageViewResult>>>
-            GetPageViewEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetPageViewEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -898,7 +898,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsBrowserTimingResult>>>
-            GetBrowserTimingEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetBrowserTimingEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1008,7 +1008,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsRequestResult>>>
-            GetRequestEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetRequestEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1118,7 +1118,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsDependencyResult>>>
-            GetDependencyEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetDependencyEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1228,7 +1228,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsExceptionResult>>>
-            GetExceptionEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetExceptionEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1338,7 +1338,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsAvailabilityResultResult>>>
-            GetAvailabilityResultEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetAvailabilityResultEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1448,7 +1448,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsPerformanceCounterResult>>>
-            GetPerformanceCounterEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetPerformanceCounterEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1558,7 +1558,7 @@ namespace Microsoft.Azure.ApplicationInsights
         /// The cancellation token.
         /// </param>
         public async Task<HttpOperationResponse<EventsResults<EventsCustomMetricResult>>>
-            GetCustomMetricEventWithHttpMessagesAsync(System.Guid eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
+            GetCustomMetricEventWithHttpMessagesAsync(string eventId, System.TimeSpan? timespan = default(System.TimeSpan?),
                 Dictionary<string, List<string>> customHeaders = null,
                 CancellationToken cancellationToken = default(CancellationToken))
         {
