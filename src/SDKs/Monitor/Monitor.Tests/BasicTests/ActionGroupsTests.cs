@@ -7,8 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
 using Xunit;
 using Microsoft.Rest.Azure;
 
@@ -112,6 +112,38 @@ namespace Monitor.Tests.BasicTests
 
         [Fact]
         [Trait("Category", "Mock")]
+        public void UpdateActionGroupTest()
+        {
+            ActionGroupResource expectedParameters = GetCreateOrUpdateActionGroupParameter();
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
+            serializedObject = serializedObject.Replace("{", "{\"name\":\"" + expectedParameters.Name + "\",\"id\":\"" + expectedParameters.Id + "\",");
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetMonitorManagementClient(handler);
+
+            ActionGroupPatchBody bodyParameter = new ActionGroupPatchBody
+            {
+                Enabled = true,
+                Tags = null
+            };
+
+            var result = insightsClient.ActionGroups.Update(
+                resourceGroupName: "rg1", 
+                actionGroupName: expectedParameters.Name, 
+                actionGroupPatch: bodyParameter);
+
+            AreEqual(expectedParameters, result);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
         public void DeleteActionGroupTest()
         {
             var handler = new RecordedDelegatingHandler();
@@ -170,6 +202,9 @@ namespace Monitor.Tests.BasicTests
                 AreEqual(exp.EmailReceivers, act.EmailReceivers);
                 AreEqual(exp.SmsReceivers, act.SmsReceivers);
                 AreEqual(exp.WebhookReceivers, act.WebhookReceivers);
+                AreEqual(exp.ItsmReceivers, act.ItsmReceivers);
+                AreEqual(exp.AzureAppPushReceivers, act.AzureAppPushReceivers);
+                AreEqual(exp.AutomationRunbookReceivers, act.AutomationRunbookReceivers);
             }
         }
 
@@ -217,6 +252,39 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
+        private static void AreEqual(IList<AzureAppPushReceiver> exp, IList<AzureAppPushReceiver> act)
+        {
+            if (exp != null)
+            {
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
+        private static void AreEqual(IList<ItsmReceiver> exp, IList<ItsmReceiver> act)
+        {
+            if (exp != null)
+            {
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
+        private static void AreEqual(IList<AutomationRunbookReceiver> exp, IList<AutomationRunbookReceiver> act)
+        {
+            if (exp != null)
+            {
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
         private static void AreEqual(EmailReceiver exp, EmailReceiver act)
         {
             if (exp != null)
@@ -246,11 +314,47 @@ namespace Monitor.Tests.BasicTests
             }
         }
 
+        private static void AreEqual(AzureAppPushReceiver exp, AzureAppPushReceiver act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.EmailAddress, act.EmailAddress);
+                Assert.Equal(exp.Name, act.Name);
+            }
+        }
+
+        private static void AreEqual(ItsmReceiver exp, ItsmReceiver act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.Region, act.Region);
+                Assert.Equal(exp.TicketConfiguration, act.TicketConfiguration);
+                Assert.Equal(exp.WorkspaceId, act.WorkspaceId);
+                Assert.Equal(exp.ConnectionId, act.ConnectionId);
+            }
+        }
+
+        private static void AreEqual(AutomationRunbookReceiver exp, AutomationRunbookReceiver act)
+        {
+            if (exp != null)
+            {
+                Assert.Equal(exp.AutomationAccountId, act.AutomationAccountId);
+                Assert.Equal(exp.IsGlobalRunbook, act.IsGlobalRunbook);
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.RunbookName, act.RunbookName);
+                Assert.Equal(exp.ServiceUri, act.ServiceUri);
+            }
+        }
+
         private static ActionGroupResource GetCreateOrUpdateActionGroupParameter(
             string name = "name1", 
             List<EmailReceiver> emailReceivers = null, 
             List<SmsReceiver> smsReceivers = null,
-            List<WebhookReceiver> webhookReceivers = null)
+            List<WebhookReceiver> webhookReceivers = null,
+            List<AzureAppPushReceiver> azureAppPushReceivers = null,
+            List<ItsmReceiver> itsmReceivers = null,
+            List<AutomationRunbookReceiver> automationRunbookReceivers = null)
         {
             // Name and id won't be serialized since they are readonly
             return new ActionGroupResource(
@@ -265,7 +369,10 @@ namespace Monitor.Tests.BasicTests
                 },
                 emailReceivers: emailReceivers,
                 smsReceivers: smsReceivers,
-                webhookReceivers: webhookReceivers
+                webhookReceivers: webhookReceivers,
+                azureAppPushReceivers: azureAppPushReceivers,
+                itsmReceivers: itsmReceivers,
+                automationRunbookReceivers: automationRunbookReceivers
             );
         }
     }

@@ -23,3 +23,10 @@
 
 - The new Api version for the whole metrics API is 2017-05-01-preview. Before it was 2016-09-01 for metrics and 2016-03-01 for metric definitions.
 - The calls can retrieve single-dimension metrics with the proper set of parameters. So the change is not completely a breaking change, but it would certainly require some adjustments in the calls.
+
+**Notes**
+
+- New receivers added to Actiongroup, swagger is already updated and this is version is like a base version now.
+- Going forward changes in Actiongroup will be done with change in version.
+- Added a patch action for Actiongroup.
+
