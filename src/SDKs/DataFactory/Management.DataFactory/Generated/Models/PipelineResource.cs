@@ -45,7 +45,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">List of parameters for pipeline.</param>
         /// <param name="concurrency">The max number of concurrent runs for the
         /// pipeline.</param>
-        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), int? concurrency = default(int?))
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Pipeline.</param>
+        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>))
             : base(id, name, type, etag)
         {
             AdditionalProperties = additionalProperties;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Activities = activities;
             Parameters = parameters;
             Concurrency = concurrency;
+            Annotations = annotations;
             CustomInit();
         }
 
@@ -91,6 +94,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.concurrency")]
         public int? Concurrency { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of tags that can be used for describing the
+        /// Pipeline.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.annotations")]
+        public IList<object> Annotations { get; set; }
 
         /// <summary>
         /// Validate the object.

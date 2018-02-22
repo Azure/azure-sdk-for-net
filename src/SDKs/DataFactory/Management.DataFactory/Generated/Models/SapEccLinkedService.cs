@@ -42,6 +42,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="username">The username for Basic authentication. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="password">The password for Basic
@@ -51,8 +54,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// runtime credential manager. Either encryptedCredential or
         /// username/password must be provided. Type: string (or Expression
         /// with resultType string).</param>
-        public SapEccLinkedService(string url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string username = default(string), SecretBase password = default(SecretBase), string encryptedCredential = default(string))
-            : base(additionalProperties, connectVia, description)
+        public SapEccLinkedService(string url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string username = default(string), SecretBase password = default(SecretBase), string encryptedCredential = default(string))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Url = url;
             Username = username;

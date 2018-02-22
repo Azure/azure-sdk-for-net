@@ -1,5 +1,13 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.6.0-preview
+
+### Feature Additions
+  * SecureOutput and BatchCount
+  * Filter Activity
+  * Linked Service Parameters
+  * FilterActivity
+
 ## Version 0.5.0-preview
 
 ### Feature Additions
