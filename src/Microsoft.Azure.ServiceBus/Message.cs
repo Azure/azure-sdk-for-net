@@ -280,7 +280,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The string representation of the current message.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, $"{{MessageId:{this.MessageId}}}");
+            return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", this.MessageId);
         }
 
         /// <summary>Clones a message, so that it is possible to send a clone of an already received 

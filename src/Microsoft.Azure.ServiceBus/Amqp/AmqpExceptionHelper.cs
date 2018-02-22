@@ -157,6 +157,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 return new QuotaExceededException(message);
             }
 
+            if (string.Equals(condition, AmqpErrorCode.MessageSizeExceeded.Value))
+            {
+                return new MessageSizeExceededException(message);
+            }
+
             return new ServiceBusException(true, message);
         }
 

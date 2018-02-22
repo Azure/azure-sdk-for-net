@@ -1065,7 +1065,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (this.IsEnabled())
             {
-                this.AmqpConnectionClosed(connection.RemoteEndpoint.ToString(), connection.ToString(), connection.State.ToString());
+                this.AmqpConnectionClosed(connection.RemoteEndpoint, connection.ToString(), connection.State.ToString());
             }
         }
 
@@ -1241,16 +1241,16 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         [NonEvent]
-        public void AmqpSendAuthenticanTokenException(string clientId, Exception exception)
+        public void AmqpSendAuthenticationTokenException(string clientId, Exception exception)
         {
             if (this.IsEnabled())
             {
-                this.AmqpSendAuthenticanTokenException(clientId, exception.ToString());
+                this.AmqpSendAuthenticationTokenException(clientId, exception.ToString());
             }
         }
 
-        [Event(107, Level = EventLevel.Error, Message = "{0}: AmqpSendAuthenticanTokenException Exception: {1}.")]
-        void AmqpSendAuthenticanTokenException(string clientId, string exception)
+        [Event(107, Level = EventLevel.Error, Message = "{0}: AmqpSendAuthenticationTokenException Exception: {1}.")]
+        void AmqpSendAuthenticationTokenException(string clientId, string exception)
         {
             this.WriteEvent(107, clientId, exception);
         }

@@ -89,6 +89,7 @@ namespace Microsoft.Azure.ServiceBus
                   prefetchCount,
                   new ServiceBusNamespaceConnection(connectionString),
                   null,
+                  null,
                   retryPolicy,
                   null)
         {
@@ -102,8 +103,49 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             this.ownsConnection = true;
-            var tokenProvider = this.ServiceBusConnection.CreateTokenProvider();
-            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
+        }
+
+        /// <summary>
+        /// Creates a new SessionClient from a specified endpoint, entity path, and token provider.
+        /// </summary>
+        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
+        /// <param name="entityPath">Queue path.</param>
+        /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
+        /// <param name="transportType">Transport type.</param>
+        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
+        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
+        /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
+        /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
+        public SessionClient(
+            string endpoint,
+            string entityPath,
+            ITokenProvider tokenProvider,
+            TransportType transportType = TransportType.Amqp,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            RetryPolicy retryPolicy = null,
+            int prefetchCount = DefaultPrefetchCount)
+            : this(nameof(SessionClient),
+                entityPath,
+                null,
+                receiveMode,
+                prefetchCount,
+                new ServiceBusNamespaceConnection(endpoint, transportType, retryPolicy),
+                tokenProvider,
+                null,
+                retryPolicy,
+                null)
+        {
+            if (tokenProvider == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(tokenProvider));
+            }
+            if (string.IsNullOrWhiteSpace(entityPath))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+            }
+
+            this.ownsConnection = true;
         }
 
         internal SessionClient(
@@ -113,18 +155,19 @@ namespace Microsoft.Azure.ServiceBus
             ReceiveMode receiveMode,
             int prefetchCount,
             ServiceBusConnection serviceBusConnection,
+            ITokenProvider tokenProvider,
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy,
             IList<ServiceBusPlugin> registeredPlugins)
             : base(clientTypeName, entityPath, retryPolicy ?? RetryPolicy.Default)
         {
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            this.OperationTimeout = this.ServiceBusConnection.OperationTimeout;
             this.EntityPath = entityPath;
             this.EntityType = entityType;
             this.ReceiveMode = receiveMode;
             this.PrefetchCount = prefetchCount;
-            this.CbsTokenProvider = cbsTokenProvider;
+            tokenProvider = tokenProvider ?? this.ServiceBusConnection.CreateTokenProvider();
+            this.CbsTokenProvider = cbsTokenProvider ?? new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             // Register plugins on the message session.

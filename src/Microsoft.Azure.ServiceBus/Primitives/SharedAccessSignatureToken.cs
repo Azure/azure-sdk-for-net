@@ -105,9 +105,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         static string GetAudienceFromToken(string token)
         {
-            string audience;
             IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
-            if (!decodedToken.TryGetValue(SignedResourceFullFieldName, out audience))
+            if (!decodedToken.TryGetValue(SignedResourceFullFieldName, out var audience))
             {
                 throw new FormatException(Resources.TokenMissingAudience);
             }
@@ -117,9 +116,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         static DateTime GetExpirationDateTimeUtcFromToken(string token)
         {
-            string expiresIn;
             IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
-            if (!decodedToken.TryGetValue(SignedExpiry, out expiresIn))
+            if (!decodedToken.TryGetValue(SignedExpiry, out var expiresIn))
             {
                 throw new FormatException(Resources.TokenMissingExpiresOn);
             }

@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             amqpMessage.Properties.GroupId = sbMessage.SessionId;
             amqpMessage.Properties.ReplyToGroupId = sbMessage.ReplyToSessionId;
 
-            if (sbMessage.TimeToLive != null)
+            if (sbMessage.TimeToLive != TimeSpan.MaxValue)
             {
                 amqpMessage.Header.Ttl = (uint)sbMessage.TimeToLive.TotalMilliseconds;
                 amqpMessage.Properties.CreationTime = DateTime.UtcNow;

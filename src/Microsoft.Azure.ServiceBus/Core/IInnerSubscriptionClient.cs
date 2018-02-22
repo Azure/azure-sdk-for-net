@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         Task OnRemoveRuleAsync(string ruleName);
 
-        Task<IEnumerable<RuleDescription>> OnGetRulesAsync(int top, int skip);
+        Task<IList<RuleDescription>> OnGetRulesAsync(int top, int skip);
 
         Task CloseAsync();
     }

@@ -64,7 +64,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             string connectionString,
             string entityPath,
             RetryPolicy retryPolicy = null)
-            : this(entityPath, null, new ServiceBusNamespaceConnection(connectionString), null, retryPolicy)
+            : this(entityPath, null, new ServiceBusNamespaceConnection(connectionString), null, null, retryPolicy)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -76,14 +76,42 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             this.ownsConnection = true;
-            var tokenProvider = this.ServiceBusConnection.CreateTokenProvider();
-            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
+        }
+
+        /// <summary>
+        /// Creates a new MessageSender
+        /// </summary>
+        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
+        /// <param name="entityPath">Queue path.</param>
+        /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
+        /// <param name="transportType">Transport type.</param>
+        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
+        public MessageSender(
+            string endpoint,
+            string entityPath,
+            ITokenProvider tokenProvider,
+            TransportType transportType = TransportType.Amqp,
+            RetryPolicy retryPolicy = null)
+            : this(entityPath, null, new ServiceBusNamespaceConnection(endpoint, transportType, retryPolicy), tokenProvider, null, retryPolicy)
+        {
+            if (tokenProvider == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(tokenProvider));
+            }
+            if (string.IsNullOrWhiteSpace(entityPath))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+            }
+
+            this.ownsConnection = true;
         }
 
         internal MessageSender(
             string entityPath,
             MessagingEntityType? entityType,
             ServiceBusConnection serviceBusConnection,
+            ITokenProvider tokenProvider,
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy)
             : base(nameof(MessageSender), entityPath, retryPolicy ?? RetryPolicy.Default)
@@ -91,13 +119,13 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.MessageSenderCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            this.OperationTimeout = serviceBusConnection.OperationTimeout;
             this.Path = entityPath;
             this.EntityType = entityType;
-            this.CbsTokenProvider = cbsTokenProvider;
+            tokenProvider = tokenProvider ?? this.ServiceBusConnection.CreateTokenProvider();
+            this.CbsTokenProvider = cbsTokenProvider ?? new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, CloseSession);
             this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, CloseRequestResponseSession);
-            this.clientLinkManager = new ActiveClientLinkManager(this.ClientId, this.CbsTokenProvider);
+            this.clientLinkManager = new ActiveClientLinkManager(this, this.CbsTokenProvider);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             MessagingEventSource.Log.MessageSenderCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
@@ -438,10 +466,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                         var size = (ulong)amqpMessage.SerializedMessageSize;
                         if (size > amqpLink.Settings.MaxMessageSize.Value)
                         {
-                            // TODO: Add MessageSizeExceededException
-                            throw new NotImplementedException("MessageSizeExceededException: " + Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value));
-                            ////throw Fx.Exception.AsError(new MessageSizeExceededException(
-                            ////Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value)));
+                            throw new MessageSizeExceededException(Resources.AmqpMessageSizeExceeded.FormatForUser(amqpMessage.DeliveryId.Value, size, amqpLink.Settings.MaxMessageSize.Value));
                         }
                     }
 
@@ -469,6 +494,12 @@ namespace Microsoft.Azure.ServiceBus.Core
                     ManagementConstants.Operations.ScheduleMessageOperation,
                     this.OperationTimeout,
                     null);
+
+                SendingAmqpLink sendLink;
+                if(this.SendLinkManager.TryGetOpenedObject(out sendLink))
+                {
+                    request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
+                }
 
                 ArraySegment<byte>[] payload = amqpMessage.GetPayload();
                 var buffer = new BufferListStream(payload);
@@ -515,6 +546,13 @@ namespace Microsoft.Azure.ServiceBus.Core
                     ManagementConstants.Operations.CancelScheduledMessageOperation,
                     this.OperationTimeout,
                     null);
+
+            SendingAmqpLink sendLink;
+            if (this.SendLinkManager.TryGetOpenedObject(out sendLink))
+            {
+                request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
+            }
+
             request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
 
             var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);

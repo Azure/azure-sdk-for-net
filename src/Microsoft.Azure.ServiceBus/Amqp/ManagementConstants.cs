@@ -12,6 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static class Request
         {
             public const string Operation = "operation";
+            public const string AssociatedLinkName = "associated-link-name";
         }
 
         public static class Response

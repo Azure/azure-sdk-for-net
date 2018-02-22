@@ -91,7 +91,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null,
             int prefetchCount = Constants.DefaultClientPrefetchCount)
-            : this(entityPath, null, receiveMode, new ServiceBusNamespaceConnection(connectionString), null, retryPolicy, prefetchCount)
+            : this(entityPath, null, receiveMode, new ServiceBusNamespaceConnection(connectionString), null, null, retryPolicy, prefetchCount)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -103,8 +103,40 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             this.ownsConnection = true;
-            var tokenProvider = this.ServiceBusConnection.CreateTokenProvider();
-            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
+        }
+
+        /// <summary>
+        /// Creates a new MessageReceiver from a specified endpoint, entity path, and token provider.
+        /// </summary>
+        /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
+        /// <param name="entityPath">Queue path.</param>
+        /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
+        /// <param name="transportType">Transport type.</param>
+        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
+        /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages this receiver
+        /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
+        /// <remarks>Creates a new connection to the entity, which is opened during the first operation.</remarks>
+        public MessageReceiver(
+            string endpoint,
+            string entityPath,
+            ITokenProvider tokenProvider,
+            TransportType transportType = TransportType.Amqp,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            RetryPolicy retryPolicy = null,
+            int prefetchCount = Constants.DefaultClientPrefetchCount)
+            : this(entityPath, null, receiveMode, new ServiceBusNamespaceConnection(endpoint, transportType, retryPolicy), tokenProvider, null, retryPolicy, prefetchCount)
+        {
+            if (tokenProvider == null)
+            {
+                throw Fx.Exception.ArgumentNull(nameof(tokenProvider));
+            }
+            if (string.IsNullOrWhiteSpace(entityPath))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+            }
+
+            this.ownsConnection = true;
         }
 
         internal MessageReceiver(
@@ -112,6 +144,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEntityType? entityType,
             ReceiveMode receiveMode,
             ServiceBusConnection serviceBusConnection,
+            ITokenProvider tokenProvider,
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy,
             int prefetchCount = Constants.DefaultClientPrefetchCount,
@@ -125,7 +158,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.ReceiveMode = receiveMode;
             this.Path = entityPath;
             this.EntityType = entityType;
-            this.CbsTokenProvider = cbsTokenProvider;
+            tokenProvider = tokenProvider ?? this.ServiceBusConnection.CreateTokenProvider();
+            this.CbsTokenProvider = cbsTokenProvider ?? new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.SessionIdInternal = sessionId;
             this.isSessionReceiver = isSessionReceiver;
             this.ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(this.CreateLinkAsync, CloseSession);
@@ -133,7 +167,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             this.PrefetchCount = prefetchCount;
             this.messageReceivePumpSyncLock = new object();
-            this.clientLinkManager = new ActiveClientLinkManager(this.ClientId, this.CbsTokenProvider);
+            this.clientLinkManager = new ActiveClientLinkManager(this, this.CbsTokenProvider);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
             MessagingEventSource.Log.MessageReceiverCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
         }
@@ -232,7 +266,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         ICbsTokenProvider CbsTokenProvider { get; }
 
-        FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLinkManager { get; }
+        internal FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLinkManager { get; }
 
         FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
 
@@ -1013,6 +1047,12 @@ namespace Microsoft.Azure.ServiceBus.Core
                         this.OperationTimeout,
                         null);
 
+                ReceivingAmqpLink receiveLink;
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+
                 amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber;
                 amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
 
@@ -1064,6 +1104,11 @@ namespace Microsoft.Azure.ServiceBus.Core
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.ReceiveBySequenceNumberOperation, this.OperationTimeout, null);
+                ReceivingAmqpLink receiveLink;
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
                 amqpRequestMessage.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers;
                 amqpRequestMessage.Map[ManagementConstants.Properties.ReceiverSettleMode] = (uint)(this.ReceiveMode == ReceiveMode.ReceiveAndDelete ? 0 : 1);
 
@@ -1157,6 +1202,11 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 // Create an AmqpRequest Message to renew  lock
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewLockOperation, this.OperationTimeout, null);
+                ReceivingAmqpLink receiveLink;
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
                 amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = new[] { new Guid(lockToken) };
 
                 var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
@@ -1345,6 +1395,11 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 // Create an AmqpRequest Message to update disposition
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.UpdateDispositionOperation, this.OperationTimeout, null);
+                ReceivingAmqpLink receiveLink;
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
                 amqpRequestMessage.Map[ManagementConstants.Properties.LockTokens] = lockTokens;
                 amqpRequestMessage.Map[ManagementConstants.Properties.DispositionStatus] = dispositionStatus.ToString().ToLowerInvariant();
 

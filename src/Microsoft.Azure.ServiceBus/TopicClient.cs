@@ -65,8 +65,8 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
 
-            this.InternalTokenProvider = this.ServiceBusConnection.CreateTokenProvider();
-            this.CbsTokenProvider = new TokenProviderAdapter(this.InternalTokenProvider, this.ServiceBusConnection.OperationTimeout);
+            var tokenProvider = this.ServiceBusConnection.CreateTokenProvider();
+            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.ownsConnection = true;
         }
 
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
         /// <param name="transportType">Transport type.</param>
         /// <param name="retryPolicy">Retry policy for topic operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <returns></returns>
+        /// <remarks>Creates a new connection to the topic, which is opened during the first send operation.</remarks>
         public TopicClient(
             string endpoint,
             string entityPath,
@@ -92,8 +92,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNull(nameof(tokenProvider));
             }
 
-            this.InternalTokenProvider = tokenProvider;
-            this.CbsTokenProvider = new TokenProviderAdapter(this.InternalTokenProvider, this.ServiceBusConnection.OperationTimeout);
+            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.ownsConnection = true;
         }
 
@@ -103,11 +102,10 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.TopicClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath);
 
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            this.OperationTimeout = this.ServiceBusConnection.OperationTimeout;
             this.syncLock = new object();
             this.TopicName = entityPath;
 
-            MessagingEventSource.Log.TopicClientCreateStop(serviceBusConnection?.Endpoint.Authority, entityPath, this.ClientId);
+            MessagingEventSource.Log.TopicClientCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
         }
 
         /// <summary>
@@ -143,6 +141,7 @@ namespace Microsoft.Azure.ServiceBus
                                 this.TopicName,
                                 MessagingEntityType.Topic,
                                 this.ServiceBusConnection,
+                                null,
                                 this.CbsTokenProvider,
                                 this.RetryPolicy);
                         }
@@ -156,8 +155,6 @@ namespace Microsoft.Azure.ServiceBus
         internal ServiceBusNamespaceConnection ServiceBusConnection { get; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
-
-        ITokenProvider InternalTokenProvider { get; }
 
         /// <summary>
         /// Sends a message to Service Bus.

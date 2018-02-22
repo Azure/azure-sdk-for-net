@@ -171,6 +171,11 @@ namespace Microsoft.Azure.ServiceBus
         public MessageLockLostException(string message) { }
         public MessageLockLostException(string message, System.Exception innerException) { }
     }
+    public sealed class MessageSizeExceededException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public MessageSizeExceededException(string message) { }
+        public MessageSizeExceededException(string message, System.Exception innerException) { }
+    }
     public sealed class MessagingEntityDisabledException : Microsoft.Azure.ServiceBus.ServiceBusException
     {
         public MessagingEntityDisabledException(string message) { }
@@ -301,6 +306,7 @@ namespace Microsoft.Azure.ServiceBus
     {
         public SessionClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public SessionClient(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
+        public SessionClient(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public string EntityPath { get; }
         public override System.TimeSpan OperationTimeout { get; set; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
@@ -442,6 +448,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         public MessageReceiver(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public MessageReceiver(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
+        public MessageReceiver(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
         public long LastPeekedSequenceNumber { get; }
         public override System.TimeSpan OperationTimeout { get; set; }
         public virtual string Path { get; }
@@ -485,6 +492,7 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public MessageSender(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public override System.TimeSpan OperationTimeout { get; set; }
         public virtual string Path { get; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }

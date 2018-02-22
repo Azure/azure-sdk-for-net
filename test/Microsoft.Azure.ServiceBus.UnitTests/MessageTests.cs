@@ -145,5 +145,43 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             }
         }
+
+        [Theory]
+        [DisplayTestMethodName]
+        [InlineData(null)]
+        [InlineData("123")]
+        [InlineData("jøbber-nå")]
+        public void Should_return_string_representation_of_message(string id)
+        {
+            var message = new Message();
+            if (id != null)
+            {
+                message.MessageId = id;
+            }
+            var result = message.ToString();
+            Assert.Equal($"{{MessageId:{id}}}", result);
+        }
+
+        [Fact]
+        public async void LargeMessageShouldThrowMessageSizeExceededException()
+        {
+            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
+
+            try
+            {
+                // 2 MB message.
+                var message = new Message(new byte[1024 * 1024 * 2]);
+                await Assert.ThrowsAsync<MessageSizeExceededException>(async () => await queueClient.SendAsync(message));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                await queueClient.CloseAsync();
+            }
+        }
     }
 }

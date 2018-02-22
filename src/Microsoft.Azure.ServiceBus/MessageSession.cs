@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus
             int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)
-            : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
+            : base(entityPath, entityType, receiveMode, serviceBusConnection, null, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
         {
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }
@@ -78,6 +78,12 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
+                ReceivingAmqpLink receiveLink;
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
 
                 var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
@@ -108,6 +114,12 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, this.OperationTimeout, null);
+                ReceivingAmqpLink receiveLink;
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
 
                 if (sessionState != null)
@@ -137,6 +149,12 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
+                ReceivingAmqpLink receiveLink;
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+
                 amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
 
                 var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);

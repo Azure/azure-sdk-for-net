@@ -95,8 +95,8 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
 
-            this.InternalTokenProvider = this.ServiceBusConnection.CreateTokenProvider();
-            this.CbsTokenProvider = new TokenProviderAdapter(this.InternalTokenProvider, this.ServiceBusConnection.OperationTimeout);
+            var tokenProvider = this.ServiceBusConnection.CreateTokenProvider();
+            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.ownsConnection = true;
         }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="transportType">Transport type.</param>
         /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
         /// <param name="retryPolicy">Retry policy for queue operations. Defaults to <see cref="RetryPolicy.Default"/></param>
-        /// <returns></returns>
+        /// <remarks>Creates a new connection to the queue, which is opened during the first send/receive operation.</remarks>
         public QueueClient(
             string endpoint,
             string entityPath,
@@ -124,8 +124,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNull(nameof(tokenProvider));
             }
 
-            this.InternalTokenProvider = tokenProvider;
-            this.CbsTokenProvider = new TokenProviderAdapter(this.InternalTokenProvider, this.ServiceBusConnection.OperationTimeout);
+            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.ownsConnection = true;
         }
 
@@ -135,7 +134,6 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.QueueClientCreateStart(serviceBusConnection?.Endpoint.Authority, entityPath, receiveMode.ToString());
 
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            this.OperationTimeout = this.ServiceBusConnection.OperationTimeout;
             this.syncLock = new object();
             this.QueueName = entityPath;
             this.ReceiveMode = receiveMode;
@@ -226,6 +224,7 @@ namespace Microsoft.Azure.ServiceBus
                                 this.QueueName,
                                 MessagingEntityType.Queue,
                                 this.ServiceBusConnection,
+                                null,
                                 this.CbsTokenProvider,
                                 this.RetryPolicy);
                         }
@@ -251,6 +250,7 @@ namespace Microsoft.Azure.ServiceBus
                                 MessagingEntityType.Queue,
                                 this.ReceiveMode,
                                 this.ServiceBusConnection,
+                                null,
                                 this.CbsTokenProvider,
                                 this.RetryPolicy,
                                 this.PrefetchCount);
@@ -279,6 +279,7 @@ namespace Microsoft.Azure.ServiceBus
                                 this.ReceiveMode,
                                 this.PrefetchCount,
                                 this.ServiceBusConnection,
+                                null,
                                 this.CbsTokenProvider,
                                 this.RetryPolicy,
                                 this.RegisteredPlugins);
@@ -318,8 +319,6 @@ namespace Microsoft.Azure.ServiceBus
         internal ServiceBusConnection ServiceBusConnection { get; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
-
-        ITokenProvider InternalTokenProvider { get; }
 
         /// <summary>
         /// Sends a message to Service Bus.

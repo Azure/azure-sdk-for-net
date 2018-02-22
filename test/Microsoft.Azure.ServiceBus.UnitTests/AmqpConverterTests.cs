@@ -84,6 +84,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var replyTo = Guid.NewGuid().ToString();
             var replyToSessionId = Guid.NewGuid().ToString();
             var publisher = Guid.NewGuid().ToString();
+            var timeToLive = TimeSpan.FromDays(5);
 
             var sbMessage = new Message(messageBody)
             {
@@ -95,7 +96,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 To = to,
                 ContentType = contentType,
                 ReplyTo = replyTo,
-                ReplyToSessionId = replyToSessionId
+                ReplyToSessionId = replyToSessionId,
+                TimeToLive = timeToLive
             };
             sbMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
 
@@ -113,6 +115,18 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(contentType, convertedSbMessage.ContentType);
             Assert.Equal(replyTo, convertedSbMessage.ReplyTo);
             Assert.Equal(replyToSessionId, convertedSbMessage.ReplyToSessionId);
+            Assert.Equal(timeToLive, convertedSbMessage.TimeToLive);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        void SB_message_with_no_TTL_results_in_empty_Ampq_TTL()
+        {
+            var sbMessage = new Message();
+
+            var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(sbMessage);
+
+            Assert.Null(amqpMessage.Header.Ttl);
         }
     }
 }

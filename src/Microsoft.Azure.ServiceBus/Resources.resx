@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AmqpFieldSessionId" xml:space="preserve">
-    <value>No session-id was specified for a session receiver.</value>
+    <value>Failed to retreive session ID from broker. Please retry.</value>
   </data>
   <data name="AmqpMessageSizeExceeded" xml:space="preserve">
     <value>The received message (delivery-id:{0}, size:{1} bytes) exceeds the limit ({2} bytes) currently allowed on the link.</value>
@@ -208,6 +208,6 @@
     <value>The {0} plugin has already been registered.</value>
   </data>
   <data name="SessionFilterMissing" xml:space="preserve">
-    <value>Session filter is missing on the link. </value>
+    <value>Failed to retreive session filter from broker. Please retry.</value>
   </data>
 </root>
