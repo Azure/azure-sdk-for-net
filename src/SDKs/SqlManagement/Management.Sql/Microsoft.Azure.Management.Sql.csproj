@@ -12,6 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
+- Added more convenient method to rename databases, `Databases.Rename(resourceGroupName, serverName, databaseName, newName)`.
 - Added support for Auto-tuning REST API
       ]]>
 		</PackageReleaseNotes>
