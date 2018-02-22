@@ -37,10 +37,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'LatestCrashConsistent', 'LatestProcessed'</param>
         /// <param name="cloudServiceCreationOption">A value indicating whether
         /// to use recovery cloud service for TFO or not.</param>
-        public RecoveryPlanA2AFailoverInput(A2ARpRecoveryPointType recoveryPointType, string cloudServiceCreationOption = default(string))
+        /// <param name="multiVmSyncPointOption">A value indicating whether
+        /// multi VM sync enabled VMs should use multi VM sync points for
+        /// failover. Possible values include: 'UseMultiVmSyncRecoveryPoint',
+        /// 'UsePerVmRecoveryPoint'</param>
+        public RecoveryPlanA2AFailoverInput(A2ARpRecoveryPointType recoveryPointType, string cloudServiceCreationOption = default(string), MultiVmSyncPointOption? multiVmSyncPointOption = default(MultiVmSyncPointOption?))
         {
             RecoveryPointType = recoveryPointType;
             CloudServiceCreationOption = cloudServiceCreationOption;
+            MultiVmSyncPointOption = multiVmSyncPointOption;
             CustomInit();
         }
 
@@ -63,6 +68,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "cloudServiceCreationOption")]
         public string CloudServiceCreationOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether multi VM sync enabled VMs
+        /// should use multi VM sync points for failover. Possible values
+        /// include: 'UseMultiVmSyncRecoveryPoint', 'UsePerVmRecoveryPoint'
+        /// </summary>
+        [JsonProperty(PropertyName = "multiVmSyncPointOption")]
+        public MultiVmSyncPointOption? MultiVmSyncPointOption { get; set; }
 
         /// <summary>
         /// Validate the object.

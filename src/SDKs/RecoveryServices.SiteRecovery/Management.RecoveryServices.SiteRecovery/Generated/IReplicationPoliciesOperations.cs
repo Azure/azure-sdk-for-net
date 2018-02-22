@@ -24,6 +24,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationPoliciesOperations
     {
         /// <summary>
+        /// Gets the list of replication policies
+        /// </summary>
+        /// <remarks>
+        /// Lists the replication policies for a vault.
+        /// </remarks>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Policy>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets the requested policy.
         /// </summary>
         /// <remarks>
@@ -99,16 +121,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the protection profile.
+        /// Updates the policy.
         /// </summary>
         /// <remarks>
         /// The operation to update a replication policy.
         /// </remarks>
         /// <param name='policyName'>
-        /// Protection profile Id.
+        /// Policy Id.
         /// </param>
         /// <param name='input'>
-        /// Update Protection Profile Input
+        /// Update Policy Input
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -126,28 +148,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<Policy>> UpdateWithHttpMessagesAsync(string policyName, UpdatePolicyInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the list of replication policies
-        /// </summary>
-        /// <remarks>
-        /// Lists the replication policies for a vault.
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Policy>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates the policy.
         /// </summary>
@@ -199,16 +199,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the protection profile.
+        /// Updates the policy.
         /// </summary>
         /// <remarks>
         /// The operation to update a replication policy.
         /// </remarks>
         /// <param name='policyName'>
-        /// Protection profile Id.
+        /// Policy Id.
         /// </param>
         /// <param name='input'>
-        /// Update Protection Profile Input
+        /// Update Policy Input
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

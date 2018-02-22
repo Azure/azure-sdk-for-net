@@ -303,7 +303,6 @@ namespace RecoveryServices.SiteRecovery.Tests
                     ApplicationConsistentSnapshotFrequencyInHours = 2,
                     ReplicationInterval = 300,
                     OnlineReplicationStartTime = null,
-                    Encryption = "Disable",
                     StorageAccounts = new List<string>() { storageAccountId }
                 };
 
@@ -363,7 +362,6 @@ namespace RecoveryServices.SiteRecovery.Tests
                     ApplicationConsistentSnapshotFrequencyInHours = 2,
                     ReplicationInterval = 300,
                     OnlineReplicationStartTime = null,
-                    Encryption = "Disable",
                     StorageAccounts = new List<string>() { "/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.Storage/storageAccounts/storavrai" }
                 };
 
