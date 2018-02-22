@@ -21,6 +21,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         private TestEndpoints() { }
         internal TestEndpoints(EnvironmentNames testEnvName)
         {
+            string _defaultAADTokenAudienceUri = @"https://management.core.windows.net/";
+            string _defaultGraphTokenAudienceUri = @"https://graph.windows.net/";
+            string _defaultPPEGraphTokenAudienceUri = @"https://graph.ppe.windows.net/";
             #region environment switch
             switch (testEnvName)
             {
@@ -35,8 +38,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         RdfePortalUri = new Uri("http://go.microsoft.com/fwlink/?LinkId=254433");
                         ResourceManagementUri = new Uri("https://management.azure.com/");
                         ServiceManagementUri = new Uri("https://management.core.windows.net");
-                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
-                        GraphTokenAudienceUri = new Uri("https://graph.windows.net/");
+                        AADTokenAudienceUri = new Uri(_defaultAADTokenAudienceUri);
+                        GraphTokenAudienceUri = new Uri(_defaultGraphTokenAudienceUri);
                         DataLakeStoreServiceUri = new Uri("https://azuredatalakestore.net");
                         DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://azuredatalakeanalytics.net");
                         break;
@@ -54,8 +57,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         RdfePortalUri = new Uri("https://windows.azure-test.net");
                         ResourceManagementUri = new Uri("https://api-dogfood.resources.windows-int.net/");
                         ServiceManagementUri = new Uri("https://management-preview.core.windows-int.net");
-                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
-                        GraphTokenAudienceUri = new Uri("https://graph.ppe.windows.net/");
+                        AADTokenAudienceUri = new Uri(_defaultAADTokenAudienceUri);
+                        GraphTokenAudienceUri = new Uri(_defaultPPEGraphTokenAudienceUri);
                         DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net");
                         DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net");
                         break;
@@ -73,8 +76,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         RdfePortalUri = new Uri("https://auxnext.windows.azure-test.net");
                         ResourceManagementUri = new Uri("https://api-next.resources.windows-int.net/");
                         ServiceManagementUri = new Uri("https://managementnext.rdfetest.dnsdemo4.com");
-                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
-                        GraphTokenAudienceUri = new Uri("https://graph.ppe.windows.net/");
+                        AADTokenAudienceUri = new Uri(_defaultAADTokenAudienceUri);
+                        GraphTokenAudienceUri = new Uri(_defaultPPEGraphTokenAudienceUri);
                         DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"); // TODO: change once a "next" environment is published
                         DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net"); // TODO: change once a "next" environment is published
                         break;
@@ -92,8 +95,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         RdfePortalUri = new Uri("https://auxcurrent.windows.azure-test.net");
                         ResourceManagementUri = new Uri("https://api-current.resources.windows-int.net/");
                         ServiceManagementUri = new Uri("https://management.rdfetest.dnsdemo4.com");
-                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
-                        GraphTokenAudienceUri = new Uri("https://graph.ppe.windows.net/");
+                        AADTokenAudienceUri = new Uri(_defaultAADTokenAudienceUri);
+                        GraphTokenAudienceUri = new Uri(_defaultPPEGraphTokenAudienceUri);
                         DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"); // TODO: change once a "Current" environment is published
                         DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net"); // TODO: change once a "Current" environment is published
                         break;
