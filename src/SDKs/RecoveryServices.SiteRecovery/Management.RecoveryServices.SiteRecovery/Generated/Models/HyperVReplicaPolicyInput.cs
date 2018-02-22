@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Hyper-V Replica specific protection profile Input.
+    /// Hyper-V Replica specific policy Input.
     /// </summary>
     [Newtonsoft.Json.JsonObject("HyperVReplica2012")]
     public partial class HyperVReplicaPolicyInput : PolicyProviderSpecificInput

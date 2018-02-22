@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// has label matching with VolumeLabel this disk will be excluded from
         /// replication if OnlyExcludeIfSingleVolume is false.
         /// </summary>
-        [JsonProperty(PropertyName = "OnlyExcludeIfSingleVolume")]
+        [JsonProperty(PropertyName = "onlyExcludeIfSingleVolume")]
         public string OnlyExcludeIfSingleVolume { get; set; }
 
     }

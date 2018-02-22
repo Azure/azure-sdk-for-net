@@ -37,7 +37,7 @@ namespace Monitor.Tests.Scenarios
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var insightsClient = GetMonitorClient(context, handler);
+                var insightsClient = GetMonitorManagementClient(context, handler);
 
                 // ***** read definitions for single-dim metrics here
 
@@ -69,7 +69,7 @@ namespace Monitor.Tests.Scenarios
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var insightsClient = GetMonitorClient(context, handler);
+                var insightsClient = GetMonitorManagementClient(context, handler);
 
                 // **** First reading metrics from the old API
 
@@ -149,7 +149,7 @@ namespace Monitor.Tests.Scenarios
                     var metric = act.Value[0];
                     Assert.False(string.IsNullOrWhiteSpace(metric.Id));
                     Assert.NotNull(metric.Name);
-                    Assert.Equal(metric.Type, "Microsoft.Insights/metrics");
+                    Assert.Equal("Microsoft.Insights/metrics", metric.Type);
 
                     Assert.NotNull(metric.Timeseries);
                     if (metric.Timeseries.Count > 0)
@@ -181,7 +181,7 @@ namespace Monitor.Tests.Scenarios
                     var metric = act.Value[0];
                     Assert.False(string.IsNullOrWhiteSpace(metric.Id));
                     Assert.NotNull(metric.Name);
-                    Assert.Equal(metric.Type, "Microsoft.Insights/metrics");
+                    Assert.Equal("Microsoft.Insights/metrics", metric.Type);
 
                     Assert.NotNull(metric.Timeseries);
                     if (metric.Timeseries.Count > 0)

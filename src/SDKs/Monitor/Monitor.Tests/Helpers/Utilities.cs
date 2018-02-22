@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Azure.Management.Monitor.Management.Models;
 using Microsoft.Azure.Management.Monitor.Models;
 using Xunit;
 
@@ -540,7 +539,7 @@ namespace Monitor.Tests.Helpers
 
             if (exp == null)
             {
-                Assert.Equal(null, act);
+                Assert.Null(act);
             }
 
             Assert.False(act == null, "List can't be null");
@@ -571,7 +570,7 @@ namespace Monitor.Tests.Helpers
 
             if (exp == null)
             {
-                Assert.Equal(null, act);
+                Assert.Null(act);
             }
 
             Assert.False(act == null, "Actual value can't be null");

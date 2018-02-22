@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="servicePrincipalId">The ID of the application used to
         /// authenticate against the Azure Data Lake Store account. Type:
         /// string (or Expression with resultType string).</param>
@@ -63,8 +66,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDataLakeStoreLinkedService(object dataLakeStoreUri, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object accountName = default(object), object subscriptionId = default(object), object resourceGroupName = default(object), object encryptedCredential = default(object))
-            : base(additionalProperties, connectVia, description)
+        public AzureDataLakeStoreLinkedService(object dataLakeStoreUri, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object accountName = default(object), object subscriptionId = default(object), object resourceGroupName = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             DataLakeStoreUri = dataLakeStoreUri;
             ServicePrincipalId = servicePrincipalId;

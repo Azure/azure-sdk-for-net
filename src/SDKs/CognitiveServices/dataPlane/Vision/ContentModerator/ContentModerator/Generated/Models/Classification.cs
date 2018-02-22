@@ -25,16 +25,22 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Initializes a new instance of the Classification class.
         /// </summary>
-        /// <param name="adultScore">The adult score.</param>
-        /// <param name="racyScore">The racy score.</param>
-        /// <param name="offensiveScore">The offensive score.</param>
+        /// <param name="category1">The category1 score details of the text.
+        /// &lt;a href="https://aka.ms/textClassifyCategories"&gt;Click
+        /// here&lt;/a&gt; for more details on category classification.</param>
+        /// <param name="category2">The category2 score details of the text.
+        /// &lt;a href="https://aka.ms/textClassifyCategories"&gt;Click
+        /// here&lt;/a&gt; for more details on category classification.</param>
+        /// <param name="category3">The category3 score details of the text.
+        /// &lt;a href="https://aka.ms/textClassifyCategories"&gt;Click
+        /// here&lt;/a&gt; for more details on category classification.</param>
         /// <param name="reviewRecommended">The review recommended
         /// flag.</param>
-        public Classification(double? adultScore = default(double?), double? racyScore = default(double?), double? offensiveScore = default(double?), bool? reviewRecommended = default(bool?))
+        public Classification(ClassificationCategory1 category1 = default(ClassificationCategory1), ClassificationCategory2 category2 = default(ClassificationCategory2), ClassificationCategory3 category3 = default(ClassificationCategory3), bool? reviewRecommended = default(bool?))
         {
-            AdultScore = adultScore;
-            RacyScore = racyScore;
-            OffensiveScore = offensiveScore;
+            Category1 = category1;
+            Category2 = category2;
+            Category3 = category3;
             ReviewRecommended = reviewRecommended;
             CustomInit();
         }
@@ -45,22 +51,28 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the adult score.
+        /// Gets or sets the category1 score details of the text. &amp;lt;a
+        /// href="https://aka.ms/textClassifyCategories"&amp;gt;Click
+        /// here&amp;lt;/a&amp;gt; for more details on category classification.
         /// </summary>
-        [JsonProperty(PropertyName = "AdultScore")]
-        public double? AdultScore { get; set; }
+        [JsonProperty(PropertyName = "Category1")]
+        public ClassificationCategory1 Category1 { get; set; }
 
         /// <summary>
-        /// Gets or sets the racy score.
+        /// Gets or sets the category2 score details of the text. &amp;lt;a
+        /// href="https://aka.ms/textClassifyCategories"&amp;gt;Click
+        /// here&amp;lt;/a&amp;gt; for more details on category classification.
         /// </summary>
-        [JsonProperty(PropertyName = "RacyScore")]
-        public double? RacyScore { get; set; }
+        [JsonProperty(PropertyName = "Category2")]
+        public ClassificationCategory2 Category2 { get; set; }
 
         /// <summary>
-        /// Gets or sets the offensive score.
+        /// Gets or sets the category3 score details of the text. &amp;lt;a
+        /// href="https://aka.ms/textClassifyCategories"&amp;gt;Click
+        /// here&amp;lt;/a&amp;gt; for more details on category classification.
         /// </summary>
-        [JsonProperty(PropertyName = "OffensiveScore")]
-        public double? OffensiveScore { get; set; }
+        [JsonProperty(PropertyName = "Category3")]
+        public ClassificationCategory3 Category3 { get; set; }
 
         /// <summary>
         /// Gets or sets the review recommended flag.
