@@ -124,7 +124,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    int maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
+                    var maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
                     var maxPayload = Encoding.ASCII.GetBytes(new string('a', maxMessageSize));
                     var maxSizeMessage = new Message(maxPayload);
 
@@ -161,7 +161,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var result = message.ToString();
             Assert.Equal($"{{MessageId:{id}}}", result);
         }
-<<<<<<< HEAD
 
         [Fact]
         public async void LargeMessageShouldThrowMessageSizeExceededException()
@@ -184,7 +183,5 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await queueClient.CloseAsync();
             }
         }
-=======
->>>>>>> Message tostring issue 407 (#408)
     }
 }
