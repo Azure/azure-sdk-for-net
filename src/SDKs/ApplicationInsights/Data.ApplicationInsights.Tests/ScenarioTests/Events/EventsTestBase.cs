@@ -26,7 +26,7 @@ namespace Data.ApplicationInsights.Tests.Events
         protected void AssertEvent(EventsResultData evnt, EventType expectedType)
         {
             Assert.NotNull(evnt);
-            Assert.NotNull(evnt.Id.Value);
+            Assert.True(!string.IsNullOrEmpty(evnt.Id));
 
             if (expectedType != EventType.PerformanceCounters && expectedType != EventType.CustomMetrics)
             {

@@ -59,7 +59,7 @@ namespace Data.ApplicationInsights.Tests.Events
 
                 AssertEvent(evnt, eventType);
 
-                traces = await client.GetEventAsync(eventType, evnt.Id.Value);
+                traces = await client.GetEventAsync(eventType, evnt.Id);
 
                 Assert.NotNull(traces);
                 Assert.NotNull(traces.Value);

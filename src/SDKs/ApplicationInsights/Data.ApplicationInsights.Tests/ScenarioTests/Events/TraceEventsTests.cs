@@ -31,9 +31,9 @@ namespace Data.ApplicationInsights.Tests.Events
                     AssertEvent(e, EventType.Traces);
                 }
 
-                Assert.True(events.Value[0].Id.HasValue);
+                Assert.True(!string.IsNullOrEmpty(events.Value[0].Id));
 
-                var evnt = await client.GetTraceEventAsync(events.Value[0].Id.Value, timespan);
+                var evnt = await client.GetTraceEventAsync(events.Value[0].Id, timespan);
 
                 Assert.NotNull(evnt);
                 Assert.NotNull(evnt.Value);

@@ -74,7 +74,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             // Check that the segmentation fields are set appropriately
             if (!isSegmented)
             {
-                Assert.Equal(0, segmentInfo.Count);
+                Assert.Empty(segmentInfo);
             }
             else
             {

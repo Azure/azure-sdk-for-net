@@ -44,9 +44,9 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
                     AssertEvent(e, eventType);
                 }
 
-                Assert.True(events.Value[0].Id.HasValue);
+                Assert.True(!string.IsNullOrEmpty(events.Value[0].Id));
 
-                var evnt = await singleQueryAsync(client, events.Value[0].Id.Value, timespan);
+                var evnt = await singleQueryAsync(client, events.Value[0].Id, timespan);
 
                 Assert.NotNull(evnt);
                 Assert.NotNull(evnt.Value);
@@ -89,9 +89,9 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
                     AssertEvent(e, eventType);
                 }
 
-                Assert.True(events.Value[0].Id.HasValue);
+                Assert.True(!string.IsNullOrEmpty(events.Value[0].Id));
 
-                var evnt = singleQuery(client, events.Value[0].Id.Value, timespan);
+                var evnt = singleQuery(client, events.Value[0].Id, timespan);
 
                 Assert.NotNull(evnt);
                 Assert.NotNull(evnt.Value);
@@ -103,10 +103,10 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         }
 
         public delegate Task<EventsResults<T>> MultiQueryAsync<T>(ApplicationInsightsDataClient client, System.TimeSpan? timespan, int top) where T : EventsResultData;
-        public delegate Task<EventsResults<T>> SingleQueryAsync<T>(ApplicationInsightsDataClient client, Guid id, System.TimeSpan? timespan) where T : EventsResultData;
+        public delegate Task<EventsResults<T>> SingleQueryAsync<T>(ApplicationInsightsDataClient client, string id, System.TimeSpan? timespan) where T : EventsResultData;
 
         public delegate EventsResults<T> MultiQuery<T>(ApplicationInsightsDataClient client, System.TimeSpan? timespan, int top) where T : EventsResultData;
-        public delegate EventsResults<T> SingleQuery<T>(ApplicationInsightsDataClient client, Guid id, System.TimeSpan? timespan) where T : EventsResultData;
+        public delegate EventsResults<T> SingleQuery<T>(ApplicationInsightsDataClient client, string id, System.TimeSpan? timespan) where T : EventsResultData;
 
         private static readonly object[] TraceParams = new object[]
         {
