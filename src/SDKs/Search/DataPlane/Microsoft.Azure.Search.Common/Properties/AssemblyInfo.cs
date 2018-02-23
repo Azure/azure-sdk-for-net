@@ -5,8 +5,8 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure Search Library")]
-[assembly: AssemblyDescription("Makes it easy to develop a .NET application that uses Azure Search.")]
+[assembly: AssemblyTitle("Microsoft Azure Search Common Library")]
+[assembly: AssemblyDescription("Common types needed by the Azure Search .NET libraries. This is not the assembly you are looking for; It is only meant to be used as a dependency.")]
 
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("4.0.2.0")]

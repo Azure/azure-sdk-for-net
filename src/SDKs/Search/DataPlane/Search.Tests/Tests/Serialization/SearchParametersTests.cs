@@ -5,10 +5,10 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Spatial;
+    using Common;
+    using Models;
+    using Spatial;
     using Xunit;
 
     public sealed class SearchParametersTests

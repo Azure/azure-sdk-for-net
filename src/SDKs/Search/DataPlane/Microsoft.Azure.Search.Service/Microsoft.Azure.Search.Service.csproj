@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Search.Service</PackageId>
+    <Description>Use this package if you're developing automation in .NET to manage Azure Search indexes, synonym maps, indexers, data sources, or other service-level resources. If you only need to query or update documents in your indexes, use the Microsoft.Azure.Search.Data package instead. If you need all the functionality of Azure Search, use the Microsoft.Azure.Search package instead.</Description>
+    <AssemblyTitle>Microsoft Azure Search Service Library</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Search.Service</AssemblyName>
+    <VersionPrefix>4.0.2-preview</VersionPrefix>
+    <PackageTags>Microsoft Azure Search;Search</PackageTags>
+    <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Spatial" Version="7.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Search.Common\Microsoft.Azure.Search.Common.csproj" />
+  </ItemGroup>
+</Project>
