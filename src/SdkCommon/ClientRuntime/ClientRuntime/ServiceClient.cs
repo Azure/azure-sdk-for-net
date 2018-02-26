@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Rest
@@ -43,6 +43,11 @@ namespace Microsoft.Rest
         /// Flag to track if provided httpClient needs to disposed
         /// </summary>
         private bool _disposeHttpClient;
+
+        /// <summary>
+        /// Flag to track if the root handler needs to disposed
+        /// </summary>
+        private bool _disposeRootHandler;
 
         /// <summary>
         /// Field used for ClientVersion property
@@ -384,8 +389,11 @@ namespace Microsoft.Rest
                 {
                     HttpClient.Dispose();
                     HttpClient = null;
-                }                
-                
+                }
+
+                if (_disposeRootHandler)
+                    HttpClientHandler.Dispose();
+
                 FirstMessageHandler = null;
                 HttpClientHandler = null;
             }
@@ -419,6 +427,8 @@ namespace Microsoft.Rest
                 if(httpClientHandler == null)
                 {
                     httpClientHandler = CreateRootHandler();
+                    //set flag to dispose of handler, since it was not supplied and had to be created here
+                    _disposeRootHandler = true;
                 }
 
                 HttpClientHandler = httpClientHandler;
@@ -472,8 +482,8 @@ namespace Microsoft.Rest
             if (!_disposed && HttpClient != null)
             {
                 MergeUserAgentInfo(DefaultUserAgentInfoList);
-                string cleanedProductName = CleanUserAgentInfoEntry(productName);                
-                HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(cleanedProductName, version));
+                string cleanedProductName = CleanUserAgentInfoEntry(productName);
+                MergeUserAgentInfo(new ProductInfoHeaderValue(cleanedProductName, version));
                 return true;
             }
 
@@ -501,14 +511,17 @@ namespace Microsoft.Rest
         /// </summary>
         private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
         {
-            // If you want to log ProductName in userAgent, it has to be without spaces
-
             foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
             {
-                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)));
-                {
-                    HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
-                }
+                MergeUserAgentInfo(piHv);
+            }
+        }
+
+        private void MergeUserAgentInfo(ProductInfoHeaderValue piHv)
+        {
+            if (!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product != null && hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
             }
         }
     }
