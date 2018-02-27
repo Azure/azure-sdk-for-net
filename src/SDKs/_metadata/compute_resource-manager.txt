@@ -1,11 +1,11 @@
-2017-12-06 01:16:55 UTC
+2018-02-12 23:09:56 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: Azure
-Branch:      current
-Commit:      8d300b227e3ce9a056cb7fa2e4a9278ab70d7cb0
+Branch:      master
+Commit:      0b2943e210d8ea37ca5e97b2fa80f0b597d9e651
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\hylee\AppData\Roaming\npm `-- autorest@2.0.4215  
+Bootstrapper version:    C:\Users\hylee\AppData\Roaming\npm `-- autorest@2.0.4245  
 Latest installed version:    

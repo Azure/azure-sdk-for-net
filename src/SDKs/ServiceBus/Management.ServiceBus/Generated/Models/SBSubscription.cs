@@ -68,7 +68,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="autoDeleteOnIdle">ISO 8061 timeSpan idle interval
         /// after which the topic is automatically deleted. The minimum
         /// duration is 5 minutes.</param>
-        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?))
+        /// <param name="forwardTo">Queue/Topic name to forward the
+        /// messages</param>
+        /// <param name="forwardDeadLetteredMessagesTo">Queue/Topic name to
+        /// forward the Dead Letter message</param>
+        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string))
             : base(id, name, type)
         {
             MessageCount = messageCount;
@@ -85,6 +89,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             Status = status;
             EnableBatchedOperations = enableBatchedOperations;
             AutoDeleteOnIdle = autoDeleteOnIdle;
+            ForwardTo = forwardTo;
+            ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
             CustomInit();
         }
 
@@ -189,6 +195,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoDeleteOnIdle")]
         public System.TimeSpan? AutoDeleteOnIdle { get; set; }
+
+        /// <summary>
+        /// Gets or sets queue/Topic name to forward the messages
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.forwardTo")]
+        public string ForwardTo { get; set; }
+
+        /// <summary>
+        /// Gets or sets queue/Topic name to forward the Dead Letter message
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.forwardDeadLetteredMessagesTo")]
+        public string ForwardDeadLetteredMessagesTo { get; set; }
 
     }
 }

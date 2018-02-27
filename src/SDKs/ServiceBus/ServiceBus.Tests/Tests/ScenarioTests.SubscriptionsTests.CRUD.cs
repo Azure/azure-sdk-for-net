@@ -13,6 +13,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using Xunit;
+    using System.Threading;
     public partial class ScenarioTests 
     {
         [Fact]
@@ -75,7 +76,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     createSub.Status = EntityStatus.Active;
                    createSub.AutoDeleteOnIdle = TimeSpan.Parse("00:07:00");
 
-                                var createSubscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, createSub );
+                var createSubscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, createSub );
                 Assert.NotNull(createSubscriptionResponse);
                 Assert.Equal(createSubscriptionResponse.Name, subscriptionName);
 
@@ -91,10 +92,21 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getSubscriptionsListAllResponse.Count() == 1);                
                 Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
+
+                // Create a Topic for Auto Forward
+                var topicName1 = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
+
+                var createTopicResponse1 = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName1,
+                new SBTopic() { EnablePartitioning = true });
+                Assert.NotNull(createTopicResponse);
+                Assert.Equal(createTopicResponse1.Name, topicName1);
+
                 // Update Subscription. 
                 var updateSubscriptionParameter = new SBSubscription() {
                     EnableBatchedOperations = true,
-                    DeadLetteringOnMessageExpiration = true
+                    DeadLetteringOnMessageExpiration = true,
+                    ForwardDeadLetteredMessagesTo = topicName1,
+                    ForwardTo = topicName1
                 };
 
                 var updateSubscriptionsResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName,subscriptionName,updateSubscriptionParameter);
@@ -114,10 +126,10 @@ namespace ServiceBus.Tests.ScenarioTests
                 ServiceBusManagementClient.Subscriptions.Delete(resourceGroup, namespaceName, topicName, subscriptionName);
                 
                 // Delete Created Topics
-                ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);                
+                ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);
 
-                // Delete namespace                                  
-                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);                
+                //Delete Namespace Async
+                ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
             }
         }
     }

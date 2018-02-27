@@ -5,9 +5,9 @@
     <Description>Makes it easy to develop a .NET application that uses Azure Search.</Description>
     <AssemblyTitle>Microsoft Azure Search Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search</AssemblyName>
-    <VersionPrefix>3.0.4</VersionPrefix>
+    <VersionPrefix>4.0.2-preview</VersionPrefix>
     <PackageTags>Microsoft Azure Search;Search</PackageTags>
-    <PackageReleaseNotes>This is the newest major version of the Azure Search .NET SDK, based on version 2016-09-01 of the Azure Search REST API. New in this version is support for indexing Azure Blob storage (including parsing of JSON blobs), indexing Azure Table storage, indexer field mappings, custom analyzers, and ETags. Also included is support for reflection-based field definitions via the FieldBuilder class, thanks to a contribution from Ian Griffiths (https://github.com/idg10). See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a preview of the newest major version of the Azure Search .NET SDK, based on version 2016-09-01-Preview of the Azure Search REST API. New in this version is support for synonyms and indexer support for JSON Blobs. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

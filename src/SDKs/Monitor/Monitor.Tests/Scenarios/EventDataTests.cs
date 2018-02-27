@@ -63,7 +63,7 @@ namespace Monitor.Tests.Scenarios
             {
                 List<EventData> expectedEventDataCollection = GetEventDataCollection();
 
-                var insightsClient = GetMonitorClient(context, handler);
+                var insightsClient = GetMonitorManagementClient(context, handler);
 
                 var startTime = DateTimeOffset.Parse("2017-08-01T00:00:00.00Z");
                 var endTime = DateTimeOffset.Parse("2017-08-01T23:59:00.00Z");
@@ -91,7 +91,7 @@ namespace Monitor.Tests.Scenarios
             {
                 List<EventData> expectedEventDataCollection = GetEventDataCollection();
 
-                var insightsClient = GetMonitorClient(context, handler);
+                var insightsClient = GetMonitorManagementClient(context, handler);
 
                 var actualEventDataCollection = insightsClient.ActivityLogs.ListNext("http://www.microsoft.com");
 

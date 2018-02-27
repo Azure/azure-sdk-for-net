@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,18 +34,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="principalId">The principal id of virtual machine scale
-        /// set identity.</param>
+        /// set identity. This property will only be provided for a system
+        /// assigned identity.</param>
         /// <param name="tenantId">The tenant id associated with the virtual
-        /// machine scale set.</param>
+        /// machine scale set. This property will only be provided for a system
+        /// assigned identity.</param>
         /// <param name="type">The type of identity used for the virtual
-        /// machine scale set. Currently, the only supported type is
-        /// 'SystemAssigned', which implicitly creates an identity. Possible
-        /// values include: 'SystemAssigned'</param>
-        public VirtualMachineScaleSetIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
+        /// machine scale set. The type 'SystemAssigned, UserAssigned' includes
+        /// both an implicitly created identity and a set of user assigned
+        /// identities. The type 'None' will remove any identities from the
+        /// virtual machine scale set. Possible values include:
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
+        /// 'None'</param>
+        /// <param name="identityIds">The list of user identities associated
+        /// with the virtual machine scale set. The user identity references
+        /// will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/identities/{identityName}'.</param>
+        public VirtualMachineScaleSetIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IList<string> identityIds = default(IList<string>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            IdentityIds = identityIds;
             CustomInit();
         }
 
@@ -53,25 +65,38 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the principal id of virtual machine scale set identity.
+        /// Gets the principal id of virtual machine scale set identity. This
+        /// property will only be provided for a system assigned identity.
         /// </summary>
         [JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; private set; }
 
         /// <summary>
         /// Gets the tenant id associated with the virtual machine scale set.
+        /// This property will only be provided for a system assigned identity.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }
 
         /// <summary>
         /// Gets or sets the type of identity used for the virtual machine
-        /// scale set. Currently, the only supported type is 'SystemAssigned',
-        /// which implicitly creates an identity. Possible values include:
-        /// 'SystemAssigned'
+        /// scale set. The type 'SystemAssigned, UserAssigned' includes both an
+        /// implicitly created identity and a set of user assigned identities.
+        /// The type 'None' will remove any identities from the virtual machine
+        /// scale set. Possible values include: 'SystemAssigned',
+        /// 'UserAssigned', 'SystemAssigned, UserAssigned', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of user identities associated with the
+        /// virtual machine scale set. The user identity references will be ARM
+        /// resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/identities/{identityName}'.
+        /// </summary>
+        [JsonProperty(PropertyName = "identityIds")]
+        public IList<string> IdentityIds { get; set; }
 
     }
 }

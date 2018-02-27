@@ -21,6 +21,7 @@ namespace MachineLearningCompute.Tests
         public string Location { get; set; }
         public string TestName { get; set; }
         public string ResourceGroupName { get; set; }
+        public string ManagedByResourceGroupName { get; set; }
         public string ClusterName { get; set; }
 
         public MachineLearningComputeTestBase(MockContext context, string testName)
@@ -89,7 +90,11 @@ namespace MachineLearningCompute.Tests
                 }
             };
 
-            return Client.OperationalizationClusters.CreateOrUpdate(ResourceGroupName, ClusterName, newCluster);
+            var createdCluster = Client.OperationalizationClusters.CreateOrUpdate(ResourceGroupName, ClusterName, newCluster);
+
+            ManagedByResourceGroupName = createdCluster.ContainerRegistry.ResourceId.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)[3];
+
+            return createdCluster;
         }
 
         public OperationalizationCluster CreateClusterWithoutOrchestratorProperties(string description = "Test cluster",
@@ -139,6 +144,5 @@ namespace MachineLearningCompute.Tests
             }
             return servicePrincipalSecret;
         }
-
     }
 }

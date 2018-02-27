@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Search
 
     public partial class SearchIndexClient
     {
-        private const string ClientRequestIdHeaderName = "client-request-id";
-
         /// <summary>
         /// Initializes a new instance of the SearchIndexClient class.
         /// </summary>
@@ -52,22 +50,17 @@ namespace Microsoft.Azure.Search
         }
 
         /// <inheritdoc />
-        public SearchCredentials SearchCredentials
-        {
-            get { return (SearchCredentials)this.Credentials; }
-        }
+        public SearchCredentials SearchCredentials => (SearchCredentials)Credentials;
 
         /// <inheritdoc />
         public bool UseHttpGetForQueries { get; set; }
 
         /// <inheritdoc />
+        [Obsolete("This method is deprecated. Please set the IndexName property instead.")]
         public void TargetDifferentIndex(string newIndexName)
         {
-            // ASSUMPTION: BaseUri is set by every constructor.
-            Tuple<string, string> hostAndFqdn = SplitHost(this.BaseUri.Host);
-            string searchServiceName = hostAndFqdn.Item1;
-            string fullyQualifiedDomainName = hostAndFqdn.Item2;
-            SetBaseUri(searchServiceName, newIndexName, fullyQualifiedDomainName);
+            var validatedIndexName = new IndexName(newIndexName);
+            IndexName = validatedIndexName;
         }
 
         internal IDocumentsProxyOperations DocumentsProxy { get; private set; }
@@ -77,35 +70,20 @@ namespace Microsoft.Azure.Search
             DocumentsProxy = new DocumentsProxyOperations(this);
         }
 
-        private static Tuple<string, string> SplitHost(string host)
-        {
-            int indexOfFirstDot = host.IndexOf('.');
-            if (indexOfFirstDot == -1 || indexOfFirstDot == host.Length - 1)
-            {
-                return Tuple.Create(host, String.Empty);
-            }
-            else
-            {
-                return Tuple.Create(host.Substring(0, indexOfFirstDot), host.Substring(indexOfFirstDot + 1));
-            }
-        }
-
         private void Initialize(string searchServiceName, string indexName, SearchCredentials credentials)
         {
-            Throw.IfArgumentNull(credentials, "credentials");
+            Throw.IfArgumentNull(credentials, nameof(credentials));
 
-            this.SetBaseUri(searchServiceName, indexName);
-
-            this.Credentials = credentials;
-            this.Credentials.InitializeServiceClient(this);
-        }
-
-        private void SetBaseUri(string searchServiceName, string indexName, string fullyQualifiedDomainName = null)
-        {
             var validatedSearchServiceName = new SearchServiceName(searchServiceName);
             var validatedIndexName = new IndexName(indexName);
 
-            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName, fullyQualifiedDomainName);
+            validatedSearchServiceName.TryBuildUriWithIndex(validatedIndexName);
+
+            SearchServiceName = validatedSearchServiceName;
+            IndexName = validatedIndexName;
+
+            Credentials = credentials;
+            Credentials.InitializeServiceClient(this);
         }
     }
 }

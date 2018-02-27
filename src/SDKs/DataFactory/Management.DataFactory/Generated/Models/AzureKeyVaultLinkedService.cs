@@ -42,8 +42,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
-        public AzureKeyVaultLinkedService(object baseUrl, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
-            : base(additionalProperties, connectVia, description)
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
+        public AzureKeyVaultLinkedService(object baseUrl, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             BaseUrl = baseUrl;
             CustomInit();

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="name">Activity name.</param>
         /// <param name="method">Rest API method for target endpoint. Possible
-        /// values include: 'GET', 'POST', 'PUT'</param>
+        /// values include: 'GET', 'POST', 'PUT', 'DELETE'</param>
         /// <param name="url">Web activity target endpoint and path. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets rest API method for target endpoint. Possible values
-        /// include: 'GET', 'POST', 'PUT'
+        /// include: 'GET', 'POST', 'PUT', 'DELETE'
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.method")]
         public string Method { get; set; }

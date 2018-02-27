@@ -35,10 +35,14 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="ports">The list of ports exposed on the container
         /// group.</param>
         /// <param name="ip">The IP exposed to the public internet.</param>
-        public IpAddress(IList<Port> ports, string ip = default(string))
+        /// <param name="dnsNameLabel">The Dns name label for the IP.</param>
+        /// <param name="fqdn">The FQDN for the IP.</param>
+        public IpAddress(IList<Port> ports, string ip = default(string), string dnsNameLabel = default(string), string fqdn = default(string))
         {
             Ports = ports;
             Ip = ip;
+            DnsNameLabel = dnsNameLabel;
+            Fqdn = fqdn;
             CustomInit();
         }
         /// <summary>
@@ -65,6 +69,18 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "ip")]
         public string Ip { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Dns name label for the IP.
+        /// </summary>
+        [JsonProperty(PropertyName = "dnsNameLabel")]
+        public string DnsNameLabel { get; set; }
+
+        /// <summary>
+        /// Gets the FQDN for the IP.
+        /// </summary>
+        [JsonProperty(PropertyName = "fqdn")]
+        public string Fqdn { get; private set; }
 
         /// <summary>
         /// Specifies if the IP is exposed to the public internet.

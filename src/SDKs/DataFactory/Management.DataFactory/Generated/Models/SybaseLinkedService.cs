@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="schema">Schema name for connection. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="authenticationType">AuthenticationType to be used for
@@ -54,8 +57,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SybaseLinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object schema = default(object), string authenticationType = default(string), object username = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
-            : base(additionalProperties, connectVia, description)
+        public SybaseLinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object schema = default(object), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Server = server;
             Database = database;
@@ -111,7 +114,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password for authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -137,10 +140,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Database == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Database");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

@@ -62,7 +62,7 @@ namespace Monitor.Tests.BasicTests
             var startTime = DateTimeOffset.Parse("2014-03-11T01:00:00.00Z");
             var endTime = DateTimeOffset.Parse("2014-03-11T02:00:00.00Z");
 
-            var insightsClient = GetMonitorClient(handler);
+            var insightsClient = GetMonitorManagementClient(handler);
 
             var filterString = new ODataQuery<EventData>(p => (p.EventTimestamp >= startTime) && (p.EventTimestamp < endTime));
                
@@ -86,7 +86,7 @@ namespace Monitor.Tests.BasicTests
             };
 
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-            var insightsClient = GetMonitorClient(handler);
+            var insightsClient = GetMonitorManagementClient(handler);
 
             var actualEventDataCollection = insightsClient.ActivityLogs.ListNext("http://www.microsoft.com");
 
