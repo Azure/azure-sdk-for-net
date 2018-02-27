@@ -481,9 +481,8 @@ namespace Microsoft.Rest
         {
             if (!_disposed && HttpClient != null)
             {
-                MergeUserAgentInfo(DefaultUserAgentInfoList);
                 string cleanedProductName = CleanUserAgentInfoEntry(productName);
-                MergeUserAgentInfo(new ProductInfoHeaderValue(cleanedProductName, version));
+                MergeUserAgentInfo(DefaultUserAgentInfoList.Concat( new[] { new ProductInfoHeaderValue(cleanedProductName, version) }));
                 return true;
             }
 
@@ -509,19 +508,14 @@ namespace Microsoft.Rest
         /// We do this because, now we accept passed in HttpClient.
         /// So for any reason the passed HttpClient has our default UserAgent info (based on key name), we will not verify and check the values and will honor those values
         /// </summary>
-        private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
+        private void MergeUserAgentInfo(IEnumerable<ProductInfoHeaderValue> defaultUserAgentInfoList)
         {
             foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
             {
-                MergeUserAgentInfo(piHv);
-            }
-        }
-
-        private void MergeUserAgentInfo(ProductInfoHeaderValue piHv)
-        {
-            if (!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product != null && hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)))
-            {
-                HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
+                if (!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product != null && hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
+                }
             }
         }
     }
