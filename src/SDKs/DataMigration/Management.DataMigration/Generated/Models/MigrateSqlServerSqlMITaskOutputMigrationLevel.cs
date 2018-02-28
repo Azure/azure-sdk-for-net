@@ -16,38 +16,34 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     [Newtonsoft.Json.JsonObject("MigrationLevelOutput")]
-    public partial class MigrateSqlServerSqlDbTaskOutputMigrationLevel : MigrateSqlServerSqlDbTaskOutput
+    public partial class MigrateSqlServerSqlMITaskOutputMigrationLevel : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlDbTaskOutputMigrationLevel class.
+        /// MigrateSqlServerSqlMITaskOutputMigrationLevel class.
         /// </summary>
-        public MigrateSqlServerSqlDbTaskOutputMigrationLevel()
+        public MigrateSqlServerSqlMITaskOutputMigrationLevel()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlDbTaskOutputMigrationLevel class.
+        /// MigrateSqlServerSqlMITaskOutputMigrationLevel class.
         /// </summary>
         /// <param name="id">Result identifier</param>
         /// <param name="startedOn">Migration start time</param>
         /// <param name="endedOn">Migration end time</param>
-        /// <param name="durationInSeconds">Duration of task execution in
-        /// seconds.</param>
         /// <param name="status">Current status of migration. Possible values
         /// include: 'Default', 'Connecting', 'SourceAndTargetSelected',
         /// 'SelectLogins', 'Configured', 'Running', 'Error', 'Stopped',
         /// 'Completed', 'CompletedWithWarnings'</param>
-        /// <param name="statusMessage">Migration status message</param>
+        /// <param name="state">Current state of migration. Possible values
+        /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
+        /// 'Skipped', 'Stopped'</param>
         /// <param name="message">Migration progress message</param>
         /// <param name="databases">Selected databases as a map from database
         /// name to database id</param>
-        /// <param name="databaseSummary">Summary of database results in the
-        /// migration</param>
-        /// <param name="migrationReportResult">Migration Report Result,
-        /// provides unique url for downloading your migration report.</param>
         /// <param name="sourceServerVersion">Source server version</param>
         /// <param name="sourceServerBrandVersion">Source server brand
         /// version</param>
@@ -56,18 +52,15 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// version</param>
         /// <param name="exceptionsAndWarnings">Migration exceptions and
         /// warnings.</param>
-        public MigrateSqlServerSqlDbTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), string status = default(string), string statusMessage = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, DatabaseSummaryResult> databaseSummary = default(IDictionary<string, DatabaseSummaryResult>), MigrationReportResult migrationReportResult = default(MigrationReportResult), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        public MigrateSqlServerSqlMITaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string status = default(string), string state = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
-            DurationInSeconds = durationInSeconds;
             Status = status;
-            StatusMessage = statusMessage;
+            State = state;
             Message = message;
             Databases = databases;
-            DatabaseSummary = databaseSummary;
-            MigrationReportResult = migrationReportResult;
             SourceServerVersion = sourceServerVersion;
             SourceServerBrandVersion = sourceServerBrandVersion;
             TargetServerVersion = targetServerVersion;
@@ -94,12 +87,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public System.DateTimeOffset? EndedOn { get; private set; }
 
         /// <summary>
-        /// Gets duration of task execution in seconds.
-        /// </summary>
-        [JsonProperty(PropertyName = "durationInSeconds")]
-        public long? DurationInSeconds { get; private set; }
-
-        /// <summary>
         /// Gets current status of migration. Possible values include:
         /// 'Default', 'Connecting', 'SourceAndTargetSelected', 'SelectLogins',
         /// 'Configured', 'Running', 'Error', 'Stopped', 'Completed',
@@ -109,10 +96,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets migration status message
+        /// Gets current state of migration. Possible values include: 'None',
+        /// 'InProgress', 'Failed', 'Warning', 'Completed', 'Skipped',
+        /// 'Stopped'
         /// </summary>
-        [JsonProperty(PropertyName = "statusMessage")]
-        public string StatusMessage { get; private set; }
+        [JsonProperty(PropertyName = "state")]
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets migration progress message
@@ -125,19 +114,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "databases")]
         public IDictionary<string, string> Databases { get; private set; }
-
-        /// <summary>
-        /// Gets summary of database results in the migration
-        /// </summary>
-        [JsonProperty(PropertyName = "databaseSummary")]
-        public IDictionary<string, DatabaseSummaryResult> DatabaseSummary { get; private set; }
-
-        /// <summary>
-        /// Gets or sets migration Report Result, provides unique url for
-        /// downloading your migration report.
-        /// </summary>
-        [JsonProperty(PropertyName = "migrationReportResult")]
-        public MigrationReportResult MigrationReportResult { get; set; }
 
         /// <summary>
         /// Gets source server version

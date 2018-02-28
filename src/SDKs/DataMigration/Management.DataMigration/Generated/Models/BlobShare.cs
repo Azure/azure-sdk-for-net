@@ -10,32 +10,31 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Migration Task errors
+    /// Blob container storage information.
     /// </summary>
-    public partial class DataMigrationError
+    public partial class BlobShare
     {
         /// <summary>
-        /// Initializes a new instance of the DataMigrationError class.
+        /// Initializes a new instance of the BlobShare class.
         /// </summary>
-        public DataMigrationError()
+        public BlobShare()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataMigrationError class.
+        /// Initializes a new instance of the BlobShare class.
         /// </summary>
-        /// <param name="message">Error description</param>
-        /// <param name="type">Possible values include: 'Default', 'Warning',
-        /// 'Error'</param>
-        public DataMigrationError(string message = default(string), string type = default(string))
+        /// <param name="sasUri">SAS URI of Azure Storage Account
+        /// Container.</param>
+        public BlobShare(string sasUri)
         {
-            Message = message;
-            Type = type;
+            SasUri = sasUri;
             CustomInit();
         }
 
@@ -45,16 +44,23 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error description
+        /// Gets or sets SAS URI of Azure Storage Account Container.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
+        [JsonProperty(PropertyName = "sasUri")]
+        public string SasUri { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Default', 'Warning', 'Error'
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SasUri == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SasUri");
+            }
+        }
     }
 }

@@ -16,24 +16,24 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties for the task that validates connection to SQL Server and
-    /// also validates source server requirements
+    /// Properties for task that validates migration input for SQL to Azure SQL
+    /// Database Managed Instance
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ConnectToSource.SqlServer")]
-    public partial class ConnectToSourceSqlServerTaskProperties : ProjectTaskProperties
+    [Newtonsoft.Json.JsonObject("ValidateMigrationInput.SqlServer.AzureSqlDbMI")]
+    public partial class ValidateMigrationInputSqlServerSqlMITaskProperties : ProjectTaskProperties
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ConnectToSourceSqlServerTaskProperties class.
+        /// ValidateMigrationInputSqlServerSqlMITaskProperties class.
         /// </summary>
-        public ConnectToSourceSqlServerTaskProperties()
+        public ValidateMigrationInputSqlServerSqlMITaskProperties()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ConnectToSourceSqlServerTaskProperties class.
+        /// ValidateMigrationInputSqlServerSqlMITaskProperties class.
         /// </summary>
         /// <param name="errors">Array of errors. This is ignored if
         /// submitted.</param>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public ConnectToSourceSqlServerTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), ConnectToSourceSqlServerTaskInput input = default(ConnectToSourceSqlServerTaskInput), IList<ConnectToSourceSqlServerTaskOutput> output = default(IList<ConnectToSourceSqlServerTaskOutput>))
+        public ValidateMigrationInputSqlServerSqlMITaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), ValidateMigrationInputSqlServerSqlMITaskInput input = default(ValidateMigrationInputSqlServerSqlMITaskInput), IList<ValidateMigrationInputSqlServerSqlMITaskOutput> output = default(IList<ValidateMigrationInputSqlServerSqlMITaskOutput>))
             : base(errors, state)
         {
             Input = input;
@@ -61,13 +61,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Gets or sets task input
         /// </summary>
         [JsonProperty(PropertyName = "input")]
-        public ConnectToSourceSqlServerTaskInput Input { get; set; }
+        public ValidateMigrationInputSqlServerSqlMITaskInput Input { get; set; }
 
         /// <summary>
         /// Gets task output. This is ignored if submitted.
         /// </summary>
         [JsonProperty(PropertyName = "output")]
-        public IList<ConnectToSourceSqlServerTaskOutput> Output { get; private set; }
+        public IList<ValidateMigrationInputSqlServerSqlMITaskOutput> Output { get; private set; }
 
         /// <summary>
         /// Validate the object.
