@@ -1,4 +1,4 @@
-2018-02-28 18:07:34 UTC
+2018-02-28 23:24:33 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: Azure
