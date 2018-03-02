@@ -50,7 +50,7 @@ namespace Authorization.Tests
                 Assert.NotNull(client);
                 Assert.NotNull(client.HttpClient);
 
-                var allClassicAdmins = client.ClassicAdministrators.List("2015-06-01");
+                var allClassicAdmins = client.ClassicAdministrators.List();
 
                 Assert.NotNull(allClassicAdmins);
 
@@ -687,8 +687,56 @@ namespace Authorization.Tests
             }
         }
 
-        //[Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-        [Fact]
+		[Fact]
+		public void RoleDefinitionsFilterTests()
+		{
+			string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+			HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+			using (MockContext context = MockContext.Start(this.GetType().FullName))
+			{
+				var client = testContext.GetAuthorizationManagementClient(context);
+
+				Assert.NotNull(client);
+				Assert.NotNull(client.HttpClient);
+
+				var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+				var allRoleDefinitions = client.RoleDefinitions.List(scope ,new ODataQuery<RoleDefinitionFilter>(item=>item.Type == "BuiltInRole"));
+
+				Assert.NotNull(allRoleDefinitions);
+
+				foreach (var roleDefinition in allRoleDefinitions)
+				{
+					Assert.NotNull(roleDefinition);
+					Assert.NotNull(roleDefinition.RoleType);
+					Assert.Equal(roleDefinition.RoleType, "BuiltInRole");
+				}
+				allRoleDefinitions = client.RoleDefinitions.List(scope, new ODataQuery<RoleDefinitionFilter>(item => item.Type == "CustomRole"));
+
+				Assert.NotNull(allRoleDefinitions);
+
+				foreach (var roleDefinition in allRoleDefinitions)
+				{
+					Assert.NotNull(roleDefinition);
+					Assert.NotNull(roleDefinition.RoleType);
+					Assert.Equal(roleDefinition.RoleType, "CustomRole");
+				}
+
+				string roleName = allRoleDefinitions.First().RoleName;
+				allRoleDefinitions = client.RoleDefinitions.List(scope, new ODataQuery<RoleDefinitionFilter>(item => item.RoleName == roleName));
+
+				Assert.NotNull(allRoleDefinitions);
+
+				foreach (var roleDefinition in allRoleDefinitions)
+				{
+					Assert.NotNull(roleDefinition);
+					Assert.NotNull(roleDefinition.RoleName);
+					Assert.Equal(roleDefinition.RoleName, roleName);
+				}
+			}
+		}
+
+		//[Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
+		[Fact]
         public void RoleDefinitionUpdateTests()
         {
             string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
