@@ -4,12 +4,17 @@
 
 namespace Microsoft.Azure.Search.Serialization
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Serialization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Rest.Serialization;
+    using static System.Linq.Expressions.Expression;
+    using Throw = Common.Throw;
 
     internal static class JsonUtility
     {
@@ -19,26 +24,18 @@ namespace Microsoft.Azure.Search.Serialization
 
         public static JsonSerializerSettings CreateTypedSerializerSettings<T>(
             JsonSerializerSettings baseSettings,
-            bool useCamelCase) where T : class
-        {
-            return CreateSerializerSettings<T>(baseSettings, useCamelCase);
-        }
+            bool useCamelCase) where T : class =>
+            CreateSerializerSettings<T>(baseSettings, useCamelCase);
 
         public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
-            where T : class
-        {
-            return CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>(baseSettings);
-        }
+            where T : class =>
+            CreateDeserializerSettings<SearchResult<T>, SuggestResult<T>, T>(baseSettings);
 
-        public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings)
-        {
-            return CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
-        }
+        public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings) =>
+            CreateSerializerSettings<Document>(baseSettings, useCamelCase: false);
 
-        public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings)
-        {
-            return CreateDeserializerSettings<SearchResult, SuggestResult, Document>(baseSettings);
-        }
+        public static JsonSerializerSettings CreateDocumentDeserializerSettings(JsonSerializerSettings baseSettings) =>
+            CreateDeserializerSettings<SearchResult, SuggestResult, Document>(baseSettings);
 
         private static JsonSerializerSettings CreateSerializerSettings<T>(
             JsonSerializerSettings baseSettings,
@@ -89,38 +86,84 @@ namespace Microsoft.Azure.Search.Serialization
             return settings;
         }
 
-        private static JsonSerializerSettings CopySettings(JsonSerializerSettings baseSettings)
+        private static JsonSerializerSettings CopySettings(JsonSerializerSettings baseSettings) =>
+            JsonSerializerSettingsCopier.Instance.Copy(baseSettings);
+
+        // Unfortunately we can't just assign the properties of JsonSerializerSettings between instances,
+        // because some of these properties come and go within the span of a few JSON.NET versions, and the
+        // Azure .NET SDKs can reference a very wide range of possible versions. Instead, we use reflection
+        // and dynamic compilation to create a copy method tailored to whatever version of JSON.NET we find
+        // ourselves using.
+        private class JsonSerializerSettingsCopier
         {
-            return new JsonSerializerSettings()
+            private readonly Delegate _copy;
+
+            private JsonSerializerSettingsCopier()
             {
-                Binder = baseSettings.Binder,
-                CheckAdditionalContent = baseSettings.CheckAdditionalContent,
-                ConstructorHandling = baseSettings.ConstructorHandling,
-                Context = baseSettings.Context,
-                ContractResolver = baseSettings.ContractResolver,
-                Converters = new List<JsonConverter>(baseSettings.Converters),
-                Culture = baseSettings.Culture,
-                DateFormatHandling = baseSettings.DateFormatHandling,
-                DateFormatString = baseSettings.DateFormatString,
-                DateParseHandling = baseSettings.DateParseHandling,
-                DateTimeZoneHandling = baseSettings.DateTimeZoneHandling,
-                DefaultValueHandling = baseSettings.DefaultValueHandling,
-                Error = baseSettings.Error,
-                FloatFormatHandling = baseSettings.FloatFormatHandling,
-                FloatParseHandling = baseSettings.FloatParseHandling,
-                Formatting = baseSettings.Formatting,
-                MaxDepth = baseSettings.MaxDepth,
-                MetadataPropertyHandling = baseSettings.MetadataPropertyHandling,
-                MissingMemberHandling = baseSettings.MissingMemberHandling,
-                NullValueHandling = baseSettings.NullValueHandling,
-                ObjectCreationHandling = baseSettings.ObjectCreationHandling,
-                PreserveReferencesHandling = baseSettings.PreserveReferencesHandling,
-                ReferenceLoopHandling = baseSettings.ReferenceLoopHandling,
-                StringEscapeHandling = baseSettings.StringEscapeHandling,
-                TraceWriter = baseSettings.TraceWriter,
-                TypeNameHandling = baseSettings.TypeNameHandling,
-                TypeNameAssemblyFormat = baseSettings.TypeNameAssemblyFormat
-            };
+                Type sourceType, targetType;
+                sourceType = targetType = typeof(JsonSerializerSettings);
+
+                ParameterExpression source = Parameter(sourceType);
+                Expression copyExpr = MakeCopyExpr(source);
+
+                // Emits 'source => {copyExpr}' where copyExpr refers to source and returns a copy of it.
+                LambdaExpression lambdaExpression =
+                    Lambda(
+                        delegateType: GetFuncType(sourceType, targetType),
+                        body: copyExpr,
+                        parameters: source);
+
+                _copy = lambdaExpression.Compile();
+            }
+
+            public static JsonSerializerSettingsCopier Instance { get; } = new JsonSerializerSettingsCopier();
+
+            public JsonSerializerSettings Copy(JsonSerializerSettings source)
+            {
+                Throw.IfArgumentNull(source, nameof(source));
+
+                // Shallow copy all the properties first, then deep copy Converters.
+                var newSettings = (JsonSerializerSettings)_copy.DynamicInvoke(source);
+                newSettings.Converters = new List<JsonConverter>(source.Converters);
+                return newSettings;
+            }
+
+            private static Expression MakeCopyExpr(ParameterExpression sourceExpr)
+            {
+                ParameterExpression source = Variable(typeof(JsonSerializerSettings));
+                ParameterExpression target = Variable(typeof(JsonSerializerSettings));
+
+                Expression assignSource = Assign(left: source, right: sourceExpr);
+                Expression assignTarget = Assign(left: target, right: New(typeof(JsonSerializerSettings)));
+
+                IEnumerable<Expression> copy = CopyAllProperties(source, target);
+
+                return Block(
+                    type: typeof(JsonSerializerSettings),
+                    variables: new[] { source, target },
+                    expressions: new[] { assignSource, assignTarget }.Concat(copy));
+            }
+
+            private static IEnumerable<Expression> CopyAllProperties(
+                ParameterExpression source,
+                ParameterExpression target)
+            {
+                var settableNonDeprecatedProperties =
+                    typeof(JsonSerializerSettings).GetTypeInfo().DeclaredProperties
+                    .Where(p => p.CanRead && p.CanWrite && !IsPropertyDeprecated(p));
+
+                foreach (PropertyInfo property in settableNonDeprecatedProperties)
+                {
+                    yield return Assign(
+                        left: PropertyOrField(target, property.Name),
+                        right: PropertyOrField(source, property.Name));
+                }
+
+                yield return target;
+            }
+
+            private static bool IsPropertyDeprecated(PropertyInfo property) =>
+                property.GetCustomAttributes().Any(a => a is ObsoleteAttribute);
         }
     }
 }
