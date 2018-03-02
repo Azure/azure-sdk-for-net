@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSearch.DataPlane.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Search.Data</PackageId>
     <Description>Use this package if you're developing a .NET application using Azure Search, and you only need to query or update documents in your indexes. If you also need to create or update indexes, synonym maps, or other service-level resources, use the Microsoft.Azure.Search package instead.</Description>
     <AssemblyTitle>Microsoft Azure Search Data Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search.Data</AssemblyName>
-    <VersionPrefix>4.0.2-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure Search;Search</PackageTags>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
+  </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Spatial" Version="7.2.0" />
   </ItemGroup>

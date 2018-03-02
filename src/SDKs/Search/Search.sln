@@ -10,6 +10,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Search.Management.Tests", "Management\Search.Management.Tests\Search.Management.Tests.csproj", "{C22D7F0A-F4D4-4AE2-AAF1-16C5A61D2703}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataPlane", "DataPlane", "{6CF5428A-7C5A-4276-AC40-41EF40911C9C}"
+	ProjectSection(SolutionItems) = preProject
+		DataPlane\AssemblyInfo.Common.cs = DataPlane\AssemblyInfo.Common.cs
+		DataPlane\AzSearch.DataPlane.props = DataPlane\AzSearch.DataPlane.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search", "DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj", "{86D38C24-45C2-481A-B59F-CE77351F32B9}"
 EndProject
