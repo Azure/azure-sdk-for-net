@@ -8,14 +8,14 @@ complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http:
 ## Features
 
 - Secrets
-    - Create, Read, Update, and Delete Secrets
+    - Create, Read, Update, Delete, and Recover Secrets
     - Backup and Restore Secrets
 - Keys
-    - Create, Read, Update, and Delete Keys
+    - Create, Read, Update, Delete, and Recover Keys
     - Import, Backup and Restore Keys
     - Encrypt, Decrypt, Wrap, Unwrap, Sign and Verify cryptographic Key operations 
 - Certificates
-    - Create, Read, Update, and Delete Certificates
+    - Create, Read, Update, Delete, and Recover Certificates
     - Create, Read, Update, and Delete certificate renewal properties
     - Create, Read, Update, and Delete certificate issuers
 
@@ -59,7 +59,7 @@ For information on building the Azure Key Vault SDK, please see [Building the Mi
 
 ## Running Tests
 
-Tests for the Azure Key Vault SDK are run in the same manner as the rest of the tests for the Azure SDK for .NET.  For information please see, [to run the tests](https://github.com/azure/azure-sdk-for-net#to-run-the-tests)
+Tests for the Azure Key Vault SDK are run in the same manner as the rest of the tests for the Azure SDK for .NET.  For information please see how to [run tests](https://github.com/azure/azure-sdk-for-net#to-run-the-tests).
 
 ## Samples
 
@@ -67,9 +67,9 @@ Code samples are available in the Azure Key Vault SDK code in the [Microsoft.Azu
 
 ## Additional Documentation
 
-* Azure Key Vault General Documentation - https://docs.microsoft.com/en-us/azure/key-vault/
-* Azure Key Vault REST API Reference - https://docs.microsoft.com/en-us/rest/api/keyvault/
-* Azure SDK for .NET Documentation - https://docs.microsoft.com/en-us/dotnet/api/overview/azure/key-vault?view=azure-dotnet
+* [Azure Key Vault General Documentation](https://docs.microsoft.com/en-us/azure/key-vault/)
+* [Azure Key Vault REST API Reference](https://docs.microsoft.com/en-us/rest/api/keyvault/)
+* [Azure Key Vault SDK for .NET Documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/key-vault?view=azure-dotnet)
   
 ## Contributing
 
