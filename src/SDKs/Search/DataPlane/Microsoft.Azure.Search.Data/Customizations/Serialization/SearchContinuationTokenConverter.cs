@@ -8,12 +8,9 @@ namespace Microsoft.Azure.Search.Serialization
     using Models;
     using Newtonsoft.Json;
 
-    internal class SearchContinuationTokenConverter : ConverterBase
+    internal class SearchContinuationTokenConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(SearchContinuationToken);
-        }
+        public override bool CanConvert(Type objectType) => objectType == typeof(SearchContinuationToken);
 
         public override object ReadJson(
             JsonReader reader, 

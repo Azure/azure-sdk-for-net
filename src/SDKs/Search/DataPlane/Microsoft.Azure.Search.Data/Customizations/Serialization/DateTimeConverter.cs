@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// <summary>
     /// Converts System.DateTime objects to System.DateTimeOffset before serialization.
     /// </summary>
-    internal class DateTimeConverter : ConverterBase
+    internal class DateTimeConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Search.Serialization
                 return null;
             }
 
-            DateTimeOffset? dateTimeOffset = Expect<DateTimeOffset?>(reader, JsonToken.Date);
+            DateTimeOffset? dateTimeOffset = reader.Expect<DateTimeOffset?>(JsonToken.Date);
             return dateTimeOffset.HasValue ? dateTimeOffset.Value.UtcDateTime : (DateTime?)null;
         }
 

@@ -12,12 +12,10 @@ namespace Microsoft.Azure.Search.Serialization
     /// <summary>
     /// Serializes Microsoft.Spatial.GeographyPoint objects to Geo-JSON and vice-versa.
     /// </summary>
-    internal class GeographyPointConverter : ConverterBase
+    internal class GeographyPointConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType)
-        {
-            return typeof(GeographyPoint).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
-        }
+        public override bool CanConvert(Type objectType) =>
+            typeof(GeographyPoint).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
 
         public override object ReadJson(
             JsonReader reader, 
@@ -31,30 +29,30 @@ namespace Microsoft.Azure.Search.Serialization
                 return null;
             }
 
-            ExpectAndAdvance(reader, JsonToken.StartObject);
-            ExpectAndAdvance(reader, JsonToken.PropertyName, "type");
-            ExpectAndAdvance(reader, JsonToken.String, "Point");
-            ExpectAndAdvance(reader, JsonToken.PropertyName, "coordinates");
-            ExpectAndAdvance(reader, JsonToken.StartArray);
-            double longitude = ExpectAndAdvance<double>(reader, JsonToken.Float);
-            double latitude = ExpectAndAdvance<double>(reader, JsonToken.Float);
-            ExpectAndAdvance(reader, JsonToken.EndArray);
+            reader.ExpectAndAdvance(JsonToken.StartObject);
+            reader.ExpectAndAdvance(JsonToken.PropertyName, "type");
+            reader.ExpectAndAdvance(JsonToken.String, "Point");
+            reader.ExpectAndAdvance(JsonToken.PropertyName, "coordinates");
+            reader.ExpectAndAdvance(JsonToken.StartArray);
+            double longitude = reader.ExpectAndAdvance<double>(JsonToken.Float);
+            double latitude = reader.ExpectAndAdvance<double>(JsonToken.Float);
+            reader.ExpectAndAdvance(JsonToken.EndArray);
 
             if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals("crs"))
             {
-                Advance(reader);
-                ExpectAndAdvance(reader, JsonToken.StartObject);
-                ExpectAndAdvance(reader, JsonToken.PropertyName, "type");
-                ExpectAndAdvance(reader, JsonToken.String, "name");
-                ExpectAndAdvance(reader, JsonToken.PropertyName, "properties");
-                ExpectAndAdvance(reader, JsonToken.StartObject);
-                ExpectAndAdvance(reader, JsonToken.PropertyName, "name");
-                ExpectAndAdvance(reader, JsonToken.String, "EPSG:4326");
-                ExpectAndAdvance(reader, JsonToken.EndObject);
-                ExpectAndAdvance(reader, JsonToken.EndObject);
+                reader.Advance();
+                reader.ExpectAndAdvance(JsonToken.StartObject);
+                reader.ExpectAndAdvance(JsonToken.PropertyName, "type");
+                reader.ExpectAndAdvance(JsonToken.String, "name");
+                reader.ExpectAndAdvance(JsonToken.PropertyName, "properties");
+                reader.ExpectAndAdvance(JsonToken.StartObject);
+                reader.ExpectAndAdvance(JsonToken.PropertyName, "name");
+                reader.ExpectAndAdvance(JsonToken.String, "EPSG:4326");
+                reader.ExpectAndAdvance(JsonToken.EndObject);
+                reader.ExpectAndAdvance(JsonToken.EndObject);
             }
 
-            Expect(reader, JsonToken.EndObject);
+            reader.Expect(JsonToken.EndObject);
             return GeographyPoint.Create(latitude, longitude);
         }
 

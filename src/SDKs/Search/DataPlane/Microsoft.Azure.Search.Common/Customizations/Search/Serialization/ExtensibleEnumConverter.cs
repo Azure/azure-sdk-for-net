@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// that they have well-known values, but they are extensible with new values and the values are based on strings
     /// instead of integers.
     /// </summary>
-    public class ExtensibleEnumConverter<T> : ConverterBase where T : ExtensibleEnum<T>
+    public class ExtensibleEnumConverter<T> : JsonConverter where T : ExtensibleEnum<T>
     {
         private ExtensibleEnumValueFactory<T> _enumValueFactory;
 
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Search.Serialization
                 return null;
             }
 
-            return _enumValueFactory(Expect<string>(reader, JsonToken.String));
+            return _enumValueFactory(reader.Expect<string>(JsonToken.String));
         }
 
         /// <summary>

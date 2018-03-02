@@ -9,9 +9,9 @@ namespace Microsoft.Azure.Search.Serialization
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Base class for custom JsonConverters.
+    /// Defines extension methods for JsonReader that make it easier to implement a custom JsonConverter.
     /// </summary>
-    public abstract class ConverterBase : JsonConverter
+    public static class JsonReaderExtensions
     {
         /// <summary>
         /// Asserts that the given JSON reader is positioned on a token with the expected type. Optionally asserts
@@ -22,16 +22,16 @@ namespace Microsoft.Azure.Search.Serialization
         /// <param name="reader">The JSON reader.</param>
         /// <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
         /// <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
-        protected void ExpectAndAdvance(JsonReader reader, JsonToken expectedToken, object expectedValue = null)
-        {
-            ExpectAndAdvance<object>(reader, expectedToken, expectedValue);
-        }
+        public static void ExpectAndAdvance(
+            this JsonReader reader, 
+            JsonToken expectedToken, 
+            object expectedValue = null) => ExpectAndAdvance<object>(reader, expectedToken, expectedValue);
 
         /// <summary>
-        /// Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the value
-        /// of the token, if any. Optionally asserts that the value of the token matches a given expected value. If
-        /// any of the assertions fail, this method throws a JsonSerializationException. Otherwise, this method
-        /// attempts to advance the JSON reader to the next position.
+        /// Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the
+        /// value of the token, if any. Optionally asserts that the value of the token matches a given expected
+        /// value. If any of the assertions fail, this method throws a JsonSerializationException. Otherwise, this
+        /// method attempts to advance the JSON reader to the next position.
         /// </summary>
         /// <typeparam name="TValue">The expected type of the value of the current JSON token.</typeparam>
         /// <param name="reader">The JSON reader.</param>
@@ -40,7 +40,10 @@ namespace Microsoft.Azure.Search.Serialization
         /// <returns>
         /// The value of the JSON token before advancing the reader, or default(TValue) if the token has no value.
         /// </returns>
-        protected TValue ExpectAndAdvance<TValue>(JsonReader reader, JsonToken expectedToken, object expectedValue = null)
+        public static TValue ExpectAndAdvance<TValue>(
+            this JsonReader reader, 
+            JsonToken expectedToken, 
+            object expectedValue = null)
         {
             TValue result = Expect<TValue>(reader, expectedToken, expectedValue);
             Advance(reader);
@@ -55,15 +58,13 @@ namespace Microsoft.Azure.Search.Serialization
         /// <param name="reader">The JSON reader.</param>
         /// <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
         /// <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
-        protected void Expect(JsonReader reader, JsonToken expectedToken, object expectedValue = null)
-        {
+        public static void Expect(this JsonReader reader, JsonToken expectedToken, object expectedValue = null) =>
             Expect<object>(reader, expectedToken, expectedValue);
-        }
 
         /// <summary>
-        /// Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the value
-        /// of the token, if any. Optionally asserts that the value of the token matches a given expected value. If
-        /// any of the assertions fail, this method throws a JsonSerializationException.
+        /// Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the
+        /// value of the token, if any. Optionally asserts that the value of the token matches a given expected
+        /// value. If any of the assertions fail, this method throws a JsonSerializationException.
         /// </summary>
         /// <typeparam name="TValue">The expected type of the value of the current JSON token.</typeparam>
         /// <param name="reader">The JSON reader.</param>
@@ -72,7 +73,10 @@ namespace Microsoft.Azure.Search.Serialization
         /// <returns>
         /// The value of the current JSON token, or default(TValue) if the current token has no value.
         /// </returns>
-        protected TValue Expect<TValue>(JsonReader reader, JsonToken expectedToken, object expectedValue = null)
+        public static TValue Expect<TValue>(
+            this JsonReader reader, 
+            JsonToken expectedToken, 
+            object expectedValue = null)
         {
             if (reader.TokenType != expectedToken)
             {
@@ -116,7 +120,7 @@ namespace Microsoft.Azure.Search.Serialization
         /// Advances the given JSON reader, or throws a JsonSerializationException if it cannot be advanced.
         /// </summary>
         /// <param name="reader">The JSON reader to advance.</param>
-        protected void Advance(JsonReader reader)
+        public static void Advance(this JsonReader reader)
         {
             if (!reader.Read())
             {
