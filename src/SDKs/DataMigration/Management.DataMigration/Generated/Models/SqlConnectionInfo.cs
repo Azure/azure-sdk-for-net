@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// settings</param>
         /// <param name="trustServerCertificate">Whether to trust the server
         /// certificate</param>
-        public SqlConnectionInfo(string dataSource, string userName = default(string), string password = default(string), AuthenticationType? authentication = default(AuthenticationType?), bool? encryptConnection = default(bool?), string additionalSettings = default(string), bool? trustServerCertificate = default(bool?))
+        public SqlConnectionInfo(string dataSource, string userName = default(string), string password = default(string), string authentication = default(string), bool? encryptConnection = default(bool?), string additionalSettings = default(string), bool? trustServerCertificate = default(bool?))
             : base(userName, password)
         {
             DataSource = dataSource;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'ActiveDirectoryPassword'
         /// </summary>
         [JsonProperty(PropertyName = "authentication")]
-        public AuthenticationType? Authentication { get; set; }
+        public string Authentication { get; set; }
 
         /// <summary>
         /// Gets or sets whether to encrypt the connection
