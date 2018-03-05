@@ -14,26 +14,25 @@ namespace Microsoft.Azure.Management.Dns.Models
     using System.Linq;
 
     /// <summary>
-    /// An AAAA record.
+    /// A reference to a another resource
     /// </summary>
-    public partial class AaaaRecord
+    public partial class SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the AaaaRecord class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        public AaaaRecord()
+        public SubResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AaaaRecord class.
+        /// Initializes a new instance of the SubResource class.
         /// </summary>
-        /// <param name="ipv6Address">The IPv6 address of this AAAA
-        /// record.</param>
-        public AaaaRecord(string ipv6Address = default(string))
+        /// <param name="id">Resource Id.</param>
+        public SubResource(string id = default(string))
         {
-            Ipv6Address = ipv6Address;
+            Id = id;
             CustomInit();
         }
 
@@ -43,10 +42,10 @@ namespace Microsoft.Azure.Management.Dns.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the IPv6 address of this AAAA record.
+        /// Gets or sets resource Id.
         /// </summary>
-        [JsonProperty(PropertyName = "ipv6Address")]
-        public string Ipv6Address { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
