@@ -4,7 +4,7 @@
     <PackageId>WebSites.Tests</PackageId>
     <Description>Websites.Tests Class Library</Description>
     <AssemblyName>WebSites.Tests</AssemblyName>
-    <VersionPrefix>2.0.0-preview</VersionPrefix>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
