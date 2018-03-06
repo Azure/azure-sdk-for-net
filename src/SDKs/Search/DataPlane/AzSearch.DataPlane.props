@@ -1,7 +1,6 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PackageTags>Microsoft Azure Search;Search</PackageTags>
-    <VersionPrefix>5.0.0-preview</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>

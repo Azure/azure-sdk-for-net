@@ -16,14 +16,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataPlane", "DataPlane", "{
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search", "DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj", "{86D38C24-45C2-481A-B59F-CE77351F32B9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3E076803-9B46-40D0-8620-CA66699C55B5} = {3E076803-9B46-40D0-8620-CA66699C55B5}
+		{CA6417A8-23A2-429D-B6D2-F636F0ABA488} = {CA6417A8-23A2-429D-B6D2-F636F0ABA488}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Search.Tests", "DataPlane\Search.Tests\Search.Tests.csproj", "{4B39B63E-16C8-415B-8201-F4330AB20380}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search.Data", "DataPlane\Microsoft.Azure.Search.Data\Microsoft.Azure.Search.Data.csproj", "{3E076803-9B46-40D0-8620-CA66699C55B5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{59C74888-5692-4ED7-9A61-C58823B22DF1} = {59C74888-5692-4ED7-9A61-C58823B22DF1}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search.Common", "DataPlane\Microsoft.Azure.Search.Common\Microsoft.Azure.Search.Common.csproj", "{59C74888-5692-4ED7-9A61-C58823B22DF1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Search.Service", "DataPlane\Microsoft.Azure.Search.Service\Microsoft.Azure.Search.Service.csproj", "{CA6417A8-23A2-429D-B6D2-F636F0ABA488}"
+	ProjectSection(ProjectDependencies) = postProject
+		{59C74888-5692-4ED7-9A61-C58823B22DF1} = {59C74888-5692-4ED7-9A61-C58823B22DF1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
