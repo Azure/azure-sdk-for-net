@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Authorization/permissions?api-version=2015-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcGVybWlzc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNy0wMQ==",
+      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Authorization/permissions?api-version=2018-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcGVybWlzc2lvbnM/YXBpLXZlcnNpb249MjAxOC0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d83b220-ef88-4dda-8a20-79f92088fa95"
+          "3d5fd5c1-226f-4faf-b1ab-3832f46463f0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.5.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": []\r\n    },\r\n    {\r\n      \"actions\": [\r\n        \"*/read\"\r\n      ],\r\n      \"notActions\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"actions\": [\r\n        \"*\"\r\n      ],\r\n      \"notActions\": [],\r\n      \"dataActions\": [],\r\n      \"notDataActions\": []\r\n    },\r\n    {\r\n      \"actions\": [\r\n        \"*/read\"\r\n      ],\r\n      \"notActions\": [],\r\n      \"dataActions\": [],\r\n      \"notDataActions\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 25 May 2017 07:12:51 GMT"
+          "Thu, 15 Feb 2018 22:50:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,13 +41,16 @@
           "Microsoft-IIS/8.5"
         ],
         "Set-Cookie": [
-          "x-ms-gateway-slice=productionb; path=/"
+          "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
+        "x-ms-request-charge": [
+          "1"
+        ],
         "x-ms-request-id": [
-          "bb01e7ed-4338-44d6-90fc-5d89424ba8fc"
+          "46fd2a81-09a9-4a14-924b-db9a3b31f99e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -59,13 +62,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "56dca62e-362f-4d9f-9932-62e1699b5f25"
+          "caf885ae-651f-44a4-819d-cbd2eb833375"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHEASTASIA:20170525T071251Z:56dca62e-362f-4d9f-9932-62e1699b5f25"
+          "CENTRALUSEUAP:20180215T225007Z:caf885ae-651f-44a4-819d-cbd2eb833375"
         ]
       },
       "StatusCode": 200
