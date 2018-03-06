@@ -250,6 +250,7 @@ namespace Microsoft.Rest
         protected ServiceClient()
             : this(CreateRootHandler())
         {
+            _disposeRootHandler = true;
         }
 
         /// <summary>
@@ -278,6 +279,7 @@ namespace Microsoft.Rest
         protected ServiceClient(params DelegatingHandler[] handlers)
             : this(CreateRootHandler(), handlers)
         {
+            _disposeRootHandler = true;
         }
 
         /// <summary>
