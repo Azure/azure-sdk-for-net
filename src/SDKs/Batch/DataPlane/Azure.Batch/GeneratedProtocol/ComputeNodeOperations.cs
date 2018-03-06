@@ -2591,7 +2591,8 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
-        /// Upload Azure Batch service log files from the specified compute node.
+        /// Upload Azure Batch service log files from the specified compute node to
+        /// Azure Blob Storage.
         /// </summary>
         /// <remarks>
         /// This is for gathering Azure Batch service log files in an automated fashion

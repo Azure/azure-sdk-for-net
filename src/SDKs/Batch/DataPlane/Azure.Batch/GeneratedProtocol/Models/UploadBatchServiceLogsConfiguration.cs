@@ -59,7 +59,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// The URL must include a Shared Access Signature (SAS) granting write
-        /// permissions to the container.
+        /// permissions to the container. The SAS duration must allow enough
+        /// time for the upload to finish. The start time for SAS is optional
+        /// and recommended to not be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "containerUrl")]
         public string ContainerUrl { get; set; }
@@ -72,8 +74,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Any log file containing a log message in the time range will be
         /// uploaded. This means that the operation might retrieve more logs
         /// than have been requested since the entire log file is always
-        /// uploaded, but the operation should not retrieve less logs than have
-        /// been requested.
+        /// uploaded, but the operation should not retrieve fewer logs than
+        /// have been requested.
         /// </remarks>
         [JsonProperty(PropertyName = "startTime")]
         public System.DateTime StartTime { get; set; }
@@ -86,10 +88,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Any log file containing a log message in the time range will be
         /// uploaded. This means that the operation might retrieve more logs
         /// than have been requested since the entire log file is always
-        /// uploaded, but the operation should not retrieve less logs than have
-        /// been requested. If omitted, the default is the current time,
-        /// meaning all currently existing log files after the start time will
-        /// be uploaded.
+        /// uploaded, but the operation should not retrieve fewer logs than
+        /// have been requested. If omitted, the default is to upload all logs
+        /// available after the startTime.
         /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }

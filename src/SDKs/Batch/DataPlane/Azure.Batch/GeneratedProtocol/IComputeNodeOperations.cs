@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Batch.Protocol
         Task<AzureOperationResponse<Stream,ComputeNodeGetRemoteDesktopHeaders>> GetRemoteDesktopWithHttpMessagesAsync(string poolId, string nodeId, ComputeNodeGetRemoteDesktopOptions computeNodeGetRemoteDesktopOptions = default(ComputeNodeGetRemoteDesktopOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Upload Azure Batch service log files from the specified compute
-        /// node.
+        /// node to Azure Blob Storage.
         /// </summary>
         /// <remarks>
         /// This is for gathering Azure Batch service log files in an automated

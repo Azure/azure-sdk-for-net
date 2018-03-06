@@ -29,25 +29,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeCounts class.
         /// </summary>
-        /// <param name="creating">The number of nodes in creating
+        /// <param name="creating">The number of nodes in the creating
         /// state.</param>
-        /// <param name="idle">The number of nodes in idle state.</param>
-        /// <param name="offline">The number of nodes in offline state.</param>
-        /// <param name="preempted">The number of nodes in preempted
+        /// <param name="idle">The number of nodes in the idle state.</param>
+        /// <param name="offline">The number of nodes in the offline
         /// state.</param>
-        /// <param name="rebooting">The count of nodes in rebooting
+        /// <param name="preempted">The number of nodes in the preempted
         /// state.</param>
-        /// <param name="reimaging">The number of nodes in reimaging
+        /// <param name="rebooting">The count of nodes in the rebooting
         /// state.</param>
-        /// <param name="running">The number of nodes in running state.</param>
-        /// <param name="starting">The number of nodes in starting
+        /// <param name="reimaging">The number of nodes in the reimaging
         /// state.</param>
-        /// <param name="startTaskFailed">The number of nodes in
+        /// <param name="running">The number of nodes in the running
+        /// state.</param>
+        /// <param name="starting">The number of nodes in the starting
+        /// state.</param>
+        /// <param name="startTaskFailed">The number of nodes in the
         /// startTaskFailed state.</param>
-        /// <param name="unknown">The number of nodes in unknown state.</param>
-        /// <param name="unusable">The number of nodes in unusable
+        /// <param name="unknown">The number of nodes in the unknown
         /// state.</param>
-        /// <param name="waitingForStartTask">The number of nodes in
+        /// <param name="unusable">The number of nodes in the unusable
+        /// state.</param>
+        /// <param name="waitingForStartTask">The number of nodes in the
         /// waitingForStartTask state.</param>
         /// <param name="total">The total number of nodes.</param>
         public NodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int unknown, int unusable, int waitingForStartTask, int total)
@@ -74,73 +77,73 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the number of nodes in creating state.
+        /// Gets or sets the number of nodes in the creating state.
         /// </summary>
         [JsonProperty(PropertyName = "creating")]
         public int Creating { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in idle state.
+        /// Gets or sets the number of nodes in the idle state.
         /// </summary>
         [JsonProperty(PropertyName = "idle")]
         public int Idle { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in offline state.
+        /// Gets or sets the number of nodes in the offline state.
         /// </summary>
         [JsonProperty(PropertyName = "offline")]
         public int Offline { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in preempted state.
+        /// Gets or sets the number of nodes in the preempted state.
         /// </summary>
         [JsonProperty(PropertyName = "preempted")]
         public int Preempted { get; set; }
 
         /// <summary>
-        /// Gets or sets the count of nodes in rebooting state.
+        /// Gets or sets the count of nodes in the rebooting state.
         /// </summary>
         [JsonProperty(PropertyName = "rebooting")]
         public int Rebooting { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in reimaging state.
+        /// Gets or sets the number of nodes in the reimaging state.
         /// </summary>
         [JsonProperty(PropertyName = "reimaging")]
         public int Reimaging { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in running state.
+        /// Gets or sets the number of nodes in the running state.
         /// </summary>
         [JsonProperty(PropertyName = "running")]
         public int Running { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in starting state.
+        /// Gets or sets the number of nodes in the starting state.
         /// </summary>
         [JsonProperty(PropertyName = "starting")]
         public int Starting { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in startTaskFailed state.
+        /// Gets or sets the number of nodes in the startTaskFailed state.
         /// </summary>
         [JsonProperty(PropertyName = "startTaskFailed")]
         public int StartTaskFailed { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in unknown state.
+        /// Gets or sets the number of nodes in the unknown state.
         /// </summary>
         [JsonProperty(PropertyName = "unknown")]
         public int Unknown { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in unusable state.
+        /// Gets or sets the number of nodes in the unusable state.
         /// </summary>
         [JsonProperty(PropertyName = "unusable")]
         public int Unusable { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of nodes in waitingForStartTask state.
+        /// Gets or sets the number of nodes in the waitingForStartTask state.
         /// </summary>
         [JsonProperty(PropertyName = "waitingForStartTask")]
         public int WaitingForStartTask { get; set; }

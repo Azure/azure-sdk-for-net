@@ -18,7 +18,7 @@
     {
       "Key": {
         "Type": "int",
-        "Name": "UploadSetSize",
+        "Name": "NumberOfFilesUploaded",
         "SummaryComment": "The number of log files which will be uploaded.",
         "RemarksComment": null,
         "BoundAccess": "read",

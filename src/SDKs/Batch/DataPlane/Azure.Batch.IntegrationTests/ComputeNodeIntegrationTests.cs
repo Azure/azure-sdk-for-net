@@ -725,7 +725,7 @@ namespace BatchClientIntegrationTests
                             fullSas,
                             startTime);
 
-                        Assert.NotEqual(0, result.UploadSetSize);
+                        Assert.NotEqual(0, result.NumberOfFilesUploaded);
                         Assert.NotEmpty(result.VirtualDirectoryName);
 
                         // Allow up to 2m for files to get uploaded

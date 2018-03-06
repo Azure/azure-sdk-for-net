@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Batch
 
         internal UploadBatchServiceLogsResult(Models.UploadBatchServiceLogsResult protocolObject)
         {
-            this.UploadSetSize = protocolObject.UploadSetSize;
+            this.NumberOfFilesUploaded = protocolObject.NumberOfFilesUploaded;
             this.VirtualDirectoryName = protocolObject.VirtualDirectoryName;
         }
 
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the number of log files which will be uploaded.
         /// </summary>
-        public int UploadSetSize { get; }
+        public int NumberOfFilesUploaded { get; }
 
         /// <summary>
         /// Gets the virtual directory within the Azure Blob Storage container to which the Batch Service log file(s) will 

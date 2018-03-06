@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of asking compute node to upload batch service log files.
+    /// The result of uploading Batch service log files from a specific compute
+    /// node.
     /// </summary>
     public partial class UploadBatchServiceLogsResult
     {
@@ -35,12 +36,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="virtualDirectoryName">The virtual directory within
         /// Azure Blob Storage container to which the Batch Service log file(s)
         /// will be uploaded.</param>
-        /// <param name="uploadSetSize">The number of log files should be
-        /// uploaded.</param>
-        public UploadBatchServiceLogsResult(string virtualDirectoryName, int uploadSetSize)
+        /// <param name="numberOfFilesUploaded">The number of log files which
+        /// will be uploaded.</param>
+        public UploadBatchServiceLogsResult(string virtualDirectoryName, int numberOfFilesUploaded)
         {
             VirtualDirectoryName = virtualDirectoryName;
-            UploadSetSize = uploadSetSize;
+            NumberOfFilesUploaded = numberOfFilesUploaded;
             CustomInit();
         }
 
@@ -54,21 +55,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// container to which the Batch Service log file(s) will be uploaded.
         /// </summary>
         /// <remarks>
-        /// Virtual directory name will be part of the blob name for each log
-        /// file uploaded, it is build base on poolId, nodeId and a unique
+        /// The virtual directory name is part of the blob name for each log
+        /// file uploaded, and it is built based poolId, nodeId and a unique
         /// identifier.
         /// </remarks>
         [JsonProperty(PropertyName = "virtualDirectoryName")]
         public string VirtualDirectoryName { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of log files should be uploaded.
+        /// Gets or sets the number of log files which will be uploaded.
         /// </summary>
-        /// <remarks>
-        /// The number of log files should be uploaded.
-        /// </remarks>
-        [JsonProperty(PropertyName = "uploadSetSize")]
-        public int UploadSetSize { get; set; }
+        [JsonProperty(PropertyName = "numberOfFilesUploaded")]
+        public int NumberOfFilesUploaded { get; set; }
 
         /// <summary>
         /// Validate the object.
