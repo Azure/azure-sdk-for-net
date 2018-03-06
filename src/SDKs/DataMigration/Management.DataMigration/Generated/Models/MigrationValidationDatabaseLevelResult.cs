@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// level. Possible values include: 'Default', 'NotStarted',
         /// 'Initialized', 'InProgress', 'Completed', 'CompletedWithIssues',
         /// 'Failed', 'Stopped'</param>
-        public MigrationValidationDatabaseLevelResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), ValidationStatus? status = default(ValidationStatus?))
+        public MigrationValidationDatabaseLevelResult(string id = default(string), string migrationId = default(string), string sourceDatabaseName = default(string), string targetDatabaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), DataIntegrityValidationResult dataIntegrityValidationResult = default(DataIntegrityValidationResult), SchemaComparisonValidationResult schemaValidationResult = default(SchemaComparisonValidationResult), QueryAnalysisValidationResult queryAnalysisValidationResult = default(QueryAnalysisValidationResult), string status = default(string))
         {
             Id = id;
             MigrationId = migrationId;
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public ValidationStatus? Status { get; private set; }
+        public string Status { get; private set; }
 
     }
 }

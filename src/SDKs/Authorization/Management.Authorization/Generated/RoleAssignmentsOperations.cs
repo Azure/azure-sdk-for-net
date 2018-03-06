@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -521,7 +521,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "roleAssignmentName");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -723,7 +723,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -919,7 +919,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "roleAssignmentName");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1071,7 +1071,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Deletes a role assignment.
         /// </summary>
-        /// <param name='roleAssignmentId'>
+        /// <param name='roleId'>
         /// The ID of the role assignment to delete.
         /// </param>
         /// <param name='customHeaders'>
@@ -1095,13 +1095,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RoleAssignment>> DeleteByIdWithHttpMessagesAsync(string roleAssignmentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RoleAssignment>> DeleteByIdWithHttpMessagesAsync(string roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (roleAssignmentId == null)
+            if (roleId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "roleAssignmentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "roleId");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1109,15 +1109,15 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("roleAssignmentId", roleAssignmentId);
+                tracingParameters.Add("roleId", roleId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteById", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{roleAssignmentId}").ToString();
-            _url = _url.Replace("{roleAssignmentId}", roleAssignmentId);
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{roleId}").ToString();
+            _url = _url.Replace("{roleId}", roleId);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1251,7 +1251,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Creates a role assignment by ID.
         /// </summary>
-        /// <param name='roleAssignmentId'>
+        /// <param name='roleId'>
         /// The ID of the role assignment to create.
         /// </param>
         /// <param name='parameters'>
@@ -1278,17 +1278,17 @@ namespace Microsoft.Azure.Management.Authorization
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RoleAssignment>> CreateByIdWithHttpMessagesAsync(string roleAssignmentId, RoleAssignmentCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RoleAssignment>> CreateByIdWithHttpMessagesAsync(string roleId, RoleAssignmentCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (roleAssignmentId == null)
+            if (roleId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "roleAssignmentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "roleId");
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1296,7 +1296,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("roleAssignmentId", roleAssignmentId);
+                tracingParameters.Add("roleId", roleId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1304,8 +1304,8 @@ namespace Microsoft.Azure.Management.Authorization
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{roleAssignmentId}").ToString();
-            _url = _url.Replace("{roleAssignmentId}", roleAssignmentId);
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{roleId}").ToString();
+            _url = _url.Replace("{roleId}", roleId);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1445,7 +1445,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Gets a role assignment by ID.
         /// </summary>
-        /// <param name='roleAssignmentId'>
+        /// <param name='roleId'>
         /// The ID of the role assignment to get.
         /// </param>
         /// <param name='customHeaders'>
@@ -1469,13 +1469,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RoleAssignment>> GetByIdWithHttpMessagesAsync(string roleAssignmentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RoleAssignment>> GetByIdWithHttpMessagesAsync(string roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (roleAssignmentId == null)
+            if (roleId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "roleAssignmentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "roleId");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1483,15 +1483,15 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("roleAssignmentId", roleAssignmentId);
+                tracingParameters.Add("roleId", roleId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetById", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{roleAssignmentId}").ToString();
-            _url = _url.Replace("{roleAssignmentId}", roleAssignmentId);
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{roleId}").ToString();
+            _url = _url.Replace("{roleId}", roleId);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -1655,7 +1655,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1846,7 +1846,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            string apiVersion = "2017-10-01-preview";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

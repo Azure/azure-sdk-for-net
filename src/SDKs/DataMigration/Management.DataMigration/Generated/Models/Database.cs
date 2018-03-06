@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Suspect', 'Emergency', 'Offline', 'Copying',
         /// 'OfflineSecondary'</param>
         /// <param name="serverId">The unique Server Id</param>
-        public Database(string id = default(string), string name = default(string), DatabaseCompatLevel? compatibilityLevel = default(DatabaseCompatLevel?), string collation = default(string), string serverName = default(string), string fqdn = default(string), string installId = default(string), string serverVersion = default(string), string serverEdition = default(string), string serverLevel = default(string), string serverDefaultDataPath = default(string), string serverDefaultLogPath = default(string), string serverDefaultBackupPath = default(string), int? serverCoreCount = default(int?), int? serverVisibleOnlineCoreCount = default(int?), DatabaseState? databaseState = default(DatabaseState?), string serverId = default(string))
+        public Database(string id = default(string), string name = default(string), string compatibilityLevel = default(string), string collation = default(string), string serverName = default(string), string fqdn = default(string), string installId = default(string), string serverVersion = default(string), string serverEdition = default(string), string serverLevel = default(string), string serverDefaultDataPath = default(string), string serverDefaultLogPath = default(string), string serverDefaultBackupPath = default(string), int? serverCoreCount = default(int?), int? serverVisibleOnlineCoreCount = default(int?), string databaseState = default(string), string serverId = default(string))
         {
             Id = id;
             Name = name;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'CompatLevel140'
         /// </summary>
         [JsonProperty(PropertyName = "compatibilityLevel")]
-        public DatabaseCompatLevel? CompatibilityLevel { get; set; }
+        public string CompatibilityLevel { get; set; }
 
         /// <summary>
         /// Gets or sets collation name of the database
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Emergency', 'Offline', 'Copying', 'OfflineSecondary'
         /// </summary>
         [JsonProperty(PropertyName = "databaseState")]
-        public DatabaseState? DatabaseState { get; set; }
+        public string DatabaseState { get; set; }
 
         /// <summary>
         /// Gets or sets the unique Server Id

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Data.ApplicationInsights.Tests</PackageId>
+    <Description>Data.ApplicationInsights.Tests Class library</Description>
+    <PackageId>Data.ApplicationInsights.Tests</PackageId>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
+    <ProjectReference Include="..\ApplicationInsights\Microsoft.Azure.ApplicationInsights.csproj" />
+    <!-- Enable below line in local to work around the bug that cannot find test cases -->
+    <!--<PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.3.0" />-->
+  </ItemGroup>
+</Project>

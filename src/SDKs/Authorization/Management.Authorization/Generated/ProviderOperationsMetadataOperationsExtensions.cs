@@ -30,15 +30,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for the operation.
-            /// </param>
             /// <param name='expand'>
             /// Specifies whether to expand the values.
             /// </param>
-            public static ProviderOperationsMetadata Get(this IProviderOperationsMetadataOperations operations, string resourceProviderNamespace, string apiVersion, string expand = "resourceTypes")
+            public static ProviderOperationsMetadata Get(this IProviderOperationsMetadataOperations operations, string resourceProviderNamespace, string expand = "resourceTypes")
             {
-                return operations.GetAsync(resourceProviderNamespace, apiVersion, expand).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceProviderNamespace, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,18 +47,15 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for the operation.
-            /// </param>
             /// <param name='expand'>
             /// Specifies whether to expand the values.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProviderOperationsMetadata> GetAsync(this IProviderOperationsMetadataOperations operations, string resourceProviderNamespace, string apiVersion, string expand = "resourceTypes", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProviderOperationsMetadata> GetAsync(this IProviderOperationsMetadataOperations operations, string resourceProviderNamespace, string expand = "resourceTypes", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, apiVersion, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -73,15 +67,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='expand'>
             /// Specifies whether to expand the values.
             /// </param>
-            public static IPage<ProviderOperationsMetadata> List(this IProviderOperationsMetadataOperations operations, string apiVersion, string expand = "resourceTypes")
+            public static IPage<ProviderOperationsMetadata> List(this IProviderOperationsMetadataOperations operations, string expand = "resourceTypes")
             {
-                return operations.ListAsync(apiVersion, expand).GetAwaiter().GetResult();
+                return operations.ListAsync(expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -90,18 +81,15 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to use for this operation.
-            /// </param>
             /// <param name='expand'>
             /// Specifies whether to expand the values.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ProviderOperationsMetadata>> ListAsync(this IProviderOperationsMetadataOperations operations, string apiVersion, string expand = "resourceTypes", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ProviderOperationsMetadata>> ListAsync(this IProviderOperationsMetadataOperations operations, string expand = "resourceTypes", CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(apiVersion, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

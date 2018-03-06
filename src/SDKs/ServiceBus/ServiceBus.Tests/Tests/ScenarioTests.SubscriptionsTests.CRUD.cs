@@ -69,14 +69,15 @@ namespace ServiceBus.Tests.ScenarioTests
                 SBSubscription createSub = new SBSubscription();
 
                 createSub.EnableBatchedOperations = true;
-                    createSub.LockDuration = TimeSpan.Parse("00:03:00");
-                    createSub.DefaultMessageTimeToLive = TimeSpan.Parse("00:05:00");
-                    createSub.DeadLetteringOnMessageExpiration = true;
-                    createSub.MaxDeliveryCount = 14;
-                    createSub.Status = EntityStatus.Active;
-                   createSub.AutoDeleteOnIdle = TimeSpan.Parse("00:07:00");
+                createSub.LockDuration = TimeSpan.Parse("00:03:00");
+                createSub.DefaultMessageTimeToLive = TimeSpan.Parse("00:05:00");
+                createSub.DeadLetteringOnMessageExpiration = true;
+                createSub.MaxDeliveryCount = 14;
+                createSub.Status = EntityStatus.Active;
+                createSub.AutoDeleteOnIdle = TimeSpan.Parse("00:07:00");
+                createSub.DeadLetteringOnFilterEvaluationExceptions = true;
 
-                var createSubscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, createSub );
+                var createSubscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, createSub);
                 Assert.NotNull(createSubscriptionResponse);
                 Assert.Equal(createSubscriptionResponse.Name, subscriptionName);
 

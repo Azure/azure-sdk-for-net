@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ProjectSourcePlatform.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProjectSourcePlatform
+    public static class ProjectSourcePlatform
     {
-        [EnumMember(Value = "SQL")]
-        SQL,
-        [EnumMember(Value = "Unknown")]
-        Unknown
-    }
-    internal static class ProjectSourcePlatformEnumExtension
-    {
-        internal static string ToSerializedValue(this ProjectSourcePlatform? value)
-        {
-            return value == null ? null : ((ProjectSourcePlatform)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ProjectSourcePlatform value)
-        {
-            switch( value )
-            {
-                case ProjectSourcePlatform.SQL:
-                    return "SQL";
-                case ProjectSourcePlatform.Unknown:
-                    return "Unknown";
-            }
-            return null;
-        }
-
-        internal static ProjectSourcePlatform? ParseProjectSourcePlatform(this string value)
-        {
-            switch( value )
-            {
-                case "SQL":
-                    return ProjectSourcePlatform.SQL;
-                case "Unknown":
-                    return ProjectSourcePlatform.Unknown;
-            }
-            return null;
-        }
+        public const string SQL = "SQL";
+        public const string Unknown = "Unknown";
     }
 }
