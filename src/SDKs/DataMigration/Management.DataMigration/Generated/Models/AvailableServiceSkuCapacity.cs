@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="defaultProperty">The default capacity</param>
         /// <param name="scaleType">The scalability approach. Possible values
         /// include: 'none', 'manual', 'automatic'</param>
-        public AvailableServiceSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? defaultProperty = default(int?), ServiceScalability? scaleType = default(ServiceScalability?))
+        public AvailableServiceSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? defaultProperty = default(int?), string scaleType = default(string))
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'none', 'manual', 'automatic'
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
-        public ServiceScalability? ScaleType { get; set; }
+        public string ScaleType { get; set; }
 
     }
 }

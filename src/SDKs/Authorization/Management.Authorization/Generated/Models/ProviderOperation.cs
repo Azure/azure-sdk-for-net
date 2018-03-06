@@ -34,13 +34,16 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// <param name="description">The operation description.</param>
         /// <param name="origin">The operation origin.</param>
         /// <param name="properties">The operation properties.</param>
-        public ProviderOperation(string name = default(string), string displayName = default(string), string description = default(string), string origin = default(string), object properties = default(object))
+        /// <param name="isDataAction">The dataAction flag to specify the
+        /// operation type.</param>
+        public ProviderOperation(string name = default(string), string displayName = default(string), string description = default(string), string origin = default(string), object properties = default(object), bool? isDataAction = default(bool?))
         {
             Name = name;
             DisplayName = displayName;
             Description = description;
             Origin = origin;
             Properties = properties;
+            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -78,6 +81,12 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dataAction flag to specify the operation type.
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
     }
 }

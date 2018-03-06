@@ -10,69 +10,16 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AuthenticationType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AuthenticationType
+    public static class AuthenticationType
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "WindowsAuthentication")]
-        WindowsAuthentication,
-        [EnumMember(Value = "SqlAuthentication")]
-        SqlAuthentication,
-        [EnumMember(Value = "ActiveDirectoryIntegrated")]
-        ActiveDirectoryIntegrated,
-        [EnumMember(Value = "ActiveDirectoryPassword")]
-        ActiveDirectoryPassword
-    }
-    internal static class AuthenticationTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this AuthenticationType? value)
-        {
-            return value == null ? null : ((AuthenticationType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AuthenticationType value)
-        {
-            switch( value )
-            {
-                case AuthenticationType.None:
-                    return "None";
-                case AuthenticationType.WindowsAuthentication:
-                    return "WindowsAuthentication";
-                case AuthenticationType.SqlAuthentication:
-                    return "SqlAuthentication";
-                case AuthenticationType.ActiveDirectoryIntegrated:
-                    return "ActiveDirectoryIntegrated";
-                case AuthenticationType.ActiveDirectoryPassword:
-                    return "ActiveDirectoryPassword";
-            }
-            return null;
-        }
-
-        internal static AuthenticationType? ParseAuthenticationType(this string value)
-        {
-            switch( value )
-            {
-                case "None":
-                    return AuthenticationType.None;
-                case "WindowsAuthentication":
-                    return AuthenticationType.WindowsAuthentication;
-                case "SqlAuthentication":
-                    return AuthenticationType.SqlAuthentication;
-                case "ActiveDirectoryIntegrated":
-                    return AuthenticationType.ActiveDirectoryIntegrated;
-                case "ActiveDirectoryPassword":
-                    return AuthenticationType.ActiveDirectoryPassword;
-            }
-            return null;
-        }
+        public const string None = "None";
+        public const string WindowsAuthentication = "WindowsAuthentication";
+        public const string SqlAuthentication = "SqlAuthentication";
+        public const string ActiveDirectoryIntegrated = "ActiveDirectoryIntegrated";
+        public const string ActiveDirectoryPassword = "ActiveDirectoryPassword";
     }
 }
