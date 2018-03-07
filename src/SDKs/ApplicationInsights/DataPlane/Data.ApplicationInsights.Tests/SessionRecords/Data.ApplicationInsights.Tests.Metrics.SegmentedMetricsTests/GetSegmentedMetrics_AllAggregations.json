@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/v1/apps/DEMO_APP/metrics/requests%2Fduration?timespan=PT12H&aggregation=avg%2Ccount%2Cmax%2Cmin%2Csum&segment=request%2FresultCode",
+      "EncodedRequestUri": "L3YxL2FwcHMvREVNT19BUFAvbWV0cmljcy9yZXF1ZXN0cyUyRmR1cmF0aW9uP3RpbWVzcGFuPVBUMTJIJmFnZ3JlZ2F0aW9uPWF2ZyUyQ2NvdW50JTJDbWF4JTJDbWluJTJDc3VtJnNlZ21lbnQ9cmVxdWVzdCUyRnJlc3VsdENvZGU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-api-key": [
+          "DEMO_KEY"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.ApplicationInsights.ApplicationInsightsDataClient/0.9.0.0"
+        ],
+        "prefer": [
+          "response-v1=true"
+        ],
+        "x-ms-app": [
+          "csharpsdk"
+        ],
+        "x-ms-client-request-id": [
+          "d0633b00-2913-4b02-a09e-0acfa58b0f5d"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"start\": \"2018-01-11T06:45:14.851Z\",\r\n    \"end\": \"2018-01-11T18:45:14.851Z\",\r\n    \"segments\": [\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 1020.66,\r\n          \"count\": 361,\r\n          \"max\": 1781.01,\r\n          \"min\": 74.6,\r\n          \"sum\": 368456.89\r\n        },\r\n        \"request/resultCode\": \"500\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 350.8,\r\n          \"count\": 2480,\r\n          \"max\": 11883.94,\r\n          \"min\": 0.42,\r\n          \"sum\": 869990.18\r\n        },\r\n        \"request/resultCode\": \"200\"\r\n      },\r\n      {\r\n        \"requests/duration\": {\r\n          \"avg\": 6.83,\r\n          \"count\": 433,\r\n          \"max\": 1554.06,\r\n          \"min\": 1.14,\r\n          \"sum\": 2957.08\r\n        },\r\n        \"request/resultCode\": \"404\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "441"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Connection": [
+          "keep-alive"
+        ],
+        "Date": [
+          "Thu, 11 Jan 2018 18:45:14 GMT"
+        ],
+        "Via": [
+          "1.1 draft-ai-green.7388b26a-f6f8-11e7-81e8-70b3d5800002"
+        ],
+        "Server": [
+          "nginx"
+        ],
+        "Vary": [
+          "Accept",
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Access-Control-Allow-Origin": [
+          "*"
+        ],
+        "Access-Control-Expose-Headers": [
+          "Retry-After,Age,WWW-Authenticate"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

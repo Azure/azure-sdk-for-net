@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// version</param>
         /// <param name="exceptionsAndWarnings">Migration exceptions and
         /// warnings.</param>
-        public MigrateSqlServerSqlDbTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), MigrationStatus? status = default(MigrationStatus?), string statusMessage = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, DatabaseSummaryResult> databaseSummary = default(IDictionary<string, DatabaseSummaryResult>), MigrationReportResult migrationReportResult = default(MigrationReportResult), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        public MigrateSqlServerSqlDbTaskOutputMigrationLevel(string id = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), long? durationInSeconds = default(long?), string status = default(string), string statusMessage = default(string), string message = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, DatabaseSummaryResult> databaseSummary = default(IDictionary<string, DatabaseSummaryResult>), MigrationReportResult migrationReportResult = default(MigrationReportResult), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
             StartedOn = startedOn;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'CompletedWithWarnings'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public MigrationStatus? Status { get; private set; }
+        public string Status { get; private set; }
 
         /// <summary>
         /// Gets migration status message

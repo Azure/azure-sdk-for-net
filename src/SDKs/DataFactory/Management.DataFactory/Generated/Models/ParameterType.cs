@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public const string Float = "Float";
         public const string Bool = "Bool";
         public const string Array = "Array";
+        public const string SecureString = "SecureString";
     }
 }

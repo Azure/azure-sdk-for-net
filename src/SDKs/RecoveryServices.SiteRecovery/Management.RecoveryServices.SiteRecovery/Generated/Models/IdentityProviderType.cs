@@ -22,9 +22,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     public enum IdentityProviderType
     {
         [EnumMember(Value = "RecoveryServicesActiveDirectory")]
-        RecoveryServicesActiveDirectory,
-        [EnumMember(Value = "CustomerActiveDirectory")]
-        CustomerActiveDirectory
+        RecoveryServicesActiveDirectory
     }
     internal static class IdentityProviderTypeEnumExtension
     {
@@ -39,8 +37,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             {
                 case IdentityProviderType.RecoveryServicesActiveDirectory:
                     return "RecoveryServicesActiveDirectory";
-                case IdentityProviderType.CustomerActiveDirectory:
-                    return "CustomerActiveDirectory";
             }
             return null;
         }
@@ -51,8 +47,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             {
                 case "RecoveryServicesActiveDirectory":
                     return IdentityProviderType.RecoveryServicesActiveDirectory;
-                case "CustomerActiveDirectory":
-                    return IdentityProviderType.CustomerActiveDirectory;
             }
             return null;
         }

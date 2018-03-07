@@ -42,6 +42,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="authenticationType">Type of authentication used to
         /// connect to the HDFS. Possible values are: Anonymous and Windows.
         /// Type: string (or Expression with resultType string).</param>
@@ -52,8 +55,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="userName">User name for Windows authentication. Type:
         /// string (or Expression with resultType string).</param>
         /// <param name="password">Password for Windows authentication.</param>
-        public HdfsLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object authenticationType = default(object), object encryptedCredential = default(object), object userName = default(object), SecretBase password = default(SecretBase))
-            : base(additionalProperties, connectVia, description)
+        public HdfsLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object authenticationType = default(object), object encryptedCredential = default(object), object userName = default(object), SecretBase password = default(SecretBase))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Url = url;
             AuthenticationType = authenticationType;

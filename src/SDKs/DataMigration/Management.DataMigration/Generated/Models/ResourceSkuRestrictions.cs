@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// the SKU is restricted.</param>
         /// <param name="reasonCode">The reason code for restriction. Possible
         /// values include: 'QuotaId', 'NotAvailableForSubscription'</param>
-        public ResourceSkuRestrictions(ResourceSkuRestrictionsType? type = default(ResourceSkuRestrictionsType?), IList<string> values = default(IList<string>), ResourceSkuRestrictionsReasonCode? reasonCode = default(ResourceSkuRestrictionsReasonCode?))
+        public ResourceSkuRestrictions(string type = default(string), IList<string> values = default(IList<string>), string reasonCode = default(string))
         {
             Type = type;
             Values = values;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Gets the type of restrictions. Possible values include: 'location'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public ResourceSkuRestrictionsType? Type { get; private set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Gets the value of restrictions. If the restriction type is set to
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'QuotaId', 'NotAvailableForSubscription'
         /// </summary>
         [JsonProperty(PropertyName = "reasonCode")]
-        public ResourceSkuRestrictionsReasonCode? ReasonCode { get; private set; }
+        public string ReasonCode { get; private set; }
 
     }
 }

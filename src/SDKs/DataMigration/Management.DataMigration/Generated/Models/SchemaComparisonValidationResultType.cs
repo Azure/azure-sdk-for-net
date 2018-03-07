@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="updateAction">Update action type with respect to
         /// target. Possible values include: 'DeletedOnTarget',
         /// 'ChangedOnTarget', 'AddedOnTarget'</param>
-        public SchemaComparisonValidationResultType(string objectName = default(string), ObjectType? objectType = default(ObjectType?), UpdateActionType? updateAction = default(UpdateActionType?))
+        public SchemaComparisonValidationResultType(string objectName = default(string), string objectType = default(string), string updateAction = default(string))
         {
             ObjectName = objectName;
             ObjectType = objectType;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'StoredProcedures', 'Table', 'User', 'View', 'Function'
         /// </summary>
         [JsonProperty(PropertyName = "objectType")]
-        public ObjectType? ObjectType { get; set; }
+        public string ObjectType { get; set; }
 
         /// <summary>
         /// Gets or sets update action type with respect to target. Possible
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'AddedOnTarget'
         /// </summary>
         [JsonProperty(PropertyName = "updateAction")]
-        public UpdateActionType? UpdateAction { get; set; }
+        public string UpdateAction { get; set; }
 
     }
 }

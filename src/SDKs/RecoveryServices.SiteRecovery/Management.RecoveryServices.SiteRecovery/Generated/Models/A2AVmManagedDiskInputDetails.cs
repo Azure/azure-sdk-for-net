@@ -36,11 +36,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// staging storage account Arm Id.</param>
         /// <param name="recoveryResourceGroupId">The target resource group Arm
         /// Id.</param>
-        public A2AVmManagedDiskInputDetails(string diskId = default(string), string primaryStagingAzureStorageAccountId = default(string), string recoveryResourceGroupId = default(string))
+        /// <param name="recoveryReplicaDiskAccountType">The replica disk type.
+        /// Its an optional value and will be same as source disk type if not
+        /// user provided.</param>
+        /// <param name="recoveryTargetDiskAccountType">The target disk type
+        /// after failover. Its an optional value and will be same as source
+        /// disk type if not user provided.</param>
+        public A2AVmManagedDiskInputDetails(string diskId = default(string), string primaryStagingAzureStorageAccountId = default(string), string recoveryResourceGroupId = default(string), string recoveryReplicaDiskAccountType = default(string), string recoveryTargetDiskAccountType = default(string))
         {
             DiskId = diskId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
+            RecoveryReplicaDiskAccountType = recoveryReplicaDiskAccountType;
+            RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
             CustomInit();
         }
 
@@ -66,6 +74,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryResourceGroupId")]
         public string RecoveryResourceGroupId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the replica disk type. Its an optional value and will
+        /// be same as source disk type if not user provided.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryReplicaDiskAccountType")]
+        public string RecoveryReplicaDiskAccountType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target disk type after failover. Its an optional
+        /// value and will be same as source disk type if not user provided.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryTargetDiskAccountType")]
+        public string RecoveryTargetDiskAccountType { get; set; }
 
     }
 }

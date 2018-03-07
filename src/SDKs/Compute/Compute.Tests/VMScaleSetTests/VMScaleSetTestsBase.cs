@@ -498,6 +498,41 @@ namespace Compute.Tests
             {
                 Assert.True((vmScaleSetOut.VirtualMachineProfile.NetworkProfile == null) || (vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count == 0));
             }
+
+            if(vmScaleSet.Zones != null)
+            {
+                Assert.True(vmScaleSet.Zones.SequenceEqual(vmScaleSetOut.Zones), "Zones don't match");
+                if(vmScaleSet.ZoneBalance.HasValue)
+                {
+                    Assert.Equal(vmScaleSet.ZoneBalance, vmScaleSetOut.ZoneBalance);
+                }
+                else
+                {
+                    if (vmScaleSet.Zones.Count > 1)
+                    {
+                        Assert.True(vmScaleSetOut.ZoneBalance.HasValue);
+                    }
+                    else
+                    {
+                        Assert.False(vmScaleSetOut.ZoneBalance.HasValue);
+                    }    
+                }
+
+                if (vmScaleSet.PlatformFaultDomainCount.HasValue)
+                {
+                    Assert.Equal(vmScaleSet.PlatformFaultDomainCount, vmScaleSetOut.PlatformFaultDomainCount);
+                }
+                else
+                {
+                    Assert.True(vmScaleSetOut.PlatformFaultDomainCount.HasValue);
+                }
+            }
+            else
+            {
+                Assert.Null(vmScaleSetOut.Zones);
+                Assert.Null(vmScaleSetOut.ZoneBalance);
+                Assert.Null(vmScaleSetOut.PlatformFaultDomainCount);
+            }
         }
 
         protected void CompareVmssNicConfig(VirtualMachineScaleSetNetworkConfiguration nicconfig,

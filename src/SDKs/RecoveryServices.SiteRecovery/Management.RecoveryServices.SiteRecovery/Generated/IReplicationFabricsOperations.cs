@@ -24,39 +24,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationFabricsOperations
     {
         /// <summary>
-        /// Migrates the site to AAD.
+        /// Gets the list of ASR fabrics
         /// </summary>
         /// <remarks>
-        /// The operation to migrate an Azure Site Recovery fabric to AAD.
+        /// Gets a list of the Azure Site Recovery fabrics in the vault.
         /// </remarks>
-        /// <param name='fabricName'>
-        /// ASR fabric to migrate.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> MigrateToAadWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Renews certificate for the fabric.
-        /// </summary>
-        /// <remarks>
-        /// Renews the connection certificate for the ASR replication fabric.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// fabric name to renew certs for.
-        /// </param>
-        /// <param name='renewCertificate'>
-        /// Renew certificate input.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -72,83 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Fabric>> RenewCertificateWithHttpMessagesAsync(string fabricName, RenewCertificateInput renewCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Perform failover of the process server.
-        /// </summary>
-        /// <remarks>
-        /// The operation to move replications from a process server to another
-        /// process server.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// The name of the fabric containing the process server.
-        /// </param>
-        /// <param name='failoverProcessServerRequest'>
-        /// The input to the failover process server operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Fabric>> ReassociateGatewayWithHttpMessagesAsync(string fabricName, FailoverProcessServerRequest failoverProcessServerRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Checks the consistency of the ASR fabric.
-        /// </summary>
-        /// <remarks>
-        /// The operation to perform a consistency check on the fabric.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Fabric>> CheckConsistencyWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes the site.
-        /// </summary>
-        /// <remarks>
-        /// The operation to delete or remove an Azure Site Recovery fabric.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// ASR fabric to delete
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Fabric>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the details of an ASR fabric.
         /// </summary>
@@ -175,7 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<Fabric>> GetWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an Azure Site Recoery fabric.
+        /// Creates an Azure Site Recovery fabric.
         /// </summary>
         /// <remarks>
         /// The operation to create an Azure Site Recovery fabric (for e.g.
@@ -226,11 +122,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse> PurgeWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the list of ASR fabrics
+        /// Checks the consistency of the ASR fabric.
         /// </summary>
         /// <remarks>
-        /// Gets a list of the Azure Site Recovery fabrics in the vault.
+        /// The operation to perform a consistency check on the fabric.
         /// </remarks>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -246,7 +145,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Fabric>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Fabric>> CheckConsistencyWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Migrates the site to AAD.
         /// </summary>
@@ -268,35 +167,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginMigrateToAadWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Renews certificate for the fabric.
-        /// </summary>
-        /// <remarks>
-        /// Renews the connection certificate for the ASR replication fabric.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// fabric name to renew certs for.
-        /// </param>
-        /// <param name='renewCertificate'>
-        /// Renew certificate input.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Fabric>> BeginRenewCertificateWithHttpMessagesAsync(string fabricName, RenewCertificateInput renewCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> MigrateToAadWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Perform failover of the process server.
         /// </summary>
@@ -325,32 +196,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Fabric>> BeginReassociateGatewayWithHttpMessagesAsync(string fabricName, FailoverProcessServerRequest failoverProcessServerRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Checks the consistency of the ASR fabric.
-        /// </summary>
-        /// <remarks>
-        /// The operation to perform a consistency check on the fabric.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Fabric>> BeginCheckConsistencyWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Fabric>> ReassociateGatewayWithHttpMessagesAsync(string fabricName, FailoverProcessServerRequest failoverProcessServerRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the site.
         /// </summary>
@@ -372,9 +218,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates an Azure Site Recoery fabric.
+        /// Renews certificate for the fabric.
+        /// </summary>
+        /// <remarks>
+        /// Renews the connection certificate for the ASR replication fabric.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// fabric name to renew certs for.
+        /// </param>
+        /// <param name='renewCertificate'>
+        /// Renew certificate input.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Fabric>> RenewCertificateWithHttpMessagesAsync(string fabricName, RenewCertificateInput renewCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates an Azure Site Recovery fabric.
         /// </summary>
         /// <remarks>
         /// The operation to create an Azure Site Recovery fabric (for e.g.
@@ -424,6 +298,132 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginPurgeWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Checks the consistency of the ASR fabric.
+        /// </summary>
+        /// <remarks>
+        /// The operation to perform a consistency check on the fabric.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Fabric>> BeginCheckConsistencyWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Migrates the site to AAD.
+        /// </summary>
+        /// <remarks>
+        /// The operation to migrate an Azure Site Recovery fabric to AAD.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// ASR fabric to migrate.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginMigrateToAadWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Perform failover of the process server.
+        /// </summary>
+        /// <remarks>
+        /// The operation to move replications from a process server to another
+        /// process server.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// The name of the fabric containing the process server.
+        /// </param>
+        /// <param name='failoverProcessServerRequest'>
+        /// The input to the failover process server operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Fabric>> BeginReassociateGatewayWithHttpMessagesAsync(string fabricName, FailoverProcessServerRequest failoverProcessServerRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes the site.
+        /// </summary>
+        /// <remarks>
+        /// The operation to delete or remove an Azure Site Recovery fabric.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// ASR fabric to delete
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string fabricName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Renews certificate for the fabric.
+        /// </summary>
+        /// <remarks>
+        /// Renews the connection certificate for the ASR replication fabric.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// fabric name to renew certs for.
+        /// </param>
+        /// <param name='renewCertificate'>
+        /// Renew certificate input.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Fabric>> BeginRenewCertificateWithHttpMessagesAsync(string fabricName, RenewCertificateInput renewCertificate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of ASR fabrics
         /// </summary>

@@ -21,12 +21,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum HealthErrorCategory
     {
+        [EnumMember(Value = "None")]
+        None,
         [EnumMember(Value = "Replication")]
         Replication,
         [EnumMember(Value = "TestFailover")]
         TestFailover,
         [EnumMember(Value = "Configuration")]
-        Configuration
+        Configuration,
+        [EnumMember(Value = "FabricInfrastructure")]
+        FabricInfrastructure,
+        [EnumMember(Value = "VersionExpiry")]
+        VersionExpiry
     }
     internal static class HealthErrorCategoryEnumExtension
     {
@@ -39,12 +45,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         {
             switch( value )
             {
+                case HealthErrorCategory.None:
+                    return "None";
                 case HealthErrorCategory.Replication:
                     return "Replication";
                 case HealthErrorCategory.TestFailover:
                     return "TestFailover";
                 case HealthErrorCategory.Configuration:
                     return "Configuration";
+                case HealthErrorCategory.FabricInfrastructure:
+                    return "FabricInfrastructure";
+                case HealthErrorCategory.VersionExpiry:
+                    return "VersionExpiry";
             }
             return null;
         }
@@ -53,12 +65,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         {
             switch( value )
             {
+                case "None":
+                    return HealthErrorCategory.None;
                 case "Replication":
                     return HealthErrorCategory.Replication;
                 case "TestFailover":
                     return HealthErrorCategory.TestFailover;
                 case "Configuration":
                     return HealthErrorCategory.Configuration;
+                case "FabricInfrastructure":
+                    return HealthErrorCategory.FabricInfrastructure;
+                case "VersionExpiry":
+                    return HealthErrorCategory.VersionExpiry;
             }
             return null;
         }
