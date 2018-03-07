@@ -6,43 +6,100 @@ using DataFactory.Tests.Utils;
 using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
 using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DataFactory.Tests.ScenarioTests
 {
     public class DataFactoryScenarioTests : ScenarioTestBase<DataFactoryScenarioTests>
     {
+        public Factory expectedFactory = new Factory(location: FactoryLocation);
+
         [Fact]
         [Trait(TraitName.TestType, TestType.Scenario)]
-        public void DataFactoryCrud()
+        public async Task DataFactoryCrud()
         {
-            var expectedFactory = new Factory(location: FactoryLocation);
-
-            Action<DataFactoryManagementClient> action = (client) =>
+            Func<DataFactoryManagementClient, Task> action = async (client) =>
             {
-                Factory createResponse = client.Factories.CreateOrUpdate(ResourceGroupName, DataFactoryName, expectedFactory);
-                this.ValidateFactory(createResponse);
-
-                Factory getResponse = client.Factories.Get(ResourceGroupName, DataFactoryName);
-                this.ValidateFactory(getResponse);
-
-                IPage<Factory> listByResourceGroupResponse = client.Factories.ListByResourceGroup(ResourceGroupName);
-                this.ValidateFactory(listByResourceGroupResponse.First());
+                await Create(client, this.ResourceGroupName, this.DataFactoryName, expectedFactory);
+                await GetList(client, this.ResourceGroupName, this.DataFactoryName, expectedFactory);
             };
 
-            Action<DataFactoryManagementClient> finallyAction = (client) =>
+            Func<DataFactoryManagementClient, Task> finallyAction = async (client) =>
             {
-                client.Factories.Delete(ResourceGroupName, DataFactoryName);
+                await Delete(client, this.ResourceGroupName, this.DataFactoryName);
             };
 
-            this.RunTest(action, finallyAction);
+            await this.RunTest(action, finallyAction);
         }
 
-        private void ValidateFactory(Factory actualFactory)
+        internal static async Task Create(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, Factory expectedFactory)
         {
-            Assert.Equal(DataFactoryName, actualFactory.Name);
+            AzureOperationResponse<Factory> createResponse = await client.Factories.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, expectedFactory);
+            ValidateFactory(createResponse.Body,dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
+
+            AzureOperationResponse<Factory> getResponse = await client.Factories.GetWithHttpMessagesAsync(resourceGroupName, dataFactoryName);
+            ValidateFactory(getResponse.Body, dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, getResponse.Response.StatusCode);
+
+            AzureOperationResponse<IPage<Factory>> listByResourceGroupResponse = await client.Factories.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName);
+            ValidateFactory(listByResourceGroupResponse.Body.First(), dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, listByResourceGroupResponse.Response.StatusCode);
+
+        }
+
+        internal static async Task Update(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, Factory expectedFactory, FactoryUpdateParameters tags)
+        {
+            AzureOperationResponse<Factory> updateResponse = await client.Factories.UpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, tags);
+            ValidateFactory(updateResponse.Body, dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, updateResponse.Response.StatusCode);
+
+            AzureOperationResponse<Factory> getResponse = await client.Factories.GetWithHttpMessagesAsync(resourceGroupName, dataFactoryName);
+            ValidateFactory(getResponse.Body, dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, getResponse.Response.StatusCode);
+
+            AzureOperationResponse<IPage<Factory>> listByResourceGroupResponse = await client.Factories.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName);
+            ValidateFactory(listByResourceGroupResponse.Body.First(), dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, listByResourceGroupResponse.Response.StatusCode);
+
+            AzureOperationResponse<IPage<Factory>> listResponse = await client.Factories.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName);
+            ValidateFactory(listResponse.Body.First(), dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, listResponse.Response.StatusCode);
+        }
+
+        internal static async Task Delete(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName)
+        {
+            AzureOperationResponse deleteResponse = await client.Factories.DeleteWithHttpMessagesAsync(resourceGroupName, dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, deleteResponse.Response.StatusCode);
+
+            deleteResponse = await client.Factories.DeleteWithHttpMessagesAsync(resourceGroupName, dataFactoryName);
+            Assert.Equal(HttpStatusCode.NoContent, deleteResponse.Response.StatusCode);
+        }
+
+        internal static async Task GetList(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, Factory expectedFactory)
+        {
+            AzureOperationResponse<Factory> createResponse = await client.Factories.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, expectedFactory);
+            ValidateFactory(createResponse.Body, dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
+
+            AzureOperationResponse<Factory> getResponse = await client.Factories.GetWithHttpMessagesAsync(resourceGroupName, dataFactoryName);
+            ValidateFactory(getResponse.Body, dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, getResponse.Response.StatusCode);
+
+            AzureOperationResponse<IPage<Factory>> listByResourceGroupResponse = await client.Factories.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName);
+            ValidateFactory(listByResourceGroupResponse.Body.First(), dataFactoryName);
+            Assert.Equal(HttpStatusCode.OK, listByResourceGroupResponse.Response.StatusCode);
+
+        }
+
+        private static void ValidateFactory(Factory actualFactory, string expectedFactoryName)
+        {
+            Assert.Equal(expectedFactoryName, actualFactory.Name);
             Assert.Equal(FactoryLocation, actualFactory.Location);
             Assert.Equal("Succeeded", actualFactory.ProvisioningState);
         }

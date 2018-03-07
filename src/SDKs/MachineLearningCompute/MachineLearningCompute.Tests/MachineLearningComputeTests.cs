@@ -4,6 +4,9 @@ using Microsoft.Azure.Management.MachineLearningCompute;
 using Xunit.Abstractions;
 using Microsoft.Azure.Management.MachineLearningCompute.Models;
 using System.Linq;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
+using System;
 
 namespace MachineLearningCompute.Tests
 {
@@ -20,10 +23,9 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void CreateCluster()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-create"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-create");
-
                 testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
 
@@ -33,12 +35,25 @@ namespace MachineLearningCompute.Tests
         }
 
         [Fact]
+        public void CreateClusterWithoutOrchestatorProperties()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-no-orch-prop"))
+            {
+                testBase.CreateResourceGroup();
+                var createdCluster = testBase.CreateClusterWithoutOrchestratorProperties();
+
+                Assert.NotNull(createdCluster);
+                Assert.Equal(OperationStatus.Succeeded, createdCluster.ProvisioningState);
+            }
+        }
+
+        [Fact]
         public void GetCluster()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-get"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-get");
-
                 var resourceGroup = testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
                 var fetchedCluster = testBase.Client.OperationalizationClusters.Get(resourceGroup.Name, createdCluster.Name);
@@ -57,10 +72,9 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void ListKeys()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-keys"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-keys");
-
                 var resourceGroup = testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
 
@@ -81,42 +95,39 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void ListClustersInResourceGroup()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-list-rg"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-list-rg");
-
                 var resourceGroup = testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
 
                 var clusterNames = testBase.Client.OperationalizationClusters.ListByResourceGroup(resourceGroup.Name).Select(cluster => cluster.Name);
 
-                Assert.True(clusterNames.Contains(createdCluster.Name));
+                Assert.Contains(createdCluster.Name, clusterNames);
             }
         }
 
         [Fact]
         public void ListClustersBySubscriptionId()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-list-sub"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-list-sub");
-
                 var resourceGroup = testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
 
                 var clusterNames = testBase.Client.OperationalizationClusters.ListBySubscriptionId().Select(cluster => cluster.Name);
 
-                Assert.True(clusterNames.Contains(createdCluster.Name));
+                Assert.Contains(createdCluster.Name, clusterNames);
             }
         }
 
         [Fact]
         public void DeleteCluster()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-delete"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-delete");
-
                 var resourceGroup = testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
 
@@ -131,10 +142,9 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void CheckSystemServicesUpdatesAvailable()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-checkupdate"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-checkupdate");
-
                 var resourceGroup = testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
 
@@ -147,10 +157,9 @@ namespace MachineLearningCompute.Tests
         [Fact]
         public void UpdateSystemServices()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-update"))
             {
-                var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-update");
-
                 var resourceGroup = testBase.CreateResourceGroup();
                 var createdCluster = testBase.CreateCluster();
 
@@ -159,6 +168,21 @@ namespace MachineLearningCompute.Tests
                 Assert.Equal(OperationStatus.Succeeded, updateResponse.UpdateStatus);
                 Assert.NotNull(updateResponse.UpdateStartedOn);
                 Assert.NotNull(updateResponse.UpdateCompletedOn);
+            }
+        }
+
+        [Fact]
+        public void DeleteAllResources()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var testBase = new MachineLearningComputeTestBase(context, testNamePrefix + "-deleteall"))
+            {
+                var resourceGroup = testBase.CreateResourceGroup();
+                var createdCluster = testBase.CreateCluster(clusterType: "Local");
+
+                var deleteResponse = testBase.Client.OperationalizationClusters.Delete(resourceGroup.Name, createdCluster.Name, deleteAll: true);
+
+                Assert.False(testBase.ResourcesClient.ResourceGroups.CheckExistence(testBase.ManagedByResourceGroupName));
             }
         }
     }

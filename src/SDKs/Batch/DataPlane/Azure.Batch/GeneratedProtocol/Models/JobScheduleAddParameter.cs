@@ -46,7 +46,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the schedule as metadata.</param>
         public JobScheduleAddParameter(string id, Schedule schedule, JobSpecification jobSpecification, string displayName = default(string), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
-            JobSpecification = new JobSpecification();
             Id = id;
             DisplayName = displayName;
             Schedule = schedule;

@@ -1,0 +1,66 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/contentmoderator/moderate/v1.0/ProcessText/Screen/?language=eng&autocorrect=false&PII=false&listId=&classify=false",
+      "EncodedRequestUri": "L2NvbnRlbnRtb2RlcmF0b3IvbW9kZXJhdGUvdjEuMC9Qcm9jZXNzVGV4dC9TY3JlZW4vP2xhbmd1YWdlPWVuZyZhdXRvY29ycmVjdD1mYWxzZSZQSUk9ZmFsc2UmbGlzdElkPSZjbGFzc2lmeT1mYWxzZQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "\"Ciao buongiorno stronzo sucks!\"",
+      "RequestHeaders": {
+        "Content-Type": [
+          "text/plain"
+        ],
+        "Content-Length": [
+          "32"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+         
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2600.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.16299",
+          "Microsoft.CognitiveServices.ContentModerator.ContentModeratorClient/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"OriginalText\": \"\\\"Ciao buongiorno stronzo sucks!\\\"\",\r\n  \"NormalizedText\": \"\\\" Ciao buongiorno stronzo sucks! \\\"\",\r\n  \"Misrepresentation\": null,\r\n  \"Language\": \"eng\",\r\n  \"Terms\": [\r\n    {\r\n      \"Index\": 25,\r\n      \"OriginalIndex\": 25,\r\n      \"ListId\": 0,\r\n      \"Term\": \"sucks\"\r\n    }\r\n  ],\r\n  \"Status\": {\r\n    \"Code\": 3000,\r\n    \"Description\": \"OK\",\r\n    \"Exception\": null\r\n  },\r\n  \"TrackingId\": \"822d73e9-f2f2-411c-bd8d-e4f5214f47aa\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "330"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "apim-request-id": [
+          "87fc350c-1040-4b98-95f1-571548591f09"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 Dec 2017 22:18:42 GMT"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

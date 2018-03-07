@@ -21,13 +21,32 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeDeallocationOption
     {
+        /// <summary>
+        /// Terminate running task processes and requeue the tasks. The tasks
+        /// will run again when a node is available. Remove nodes as soon as
+        /// tasks have been terminated.
+        /// </summary>
         [EnumMember(Value = "requeue")]
         Requeue,
+        /// <summary>
+        /// Terminate running tasks. The tasks will be completed with
+        /// failureInfo indicating that they were terminated, and will not run
+        /// again. Remove nodes as soon as tasks have been terminated.
+        /// </summary>
         [EnumMember(Value = "terminate")]
         Terminate,
-        [EnumMember(Value = "taskCompletion")]
+        /// <summary>
+        /// Allow currently running tasks to complete. Schedule no new tasks
+        /// while waiting. Remove nodes when all tasks have completed.
+        /// </summary>
+        [EnumMember(Value = "taskcompletion")]
         TaskCompletion,
-        [EnumMember(Value = "retainedData")]
+        /// <summary>
+        /// Allow currently running tasks to complete, then wait for all task
+        /// data retention periods to expire. Schedule no new tasks while
+        /// waiting. Remove nodes when all task retention periods have expired.
+        /// </summary>
+        [EnumMember(Value = "retaineddata")]
         RetainedData
     }
     internal static class ComputeNodeDeallocationOptionEnumExtension
@@ -46,9 +65,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                 case ComputeNodeDeallocationOption.Terminate:
                     return "terminate";
                 case ComputeNodeDeallocationOption.TaskCompletion:
-                    return "taskCompletion";
+                    return "taskcompletion";
                 case ComputeNodeDeallocationOption.RetainedData:
-                    return "retainedData";
+                    return "retaineddata";
             }
             return null;
         }
@@ -61,9 +80,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeDeallocationOption.Requeue;
                 case "terminate":
                     return ComputeNodeDeallocationOption.Terminate;
-                case "taskCompletion":
+                case "taskcompletion":
                     return ComputeNodeDeallocationOption.TaskCompletion;
-                case "retainedData":
+                case "retaineddata":
                     return ComputeNodeDeallocationOption.RetainedData;
             }
             return null;

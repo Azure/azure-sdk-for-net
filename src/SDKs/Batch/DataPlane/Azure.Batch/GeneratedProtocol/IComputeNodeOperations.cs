@@ -169,23 +169,8 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </param>
         /// <param name='nodeRebootOption'>
         /// When to reboot the compute node and what to do with currently
-        /// running tasks. Values are:
-        ///
-        /// requeue - Terminate running task processes and requeue the tasks.
-        /// The tasks will run again when a node is available. Restart the node
-        /// as soon as tasks have been terminated.
-        /// terminate - Terminate running tasks. The tasks will not run again.
-        /// Restart the node as soon as tasks have been terminated.
-        /// taskcompletion - Allow currently running tasks to complete.
-        /// Schedule no new tasks while waiting. Restart the node when all
-        /// tasks have completed.
-        /// retaineddata - Allow currently running tasks to complete, then wait
-        /// for all task data retention periods to expire. Schedule no new
-        /// tasks while waiting. Restart the node when all task retention
-        /// periods have expired.
-        ///
-        /// The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskCompletion', 'retainedData'
+        /// running tasks. The default value is requeue. Possible values
+        /// include: 'requeue', 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeRebootOptions'>
         /// Additional parameters for the operation
@@ -219,23 +204,8 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </param>
         /// <param name='nodeReimageOption'>
         /// When to reimage the compute node and what to do with currently
-        /// running tasks. Values are:
-        ///
-        /// requeue - Terminate running task processes and requeue the tasks.
-        /// The tasks will run again when a node is available. Reimage the node
-        /// as soon as tasks have been terminated.
-        /// terminate - Terminate running tasks. The tasks will not run again.
-        /// Reimage the node as soon as tasks have been terminated.
-        /// taskcompletion - Allow currently running tasks to complete.
-        /// Schedule no new tasks while waiting. Reimage the node when all
-        /// tasks have completed.
-        /// retaineddata - Allow currently running tasks to complete, then wait
-        /// for all task data retention periods to expire. Schedule no new
-        /// tasks while waiting. Reimage the node when all task retention
-        /// periods have expired.
-        ///
-        /// The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskCompletion', 'retainedData'
+        /// running tasks. The default value is requeue. Possible values
+        /// include: 'requeue', 'terminate', 'taskCompletion', 'retainedData'
         /// </param>
         /// <param name='computeNodeReimageOptions'>
         /// Additional parameters for the operation
@@ -269,20 +239,8 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </param>
         /// <param name='nodeDisableSchedulingOption'>
         /// What to do with currently running tasks when disabling task
-        /// scheduling on the compute node. Values are:
-        ///
-        /// requeue - Terminate running task processes and requeue the tasks.
-        /// The tasks may run again on other compute nodes, or when task
-        /// scheduling is re-enabled on this node. Enter offline state as soon
-        /// as tasks have been terminated.
-        /// terminate - Terminate running tasks. The tasks will not run again.
-        /// Enter offline state as soon as tasks have been terminated.
-        /// taskcompletion - Allow currently running tasks to complete.
-        /// Schedule no new tasks while waiting. Enter offline state when all
-        /// tasks have completed.
-        ///
-        /// The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'taskCompletion'
+        /// scheduling on the compute node. The default value is requeue.
+        /// Possible values include: 'requeue', 'terminate', 'taskCompletion'
         /// </param>
         /// <param name='computeNodeDisableSchedulingOptions'>
         /// Additional parameters for the operation

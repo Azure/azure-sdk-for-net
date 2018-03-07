@@ -54,6 +54,32 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void ExecuteSsisPackageActivity_SDKSample()
+        {
+            string triggeredPipelineName = "MyExecuteSsisPackagePipelineActivity";
+            ExecuteSSISPackageActivity activity = new ExecuteSSISPackageActivity
+            {
+                Name = triggeredPipelineName,
+                Description = "Execute ssis package activity",
+                Runtime = "x64",
+                LoggingLevel = "Basic",
+                EnvironmentPath = "./test",
+                PackageLocation = new SSISPackageLocation
+                {
+                    PackagePath = "myfolder/myproject/mypackage.dtsx"
+                },
+                ConnectVia = new IntegrationRuntimeReference
+                {
+                    ReferenceName = "myIntegrationRuntime"
+                }
+            };
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+            var json = SafeJsonConvert.SerializeObject(activity, client.SerializationSettings);
+            Assert.Contains(triggeredPipelineName, json);
+        }
+
+        [Fact]
         public void ExecuteBasicWebActivity_SDKSample()
         {
             string triggeredPipelineName = "MyBasicWebPipelineActivity";

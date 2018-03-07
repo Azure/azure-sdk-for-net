@@ -21,11 +21,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum TaskAddStatus
     {
+        /// <summary>
+        /// The task was added successfully.
+        /// </summary>
         [EnumMember(Value = "success")]
         Success,
-        [EnumMember(Value = "clientError")]
+        /// <summary>
+        /// The task failed to add due to a client error and should not be
+        /// retried without modifying the request as appropriate.
+        /// </summary>
+        [EnumMember(Value = "clienterror")]
         ClientError,
-        [EnumMember(Value = "serverError")]
+        /// <summary>
+        /// Task failed to add due to a server error and can be retried without
+        /// modification.
+        /// </summary>
+        [EnumMember(Value = "servererror")]
         ServerError
     }
     internal static class TaskAddStatusEnumExtension
@@ -42,9 +53,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                 case TaskAddStatus.Success:
                     return "success";
                 case TaskAddStatus.ClientError:
-                    return "clientError";
+                    return "clienterror";
                 case TaskAddStatus.ServerError:
-                    return "serverError";
+                    return "servererror";
             }
             return null;
         }
@@ -55,9 +66,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             {
                 case "success":
                     return TaskAddStatus.Success;
-                case "clientError":
+                case "clienterror":
                     return TaskAddStatus.ClientError;
-                case "serverError":
+                case "servererror":
                     return TaskAddStatus.ServerError;
             }
             return null;

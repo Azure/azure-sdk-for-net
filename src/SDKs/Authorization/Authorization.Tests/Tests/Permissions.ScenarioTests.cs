@@ -12,6 +12,8 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Net;
 using Xunit;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace Authorization.Tests
 {
@@ -100,7 +102,7 @@ namespace Authorization.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
-                string resourceName = TestUtilities.GenerateName("csmr");
+                string resourceName = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "resourceId").ToString();
                 var client = GetResourceManagementClient(context);
                 var location = RESOURCE_TEST_LOCATION;
 
@@ -108,24 +110,24 @@ namespace Authorization.Tests
                     new Microsoft.Azure.Management.Resources.Models.ResourceGroup { Location = location });
 
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName,
-                        "Microsoft.Web",
+                        "Microsoft.Authorization",
                         "",
-                        "sites",
+                        "roleAssignments",
                         resourceName,
-                        WEBSITE_RP_VERSION,
+                        "2017-09-01",
                     new Microsoft.Azure.Management.Resources.Models.GenericResource()
                     {
                         Location = location,
-                        Properties = "{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}"
+                        Properties = JObject.Parse("{'roleDefinitionId':'/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7','principalId':'f8d526a0-54eb-4941-ae69-ebf4a334d0f0'}")
                     }
                 );
-
+                
                 var authzClient = GetAuthorizationManagementClient(context);
 
                 var resourcePermissions = authzClient.Permissions.ListForResource(groupName,
-                    "Microsoft.Web",
+                    "Microsoft.Authorization",
                     "",
-                    "sites",
+                    "roleAssignments",
                     resourceName
                 );
 
@@ -163,6 +165,26 @@ namespace Authorization.Tests
                     Assert.Equal(HttpStatusCode.NotFound, ce.Response.StatusCode);
                 }
             }
+        }
+
+        private static T GetValueFromTestContext<T>(Func<T> constructor, Func<string, T> parser, string mockName)
+        {
+            T retValue = default(T);
+
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                retValue = constructor.Invoke();
+                HttpMockServer.Variables[mockName] = retValue.ToString();
+            }
+            else
+            {
+                if (HttpMockServer.Variables.ContainsKey(mockName))
+                {
+                    retValue = parser.Invoke(HttpMockServer.Variables[mockName]);
+                }
+            }
+
+            return retValue;
         }
     }
 }

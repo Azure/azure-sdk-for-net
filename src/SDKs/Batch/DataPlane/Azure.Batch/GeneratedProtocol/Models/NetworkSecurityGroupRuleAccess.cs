@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum NetworkSecurityGroupRuleAccess
     {
+        /// <summary>
+        /// Allow access.
+        /// </summary>
         [EnumMember(Value = "allow")]
         Allow,
+        /// <summary>
+        /// Deny access.
+        /// </summary>
         [EnumMember(Value = "deny")]
         Deny
     }

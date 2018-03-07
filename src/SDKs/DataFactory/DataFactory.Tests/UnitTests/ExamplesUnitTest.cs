@@ -107,8 +107,13 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("IntegrationRuntimes_Update", (example, client, responseCode) =>
             {
-                IntegrationRuntimeResource resource = client.IntegrationRuntimes.CreateOrUpdate(RGN(example), FN(example), IRN(example), IRR(example, client, "integrationRuntime"));
-                CheckResponseBody(example, client, responseCode, resource);
+                IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
+                    new UpdateIntegrationRuntimeRequest
+                    {
+                        AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
+                        UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
+                    });
+                CheckResponseBody(example, client, responseCode, response);
             });
         }
 
@@ -198,6 +203,59 @@ namespace DataFactory.Tests.UnitTests
             {
                 client.LongRunningOperationRetryTimeout = 1;
                 client.IntegrationRuntimes.Stop(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimes_Upgrade()
+        {
+            RunAyncApiTest("IntegrationRuntimes_Upgrade", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.Upgrade(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Update()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Update", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Update(RGN(example), FN(example), IRN(example), "Node_1",
+                new UpdateIntegrationRuntimeNodeRequest
+                {
+                    ConcurrentJobsLimit = 2
+                });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimes_RemoveNode()
+        {
+            RunAyncApiTest("IntegrationRuntimes_RemoveNode", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.RemoveNode(RGN(example), FN(example), IRN(example),
+                    new IntegrationRuntimeRemoveNodeRequest
+                    {
+                        NodeName = "Node_1"
+                    });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Delete()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Delete", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_GetIpAddress()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_GetIpAddress", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
             });
         }
 
@@ -433,6 +491,15 @@ namespace DataFactory.Tests.UnitTests
                 CreateRunResponse response = client.Pipelines.CreateRun(RGN(example), FN(example), PN(example), GetTypedParameter<Dictionary<string, object>>(example, client, "parameters"));
                 CheckResponseBody(example, client, responseCode, response);
                 // ISSUE: It always returns a 202 response with a runId and no Location header, regardless of whether a run was actually created
+            });
+        }
+
+        [Fact]
+        public void Factories_CancelPipelineRun()
+        {
+            RunTest("Factories_CancelPipelineRun", (example, client, responseCode) =>
+            {
+                client.Factories.CancelPipelineRun(RGN(example), FN(example), new Guid().ToString());
             });
         }
 

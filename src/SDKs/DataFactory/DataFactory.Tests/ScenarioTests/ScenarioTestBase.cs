@@ -3,36 +3,60 @@
 // license information.
 
 using Microsoft.Azure.Management.DataFactory;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace DataFactory.Tests.ScenarioTests
 {
     public abstract class ScenarioTestBase<T>
     {
-        protected const string ResourceGroupName = "sdktesting";
-        protected const string DataFactoryName = "sdktestingfactory";
+        private const string ResourceGroupNamePrefix = "sdktestingadfrg";
+        protected const string DataFactoryNamePrefix = "sdktestingfactory";
         protected const string FactoryLocation = "East US 2";
         protected static string ClassName = typeof(T).FullName;
 
-        protected void RunTest(Action<DataFactoryManagementClient> initialAction, Action<DataFactoryManagementClient> finallyAction = null, [CallerMemberName] string methodName = "")
+        protected string ResourceGroupName { get; private set; }
+        protected string DataFactoryName { get; private set; }
+
+        protected DataFactoryManagementClient Client { get; private set; }
+
+        protected async Task RunTest(Func<DataFactoryManagementClient, Task> initialAction, Func<DataFactoryManagementClient, Task> finallyAction, [CallerMemberName] string methodName = "")
         {
             using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
-                DataFactoryManagementClient client = mockContext.GetServiceClient<DataFactoryManagementClient>(TestEnvironmentFactory.GetTestEnvironment());
+                this.ResourceGroupName = TestUtilities.GenerateName(ResourceGroupNamePrefix);
+                this.DataFactoryName = TestUtilities.GenerateName(DataFactoryNamePrefix);
+                this.Client = mockContext.GetServiceClient<DataFactoryManagementClient>(TestEnvironmentFactory.GetTestEnvironment());
+                ResourceManagementClient resourceManagementClient = mockContext.GetServiceClient<ResourceManagementClient>(TestEnvironmentFactory.GetTestEnvironment());
+
                 try
                 {
-                    initialAction.Invoke(client);
+                    resourceManagementClient.ResourceGroups.CreateOrUpdate(this.ResourceGroupName, new ResourceGroup() { Location = FactoryLocation });
+                    await initialAction(this.Client);
                 }
                 finally
                 {
                     if (finallyAction != null)
                     {
-                        finallyAction.Invoke(client);
+                        await finallyAction(this.Client);
                     }
+
+                    resourceManagementClient.ResourceGroups.Delete(this.ResourceGroupName);
                 }
             }
+        }
+
+        protected static void ValidateSubResource(DataFactoryManagementClient client, string resourceGroupName, Microsoft.Azure.Management.DataFactory.Models.SubResource actual, string expectedDataFactoryName, string expectedName, string expectedSubResourceType)
+        {
+            string expectedResourceID = $"/subscriptions/{client.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{expectedDataFactoryName}/{expectedSubResourceType}/{expectedName}";
+            Assert.Equal(expectedResourceID, actual.Id);
+            Assert.Equal(expectedName, actual.Name);
+            Assert.NotNull(actual.Etag);
         }
     }
 }

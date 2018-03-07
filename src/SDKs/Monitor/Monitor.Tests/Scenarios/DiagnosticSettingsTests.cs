@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -27,7 +27,7 @@ namespace Monitor.Tests.Scenarios
         /// <summary>
         /// User needs several permissions before executing these commands. Otherwise it fails for some authorization issue.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "This feature is about to be changed.")]
         [Trait("Category", "Scenario")]
         public void CreateGetUpdateDiagnosticSetting()
         {

@@ -1,16 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.Websites</PackageId>
-    <Description>Provides website management capabilities for Microsoft Azure.</Description>
-    <AssemblyName>Microsoft.Azure.Management.Websites</AssemblyName>
-    <VersionPrefix>1.7.0-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure website management;website management</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[This is the Azure App Service SDK for .NET, based on the Azure App Service REST API, version 2016-03-01 of Certificates, Recommendations, and DeletedWebApps, 2016-08-01 of WebApps, and 2016-09-01 of AppServiceEnvironments and AppServicePlans.]]>
-    </PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>  
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Websites</PackageId>
+		<Description>Provides website management capabilities for Microsoft Azure.</Description>
+		<AssemblyName>Microsoft.Azure.Management.Websites</AssemblyName>
+		<Version>1.7.1-preview</Version>
+		<PackageTags>Microsoft Azure website management;website management;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[This is the Azure App Service SDK for .NET, based on the Azure App Service REST API, version 2016-03-01 of Certificates, Recommendations, and DeletedWebApps, 2016-08-01 of WebApps, and 2016-09-01 of AppServiceEnvironments and AppServicePlans.]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

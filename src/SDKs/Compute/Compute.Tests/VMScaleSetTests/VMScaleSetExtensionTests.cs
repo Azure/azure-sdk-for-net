@@ -34,7 +34,7 @@ namespace Compute.Tests
             }
         }
 
-        public void TestVMScaleSetExtensionsImpl(MockContext context)
+        private void TestVMScaleSetExtensionsImpl(MockContext context)
         {
             EnsureClientsInitialized(context);
 

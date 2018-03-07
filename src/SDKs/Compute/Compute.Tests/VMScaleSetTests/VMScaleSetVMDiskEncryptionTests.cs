@@ -42,7 +42,7 @@ namespace Compute.Tests
             }
         }
 
-        public void TestDiskEncryptionOnScaleSetVMInternal(MockContext context, bool hasManagedDisks = true, bool useVmssExtension = true)
+        private void TestDiskEncryptionOnScaleSetVMInternal(MockContext context, bool hasManagedDisks = true, bool useVmssExtension = true)
         {
             EnsureClientsInitialized(context);
 
@@ -90,7 +90,7 @@ namespace Compute.Tests
                     useVmssExtension ? extensionProfile : null,
                     (vmss) =>
                     {
-                        vmss.Sku.Name = "Standard_A3";
+                        vmss.Sku.Name = VirtualMachineSizeTypes.StandardA3;
                         vmss.Sku.Tier = "Standard";
                         vmss.VirtualMachineProfile.StorageProfile.OsDisk = new VirtualMachineScaleSetOSDisk()
                         {

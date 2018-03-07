@@ -68,7 +68,7 @@ namespace Compute.Tests
                     inputVM = null;
                     try
                     {
-                        vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                        vm1 = CreateVM(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
                     }
                     catch (Exception ex)
                     {
@@ -122,7 +122,7 @@ namespace Compute.Tests
                     VirtualMachine vm1 = null;
                     try
                     {
-                        vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
+                        vm1 = CreateVM(rgName, asName, storageAccountOutput, dummyImageRef, out inputVM, useVMMImage);
                     }
                     catch (Exception ex)
                     {

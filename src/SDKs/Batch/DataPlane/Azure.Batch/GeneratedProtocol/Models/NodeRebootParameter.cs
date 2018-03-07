@@ -47,21 +47,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// currently running tasks.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// requeue - Terminate running task processes and requeue the tasks.
-        /// The tasks will run again when a node is available. Restart the node
-        /// as soon as tasks have been terminated.
-        /// terminate - Terminate running tasks. The tasks will not run again.
-        /// Restart the node as soon as tasks have been terminated.
-        /// taskcompletion - Allow currently running tasks to complete.
-        /// Schedule no new tasks while waiting. Restart the node when all
-        /// tasks have completed.
-        /// retaineddata - Allow currently running tasks to complete, then wait
-        /// for all task data retention periods to expire. Schedule no new
-        /// tasks while waiting. Restart the node when all task retention
-        /// periods have expired.
-        ///
         /// The default value is requeue. Possible values include: 'requeue',
         /// 'terminate', 'taskCompletion', 'retainedData'
         /// </remarks>

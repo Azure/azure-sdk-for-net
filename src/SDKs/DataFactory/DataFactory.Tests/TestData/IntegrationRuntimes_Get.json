@@ -9,20 +9,38 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:51 GMT",
-        "x-ms-request-id": "61423813-3e7f-485e-b6c3-dd332b3dc9e1",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14916",
-        "x-ms-correlation-request-id": "ed66496f-3cad-4f82-b955-86503726cfe5"
+        "Date": "Tue, 28 Nov 2017 07:05:29 GMT",
+        "x-ms-request-id": "f0c62d3c-0df3-4b08-b860-d258752bdfec",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": {
         "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
         "name": "exampleIntegrationRuntime",
         "properties": {
-          "type": "SelfHosted",
-          "description": "Update description"
+          "type": "Managed",
+          "typeProperties": {
+            "computeProperties": {
+              "location": "West US",
+              "nodeSize": "Standard_D1_v2",
+              "numberOfNodes": 1,
+              "maxParallelExecutionsPerNode": 1
+            },
+            "ssisProperties": {
+              "catalogInfo": {
+                "catalogServerEndpoint": "yandongtestsvr.database.windows.net",
+                "catalogAdminUserName": "yanzhang",
+                "catalogAdminPassword": {
+                  "type": "SecureString",
+                  "value": "**********"
+                },
+                "catalogPricingTier": "S1"
+              }
+            }
+          },
+          "description": "A managed reserved integration runtime",
+          "state": "Initial"
         },
-        "etag": "28031ba7-0000-0000-0000-59b971260000"
+        "etag": "0100333d-0000-0000-0000-5a1d0ab80000"
       }
     }
   }

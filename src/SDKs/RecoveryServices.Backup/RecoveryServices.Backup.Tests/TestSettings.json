@@ -1,7 +1,7 @@
 ﻿{
-  "VirtualMachineName": "iaasvmtestv2vm1",
-  "VirtualMachineResourceGroupName": "sdktestrg",
+  "VirtualMachineName": "netvmtestv2vm1",
+  "VirtualMachineResourceGroupName": "netsdktestrg",
   "VirtualMachineType": "Compute",
-  "RestoreStorageAccountName": "sdktestrg",
-  "RestoreStorageAccountResourceGroupName": "sdktestrg"
+  "RestoreStorageAccountName": "netsdktestsac",
+  "RestoreStorageAccountResourceGroupName": "netsdktestrg"
 }
