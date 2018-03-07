@@ -16,16 +16,20 @@ namespace PolicyInsights.Tests
     {
         private static readonly HttpRecorderMode Mode = HttpRecorderMode.Playback;
 
+        #region Test setup
+
+        private static readonly string SubscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+
         static PolicyInsightsTests()
         {
             if (HttpRecorderMode.Record == Mode)
             {
-                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=d0610b27-9663-4c05-89f8-5b4be01e86a5;Environment=Prod;HttpRecorderMode=Record;");
+                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=" + SubscriptionId + ";Environment=Prod;HttpRecorderMode=Record;");
                 Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
             }
             else
             {
-                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=d0610b27-9663-4c05-89f8-5b4be01e86a5;Environment=Prod;HttpRecorderMode=Playback;");
+                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=" + SubscriptionId + ";Environment=Prod;HttpRecorderMode=Playback;");
                 Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             }
 
@@ -33,6 +37,22 @@ namespace PolicyInsights.Tests
         }
 
         public static TestEnvironment TestEnvironment { get; }
+
+        private PolicyInsightsClient GetPolicyInsightsClient(MockContext context)
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                HttpMockServer.RecordsDirectory = @"C:\Git\bulentelmaci\azure-sdk-for-net\src\SDKs\PolicyInsights\Management\PolicyInsights.Tests\SessionRecords";
+            }
+
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
+            var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>(TestEnvironment, handlers: handler);
+            return policyInsightsClient;
+        }
+
+        #endregion
+
+        #region Validation
 
         private void ValidatePolicyEventsQueryResults(PolicyEventsQueryResults queryResults)
         {
@@ -156,17 +176,9 @@ namespace PolicyInsights.Tests
             }
         }
 
-        private PolicyInsightsClient GetPolicyInsightsClient(MockContext context)
-        {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                HttpMockServer.RecordsDirectory = @"C:\Git\bulentelmaci\azure-sdk-for-net\src\SDKs\PolicyInsights\Management\PolicyInsights.Tests\SessionRecords";
-            }
+        #endregion
 
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
-            var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>(TestEnvironment, handlers: handler);
-            return policyInsightsClient;
-        }
+        #region Policy Events - Scopes
 
         [Fact]
         public void PolicyEvents_ManagementGroupScope()
@@ -270,6 +282,10 @@ namespace PolicyInsights.Tests
             }
         }
 
+        #endregion
+
+        #region Policy States Latest - Scopes
+
         [Fact]
         public void PolicyStates_LatestManagementGroupScope()
         {
@@ -371,6 +387,10 @@ namespace PolicyInsights.Tests
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
+
+        #endregion
+
+        #region Policy States Default - Scopes
 
         [Fact]
         public void PolicyStates_DefaultManagementGroupScope()
@@ -474,6 +494,10 @@ namespace PolicyInsights.Tests
             }
         }
 
+        #endregion
+
+        #region Policy States Latest - Summarize
+
         [Fact]
         public void PolicyStates_SummarizeManagementGroupScope()
         {
@@ -575,5 +599,7 @@ namespace PolicyInsights.Tests
                 ValidateSummarizeResults(summarizeResults);
             }
         }
+
+        #endregion
     }
 }
