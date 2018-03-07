@@ -8,10 +8,6 @@
 	</PropertyGroup>
 	<PropertyGroup>
     <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
-	  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-	  <WarningsAsErrors />
 	</PropertyGroup>
 
 	<ItemGroup>
