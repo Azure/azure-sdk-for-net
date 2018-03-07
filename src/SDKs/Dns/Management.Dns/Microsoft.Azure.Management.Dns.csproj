@@ -6,12 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Dns</PackageId>
 		<Description>Provides management capabilities for Azure Dns.</Description>
-		<Version>2.1.0-preview</Version>
+		<Version>2.2.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Dns</AssemblyName>    
 		<PackageTags>Microsoft Azure Dns;Dns;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure DNS SDK. Included with this release is support for CAA records. This release also changes the signature of the Delete operation of a DNS zone.
+        This is a public preview release of the Azure DNS SDK. Included with this release is support for creating Private DNS zones. Also included is the support for CAA records and the signature change of the Delete operation of a DNS zone.
       ]]>
 		</PackageReleaseNotes>    
 	</PropertyGroup>
