@@ -270,12 +270,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='roleAssignmentId'>
+            /// <param name='roleId'>
             /// The ID of the role assignment to delete.
             /// </param>
-            public static RoleAssignment DeleteById(this IRoleAssignmentsOperations operations, string roleAssignmentId)
+            public static RoleAssignment DeleteById(this IRoleAssignmentsOperations operations, string roleId)
             {
-                return operations.DeleteByIdAsync(roleAssignmentId).GetAwaiter().GetResult();
+                return operations.DeleteByIdAsync(roleId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -284,15 +284,15 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='roleAssignmentId'>
+            /// <param name='roleId'>
             /// The ID of the role assignment to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> DeleteByIdAsync(this IRoleAssignmentsOperations operations, string roleAssignmentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RoleAssignment> DeleteByIdAsync(this IRoleAssignmentsOperations operations, string roleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteByIdWithHttpMessagesAsync(roleAssignmentId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteByIdWithHttpMessagesAsync(roleId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -304,15 +304,15 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='roleAssignmentId'>
+            /// <param name='roleId'>
             /// The ID of the role assignment to create.
             /// </param>
             /// <param name='parameters'>
             /// Parameters for the role assignment.
             /// </param>
-            public static RoleAssignment CreateById(this IRoleAssignmentsOperations operations, string roleAssignmentId, RoleAssignmentCreateParameters parameters)
+            public static RoleAssignment CreateById(this IRoleAssignmentsOperations operations, string roleId, RoleAssignmentCreateParameters parameters)
             {
-                return operations.CreateByIdAsync(roleAssignmentId, parameters).GetAwaiter().GetResult();
+                return operations.CreateByIdAsync(roleId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='roleAssignmentId'>
+            /// <param name='roleId'>
             /// The ID of the role assignment to create.
             /// </param>
             /// <param name='parameters'>
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> CreateByIdAsync(this IRoleAssignmentsOperations operations, string roleAssignmentId, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RoleAssignment> CreateByIdAsync(this IRoleAssignmentsOperations operations, string roleId, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateByIdWithHttpMessagesAsync(roleAssignmentId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateByIdWithHttpMessagesAsync(roleId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -344,12 +344,12 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='roleAssignmentId'>
+            /// <param name='roleId'>
             /// The ID of the role assignment to get.
             /// </param>
-            public static RoleAssignment GetById(this IRoleAssignmentsOperations operations, string roleAssignmentId)
+            public static RoleAssignment GetById(this IRoleAssignmentsOperations operations, string roleId)
             {
-                return operations.GetByIdAsync(roleAssignmentId).GetAwaiter().GetResult();
+                return operations.GetByIdAsync(roleId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -358,15 +358,15 @@ namespace Microsoft.Azure.Management.Authorization
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='roleAssignmentId'>
+            /// <param name='roleId'>
             /// The ID of the role assignment to get.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RoleAssignment> GetByIdAsync(this IRoleAssignmentsOperations operations, string roleAssignmentId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RoleAssignment> GetByIdAsync(this IRoleAssignmentsOperations operations, string roleId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleAssignmentId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

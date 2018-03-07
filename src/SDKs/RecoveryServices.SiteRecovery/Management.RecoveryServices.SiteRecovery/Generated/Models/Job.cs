@@ -34,21 +34,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="type">Resource Type</param>
         /// <param name="location">Resource Location</param>
         /// <param name="properties">The custom data.</param>
-        /// <param name="status">The status of the Job. ARM expects the
-        /// terminal status to be one of (1) Succeeded, (2) Failed or (3)
-        /// Canceled. All other values imply that the operation is still
-        /// running / being applied.</param>
-        /// <param name="error">The error.</param>
-        /// <param name="startTime">The start time.</param>
-        /// <param name="endTime">The start time.</param>
-        public Job(string id = default(string), string name = default(string), string type = default(string), string location = default(string), JobProperties properties = default(JobProperties), string status = default(string), ARMException error = default(ARMException), string startTime = default(string), string endTime = default(string))
+        public Job(string id = default(string), string name = default(string), string type = default(string), string location = default(string), JobProperties properties = default(JobProperties))
             : base(id, name, type, location)
         {
             Properties = properties;
-            Status = status;
-            Error = error;
-            StartTime = startTime;
-            EndTime = endTime;
             CustomInit();
         }
 
@@ -62,32 +51,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public JobProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the status of the Job. ARM expects the terminal status
-        /// to be one of (1) Succeeded, (2) Failed or (3) Canceled. All other
-        /// values imply that the operation is still running / being applied.
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
-
-        /// <summary>
-        /// Gets or sets the error.
-        /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ARMException Error { get; set; }
-
-        /// <summary>
-        /// Gets or sets the start time.
-        /// </summary>
-        [JsonProperty(PropertyName = "startTime")]
-        public string StartTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets the start time.
-        /// </summary>
-        [JsonProperty(PropertyName = "endTime")]
-        public string EndTime { get; set; }
 
     }
 }

@@ -44,7 +44,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryAvailabilitySetId">The recovery availability
         /// set.</param>
         /// <param name="policyId">The Policy Id.</param>
-        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string))
+        /// <param name="recoveryBootDiagStorageAccountId">The boot diagnostic
+        /// storage account.</param>
+        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string), string recoveryBootDiagStorageAccountId = default(string))
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
             PolicyId = policyId;
+            RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             CustomInit();
         }
 
@@ -103,6 +106,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyId")]
         public string PolicyId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the boot diagnostic storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryBootDiagStorageAccountId")]
+        public string RecoveryBootDiagStorageAccountId { get; set; }
 
     }
 }

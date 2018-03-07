@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ResourceSkuCapacityScaleType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResourceSkuCapacityScaleType
+    public static class ResourceSkuCapacityScaleType
     {
-        [EnumMember(Value = "Automatic")]
-        Automatic,
-        [EnumMember(Value = "Manual")]
-        Manual,
-        [EnumMember(Value = "None")]
-        None
-    }
-    internal static class ResourceSkuCapacityScaleTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ResourceSkuCapacityScaleType? value)
-        {
-            return value == null ? null : ((ResourceSkuCapacityScaleType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ResourceSkuCapacityScaleType value)
-        {
-            switch( value )
-            {
-                case ResourceSkuCapacityScaleType.Automatic:
-                    return "Automatic";
-                case ResourceSkuCapacityScaleType.Manual:
-                    return "Manual";
-                case ResourceSkuCapacityScaleType.None:
-                    return "None";
-            }
-            return null;
-        }
-
-        internal static ResourceSkuCapacityScaleType? ParseResourceSkuCapacityScaleType(this string value)
-        {
-            switch( value )
-            {
-                case "Automatic":
-                    return ResourceSkuCapacityScaleType.Automatic;
-                case "Manual":
-                    return ResourceSkuCapacityScaleType.Manual;
-                case "None":
-                    return ResourceSkuCapacityScaleType.None;
-            }
-            return null;
-        }
+        public const string Automatic = "Automatic";
+        public const string Manual = "Manual";
+        public const string None = "None";
     }
 }

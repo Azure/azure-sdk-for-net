@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Hyper V replica provider specific settings
+    /// Single Host fabric provider specific VM settings.
     /// </summary>
     [Newtonsoft.Json.JsonObject("HyperVVirtualMachine")]
     public partial class HyperVVirtualMachineDetails : ConfigurationSettings
@@ -39,12 +39,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="osDetails">The Last replication time.</param>
         /// <param name="diskDetails">The Last successful failover
         /// time.</param>
-        public HyperVVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>))
+        /// <param name="hasPhysicalDisk">A value indicating whether the VM has
+        /// a physical disk attached.</param>
+        /// <param name="hasFibreChannelAdapter">A value indicating whether the
+        /// VM has a fibre channel adapter attached.</param>
+        /// <param name="hasSharedVhd">A value indicating whether the VM has a
+        /// shared VHD attached.</param>
+        public HyperVVirtualMachineDetails(string sourceItemId = default(string), string generation = default(string), OSDetails osDetails = default(OSDetails), IList<DiskDetails> diskDetails = default(IList<DiskDetails>), bool? hasPhysicalDisk = default(bool?), bool? hasFibreChannelAdapter = default(bool?), bool? hasSharedVhd = default(bool?))
         {
             SourceItemId = sourceItemId;
             Generation = generation;
             OsDetails = osDetails;
             DiskDetails = diskDetails;
+            HasPhysicalDisk = hasPhysicalDisk;
+            HasFibreChannelAdapter = hasFibreChannelAdapter;
+            HasSharedVhd = hasSharedVhd;
             CustomInit();
         }
 
@@ -76,6 +85,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskDetails")]
         public IList<DiskDetails> DiskDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the VM has a physical disk
+        /// attached.
+        /// </summary>
+        [JsonProperty(PropertyName = "hasPhysicalDisk")]
+        public bool? HasPhysicalDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the VM has a fibre channel
+        /// adapter attached.
+        /// </summary>
+        [JsonProperty(PropertyName = "hasFibreChannelAdapter")]
+        public bool? HasFibreChannelAdapter { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the VM has a shared VHD
+        /// attached.
+        /// </summary>
+        [JsonProperty(PropertyName = "hasSharedVhd")]
+        public bool? HasSharedVhd { get; set; }
 
     }
 }

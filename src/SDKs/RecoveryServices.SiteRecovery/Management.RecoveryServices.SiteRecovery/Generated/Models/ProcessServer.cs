@@ -66,7 +66,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="osVersion">OS Version of the process server. Note:
         /// This will get populated if user has CS version greater than
         /// 9.12.0.0.</param>
-        public ProcessServer(string friendlyName = default(string), string id = default(string), string ipAddress = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<MobilityServiceUpdate> mobilityServiceUpdates = default(IList<MobilityServiceUpdate>), string hostId = default(string), string machineCount = default(string), string replicationPairCount = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string psServiceStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?), string osVersion = default(string))
+        /// <param name="healthErrors">Health errors.</param>
+        /// <param name="agentExpiryDate">Agent expiry date.</param>
+        /// <param name="agentVersionDetails">The agent version
+        /// details.</param>
+        public ProcessServer(string friendlyName = default(string), string id = default(string), string ipAddress = default(string), string osType = default(string), string agentVersion = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string versionStatus = default(string), IList<MobilityServiceUpdate> mobilityServiceUpdates = default(IList<MobilityServiceUpdate>), string hostId = default(string), string machineCount = default(string), string replicationPairCount = default(string), string systemLoad = default(string), string systemLoadStatus = default(string), string cpuLoad = default(string), string cpuLoadStatus = default(string), long? totalMemoryInBytes = default(long?), long? availableMemoryInBytes = default(long?), string memoryUsageStatus = default(string), long? totalSpaceInBytes = default(long?), long? availableSpaceInBytes = default(long?), string spaceUsageStatus = default(string), string psServiceStatus = default(string), System.DateTime? sslCertExpiryDate = default(System.DateTime?), int? sslCertExpiryRemainingDays = default(int?), string osVersion = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), System.DateTime? agentExpiryDate = default(System.DateTime?), VersionDetails agentVersionDetails = default(VersionDetails))
         {
             FriendlyName = friendlyName;
             Id = id;
@@ -93,6 +97,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             SslCertExpiryDate = sslCertExpiryDate;
             SslCertExpiryRemainingDays = sslCertExpiryRemainingDays;
             OsVersion = osVersion;
+            HealthErrors = healthErrors;
+            AgentExpiryDate = agentExpiryDate;
+            AgentVersionDetails = agentVersionDetails;
             CustomInit();
         }
 
@@ -252,6 +259,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "osVersion")]
         public string OsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets health errors.
+        /// </summary>
+        [JsonProperty(PropertyName = "healthErrors")]
+        public IList<HealthError> HealthErrors { get; set; }
+
+        /// <summary>
+        /// Gets or sets agent expiry date.
+        /// </summary>
+        [JsonProperty(PropertyName = "agentExpiryDate")]
+        public System.DateTime? AgentExpiryDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the agent version details.
+        /// </summary>
+        [JsonProperty(PropertyName = "agentVersionDetails")]
+        public VersionDetails AgentVersionDetails { get; set; }
 
     }
 }

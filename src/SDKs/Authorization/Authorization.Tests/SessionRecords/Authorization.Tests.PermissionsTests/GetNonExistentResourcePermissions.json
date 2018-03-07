@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Web//sites/csmr653/providers/Microsoft.Authorization/permissions?api-version=2015-07-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvY3NtcjY1My9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcGVybWlzc2lvbnM/YXBpLXZlcnNpb249MjAxNS0wNy0wMQ==",
+      "RequestUri": "/subscriptions/4004a9fd-d58e-48dc-aeb2-4a4aec58606f/resourcegroups/NonExistentResourceGroup/providers/Microsoft.Web//sites/csmr7856/providers/Microsoft.Authorization/permissions?api-version=2018-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDAwNGE5ZmQtZDU4ZS00OGRjLWFlYjItNGE0YWVjNTg2MDZmL3Jlc291cmNlZ3JvdXBzL05vbkV4aXN0ZW50UmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi8vc2l0ZXMvY3Ntcjc4NTYvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRob3JpemF0aW9uL3Blcm1pc3Npb25zP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c38e3e0a-931a-43ca-9942-46b635cb123b"
+          "77237e2c-1c84-4747-ab9e-67bffdd9a15e"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.5.0.0"
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.6.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NonExistentResourceGroup' could not be found.\"\r\n  }\r\n}",
@@ -32,7 +32,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 25 May 2017 07:12:53 GMT"
+          "Thu, 15 Feb 2018 22:50:05 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,16 +41,19 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "a42f963f-081a-4b5d-b145-b1b310f6fc74"
+          "b63db0ee-c2af-4e1e-a01a-f6968fda1755"
         ],
         "x-ms-correlation-request-id": [
-          "a42f963f-081a-4b5d-b145-b1b310f6fc74"
+          "b63db0ee-c2af-4e1e-a01a-f6968fda1755"
         ],
         "x-ms-routing-request-id": [
-          "JAPANEAST:20170525T071253Z:a42f963f-081a-4b5d-b145-b1b310f6fc74"
+          "CENTRALUSEUAP:20180215T225006Z:b63db0ee-c2af-4e1e-a01a-f6968fda1755"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 404
@@ -58,7 +61,7 @@
   ],
   "Names": {
     "GetNonExistentResourcePermissions": [
-      "csmr653"
+      "csmr7856"
     ]
   },
   "Variables": {

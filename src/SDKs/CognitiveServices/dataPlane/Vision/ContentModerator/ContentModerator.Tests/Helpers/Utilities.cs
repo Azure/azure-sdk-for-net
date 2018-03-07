@@ -375,12 +375,12 @@ namespace ContentModeratorTests.Helpers
                         error = " Classification is null";
                     else
                     {
-                        if (s.Classification.AdultScore == null)
-                            error += " Classification.Adult Score is null";
-                        if (s.Classification.RacyScore == null)
-                            error += " Classification.Racy Score is null";
-                        if (s.Classification.OffensiveScore== null)
-                            error += " Classification.OffensiveScore is null";
+                        if (s.Classification.Category1 == null)
+                            error += " Classification.Category1 Score is null";
+                        if (s.Classification.Category2 == null)
+                            error += " Classification.Category2 Score is null";
+                        if (s.Classification.Category3== null)
+                            error += " Classification.Category3 Score is null";
                         if (s.Classification.ReviewRecommended == null)
                             error += " Classification.ReviewRecommended is null";
                     }

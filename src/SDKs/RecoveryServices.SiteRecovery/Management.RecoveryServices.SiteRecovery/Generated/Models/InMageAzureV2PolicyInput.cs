@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMWare Azure specific protection profile Input.
+    /// VMWare Azure specific policy Input.
     /// </summary>
     [Newtonsoft.Json.JsonObject("InMageAzureV2")]
     public partial class InMageAzureV2PolicyInput : PolicyProviderSpecificInput

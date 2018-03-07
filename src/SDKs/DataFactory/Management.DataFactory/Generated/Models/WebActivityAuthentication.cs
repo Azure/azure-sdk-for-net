@@ -31,18 +31,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the WebActivityAuthentication class.
         /// </summary>
         /// <param name="type">Web activity authentication
-        /// (Basic/ClientCertificate)</param>
+        /// (Basic/ClientCertificate/MSI)</param>
         /// <param name="pfx">Base64-encoded contents of a PFX file.</param>
         /// <param name="username">Web activity authentication user name for
         /// basic authentication.</param>
         /// <param name="password">Password for the PFX file or basic
         /// authentication.</param>
-        public WebActivityAuthentication(string type, SecureString pfx = default(SecureString), string username = default(string), SecureString password = default(SecureString))
+        /// <param name="resource">Resource for which Azure Auth token will be
+        /// requested when using MSI Authentication.</param>
+        public WebActivityAuthentication(string type, SecureString pfx = default(SecureString), string username = default(string), SecureString password = default(SecureString), string resource = default(string))
         {
             Type = type;
             Pfx = pfx;
             Username = username;
             Password = password;
+            Resource = resource;
             CustomInit();
         }
 
@@ -52,7 +55,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets web activity authentication (Basic/ClientCertificate)
+        /// Gets or sets web activity authentication
+        /// (Basic/ClientCertificate/MSI)
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
@@ -75,6 +79,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public SecureString Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource for which Azure Auth token will be requested
+        /// when using MSI Authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "resource")]
+        public string Resource { get; set; }
 
         /// <summary>
         /// Validate the object.
