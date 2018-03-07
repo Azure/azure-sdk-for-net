@@ -14,6 +14,7 @@ namespace PolicyInsights.Tests
 {
     public class PolicyInsightsTests : TestBase
     {
+        // Change this to Record when you want to record a test; also change the project to build for full .net since interactive login won't work for .net core
         private static readonly HttpRecorderMode Mode = HttpRecorderMode.Playback;
 
         #region Test setup
@@ -597,6 +598,126 @@ namespace PolicyInsights.Tests
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResourceGroupLevelPolicyAssignment(subscriptionId, resourceGroupName, policyAssignmentName);
                 ValidateSummarizeResults(summarizeResults);
+            }
+        }
+
+        #endregion
+
+        #region Query options
+
+        [Fact]
+        public void QueryOptions_QueryResultsWithFrom()
+        {
+            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryOptions = new QueryOptions { FromProperty = DateTime.Parse("2018-03-01 15:14:13Z") };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+            }
+        }
+
+        [Fact]
+        public void QueryOptions_QueryResultsWithTo()
+        {
+            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryOptions = new QueryOptions { To = DateTime.Parse("2018-03-01 15:14:13Z") };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+            }
+        }
+
+        [Fact]
+        public void QueryOptions_QueryResultsWithTop()
+        {
+            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryOptions = new QueryOptions { Top = 10 };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+                Assert.True(10 == queryResults.Odatacount.Value);
+                Assert.True(10 == queryResults.Value.Count);
+            }
+        }
+
+        [Fact]
+        public void QueryOptions_QueryResultsWithOrderBy()
+        {
+            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryOptions = new QueryOptions { OrderBy = "PolicyAssignmentId desc" };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+            }
+        }
+
+        [Fact]
+        public void QueryOptions_QueryResultsWithSelect()
+        {
+            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryOptions = new QueryOptions { Select = "Timestamp, ResourceId, PolicyAssignmentId, PolicyDefinitionId, IsCompliant, SubscriptionId, PolicyDefinitionAction" };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+            }
+        }
+
+        [Fact]
+        public void QueryOptions_QueryResultsWithFilter()
+        {
+            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryOptions = new QueryOptions { Filter = "IsCompliant eq false and PolicyDefinitionAction eq 'deny'" };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                ValidatePolicyStatesQueryResults(queryResults);
+            }
+        }
+
+        [Fact]
+        public void QueryOptions_QueryResultsWithApply()
+        {
+            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryOptions = new QueryOptions { Apply = "groupby((PolicyAssignmentId, PolicyDefinitionId, ResourceId))/groupby((PolicyAssignmentId, PolicyDefinitionId), aggregate($count as NumResources))" };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+
+                Assert.NotNull(queryResults);
+
+                Assert.False(string.IsNullOrEmpty(queryResults.Odatacontext));
+                Assert.True(queryResults.Odatacount.HasValue);
+                Assert.True(queryResults.Odatacount.Value > 0);
+
+                Assert.NotNull(queryResults.Value);
+                Assert.NotEmpty(queryResults.Value);
+
+                foreach (var policyState in queryResults.Value)
+                {
+                    Assert.NotNull(policyState);
+
+                    Assert.Null(policyState.Odataid);
+                    Assert.False(string.IsNullOrEmpty(policyState.Odatacontext));
+
+                    Assert.False(string.IsNullOrEmpty(policyState.PolicyAssignmentId));
+                    Assert.False(string.IsNullOrEmpty(policyState.PolicyDefinitionId));
+
+                    Assert.NotNull(policyState.AdditionalProperties);
+                    Assert.True(policyState.AdditionalProperties.ContainsKey("NumResources"));
+                    Assert.NotNull(policyState.AdditionalProperties["NumResources"] as long?);
+                }
             }
         }
 
