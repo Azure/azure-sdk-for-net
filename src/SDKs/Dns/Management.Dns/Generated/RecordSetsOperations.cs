@@ -476,7 +476,7 @@ namespace Microsoft.Azure.Management.Dns
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 201 && (int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.Dns
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 201)
+            if ((int)_statusCode == 200)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.Dns
                 }
             }
             // Deserialize Response
-            if ((int)_statusCode == 200)
+            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -718,7 +718,7 @@ namespace Microsoft.Azure.Management.Dns
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204 && (int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1427,7 +1427,7 @@ namespace Microsoft.Azure.Management.Dns
         /// The maximum number of record sets to return. If not specified, returns up
         /// to 100 record sets.
         /// </param>
-        /// <param name='recordsetnamesuffix'>
+        /// <param name='recordSetNameSuffix'>
         /// The suffix label of the record set name that has to be used to filter the
         /// record set enumerations. If this parameter is specified, Enumeration will
         /// return only records that end with .&lt;recordSetNameSuffix&gt;
@@ -1453,7 +1453,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RecordSet>>> ListAllByDnsZoneWithHttpMessagesAsync(string resourceGroupName, string zoneName, int? top = default(int?), string recordsetnamesuffix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RecordSet>>> ListAllByDnsZoneWithHttpMessagesAsync(string resourceGroupName, string zoneName, int? top = default(int?), string recordSetNameSuffix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1481,7 +1481,7 @@ namespace Microsoft.Azure.Management.Dns
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("zoneName", zoneName);
                 tracingParameters.Add("top", top);
-                tracingParameters.Add("recordsetnamesuffix", recordsetnamesuffix);
+                tracingParameters.Add("recordSetNameSuffix", recordSetNameSuffix);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAllByDnsZone", tracingParameters);
             }
@@ -1496,9 +1496,9 @@ namespace Microsoft.Azure.Management.Dns
             {
                 _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
-            if (recordsetnamesuffix != null)
+            if (recordSetNameSuffix != null)
             {
-                _queryParameters.Add(string.Format("$recordsetnamesuffix={0}", System.Uri.EscapeDataString(recordsetnamesuffix)));
+                _queryParameters.Add(string.Format("$recordsetnamesuffix={0}", System.Uri.EscapeDataString(recordSetNameSuffix)));
             }
             if (Client.ApiVersion != null)
             {

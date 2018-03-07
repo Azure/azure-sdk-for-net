@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Dns
         /// The maximum number of record sets to return. If not specified,
         /// returns up to 100 record sets.
         /// </param>
-        /// <param name='recordsetnamesuffix'>
+        /// <param name='recordSetNameSuffix'>
         /// The suffix label of the record set name that has to be used to
         /// filter the record set enumerations. If this parameter is specified,
         /// Enumeration will return only records that end with
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RecordSet>>> ListAllByDnsZoneWithHttpMessagesAsync(string resourceGroupName, string zoneName, int? top = default(int?), string recordsetnamesuffix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<RecordSet>>> ListAllByDnsZoneWithHttpMessagesAsync(string resourceGroupName, string zoneName, int? top = default(int?), string recordSetNameSuffix = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the record sets of a specified type in a DNS zone.
         /// </summary>

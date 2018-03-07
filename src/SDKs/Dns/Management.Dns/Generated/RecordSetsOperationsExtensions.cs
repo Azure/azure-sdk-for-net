@@ -432,14 +432,14 @@ namespace Microsoft.Azure.Management.Dns
             /// The maximum number of record sets to return. If not specified, returns up
             /// to 100 record sets.
             /// </param>
-            /// <param name='recordsetnamesuffix'>
+            /// <param name='recordSetNameSuffix'>
             /// The suffix label of the record set name that has to be used to filter the
             /// record set enumerations. If this parameter is specified, Enumeration will
             /// return only records that end with .&lt;recordSetNameSuffix&gt;
             /// </param>
-            public static IPage<RecordSet> ListAllByDnsZone(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?), string recordsetnamesuffix = default(string))
+            public static IPage<RecordSet> ListAllByDnsZone(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?), string recordSetNameSuffix = default(string))
             {
-                return operations.ListAllByDnsZoneAsync(resourceGroupName, zoneName, top, recordsetnamesuffix).GetAwaiter().GetResult();
+                return operations.ListAllByDnsZoneAsync(resourceGroupName, zoneName, top, recordSetNameSuffix).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Dns
             /// The maximum number of record sets to return. If not specified, returns up
             /// to 100 record sets.
             /// </param>
-            /// <param name='recordsetnamesuffix'>
+            /// <param name='recordSetNameSuffix'>
             /// The suffix label of the record set name that has to be used to filter the
             /// record set enumerations. If this parameter is specified, Enumeration will
             /// return only records that end with .&lt;recordSetNameSuffix&gt;
@@ -466,9 +466,9 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RecordSet>> ListAllByDnsZoneAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?), string recordsetnamesuffix = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RecordSet>> ListAllByDnsZoneAsync(this IRecordSetsOperations operations, string resourceGroupName, string zoneName, int? top = default(int?), string recordSetNameSuffix = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllByDnsZoneWithHttpMessagesAsync(resourceGroupName, zoneName, top, recordsetnamesuffix, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllByDnsZoneWithHttpMessagesAsync(resourceGroupName, zoneName, top, recordSetNameSuffix, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
