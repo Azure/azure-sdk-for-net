@@ -1,8 +1,9 @@
-2018-03-05 22:08:40 UTC
+2018-03-08 22:10:22 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: owolabi2
-Branch:      private-dns-public-preview
+Branch:      koowolab/private-dns-public-preview
+Commit:      c7fd5f85b7c3e7389ff7cf4b533c1bed1aeead08
 
 2) AutoRest information
 Requested version: latest

@@ -34,8 +34,6 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <summary>
         /// Initializes a new instance of the Zone class.
         /// </summary>
-        /// <param name="zoneType">The type of this DNS zone (Public or
-        /// Private). Possible values include: 'Public', 'Private'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -51,13 +49,15 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <param name="nameServers">The name servers for this DNS zone. This
         /// is a read-only property and any attempt to set this value will be
         /// ignored.</param>
+        /// <param name="zoneType">The type of this DNS zone (Public or
+        /// Private). Possible values include: 'Public', 'Private'</param>
         /// <param name="registrationVirtualNetworks">A list of references to
         /// virtual networks that register hostnames in this DNS zone. This is
         /// a only when ZoneType is Private.</param>
         /// <param name="resolutionVirtualNetworks">A list of references to
         /// virtual networks that resolve records in this DNS zone. This is a
         /// only when ZoneType is Private.</param>
-        public Zone(ZoneType zoneType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>), IList<SubResource> registrationVirtualNetworks = default(IList<SubResource>), IList<SubResource> resolutionVirtualNetworks = default(IList<SubResource>))
+        public Zone(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>), ZoneType? zoneType = default(ZoneType?), IList<SubResource> registrationVirtualNetworks = default(IList<SubResource>), IList<SubResource> resolutionVirtualNetworks = default(IList<SubResource>))
             : base(id, name, type, location, tags)
         {
             Etag = etag;
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// Possible values include: 'Public', 'Private'
         /// </summary>
         [JsonProperty(PropertyName = "properties.zoneType")]
-        public ZoneType ZoneType { get; set; }
+        public ZoneType? ZoneType { get; set; }
 
         /// <summary>
         /// Gets or sets a list of references to virtual networks that register
@@ -126,14 +126,5 @@ namespace Microsoft.Azure.Management.Dns.Models
         [JsonProperty(PropertyName = "properties.resolutionVirtualNetworks")]
         public IList<SubResource> ResolutionVirtualNetworks { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }
