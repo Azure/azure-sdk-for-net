@@ -11,9 +11,9 @@
 		<PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;</PackageTags>
 		<PackageReleaseNotes>See https://aka.ms/azure-sdk-for-net/monitor/changelog for release notes.</PackageReleaseNotes>
 	</PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
