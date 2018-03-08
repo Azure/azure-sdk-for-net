@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd policyinsights/resource-manager %*
+call %~dp0..\..\..\..\..\tools\generate.cmd policyinsights/resource-manager %*

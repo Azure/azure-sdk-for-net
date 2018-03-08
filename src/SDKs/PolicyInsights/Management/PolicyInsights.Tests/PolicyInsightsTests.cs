@@ -14,40 +14,24 @@ namespace PolicyInsights.Tests
 {
     public class PolicyInsightsTests : TestBase
     {
-        // Change this to Record when you want to record a test; also change the project to build for full .net since interactive login won't work for .net core
-        private static readonly HttpRecorderMode Mode = HttpRecorderMode.Playback;
-
         #region Test setup
-
-        private static readonly string SubscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
 
         static PolicyInsightsTests()
         {
-            if (HttpRecorderMode.Record == Mode)
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=" + SubscriptionId + ";Environment=Prod;HttpRecorderMode=Record;");
-                Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+                TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
             }
-            else
-            {
-                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=" + SubscriptionId + ";Environment=Prod;HttpRecorderMode=Playback;");
-                Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            }
-
-            TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
         }
 
         public static TestEnvironment TestEnvironment { get; }
 
-        private PolicyInsightsClient GetPolicyInsightsClient(MockContext context)
+        private static PolicyInsightsClient GetPolicyInsightsClient(MockContext context)
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                HttpMockServer.RecordsDirectory = @"C:\Git\bulentelmaci\azure-sdk-for-net\src\SDKs\PolicyInsights\Management\PolicyInsights.Tests\SessionRecords";
-            }
-
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
-            var policyInsightsClient = context.GetServiceClient<PolicyInsightsClient>(TestEnvironment, handlers: handler);
+            var policyInsightsClient = HttpMockServer.Mode == HttpRecorderMode.Record
+                ? context.GetServiceClient<PolicyInsightsClient>(TestEnvironment, handlers: handler)
+                : context.GetServiceClient<PolicyInsightsClient>(handlers: handler);
             return policyInsightsClient;
         }
 

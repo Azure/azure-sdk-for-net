@@ -4,13 +4,10 @@
     <PackageId>PolicyInsights.Tests</PackageId>
     <Description>PolicyInsights.Tests Class Library</Description>
     <AssemblyName>PolicyInsights.Tests</AssemblyName>
-    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <VersionPrefix>0.9.0-preview</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-	<!-- 
-    <TargetFrameworks>net452</TargetFrameworks>
-	-->
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Management.PolicyInsights\Microsoft.Azure.Management.PolicyInsights.csproj" />
@@ -20,12 +17,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <!--
-  <ItemGroup>
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-   </ItemGroup>
-  -->
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
