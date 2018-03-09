@@ -71,11 +71,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(productTerms, createResponse.Terms);
 
                     //get async
-                    var getResponse = await testBase.client.Product.GetWithHttpMessagesAsync(
+                    var productTag = await testBase.client.Product.GetEntityTagAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         productId);
-                    Assert.NotNull(getResponse);
+                    Assert.NotNull(productTag);
 
                     // update product
                     string patchedName = TestUtilities.GenerateName("productName");
@@ -83,7 +83,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string patchedTerms = TestUtilities.GenerateName("productTerms");
                     var updateParameters = new ProductUpdateParameters
                     {
-                        Name = patchedName,
+                        DisplayName = patchedName,
                         Description = patchedDescription,
                         Terms = patchedTerms
                     };
@@ -92,10 +92,13 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         productId,
                         updateParameters,
-                        getResponse.Headers.ETag);
+                        productTag.ETag);
 
                     // get to check it was updated
-                    var getUpdatedResponse = testBase.client.Product.Get(testBase.rgName, testBase.serviceName, productId);
+                    var getUpdatedResponse = testBase.client.Product.Get(
+                        testBase.rgName, 
+                        testBase.serviceName,
+                        productId);
 
                     Assert.NotNull(getUpdatedResponse);
 
@@ -107,17 +110,55 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(productSubscriptionsLimit, getUpdatedResponse.SubscriptionsLimit);
                     Assert.Equal(patchedTerms, getUpdatedResponse.Terms);
 
+                    // check product listing works
+                    // list paged 
+                    var productList = await testBase.client.Product.ListByServiceAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        new Microsoft.Rest.Azure.OData.ODataQuery<ProductContract> { Top = 1 });
+
+                    Assert.NotNull(productList);
+                    Assert.Single(productList);
+                    // first is the product in Test due to alphabetical order of name
+                    Assert.Equal(patchedName, productList.First().DisplayName); 
+                    Assert.NotEmpty(productList.NextPageLink);
+
+                    // check the next link returned from above query works
+                    var pagedProducts = await testBase.client.Product.ListByServiceNextAsync(productList.NextPageLink);
+                    Assert.NotNull(pagedProducts);
+                    Assert.Single(pagedProducts);
+                    // next is the Starter product due to alphabetical order of name
+                    Assert.Equal("Starter", pagedProducts.First().DisplayName);
+
+                    // check the nextlink to the next page link query works
+                    pagedProducts = await testBase.client.Product.ListByServiceNextAsync(pagedProducts.NextPageLink);
+                    Assert.NotNull(pagedProducts);
+                    Assert.Single(pagedProducts);
+                    // finally the Unlimited product due to alphabetical order of name
+                    Assert.Equal("Unlimited", pagedProducts.First().DisplayName);
+                    Assert.Empty(pagedProducts.NextPageLink); // it should be empty now.
+
+                    // get the entity tag
+                    productTag = await testBase.client.Product.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        productId);
+                    Assert.NotNull(productTag);
+
                     // delete the product 
                     testBase.client.Product.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         productId,
-                        "*",
-                        true);
+                        productTag.ETag,
+                        deleteSubscriptions:true);
 
-                    // get the deleted api to make sure it was deleted
+                    // get the deleted product to make sure it was deleted
                     Assert.Throws<ErrorResponseException>(()
-                        => testBase.client.Product.Get(testBase.rgName, testBase.serviceName, productId));
+                        => testBase.client.Product.Get(
+                            testBase.rgName, 
+                            testBase.serviceName,
+                            productId));
                 }
                 finally
                 {
@@ -152,7 +193,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     });
 
                 Assert.NotNull(getProductsResponse);                
-                Assert.Equal(1, getProductsResponse.Count());
+                Assert.Single(getProductsResponse);
 
                 var product = getProductsResponse.Single();
 
@@ -164,7 +205,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
 
                 Assert.NotNull(listApisResponse);                
-                Assert.Equal(1, listApisResponse.Count());
+                Assert.Single(listApisResponse);
 
                 // get api
                 var getResponse = testBase.client.Api.Get(
@@ -189,7 +230,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
 
                 Assert.NotNull(listApisResponse);                
-                Assert.Equal(0, listApisResponse.Count());
+                Assert.Empty(listApisResponse);
 
                 // add the api to product
                 var addResponse = testBase.client.ProductApi.CreateOrUpdate(
@@ -208,7 +249,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
 
                 Assert.NotNull(listApisResponse);                
-                Assert.Equal(1, listApisResponse.Count());
+                Assert.Single(listApisResponse);
             }
         }
 
@@ -233,7 +274,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     });
 
                 Assert.NotNull(getProductsResponse);                
-                Assert.Equal(1, getProductsResponse.Count());
+                Assert.Single(getProductsResponse);
 
                 var product = getProductsResponse.Single();
 
@@ -295,7 +336,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         }
 
         [Fact]
-        public void SubscriptionsList()
+        public async Task SubscriptionsList()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
@@ -316,14 +357,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var product = listProductsResponse.Single();
 
                 // list product's subscriptions
-                var listSubscriptionsResponse = testBase.client.ProductSubscriptions.List(
+                var listSubscriptionsResponse = await testBase.client.ProductSubscriptions.ListAsync(
                     testBase.rgName,
                     testBase.serviceName,
                     product.Name,
                     null);
 
                 Assert.NotNull(listSubscriptionsResponse);                
-                Assert.Equal(1, listSubscriptionsResponse.Count());
+                Assert.Single(listSubscriptionsResponse);
             }
         }
     }

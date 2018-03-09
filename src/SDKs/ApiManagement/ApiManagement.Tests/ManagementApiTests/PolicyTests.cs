@@ -88,19 +88,25 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(globalPolicyResponse);
 
                     // get policy to check it was added
-                    var getPolicyResponse = await testBase.client.Policy.GetWithHttpMessagesAsync(
+                    var getPolicyResponse = await testBase.client.Policy.GetAsync(
                         testBase.rgName,
                         testBase.serviceName);
 
                     Assert.NotNull(getPolicyResponse);
-                    Assert.NotNull(getPolicyResponse.Body.PolicyContent);
-                    Assert.NotNull(getPolicyResponse.Headers.ETag);
+                    Assert.NotNull(getPolicyResponse.PolicyContent);
+
+                    // get the policy etag
+                    var globalPolicyTag = await testBase.client.Policy.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    Assert.NotNull(globalPolicyTag);
+                    Assert.NotNull(globalPolicyTag.ETag);
 
                     // remove policy
                     testBase.client.Policy.Delete(
                         testBase.rgName,
                         testBase.serviceName,
-                        getPolicyResponse.Headers.ETag);
+                        globalPolicyTag.ETag);
 
                     // get policy to check it was removed
                     try
@@ -158,21 +164,28 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(setResponse);
 
                 // get policy to check it was added
-                var getApiPolicyResponse = await testBase.client.ApiPolicy.GetWithHttpMessagesAsync(
+                var getApiPolicy = await testBase.client.ApiPolicy.GetAsync(
                     testBase.rgName,
                     testBase.serviceName,
                     api.Name);
 
-                Assert.NotNull(getApiPolicyResponse);
-                Assert.NotNull(getApiPolicyResponse.Body.PolicyContent);
-                Assert.NotNull(getApiPolicyResponse.Headers.ETag);
+                Assert.NotNull(getApiPolicy);
+                Assert.NotNull(getApiPolicy.PolicyContent);
+
+                // get the api policy tag
+                var apiPolicyTag = await testBase.client.ApiPolicy.GetEntityTagAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    api.Name);
+                Assert.NotNull(apiPolicyTag);
+                Assert.NotNull(apiPolicyTag.ETag);
 
                 // remove policy
                 testBase.client.ApiPolicy.Delete(
                     testBase.rgName,
                     testBase.serviceName,
                     api.Name,
-                    getApiPolicyResponse.Headers.ETag);
+                    apiPolicyTag.ETag);
 
                 // get policy to check it was removed
                 try
@@ -223,15 +236,23 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(setResponse);
 
                 // get policy to check it was added
-                var getOperationPolicyResponse = await testBase.client.ApiOperationPolicy.GetWithHttpMessagesAsync(
+                var getOperationPolicy = await testBase.client.ApiOperationPolicy.GetAsync(
                     testBase.rgName,
                     testBase.serviceName,
                     api.Name,
                     operation.Name);
 
-                Assert.NotNull(getOperationPolicyResponse);
-                Assert.NotNull(getOperationPolicyResponse.Body.PolicyContent);
-                Assert.NotNull(getOperationPolicyResponse.Headers.ETag);
+                Assert.NotNull(getOperationPolicy);
+                Assert.NotNull(getOperationPolicy.PolicyContent);
+
+                // get operation policy tag
+                var operationPolicyTag = await testBase.client.ApiOperationPolicy.GetEntityTagAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    api.Name,
+                    operation.Name);
+                Assert.NotNull(operationPolicyTag);
+                Assert.NotNull(operationPolicyTag.ETag);
 
                 // remove policy
                 testBase.client.ApiOperationPolicy.Delete(
@@ -239,7 +260,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName,
                     api.Name,
                     operation.Name,
-                    getOperationPolicyResponse.Headers.ETag);
+                    operationPolicyTag.ETag);
 
                 // get policy to check it was removed
                 try
@@ -294,21 +315,28 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(setResponse);
 
                 // get policy to check it was added
-                var getProductPolicyResponse = await testBase.client.ProductPolicy.GetWithHttpMessagesAsync(
+                var getProductPolicy = await testBase.client.ProductPolicy.GetAsync(
                     testBase.rgName,
                     testBase.serviceName,
                     product.Name);
 
-                Assert.NotNull(getProductPolicyResponse);
-                Assert.NotNull(getProductPolicyResponse.Body.PolicyContent);
-                Assert.NotNull(getProductPolicyResponse.Headers.ETag);
+                Assert.NotNull(getProductPolicy);
+                Assert.NotNull(getProductPolicy.PolicyContent);
+
+                // get product policy tag
+                var productPolicyTag = await testBase.client.ProductPolicy.GetEntityTagAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    product.Name);
+                Assert.NotNull(productPolicyTag);
+                Assert.NotNull(productPolicyTag.ETag);
 
                 // remove policy
                 testBase.client.ProductPolicy.Delete(
                     testBase.rgName,
                     testBase.serviceName,
                     product.Name,
-                    getProductPolicyResponse.Headers.ETag);
+                    productPolicyTag.ETag);
 
                 // get policy to check it was removed
                 try
