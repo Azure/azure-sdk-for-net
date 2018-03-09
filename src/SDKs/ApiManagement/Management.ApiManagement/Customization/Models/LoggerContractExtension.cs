@@ -5,7 +5,7 @@
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
-    /// Subscription details.
+    /// Logger Contract extension.
     /// </summary>
     public partial class LoggerContract
     {
@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                     {
                         if (this.Credentials.TryGetValue(LoggerConstants.EventHubPropertyName, out string propertyName))
                         {
-                            return propertyName.Replace("{", "").Replace("}", "");
+                            return propertyName?.Replace("{", "").Replace("}", "");
                         }
                     }
                     else if (this.LoggerType.Equals(Models.LoggerType.ApplicationInsights))
                     {
                         if (this.Credentials.TryGetValue(LoggerConstants.ApplicationInsightsPropertyName, out string propertyName))
                         {
-                            return propertyName.Replace("{", "").Replace("}", "");
+                            return propertyName?.Replace("{", "").Replace("}", "");
                         }
                     }
                 }
 
-                return string.Empty;
+                return null;
             }
         }
     }
