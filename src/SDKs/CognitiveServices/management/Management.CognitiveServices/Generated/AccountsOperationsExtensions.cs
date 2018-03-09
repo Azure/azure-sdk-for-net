@@ -403,6 +403,46 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
 
             /// <summary>
+            /// Get usages for the requested Cognitive Services account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            public static UsagesResult GetUsages(this IAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                return operations.GetUsagesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get usages for the requested Cognitive Services account
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of Cognitive Services account.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UsagesResult> GetUsagesAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUsagesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns all the resources of a particular type belonging to a resource
             /// group
             /// </summary>
