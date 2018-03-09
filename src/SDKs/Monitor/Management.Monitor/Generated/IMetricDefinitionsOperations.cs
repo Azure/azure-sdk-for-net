@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='resourceUri'>
         /// The identifier of the resource.
         /// </param>
+        /// <param name='metricnamespace'>
+        /// Metric namespace to query metric definitions for.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -44,6 +47,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListWithHttpMessagesAsync(string resourceUri, string metricnamespace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

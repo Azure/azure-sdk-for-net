@@ -98,7 +98,7 @@ namespace Monitor.Tests.Scenarios
 
                 // Reading multi-dim metrics
                 // https://management.azure.com/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/azmon-rest-api-walkthrough/providers/Microsoft.Storage/accounts/contosodiag1/providers/microsoft.insights/metrics?metric=Transactions&timespan=2017-09-19T02:00:00Z/2017-09-19T02:25:00Z&$filter=APIName eq 'GetBlobProperties'&interval=PT1M&aggregation=Count&api-version=2017-05-01-preview"
-                string timeSpan = "2017-09-19T02:00:00Z/2017-09-19T02:25:00Z";
+                string timeSpan = "2018-03-02T23:48:11Z/2018-03-03T00:18:11Z";
                 ODataQuery<MetadataValue> filter = new ODataQuery<MetadataValue>("APIName eq 'GetBlobProperties'");
 
                 // Read data
@@ -107,7 +107,7 @@ namespace Monitor.Tests.Scenarios
                     odataQuery: filter,
                     timespan: timeSpan,
                     interval: TimeSpan.FromMinutes(1),
-                    metric: "Transactions",
+                    metricnames: "Transactions",
                     aggregation: "Count",
                     resultType: ResultType.Data);
 
@@ -124,7 +124,7 @@ namespace Monitor.Tests.Scenarios
                     odataQuery: filter,
                     timespan: timeSpan,
                     interval: TimeSpan.FromMinutes(1),
-                    metric: "Transactions",
+                    metricnames: "Transactions",
                     aggregation: "Count",
                     resultType: ResultType.Metadata);
 

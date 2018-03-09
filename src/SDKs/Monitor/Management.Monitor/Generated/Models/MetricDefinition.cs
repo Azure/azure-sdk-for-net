@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// dimension is required.</param>
         /// <param name="resourceId">the resource identifier of the resource
         /// that emitted the metric.</param>
+        /// <param name="namespaceProperty">the namespace the metric blongs
+        /// to.</param>
         /// <param name="name">the name and the display name of the metric,
         /// i.e. it is a localizable string.</param>
         /// <param name="unit">the unit of the metric. Possible values include:
@@ -44,19 +46,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// value defining how to use the values for display. Possible values
         /// include: 'None', 'Average', 'Count', 'Minimum', 'Maximum',
         /// 'Total'</param>
+        /// <param name="supportedAggregationTypes">the collection of what
+        /// aggregation types are supported.</param>
         /// <param name="metricAvailabilities">the collection of what
         /// aggregation intervals are available to be queried.</param>
         /// <param name="id">the resource identifier of the metric
         /// definition.</param>
         /// <param name="dimensions">the name and the display name of the
         /// dimension, i.e. it is a localizable string.</param>
-        public MetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = default(string), LocalizableString name = default(LocalizableString), Unit? unit = default(Unit?), AggregationType? primaryAggregationType = default(AggregationType?), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string), IList<LocalizableString> dimensions = default(IList<LocalizableString>))
+        public MetricDefinition(bool? isDimensionRequired = default(bool?), string resourceId = default(string), string namespaceProperty = default(string), LocalizableString name = default(LocalizableString), Unit? unit = default(Unit?), AggregationType? primaryAggregationType = default(AggregationType?), IList<AggregationType?> supportedAggregationTypes = default(IList<AggregationType?>), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>), string id = default(string), IList<LocalizableString> dimensions = default(IList<LocalizableString>))
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
+            NamespaceProperty = namespaceProperty;
             Name = name;
             Unit = unit;
             PrimaryAggregationType = primaryAggregationType;
+            SupportedAggregationTypes = supportedAggregationTypes;
             MetricAvailabilities = metricAvailabilities;
             Id = id;
             Dimensions = dimensions;
@@ -82,6 +88,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string ResourceId { get; set; }
 
         /// <summary>
+        /// Gets or sets the namespace the metric blongs to.
+        /// </summary>
+        [JsonProperty(PropertyName = "namespace")]
+        public string NamespaceProperty { get; set; }
+
+        /// <summary>
         /// Gets or sets the name and the display name of the metric, i.e. it
         /// is a localizable string.
         /// </summary>
@@ -103,6 +115,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "primaryAggregationType")]
         public AggregationType? PrimaryAggregationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of what aggregation types are
+        /// supported.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedAggregationTypes")]
+        public IList<AggregationType?> SupportedAggregationTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of what aggregation intervals are
