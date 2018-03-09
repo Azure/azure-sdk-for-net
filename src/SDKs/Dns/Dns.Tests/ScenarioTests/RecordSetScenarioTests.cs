@@ -466,13 +466,13 @@ namespace Microsoft.Azure.Management.Dns.Testing
             ListRecordsInZone(isCrossType: true);
         }
 
-        [Fact(Skip = "needs re-recording. XUnit released version will not support overloaded test names")]
+        [Fact]
         public void ListRecordsInZoneWithSuffixAcrossTypes()
         {
             ListRecordsInZoneWithSuffixCrossType(isCrossType: true);
         }
 
-        [Fact(Skip ="needs re-recording. XUnit released version will not support overloaded test names")]
+        [Fact]
         public void ListRecordsInZoneWithSuffix()
         {
             ListRecordsInZoneWithSuffixCrossType(isCrossType: false);

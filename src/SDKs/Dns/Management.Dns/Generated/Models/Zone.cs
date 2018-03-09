@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <summary>
         /// Initializes a new instance of the Zone class.
         /// </summary>
+        /// <param name="location">Resource location.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="etag">The etag of the zone.</param>
         /// <param name="maxNumberOfRecordSets">The maximum number of record
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <param name="nameServers">The name servers for this DNS zone. This
         /// is a read-only property and any attempt to set this value will be
         /// ignored.</param>
-        public Zone(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>))
-            : base(id, name, type, location, tags)
+        public Zone(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>))
+            : base(location, id, name, type, tags)
         {
             Etag = etag;
             MaxNumberOfRecordSets = maxNumberOfRecordSets;
@@ -93,5 +93,15 @@ namespace Microsoft.Azure.Management.Dns.Models
         [JsonProperty(PropertyName = "properties.nameServers")]
         public IList<string> NameServers { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

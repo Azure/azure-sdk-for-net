@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         resourceGroup.Name,
                         zoneName,
                         ifMatch: null,
-                        parameters: retrievedZone);
+                        tags: retrievedZone.Tags);
 
                 assertZoneInvariants(updateResponse);
                 Assert.Equal(4, updateResponse.Tags.Count);
