@@ -41,20 +41,33 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='interval'>
             /// The interval (i.e. timegrain) of the query.
             /// </param>
-            /// <param name='metric'>
-            /// The name of the metric to retrieve.
+            /// <param name='metricnames'>
+            /// The names of the metrics (comma separated) to retrieve.
             /// </param>
             /// <param name='aggregation'>
             /// The list of aggregation types (comma separated) to retrieve.
+            /// </param>
+            /// <param name='top'>
+            /// The maximum number of records to retrieve.
+            /// Valid only if $filter is specified.
+            /// Defaults to 10.
+            /// </param>
+            /// <param name='orderby'>
+            /// The aggregation to use for sorting results and the direction of the sort.
+            /// Only one order can be specified.
+            /// Examples: sum asc.
             /// </param>
             /// <param name='resultType'>
             /// Reduces the set of data collected. The syntax allowed depends on the
             /// operation. See the operation's description for details. Possible values
             /// include: 'Data', 'Metadata'
             /// </param>
-            public static Response List(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metric = default(string), string aggregation = default(string), ResultType? resultType = default(ResultType?))
+            /// <param name='metricnamespace'>
+            /// Metric namespace to query metric definitions for.
+            /// </param>
+            public static Response List(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), double? top = default(double?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string))
             {
-                return operations.ListAsync(resourceUri, odataQuery, timespan, interval, metric, aggregation, resultType).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceUri, odataQuery, timespan, interval, metricnames, aggregation, top, orderby, resultType, metricnamespace).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -76,23 +89,36 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='interval'>
             /// The interval (i.e. timegrain) of the query.
             /// </param>
-            /// <param name='metric'>
-            /// The name of the metric to retrieve.
+            /// <param name='metricnames'>
+            /// The names of the metrics (comma separated) to retrieve.
             /// </param>
             /// <param name='aggregation'>
             /// The list of aggregation types (comma separated) to retrieve.
+            /// </param>
+            /// <param name='top'>
+            /// The maximum number of records to retrieve.
+            /// Valid only if $filter is specified.
+            /// Defaults to 10.
+            /// </param>
+            /// <param name='orderby'>
+            /// The aggregation to use for sorting results and the direction of the sort.
+            /// Only one order can be specified.
+            /// Examples: sum asc.
             /// </param>
             /// <param name='resultType'>
             /// Reduces the set of data collected. The syntax allowed depends on the
             /// operation. See the operation's description for details. Possible values
             /// include: 'Data', 'Metadata'
             /// </param>
+            /// <param name='metricnamespace'>
+            /// Metric namespace to query metric definitions for.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Response> ListAsync(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metric = default(string), string aggregation = default(string), ResultType? resultType = default(ResultType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Response> ListAsync(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), double? top = default(double?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, odataQuery, timespan, interval, metric, aggregation, resultType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, odataQuery, timespan, interval, metricnames, aggregation, top, orderby, resultType, metricnamespace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

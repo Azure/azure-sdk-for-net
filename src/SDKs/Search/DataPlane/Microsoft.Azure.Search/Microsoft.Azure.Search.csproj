@@ -1,19 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSearch.DataPlane.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Search</PackageId>
     <Description>Makes it easy to develop a .NET application that uses Azure Search.</Description>
     <AssemblyTitle>Microsoft Azure Search Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search</AssemblyName>
-    <VersionPrefix>4.0.2-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure Search;Search</PackageTags>
+    <VersionPrefix>5.0.0-preview</VersionPrefix>
     <PackageReleaseNotes>This is a preview of the newest major version of the Azure Search .NET SDK, based on version 2016-09-01-Preview of the Azure Search REST API. New in this version is support for synonyms and indexer support for JSON Blobs. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Spatial" Version="7.2.0" />
+    <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Search.Data" Version="[5.0.0-preview, 6.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Service" Version="[5.0.0-preview, 6.0.0)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.Search.Data\Microsoft.Azure.Search.Data.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.Search.Service\Microsoft.Azure.Search.Service.csproj" />
   </ItemGroup>
 </Project>

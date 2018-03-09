@@ -5,8 +5,8 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Search.Models;
+    using Common;
+    using Models;
     using Xunit;
 
     public sealed class SuggestParametersTests

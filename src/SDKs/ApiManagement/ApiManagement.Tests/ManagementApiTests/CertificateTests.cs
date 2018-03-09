@@ -7,7 +7,6 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
 using Xunit;
-using System.Linq;
 using System.Threading.Tasks;
 using System;
 using System.Security.Cryptography.X509Certificates;
@@ -32,7 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
 
                 Assert.NotNull(listResponse);
-                Assert.Equal(0, listResponse.Count());
+                Assert.Empty(listResponse);
 
                 // create new certificate
                 string certificateId = TestUtilities.GenerateName("certificateId");
@@ -74,7 +73,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         null);
 
                     Assert.NotNull(listResponse);
-                    Assert.Equal(1, listResponse.Count());
+                    Assert.Single(listResponse);
 
                     // remove the certificate
                     testBase.client.Certificate.Delete(
@@ -90,7 +89,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         null);
 
                     Assert.NotNull(listResponse);
-                    Assert.Equal(0, listResponse.Count());
+                    Assert.Empty(listResponse);
                 }
                 finally
                 {
