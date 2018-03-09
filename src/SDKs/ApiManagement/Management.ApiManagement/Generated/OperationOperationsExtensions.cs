@@ -35,8 +35,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -59,8 +60,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.

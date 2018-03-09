@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             public static IPage<SchemaContract> ListByApi(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId)
             {
@@ -55,8 +56,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -83,8 +85,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API
@@ -109,8 +112,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API
@@ -140,8 +144,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API
@@ -165,8 +170,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API
@@ -196,8 +202,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API
@@ -228,8 +235,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API
@@ -266,8 +274,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API
@@ -296,8 +305,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='schemaId'>
             /// Schema identifier within an API. Must be unique in the current API

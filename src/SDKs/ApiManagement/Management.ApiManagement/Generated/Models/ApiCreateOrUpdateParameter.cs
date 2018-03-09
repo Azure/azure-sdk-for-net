@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="soapApiType">Type of Api to create.
         /// * `http` creates a SOAP to REST API
         /// * `soap` creates a SOAP pass-through API. Possible values include:
-        /// 'http', 'soap'</param>
+        /// 'SoapToRest', 'SoapPassThrough'</param>
         public ApiCreateOrUpdateParameter(string path, string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiVersionSetId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails), string contentValue = default(string), string contentFormat = default(string), ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default(ApiCreateOrUpdatePropertiesWsdlSelector), string soapApiType = default(string))
         {
             Description = description;
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets type of Api to create.
         /// * `http` creates a SOAP to REST API
         /// * `soap` creates a SOAP pass-through API. Possible values include:
-        /// 'http', 'soap'
+        /// 'SoapToRest', 'SoapPassThrough'
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiType")]
         public string SoapApiType { get; set; }

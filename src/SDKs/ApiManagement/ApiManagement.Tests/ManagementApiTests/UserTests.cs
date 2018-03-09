@@ -101,7 +101,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.True(Uri.TryCreate(genrateSsoResponse.Value, UriKind.Absolute, out uri));
 
                     // generate token for user
-                    var userTokenParameters = new UserTokenParameters(KeyType.Primary, DateTime.UtcNow.AddDays(30)); 
+                    var userTokenParameters = new UserTokenParameters(KeyType.Primary, DateTime.UtcNow.AddDays(10)); 
                         var genrateTokenResponse = testBase.client.User.GetSharedAccessToken(
                         testBase.rgName,
                         testBase.serviceName,
