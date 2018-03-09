@@ -3,14 +3,14 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
-using System.Linq;
-using System.Threading.Tasks;
-using System;
-using System.Net;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {

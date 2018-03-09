@@ -110,6 +110,34 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(productSubscriptionsLimit, getUpdatedResponse.SubscriptionsLimit);
                     Assert.Equal(patchedTerms, getUpdatedResponse.Terms);
 
+                    // check product listing works
+                    // list paged 
+                    var productList = await testBase.client.Product.ListByServiceAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        new Microsoft.Rest.Azure.OData.ODataQuery<ProductContract> { Top = 1 });
+
+                    Assert.NotNull(productList);
+                    Assert.Single(productList);
+                    // first is the product in Test due to alphabetical order of name
+                    Assert.Equal(patchedName, productList.First().DisplayName); 
+                    Assert.NotEmpty(productList.NextPageLink);
+
+                    // check the next link returned from above query works
+                    var pagedProducts = await testBase.client.Product.ListByServiceNextAsync(productList.NextPageLink);
+                    Assert.NotNull(pagedProducts);
+                    Assert.Single(pagedProducts);
+                    // next is the Starter product due to alphabetical order of name
+                    Assert.Equal("Starter", pagedProducts.First().DisplayName);
+
+                    // check the nextlink to the next page link query works
+                    pagedProducts = await testBase.client.Product.ListByServiceNextAsync(pagedProducts.NextPageLink);
+                    Assert.NotNull(pagedProducts);
+                    Assert.Single(pagedProducts);
+                    // finally the Unlimited product due to alphabetical order of name
+                    Assert.Equal("Unlimited", pagedProducts.First().DisplayName);
+                    Assert.Empty(pagedProducts.NextPageLink); // it should be empty now.
+
                     // get the entity tag
                     productTag = await testBase.client.Product.GetEntityTagAsync(
                         testBase.rgName,

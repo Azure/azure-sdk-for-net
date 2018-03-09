@@ -180,5 +180,75 @@ namespace ApiManagement.Tests
                 return Convert.FromBase64String(HttpMockServer.Variables["RandomBytes"]);
             }
         }
+
+        public OperationContract CreateOperationContract(string httpMethod)
+        {
+            return new OperationContract
+            {
+                DisplayName = "operation_" + TestUtilities.GenerateName(),
+                Description = "description_" + TestUtilities.GenerateName(),
+                UrlTemplate = "template_" + TestUtilities.GenerateName(),
+                Method = httpMethod,
+                Request = new RequestContract
+                {
+                    Description = "description_" + TestUtilities.GenerateName(),
+                    Headers = new[]
+                    {
+                        new ParameterContract
+                        {
+                            Name = "param_" + TestUtilities.GenerateName(),
+                            Description = "description_" + TestUtilities.GenerateName(),
+                            Type = "int",
+                            DefaultValue = "b",
+                            Required = true,
+                            Values = new[] { "a", "b", "c" }
+                        },
+                        new ParameterContract
+                        {
+                            Name = "param_" + TestUtilities.GenerateName(),
+                            Description = "description_" + TestUtilities.GenerateName(),
+                            Type = "bool",
+                            DefaultValue = "e",
+                            Required = false,
+                            Values = new[] { "d", "e", "f" }
+                        }
+                    },
+                    Representations = new[]
+                    {
+                        new RepresentationContract
+                        {
+                            ContentType = "text/plain",
+                            Sample = "sample_" + TestUtilities.GenerateName(),
+                        },
+                        new RepresentationContract
+                        {
+                            ContentType = "application/xml",
+                            Sample = "sample_" + TestUtilities.GenerateName(),
+                        }
+                    }
+                },
+                Responses = new[]
+                {
+                    new ResponseContract
+                    {
+                        StatusCode = 200,
+                        Description = "description_" + TestUtilities.GenerateName(),
+                        Representations = new[]
+                        {
+                            new RepresentationContract
+                            {
+                                ContentType = "application/json",
+                                Sample = "sample_" + TestUtilities.GenerateName()
+                            },
+                            new RepresentationContract
+                            {
+                                ContentType = "application/xml",
+                                Sample = "sample_" + TestUtilities.GenerateName()
+                            }
+                        }
+                    }
+                }
+            };
+        }
     }
 }

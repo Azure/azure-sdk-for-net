@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         public const string Swagger = "swagger-link";
         /// <summary>
-        /// Export the Api Definition in WSDL Schema to Storage Blob.
+        /// Export the Api Definition in WSDL Schema to Storage Blob. This is
+        /// only supported for APIs of Type `soap`
         /// </summary>
         public const string Wsdl = "wsdl-link";
         /// <summary>

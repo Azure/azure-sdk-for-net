@@ -3,17 +3,17 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using ApiManagementManagement.Tests.Helpers;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Xunit;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
-using System.Net;
 using Microsoft.Rest.Azure;
-using ApiManagementManagement.Tests.Helpers;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -27,88 +27,53 @@ namespace ApiManagement.Tests.ManagementApiTests
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
-                // add new api
 
-                // create autorization server
-                string newApiAuthorizationServerId = TestUtilities.GenerateName("authorizationServerId");
+                // add new api
+                const string swaggerPath = "./Resources/SwaggerPetStoreV2.json";
+                const string path = "swaggerApi";
+
                 string newApiId = TestUtilities.GenerateName("apiid");
                 string newReleaseId = TestUtilities.GenerateName("apireleaseid");
 
                 try
-                {
-                    var createAuthServerParams = new AuthorizationServerContract
+                {                    
+                    // import API
+                    string swaggerApiContent;
+                    using (StreamReader reader = File.OpenText(swaggerPath))
                     {
-                        DisplayName = TestUtilities.GenerateName("authName"),
-                        DefaultScope = TestUtilities.GenerateName("oauth2scope"),
-                        AuthorizationEndpoint = "https://contoso.com/auth",
-                        TokenEndpoint = "https://contoso.com/token",
-                        ClientRegistrationEndpoint = "https://contoso.com/clients/reg",
-                        GrantTypes = new List<string> { GrantType.AuthorizationCode, GrantType.Implicit },
-                        AuthorizationMethods = new List<AuthorizationMethod?> { AuthorizationMethod.POST, AuthorizationMethod.GET },
-                        BearerTokenSendingMethods = new List<string> { BearerTokenSendingMethod.AuthorizationHeader, BearerTokenSendingMethod.Query },
-                        ClientId = TestUtilities.GenerateName("clientid")
+                        swaggerApiContent = reader.ReadToEnd();
+                    }
+
+                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
+                    {
+                        Path = path,
+                        ContentFormat = ContentFormat.SwaggerJson,
+                        ContentValue = swaggerApiContent
                     };
 
-                    testBase.client.AuthorizationServer.CreateOrUpdate(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        newApiAuthorizationServerId,
-                        createAuthServerParams);
+                    var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            newApiId,
+                            apiCreateOrUpdate);
 
-                    string newApiName = TestUtilities.GenerateName("apiname");
-                    string newApiDescription = TestUtilities.GenerateName("apidescription");
-                    string newApiPath = "newapiPath";
-                    string newApiServiceUrl = "http://newechoapi.cloudapp.net/api";
-                    string subscriptionKeyParametersHeader = TestUtilities.GenerateName("header");
-                    string subscriptionKeyQueryStringParamName = TestUtilities.GenerateName("query");
-                    string newApiAuthorizationScope = TestUtilities.GenerateName("oauth2scope");
-                    var newApiAuthenticationSettings = new AuthenticationSettingsContract
-                    {
-                        OAuth2 = new OAuth2AuthenticationSettingsContract
-                        {
-                            AuthorizationServerId = newApiAuthorizationServerId,
-                            Scope = newApiAuthorizationScope
-                        }
-                    };
-
-                    var apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter
-                    {
-                        DisplayName = newApiName,
-                        Description = newApiDescription,
-                        Path = newApiPath,
-                        ServiceUrl = newApiServiceUrl,
-                        Protocols = new List<Protocol?> { Protocol.Https, Protocol.Http },
-                        SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract
-                        {
-                            Header = subscriptionKeyParametersHeader,
-                            Query = subscriptionKeyQueryStringParamName
-                        },
-                        AuthenticationSettings = newApiAuthenticationSettings
-                    };
-                    
-                    var createdApiContract = testBase.client.Api.CreateOrUpdate(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        newApiId,
-                        apiCreateOrUpdateParameter);
+                    Assert.NotNull(swaggerApiResponse);
 
                     // get new api to check it was added
-                    var apiGetResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newApiId);
+                    var petstoreApiContract = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newApiId);
 
-                    Assert.NotNull(apiGetResponse);
-                    Assert.Equal(newApiId, apiGetResponse.Name);
-                    Assert.Equal(newApiName, apiGetResponse.DisplayName);
-                    Assert.Equal(newApiDescription, apiGetResponse.Description);
-                    Assert.Equal(newApiPath, apiGetResponse.Path);
-                    Assert.Equal(newApiServiceUrl, apiGetResponse.ServiceUrl);
-                    Assert.Equal(subscriptionKeyParametersHeader, apiGetResponse.SubscriptionKeyParameterNames.Header);
-                    Assert.Equal(subscriptionKeyQueryStringParamName, apiGetResponse.SubscriptionKeyParameterNames.Query);
-                    Assert.Equal(2, apiGetResponse.Protocols.Count);
-                    Assert.True(apiGetResponse.Protocols.Contains(Protocol.Http));
-                    Assert.True(apiGetResponse.Protocols.Contains(Protocol.Https));
-                    Assert.NotNull(apiGetResponse.AuthenticationSettings);
-                    Assert.NotNull(apiGetResponse.AuthenticationSettings.OAuth2);
-                    Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2.AuthorizationServerId);
+                    Assert.NotNull(petstoreApiContract);
+                    Assert.Equal(path, petstoreApiContract.Path);
+                    Assert.Equal("Swagger Petstore Extensive", petstoreApiContract.DisplayName);
+                    Assert.Equal("http://petstore.swagger.wordnik.com/api", petstoreApiContract.ServiceUrl);
+
+                    // test the number of operations it has
+                    var petstoreApiOperations = testBase.client.ApiOperation.ListByApi(
+                        testBase.rgName,
+                        testBase.serviceName, 
+                        newApiId);
+                    Assert.NotNull(petstoreApiOperations);
+                    Assert.NotEmpty(petstoreApiOperations);
 
                     // get the API Entity Tag
                     ApiGetEntityTagHeaders apiTag = testBase.client.Api.GetEntityTag(
@@ -121,30 +86,71 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // add an api revision
                     string revisionNumber = "2";
-                    string newApiRevisionServiceUrl = "http://newechoapi.cloudapp.net/apiv2";
 
-                    apiCreateOrUpdateParameter.ServiceUrl = newApiRevisionServiceUrl;
+                    // create a revision of Petstore
+                    var petstoreRevisionContract = new ApiCreateOrUpdateParameter()
+                    {
+                        Path = petstoreApiContract.Path + revisionNumber,
+                        DisplayName = petstoreApiContract.DisplayName + revisionNumber,
+                        ServiceUrl = petstoreApiContract.ServiceUrl + revisionNumber,
+                        Protocols = petstoreApiContract.Protocols,
+                        SubscriptionKeyParameterNames = petstoreApiContract.SubscriptionKeyParameterNames,
+                        AuthenticationSettings = petstoreApiContract.AuthenticationSettings,
+                        Description = petstoreApiContract.Description
+                    };
 
-                    apiGetResponse = await testBase.client.Api.CreateOrUpdateAsync(
+                    var petStoreSecondRevision = await testBase.client.Api.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newApiId.ApiRevisionIdentifier(revisionNumber),
-                        apiCreateOrUpdateParameter);
+                        petstoreRevisionContract);
+                    Assert.NotNull(petStoreSecondRevision);
+                    Assert.Equal(petstoreRevisionContract.Path, petStoreSecondRevision.Path);
+                    Assert.Equal(petstoreRevisionContract.ServiceUrl, petStoreSecondRevision.ServiceUrl);
+                    Assert.Equal(revisionNumber, petStoreSecondRevision.ApiRevision);
 
-                    Assert.NotNull(apiGetResponse);
-                    Assert.Equal(newApiId.ApiRevisionIdentifier(revisionNumber), apiGetResponse.Name);
-                    Assert.Equal(newApiName, apiGetResponse.DisplayName);
-                    Assert.Equal(newApiDescription, apiGetResponse.Description);
-                    Assert.Equal(newApiPath, apiGetResponse.Path);
-                    Assert.Equal(newApiRevisionServiceUrl, apiGetResponse.ServiceUrl);
-                    Assert.Equal(subscriptionKeyParametersHeader, apiGetResponse.SubscriptionKeyParameterNames.Header);
-                    Assert.Equal(subscriptionKeyQueryStringParamName, apiGetResponse.SubscriptionKeyParameterNames.Query);
-                    Assert.Equal(2, apiGetResponse.Protocols.Count);
-                    Assert.True(apiGetResponse.Protocols.Contains(Protocol.Http));
-                    Assert.True(apiGetResponse.Protocols.Contains(Protocol.Https));
-                    Assert.NotNull(apiGetResponse.AuthenticationSettings);
-                    Assert.NotNull(apiGetResponse.AuthenticationSettings.OAuth2);
-                    Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2.AuthorizationServerId);
+                    // add couple of operation to this revision
+                    var newOperationId = TestUtilities.GenerateName("firstOpRev");
+                    var firstOperationContract = testBase.CreateOperationContract("POST");
+                    var firstOperation = await testBase.client.ApiOperation.CreateOrUpdateAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId.ApiRevisionIdentifier(revisionNumber),
+                        newOperationId,
+                        firstOperationContract);
+                    Assert.NotNull(firstOperation);
+                    Assert.Equal("POST", firstOperation.Method);
+
+                    var secondOperationId = TestUtilities.GenerateName("secondOpName");
+                    var secondOperationContract = testBase.CreateOperationContract("GET");
+                    var secondOperation = await testBase.client.ApiOperation.CreateOrUpdateAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId.ApiRevisionIdentifier(revisionNumber),
+                        secondOperationId,
+                        secondOperationContract);
+                    Assert.NotNull(secondOperation);
+                    Assert.Equal("GET", secondOperation.Method);
+
+                    // now test out list operation on the revision api
+                    var firstOperationOfSecondRevision = await testBase.client.ApiOperation.ListByApiAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId.ApiRevisionIdentifier(revisionNumber),
+                        new Microsoft.Rest.Azure.OData.ODataQuery<OperationContract>
+                        {
+                            Top = 1
+                        });
+                    Assert.NotNull(firstOperationOfSecondRevision);
+                    Assert.Single(firstOperationOfSecondRevision);
+                    Assert.NotEmpty(firstOperationOfSecondRevision.NextPageLink);
+
+                    // now test whether the next page link works
+                    var secondOperationOfSecondRevision = await testBase.client.ApiOperation.ListByApiNextAsync(
+                        firstOperationOfSecondRevision.NextPageLink);
+                    Assert.NotNull(secondOperationOfSecondRevision);
+                    Assert.Single(secondOperationOfSecondRevision);
+                    Assert.Empty(secondOperationOfSecondRevision.NextPageLink);
 
                     // list apiRevision
                     IPage<ApiRevisionContract> apiRevisions = await testBase.client.ApiRevisions.ListAsync(
@@ -258,12 +264,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newApiId,
                         "*",
                         deleteRevisions: true);
-
-                    testBase.client.AuthorizationServer.Delete(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        newApiAuthorizationServerId,
-                        "*");
                 }
             }
         }
