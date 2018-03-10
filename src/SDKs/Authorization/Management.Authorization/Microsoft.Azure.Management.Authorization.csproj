@@ -7,14 +7,12 @@
 		<Description>Provides capabilities to query Microsoft Azure Management Authorization.</Description>
 		<AssemblyTitle>Authorization Library for Microsoft Azure Management Authorization</AssemblyTitle>
 		<Version>2.8.0-preview</Version>
-		<Version>2.7.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Authorization</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Authorization</PackageId>
 		<PackageTags>Microsoft Azure Management;Authorization;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 			This is a public preview release of the Azure Authorization SDK. Included with this release is support for type filter of Role definitions.
-			This is a public preview release of the Azure Authorization SDK. Included with this release is support for data actions for Role Definitions.
 			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

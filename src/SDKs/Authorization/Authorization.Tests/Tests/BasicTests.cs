@@ -459,7 +459,6 @@ namespace Authorization.Tests
             }
         }
 
-
         //[Fact(Skip = "Need to re-record due to VS2017 nuget upgrade")]
         [Fact]
         public void RoleAssignmentListForScopeTest()
@@ -700,56 +699,56 @@ namespace Authorization.Tests
             }
         }
 
-		[Fact]
-		public void RoleDefinitionsFilterTests()
-		{
-			string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
-			HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-			using (MockContext context = MockContext.Start(this.GetType().FullName))
-			{
-				var client = testContext.GetAuthorizationManagementClient(context);
+        [Fact]
+        public void RoleDefinitionsFilterTests()
+        {
+            string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
+            HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = testContext.GetAuthorizationManagementClient(context);
 
-				Assert.NotNull(client);
-				Assert.NotNull(client.HttpClient);
+                Assert.NotNull(client);
+                Assert.NotNull(client.HttpClient);
 
-				var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-				var allRoleDefinitions = client.RoleDefinitions.List(scope ,new ODataQuery<RoleDefinitionFilter>(item=>item.Type == "BuiltInRole"));
+                var scope = "subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
+                var allRoleDefinitions = client.RoleDefinitions.List(scope ,new ODataQuery<RoleDefinitionFilter>(item=>item.Type == "BuiltInRole"));
 
-				Assert.NotNull(allRoleDefinitions);
+                Assert.NotNull(allRoleDefinitions);
 
-				foreach (var roleDefinition in allRoleDefinitions)
-				{
-					Assert.NotNull(roleDefinition);
-					Assert.NotNull(roleDefinition.RoleType);
-					Assert.Equal(roleDefinition.RoleType, "BuiltInRole");
-				}
-				allRoleDefinitions = client.RoleDefinitions.List(scope, new ODataQuery<RoleDefinitionFilter>(item => item.Type == "CustomRole"));
+                foreach (var roleDefinition in allRoleDefinitions)
+                {
+                    Assert.NotNull(roleDefinition);
+                    Assert.NotNull(roleDefinition.RoleType);
+                    Assert.Equal("BuiltInRole", roleDefinition.RoleType);
+                }
+                allRoleDefinitions = client.RoleDefinitions.List(scope, new ODataQuery<RoleDefinitionFilter>(item => item.Type == "CustomRole"));
 
-				Assert.NotNull(allRoleDefinitions);
+                Assert.NotNull(allRoleDefinitions);
 
-				foreach (var roleDefinition in allRoleDefinitions)
-				{
-					Assert.NotNull(roleDefinition);
-					Assert.NotNull(roleDefinition.RoleType);
-					Assert.Equal(roleDefinition.RoleType, "CustomRole");
-				}
+                foreach (var roleDefinition in allRoleDefinitions)
+                {
+                    Assert.NotNull(roleDefinition);
+                    Assert.NotNull(roleDefinition.RoleType);
+                    Assert.Equal("CustomRole", roleDefinition.RoleType);
+                }
 
-				string roleName = allRoleDefinitions.First().RoleName;
-				allRoleDefinitions = client.RoleDefinitions.List(scope, new ODataQuery<RoleDefinitionFilter>(item => item.RoleName == roleName));
+                string roleName = allRoleDefinitions.Last().RoleName;
+                allRoleDefinitions = client.RoleDefinitions.List(scope, new ODataQuery<RoleDefinitionFilter>(item => item.RoleName == roleName));
 
-				Assert.NotNull(allRoleDefinitions);
+                Assert.NotNull(allRoleDefinitions);
 
-				foreach (var roleDefinition in allRoleDefinitions)
-				{
-					Assert.NotNull(roleDefinition);
-					Assert.NotNull(roleDefinition.RoleName);
-					Assert.Equal(roleDefinition.RoleName, roleName);
-				}
-			}
-		}
+                foreach (var roleDefinition in allRoleDefinitions)
+                {
+                    Assert.NotNull(roleDefinition);
+                    Assert.NotNull(roleDefinition.RoleName);
+                    Assert.Equal(roleDefinition.RoleName, roleName);
+                }
+            }
+        }
 
-		//[Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
-		[Fact]
+        //[Fact(Skip = "After upgrade to vs2017, starts failing. Needs investigation")]
+        [Fact]
         public void RoleDefinitionUpdateTests()
         {
             string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
@@ -1034,7 +1033,7 @@ namespace Authorization.Tests
             }
         }
 
-        [Fact(Skip = "Unskip this test when storage or other RP exposes actions which are data actions")]
+        [Fact]
         public void RoleDefinitionCreateWithDataActionTests()
         {
             string executingAssemblyPath = this.GetType().GetTypeInfo().Assembly.Location;
@@ -1047,9 +1046,7 @@ namespace Authorization.Tests
                 RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
                 string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId + "/" + ResourceGroup;
-
-                Guid newRoleId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition2");
-                string resourceGroupScope = currentSubscriptionId;
+				
                 string fullRoleId = "/subscriptions/" + client.SubscriptionId + RoleDefIdPrefix + roleDefinitionId;
                 // Create a custom role definition
                 try
@@ -1062,7 +1059,7 @@ namespace Authorization.Tests
                                 {
                                     new Permission()
                                     {
-                                        DataActions = new List<string> {"Microsoft.Storage/*/Read" }
+                                        DataActions = new List<string> { "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/*" }
                                     }
                                 },
                         AssignableScopes = new List<string>() { currentSubscriptionId }
@@ -1081,14 +1078,11 @@ namespace Authorization.Tests
                     Assert.NotEmpty(roleDefinition.AssignableScopes);
                     Assert.Equal(currentSubscriptionId.ToLower(), roleDefinition.AssignableScopes.Single().ToLower());
                     Assert.NotEmpty(roleDefinition.Permissions);
-                    Assert.Equal("Microsoft.Authorization/*/Read", roleDefinition.Permissions.Single().Actions.Single());
+                    Assert.Equal("Microsoft.Storage/storageAccounts/blobServices/containers/blobs/*", roleDefinition.Permissions.Single().DataActions.Single());
                 }
                 finally
                 {
                     var deleteResult = client.RoleDefinitions.Delete(currentSubscriptionId, roleDefinitionId.ToString());
-                    Assert.NotNull(deleteResult);
-
-                    deleteResult = client.RoleDefinitions.Delete(resourceGroupScope, newRoleId.ToString());
                     Assert.NotNull(deleteResult);
                 }
             }
@@ -1173,7 +1167,7 @@ namespace Authorization.Tests
                 }
                 catch (CloudException ex)
                 {
-                    Assert.Equal(ex.Message, "Provider 'InvalidProvider' not found.");
+                    Assert.Equal("Provider 'InvalidProvider' not found.", ex.Message);
                 }
             }
         }
