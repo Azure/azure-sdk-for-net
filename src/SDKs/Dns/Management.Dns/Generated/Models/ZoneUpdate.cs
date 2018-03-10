@@ -11,29 +11,30 @@
 namespace Microsoft.Azure.Management.Dns.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// An AAAA record.
+    /// Describes a request to update a DNS zone.
     /// </summary>
-    public partial class AaaaRecord
+    public partial class ZoneUpdate
     {
         /// <summary>
-        /// Initializes a new instance of the AaaaRecord class.
+        /// Initializes a new instance of the ZoneUpdate class.
         /// </summary>
-        public AaaaRecord()
+        public ZoneUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AaaaRecord class.
+        /// Initializes a new instance of the ZoneUpdate class.
         /// </summary>
-        /// <param name="ipv6Address">The IPv6 address of this AAAA
-        /// record.</param>
-        public AaaaRecord(string ipv6Address = default(string))
+        /// <param name="tags">Resource tags.</param>
+        public ZoneUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Ipv6Address = ipv6Address;
+            Tags = tags;
             CustomInit();
         }
 
@@ -43,10 +44,10 @@ namespace Microsoft.Azure.Management.Dns.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the IPv6 address of this AAAA record.
+        /// Gets or sets resource tags.
         /// </summary>
-        [JsonProperty(PropertyName = "ipv6Address")]
-        public string Ipv6Address { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
