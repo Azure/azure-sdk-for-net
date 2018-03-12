@@ -539,18 +539,17 @@ namespace Microsoft.Azure.Management.Dns.Testing
             ListRecordsInZone(isCrossType: true);
         }
 
-        [Fact(Skip = "needs re-recording. XUnit released version will not support overloaded test names")]
+        [Fact]
         public void ListRecordsInZoneWithSuffixAcrossTypes()
         {
             ListRecordsInZoneWithSuffixCrossType(isCrossType: true);
         }
 
-        [Fact(Skip ="needs re-recording. XUnit released version will not support overloaded test names")]
+        [Fact]
         public void ListRecordsInZoneWithSuffix()
         {
             ListRecordsInZoneWithSuffixCrossType(isCrossType: false);
         }
-
 
         private void ListRecordsInZone(
             bool isCrossType,
@@ -578,32 +577,40 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                     if (isCrossType)
                     {
-                        var listresponse = testContext.DnsClient.RecordSets
+                        var listresponse1 = testContext.DnsClient.RecordSets
                             .ListByDnsZone(
                                 testContext.ResourceGroup.Name,
                                 testContext.ZoneName);
 
-                        // not checking for the record count as this will return standard SOA and auth NS records as well
-                        Assert.NotNull(listresponse);
-                        Assert.True(
-                            listresponse.Any(
-                                recordSetReturned =>
-                                    string.Equals(
-                                        recordSetNames[0],
-                                        recordSetReturned.Name))
-                            &&
-                            listresponse.Any(
-                                recordSetReturned =>
-                                    string.Equals(
-                                        recordSetNames[1],
-                                        recordSetReturned.Name))
-                            &&
-                            listresponse.Any(
-                                recordSetReturned =>
-                                    string.Equals(
-                                        recordSetNames[2],
-                                        recordSetReturned.Name)),
-                            "The returned records do not meet expectations");
+                        var listresponse2 = testContext.DnsClient.RecordSets
+                            .ListAllByDnsZone(
+                                testContext.ResourceGroup.Name,
+                                testContext.ZoneName);
+
+                        foreach (var listresponse in new[] { listresponse1, listresponse2 })
+                        {
+                            // not checking for the record count as this will return standard SOA and auth NS records as well
+                            Assert.NotNull(listresponse);
+                            Assert.True(
+                                listresponse.Any(
+                                    recordSetReturned =>
+                                        string.Equals(
+                                            recordSetNames[0],
+                                            recordSetReturned.Name))
+                                &&
+                                listresponse.Any(
+                                    recordSetReturned =>
+                                        string.Equals(
+                                            recordSetNames[1],
+                                            recordSetReturned.Name))
+                                &&
+                                listresponse.Any(
+                                    recordSetReturned =>
+                                        string.Equals(
+                                            recordSetNames[2],
+                                            recordSetReturned.Name)),
+                                "The returned records do not meet expectations");
+                        }
                     }
                     else
                     {

@@ -19,19 +19,19 @@ namespace Microsoft.Azure.Management.Dns.Testing
     public class ZoneScenarioTests
     {
         [Fact]
-        public void CrudPublicZoneFullCycle()
+        public void CrudZoneFullCycle()
         {
             using (
-                MockContext context = MockContext.Start(GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsClient = ResourceGroupHelper.GetDnsClient(
                     context,
@@ -51,11 +51,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ResourceGroupHelper.CreateResourceGroup(
                         resourceManagementClient);
 
-                void AssertZoneInvariants(Zone zone)
+                Action<Zone> assertZoneInvariants = zone =>
                 {
                     Assert.Equal(zoneName, zone.Name);
                     Assert.False(string.IsNullOrEmpty(zone.Etag));
-                }
+                };
 
                 // Create the zone clean, verify response
                 var createdZone = dnsClient.Zones.CreateOrUpdate(
@@ -65,12 +65,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ifNoneMatch: null,
                     parameters: new Zone
                     {
-                        ZoneType = ZoneType.Public,
                         Location = location,
-                        Tags = new Dictionary<string, string> {{"tag1", "value1"}},
+                        Tags =
+                            new Dictionary<string, string> { { "tag1", "value1" } },
                     });
 
-                AssertZoneInvariants(createdZone);
+                assertZoneInvariants(createdZone);
                 Assert.Equal(1, createdZone.Tags.Count);
                 Assert.True(
                     createdZone.NameServers != null &&
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     resourceGroup.Name,
                     zoneName);
 
-                AssertZoneInvariants(retrievedZone);
+                assertZoneInvariants(retrievedZone);
                 Assert.Equal(1, retrievedZone.Tags.Count);
 
                 Assert.True(
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         ifNoneMatch: null,
                         parameters: createdZone);
 
-                AssertZoneInvariants(updateResponse);
+                assertZoneInvariants(updateResponse);
                 Assert.Equal(2, updateResponse.Tags.Count);
 
                 // Retrieve the zone after create, verify response
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     resourceGroup.Name,
                     zoneName);
 
-                AssertZoneInvariants(retrievedZone);
+                assertZoneInvariants(retrievedZone);
                 Assert.Equal(2, retrievedZone.Tags.Count);
 
                 // Call Update on the object returned by Get (important distinction from Create above)
@@ -137,11 +137,30 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         ifNoneMatch: null,
                         parameters: retrievedZone);
 
-                AssertZoneInvariants(updateResponse);
+                assertZoneInvariants(updateResponse);
                 Assert.Equal(3, updateResponse.Tags.Count);
 
+                // Call Patch operation
+                retrievedZone.Tags = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"},
+                    {"tag2", "value2"},
+                    {"tag3", "value3"},
+                    {"tag4", "value4"}
+                };
+
+                updateResponse =
+                    dnsClient.Zones.Update(
+                        resourceGroup.Name,
+                        zoneName,
+                        ifMatch: null,
+                        tags: retrievedZone.Tags);
+
+                assertZoneInvariants(updateResponse);
+                Assert.Equal(4, updateResponse.Tags.Count);
+
                 // Delete the zone
-                DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
+                DeleteZones(dnsClient, resourceGroup, new[] { zoneName });
             }
         }
 
@@ -258,23 +277,23 @@ namespace Microsoft.Azure.Management.Dns.Testing
         }
 
         [Fact]
-        public void ListZonesInResourceGroup()
+        public void ListZones()
         {
             using (
-                MockContext context = MockContext.Start(GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var networkHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
 
                 var dnsClient = ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -305,19 +324,21 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void ListZonesInSubscription()
         {
-            using (MockContext context = MockContext.Start(GetType().FullName))
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var networkHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
 
                 var dnsClient = ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -349,16 +370,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void ListZonesWithTopParameter()
         {
             using (
-                MockContext context = MockContext.Start(GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -375,7 +396,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 ResourceGroup resourceGroup =
                     ResourceGroupHelper.CreateResourceGroup(
                         resourceManagementClient);
-                CreateZones(
+                ZoneScenarioTests.CreateZones(
                     dnsClient,
                     resourceGroup,
                     zoneNames,
@@ -390,7 +411,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     zoneNames.Any(
                         zoneName => zoneName == listresponse.ElementAt(0).Name));
 
-                DeleteZones(
+                ZoneScenarioTests.DeleteZones(
                     dnsClient,
                     resourceGroup,
                     zoneNames);
@@ -401,16 +422,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void ListZonesWithListNext()
         {
             using (
-                MockContext context = MockContext.Start(GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -427,14 +448,14 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 ResourceGroup resourceGroup =
                     ResourceGroupHelper.CreateResourceGroup(
                         resourceManagementClient);
-                CreateZones(
+                ZoneScenarioTests.CreateZones(
                     dnsClient,
                     resourceGroup,
                     zoneNames,
                     resourceManagementClient);
 
                 var listresponse =
-                    dnsClient.Zones.ListByResourceGroup(resourceGroup.Name,1);
+                    dnsClient.Zones.ListByResourceGroup(resourceGroup.Name, 1);
 
                 Assert.NotNull(listresponse.NextPageLink);
 
@@ -444,7 +465,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 Assert.Equal(1, listresponse.Count());
 
-                DeleteZones(
+                ZoneScenarioTests.DeleteZones(
                     dnsClient,
                     resourceGroup,
                     zoneNames);
@@ -455,16 +476,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void UpdateZonePreconditionFailed()
         {
             using (
-                MockContext context = MockContext.Start(GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -517,16 +538,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void GetNonExistingZoneFailsAsExpected()
         {
             using (
-                MockContext context = MockContext.Start(GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -556,16 +577,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public void CrudZoneSetsTheCurrentAndMaxRecordSetNumbersInResponse()
         {
             using (
-                MockContext context = MockContext.Start(GetType().FullName)
+                MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
                 var resourcesHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 var dnsHandler = new RecordedDelegatingHandler
                 {
-                    StatusCodeToReturn = HttpStatusCode.OK
+                    StatusCodeToReturn = System.Net.HttpStatusCode.OK
                 };
                 DnsManagementClient dnsClient =
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
@@ -591,7 +612,6 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     zoneName,
                     new Zone
                     {
-                        ZoneType = ZoneType.Public,
                         Location = location,
                     });
 
@@ -609,7 +629,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 };
 
                 // Delete the zone
-                DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
+                DeleteZones(dnsClient, resourceGroup, new[] { zoneName });
             }
         }
 

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Dns
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -188,17 +190,17 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='zoneName'>
             /// The name of the DNS zone (without a terminating dot).
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update operation.
-            /// </param>
             /// <param name='ifMatch'>
             /// The etag of the DNS zone. Omit this value to always overwrite the current
             /// zone. Specify the last-seen etag value to prevent accidentally overwritting
             /// any concurrent changes.
             /// </param>
-            public static Zone Update(this IZonesOperations operations, string resourceGroupName, string zoneName, Zone parameters, string ifMatch = default(string))
+            /// <param name='tags'>
+            /// Resource tags.
+            /// </param>
+            public static Zone Update(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, zoneName, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, zoneName, ifMatch, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -213,20 +215,20 @@ namespace Microsoft.Azure.Management.Dns
             /// <param name='zoneName'>
             /// The name of the DNS zone (without a terminating dot).
             /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Update operation.
-            /// </param>
             /// <param name='ifMatch'>
             /// The etag of the DNS zone. Omit this value to always overwrite the current
             /// zone. Specify the last-seen etag value to prevent accidentally overwritting
             /// any concurrent changes.
             /// </param>
+            /// <param name='tags'>
+            /// Resource tags.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Zone> UpdateAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, Zone parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Zone> UpdateAsync(this IZonesOperations operations, string resourceGroupName, string zoneName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, zoneName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, zoneName, ifMatch, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

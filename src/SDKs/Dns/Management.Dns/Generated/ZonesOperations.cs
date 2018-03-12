@@ -106,6 +106,10 @@ namespace Microsoft.Azure.Management.Dns
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -539,13 +543,13 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='zoneName'>
         /// The name of the DNS zone (without a terminating dot).
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update operation.
-        /// </param>
         /// <param name='ifMatch'>
         /// The etag of the DNS zone. Omit this value to always overwrite the current
         /// zone. Specify the last-seen etag value to prevent accidentally overwritting
         /// any concurrent changes.
+        /// </param>
+        /// <param name='tags'>
+        /// Resource tags.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -568,7 +572,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Zone>> UpdateWithHttpMessagesAsync(string resourceGroupName, string zoneName, Zone parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Zone>> UpdateWithHttpMessagesAsync(string resourceGroupName, string zoneName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -578,10 +582,6 @@ namespace Microsoft.Azure.Management.Dns
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "zoneName");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -589,6 +589,11 @@ namespace Microsoft.Azure.Management.Dns
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            ZoneUpdate parameters = new ZoneUpdate();
+            if (tags != null)
+            {
+                parameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -599,8 +604,8 @@ namespace Microsoft.Azure.Management.Dns
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("zoneName", zoneName);
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }

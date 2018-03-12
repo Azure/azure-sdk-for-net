@@ -124,13 +124,13 @@ namespace Microsoft.Azure.Management.Dns
         /// <param name='zoneName'>
         /// The name of the DNS zone (without a terminating dot).
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update operation.
-        /// </param>
         /// <param name='ifMatch'>
         /// The etag of the DNS zone. Omit this value to always overwrite the
         /// current zone. Specify the last-seen etag value to prevent
         /// accidentally overwritting any concurrent changes.
+        /// </param>
+        /// <param name='tags'>
+        /// Resource tags.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Dns
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Zone>> UpdateWithHttpMessagesAsync(string resourceGroupName, string zoneName, Zone parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Zone>> UpdateWithHttpMessagesAsync(string resourceGroupName, string zoneName, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the DNS zones within a resource group.
         /// </summary>
