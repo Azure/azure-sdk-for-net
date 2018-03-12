@@ -15,5 +15,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 </Project>

@@ -12,6 +12,7 @@
         This is a public preview release of the Azure Key Vault SDK. Included in this preview are updates to support eliptical curve keys.  This package should not be used in production. It is subject to breaking changes, and will not be supported once the preview has ended. 
       ]]>
     </PackageReleaseNotes>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
