@@ -16,24 +16,24 @@ namespace Microsoft.Azure.KeyVault.Models
     using System.Linq;
 
     /// <summary>
-    /// The backup key result, containing the backup blob.
+    /// The backup storage result, containing the backup blob.
     /// </summary>
-    public partial class BackupKeyResult
+    public partial class BackupStorageResult
     {
         /// <summary>
-        /// Initializes a new instance of the BackupKeyResult class.
+        /// Initializes a new instance of the BackupStorageResult class.
         /// </summary>
-        public BackupKeyResult()
+        public BackupStorageResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BackupKeyResult class.
+        /// Initializes a new instance of the BackupStorageResult class.
         /// </summary>
         /// <param name="value">The backup blob containing the backed up
-        /// key.</param>
-        public BackupKeyResult(byte[] value = default(byte[]))
+        /// storage account.</param>
+        public BackupStorageResult(byte[] value = default(byte[]))
         {
             Value = value;
             CustomInit();
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the backup blob containing the backed up key.
+        /// Gets the backup blob containing the backed up storage account.
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "value")]

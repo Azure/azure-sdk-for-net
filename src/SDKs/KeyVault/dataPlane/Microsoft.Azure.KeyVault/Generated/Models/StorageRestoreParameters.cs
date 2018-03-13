@@ -11,31 +11,31 @@
 namespace Microsoft.Azure.KeyVault.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The storage account key regenerate parameters.
+    /// The secret restore parameters.
     /// </summary>
-    public partial class StorageAccountRegenerteKeyParameters
+    public partial class StorageRestoreParameters
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountRegenerteKeyParameters class.
+        /// Initializes a new instance of the StorageRestoreParameters class.
         /// </summary>
-        public StorageAccountRegenerteKeyParameters()
+        public StorageRestoreParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// StorageAccountRegenerteKeyParameters class.
+        /// Initializes a new instance of the StorageRestoreParameters class.
         /// </summary>
-        /// <param name="keyName">The storage account key name.</param>
-        public StorageAccountRegenerteKeyParameters(string keyName)
+        /// <param name="storageBundleBackup">The backup blob associated with a
+        /// storage account.</param>
+        public StorageRestoreParameters(byte[] storageBundleBackup)
         {
-            KeyName = keyName;
+            StorageBundleBackup = storageBundleBackup;
             CustomInit();
         }
 
@@ -45,10 +45,11 @@ namespace Microsoft.Azure.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the storage account key name.
+        /// Gets or sets the backup blob associated with a storage account.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        [JsonConverter(typeof(Base64UrlJsonConverter))]
+        [JsonProperty(PropertyName = "value")]
+        public byte[] StorageBundleBackup { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -58,9 +59,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (KeyName == null)
+            if (StorageBundleBackup == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "StorageBundleBackup");
             }
         }
     }

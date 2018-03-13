@@ -18,36 +18,36 @@ namespace Microsoft.Azure.KeyVault.Models
     using System.Linq;
 
     /// <summary>
-    /// The deleted certificate item containing metadata about the deleted
-    /// certificate.
+    /// The deleted storage account item containing metadata about the deleted
+    /// storage account.
     /// </summary>
-    public partial class DeletedCertificateItem : CertificateItem
+    public partial class DeletedStorageAccountItem : StorageAccountItem
     {
         /// <summary>
-        /// Initializes a new instance of the DeletedCertificateItem class.
+        /// Initializes a new instance of the DeletedStorageAccountItem class.
         /// </summary>
-        public DeletedCertificateItem()
+        public DeletedStorageAccountItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DeletedCertificateItem class.
+        /// Initializes a new instance of the DeletedStorageAccountItem class.
         /// </summary>
-        /// <param name="id">Certificate identifier.</param>
-        /// <param name="attributes">The certificate management
+        /// <param name="id">Storage identifier.</param>
+        /// <param name="resourceId">Storage account resource Id.</param>
+        /// <param name="attributes">The storage account management
         /// attributes.</param>
         /// <param name="tags">Application specific metadata in the form of
         /// key-value pairs.</param>
-        /// <param name="x509Thumbprint">Thumbprint of the certificate.</param>
         /// <param name="recoveryId">The url of the recovery object, used to
-        /// identify and recover the deleted certificate.</param>
-        /// <param name="scheduledPurgeDate">The time when the certificate is
-        /// scheduled to be purged, in UTC</param>
-        /// <param name="deletedDate">The time when the certificate was
+        /// identify and recover the deleted storage account.</param>
+        /// <param name="scheduledPurgeDate">The time when the storage account
+        /// is scheduled to be purged, in UTC</param>
+        /// <param name="deletedDate">The time when the storage account was
         /// deleted, in UTC</param>
-        public DeletedCertificateItem(string id = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), byte[] x509Thumbprint = default(byte[]), string recoveryId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletedDate = default(System.DateTime?))
-            : base(id, attributes, tags, x509Thumbprint)
+        public DeletedStorageAccountItem(string id = default(string), string resourceId = default(string), StorageAccountAttributes attributes = default(StorageAccountAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string recoveryId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletedDate = default(System.DateTime?))
+            : base(id, resourceId, attributes, tags)
         {
             RecoveryId = recoveryId;
             ScheduledPurgeDate = scheduledPurgeDate;
@@ -62,21 +62,21 @@ namespace Microsoft.Azure.KeyVault.Models
 
         /// <summary>
         /// Gets or sets the url of the recovery object, used to identify and
-        /// recover the deleted certificate.
+        /// recover the deleted storage account.
         /// </summary>
         [JsonProperty(PropertyName = "recoveryId")]
         public string RecoveryId { get; set; }
 
         /// <summary>
-        /// Gets the time when the certificate is scheduled to be purged, in
-        /// UTC
+        /// Gets the time when the storage account is scheduled to be purged,
+        /// in UTC
         /// </summary>
         [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "scheduledPurgeDate")]
         public System.DateTime? ScheduledPurgeDate { get; private set; }
 
         /// <summary>
-        /// Gets the time when the certificate was deleted, in UTC
+        /// Gets the time when the storage account was deleted, in UTC
         /// </summary>
         [JsonConverter(typeof(UnixTimeJsonConverter))]
         [JsonProperty(PropertyName = "deletedDate")]

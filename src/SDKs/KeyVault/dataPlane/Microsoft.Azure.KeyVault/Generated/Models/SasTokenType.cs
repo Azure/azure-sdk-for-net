@@ -12,13 +12,11 @@ namespace Microsoft.Azure.KeyVault.Models
 {
 
     /// <summary>
-    /// Defines values for DeletionRecoveryLevel.
+    /// Defines values for SasTokenType.
     /// </summary>
-    public static class DeletionRecoveryLevel
+    public static class SasTokenType
     {
-        public const string Purgeable = "Purgeable";
-        public const string RecoverablePurgeable = "Recoverable+Purgeable";
-        public const string Recoverable = "Recoverable";
-        public const string RecoverableProtectedSubscription = "Recoverable+ProtectedSubscription";
+        public const string Account = "account";
+        public const string Service = "service";
     }
 }
