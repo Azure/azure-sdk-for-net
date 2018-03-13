@@ -76,14 +76,14 @@ function NotifyError {
 }
 
 if (-not ($modulePath | Test-Path)) {
-    NotifyError "Could not find code generation module at: $modulePath"
+    NotifyError "Could not find code generation module at: $modulePath. Please run `msbuild build.proj` to install the module."
     Exit -1
 }
 
 Import-Module "$modulePath"
 
 if (-not (Get-Module -ListAvailable -Name "$modulePath")) {
-    NotifyError "Could not find module: $modulePath"
+    NotifyError "Could not find module: $modulePath. Please run `msbuild build.proj` to install the module."
     Exit -1
 }
 
@@ -117,5 +117,5 @@ finally {
     Get-OutputStream | Out-File -FilePath $logFile | Out-Null
     Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
     Clear-OutputStreams
-    Get-Module | Remove-Module
+    Get-Module -Name "$modulePath" | Remove-Module
 }
