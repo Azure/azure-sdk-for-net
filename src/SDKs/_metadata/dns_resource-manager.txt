@@ -1,11 +1,10 @@
-2018-03-08 22:10:22 UTC
+2018-03-13 18:01:05 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: owolabi2
-Branch:      koowolab/private-dns-public-preview
-Commit:      c7fd5f85b7c3e7389ff7cf4b533c1bed1aeead08
+GitHub user: Azure
+Branch:      master
+Commit:      f6f1326e3dcdda7b83144a7e99c719691af5f292
 
 2) AutoRest information
 Requested version: latest
 Bootstrapper version:    C:\Program Files\nodejs `-- autorest@2.0.4245  
-Latest installed version:    
