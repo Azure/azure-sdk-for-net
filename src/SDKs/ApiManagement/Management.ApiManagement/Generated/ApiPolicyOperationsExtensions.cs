@@ -34,8 +34,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             public static PolicyCollection ListByApi(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string apiId)
             {
@@ -55,8 +56,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -83,8 +85,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             public static ApiPolicyGetEntityTagHeaders GetEntityTag(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string apiId)
             {
@@ -105,8 +108,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The name of the API Management service.
             /// </param>
             /// <param name='apiId'>
-            /// API identifier. Must be unique in the current API Management service
-            /// instance.
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
