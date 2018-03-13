@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// warnings.</param>
         /// <param name="objectSummary">Summary of object results in the
         /// migration</param>
-        public MigrateSqlServerSqlDbTaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), MigrationState? state = default(MigrationState?), DatabaseMigrationStage? stage = default(DatabaseMigrationStage?), string statusMessage = default(string), string message = default(string), long? numberOfObjects = default(long?), long? numberOfObjectsCompleted = default(long?), long? errorCount = default(long?), string errorPrefix = default(string), string resultPrefix = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>), IDictionary<string, DataItemMigrationSummaryResult> objectSummary = default(IDictionary<string, DataItemMigrationSummaryResult>))
+        public MigrateSqlServerSqlDbTaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string state = default(string), string stage = default(string), string statusMessage = default(string), string message = default(string), long? numberOfObjects = default(long?), long? numberOfObjectsCompleted = default(long?), long? errorCount = default(long?), string errorPrefix = default(string), string resultPrefix = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>), IDictionary<string, DataItemMigrationSummaryResult> objectSummary = default(IDictionary<string, DataItemMigrationSummaryResult>))
             : base(id)
         {
             DatabaseName = databaseName;
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public MigrationState? State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets migration stage that this database is in. Possible values
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Completed'
         /// </summary>
         [JsonProperty(PropertyName = "stage")]
-        public DatabaseMigrationStage? Stage { get; private set; }
+        public string Stage { get; private set; }
 
         /// <summary>
         /// Gets status message

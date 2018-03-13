@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ErrorType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ErrorType
+    public static class ErrorType
     {
-        [EnumMember(Value = "Default")]
-        Default,
-        [EnumMember(Value = "Warning")]
-        Warning,
-        [EnumMember(Value = "Error")]
-        Error
-    }
-    internal static class ErrorTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ErrorType? value)
-        {
-            return value == null ? null : ((ErrorType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ErrorType value)
-        {
-            switch( value )
-            {
-                case ErrorType.Default:
-                    return "Default";
-                case ErrorType.Warning:
-                    return "Warning";
-                case ErrorType.Error:
-                    return "Error";
-            }
-            return null;
-        }
-
-        internal static ErrorType? ParseErrorType(this string value)
-        {
-            switch( value )
-            {
-                case "Default":
-                    return ErrorType.Default;
-                case "Warning":
-                    return ErrorType.Warning;
-                case "Error":
-                    return ErrorType.Error;
-            }
-            return null;
-        }
+        public const string Default = "Default";
+        public const string Warning = "Warning";
+        public const string Error = "Error";
     }
 }

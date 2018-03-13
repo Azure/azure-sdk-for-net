@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Severity.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Severity
+    public static class Severity
     {
-        [EnumMember(Value = "Message")]
-        Message,
-        [EnumMember(Value = "Warning")]
-        Warning,
-        [EnumMember(Value = "Error")]
-        Error
-    }
-    internal static class SeverityEnumExtension
-    {
-        internal static string ToSerializedValue(this Severity? value)
-        {
-            return value == null ? null : ((Severity)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this Severity value)
-        {
-            switch( value )
-            {
-                case Severity.Message:
-                    return "Message";
-                case Severity.Warning:
-                    return "Warning";
-                case Severity.Error:
-                    return "Error";
-            }
-            return null;
-        }
-
-        internal static Severity? ParseSeverity(this string value)
-        {
-            switch( value )
-            {
-                case "Message":
-                    return Severity.Message;
-                case "Warning":
-                    return Severity.Warning;
-                case "Error":
-                    return Severity.Error;
-            }
-            return null;
-        }
+        public const string Message = "Message";
+        public const string Warning = "Warning";
+        public const string Error = "Error";
     }
 }

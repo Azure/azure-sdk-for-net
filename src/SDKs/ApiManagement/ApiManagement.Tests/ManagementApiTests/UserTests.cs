@@ -19,6 +19,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Fact]
         public async Task CreateListUpdateDelete()
         {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -31,7 +32,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
 
                 Assert.NotNull(listUsersResponse);
-                Assert.Equal(1, listUsersResponse.Count());
+                Assert.Single(listUsersResponse);
 
                 // create user
                 string userId = TestUtilities.GenerateName("userId");
@@ -43,7 +44,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     string userLastName = TestUtilities.GenerateName("userLastName");
                     string userPassword = TestUtilities.GenerateName("userPassword");
                     string userNote = TestUtilities.GenerateName("userNote");
-                    UserState? userSate = UserState.Active;
+                    string userSate = UserState.Active;
 
                     var userCreateParameters = new UserCreateParameters
                     {
@@ -86,7 +87,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(listUsersResponse);
                     Assert.NotNull(listUsersResponse.NextPageLink);
-                    Assert.Equal(1, listUsersResponse.Count());
+                    Assert.Single(listUsersResponse);
 
                     // generate SSO token URL
                     var genrateSsoResponse = testBase.client.User.GenerateSsoUrl(
@@ -144,6 +145,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         [Fact]
         public void UserIdentities()
         {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -158,7 +160,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                      new Microsoft.Rest.Azure.OData.ODataQuery<UserContract> { Filter = "firstName eq 'Administrator'" });
 
                 Assert.NotNull(listUsersResponse);
-                Assert.Equal(1, listUsersResponse.Count());
+                Assert.Single(listUsersResponse);
 
                 var user = listUsersResponse.Single();
 
@@ -171,15 +173,16 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(listResponse);
 
                 // there should be Azure identification
-                Assert.Equal(1, listResponse.Value.Count());
-                Assert.Equal(user.Email, listResponse.Value.Single().Id);
-                Assert.Equal("Azure", listResponse.Value.Single().Provider);
+                Assert.Single(listResponse);
+                Assert.Equal(user.Email, listResponse.Single().Id);
+                Assert.Equal("Azure", listResponse.Single().Provider);
             }
         }
 
         [Fact]
         public void GroupsListAddRemove()
         {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -238,7 +241,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Assert.NotNull(listUserGroupsResponse);
                         
                         // there should be 'Developers' group by default
-                        Assert.Equal(1, listUserGroupsResponse.Count());
+                        Assert.Single(listUserGroupsResponse);
                         var group = listUserGroupsResponse.First();
 
                         // add the user to the group
@@ -285,7 +288,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Assert.NotNull(listUserGroupsResponse);
 
                         // there should be default 'Developers' group
-                        Assert.Equal(1, listUserGroupsResponse.Count());
+                        Assert.Single(listUserGroupsResponse);
                         Assert.Equal("developers", listUserGroupsResponse.Single().Name);
                     }
                     finally
@@ -305,7 +308,6 @@ namespace ApiManagement.Tests.ManagementApiTests
         public void SubscriptionsList()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new ApiManagementTestBase(context);
@@ -333,14 +335,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     new Microsoft.Rest.Azure.OData.ODataQuery<SubscriptionContract> { Top = 1 });
 
                 Assert.NotNull(listResponse);
-                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse);
                 Assert.NotNull(listResponse.NextPageLink);
 
                 // list next page
                 listResponse = testBase.client.UserSubscription.ListNext(listResponse.NextPageLink);
 
                 Assert.NotNull(listResponse);
-                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse);
                 Assert.NotNull(listResponse.NextPageLink);
             }
         }

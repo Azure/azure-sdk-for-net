@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="publicKey">The public key of the service, used to
         /// encrypt secrets sent to the service</param>
         /// <param name="sku">Service SKU</param>
-        public DataMigrationService(string location, string virtualSubnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string kind = default(string), ServiceProvisioningState? provisioningState = default(ServiceProvisioningState?), string publicKey = default(string), ServiceSku sku = default(ServiceSku))
+        public DataMigrationService(string location, string virtualSubnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string kind = default(string), string provisioningState = default(string), string publicKey = default(string), ServiceSku sku = default(ServiceSku))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Starting', 'FailedToStart', 'FailedToStop', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ServiceProvisioningState? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the public key of the service, used to encrypt secrets

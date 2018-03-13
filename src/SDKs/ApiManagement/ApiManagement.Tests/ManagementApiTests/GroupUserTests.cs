@@ -3,13 +3,14 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ApiManagementManagement.Tests.Helpers;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
+using Xunit;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -37,16 +38,16 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Description = "Group created from Sdk client"
                     };
 
-                    var createResponse = testBase.client.Group.CreateOrUpdate(
+                    var groupContract = await testBase.client.Group.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newGroupId,
                         parameters);
-                    Assert.NotNull(createResponse);
-                    Assert.Equal(newGroupDisplayName, createResponse.DisplayName);
-                    Assert.Equal(false, createResponse.BuiltIn);
-                    Assert.NotNull(createResponse.Description);
-                    Assert.Equal(GroupType.Custom, createResponse.GroupContractType);
+                    Assert.NotNull(groupContract);
+                    Assert.Equal(newGroupDisplayName, groupContract.DisplayName);
+                    Assert.False(groupContract.BuiltIn);
+                    Assert.NotNull(groupContract.Description);
+                    Assert.Equal(GroupType.Custom, groupContract.GroupContractType);
 
                     // list all group users
                     var listResponse = testBase.client.GroupUser.List(
@@ -55,7 +56,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newGroupId,
                         null);
                     Assert.NotNull(listResponse);
-                    Assert.Equal(0, listResponse.Count());
+                    Assert.Empty(listResponse);
 
                     // create a new user and add to the group
                     var createParameters = new UserCreateParameters()
@@ -80,9 +81,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         newGroupId,
                         userId);
-
                     Assert.NotNull(addUserContract);
-                    Assert.Equal(userContract.Id, addUserContract.Id);
+                    Assert.Equal(userContract.Email, addUserContract.Email);
+                    Assert.Equal(userContract.FirstName, addUserContract.FirstName);
 
                     // list group user
                     var listgroupResponse = testBase.client.GroupUser.List(
@@ -90,8 +91,16 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         newGroupId);
                     Assert.NotNull(listgroupResponse);
-                    Assert.Equal(1, listgroupResponse.Count());
-                    Assert.Equal(addUserContract.Id, listgroupResponse.First().Id);
+                    Assert.Single(listgroupResponse);
+                    Assert.Equal(addUserContract.Email, listgroupResponse.GetEnumerator().ToIEnumerable().First().Email);
+
+                    // check entity exists 
+                    var entityStatus = await testBase.client.GroupUser.CheckEntityExistsAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newGroupId,
+                        userId);
+                    Assert.True(entityStatus);
 
                     // remove user from group
                     testBase.client.GroupUser.Delete(
@@ -101,12 +110,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                         userId);
 
                     // make sure user is removed
-                    listgroupResponse = testBase.client.GroupUser.List(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        newGroupId);
-                    Assert.NotNull(listgroupResponse);
-                    Assert.Equal(0, listgroupResponse.Count());
+                    entityStatus = await testBase.client.GroupUser.CheckEntityExistsAsync(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            newGroupId,
+                            userId);
+                    Assert.False(entityStatus);
                 }
                 finally
                 {

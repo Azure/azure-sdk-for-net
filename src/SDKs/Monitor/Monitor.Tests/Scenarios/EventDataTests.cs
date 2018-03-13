@@ -139,7 +139,7 @@ namespace Monitor.Tests.Scenarios
                 Assert.Equal(exp.Description, act.Description);
                 Assert.Equal(exp.EventDataId, act.EventDataId);
                 AreEqual(exp.EventName, act.EventName);
-                Assert.Equal(exp.EventTimestamp.ToUniversalTime(), act.EventTimestamp.ToUniversalTime());
+                Assert.Equal(exp.EventTimestamp?.ToUniversalTime(), act.EventTimestamp?.ToUniversalTime());
                 AreEqual(exp.HttpRequest, act.HttpRequest);
                 Assert.Equal(exp.Level, act.Level);
                 Assert.Equal(exp.OperationId, act.OperationId);
@@ -149,7 +149,7 @@ namespace Monitor.Tests.Scenarios
                 AreEqual(exp.ResourceProviderName, act.ResourceProviderName);
                 AreEqual(exp.Status, act.Status);
                 AreEqual(exp.SubStatus, act.SubStatus);
-                Assert.Equal(exp.SubmissionTimestamp.ToUniversalTime(), act.SubmissionTimestamp.ToUniversalTime());
+                Assert.Equal(exp.SubmissionTimestamp?.ToUniversalTime(), act.SubmissionTimestamp?.ToUniversalTime());
                 Assert.Equal(exp.SubscriptionId, act.SubscriptionId);
 
                 // TODO: This cannot be verified for now. Should fix this in the next mmilestone.

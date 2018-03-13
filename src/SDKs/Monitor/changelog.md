@@ -1,6 +1,41 @@
 ## Microsoft.Azure.Management.Monitor release notes
 
-### Changes in 0.17.0-preview
+### Changes in 0.19.0-preview
+
+**Notes**
+
+- Approx. date of publication (2018-03)
+- New receivers added to Actiongroup.
+- Added a patch action for Actiongroup.
+- The attributes of the EventData class are all explicitly marked as read-only. These objects were and still are only returned by the Activity Logs requests, i.e. they have always behaved as read-only attributes.
+- The new Api version for the metrics Api and metricDefinitions Api is 2018-01-01. The previous Api version was 2017-05-01-preview.
+- A new optional query parameter called 'metricnamespace' is added to metricDefinitions Api.
+- Optional query parameters 'top', 'orderby' and 'metricnamespace' are added to metrics Api.
+- MetricsTests were updated and sessions re-recorded.
+
+
+**Breaking change**
+
+- The operations that used to be grouped under **data-plane** were really **resource-management** operations. All those operations were moved to the **resource-management** group and the **data-plane** groups has been removed.
+- As a consequence of the previous item the class namespace **Microsoft.Azure.Management.Monitor.Management** has been removed. All the artifacts (e.g. classes, interfaces) are in the namespace: **Microsoft.Azure.Management.Monitor**.
+- Another consequence of the first item is that the client **MonitorClient** does not exist anymore. Only the client **MonitorManagementClient** remains and it exposes all the operations of the SDK.
+- A query parameter was renamed from 'metric' to 'metricnames' for metrics Api.
+
+### Changes in 0.18.1-preview
+
+**Notes**
+
+- Approx. date of publication (2017-10-20)
+- Fixing doc issues
+- Adding two values to the metric unit enumeration, generating metadata files
+- Adding multi-dimensional metrics tests
+
+### Changes in 0.18.0-preview
+
+**Notes**
+
+- Approx. date of publication (2017-09-20)
+- Release 0.17.0-preview was not published.
 
 **Breaking change**
 
@@ -24,9 +59,27 @@
 - The new Api version for the whole metrics API is 2017-05-01-preview. Before it was 2016-09-01 for metrics and 2016-03-01 for metric definitions.
 - The calls can retrieve single-dimension metrics with the proper set of parameters. So the change is not completely a breaking change, but it would certainly require some adjustments in the calls.
 
+### Changes in 0.16.1-preview
+
 **Notes**
 
-- New receivers added to Actiongroup, swagger is already updated and this is version is like a base version now.
-- Going forward changes in Actiongroup will be done with change in version.
-- Added a patch action for Actiongroup.
+- Approx. date of publication (2017-08-23)
+- Adding ActivityLogAlerts and ActionGroups APIs and their unit tests
+- Adding PATCH operations and the corresponding unit tests
+- Adding scenario tests, improving and re-recording them
+- Making sure the scenario tests point to the more recent version of the Resource Manager.dll
 
+### Changes in 0.16.0-preview
+
+**Notes**
+
+- Approx. date of publication (2017-04-27)
+- Fixing version of Newtonsoft.Json
+- Adding some unit tests and making sure the Tests project works.
+- Commenting imports in the project file
+- Changing class namespace of the generated code
+- Changing namespace and assembly name for compliance
+- Leaving the Swagger spec for DiagnosticSettings out of the generation and using the previous API again
+- Updating the generate.cmd command to the latest commit for the arm-monitor composite file
+- Making the default class namespace consistent with the dll and nuget package names
+- Removing unused test files (DiagnosticSettings) and changing the project file accordingly.

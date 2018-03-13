@@ -10,75 +10,17 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DatabaseMigrationStage.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DatabaseMigrationStage
+    public static class DatabaseMigrationStage
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "Initialize")]
-        Initialize,
-        [EnumMember(Value = "Backup")]
-        Backup,
-        [EnumMember(Value = "FileCopy")]
-        FileCopy,
-        [EnumMember(Value = "Restore")]
-        Restore,
-        [EnumMember(Value = "Completed")]
-        Completed
-    }
-    internal static class DatabaseMigrationStageEnumExtension
-    {
-        internal static string ToSerializedValue(this DatabaseMigrationStage? value)
-        {
-            return value == null ? null : ((DatabaseMigrationStage)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DatabaseMigrationStage value)
-        {
-            switch( value )
-            {
-                case DatabaseMigrationStage.None:
-                    return "None";
-                case DatabaseMigrationStage.Initialize:
-                    return "Initialize";
-                case DatabaseMigrationStage.Backup:
-                    return "Backup";
-                case DatabaseMigrationStage.FileCopy:
-                    return "FileCopy";
-                case DatabaseMigrationStage.Restore:
-                    return "Restore";
-                case DatabaseMigrationStage.Completed:
-                    return "Completed";
-            }
-            return null;
-        }
-
-        internal static DatabaseMigrationStage? ParseDatabaseMigrationStage(this string value)
-        {
-            switch( value )
-            {
-                case "None":
-                    return DatabaseMigrationStage.None;
-                case "Initialize":
-                    return DatabaseMigrationStage.Initialize;
-                case "Backup":
-                    return DatabaseMigrationStage.Backup;
-                case "FileCopy":
-                    return DatabaseMigrationStage.FileCopy;
-                case "Restore":
-                    return DatabaseMigrationStage.Restore;
-                case "Completed":
-                    return DatabaseMigrationStage.Completed;
-            }
-            return null;
-        }
+        public const string None = "None";
+        public const string Initialize = "Initialize";
+        public const string Backup = "Backup";
+        public const string FileCopy = "FileCopy";
+        public const string Restore = "Restore";
+        public const string Completed = "Completed";
     }
 }

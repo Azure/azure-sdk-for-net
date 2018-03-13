@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="text">Error Text</param>
         /// <param name="severity">Severity of the error. Possible values
         /// include: 'Message', 'Warning', 'Error'</param>
-        public ValidationError(string text = default(string), Severity? severity = default(Severity?))
+        public ValidationError(string text = default(string), string severity = default(string))
         {
             Text = text;
             Severity = severity;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Message', 'Warning', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
-        public Severity? Severity { get; set; }
+        public string Severity { get; set; }
 
     }
 }
