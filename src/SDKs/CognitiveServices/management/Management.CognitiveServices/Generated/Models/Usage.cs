@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="status">Cognitive Services account quota usage status.
         /// Possible values include: 'Included', 'Blocked', 'InOverage',
         /// 'Unknown'</param>
-        public Usage(string unit = default(string), MetricName name = default(MetricName), string quotaPeriod = default(string), int? limit = default(int?), int? currentValue = default(int?), string nextResetTime = default(string), string status = default(string))
+        public Usage(string unit = default(string), MetricName name = default(MetricName), string quotaPeriod = default(string), double? limit = default(double?), double? currentValue = default(double?), string nextResetTime = default(string), string status = default(string))
         {
             Unit = unit;
             Name = name;
@@ -83,13 +83,13 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// Gets maximum value for this metric.
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
-        public int? Limit { get; private set; }
+        public double? Limit { get; private set; }
 
         /// <summary>
         /// Gets current value for this metric.
         /// </summary>
         [JsonProperty(PropertyName = "currentValue")]
-        public int? CurrentValue { get; private set; }
+        public double? CurrentValue { get; private set; }
 
         /// <summary>
         /// Gets next reset time for current quota.

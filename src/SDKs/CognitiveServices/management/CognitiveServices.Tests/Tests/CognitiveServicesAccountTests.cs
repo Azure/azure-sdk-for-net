@@ -247,9 +247,13 @@ namespace CognitiveServices.Tests
                 // Get usages
                 var usages = cognitiveServicesMgmtClient.Accounts.GetUsages(rgname, accountName);
 
-                // Has 
+                // Has usage data.
                 Assert.NotNull(usages.Value);
+
+                // Has quota limit 
                 Assert.True(usages.Value[0].Limit > 0);
+
+                // Current value == 0 as there is no call made for this newly created account.
                 Assert.Equal(0, usages.Value[0].CurrentValue);
             }
         }
