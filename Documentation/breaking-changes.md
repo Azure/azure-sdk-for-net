@@ -1,5 +1,7 @@
 # Breaking Change Definition
 
+<!-- Testing CI builds please do not merge -->
+
 Breaking changes in Azure SDK for .NET are defined as follows:
 
 ## Generated classes
