@@ -49,13 +49,24 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// <param name="nameServers">The name servers for this DNS zone. This
         /// is a read-only property and any attempt to set this value will be
         /// ignored.</param>
-        public Zone(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>))
+        /// <param name="zoneType">The type of this DNS zone (Public or
+        /// Private). Possible values include: 'Public', 'Private'</param>
+        /// <param name="registrationVirtualNetworks">A list of references to
+        /// virtual networks that register hostnames in this DNS zone. This is
+        /// a only when ZoneType is Private.</param>
+        /// <param name="resolutionVirtualNetworks">A list of references to
+        /// virtual networks that resolve records in this DNS zone. This is a
+        /// only when ZoneType is Private.</param>
+        public Zone(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), long? maxNumberOfRecordSets = default(long?), long? numberOfRecordSets = default(long?), IList<string> nameServers = default(IList<string>), ZoneType? zoneType = default(ZoneType?), IList<SubResource> registrationVirtualNetworks = default(IList<SubResource>), IList<SubResource> resolutionVirtualNetworks = default(IList<SubResource>))
             : base(location, id, name, type, tags)
         {
             Etag = etag;
             MaxNumberOfRecordSets = maxNumberOfRecordSets;
             NumberOfRecordSets = numberOfRecordSets;
             NameServers = nameServers;
+            ZoneType = zoneType;
+            RegistrationVirtualNetworks = registrationVirtualNetworks;
+            ResolutionVirtualNetworks = resolutionVirtualNetworks;
             CustomInit();
         }
 
@@ -92,6 +103,28 @@ namespace Microsoft.Azure.Management.Dns.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.nameServers")]
         public IList<string> NameServers { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the type of this DNS zone (Public or Private).
+        /// Possible values include: 'Public', 'Private'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneType")]
+        public ZoneType? ZoneType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of references to virtual networks that register
+        /// hostnames in this DNS zone. This is a only when ZoneType is
+        /// Private.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.registrationVirtualNetworks")]
+        public IList<SubResource> RegistrationVirtualNetworks { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of references to virtual networks that resolve
+        /// records in this DNS zone. This is a only when ZoneType is Private.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resolutionVirtualNetworks")]
+        public IList<SubResource> ResolutionVirtualNetworks { get; set; }
 
         /// <summary>
         /// Validate the object.
