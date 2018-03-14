@@ -14,25 +14,26 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// The disks sku name. Can be Standard_LRS or Premium_LRS.
+    /// The snapshots sku name. Can be Standard_LRS, Premium_LRS, or
+    /// Standard_ZRS.
     /// </summary>
-    public partial class DiskSku
+    public partial class SnapshotSku
     {
         /// <summary>
-        /// Initializes a new instance of the DiskSku class.
+        /// Initializes a new instance of the SnapshotSku class.
         /// </summary>
-        public DiskSku()
+        public SnapshotSku()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DiskSku class.
+        /// Initializes a new instance of the SnapshotSku class.
         /// </summary>
         /// <param name="name">The sku name. Possible values include:
-        /// 'Standard_LRS', 'Premium_LRS'</param>
+        /// 'Standard_LRS', 'Premium_LRS', 'Standard_ZRS'</param>
         /// <param name="tier">The sku tier.</param>
-        public DiskSku(string name = default(string), string tier = default(string))
+        public SnapshotSku(string name = default(string), string tier = default(string))
         {
             Name = name;
             Tier = tier;
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets the sku name. Possible values include: 'Standard_LRS',
-        /// 'Premium_LRS'
+        /// 'Premium_LRS', 'Standard_ZRS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -21,7 +21,7 @@ namespace Compute.Tests.DiskRPTests
         private string DiskRPLocation = ComputeManagementTestUtilities.DefaultLocation.ToLower();
 
         #region Execution
-        protected void Disk_CRUD_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
+        protected void Disk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -103,7 +103,7 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Snapshot_CRUD_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -186,7 +186,7 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Disk_List_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null)
+        protected void Disk_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -249,7 +249,7 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
-        protected void Snapshot_List_Execute(DiskCreateOption diskCreateOption, string methodName, int? diskSizeGB = null)
+        protected void Snapshot_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -282,7 +282,7 @@ namespace Compute.Tests.DiskRPTests
 
                     // Generate 4 snapshots using disks info
                     Snapshot snapshot11 = GenerateDefaultSnapshot(diskOut11.Id);
-                    Snapshot snapshot12 = GenerateDefaultSnapshot(diskOut12.Id);
+                    Snapshot snapshot12 = GenerateDefaultSnapshot(diskOut12.Id, SnapshotStorageAccountTypes.StandardZRS);
                     Snapshot snapshot21 = GenerateDefaultSnapshot(diskOut21.Id);
                     Snapshot snapshot22 = GenerateDefaultSnapshot(diskOut22.Id);
 
@@ -328,7 +328,7 @@ namespace Compute.Tests.DiskRPTests
         #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
-        protected Disk GenerateDefaultDisk(DiskCreateOption diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null)
+        protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null)
         {
             Disk disk;
 
@@ -355,7 +355,7 @@ namespace Compute.Tests.DiskRPTests
         /// Generates a disk used when the DiskCreateOption is Import
         /// </summary>
         /// <returns></returns>
-        private Disk GenerateImportDisk(DiskCreateOption diskCreateOption, string rgName)
+        private Disk GenerateImportDisk(string diskCreateOption, string rgName)
         {
             // Create a VM, so we can use its OS disk for creating the image
             string storageAccountName = ComputeManagementTestUtilities.GenerateName(DiskNamePrefix);
@@ -383,7 +383,7 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
-        private Disk GenerateBaseDisk(DiskCreateOption diskCreateOption)
+        private Disk GenerateBaseDisk(string diskCreateOption)
         {
             var disk = new Disk
             {
@@ -397,26 +397,26 @@ namespace Compute.Tests.DiskRPTests
             {
                 CreateOption = diskCreateOption,
             };
-            disk.OsType = OperatingSystemTypes.Windows;
+            disk.OsType = OperatingSystemTypes.Linux;
 
             return disk;
         }
 
-        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId)
+        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = SnapshotStorageAccountTypes.StandardLRS)
         {
-            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId);
+            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes);
             return snapshot;
         }
 
-        private Snapshot GenerateBaseSnapshot(string sourceDiskId)
+        private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes)
         {
             var snapshot = new Snapshot()
             {
                 Location = DiskRPLocation
             };
-            snapshot.Sku = new DiskSku()
+            snapshot.Sku = new SnapshotSku()
             {
-                Name = StorageAccountTypes.StandardLRS
+                Name = snapshotStorageAccountTypes ?? SnapshotStorageAccountTypes.StandardLRS
             };
             snapshot.CreationData = new CreationData()
             {

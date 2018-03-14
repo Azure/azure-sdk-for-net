@@ -600,6 +600,106 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Redeploy one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            public static OperationStatusResponse Redeploy(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            {
+                return operations.RedeployAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Redeploy one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatusResponse> RedeployAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RedeployWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Perform maintenance on one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            public static OperationStatusResponse PerformMaintenance(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            {
+                return operations.PerformMaintenanceAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Perform maintenance on one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatusResponse> PerformMaintenanceAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Upgrades one or more virtual machines to the latest SKU set in the VM scale
             /// set model.
             /// </summary>
@@ -1180,6 +1280,106 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<OperationStatusResponse> BeginStartAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Redeploy one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            public static OperationStatusResponse BeginRedeploy(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            {
+                return operations.BeginRedeployAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Redeploy one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatusResponse> BeginRedeployAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Perform maintenance on one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            public static OperationStatusResponse BeginPerformMaintenance(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            {
+                return operations.BeginPerformMaintenanceAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Perform maintenance on one or more virtual machines in a VM scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the VM scale set.
+            /// </param>
+            /// <param name='instanceIds'>
+            /// The virtual machine scale set instance ids. Omitting the virtual machine
+            /// scale set instance ids will result in the operation being performed on all
+            /// virtual machines in the virtual machine scale set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OperationStatusResponse> BeginPerformMaintenanceAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginPerformMaintenanceWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

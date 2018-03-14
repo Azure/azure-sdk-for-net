@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -42,10 +41,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// information about disks, see [About disks and VHDs for Azure
         /// virtual
         /// machines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-about-disks-vhds?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json).</param>
-        public ImageStorageProfile(ImageOSDisk osDisk, IList<ImageDataDisk> dataDisks = default(IList<ImageDataDisk>))
+        /// <param name="zoneResilient">Specifies whether an image is zone
+        /// resilient or not. Default is false. Zone resilient images can be
+        /// created only in regions that provide Zone Redundant Storage
+        /// (ZRS).</param>
+        public ImageStorageProfile(ImageOSDisk osDisk = default(ImageOSDisk), IList<ImageDataDisk> dataDisks = default(IList<ImageDataDisk>), bool? zoneResilient = default(bool?))
         {
             OsDisk = osDisk;
             DataDisks = dataDisks;
+            ZoneResilient = zoneResilient;
             CustomInit();
         }
 
@@ -75,17 +79,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<ImageDataDisk> DataDisks { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies whether an image is zone resilient or not.
+        /// Default is false. Zone resilient images can be created only in
+        /// regions that provide Zone Redundant Storage (ZRS).
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneResilient")]
+        public bool? ZoneResilient { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (OsDisk == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OsDisk");
-            }
             if (OsDisk != null)
             {
                 OsDisk.Validate();

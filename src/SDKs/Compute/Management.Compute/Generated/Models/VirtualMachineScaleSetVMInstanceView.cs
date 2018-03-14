@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// thumbprint.</param>
         /// <param name="vmAgent">The VM Agent running on the virtual
         /// machine.</param>
+        /// <param name="maintenanceRedeployStatus">The Maintenance Operation
+        /// status on the virtual machine.</param>
         /// <param name="disks">The disks information.</param>
         /// <param name="extensions">The extensions information.</param>
         /// <param name="vmHealth">The health status for the VM.</param>
@@ -53,12 +55,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="placementGroupId">The placement group in which the VM
         /// is running. If the VM is deallocated it will not have a
         /// placementGroupId.</param>
-        public VirtualMachineScaleSetVMInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), VirtualMachineHealthStatus vmHealth = default(VirtualMachineHealthStatus), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), string placementGroupId = default(string))
+        public VirtualMachineScaleSetVMInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), MaintenanceRedeployStatus maintenanceRedeployStatus = default(MaintenanceRedeployStatus), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), VirtualMachineHealthStatus vmHealth = default(VirtualMachineHealthStatus), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), string placementGroupId = default(string))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
             RdpThumbPrint = rdpThumbPrint;
             VmAgent = vmAgent;
+            MaintenanceRedeployStatus = maintenanceRedeployStatus;
             Disks = disks;
             Extensions = extensions;
             VmHealth = vmHealth;
@@ -96,6 +99,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmAgent")]
         public VirtualMachineAgentInstanceView VmAgent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Maintenance Operation status on the virtual
+        /// machine.
+        /// </summary>
+        [JsonProperty(PropertyName = "maintenanceRedeployStatus")]
+        public MaintenanceRedeployStatus MaintenanceRedeployStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the disks information.
