@@ -44,23 +44,13 @@ if not "%req_help%" == "" (
 
 :: repo information
 set rp="%1"
-if not "%2" == "" (set version="%2")         else (set version="latest")
-if not "%3" == "" (set specsRepoUser="%3")   else (set specsRepoUser="Azure")
+if not "%2" == "" (set autoRestVersion="%2")         else (set autoRestVersion="latest")
+if not "%3" == "" (set specsRepoFork="%3")   else (set specsRepoFork="Azure")
 if not "%4" == "" (set specsRepoBranch="%4") else (set specsRepoBranch="master")
 if not "%5" == "" (set specsRepoName="%5")   else (set specsRepoName="azure-rest-api-specs")
-if not "%6" == "" (set sdksFolder="%6")      else (set sdksFolder=%~dp0..\src\SDKS)
-set configFile="https://github.com/%specsRepoUser%/%specsRepoName%/blob/%specsRepoBranch%/specification/%rp%/readme.md"
-
-:: installation
-if "%7" == "" (call npm i -g autorest)
+if not "%6" == "" (set sdkDirectory="%6")      else (set sdkDirectory=%~dp0..\src\SDKS)
 
 :: code generation
 @echo on
-call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=%version% --reflect-api-versions
+call powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File "%~dp0\generateTool.ps1" -ResourceProvider %rp% -SpecsRepoFork %specsRepoFork% -SpecsRepoBranch %specsRepoBranch% -SpecsRepoName %specsRepoName% -SdkDirectory %sdkDirectory% -AutoRestVersion %autoRestVersion%
 @echo off
-
-:: metadata
-mkdir %~dp0\..\src\SDKs\_metadata >nul 2>&1
-call powershell %~dp0\generateMetadata.ps1 %specsRepoUser% %specsRepoBranch% %version% %configFile% > %~dp0\..\src\SDKs\_metadata\%rp:/=_%.txt
-
-endlocal
