@@ -27,8 +27,10 @@ namespace Compute.Tests
         [Trait("Name", "TestImageOperations")]
         public void TestImageOperations()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "FranceCentral");
                 EnsureClientsInitialized(context);
 
                 // Create resource group
@@ -104,7 +106,6 @@ namespace Compute.Tests
                                 BlobUri = createdVM.StorageProfile.OsDisk.Vhd.Uri,
                                 OsState = OperatingSystemStateTypes.Generalized,
                                 OsType = OperatingSystemTypes.Windows,
-                                DiskSizeGB = createdVM.StorageProfile.OsDisk.DiskSizeGB
                             },
                             DataDisks = new List<ImageDataDisk>()
                             {
@@ -112,9 +113,9 @@ namespace Compute.Tests
                                 {
                                     BlobUri = createdVM.StorageProfile.DataDisks[0].Vhd.Uri,
                                     Lun = createdVM.StorageProfile.DataDisks[0].Lun,
-                                    DiskSizeGB = createdVM.StorageProfile.DataDisks[0].DiskSizeGB
                                 }
-                            }
+                            },
+                            ZoneResilient = true
                         }
                     };
 
@@ -136,6 +137,7 @@ namespace Compute.Tests
                     }
 
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                 }
             }
         }
@@ -178,6 +180,8 @@ namespace Compute.Tests
                     Assert.NotNull(dataDiskOut.DiskSizeGB);
                 }
             }
+
+            Assert.Equal(imageIn.StorageProfile.ZoneResilient, imageOut.StorageProfile.ZoneResilient);
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Compute.Tests
                         }
                         else
                         {
-                            m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "").ToLower();
+                            m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "");
                         }
                     }
                 }
@@ -210,7 +210,7 @@ namespace Compute.Tests
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
             string vmSize = VirtualMachineSizeTypes.StandardA0,
-            StorageAccountTypes storageAccountType = StorageAccountTypes.StandardLRS,
+            string storageAccountType = StorageAccountTypes.StandardLRS,
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null)
         {
@@ -731,7 +731,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0, StorageAccountTypes storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
+            string vmSize = VirtualMachineSizeTypes.StandardA0, string storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);

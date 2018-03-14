@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AccessLevel.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AccessLevel
+    public static class AccessLevel
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "Read")]
-        Read
-    }
-    internal static class AccessLevelEnumExtension
-    {
-        internal static string ToSerializedValue(this AccessLevel? value)
-        {
-            return value == null ? null : ((AccessLevel)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AccessLevel value)
-        {
-            switch( value )
-            {
-                case AccessLevel.None:
-                    return "None";
-                case AccessLevel.Read:
-                    return "Read";
-            }
-            return null;
-        }
-
-        internal static AccessLevel? ParseAccessLevel(this string value)
-        {
-            switch( value )
-            {
-                case "None":
-                    return AccessLevel.None;
-                case "Read":
-                    return AccessLevel.Read;
-            }
-            return null;
-        }
+        public const string None = "None";
+        public const string Read = "Read";
     }
 }

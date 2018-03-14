@@ -12,15 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for DiskCreateOption.
+    /// Defines values for SnapshotStorageAccountTypes.
     /// </summary>
-    public static class DiskCreateOption
+    public static class SnapshotStorageAccountTypes
     {
-        public const string Empty = "Empty";
-        public const string Attach = "Attach";
-        public const string FromImage = "FromImage";
-        public const string Import = "Import";
-        public const string Copy = "Copy";
-        public const string Restore = "Restore";
+        public const string StandardLRS = "Standard_LRS";
+        public const string PremiumLRS = "Premium_LRS";
+        public const string StandardZRS = "Standard_ZRS";
     }
 }
