@@ -1,5 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.7.0-preview
+
+### Feature Additions
+  * Add AzureDatabricks LinkedService and DatabricksNotebook Activity
+  * Add headNodeSize and dataNodeSize properties in HDInsightOnDemand LinkedService.
+  * Add LinkedService, Dataset, CopySource for SalesforceMarketingCloud
+
 ## Version 0.6.0-preview
 
 ### Feature Additions
