@@ -14,7 +14,6 @@
 New features:
 - Added support for List and Cancel operation on Azure database and elastic pool REST API
 - Added more convenient method to rename databases, `Databases.Rename(resourceGroupName, serverName, databaseName, newName)`.
-- Added support for Auto-tuning REST API
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
