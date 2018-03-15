@@ -117,5 +117,5 @@ finally {
     Get-OutputStream | Out-File -FilePath $logFile | Out-Null
     Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
     Clear-OutputStreams
-    Get-Module -Name "$modulePath" | Remove-Module
+    Get-Module -ListAvailable "$modulePath" | Remove-Module 
 }
