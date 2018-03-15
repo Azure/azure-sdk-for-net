@@ -55,5 +55,61 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 }
             }
 
+            /// <summary>
+            /// Refreshes health summary of the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static VaultHealthDetails Refresh(this IReplicationVaultHealthOperations operations)
+            {
+                return operations.RefreshAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Refreshes health summary of the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VaultHealthDetails> RefreshAsync(this IReplicationVaultHealthOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RefreshWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Refreshes health summary of the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static VaultHealthDetails BeginRefresh(this IReplicationVaultHealthOperations operations)
+            {
+                return operations.BeginRefreshAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Refreshes health summary of the vault.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VaultHealthDetails> BeginRefreshAsync(this IReplicationVaultHealthOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginRefreshWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

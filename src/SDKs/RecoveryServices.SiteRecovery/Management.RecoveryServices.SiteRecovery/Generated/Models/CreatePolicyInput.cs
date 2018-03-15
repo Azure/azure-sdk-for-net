@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Protection profile input.
+    /// Protection Policy input.
     /// </summary>
     public partial class CreatePolicyInput
     {

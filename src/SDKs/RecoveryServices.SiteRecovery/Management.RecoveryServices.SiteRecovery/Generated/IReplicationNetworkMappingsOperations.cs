@@ -24,28 +24,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationNetworkMappingsOperations
     {
         /// <summary>
-        /// Gets all the network mappings under a vault.
-        /// </summary>
-        /// <remarks>
-        /// Lists all ASR network mappings in the vault.
-        /// </remarks>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<NetworkMapping>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets all the network mappings under a network.
         /// </summary>
         /// <remarks>
@@ -201,6 +179,28 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<NetworkMapping>> UpdateWithHttpMessagesAsync(string fabricName, string networkName, string networkMappingName, UpdateNetworkMappingInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Gets all the network mappings under a vault.
+        /// </summary>
+        /// <remarks>
+        /// Lists all ASR network mappings in the vault.
+        /// </remarks>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<NetworkMapping>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates network mapping.
         /// </summary>
         /// <remarks>
@@ -297,31 +297,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<NetworkMapping>> BeginUpdateWithHttpMessagesAsync(string fabricName, string networkName, string networkMappingName, UpdateNetworkMappingInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the network mappings under a vault.
-        /// </summary>
-        /// <remarks>
-        /// Lists all ASR network mappings in the vault.
-        /// </remarks>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<NetworkMapping>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets all the network mappings under a network.
         /// </summary>
         /// <remarks>
@@ -346,5 +321,30 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<NetworkMapping>>> ListByReplicationNetworksNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all the network mappings under a vault.
+        /// </summary>
+        /// <remarks>
+        /// Lists all ASR network mappings in the vault.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<NetworkMapping>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DiskCreateOptionTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DiskCreateOptionTypes
+    public static class DiskCreateOptionTypes
     {
-        [EnumMember(Value = "FromImage")]
-        FromImage,
-        [EnumMember(Value = "Empty")]
-        Empty,
-        [EnumMember(Value = "Attach")]
-        Attach
-    }
-    internal static class DiskCreateOptionTypesEnumExtension
-    {
-        internal static string ToSerializedValue(this DiskCreateOptionTypes? value)
-        {
-            return value == null ? null : ((DiskCreateOptionTypes)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DiskCreateOptionTypes value)
-        {
-            switch( value )
-            {
-                case DiskCreateOptionTypes.FromImage:
-                    return "FromImage";
-                case DiskCreateOptionTypes.Empty:
-                    return "Empty";
-                case DiskCreateOptionTypes.Attach:
-                    return "Attach";
-            }
-            return null;
-        }
-
-        internal static DiskCreateOptionTypes? ParseDiskCreateOptionTypes(this string value)
-        {
-            switch( value )
-            {
-                case "FromImage":
-                    return DiskCreateOptionTypes.FromImage;
-                case "Empty":
-                    return DiskCreateOptionTypes.Empty;
-                case "Attach":
-                    return DiskCreateOptionTypes.Attach;
-            }
-            return null;
-        }
+        public const string FromImage = "FromImage";
+        public const string Empty = "Empty";
+        public const string Attach = "Attach";
     }
 }

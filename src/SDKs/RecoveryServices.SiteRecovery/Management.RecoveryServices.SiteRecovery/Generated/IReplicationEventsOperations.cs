@@ -25,31 +25,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationEventsOperations
     {
         /// <summary>
-        /// Get the details of an Azure Site recovery event.
-        /// </summary>
-        /// <remarks>
-        /// The operation to get the details of an Azure Site recovery event.
-        /// </remarks>
-        /// <param name='eventName'>
-        /// The name of the Azure Site Recovery event.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<EventModel>> GetWithHttpMessagesAsync(string eventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets the list of Azure Site Recovery events.
         /// </summary>
         /// <remarks>
@@ -74,6 +49,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<EventModel>>> ListWithHttpMessagesAsync(ODataQuery<EventQueryParameter> odataQuery = default(ODataQuery<EventQueryParameter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get the details of an Azure Site recovery event.
+        /// </summary>
+        /// <remarks>
+        /// The operation to get the details of an Azure Site recovery event.
+        /// </remarks>
+        /// <param name='eventName'>
+        /// The name of the Azure Site Recovery event.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<EventModel>> GetWithHttpMessagesAsync(string eventName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of Azure Site Recovery events.
         /// </summary>

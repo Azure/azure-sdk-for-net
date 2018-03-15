@@ -22,6 +22,40 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationAlertSettingsOperationsExtensions
     {
             /// <summary>
+            /// Gets the list of configured email notification(alert) configurations.
+            /// </summary>
+            /// <remarks>
+            /// Gets the list of email notification(alert) configurations for the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<Alert> List(this IReplicationAlertSettingsOperations operations)
+            {
+                return operations.ListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of configured email notification(alert) configurations.
+            /// </summary>
+            /// <remarks>
+            /// Gets the list of email notification(alert) configurations for the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Alert>> ListAsync(this IReplicationAlertSettingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets an email notification(alert) configuration.
             /// </summary>
             /// <remarks>
@@ -102,40 +136,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<Alert> CreateAsync(this IReplicationAlertSettingsOperations operations, string alertSettingName, ConfigureAlertRequest request, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(alertSettingName, request, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the list of configured email notification(alert) configurations.
-            /// </summary>
-            /// <remarks>
-            /// Gets the list of email notification(alert) configurations for the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<Alert> List(this IReplicationAlertSettingsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of configured email notification(alert) configurations.
-            /// </summary>
-            /// <remarks>
-            /// Gets the list of email notification(alert) configurations for the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Alert>> ListAsync(this IReplicationAlertSettingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

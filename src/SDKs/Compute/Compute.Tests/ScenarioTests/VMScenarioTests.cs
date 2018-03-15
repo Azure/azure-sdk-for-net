@@ -88,7 +88,7 @@ namespace Compute.Tests
         }
 
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = VirtualMachineSizeTypes.StandardA0,
-            StorageAccountTypes storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
+            string storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {

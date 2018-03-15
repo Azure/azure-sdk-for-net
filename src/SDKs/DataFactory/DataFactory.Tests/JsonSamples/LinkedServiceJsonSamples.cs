@@ -889,7 +889,9 @@ namespace DataFactory.Tests.JsonSamples
             tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
             clusterNamePrefix: ""OnDemandHdiResource"",
             clusterResourceGroup: ""ADF"",
-            version: ""3.5""
+            version: ""3.5"",
+            headNodeSize: ""standard_v3"",
+            dataNodeSize: ""standard_D12_v2""
         }
     }
 }";
@@ -1473,6 +1475,45 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 type: ""SecureString"",
                 value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string DatabricksLinkedService = @"
+{
+    name: ""DatabricksLinkedService"",
+    properties: {
+        type: ""AzureDatabricks"",
+        typeProperties: {
+            domain: ""https://westeurope.azuredatabricks.net/"",
+            accessToken:  {
+                type: ""SecureString"",
+                value: ""someKey""
+            },
+            existingClusterId: ""1215-091927-stems91""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string DatabricksLinkedServiceWithNewCluster = @"
+{
+    name: ""DatabricksLinkedService"",
+    properties: {
+        type: ""AzureDatabricks"",
+        typeProperties: {
+            domain: ""https://westeurope.azuredatabricks.net/"",
+            accessToken: {
+                type: ""SecureString"",
+                value: ""someKey""
+            },
+            newClusterVersion: ""3.4.x-scala2.11"",
+            newClusterNumOfWorker: ""1"",
+            newClusterNodeType: ""Standard_DS3_v2"",
+            newClusterSparkConf: {
+                ""spark.speculation"": true
             }
         }
     }

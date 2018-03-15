@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="fileType">Database file type. Possible values include:
         /// 'Rows', 'Log', 'Filestream', 'NotSupported', 'Fulltext'</param>
         /// <param name="sizeMB">Size of the file in megabytes</param>
-        public DatabaseFileInfo(string databaseName = default(string), string id = default(string), string logicalName = default(string), string physicalFullName = default(string), string restoreFullName = default(string), DatabaseFileType? fileType = default(DatabaseFileType?), double? sizeMB = default(double?))
+        public DatabaseFileInfo(string databaseName = default(string), string id = default(string), string logicalName = default(string), string physicalFullName = default(string), string restoreFullName = default(string), string fileType = default(string), double? sizeMB = default(double?))
         {
             DatabaseName = databaseName;
             Id = id;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Log', 'Filestream', 'NotSupported', 'Fulltext'
         /// </summary>
         [JsonProperty(PropertyName = "fileType")]
-        public DatabaseFileType? FileType { get; set; }
+        public string FileType { get; set; }
 
         /// <summary>
         /// Gets or sets size of the file in megabytes

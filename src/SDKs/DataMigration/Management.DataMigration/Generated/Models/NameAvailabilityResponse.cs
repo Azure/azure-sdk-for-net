@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Invalid'</param>
         /// <param name="message">The localized reason why the name is not
         /// available, if nameAvailable is false</param>
-        public NameAvailabilityResponse(bool? nameAvailable = default(bool?), NameCheckFailureReason? reason = default(NameCheckFailureReason?), string message = default(string))
+        public NameAvailabilityResponse(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "reason")]
-        public NameCheckFailureReason? Reason { get; set; }
+        public string Reason { get; set; }
 
         /// <summary>
         /// Gets or sets the localized reason why the name is not available, if

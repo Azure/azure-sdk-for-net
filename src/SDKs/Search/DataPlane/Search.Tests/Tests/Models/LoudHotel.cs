@@ -5,10 +5,10 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Spatial;
+    using Common;
     using Newtonsoft.Json;
+    using Spatial;
 
     public class LoudHotel
     {
@@ -60,52 +60,31 @@ namespace Microsoft.Azure.Search.Tests
             }
 
             return
-                this.HOTELID == other.HOTELID &&
-                this.BASERATE == other.BASERATE &&
-                this.DESCRIPTION == other.DESCRIPTION &&
-                this.DESCRIPTIONFRENCH == other.DESCRIPTIONFRENCH &&
-                this.HOTELNAME == other.HOTELNAME &&
-                this.CATEGORY == other.CATEGORY &&
-                ((this.TAGS == null) ? (other.TAGS == null || other.TAGS.Length == 0) : this.TAGS.SequenceEqual(other.TAGS ?? new string[0])) &&
-                this.PARKINGINCLUDED == other.PARKINGINCLUDED &&
-                this.SMOKINGALLOWED == other.SMOKINGALLOWED &&
-                this.LASTRENOVATIONDATE == other.LASTRENOVATIONDATE &&
-                this.RATING == other.RATING &&
-                ((this.LOCATION == null) ? other.LOCATION == null : this.LOCATION.Equals(other.LOCATION));
+                HOTELID == other.HOTELID &&
+                BASERATE == other.BASERATE &&
+                DESCRIPTION == other.DESCRIPTION &&
+                DESCRIPTIONFRENCH == other.DESCRIPTIONFRENCH &&
+                HOTELNAME == other.HOTELNAME &&
+                CATEGORY == other.CATEGORY &&
+                ((TAGS == null) ? (other.TAGS == null || other.TAGS.Length == 0) : TAGS.SequenceEqual(other.TAGS ?? new string[0])) &&
+                PARKINGINCLUDED == other.PARKINGINCLUDED &&
+                SMOKINGALLOWED == other.SMOKINGALLOWED &&
+                LASTRENOVATIONDATE == other.LASTRENOVATIONDATE &&
+                RATING == other.RATING &&
+                ((LOCATION == null) ? other.LOCATION == null : LOCATION.Equals(other.LOCATION));
         }
 
-        public override int GetHashCode()
-        {
-            return (this.HOTELID != null) ? this.HOTELID.GetHashCode() : 0;
-        }
+        public override int GetHashCode() => HOTELID?.GetHashCode() ?? 0;
 
-        public override string ToString()
-        {
-            const string Format =
-                "ID: {0}; BaseRate: {1}; Description: {2}; Description (French): {3}; Name: {4}; Category: {5}; " +
-                "Tags: {6}; Parking: {7}; Smoking: {8}; LastRenovationDate: {9}; Rating: {10}; " +
-                "Location: [{11}, {12}]";
+        public override string ToString() =>
+            $"ID: {HOTELID}; BaseRate: {BASERATE}; Description: {DESCRIPTION}; " +
+            $"Description (French): {DESCRIPTIONFRENCH}; Name: {HOTELNAME}; Category: {CATEGORY}; " +
+            $"Tags: {TAGS?.ToCommaSeparatedString() ?? "null"}; Parking: {PARKINGINCLUDED}; " +
+            $"Smoking: {SMOKINGALLOWED}; LastRenovationDate: {LASTRENOVATIONDATE}; Rating: {RATING}; " +
+            $"Location: [{LOCATION?.Longitude ?? 0}, {LOCATION?.Latitude ?? 0}]";
 
-            return String.Format(
-                Format,
-                this.HOTELID,
-                this.BASERATE,
-                this.DESCRIPTION,
-                this.DESCRIPTIONFRENCH,
-                this.HOTELNAME,
-                this.CATEGORY,
-                (this.TAGS != null) ? this.TAGS.ToCommaSeparatedString() : "null",
-                this.PARKINGINCLUDED,
-                this.SMOKINGALLOWED,
-                this.LASTRENOVATIONDATE,
-                this.RATING,
-                this.LOCATION != null ? this.LOCATION.Longitude : 0,
-                this.LOCATION != null ? this.LOCATION.Latitude : 0);
-        }
-
-        public Hotel ToHotel()
-        {
-            return new Hotel()
+        public Hotel ToHotel() =>
+            new Hotel()
             {
                 BaseRate = BASERATE,
                 Category = CATEGORY,
@@ -120,6 +99,5 @@ namespace Microsoft.Azure.Search.Tests
                 SmokingAllowed = SMOKINGALLOWED,
                 Tags = TAGS
             };
-        }
     }
 }

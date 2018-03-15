@@ -63,46 +63,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets the source id of the events to be queried.
         /// </summary>
-        [JsonProperty(PropertyName = "EventCode")]
+        [JsonProperty(PropertyName = "eventCode")]
         public string EventCode { get; set; }
 
         /// <summary>
         /// Gets or sets the severity of the events to be queried.
         /// </summary>
-        [JsonProperty(PropertyName = "Severity")]
+        [JsonProperty(PropertyName = "severity")]
         public string Severity { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the events to be queried.
         /// </summary>
-        [JsonProperty(PropertyName = "EventType")]
+        [JsonProperty(PropertyName = "eventType")]
         public string EventType { get; set; }
 
         /// <summary>
         /// Gets or sets the affected object server id of the events to be
         /// queried.
         /// </summary>
-        [JsonProperty(PropertyName = "FabricName")]
+        [JsonProperty(PropertyName = "fabricName")]
         public string FabricName { get; set; }
 
         /// <summary>
         /// Gets or sets the affected object name of the events to be queried.
         /// </summary>
-        [JsonProperty(PropertyName = "AffectedObjectFriendlyName")]
+        [JsonProperty(PropertyName = "affectedObjectFriendlyName")]
         public string AffectedObjectFriendlyName { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the time range within which the
         /// events are to be queried.
         /// </summary>
-        [JsonProperty(PropertyName = "StartTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end time of the time range within which the events
         /// are to be queried.
         /// </summary>
-        [JsonProperty(PropertyName = "EndTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
     }

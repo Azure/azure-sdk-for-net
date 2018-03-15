@@ -55,10 +55,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create Queue
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
                 var createQueueResponse = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName,
-                new SBQueue() { EnableExpress = true});
+                new SBQueue() { EnableExpress = true, EnableBatchedOperations = true});
 
                 Assert.NotNull(createQueueResponse);
                 Assert.Equal(createQueueResponse.Name, queueName);
+                Assert.True(createQueueResponse.EnableExpress);
                 
                 // Get the created Queue
                 var getQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);

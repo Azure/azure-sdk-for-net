@@ -28,11 +28,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the VMwareV2FabricCreationInput
+        /// class.
+        /// </summary>
+        /// <param name="keyVaultUrl">The Key Vault URL.</param>
+        /// <param name="keyVaultResourceArmId">The Key Vault ARM Id.</param>
+        public VMwareV2FabricCreationInput(string keyVaultUrl = default(string), string keyVaultResourceArmId = default(string))
+        {
+            KeyVaultUrl = keyVaultUrl;
+            KeyVaultResourceArmId = keyVaultResourceArmId;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the Key Vault URL.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyVaultUrl")]
+        public string KeyVaultUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Key Vault ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyVaultResourceArmId")]
+        public string KeyVaultResourceArmId { get; set; }
 
     }
 }

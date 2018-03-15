@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// submitted. Possible values include: 'Unknown', 'Queued', 'Running',
         /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
         /// 'Faulted'</param>
-        public ProjectTaskProperties(IList<ODataError> errors = default(IList<ODataError>), TaskState? state = default(TaskState?))
+        public ProjectTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string))
         {
             Errors = errors;
             State = state;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Succeeded', 'Failed', 'FailedInputValidation', 'Faulted'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public TaskState? State { get; private set; }
+        public string State { get; private set; }
 
     }
 }

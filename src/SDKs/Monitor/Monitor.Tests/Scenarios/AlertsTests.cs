@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Azure;
@@ -70,7 +70,8 @@ namespace Monitor.Tests.Scenarios
                     var selected = listOfRules.Where(r => string.Equals(r.Id, retrievedRule.Id, StringComparison.OrdinalIgnoreCase)).ToList();
 
                     Assert.NotNull(selected);
-                    Assert.Equal(1, selected.Count);
+                    Assert.NotEmpty(selected);
+                    Assert.True(selected.Count == 1);
                     Utilities.AreEqual(retrievedRule, selected[0]);
                 }
 
@@ -91,8 +92,7 @@ namespace Monitor.Tests.Scenarios
                 );
 
                 AlertRuleResource updatedRule = null;
-                Assert.Throws(
-                    typeof(ErrorResponseException),
+                Assert.Throws<ErrorResponseException>(
                     () => updatedRule = insightsClient.AlertRules.Update(
                         resourceGroupName: ResourceGroupName,
                         ruleName: RuleName,
@@ -124,8 +124,7 @@ namespace Monitor.Tests.Scenarios
                     resourceGroupName: ResourceGroupName,
                     ruleName: RuleName);
 
-                Assert.Throws(
-                    typeof(CloudException),
+                Assert.Throws<CloudException>(
                     () => insightsClient.AlertRules.Get(
                             resourceGroupName: ResourceGroupName,
                             ruleName: RuleName));
@@ -182,7 +181,7 @@ namespace Monitor.Tests.Scenarios
                 if (!this.IsRecording)
                 {
                     Assert.True(incidentsList.Count > 0, "List of incidents should not be 0 length.");
-                    Assert.True(string.Equals(incidentsList[0].RuleName, string.Format(provider: CultureInfo.InvariantCulture, format: ResourceId, args: insightsClient.SubscriptionId), StringComparison.OrdinalIgnoreCase));
+                    Assert.Equal(string.Format(provider: CultureInfo.InvariantCulture, format: ResourceId, args: insightsClient.SubscriptionId), incidentsList[0].RuleName, ignoreCase: true);
                 }
 
                 if (incidentsList.Count > 0)
