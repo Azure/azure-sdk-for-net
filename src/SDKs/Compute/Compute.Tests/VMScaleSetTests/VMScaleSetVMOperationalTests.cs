@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Network;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Compute;
+using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
 namespace Compute.Tests
@@ -190,6 +189,96 @@ namespace Compute.Tests
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following operations:
+        /// Create RG
+        /// Create VM Scale Set
+        /// Redeploy one instance of VM Scale Set
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_Redeploy()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var originalLocation = ComputeManagementTestUtilities.DefaultLocation;
+                ComputeManagementTestUtilities.DefaultLocation = "EastUS2";
+
+                InitializeCommon(context);
+                instanceId = "0";
+                bool passed = false;
+
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+                    m_CrpClient.VirtualMachineScaleSetVMs.Redeploy(rgName, vmScaleSet.Name, instanceId);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                    ComputeManagementTestUtilities.DefaultLocation = originalLocation;
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following operations:
+        /// Create RG
+        /// Create VM Scale Set
+        /// Perform maintenance on one instance of VM Scale Set
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_PerformMaintenance()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var originalLocation = ComputeManagementTestUtilities.DefaultLocation;
+                ComputeManagementTestUtilities.DefaultLocation = "EastUS2";
+
+                InitializeCommon(context);
+                instanceId = "0";
+                VirtualMachineScaleSet vmScaleSet = null;
+
+                bool passed = false;
+
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef,
+                        out inputVMScaleSet, createWithManagedDisks: true);
+                    m_CrpClient.VirtualMachineScaleSetVMs.PerformMaintenance(rgName, vmScaleSet.Name, instanceId);
+
+                    passed = true;
+                }
+                catch (CloudException cex)
+                {
+                    passed = true;
+                    string expectedMessage =
+                        $"Operation 'performMaintenance' is not allowed on VM '{vmScaleSet.Name}_0' " +
+                        "since the Subscription of this VM is not eligible.";
+                    Assert.Equal(expectedMessage, cex.Message);
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                    ComputeManagementTestUtilities.DefaultLocation = originalLocation;
                 }
 
                 Assert.True(passed);
