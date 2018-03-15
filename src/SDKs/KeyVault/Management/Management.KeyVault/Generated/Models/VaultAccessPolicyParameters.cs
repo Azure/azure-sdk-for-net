@@ -13,41 +13,39 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Key Vault resource
+    /// Parameters for updating the access policy in a vault
     /// </summary>
-    public partial class Resource : IResource
+    public partial class VaultAccessPolicyParameters : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the VaultAccessPolicyParameters
+        /// class.
         /// </summary>
-        public Resource()
+        public VaultAccessPolicyParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the VaultAccessPolicyParameters
+        /// class.
         /// </summary>
-        /// <param name="location">The supported Azure location where the key
-        /// vault should be created.</param>
-        /// <param name="id">The Azure Resource Manager resource ID for the key
-        /// vault.</param>
-        /// <param name="name">The name of the key vault.</param>
-        /// <param name="type">The resource type of the key vault.</param>
-        /// <param name="tags">The tags that will be assigned to the key vault.
-        /// </param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="properties">Properties of the access policy</param>
+        /// <param name="id">The resource id of the access policy.</param>
+        /// <param name="name">The resource name of the access policy.</param>
+        /// <param name="type">The resource name of the access policy.</param>
+        /// <param name="location">The resource type of the the access
+        /// policy.</param>
+        public VaultAccessPolicyParameters(VaultAccessPolicyProperties properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
-            Tags = tags;
+            Properties = properties;
             CustomInit();
         }
 
@@ -57,35 +55,34 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the Azure Resource Manager resource ID for the key vault.
+        /// Gets the resource id of the access policy.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the name of the key vault.
+        /// Gets the resource name of the access policy.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the resource type of the key vault.
+        /// Gets the resource name of the access policy.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the supported Azure location where the key vault
-        /// should be created.
+        /// Gets the resource type of the the access policy.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; private set; }
 
         /// <summary>
-        /// Gets or sets the tags that will be assigned to the key vault.
+        /// Gets or sets properties of the access policy
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public VaultAccessPolicyProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -95,9 +92,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Location == null)
+            if (Properties == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }

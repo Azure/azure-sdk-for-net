@@ -10,39 +10,34 @@
 
 namespace Microsoft.Azure.Management.KeyVault.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// SKU details
+    /// A rule governing the accesibility of a vault from a specific ip address
+    /// or ip range.
     /// </summary>
-    public partial class Sku
+    public partial class IPRule
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
-        public Sku()
+        public IPRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the IPRule class.
         /// </summary>
-        /// <param name="name">SKU name to specify whether the key vault is a
-        /// standard vault or a premium vault. Possible values include:
-        /// 'standard', 'premium'</param>
-        public Sku(SkuName name)
+        /// <param name="value">An IPv4 address range in CIDR notation, such as
+        /// '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all
+        /// addresses that start with 124.56.78).</param>
+        public IPRule(string value)
         {
-            Name = name;
+            Value = value;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for Sku class.
-        /// </summary>
-        static Sku()
-        {
-            Family = "A";
         }
 
         /// <summary>
@@ -51,27 +46,25 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SKU name to specify whether the key vault is a
-        /// standard vault or a premium vault. Possible values include:
-        /// 'standard', 'premium'
+        /// Gets or sets an IPv4 address range in CIDR notation, such as
+        /// '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all
+        /// addresses that start with 124.56.78).
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public SkuName Name { get; set; }
-
-        /// <summary>
-        /// SKU family name
-        /// </summary>
-        [JsonProperty(PropertyName = "family")]
-        public static string Family { get; private set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
         }
     }
 }

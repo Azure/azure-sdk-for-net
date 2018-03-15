@@ -8,7 +8,7 @@
 		<Description>Provides key vault management capabilities for Microsoft Azure.</Description>
 		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
-		<Version>2.3.0-preview</Version>
+		<Version>2.4.0-alpha</Version>
 		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>

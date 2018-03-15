@@ -10,39 +10,40 @@
 
 namespace Microsoft.Azure.Management.KeyVault.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// SKU details
+    /// The parameters used to check the availabity of the vault name.
     /// </summary>
-    public partial class Sku
+    public partial class VaultCheckNameAvailabilityParameters
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the
+        /// VaultCheckNameAvailabilityParameters class.
         /// </summary>
-        public Sku()
+        public VaultCheckNameAvailabilityParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the
+        /// VaultCheckNameAvailabilityParameters class.
         /// </summary>
-        /// <param name="name">SKU name to specify whether the key vault is a
-        /// standard vault or a premium vault. Possible values include:
-        /// 'standard', 'premium'</param>
-        public Sku(SkuName name)
+        /// <param name="name">The vault name.</param>
+        public VaultCheckNameAvailabilityParameters(string name)
         {
             Name = name;
             CustomInit();
         }
         /// <summary>
-        /// Static constructor for Sku class.
+        /// Static constructor for VaultCheckNameAvailabilityParameters class.
         /// </summary>
-        static Sku()
+        static VaultCheckNameAvailabilityParameters()
         {
-            Family = "A";
+            Type = "Microsoft.KeyVault/vaults";
         }
 
         /// <summary>
@@ -51,27 +52,29 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SKU name to specify whether the key vault is a
-        /// standard vault or a premium vault. Possible values include:
-        /// 'standard', 'premium'
+        /// Gets or sets the vault name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// SKU family name
+        /// The type of resource, Microsoft.KeyVault/vaults
         /// </summary>
-        [JsonProperty(PropertyName = "family")]
-        public static string Family { get; private set; }
+        [JsonProperty(PropertyName = "type")]
+        public static string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
         }
     }
 }

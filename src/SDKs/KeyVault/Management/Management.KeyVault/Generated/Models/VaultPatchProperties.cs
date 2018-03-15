@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.KeyVault.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,19 +18,18 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     /// <summary>
     /// Properties of the vault
     /// </summary>
-    public partial class VaultProperties
+    public partial class VaultPatchProperties
     {
         /// <summary>
-        /// Initializes a new instance of the VaultProperties class.
+        /// Initializes a new instance of the VaultPatchProperties class.
         /// </summary>
-        public VaultProperties()
+        public VaultPatchProperties()
         {
-            Sku = new Sku();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VaultProperties class.
+        /// Initializes a new instance of the VaultPatchProperties class.
         /// </summary>
         /// <param name="tenantId">The Azure Active Directory tenant ID that
         /// should be used for authenticating requests to the key
@@ -40,8 +38,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="accessPolicies">An array of 0 to 16 identities that
         /// have access to the key vault. All identities in the array must use
         /// the same tenant ID as the key vault's tenant ID.</param>
-        /// <param name="vaultUri">The URI of the vault for performing
-        /// operations on keys and secrets.</param>
         /// <param name="enabledForDeployment">Property to specify whether
         /// Azure Virtual Machines are permitted to retrieve certificates
         /// stored as secrets from the key vault.</param>
@@ -66,12 +62,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// - that is, the property does not accept false as its value.</param>
         /// <param name="networkAcls">A collection of rules governing the
         /// accessibility of the vault from specific network locations.</param>
-        public VaultProperties(System.Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet))
+        public VaultPatchProperties(System.Guid? tenantId = default(System.Guid?), Sku sku = default(Sku), IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet))
         {
             TenantId = tenantId;
             Sku = sku;
             AccessPolicies = accessPolicies;
-            VaultUri = vaultUri;
             EnabledForDeployment = enabledForDeployment;
             EnabledForDiskEncryption = enabledForDiskEncryption;
             EnabledForTemplateDeployment = enabledForTemplateDeployment;
@@ -92,7 +87,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// used for authenticating requests to the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public System.Guid TenantId { get; set; }
+        public System.Guid? TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets SKU details
@@ -107,13 +102,6 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "accessPolicies")]
         public IList<AccessPolicyEntry> AccessPolicies { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URI of the vault for performing operations on keys
-        /// and secrets.
-        /// </summary>
-        [JsonProperty(PropertyName = "vaultUri")]
-        public string VaultUri { get; set; }
 
         /// <summary>
         /// Gets or sets property to specify whether Azure Virtual Machines are
@@ -175,15 +163,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Sku == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
-            }
             if (Sku != null)
             {
                 Sku.Validate();

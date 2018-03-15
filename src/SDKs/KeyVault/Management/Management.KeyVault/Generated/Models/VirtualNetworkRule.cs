@@ -10,39 +10,33 @@
 
 namespace Microsoft.Azure.Management.KeyVault.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// SKU details
+    /// A rule governing the accesibility of a vault from a specific virtual
+    /// network.
     /// </summary>
-    public partial class Sku
+    public partial class VirtualNetworkRule
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
-        public Sku()
+        public VirtualNetworkRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
-        /// <param name="name">SKU name to specify whether the key vault is a
-        /// standard vault or a premium vault. Possible values include:
-        /// 'standard', 'premium'</param>
-        public Sku(SkuName name)
+        /// <param name="id">Full resource id of a vnet subnet, such as
+        /// '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.</param>
+        public VirtualNetworkRule(string id)
         {
-            Name = name;
+            Id = id;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for Sku class.
-        /// </summary>
-        static Sku()
-        {
-            Family = "A";
         }
 
         /// <summary>
@@ -51,27 +45,24 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SKU name to specify whether the key vault is a
-        /// standard vault or a premium vault. Possible values include:
-        /// 'standard', 'premium'
+        /// Gets or sets full resource id of a vnet subnet, such as
+        /// '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public SkuName Name { get; set; }
-
-        /// <summary>
-        /// SKU family name
-        /// </summary>
-        [JsonProperty(PropertyName = "family")]
-        public static string Family { get; private set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
         }
     }
 }
