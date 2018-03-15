@@ -141,7 +141,11 @@ namespace Sql.Tests
                     Dtu = 250,
                     Tags = tags
                 });
-                Thread.Sleep(TimeSpan.FromSeconds(5));
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
+                }
 
                 // Get the pool update operation for new added properties on elastic pool operations: ETA, Operation Description and IsCancellable
                 //   Expected they have null value since not been updated by operation progress
