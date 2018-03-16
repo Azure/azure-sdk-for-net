@@ -80,6 +80,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Response>> ListWithHttpMessagesAsync(string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), double? top = default(double?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Response>> ListWithHttpMessagesAsync(string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), int? top = default(int?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
