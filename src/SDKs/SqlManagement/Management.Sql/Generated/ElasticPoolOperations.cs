@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DatabaseOperations operations.
+    /// ElasticPoolOperations operations.
     /// </summary>
-    internal partial class DatabaseOperations : IServiceOperations<SqlManagementClient>, IDatabaseOperations
+    internal partial class ElasticPoolOperations : IServiceOperations<SqlManagementClient>, IElasticPoolOperations
     {
         /// <summary>
-        /// Initializes a new instance of the DatabaseOperations class.
+        /// Initializes a new instance of the ElasticPoolOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DatabaseOperations(SqlManagementClient client)
+        internal ElasticPoolOperations(SqlManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Cancels the asynchronous operation on the database.
+        /// Cancels the asynchronous operation on the elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -60,8 +60,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database.
+        /// <param name='elasticPoolName'>
         /// </param>
         /// <param name='operationId'>
         /// The operation identifier.
@@ -84,7 +83,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, System.Guid operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string serverName, string elasticPoolName, System.Guid operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -94,9 +93,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            if (databaseName == null)
+            if (elasticPoolName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "elasticPoolName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -112,7 +111,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("elasticPoolName", elasticPoolName);
                 tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -120,10 +119,10 @@ namespace Microsoft.Azure.Management.Sql
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations/{operationId}/cancel").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations/{operationId}/cancel").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{elasticPoolName}", System.Uri.EscapeDataString(elasticPoolName));
             _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(operationId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -239,7 +238,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets a list of operations performed on the database.
+        /// Gets a list of operations performed on the elastic pool.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can obtain
@@ -248,8 +247,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <param name='serverName'>
         /// The name of the server.
         /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database.
+        /// <param name='elasticPoolName'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -272,7 +270,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DatabaseOperation>>> ListByDatabaseWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ElasticPoolOperation>>> ListByElasticPoolWithHttpMessagesAsync(string resourceGroupName, string serverName, string elasticPoolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -282,9 +280,9 @@ namespace Microsoft.Azure.Management.Sql
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serverName");
             }
-            if (databaseName == null)
+            if (elasticPoolName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "elasticPoolName");
             }
             if (Client.SubscriptionId == null)
             {
@@ -300,17 +298,17 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
-                tracingParameters.Add("databaseName", databaseName);
+                tracingParameters.Add("elasticPoolName", elasticPoolName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByDatabase", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByElasticPool", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/operations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}/operations").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
-            _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
+            _url = _url.Replace("{elasticPoolName}", System.Uri.EscapeDataString(elasticPoolName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -410,7 +408,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<DatabaseOperation>>();
+            var _result = new AzureOperationResponse<IPage<ElasticPoolOperation>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -423,7 +421,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<DatabaseOperation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ElasticPoolOperation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -443,7 +441,7 @@ namespace Microsoft.Azure.Management.Sql
         }
 
         /// <summary>
-        /// Gets a list of operations performed on the database.
+        /// Gets a list of operations performed on the elastic pool.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -469,7 +467,7 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DatabaseOperation>>> ListByDatabaseNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ElasticPoolOperation>>> ListByElasticPoolNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -484,7 +482,7 @@ namespace Microsoft.Azure.Management.Sql
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByDatabaseNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByElasticPoolNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -583,7 +581,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<DatabaseOperation>>();
+            var _result = new AzureOperationResponse<IPage<ElasticPoolOperation>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -596,7 +594,7 @@ namespace Microsoft.Azure.Management.Sql
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<DatabaseOperation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<ElasticPoolOperation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
