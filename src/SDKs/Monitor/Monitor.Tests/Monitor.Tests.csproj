@@ -13,8 +13,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
 		<ProjectReference Include="..\Management.Monitor\Microsoft.Azure.Management.Monitor.csproj" />
-		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-		<PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.2" />
 		<None Update="SessionRecords\**\*.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
