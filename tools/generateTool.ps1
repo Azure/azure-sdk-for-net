@@ -51,8 +51,7 @@ Param(
     [string] $SpecsRepoFork = "Azure",
     [string] $SpecsRepoName = "azure-rest-api-specs",
     [string] $SpecsRepoBranch = "master",
-    [Parameter(Mandatory = $true)]
-    [string] $SdkDirectory= "$([System.IO.Path]::GetTempPath())\Compute",
+    [string] $SdkDirectory,
     [string] $AutoRestVersion = "latest",
     [switch] $PowershellInvoker
 )
@@ -62,6 +61,10 @@ Write-Host "autorest version received is : $AutoRestVersion"
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
 $currPath = split-path $SCRIPT:MyInvocation.MyCommand.Path -parent
+if([string]::IsNullOrEmpty($SdkDirectory))
+{
+    $SdkDirectory = "$currPath\..\src\SDKs\"
+}
 $modulePath = "$currPath\SdkBuildTools\psModules\CodeGenerationModules\generateDotNetSdkCode.psm1"
 $logFile = "$currPath\..\src\SDKs\_metadata\$($ResourceProvider.Replace("/","_")).txt"
 $errorFile = "$currPath\SdkBuildTools\errorlog.txt"
