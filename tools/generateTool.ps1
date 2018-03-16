@@ -98,10 +98,10 @@ function Start-Script {
     
     $invokerMessage = ".\tools\generate.ps1 was invoked by"
     if($PowershellInvoker) {
-        $outputStream.Append("$invokerMessage generate.ps1") | Out-Null
+        Write-InfoLog "$invokerMessage generate.ps1" -logToFile
     }
     else {
-        $outputStream.Append("$invokerMessage generate.cmd") | Out-Null
+        Write-InfoLog "$invokerMessage generate.cmd" -logToFile
     }
 
 }

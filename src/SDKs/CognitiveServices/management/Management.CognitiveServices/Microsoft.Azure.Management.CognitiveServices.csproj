@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>3.0.1</Version>
+		<Version>4.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
 		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
-		<PackageReleaseNotes>1. Updating notice.txt;</PackageReleaseNotes>
+		<PackageReleaseNotes>1. Add GetUsages operation in AccountsOperations; 2. Decommissioned several API Kind;</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
