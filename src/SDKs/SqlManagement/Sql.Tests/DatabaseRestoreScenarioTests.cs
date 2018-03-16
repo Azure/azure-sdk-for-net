@@ -163,6 +163,64 @@ namespace Sql.Tests
         }
 
         [Fact]
+        public void TestLongTermRetentionV2Policies()
+        {
+            string defaultPolicy = "PT0S";
+
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Database database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(), new Database { Location = server.Location });
+
+                // Get the policy and verify it is the default policy
+                //
+                BackupLongTermRetentionPolicy policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(defaultPolicy, policy.WeeklyRetention);
+                Assert.Equal(defaultPolicy, policy.MonthlyRetention);
+                Assert.Equal(defaultPolicy, policy.YearlyRetention);
+                Assert.Equal(0, policy.WeekOfYear);
+
+                // Set the retention policy to two weeks for the weekly retention policy
+                //
+                BackupLongTermRetentionPolicy parameters = new BackupLongTermRetentionPolicy(weeklyRetention: "P2W");
+                var policyResult = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters).Result;
+                sqlClient.GetPutOrPatchOperationResultAsync(policyResult, new Dictionary<string, List<string>>(), CancellationToken.None).Wait();
+
+                // Get the policy and verify the weekly policy is two weeks but all the rest stayed the same
+                //
+                policy = sqlClient.BackupLongTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(parameters.WeeklyRetention, policy.WeeklyRetention);
+                Assert.Equal(defaultPolicy, policy.MonthlyRetention);
+                Assert.Equal(defaultPolicy, policy.YearlyRetention);
+                Assert.Equal(0, policy.WeekOfYear);
+            }
+        }
+
+        [Fact]
+        public void TestLongTermRetentionV2Backups()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Database database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(), new Database { Location = server.Location });
+
+                // Get the backups under the server and database. Assert there are no backups returned.
+                // Note: While we call ListByLocation, we can't guarantee there are no backups under that location for the subscription.
+                //
+                IPage<LongTermRetentionBackup> backups = sqlClient.LongTermRetentionBackups.ListByLocation(server.Location);
+                backups = sqlClient.LongTermRetentionBackups.ListByServer(server.Location, server.Name);
+                Assert.True(backups.Count() == 0);
+                backups = sqlClient.LongTermRetentionBackups.ListByDatabase(server.Location, server.Name, database.Name);
+                Assert.True(backups.Count() == 0);
+                Assert.Throws(typeof(CloudException), () => sqlClient.LongTermRetentionBackups.Get(server.Location, server.Name, database.Name, "backup"));
+            }
+        }
+
+        [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestLongTermRetentionV2Crud()
         {
             string locationName = "westcentralus";
