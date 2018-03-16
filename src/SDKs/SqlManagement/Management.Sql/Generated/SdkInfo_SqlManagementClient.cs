@@ -11,8 +11,7 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("Sql", "BackupLongTermRetentionPolicies", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "BackupLongTermRetentionVaults", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "BackupLongTermRetentionPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Capabilities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingRules", "2014-04-01"),
@@ -31,6 +30,7 @@ internal static partial class SdkInfo
                 new Tuple<string, string, string>("Sql", "FailoverGroups", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "FirewallRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "GeoBackupPolicies", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "LongTermRetentionBackups", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "Operations", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "RecommendedElasticPools", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "RecoverableDatabases", "2014-04-01"),
