@@ -185,8 +185,7 @@ namespace Sql.Tests
                 // Set the retention policy to two weeks for the weekly retention policy
                 //
                 BackupLongTermRetentionPolicy parameters = new BackupLongTermRetentionPolicy(weeklyRetention: "P2W");
-                var policyResult = sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters).Result;
-                sqlClient.GetPutOrPatchOperationResultAsync(policyResult, new Dictionary<string, List<string>>(), CancellationToken.None).Wait();
+                sqlClient.BackupLongTermRetentionPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, database.Name, parameters);
 
                 // Get the policy and verify the weekly policy is two weeks but all the rest stayed the same
                 //
@@ -223,10 +222,15 @@ namespace Sql.Tests
         [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestLongTermRetentionV2Crud()
         {
-            string locationName = "westcentralus";
-            string resourceGroupName = "Default-SQL-WestCentralUs";
-            string serverName = "trgrie-ltr-server";
-            string databaseName = "testdb";
+            // MANUAL INSTRUCTIONS
+            // Create a server and database and fill in the appropriate information below
+            // Set the weekly retention on the database so that the first backup gets picked up
+            // Wait about 18 hours until it gets properly copied and you see the backup when run get backups
+            //
+            string locationName = "";
+            string resourceGroupName = "";
+            string serverName = "";
+            string databaseName = "";
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
