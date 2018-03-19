@@ -1527,6 +1527,49 @@ namespace Microsoft.Azure.KeyVault
         Task<AzureOperationResponse<CertificateBundle>> MergeCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, IList<byte[]> x509Certificates, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Backs up the specified certificate.
+        /// </summary>
+        /// <remarks>
+        /// Requests that a backup of the specified certificate be downloaded
+        /// to the client. All versions of the certificate will be downloaded.
+        /// This operation requires the certificates/backup permission.
+        /// </remarks>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateName'>
+        /// The name of the certificate.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<BackupCertificateResult>> BackupCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Restores a backed up certificate to a vault.
+        /// </summary>
+        /// <remarks>
+        /// Restores a backed up certificate, and all its versions, to a vault.
+        /// This operation requires the certificates/restore permission.
+        /// </remarks>
+        /// <param name='vaultBaseUrl'>
+        /// The vault name, for example https://myvault.vault.azure.net.
+        /// </param>
+        /// <param name='certificateBundleBackup'>
+        /// The backup blob associated with a certificate bundle.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CertificateBundle>> RestoreCertificateWithHttpMessagesAsync(string vaultBaseUrl, byte[] certificateBundleBackup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Lists the deleted certificates in the specified vault currently
         /// available for recovery.
         /// </summary>

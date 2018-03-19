@@ -1761,6 +1761,61 @@ namespace Microsoft.Azure.KeyVault
             }
 
             /// <summary>
+            /// Backs up the specified certificate.
+            /// </summary>
+            /// <remarks>
+            /// Requests that a backup of the specified certificate be downloaded to the
+            /// client. All versions of the certificate will be downloaded. This operation
+            /// requires the certificates/backup permission.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='certificateName'>
+            /// The name of the certificate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BackupCertificateResult> BackupCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BackupCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Restores a backed up certificate to a vault.
+            /// </summary>
+            /// <remarks>
+            /// Restores a backed up certificate, and all its versions, to a vault. This
+            /// operation requires the certificates/restore permission.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='vaultBaseUrl'>
+            /// The vault name, for example https://myvault.vault.azure.net.
+            /// </param>
+            /// <param name='certificateBundleBackup'>
+            /// The backup blob associated with a certificate bundle.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateBundle> RestoreCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, byte[] certificateBundleBackup, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.RestoreCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateBundleBackup, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists the deleted certificates in the specified vault currently available
             /// for recovery.
             /// </summary>
