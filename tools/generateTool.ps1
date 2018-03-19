@@ -56,8 +56,6 @@ Param(
     [switch] $PowershellInvoker
 )
 
-Write-Host "autorest version received is : $AutoRestVersion"
-
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
 $currPath = split-path $SCRIPT:MyInvocation.MyCommand.Path -parent
@@ -67,15 +65,19 @@ if([string]::IsNullOrEmpty($SdkDirectory))
 }
 $modulePath = "$currPath\SdkBuildTools\psModules\CodeGenerationModules\generateDotNetSdkCode.psm1"
 $logFile = "$currPath\..\src\SDKs\_metadata\$($ResourceProvider.Replace("/","_")).txt"
-$errorFile = "$currPath\SdkBuildTools\errorlog.txt"
 
 function NotifyError {
     param (
         [string] $errorMsg
     )
     Write-Error $errorMsg
-    $errorMsg | Out-File -FilePath $errorFile
-    Start-Process "$errorFile"
+    $errorFilePath = "$currPath\SdkBuildTools"
+    If(!(test-path $errorFilePath))
+    {
+        New-Item -ItemType Directory -Force -Path $errorFilePath
+    }
+    $errorMsg | Out-File -FilePath "$errorFilePath\errorLog.txt"
+    Start-Process "$errorFilePath\errorLog.txt"
 }
 
 if (-not ($modulePath | Test-Path)) {
