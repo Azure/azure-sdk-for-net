@@ -52,30 +52,32 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         protected override void InitializeAsyncHeadersToUse()
         {
             base.InitializeAsyncHeadersToUse();
+
+            // Default polling URI for PATCH request does not necessary need to have Async operation/location headers
+
             if (string.IsNullOrEmpty(CurrentPollingState.PollingUrlToUse))
             {
-                CurrentPollingState.PollingUrlToUse = InitialResponse.Request.RequestUri.AbsoluteUri;
-                CurrentPollingState.FinalGETUrlToUser = CurrentPollingState.PollingUrlToUse;
+                CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(InitialResponse.Request.RequestUri.AbsoluteUri);
+            }
+
+            if (string.IsNullOrEmpty(CurrentPollingState.FinalGETUrlToUser))
+            {
+                CurrentPollingState.FinalGETUrlToUser = GetValidAbsoluteUri(InitialResponse.Request.RequestUri.AbsoluteUri);
             }
 
             // 201
             if (CurrentPollingState.CurrentStatusCode == System.Net.HttpStatusCode.Created)
             {
-                if (string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink))
+                if (!string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink))
                 {
-                    string requestUri = CurrentPollingState.Request.RequestUri.AbsoluteUri;
-                    if (string.IsNullOrEmpty(requestUri))
-                    {
-                        throw new ValidationException(ValidationRules.CannotBeNull, "RequestUri");
-                    }
-                    else
-                    {
-                        CurrentPollingState.PollingUrlToUse = CurrentPollingState.Request.RequestUri.AbsoluteUri;
-                    }
+                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.AzureAsyncOperationHeaderLink;
                 }
                 else
                 {
-                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.AzureAsyncOperationHeaderLink;
+                    if (string.IsNullOrEmpty(CurrentPollingState.PollingUrlToUse))
+                    {
+                        throw new ValidationException(ValidationRules.CannotBeNull, "201 status code requires AzureAsyncOperationHeader/RequestUri");
+                    }
                 }
             }
 
@@ -121,7 +123,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 if ((!string.IsNullOrEmpty(CurrentPollingState.AzureAsyncOperationHeaderLink) || CurrentPollingState.Resource == null))
                 {
                     CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.InitialResponse.Request.RequestUri.AbsoluteUri, throwForInvalidUri: true);
-
                     await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
                 }
             }
