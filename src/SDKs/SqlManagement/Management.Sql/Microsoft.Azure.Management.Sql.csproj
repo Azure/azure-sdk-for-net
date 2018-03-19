@@ -14,6 +14,11 @@
 New features:
 - Added support for List and Cancel operation on Azure database and elastic pool REST API
 - Added more convenient method to rename databases, `Databases.Rename(resourceGroupName, serverName, databaseName, newName)`.
+- Added .NET SDK APIs for new Long Term Retention V2 commands, including getting backups, deleting backups, setting the V2 policies, and getting the V2 policies
+Breaking Changes:
+- Removed support for managing Vaults used for Long Term Retention V1
+- Changed BackupLongTermRetentionPolicy class, removing the Long Term Retention V1 properties and adding the Long Term Retention V2 properties
+- Removed BackupLongTermRetentionPolicyState
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

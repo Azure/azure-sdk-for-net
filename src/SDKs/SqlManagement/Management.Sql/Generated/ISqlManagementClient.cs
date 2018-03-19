@@ -67,16 +67,6 @@ namespace Microsoft.Azure.Management.Sql
 
 
         /// <summary>
-        /// Gets the IBackupLongTermRetentionPoliciesOperations.
-        /// </summary>
-        IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; }
-
-        /// <summary>
-        /// Gets the IBackupLongTermRetentionVaultsOperations.
-        /// </summary>
-        IBackupLongTermRetentionVaultsOperations BackupLongTermRetentionVaults { get; }
-
-        /// <summary>
         /// Gets the IRecoverableDatabasesOperations.
         /// </summary>
         IRecoverableDatabasesOperations RecoverableDatabases { get; }
@@ -250,6 +240,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
+
+        /// <summary>
+        /// Gets the IBackupLongTermRetentionPoliciesOperations.
+        /// </summary>
+        IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; }
 
         /// <summary>
         /// Gets the IServerAutomaticTuningOperations.

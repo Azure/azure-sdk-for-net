@@ -72,16 +72,6 @@ namespace Microsoft.Azure.Management.Sql
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IBackupLongTermRetentionPoliciesOperations.
-        /// </summary>
-        public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IBackupLongTermRetentionVaultsOperations.
-        /// </summary>
-        public virtual IBackupLongTermRetentionVaultsOperations BackupLongTermRetentionVaults { get; private set; }
-
-        /// <summary>
         /// Gets the IRecoverableDatabasesOperations.
         /// </summary>
         public virtual IRecoverableDatabasesOperations RecoverableDatabases { get; private set; }
@@ -255,6 +245,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        public virtual ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupLongTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
 
         /// <summary>
         /// Gets the IServerAutomaticTuningOperations.
@@ -482,8 +482,6 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         private void Initialize()
         {
-            BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
-            BackupLongTermRetentionVaults = new BackupLongTermRetentionVaultsOperations(this);
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
             Capabilities = new CapabilitiesOperations(this);
@@ -519,6 +517,8 @@ namespace Microsoft.Azure.Management.Sql
             SyncMembers = new SyncMembersOperations(this);
             SubscriptionUsages = new SubscriptionUsagesOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
+            LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
+            BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
             RestorePoints = new RestorePointsOperations(this);
