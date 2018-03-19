@@ -17,11 +17,11 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
     /// <summary>
     /// Verify Symmetric Key.
     /// </summary>
-    public class KeyResolverTests : IClassFixture<KeyVaultTestFixture>
+    public class KeyResolver : IClassFixture<KeyVaultTestFixture>
     {
         private KeyVaultTestFixture fixture;
 
-        public KeyResolverTests(KeyVaultTestFixture fixture)
+        public KeyResolver(KeyVaultTestFixture fixture)
         {
             this.fixture = fixture;
             _standardVaultOnly = fixture.standardVaultOnly;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a key in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyResolver_ResolveKey()
+        public void ResolveKey()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a 128bit secret encoded as base64 in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyResolver_ResolveSecret128Base64()
+        public void ResolveSecret128Base64()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a 192bit secret encoded as base64 in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyResolver_ResolveSecret192Base64()
+        public void ResolveSecret192Base64()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a 256bit secret encoded as base64 in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyResolver_ResolveSecret256Base64()
+        public void ResolveSecret256Base64()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {

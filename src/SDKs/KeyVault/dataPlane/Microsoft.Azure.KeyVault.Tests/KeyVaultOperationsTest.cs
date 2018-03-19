@@ -22,11 +22,11 @@ using Xunit;
 
 namespace Microsoft.Azure.KeyVault.Tests
 {
-    public class OperationsTest : IClassFixture<KeyVaultTestFixture>
+    public class Operations : IClassFixture<KeyVaultTestFixture>
     {
         private KeyVaultTestFixture fixture;
 
-        public OperationsTest(KeyVaultTestFixture fixture)
+        public Operations(KeyVaultTestFixture fixture)
         {
             this.fixture = fixture;
             _standardVaultOnly = fixture.standardVaultOnly;
@@ -3873,7 +3873,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
 
-        public void EncryptDecrypt(KeyVaultClient client, KeyIdentifier keyIdentifier, string algorithm)
+        internal void EncryptDecrypt(KeyVaultClient client, KeyIdentifier keyIdentifier, string algorithm)
         {
             var plainText = RandomBytes(10);
             var encryptResult = client.EncryptAsync(keyIdentifier.BaseIdentifier, algorithm, plainText).GetAwaiter().GetResult();
