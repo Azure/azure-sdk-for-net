@@ -6,6 +6,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
     using System;
     using System.Collections.Generic;
     using System.Net;
+    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -18,6 +19,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             where TResourceBody : class
             where TRequestHeaders : class
     {
+        // Flag to indicate if final GET is set with call back
+        private bool SetFinalGetCallback;
+
         /// <summary>
         /// REST Operation Verb
         /// </summary>
@@ -33,7 +37,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         public DeleteLro(IAzureClient client, AzureOperationResponse<TResourceBody, TRequestHeaders> response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) : base(client, response, customHeaders, cancellationToken)
-        { }
+        {
+            SetFinalGetCallback = false;
+        }
 
         /// <summary>
         /// For DELETE
@@ -49,17 +55,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         protected override void InitializeAsyncHeadersToUse()
         {
             base.InitializeAsyncHeadersToUse();
-
+            
             // 201 (status code)
+            // We are being extra permissible, we will not throw if RP sends 201 + location header, we will treat it similarly as 202+location
             if (CurrentPollingState.CurrentStatusCode == System.Net.HttpStatusCode.Created)
             {
-                if (string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink))
+                if (!string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink))
                 {
-                    throw new ValidationException(ValidationRules.CannotBeNull, "Recommended pattern DELETE-201-LocationHeader");
+                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.LocationHeaderLink;
+                    CurrentPollingState.FinalGETUrlToUser = CurrentPollingState.LocationHeaderLink;
+                    SetFinalGetCallback = true;                    
                 }
                 else
                 {
-                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.LocationHeaderLink;
+                    throw new ValidationException(ValidationRules.CannotBeNull, "Recommended pattern DELETE-201-LocationHeader");
                 }
             }
 
@@ -77,16 +86,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     {
                         CurrentPollingState.PollingUrlToUse = CurrentPollingState.LocationHeaderLink;
                     }
-                    else
-                    {
-                        // During polling if we get location header in addtion to AsyncOperation header, that needs to be used to get result for the final GET
-                        CurrentPollingState.FinalGETUrlToUser = GetValidAbsoluteUri(CurrentPollingState.LocationHeaderLink);
-                    }
+
+                    // During polling if we get location header in addtion to AsyncOperation header, that needs to be used to get result for the final GET
+                    CurrentPollingState.FinalGETUrlToUser = GetValidAbsoluteUri(CurrentPollingState.LocationHeaderLink);
+                    SetFinalGetCallback = true;
                 }
 
                 if (string.IsNullOrEmpty(CurrentPollingState.PollingUrlToUse))
                 {
-                    throw new ValidationException(ValidationRules.CannotBeNull, "Recommended patterns: POST-202-LocationHeder(Prefered)/AzureAsyncOperationHeader");
+                    throw new ValidationException(ValidationRules.CannotBeNull, "Recommended patterns: DELETE-202-LocationHeader(Prefered)/AzureAsyncOperationHeader");
                 }
             }
         }
@@ -119,20 +127,43 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             //We do an additional Get to get the resource for PUT requests
             if (AzureAsyncOperation.SuccessStatus.Equals(CurrentPollingState.Status, StringComparison.OrdinalIgnoreCase))
             {
-                if(CurrentPollingState.PollingUrlToUse.Equals(CurrentPollingState?.AzureAsyncOperationHeaderLink))
+                if ((!string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink)))
                 {
-                    if ((!string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink)))
+                    // We want to call the one last time the original URI that will give you the required resource
+                    if (!string.IsNullOrEmpty(CurrentPollingState.FinalGETUrlToUser))
                     {
-                        // We want to call the one last time the original URI that will give you the required resource
-                        if (!string.IsNullOrEmpty(CurrentPollingState.FinalGETUrlToUser))
+                        if (SetFinalGetCallback)
                         {
-                            CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
+                            // Initialize callback for final GET
+                            CurrentPollingState.IgnoreOperationErrorStatusCallBack = (httpRequest) => IgnoreResponseStatus(httpRequest);
                         }
 
+                        CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
                         await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Flag if NotFound status should be ignored during DELETE polling
+        /// Enable legacy behavior for certain RPs that are sending resource URI as part of location
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        internal bool IgnoreResponseStatus(HttpResponseMessage response)
+        {
+            bool ignoreCheckingErrorStatus = false;
+            HttpStatusCode statusCode = response.StatusCode;
+
+            if (statusCode == HttpStatusCode.NoContent)
+                ignoreCheckingErrorStatus = true;
+            else if(statusCode == HttpStatusCode.PreconditionFailed)
+                ignoreCheckingErrorStatus = true;
+            else if (statusCode == HttpStatusCode.NotFound)
+                ignoreCheckingErrorStatus = true;
+
+            return ignoreCheckingErrorStatus;
         }
     }
 }

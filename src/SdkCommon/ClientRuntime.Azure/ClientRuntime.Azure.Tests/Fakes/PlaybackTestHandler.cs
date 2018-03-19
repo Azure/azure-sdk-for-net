@@ -26,6 +26,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test.Fakes
             _counter = 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="responses"></param>
         public PlaybackTestHandler(IEnumerable<HttpResponseMessage> responses) :
             this()
         {
