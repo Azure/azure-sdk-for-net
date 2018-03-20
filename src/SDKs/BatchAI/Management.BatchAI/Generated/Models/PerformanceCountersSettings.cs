@@ -15,27 +15,28 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Input directory for the job.
+    /// Performance counters reporting settings.
     /// </summary>
-    public partial class InputDirectory
+    public partial class PerformanceCountersSettings
     {
         /// <summary>
-        /// Initializes a new instance of the InputDirectory class.
+        /// Initializes a new instance of the PerformanceCountersSettings
+        /// class.
         /// </summary>
-        public InputDirectory()
+        public PerformanceCountersSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InputDirectory class.
+        /// Initializes a new instance of the PerformanceCountersSettings
+        /// class.
         /// </summary>
-        /// <param name="id">The id for the input directory.</param>
-        /// <param name="path">The path to the input directory.</param>
-        public InputDirectory(string id, string path)
+        /// <param name="appInsightsReference">Specifies Azure Application
+        /// Insights information for performance counters reporting.</param>
+        public PerformanceCountersSettings(AppInsightsReference appInsightsReference)
         {
-            Id = id;
-            Path = path;
+            AppInsightsReference = appInsightsReference;
             CustomInit();
         }
 
@@ -45,21 +46,15 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id for the input directory.
+        /// Gets or sets specifies Azure Application Insights information for
+        /// performance counters reporting.
         /// </summary>
         /// <remarks>
-        /// The path of the input directory will be available as a value of an
-        /// environment variable with AZ_BATCHAI_INPUT_<id> name, where <id> is
-        /// the value of id attribute.
+        /// If provided, Batch AI will upload node performance counters to the
+        /// corresponding Azure Application Insights account.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the path to the input directory.
-        /// </summary>
-        [JsonProperty(PropertyName = "path")]
-        public string Path { get; set; }
+        [JsonProperty(PropertyName = "appInsightsReference")]
+        public AppInsightsReference AppInsightsReference { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -69,13 +64,13 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (AppInsightsReference == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "AppInsightsReference");
             }
-            if (Path == null)
+            if (AppInsightsReference != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Path");
+                AppInsightsReference.Validate();
             }
         }
     }
