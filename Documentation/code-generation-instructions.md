@@ -2,7 +2,7 @@
 
 To generate code, simply run the `generate.ps1` powershell script. If a powershell script does not exist under the RP directory, create one using an example [here](https://github.com/Azure/azure-sdk-for-net/blob/psSdkJson6/src/SDKs/Compute/Management.Compute/generate.ps1).
 
-If code generation fails for any reason, here a few common steps to resolve the issues.
+If code generation fails for any reason, here are a few common steps to resolve the issues.
 
 - Clean the repo
 ```
@@ -42,3 +42,14 @@ Please check the branch and fork of the REST spec for which the code was generat
 
 # How to sign/publish bits
 For detailed information about publishing and the overall workflow towards developing a powershell cli, click [here](https://github.com/Azure/adx-documentation-pr/blob/master/engineering/autorest-to-powershell.md)
+
+# How to generate code from a different fork and branch
+For testing purposes, code can be generated from any fork and branch.
+To do so, modify the `generate.ps1` as below
+```
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File "<relativepath>\..\tools\generateTool.ps1" -ResourceProvider "<resourceprovider>" -PowershellInvoker -AutoRestVersion "latest" -SpecsRepoFork "<forkname>" -SpecsRepoBranch "<branchname>"
+```
+If the spec is a completely different repo, add the following argument to the command above
+```
+-SpecsRepoName "<specsrepo>"
+```
