@@ -7,8 +7,9 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>17.0.0-preview</Version>
+		<Version>17.0.0.1</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<PackageReleaseNotes>
 		<![CDATA[
 			1) Added IPTags for Public IP;Updated LB InboundNatPool API

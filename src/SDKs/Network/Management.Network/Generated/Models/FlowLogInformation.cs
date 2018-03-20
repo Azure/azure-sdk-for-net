@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Information on the configuration of flow log.
+    /// Information on the configuration of flow log and traffic analytics
+    /// (optional).
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class FlowLogInformation
@@ -37,12 +38,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="storageId">ID of the storage account which is used to
         /// store the flow log.</param>
         /// <param name="enabled">Flag to enable/disable flow logging.</param>
-        public FlowLogInformation(string targetResourceId, string storageId, bool enabled, RetentionPolicyParameters retentionPolicy = default(RetentionPolicyParameters))
+        public FlowLogInformation(string targetResourceId, string storageId, bool enabled, RetentionPolicyParameters retentionPolicy = default(RetentionPolicyParameters), TrafficAnalyticsProperties flowAnalyticsConfiguration = default(TrafficAnalyticsProperties))
         {
             TargetResourceId = targetResourceId;
             StorageId = storageId;
             Enabled = enabled;
             RetentionPolicy = retentionPolicy;
+            FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
             CustomInit();
         }
 
@@ -76,6 +78,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public RetentionPolicyParameters RetentionPolicy { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "flowAnalyticsConfiguration")]
+        public TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -90,6 +97,10 @@ namespace Microsoft.Azure.Management.Network.Models
             if (StorageId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "StorageId");
+            }
+            if (FlowAnalyticsConfiguration != null)
+            {
+                FlowAnalyticsConfiguration.Validate();
             }
         }
     }

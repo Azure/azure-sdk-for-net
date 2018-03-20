@@ -36,8 +36,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="target">The ID of the targeted resource, only VM is
         /// currently supported.</param>
-        /// <param name="name">Name of the packet capture session.</param>
-        /// <param name="id">ID of the packet capture operation.</param>
+        /// <param name="name">Name of the packet capture.</param>
+        /// <param name="id">ID of the packet capture.</param>
+        /// <param name="type">Packet capture type.</param>
         /// <param name="bytesToCapturePerPacket">Number of bytes captured per
         /// packet, the remaining bytes are truncated.</param>
         /// <param name="totalBytesPerSession">Maximum size of the capture
@@ -47,10 +48,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// packet capture session. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
-        public PacketCaptureResult(string target, PacketCaptureStorageLocation storageLocation, string name = default(string), string id = default(string), string etag = default(string), int? bytesToCapturePerPacket = default(int?), int? totalBytesPerSession = default(int?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>), string provisioningState = default(string))
+        public PacketCaptureResult(string target, PacketCaptureStorageLocation storageLocation, string name = default(string), string id = default(string), string type = default(string), string etag = default(string), int? bytesToCapturePerPacket = default(int?), int? totalBytesPerSession = default(int?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>), string provisioningState = default(string))
         {
             Name = name;
             Id = id;
+            Type = type;
             Etag = etag;
             Target = target;
             BytesToCapturePerPacket = bytesToCapturePerPacket;
@@ -68,16 +70,22 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets name of the packet capture session.
+        /// Gets name of the packet capture.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets ID of the packet capture operation.
+        /// Gets ID of the packet capture.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets packet capture type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// </summary>
