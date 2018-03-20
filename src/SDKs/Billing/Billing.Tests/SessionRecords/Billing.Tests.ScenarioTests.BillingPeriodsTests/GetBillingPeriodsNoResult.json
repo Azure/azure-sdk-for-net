@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2017-04-24-preview&$filter=billingPeriodEndDate%20lt%202017-01-01&$top=1",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM0N2Q2M2EtNDIxYS00M2E3LTgzNmEtNWYzODljNzljZDA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nUGVyaW9kcz9hcGktdmVyc2lvbj0yMDE3LTA0LTI0LXByZXZpZXcmJGZpbHRlcj1iaWxsaW5nUGVyaW9kRW5kRGF0ZSUyMGx0JTIwMjAxNy0wMS0wMSYkdG9wPTE=",
+      "RequestUri": "/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2018-03-01-preview&$filter=billingPeriodEndDate%20lt%202017-01-01&$top=1",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM0N2Q2M2EtNDIxYS00M2E3LTgzNmEtNWYzODljNzljZDA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nUGVyaW9kcz9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXcmJGZpbHRlcj1iaWxsaW5nUGVyaW9kRW5kRGF0ZSUyMGx0JTIwMjAxNy0wMS0wMSYkdG9wPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -17,7 +17,7 @@
           "Microsoft.Azure.Management.Billing.BillingManagementClient/1.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"target\": \"https://billing-preview.windowsazure.com/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2017-04-24-preview&$filter=billingPeriodEndDate%20lt%202017-01-01&$top=1\",\r\n    \"message\": \"Could not find billing period for the subscription.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"target\": \"https://billing-preview.windowsazure.com/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2018-03-01-preview&$filter=billingPeriodEndDate%20lt%202017-01-01&$top=1\",\r\n    \"message\": \"Could not find billing period for the subscription.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "332"
