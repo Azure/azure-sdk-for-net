@@ -38,7 +38,7 @@ namespace Network.Tests.Tests
                 var storageManagementClient = NetworkManagementTestUtilities.GetStorageManagementClientWithHandler(context, handler4);
                 var operationalInsightsManagementClient = NetworkManagementTestUtilities.GetOperationalInsightsManagementClientWithHandler(context, handler5);
 
-                string location = "westcentralus";
+                string location = "eastus2euap";
                 string workspaceLocation = "East US";
 
                 string resourceGroupName = TestUtilities.GenerateName();
@@ -101,6 +101,11 @@ namespace Network.Tests.Tests
                     TargetResourceId = getNsgResponse.Id,
                     Enabled = true,
                     StorageId = storageAccount.Id,
+                    RetentionPolicy = new RetentionPolicyParameters
+                    {
+                        Days = 5,
+                        Enabled = true
+                    },
                     FlowAnalyticsConfiguration = new TrafficAnalyticsProperties()
                     {
                         NetworkWatcherFlowAnalyticsConfiguration = new TrafficAnalyticsConfigurationProperties()
