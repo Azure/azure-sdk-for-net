@@ -20,7 +20,7 @@ namespace Network.Tests.Tests
 
     public class FlowLogTests
     {
-        [Fact]
+        [Fact(Skip = "Test can be run after fixes for this API will be deployed in every region")]
         public void FlowLogApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
