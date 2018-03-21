@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Batch.Tests
                 Content = new StringContent(@"")
             };
 
-            var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
+            var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse, okResponse });
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
             client.BatchAccount.Delete("resGroup", "acctName");
