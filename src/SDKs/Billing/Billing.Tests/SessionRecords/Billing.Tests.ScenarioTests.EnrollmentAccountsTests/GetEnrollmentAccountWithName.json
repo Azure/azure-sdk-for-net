@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/2.1.0.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Billing/enrollmentAccounts/c8a9f59a-2d9b-4086-91c8-8988cae3bec3\",\r\n  \"name\": \"c8a9f59a-2d9b-4086-91c8-8988cae3bec3\",\r\n  \"properties\": {\r\n    \"principalName\": \"JoeSchmoe@contoso.onmicrosoft.com\",\r\n    \"offerTypes\": [\r\n      \"MS-AZR-0017P\",\r\n      \"MS-AZR-0025P\",\r\n      \"MS-AZR-0148P\"\r\n    ]\r\n  },\r\n  \"type\": \"Microsoft.Billing/enrollmentAccounts\"\r\n}",
