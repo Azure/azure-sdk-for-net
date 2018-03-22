@@ -104,6 +104,11 @@ namespace Microsoft.Azure.Management.WebSites
         IRecommendationsOperations Recommendations { get; }
 
         /// <summary>
+        /// Gets the IResourceHealthMetadataOperations.
+        /// </summary>
+        IResourceHealthMetadataOperations ResourceHealthMetadata { get; }
+
+        /// <summary>
         /// Gets the IWebAppsOperations.
         /// </summary>
         IWebAppsOperations WebApps { get; }
