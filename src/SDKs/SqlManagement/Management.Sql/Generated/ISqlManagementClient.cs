@@ -275,6 +275,5 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolOperations.
         /// </summary>
         IElasticPoolOperations ElasticPoolOperations { get; }
-
     }
 }
