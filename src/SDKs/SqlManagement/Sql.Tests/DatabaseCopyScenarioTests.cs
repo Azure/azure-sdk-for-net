@@ -31,12 +31,10 @@ namespace Sql.Tests
                 {
                     Location = server.Location,
                     Collation = SqlTestConstants.DefaultCollation,
-                    Edition = SqlTestConstants.DefaultDatabaseEdition,
+                    Sku = SqlTestConstants.DefaultDatabaseSku(),
 
                     // Make max size bytes less than default, to ensure that copy follows this parameter
                     MaxSizeBytes = 500 * 1024L * 1024L,
-                    RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
-                    RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     CreateMode = "Default"
                 };
                 var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);

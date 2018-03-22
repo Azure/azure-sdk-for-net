@@ -128,15 +128,6 @@ namespace Sql.Tests
                 Assert.NotNull(actual.MaxSizeBytes);
             }
 
-            if (expected.RequestedServiceObjectiveId != null)
-            {
-                Assert.Equal(expected.RequestedServiceObjectiveId, actual.RequestedServiceObjectiveId);
-            }
-            else
-            {
-                Assert.NotNull(actual.RequestedServiceObjectiveId);
-            }
-
             if (!string.IsNullOrEmpty(expected.RequestedServiceObjectiveName))
             {
                 Assert.Equal(expected.RequestedServiceObjectiveName, actual.RequestedServiceObjectiveName);
@@ -191,15 +182,6 @@ namespace Sql.Tests
             else
             {
                 Assert.NotNull(actual.MaxSizeBytes);
-            }
-
-            if (expected.RequestedServiceObjectiveId != null)
-            {
-                Assert.Equal(expected.RequestedServiceObjectiveId, actual.RequestedServiceObjectiveId);
-            }
-            else
-            {
-                Assert.NotNull(actual.RequestedServiceObjectiveId);
             }
 
             if (!string.IsNullOrEmpty(expected.RequestedServiceObjectiveName))

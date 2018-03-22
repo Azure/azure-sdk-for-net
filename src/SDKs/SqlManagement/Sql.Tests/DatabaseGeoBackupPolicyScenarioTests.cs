@@ -27,7 +27,7 @@ namespace Sql.Tests
                 var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
                 {
                     Location = server.Location,
-                    Edition = DatabaseEdition.DataWarehouse
+                    Sku = SqlTestConstants.DefaultDataWarehouseSku()
                 });
                 Assert.NotNull(db1);
 
