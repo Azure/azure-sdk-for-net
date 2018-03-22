@@ -262,16 +262,16 @@ namespace Sql.Tests
                 LongTermRetentionBackup backup = sqlClient.LongTermRetentionBackups.Get(locationName, serverName, databaseName, backups.First().Name);
                 Assert.NotNull(backup);
 
-                // Restore the backup - TODO After Database 2017-03-01-Preview is done
+                // Restore the backup
                 //
-                /* Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
+                Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
                     resourceGroupName, serverName, databaseName: SqlManagementTestUtilities.GenerateName(),
                     parameters: new Database
                     {
                         Location = locationName,
                         CreateMode = CreateMode.RestoreLongTermRetentionBackup,
-                        RecoveryServicesRecoveryPointResourceId = ""
-                    });*/
+                        LongTermRetentionBackupResourceId = backup.Id
+                    });
 
                 // Delete the backup.
                 //
