@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for PerformanceLevelUnit.
+    /// Defines values for CapabilityGroup.
     /// </summary>
-    public static class PerformanceLevelUnit
+    public static class CapabilityGroup
     {
-        public const string DTU = "DTU";
-        public const string VCores = "VCores";
+        public const string SupportedEditions = "supportedEditions";
+        public const string SupportedElasticPoolEditions = "supportedElasticPoolEditions";
+        public const string SupportedManagedInstanceVersions = "supportedManagedInstanceVersions";
     }
 }

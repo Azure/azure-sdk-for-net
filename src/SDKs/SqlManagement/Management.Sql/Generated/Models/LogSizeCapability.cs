@@ -14,27 +14,27 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The maximum size capability.
+    /// The log size capability.
     /// </summary>
-    public partial class MaxSizeCapability
+    public partial class LogSizeCapability
     {
         /// <summary>
-        /// Initializes a new instance of the MaxSizeCapability class.
+        /// Initializes a new instance of the LogSizeCapability class.
         /// </summary>
-        public MaxSizeCapability()
+        public LogSizeCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MaxSizeCapability class.
+        /// Initializes a new instance of the LogSizeCapability class.
         /// </summary>
-        /// <param name="limit">The maximum size limit (see 'unit' for the
+        /// <param name="limit">The log size limit (see 'unit' for the
         /// units).</param>
         /// <param name="unit">The units that the limit is expressed in.
         /// Possible values include: 'Megabytes', 'Gigabytes', 'Terabytes',
-        /// 'Petabytes'</param>
-        public MaxSizeCapability(int? limit = default(int?), string unit = default(string))
+        /// 'Petabytes', 'Percent'</param>
+        public LogSizeCapability(int? limit = default(int?), string unit = default(string))
         {
             Limit = limit;
             Unit = unit;
@@ -47,14 +47,15 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the maximum size limit (see 'unit' for the units).
+        /// Gets the log size limit (see 'unit' for the units).
         /// </summary>
         [JsonProperty(PropertyName = "limit")]
         public int? Limit { get; private set; }
 
         /// <summary>
         /// Gets the units that the limit is expressed in. Possible values
-        /// include: 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'
+        /// include: 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes',
+        /// 'Percent'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; private set; }

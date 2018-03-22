@@ -12,11 +12,14 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for PerformanceLevelUnit.
+    /// Defines values for LogSizeUnit.
     /// </summary>
-    public static class PerformanceLevelUnit
+    public static class LogSizeUnit
     {
-        public const string DTU = "DTU";
-        public const string VCores = "VCores";
+        public const string Megabytes = "Megabytes";
+        public const string Gigabytes = "Gigabytes";
+        public const string Terabytes = "Terabytes";
+        public const string Petabytes = "Petabytes";
+        public const string Percent = "Percent";
     }
 }

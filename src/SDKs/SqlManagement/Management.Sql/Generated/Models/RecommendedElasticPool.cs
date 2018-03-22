@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Expanded property</param>
         /// <param name="metrics">The list of databases housed in the server.
         /// Expanded property</param>
-        public RecommendedElasticPool(string id = default(string), string name = default(string), string type = default(string), string databaseEdition = default(string), double? dtu = default(double?), double? databaseDtuMin = default(double?), double? databaseDtuMax = default(double?), double? storageMB = default(double?), System.DateTime? observationPeriodStart = default(System.DateTime?), System.DateTime? observationPeriodEnd = default(System.DateTime?), double? maxObservedDtu = default(double?), double? maxObservedStorageMB = default(double?), IList<Database> databases = default(IList<Database>), IList<RecommendedElasticPoolMetric> metrics = default(IList<RecommendedElasticPoolMetric>))
+        public RecommendedElasticPool(string id = default(string), string name = default(string), string type = default(string), string databaseEdition = default(string), double? dtu = default(double?), double? databaseDtuMin = default(double?), double? databaseDtuMax = default(double?), double? storageMB = default(double?), System.DateTime? observationPeriodStart = default(System.DateTime?), System.DateTime? observationPeriodEnd = default(System.DateTime?), double? maxObservedDtu = default(double?), double? maxObservedStorageMB = default(double?), IList<TrackedResource> databases = default(IList<TrackedResource>), IList<RecommendedElasticPoolMetric> metrics = default(IList<RecommendedElasticPoolMetric>))
             : base(id, name, type)
         {
             DatabaseEdition = databaseEdition;
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets the list of databases in this pool. Expanded property
         /// </summary>
         [JsonProperty(PropertyName = "properties.databases")]
-        public IList<Database> Databases { get; private set; }
+        public IList<TrackedResource> Databases { get; private set; }
 
         /// <summary>
         /// Gets the list of databases housed in the server. Expanded property

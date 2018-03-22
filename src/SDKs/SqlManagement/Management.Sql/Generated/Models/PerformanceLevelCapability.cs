@@ -14,29 +14,27 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The maximum size capability.
+    /// The performance level capability.
     /// </summary>
-    public partial class MaxSizeCapability
+    public partial class PerformanceLevelCapability
     {
         /// <summary>
-        /// Initializes a new instance of the MaxSizeCapability class.
+        /// Initializes a new instance of the PerformanceLevelCapability class.
         /// </summary>
-        public MaxSizeCapability()
+        public PerformanceLevelCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MaxSizeCapability class.
+        /// Initializes a new instance of the PerformanceLevelCapability class.
         /// </summary>
-        /// <param name="limit">The maximum size limit (see 'unit' for the
-        /// units).</param>
-        /// <param name="unit">The units that the limit is expressed in.
-        /// Possible values include: 'Megabytes', 'Gigabytes', 'Terabytes',
-        /// 'Petabytes'</param>
-        public MaxSizeCapability(int? limit = default(int?), string unit = default(string))
+        /// <param name="value">Performance level value.</param>
+        /// <param name="unit">Unit type used to measure performance level.
+        /// Possible values include: 'DTU', 'VCores'</param>
+        public PerformanceLevelCapability(double? value = default(double?), string unit = default(string))
         {
-            Limit = limit;
+            Value = value;
             Unit = unit;
             CustomInit();
         }
@@ -47,14 +45,14 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the maximum size limit (see 'unit' for the units).
+        /// Gets performance level value.
         /// </summary>
-        [JsonProperty(PropertyName = "limit")]
-        public int? Limit { get; private set; }
+        [JsonProperty(PropertyName = "value")]
+        public double? Value { get; private set; }
 
         /// <summary>
-        /// Gets the units that the limit is expressed in. Possible values
-        /// include: 'Megabytes', 'Gigabytes', 'Terabytes', 'Petabytes'
+        /// Gets unit type used to measure performance level. Possible values
+        /// include: 'DTU', 'VCores'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; private set; }

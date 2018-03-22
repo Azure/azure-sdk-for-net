@@ -11,40 +11,38 @@
 namespace Microsoft.Azure.Management.Sql.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The server capability
+    /// The minimum per-database performance level capability.
     /// </summary>
-    public partial class ServerVersionCapability
+    public partial class ElasticPoolPerDatabaseMinPerformanceLevelCapability
     {
         /// <summary>
-        /// Initializes a new instance of the ServerVersionCapability class.
+        /// Initializes a new instance of the
+        /// ElasticPoolPerDatabaseMinPerformanceLevelCapability class.
         /// </summary>
-        public ServerVersionCapability()
+        public ElasticPoolPerDatabaseMinPerformanceLevelCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerVersionCapability class.
+        /// Initializes a new instance of the
+        /// ElasticPoolPerDatabaseMinPerformanceLevelCapability class.
         /// </summary>
-        /// <param name="name">The server version name.</param>
-        /// <param name="supportedEditions">The list of supported database
-        /// editions.</param>
-        /// <param name="supportedElasticPoolEditions">The list of supported
-        /// elastic pool editions.</param>
+        /// <param name="limit">The minimum performance level per
+        /// database.</param>
+        /// <param name="unit">Unit type used to measure performance level.
+        /// Possible values include: 'DTU', 'VCores'</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ServerVersionCapability(string name = default(string), IList<EditionCapability> supportedEditions = default(IList<EditionCapability>), IList<ElasticPoolEditionCapability> supportedElasticPoolEditions = default(IList<ElasticPoolEditionCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit = default(double?), string unit = default(string), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
-            Name = name;
-            SupportedEditions = supportedEditions;
-            SupportedElasticPoolEditions = supportedElasticPoolEditions;
+            Limit = limit;
+            Unit = unit;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -56,22 +54,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the server version name.
+        /// Gets the minimum performance level per database.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        [JsonProperty(PropertyName = "limit")]
+        public double? Limit { get; private set; }
 
         /// <summary>
-        /// Gets the list of supported database editions.
+        /// Gets unit type used to measure performance level. Possible values
+        /// include: 'DTU', 'VCores'
         /// </summary>
-        [JsonProperty(PropertyName = "supportedEditions")]
-        public IList<EditionCapability> SupportedEditions { get; private set; }
-
-        /// <summary>
-        /// Gets the list of supported elastic pool editions.
-        /// </summary>
-        [JsonProperty(PropertyName = "supportedElasticPoolEditions")]
-        public IList<ElasticPoolEditionCapability> SupportedElasticPoolEditions { get; private set; }
+        [JsonProperty(PropertyName = "unit")]
+        public string Unit { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:

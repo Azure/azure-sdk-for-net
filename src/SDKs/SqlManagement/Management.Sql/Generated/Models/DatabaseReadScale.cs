@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for PerformanceLevelUnit.
+    /// Defines values for DatabaseReadScale.
     /// </summary>
-    public static class PerformanceLevelUnit
+    public static class DatabaseReadScale
     {
-        public const string DTU = "DTU";
-        public const string VCores = "VCores";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

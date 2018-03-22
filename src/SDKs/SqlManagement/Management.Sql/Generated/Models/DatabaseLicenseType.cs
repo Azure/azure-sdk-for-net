@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for PerformanceLevelUnit.
+    /// Defines values for DatabaseLicenseType.
     /// </summary>
-    public static class PerformanceLevelUnit
+    public static class DatabaseLicenseType
     {
-        public const string DTU = "DTU";
-        public const string VCores = "VCores";
+        public const string LicenseIncluded = "LicenseIncluded";
+        public const string BasePrice = "BasePrice";
     }
 }

@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for PerformanceLevelUnit.
+    /// Defines values for ElasticPoolLicenseType.
     /// </summary>
-    public static class PerformanceLevelUnit
+    public static class ElasticPoolLicenseType
     {
-        public const string DTU = "DTU";
-        public const string VCores = "VCores";
+        public const string LicenseIncluded = "LicenseIncluded";
+        public const string BasePrice = "BasePrice";
     }
 }

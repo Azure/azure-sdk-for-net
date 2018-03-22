@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for PerformanceLevelUnit.
+    /// Defines values for CatalogCollationType.
     /// </summary>
-    public static class PerformanceLevelUnit
+    public static class CatalogCollationType
     {
-        public const string DTU = "DTU";
-        public const string VCores = "VCores";
+        public const string DATABASEDEFAULT = "DATABASE_DEFAULT";
+        public const string SQLLatin1GeneralCP1CIAS = "SQL_Latin1_General_CP1_CI_AS";
     }
 }

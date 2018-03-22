@@ -16,37 +16,34 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The elastic pool edition capability.
+    /// The managed instance capability
     /// </summary>
-    public partial class ElasticPoolEditionCapability
+    public partial class ManagedInstanceVersionCapability
     {
         /// <summary>
-        /// Initializes a new instance of the ElasticPoolEditionCapability
+        /// Initializes a new instance of the ManagedInstanceVersionCapability
         /// class.
         /// </summary>
-        public ElasticPoolEditionCapability()
+        public ManagedInstanceVersionCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ElasticPoolEditionCapability
+        /// Initializes a new instance of the ManagedInstanceVersionCapability
         /// class.
         /// </summary>
-        /// <param name="name">The elastic pool edition name.</param>
-        /// <param name="supportedElasticPoolPerformanceLevels">The list of
-        /// supported elastic pool DTU levels for the edition.</param>
-        /// <param name="zoneRedundant">Whether or not zone redundancy is
-        /// supported for the edition.</param>
+        /// <param name="name">The server version name.</param>
+        /// <param name="supportedEditions">The list of supported managed
+        /// instance editions.</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ElasticPoolEditionCapability(string name = default(string), IList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = default(IList<ElasticPoolPerformanceLevelCapability>), bool? zoneRedundant = default(bool?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ManagedInstanceVersionCapability(string name = default(string), IList<ManagedInstanceEditionCapability> supportedEditions = default(IList<ManagedInstanceEditionCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
-            SupportedElasticPoolPerformanceLevels = supportedElasticPoolPerformanceLevels;
-            ZoneRedundant = zoneRedundant;
+            SupportedEditions = supportedEditions;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -58,22 +55,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the elastic pool edition name.
+        /// Gets the server version name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the list of supported elastic pool DTU levels for the edition.
+        /// Gets the list of supported managed instance editions.
         /// </summary>
-        [JsonProperty(PropertyName = "supportedElasticPoolPerformanceLevels")]
-        public IList<ElasticPoolPerformanceLevelCapability> SupportedElasticPoolPerformanceLevels { get; private set; }
-
-        /// <summary>
-        /// Gets whether or not zone redundancy is supported for the edition.
-        /// </summary>
-        [JsonProperty(PropertyName = "zoneRedundant")]
-        public bool? ZoneRedundant { get; private set; }
+        [JsonProperty(PropertyName = "supportedEditions")]
+        public IList<ManagedInstanceEditionCapability> SupportedEditions { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:

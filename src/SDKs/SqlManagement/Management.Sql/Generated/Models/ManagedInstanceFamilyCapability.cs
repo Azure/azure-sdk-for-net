@@ -16,43 +16,43 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The service objectives capability.
+    /// The managed server family capability.
     /// </summary>
-    public partial class ServiceObjectiveCapability
+    public partial class ManagedInstanceFamilyCapability
     {
         /// <summary>
-        /// Initializes a new instance of the ServiceObjectiveCapability class.
+        /// Initializes a new instance of the ManagedInstanceFamilyCapability
+        /// class.
         /// </summary>
-        public ServiceObjectiveCapability()
+        public ManagedInstanceFamilyCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServiceObjectiveCapability class.
+        /// Initializes a new instance of the ManagedInstanceFamilyCapability
+        /// class.
         /// </summary>
-        /// <param name="id">The unique ID of the service objective.</param>
-        /// <param name="name">The service objective name.</param>
-        /// <param name="supportedMaxSizes">The list of supported maximum
-        /// database sizes.</param>
-        /// <param name="performanceLevel">The performance level.</param>
-        /// <param name="sku">The sku.</param>
+        /// <param name="name">Family name.</param>
+        /// <param name="sku">SKU name.</param>
         /// <param name="supportedLicenseTypes">List of supported license
         /// types.</param>
-        /// <param name="includedMaxSize">The included (free) max size.</param>
+        /// <param name="supportedVcoresValues">List of supported virtual cores
+        /// values.</param>
+        /// <param name="includedMaxSize">Included size.</param>
+        /// <param name="supportedStorageSizes">Storage size ranges.</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
         /// <param name="reason">The reason for the capability not being
         /// available.</param>
-        public ServiceObjectiveCapability(System.Guid? id = default(System.Guid?), string name = default(string), IList<MaxSizeRangeCapability> supportedMaxSizes = default(IList<MaxSizeRangeCapability>), PerformanceLevelCapability performanceLevel = default(PerformanceLevelCapability), Sku sku = default(Sku), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
+        public ManagedInstanceFamilyCapability(string name = default(string), string sku = default(string), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), IList<ManagedInstanceVcoresCapability> supportedVcoresValues = default(IList<ManagedInstanceVcoresCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), IList<MaxSizeRangeCapability> supportedStorageSizes = default(IList<MaxSizeRangeCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
-            Id = id;
             Name = name;
-            SupportedMaxSizes = supportedMaxSizes;
-            PerformanceLevel = performanceLevel;
             Sku = sku;
             SupportedLicenseTypes = supportedLicenseTypes;
+            SupportedVcoresValues = supportedVcoresValues;
             IncludedMaxSize = includedMaxSize;
+            SupportedStorageSizes = supportedStorageSizes;
             Status = status;
             Reason = reason;
             CustomInit();
@@ -64,34 +64,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the unique ID of the service objective.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; private set; }
-
-        /// <summary>
-        /// Gets the service objective name.
+        /// Gets family name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the list of supported maximum database sizes.
-        /// </summary>
-        [JsonProperty(PropertyName = "supportedMaxSizes")]
-        public IList<MaxSizeRangeCapability> SupportedMaxSizes { get; private set; }
-
-        /// <summary>
-        /// Gets the performance level.
-        /// </summary>
-        [JsonProperty(PropertyName = "performanceLevel")]
-        public PerformanceLevelCapability PerformanceLevel { get; private set; }
-
-        /// <summary>
-        /// Gets the sku.
+        /// Gets SKU name.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; private set; }
+        public string Sku { get; private set; }
 
         /// <summary>
         /// Gets list of supported license types.
@@ -100,10 +82,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         public IList<LicenseTypeCapability> SupportedLicenseTypes { get; private set; }
 
         /// <summary>
-        /// Gets the included (free) max size.
+        /// Gets list of supported virtual cores values.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedVcoresValues")]
+        public IList<ManagedInstanceVcoresCapability> SupportedVcoresValues { get; private set; }
+
+        /// <summary>
+        /// Gets included size.
         /// </summary>
         [JsonProperty(PropertyName = "includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; private set; }
+
+        /// <summary>
+        /// Gets storage size ranges.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedStorageSizes")]
+        public IList<MaxSizeRangeCapability> SupportedStorageSizes { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:
@@ -118,18 +112,5 @@ namespace Microsoft.Azure.Management.Sql.Models
         [JsonProperty(PropertyName = "reason")]
         public string Reason { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
-        }
     }
 }
