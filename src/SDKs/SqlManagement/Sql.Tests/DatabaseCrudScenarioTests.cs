@@ -51,7 +51,7 @@ namespace Sql.Tests
                     Location = server.Location,
                     Collation = SqlTestConstants.DefaultCollation,
                     Edition = SqlTestConstants.DefaultDatabaseEdition,
-                    MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
+                    MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
                     RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
                     RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     Tags = tags,
@@ -206,7 +206,7 @@ namespace Sql.Tests
                 Location = server.Location,
                 Collation = SqlTestConstants.DefaultCollation,
                 Edition = SqlTestConstants.DefaultDatabaseEdition,
-                MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
+                MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
                 RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
                 RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                 Tags = tags,
@@ -268,7 +268,7 @@ namespace Sql.Tests
             // Update max size
             //
             dynamic updateMaxSize = createModelFunc();
-            updateMaxSize.MaxSizeBytes = (250 * 1024L * 1024L * 1024L).ToString();
+            updateMaxSize.MaxSizeBytes = 250 * 1024L * 1024L * 1024L;
             var db6 = updateFunc(resourceGroup.Name, server.Name, dbName, updateMaxSize);
             SqlManagementTestUtilities.ValidateDatabase(updateMaxSize, db6, dbName);
 

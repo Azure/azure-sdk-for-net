@@ -34,7 +34,7 @@ namespace Sql.Tests
                     Edition = SqlTestConstants.DefaultDatabaseEdition,
 
                     // Make max size bytes less than default, to ensure that copy follows this parameter
-                    MaxSizeBytes = (500 * 1024L * 1024L).ToString(),
+                    MaxSizeBytes = 500 * 1024L * 1024L,
                     RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
                     RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
                     CreateMode = "Default"
