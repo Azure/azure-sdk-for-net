@@ -14,12 +14,12 @@ using Xunit;
 
 namespace Billing.Tests.ScenarioTests
 {
-    public class EnrollmentAccountsTests : TestBase
+    public class EnrollmentAccountTests : TestBase
     {
         const string EnrollmentAccountName = "c8a9f59a-2d9b-4086-91c8-8988cae3bec3";
 
         [Fact]
-        public void ListEnrollmentAccountsTest()
+        public void ListEnrollmentAccounts()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -48,7 +48,7 @@ namespace Billing.Tests.ScenarioTests
 
         private static string GetSessionsDirectoryPath()
         {
-            string executingAssemblyPath = typeof(Billing.Tests.ScenarioTests.EnrollmentAccountsTests).GetTypeInfo().Assembly.Location;
+            string executingAssemblyPath = typeof(Billing.Tests.ScenarioTests.EnrollmentAccountTests).GetTypeInfo().Assembly.Location;
             return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
     }
