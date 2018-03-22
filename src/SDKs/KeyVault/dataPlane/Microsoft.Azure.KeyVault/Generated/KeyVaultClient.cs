@@ -12757,7 +12757,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> PurgeDeletedStorgeAccountWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> PurgeDeletedStorageAccountWithHttpMessagesAsync(string vaultBaseUrl, string storageAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -12788,7 +12788,7 @@ namespace Microsoft.Azure.KeyVault
                 tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
                 tracingParameters.Add("storageAccountName", storageAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "PurgeDeletedStorgeAccount", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PurgeDeletedStorageAccount", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;

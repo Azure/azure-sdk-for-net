@@ -2040,9 +2040,9 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PurgeDeletedStorgeAccountAsync(this IKeyVaultClient operations, string vaultBaseUrl, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PurgeDeletedStorageAccountAsync(this IKeyVaultClient operations, string vaultBaseUrl, string storageAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.PurgeDeletedStorgeAccountWithHttpMessagesAsync(vaultBaseUrl, storageAccountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.PurgeDeletedStorageAccountWithHttpMessagesAsync(vaultBaseUrl, storageAccountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

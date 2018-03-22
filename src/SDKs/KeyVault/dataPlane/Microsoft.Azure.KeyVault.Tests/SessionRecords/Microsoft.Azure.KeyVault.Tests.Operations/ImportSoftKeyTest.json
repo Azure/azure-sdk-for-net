@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//keys/ImportSoftKeyTest?api-version=2016-10-01",
+      "RequestUri": "//keys/ImportSoftKeyTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0ltcG9ydFNvZnRLZXlUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"key\": {\r\n    \"kty\": \"RSA\",\r\n    \"n\": \"nKAwarTrOpzd1hhH4cQNdVTgRF-b0ubPD8ZNVf0UXjb62QuAk3Dn68ESThcF7SoDYRx2QVcfoMC9WCcuQUQDieJF-lvJTSer1TwH72NBovwKlHvrXqEI0a6_uVYY5n-soGt7qFZNbwQLdWWA6PrbqTLIkv6r01dcuhTiQQAn6OWEa0JbFvWfF1kILQIaSBBBaaQ4R7hZs7-VQTHGD7J1xGteof4gw2VTiwNdcE8p5UG5b6S9KQwAeET4yB4KFPwQ3TDdzxJQ89mwYVi_sgAIggN54hTq4oEKYJHBOMtFGIN0_HQ60ZSUnpOi87xNC-8VFqnv4rfTQ7nkK6XMvjMVfw\",\r\n    \"e\": \"AQAB\",\r\n    \"d\": \"GeT1_D5LAZa7qlC7WZ0DKJnOth8kcPrN0urTEFtWCbmHQWkAad_px_VUpGp0BWDDzENbXbQcu4QCCdf4crve5eXt8dVI86OSah-RpEdBq8OFsETIhg2Tmq8MbYTJexoynRcIC62xAaCmkFMmu931gQSvWnYWTEuOPgmD2oE_F-bP9TFlGRc69a6MSbtcSRyFTsd5KsUr40QS4zf2W4kZCOWejyLuxk88SXgUqcJx86Ulc1Ol1KkTBLadvReAZCyCMwKBlNRGw46BU_iK0vK7rTD9fmEd639Gjti6eLpnyQYpnVe8uGgwVU1fHBkAKyapWoEG6VMhMntcrvgukKLIsQ\",\r\n    \"dp\": \"ZGnmWx-Nca71z9a9vvT4g02iv3S-3kSgmhl8JST09YQwK8tfiK7nXnNMtXJi2K4dLKKnLicGtCzB6W3mXdLcP2SUOWDOeStoBt8HEBT4MrI1psCKqnBum78WkHju90rBFj99amkP6UeQy5EASAzgmKQu2nUaUnRV0lYP8LHMCkE\",\r\n    \"dq\": \"dtpke0foFs04hPS6XYLA5lc7-1MAHfZKN4CkMAofwDqPmRQzCxpDJUk0gMWGJEdU_Lqfbg22Py44cci0dczH36NW3UU5BL86T2_SPPDOuyX7kDscrIJCdowxQCGJHGRBEozM_uTL46wu6UnUIv7m7cuGgodJyZBcdwpo6ziFink\",\r\n    \"qi\": \"Y9KD5GaHkAYmAqpOfAQUMr71QuAAaBb0APzMuUvoEYw39PD3_vJeh9HZ15QmJ8zCX10-nlzUB-bWwvK-rGcJXbK4pArilr5MiaYv7e8h5eW2zs2_itDJ6Oebi-wVbMhg7DvUTBbkCvPhhIedE4UlDQmMYP7RhzVVs7SfmkGs_DQ\",\r\n    \"p\": \"v1jeCPnuJQM2PW2690Q9KJk0Ulok8VFGjkcHUHVi3orKdy7y_TCIWM6ZGvgFzI6abinzYbTEPKV4wFdMAwvOWmawXj5YrsoeB44_HXJ0ak_5_iP6XXR8MLGXbd0ZqsxvAZyzMj9vyle7EN2cBod6aenI2QZoRDucPvjPwZsZotk\",\r\n    \"q\": \"0Yv-Dj6qnvx_LL70lUnKA6MgHE_bUC4drl5ZNDDsUdUUYfxIK4G1rGU45kHGtp-Qg-Uyf9s52ywLylhcVE3jfbjOgEozlSwKyhqfXkLpMLWHqOKj9fcfYd4PWKPOgpzWsqjA6fJbBUMYo0CU2G9cWCtVodO7sBJVSIZunWrAlBc\"\r\n  },\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\"\r\n  }\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/ImportSoftKeyTest/2eb4a15d74184c6f84159c3ca90f0f4b?api-version=2016-10-01",
+      "RequestUri": "/keys/ImportSoftKeyTest/2eb4a15d74184c6f84159c3ca90f0f4b?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvSW1wb3J0U29mdEtleVRlc3QvMmViNGExNWQ3NDE4NGM2Zjg0MTU5YzNjYTkwZjBmNGI/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -135,7 +135,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/ImportSoftKeyTest?api-version=2016-10-01",
+      "RequestUri": "//keys/ImportSoftKeyTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0ltcG9ydFNvZnRLZXlUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -199,7 +199,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9JbXBvcnRTb2Z0S2V5VGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -263,7 +263,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9JbXBvcnRTb2Z0S2V5VGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -327,7 +327,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9JbXBvcnRTb2Z0S2V5VGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -391,7 +391,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9JbXBvcnRTb2Z0S2V5VGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -455,7 +455,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/ImportSoftKeyTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9JbXBvcnRTb2Z0S2V5VGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",

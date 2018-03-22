@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//storage/regenerateKeyStrg01?api-version=2016-10-01",
+      "RequestUri": "//storage/regenerateKeyStrg01?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL3JlZ2VuZXJhdGVLZXlTdHJnMDE/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"resourceId\": \"/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/resourceGroups/kvstoragetestrg/providers/Microsoft.Storage/storageAccounts/azkvteststorage1westus\",\r\n  \"activeKeyName\": \"key1\",\r\n  \"autoRegenerateKey\": true,\r\n  \"regenerationPeriod\": \"P30D\",\r\n  \"attributes\": {\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/regenerateKeyStrg01/regeneratekey?api-version=2016-10-01",
+      "RequestUri": "//storage/regenerateKeyStrg01/regeneratekey?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL3JlZ2VuZXJhdGVLZXlTdHJnMDEvcmVnZW5lcmF0ZWtleT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"keyName\": \"key2\"\r\n}",
@@ -141,7 +141,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/regenerateKeyStrg01?api-version=2016-10-01",
+      "RequestUri": "//storage/regenerateKeyStrg01?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL3JlZ2VuZXJhdGVLZXlTdHJnMDE/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

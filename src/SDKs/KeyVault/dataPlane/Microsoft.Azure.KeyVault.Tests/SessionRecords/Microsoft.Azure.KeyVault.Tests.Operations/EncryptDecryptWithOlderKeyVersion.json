@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/keys/sdktestkey/create?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey/create?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS9jcmVhdGU/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ]\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/sdktestkey//encrypt?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey//encrypt?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS8vZW5jcnlwdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"RSA1_5\",\r\n  \"value\": \"TjFowzRMEPuGXQ\"\r\n}",
@@ -141,7 +141,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/sdktestkey/0a9e36203d224dd285d933e17478c870/decrypt?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey/0a9e36203d224dd285d933e17478c870/decrypt?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS8wYTllMzYyMDNkMjI0ZGQyODVkOTMzZTE3NDc4Yzg3MC9kZWNyeXB0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"RSA1_5\",\r\n  \"value\": \"hNbYuq0kw3Iofa_Rv0PCaPnchsdIn7iSq8tcyNs-tzYTNRtMXrncMUKhJpTNi5aEHTn0ywmArSpxozp7glCqbcnKEtZE07ftXbnvHzcvrPFXRJ-M5fqP_Yrq_EMQg7epkqfhS9iXhQR02aC0qOidzsDg1QtMjNaL9_tQAocKpmBDTsVdf6ARK9CaxUtLsJgGdMq8NUa9Vyn62MTGuHUQll3GyrKD0UMHM1QgMF62wwqhWQBl3zgcgq_6IfEy-STmg7DUmPqKKtr_i_Ry53rUKqTBWOACKb2tJ5jy4smVypAAPo6daviFSCpXO2xbk2rcpeAeMhfDDtVXafhoZTrdMA\"\r\n}",

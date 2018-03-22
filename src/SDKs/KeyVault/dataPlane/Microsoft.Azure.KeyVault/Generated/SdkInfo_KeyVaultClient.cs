@@ -59,7 +59,7 @@ internal static partial class SdkInfo
                 new Tuple<string, string, string>("KeyVaultClient", "PurgeDeletedCertificate", "7.0-preview"),
                 new Tuple<string, string, string>("KeyVaultClient", "PurgeDeletedKey", "7.0-preview"),
                 new Tuple<string, string, string>("KeyVaultClient", "PurgeDeletedSecret", "7.0-preview"),
-                new Tuple<string, string, string>("KeyVaultClient", "PurgeDeletedStorgeAccount", "7.0-preview"),
+                new Tuple<string, string, string>("KeyVaultClient", "PurgeDeletedStorageAccount", "7.0-preview"),
                 new Tuple<string, string, string>("KeyVaultClient", "RecoverDeletedCertificate", "7.0-preview"),
                 new Tuple<string, string, string>("KeyVaultClient", "RecoverDeletedKey", "7.0-preview"),
                 new Tuple<string, string, string>("KeyVaultClient", "RecoverDeletedSasDefinition", "7.0-preview"),

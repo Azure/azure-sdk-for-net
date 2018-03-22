@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/certificates/longSelfSignedCert01/create?api-version=2016-10-01",
+      "RequestUri": "/certificates/longSelfSignedCert01/create?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9sb25nU2VsZlNpZ25lZENlcnQwMS9jcmVhdGU/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"policy\": {\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    },\r\n    \"x509_props\": {\r\n      \"subject\": \"CN=*.microsoft.com\",\r\n      \"sans\": {\r\n        \"dns_names\": [\r\n          \"onedrive.microsoft.com\",\r\n          \"xbox.microsoft.com\"\r\n        ]\r\n      },\r\n      \"validity_months\": 24\r\n    },\r\n    \"issuer\": {\r\n      \"name\": \"Self\"\r\n    }\r\n  }\r\n}",
@@ -44,7 +44,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://testvault1021.vault.azure.net/certificates/longSelfSignedCert01/pending?api-version=2016-10-01&request_id=f6496e5e4b464617834a86849123d67a"
+          "https://testvault1021.vault.azure.net/certificates/longSelfSignedCert01/pending?api-version=7.0-preview&request_id=f6496e5e4b464617834a86849123d67a"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -74,7 +74,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/certificates/longSelfSignedCert01/pending?api-version=2016-10-01",
+      "RequestUri": "/certificates/longSelfSignedCert01/pending?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9sb25nU2VsZlNpZ25lZENlcnQwMS9wZW5kaW5nP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -138,7 +138,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/longSelfSignedCert01/pending?api-version=2016-10-01",
+      "RequestUri": "/certificates/longSelfSignedCert01/pending?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9sb25nU2VsZlNpZ25lZENlcnQwMS9wZW5kaW5nP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -202,7 +202,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/longSelfSignedCert01/?api-version=2016-10-01",
+      "RequestUri": "/certificates/longSelfSignedCert01/?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9sb25nU2VsZlNpZ25lZENlcnQwMS8/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -266,7 +266,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/secrets/longSelfSignedCert01/0f4c7943215e487b85cd769dd891dd01?api-version=2016-10-01",
+      "RequestUri": "/secrets/longSelfSignedCert01/0f4c7943215e487b85cd769dd891dd01?api-version=7.0-preview",
       "EncodedRequestUri": "L3NlY3JldHMvbG9uZ1NlbGZTaWduZWRDZXJ0MDEvMGY0Yzc5NDMyMTVlNDg3Yjg1Y2Q3NjlkZDg5MWRkMDE/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -330,7 +330,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/longSelfSignedCert01?api-version=2016-10-01",
+      "RequestUri": "/certificates/longSelfSignedCert01?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9sb25nU2VsZlNpZ25lZENlcnQwMT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",

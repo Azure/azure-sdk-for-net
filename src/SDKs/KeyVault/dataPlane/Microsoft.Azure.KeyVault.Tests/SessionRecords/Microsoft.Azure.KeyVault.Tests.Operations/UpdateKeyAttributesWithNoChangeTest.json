@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//keys/UpdateKeyAttributesWithNoChangeTest/create?api-version=2016-10-01",
+      "RequestUri": "//keys/UpdateKeyAttributesWithNoChangeTest/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNXaXRoTm9DaGFuZ2VUZXN0L2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_size\": 2048,\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ],\r\n  \"attributes\": {\r\n    \"enabled\": false,\r\n    \"nbf\": 1262332800,\r\n    \"exp\": 1893484800\r\n  }\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/UpdateKeyAttributesWithNoChangeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/UpdateKeyAttributesWithNoChangeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNXaXRoTm9DaGFuZ2VUZXN0Lz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"attributes\": {\r\n    \"enabled\": false,\r\n    \"nbf\": 1262332800,\r\n    \"exp\": 1893484800\r\n  }\r\n}",
@@ -141,7 +141,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/UpdateKeyAttributesWithNoChangeTest?api-version=2016-10-01",
+      "RequestUri": "//keys/UpdateKeyAttributesWithNoChangeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNXaXRoTm9DaGFuZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -205,7 +205,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzV2l0aE5vQ2hhbmdlVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -269,7 +269,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzV2l0aE5vQ2hhbmdlVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -333,7 +333,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzV2l0aE5vQ2hhbmdlVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -397,7 +397,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzV2l0aE5vQ2hhbmdlVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -461,7 +461,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesWithNoChangeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzV2l0aE5vQ2hhbmdlVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",

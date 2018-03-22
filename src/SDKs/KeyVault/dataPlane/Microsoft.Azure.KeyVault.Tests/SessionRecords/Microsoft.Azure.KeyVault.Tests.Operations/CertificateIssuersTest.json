@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/certificates/issuers/issuer01?api-version=2016-10-01",
+      "RequestUri": "/certificates/issuers/issuer01?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pc3N1ZXJzL2lzc3VlcjAxP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"provider\": \"Test\",\r\n  \"credentials\": {\r\n    \"account_id\": \"keyvaultuser\",\r\n    \"pwd\": \"password\"\r\n  },\r\n  \"org_details\": {\r\n    \"admin_details\": [\r\n      {\r\n        \"first_name\": \"John\",\r\n        \"last_name\": \"Doe\",\r\n        \"email\": \"admin@microsoft.com\",\r\n        \"phone\": \"4255555555\"\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/issuers/issuer01?api-version=2016-10-01",
+      "RequestUri": "/certificates/issuers/issuer01?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pc3N1ZXJzL2lzc3VlcjAxP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -135,7 +135,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/issuers/issuer02?api-version=2016-10-01",
+      "RequestUri": "/certificates/issuers/issuer02?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pc3N1ZXJzL2lzc3VlcjAyP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"provider\": \"Test\",\r\n  \"credentials\": {\r\n    \"account_id\": \"keyvaultuser\",\r\n    \"pwd\": \"password\"\r\n  },\r\n  \"org_details\": {\r\n    \"admin_details\": [\r\n      {\r\n        \"first_name\": \"John\",\r\n        \"last_name\": \"Doe\",\r\n        \"email\": \"admin@microsoft.com\",\r\n        \"phone\": \"4255555555\"\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -205,7 +205,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/issuers?api-version=2016-10-01",
+      "RequestUri": "/certificates/issuers?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pc3N1ZXJzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -269,7 +269,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/issuers?api-version=2016-10-01",
+      "RequestUri": "/certificates/issuers?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pc3N1ZXJzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -333,7 +333,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/issuers/issuer01?api-version=2016-10-01",
+      "RequestUri": "/certificates/issuers/issuer01?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pc3N1ZXJzL2lzc3VlcjAxP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -397,7 +397,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/issuers/issuer02?api-version=2016-10-01",
+      "RequestUri": "/certificates/issuers/issuer02?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pc3N1ZXJzL2lzc3VlcjAyP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",

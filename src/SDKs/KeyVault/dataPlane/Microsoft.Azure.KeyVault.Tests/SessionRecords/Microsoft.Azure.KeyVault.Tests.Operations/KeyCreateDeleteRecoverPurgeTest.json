@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/create?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_size\": 2048,\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ],\r\n  \"attributes\": {},\r\n  \"tags\": {\r\n    \"purpose\": \"unit test\",\r\n    \"test name \": \"CreateDeleteRecoverPurgeTest\"\r\n  }\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -135,7 +135,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -199,7 +199,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -263,7 +263,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -327,7 +327,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -391,7 +391,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -455,7 +455,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -519,7 +519,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -583,7 +583,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -647,7 +647,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -711,7 +711,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//keys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -775,7 +775,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -839,7 +839,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -903,7 +903,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -967,7 +967,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1031,7 +1031,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1095,7 +1095,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1159,7 +1159,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1223,7 +1223,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1287,7 +1287,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9DcmVhdGVEZWxldGVSZWNvdmVyUHVyZ2VUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1351,7 +1351,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest/recover?api-version=2016-10-01",
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest/recover?api-version=7.0-preview",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3QvcmVjb3Zlcj9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
@@ -1415,7 +1415,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=2016-10-01",
+      "RequestUri": "/deletedkeys/CreateDeleteRecoverPurgeTest?api-version=7.0-preview",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL0NyZWF0ZURlbGV0ZVJlY292ZXJQdXJnZVRlc3Q/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

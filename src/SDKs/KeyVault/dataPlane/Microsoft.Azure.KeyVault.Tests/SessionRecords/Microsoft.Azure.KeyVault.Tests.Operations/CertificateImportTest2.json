@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/certificates/importCert02/import?api-version=2016-10-01",
+      "RequestUri": "/certificates/importCert02/import?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDIvaW1wb3J0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"value\": \"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\",\r\n  \"pwd\": \"\",\r\n  \"policy\": {\r\n    \"key_props\": {\r\n      \"exportable\": true,\r\n      \"kty\": \"RSA\",\r\n      \"key_size\": 2048,\r\n      \"reuse_key\": false\r\n    },\r\n    \"secret_props\": {\r\n      \"contentType\": \"application/x-pkcs12\"\r\n    }\r\n  }\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/importCert02/?api-version=2016-10-01",
+      "RequestUri": "/certificates/importCert02/?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDIvP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -135,7 +135,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/importCert02/c5f5d00c8a4b44f385e840df0b06e2c3?api-version=2016-10-01",
+      "RequestUri": "/certificates/importCert02/c5f5d00c8a4b44f385e840df0b06e2c3?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDIvYzVmNWQwMGM4YTRiNDRmMzg1ZTg0MGRmMGIwNmUyYzM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -199,7 +199,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/secrets/importCert02/c5f5d00c8a4b44f385e840df0b06e2c3?api-version=2016-10-01",
+      "RequestUri": "/secrets/importCert02/c5f5d00c8a4b44f385e840df0b06e2c3?api-version=7.0-preview",
       "EncodedRequestUri": "L3NlY3JldHMvaW1wb3J0Q2VydDAyL2M1ZjVkMDBjOGE0YjQ0ZjM4NWU4NDBkZjBiMDZlMmMzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -263,7 +263,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/certificates/importCert02?api-version=2016-10-01",
+      "RequestUri": "/certificates/importCert02?api-version=7.0-preview",
       "EncodedRequestUri": "L2NlcnRpZmljYXRlcy9pbXBvcnRDZXJ0MDI/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",

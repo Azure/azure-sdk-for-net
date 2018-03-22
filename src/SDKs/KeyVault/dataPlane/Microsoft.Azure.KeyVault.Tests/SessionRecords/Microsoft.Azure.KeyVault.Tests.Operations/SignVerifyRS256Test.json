@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/keys/sdktestkey//sign?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey//sign?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS8vc2lnbj9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"RS256\",\r\n  \"value\": \"PS3iee-oQeI_4MQ7uZ93voMkEbOi8f0bQHqUoXYR-nQ\"\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/sdktestkey/0a9e36203d224dd285d933e17478c870/verify?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey/0a9e36203d224dd285d933e17478c870/verify?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS8wYTllMzYyMDNkMjI0ZGQyODVkOTMzZTE3NDc4Yzg3MC92ZXJpZnk/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"RS256\",\r\n  \"digest\": \"PS3iee-oQeI_4MQ7uZ93voMkEbOi8f0bQHqUoXYR-nQ\",\r\n  \"value\": \"eU_CgaqYt0QBtj10EToONfruRhcT4JSARPesvU07tgT0RFb9KpIFqpN-3h_Tl-s-fGOTJxG8aZc5s03TgJAYYOmpWNaSk5-ktT2b-iZWY2srUZON9uikIC03ZXZenPPdMcjkJPWh9Gk1LW39DYqaPkASR4hABOW7D6ErT0n1EqfB6-9KJPk31cqhiePhERcBcqrLKoiBDFJBrpeH0aq1Rg56DZB6ZZZXcl3S75_z6eYDNt0Z2y5ptj4JQJab7tqiBV8EZzShow4uhXaWkkEdmyahudSnhrYewDKjU39pPbqtVT0GiVgUOiTu0Q0lACYOTo1vx4W7m6Cq7ytLIct1MA\"\r\n}",

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//keys/UpdateKeyAttributesTest/create?api-version=2016-10-01",
+      "RequestUri": "//keys/UpdateKeyAttributesTest/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0L2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_size\": 2048,\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ]\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/UpdateKeyAttributesTest/create?api-version=2016-10-01",
+      "RequestUri": "//keys/UpdateKeyAttributesTest/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0L2NyZWF0ZT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\",\r\n  \"key_size\": 2048,\r\n  \"key_ops\": [\r\n    \"encrypt\",\r\n    \"decrypt\",\r\n    \"sign\",\r\n    \"verify\",\r\n    \"wrapKey\",\r\n    \"unwrapKey\"\r\n  ]\r\n}",
@@ -141,7 +141,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/UpdateKeyAttributesTest/?api-version=2016-10-01",
+      "RequestUri": "//keys/UpdateKeyAttributesTest/?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0Lz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"key_ops\": [\r\n    \"decrypt\",\r\n    \"encrypt\"\r\n  ],\r\n  \"attributes\": {\r\n    \"enabled\": true,\r\n    \"nbf\": 315561600,\r\n    \"exp\": 347184000\r\n  }\r\n}",
@@ -211,7 +211,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/UpdateKeyAttributesTest/3d31e6e5c4c14eaf9be8d42c00225088?api-version=2016-10-01",
+      "RequestUri": "/keys/UpdateKeyAttributesTest/3d31e6e5c4c14eaf9be8d42c00225088?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvVXBkYXRlS2V5QXR0cmlidXRlc1Rlc3QvM2QzMWU2ZTVjNGMxNGVhZjliZThkNDJjMDAyMjUwODg/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"key_ops\": [\r\n    \"decrypt\",\r\n    \"encrypt\"\r\n  ],\r\n  \"attributes\": {\r\n    \"enabled\": false,\r\n    \"nbf\": 631180800,\r\n    \"exp\": 662716800\r\n  }\r\n}",
@@ -281,7 +281,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "RequestUri": "//keys/UpdateKeyAttributesTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL1VwZGF0ZUtleUF0dHJpYnV0ZXNUZXN0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -345,7 +345,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -409,7 +409,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -473,7 +473,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -537,7 +537,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -601,7 +601,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/UpdateKeyAttributesTest?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9VcGRhdGVLZXlBdHRyaWJ1dGVzVGVzdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",

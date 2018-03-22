@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//storage/listsas01?api-version=2016-10-01",
+      "RequestUri": "//storage/listsas01?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL2xpc3RzYXMwMT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"resourceId\": \"/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/resourceGroups/kvstoragetestrg/providers/Microsoft.Storage/storageAccounts/azkvteststorage1westus\",\r\n  \"activeKeyName\": \"key1\",\r\n  \"autoRegenerateKey\": true,\r\n  \"regenerationPeriod\": \"P30D\",\r\n  \"attributes\": {\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/listsas01?api-version=2016-10-01",
+      "RequestUri": "//storage/listsas01?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL2xpc3RzYXMwMT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"resourceId\": \"/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/resourceGroups/kvstoragetestrg/providers/Microsoft.Storage/storageAccounts/azkvteststorage1westus\",\r\n  \"activeKeyName\": \"key1\",\r\n  \"autoRegenerateKey\": true,\r\n  \"regenerationPeriod\": \"P30D\",\r\n  \"attributes\": {\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -141,7 +141,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/listsas01/sas/listStrgSasDef01?api-version=2016-10-01",
+      "RequestUri": "//storage/listsas01/sas/listStrgSasDef01?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL2xpc3RzYXMwMS9zYXMvbGlzdFN0cmdTYXNEZWYwMT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"parameters\": {\r\n    \"sasType\": \"account\",\r\n    \"signedProtocols\": \"https\",\r\n    \"signedServices\": \"bq\",\r\n    \"signedResourceTypes\": \"myresource\",\r\n    \"signedPermissions\": \"rw\",\r\n    \"signedVersion\": \"2016-05-31\",\r\n    \"validityPeriod\": \"PT10H\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -211,7 +211,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/listsas01/sas/listStrgSasDef02?api-version=2016-10-01",
+      "RequestUri": "//storage/listsas01/sas/listStrgSasDef02?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL2xpc3RzYXMwMS9zYXMvbGlzdFN0cmdTYXNEZWYwMj9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"parameters\": {\r\n    \"sasType\": \"account\",\r\n    \"signedProtocols\": \"https\",\r\n    \"signedServices\": \"bq\",\r\n    \"signedResourceTypes\": \"myresource\",\r\n    \"signedPermissions\": \"rw\",\r\n    \"signedVersion\": \"2016-05-31\",\r\n    \"validityPeriod\": \"PT10H\"\r\n  },\r\n  \"attributes\": {\r\n    \"enabled\": true\r\n  }\r\n}",
@@ -281,7 +281,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/listsas01/sas?api-version=2016-10-01",
+      "RequestUri": "//storage/listsas01/sas?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL2xpc3RzYXMwMS9zYXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -345,7 +345,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/listsas01/sas/listStrgSasDef01?api-version=2016-10-01",
+      "RequestUri": "//storage/listsas01/sas/listStrgSasDef01?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL2xpc3RzYXMwMS9zYXMvbGlzdFN0cmdTYXNEZWYwMT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -409,7 +409,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//storage/listsas01/sas/listStrgSasDef02?api-version=2016-10-01",
+      "RequestUri": "//storage/listsas01/sas/listStrgSasDef02?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9zdG9yYWdlL2xpc3RzYXMwMS9zYXMvbGlzdFN0cmdTYXNEZWYwMj9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",

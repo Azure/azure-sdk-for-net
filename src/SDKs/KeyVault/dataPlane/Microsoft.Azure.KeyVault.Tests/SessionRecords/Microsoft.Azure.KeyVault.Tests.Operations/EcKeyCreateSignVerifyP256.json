@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//keys/EcTestKeyP256/create?api-version=2016-10-01",
+      "RequestUri": "//keys/EcTestKeyP256/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL0VjVGVzdEtleVAyNTYvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"EC\",\r\n  \"crv\": \"P-256\",\r\n  \"key_size\": null,\r\n  \"key_ops\": null,\r\n  \"attributes\": null,\r\n  \"tags\": null\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/EcTestKeyP256/fe277909d7e248f7913d6049ccf8451f/sign?api-version=2016-10-01",
+      "RequestUri": "/keys/EcTestKeyP256/fe277909d7e248f7913d6049ccf8451f/sign?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvRWNUZXN0S2V5UDI1Ni9mZTI3NzkwOWQ3ZTI0OGY3OTEzZDYwNDljY2Y4NDUxZi9zaWduP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"ES256\",\r\n  \"value\": \"GgxGb1115NitZ2XV9RnbyCt8NDs3+IUA7F5kAFOTsw0=\"\r\n}",
@@ -141,7 +141,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/EcTestKeyP256/fe277909d7e248f7913d6049ccf8451f/verify?api-version=2016-10-01",
+      "RequestUri": "/keys/EcTestKeyP256/fe277909d7e248f7913d6049ccf8451f/verify?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvRWNUZXN0S2V5UDI1Ni9mZTI3NzkwOWQ3ZTI0OGY3OTEzZDYwNDljY2Y4NDUxZi92ZXJpZnk/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"ES256\",\r\n  \"digest\": \"GgxGb1115NitZ2XV9RnbyCt8NDs3+IUA7F5kAFOTsw0=\",\r\n  \"value\": \"++QH5ItfacooSkOktqhhUIBvBbz7H0cPoAZWdm5Y/xJqQprw4BKkwB0xPZ95Gek+bcb4qB/tZMjbDsbNocdOSg==\"\r\n}",
@@ -211,7 +211,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/EcTestKeyP256/fe277909d7e248f7913d6049ccf8451f/verify?api-version=2016-10-01",
+      "RequestUri": "/keys/EcTestKeyP256/fe277909d7e248f7913d6049ccf8451f/verify?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvRWNUZXN0S2V5UDI1Ni9mZTI3NzkwOWQ3ZTI0OGY3OTEzZDYwNDljY2Y4NDUxZi92ZXJpZnk/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"ES256\",\r\n  \"digest\": \"GgxGb1115NitZ2XV9RnbyCt8NDs3+IUA7F5kAFOTsw0=\",\r\n  \"value\": \"++QH5ItfacooSkOktqhhUIBvBbz7H0cPoAZWdm5Y/xJqQprw4BKkwB0xPZ95Gek+bcb4qB/tZMjbDsbNocdOSw==\"\r\n}",

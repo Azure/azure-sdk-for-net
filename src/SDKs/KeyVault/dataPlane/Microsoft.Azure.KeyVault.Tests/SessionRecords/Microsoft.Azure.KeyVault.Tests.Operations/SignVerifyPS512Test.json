@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/keys/sdktestkey//sign?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey//sign?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS8vc2lnbj9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"PS512\",\r\n  \"value\": \"4wt-h1SnktyWQjR_fl9dMP9T_M7bOCh-YcXfB0FSlUZcN2Dvb63ZIXoh0ogad3nkMjSMVhrk85-CDEo7lFDm-Q\"\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/sdktestkey/76c1a0157d6749be942408a8ba77b6e0/verify?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey/76c1a0157d6749be942408a8ba77b6e0/verify?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS83NmMxYTAxNTdkNjc0OWJlOTQyNDA4YThiYTc3YjZlMC92ZXJpZnk/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"PS512\",\r\n  \"digest\": \"4wt-h1SnktyWQjR_fl9dMP9T_M7bOCh-YcXfB0FSlUZcN2Dvb63ZIXoh0ogad3nkMjSMVhrk85-CDEo7lFDm-Q\",\r\n  \"value\": \"K93Em7Op15cBUUYXWNZotYkXPuUm71oum_74B-HE_WwdhvtJ3ThVD78jdheunIzJiQWRCa_J8p-WxzqaFEp7IqdoDFPOgPwJG4fW9ZdPlzEtse-CrssrcgLQPq9c9vkvThI2mDzMYoE7bG3t6FZksO8BZJFDx08r0jnk4a5RAOz6D1UWzKT5DBhQFZcmASrRYwMuhAjZ3tEpIJZ_XCx6Mna9wyhxPnzEdQyRtSd6Gly6DWhYmYiSNaQbFi0qg0Cr74TwKpHfw7HPurg1J5hp3yBz-Egr7Q1P0k-XcXAmAflhw-_vrGDBjgj_74A0uPKEQWFkCRHevqfT0XQX3BCa1w\"\r\n}",

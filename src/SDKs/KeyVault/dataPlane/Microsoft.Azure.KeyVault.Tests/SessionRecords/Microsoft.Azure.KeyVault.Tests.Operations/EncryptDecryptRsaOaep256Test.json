@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/keys/sdktestkey//encrypt?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey//encrypt?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS8vZW5jcnlwdD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"RSA-OAEP-256\",\r\n  \"value\": \"2Ht8TBsMWK1uFw\"\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys/sdktestkey/0b12b5e5fb8241a39baad0ea60450b82/decrypt?api-version=2016-10-01",
+      "RequestUri": "/keys/sdktestkey/0b12b5e5fb8241a39baad0ea60450b82/decrypt?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXMvc2RrdGVzdGtleS8wYjEyYjVlNWZiODI0MWEzOWJhYWQwZWE2MDQ1MGI4Mi9kZWNyeXB0P2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"alg\": \"RSA-OAEP-256\",\r\n  \"value\": \"RLm5dIhcbeVei8BgMHiVe7n_FwFFLZ0kdYyxuFHnTBdbD80TsrpWBdSug3Ynye5b2oVx8Zp-mmVYCh9X4p84ECrRkwCVak110h1QqJlt6IjmUbgBkng9UyoVRc8Zdh-ZHDkEZT47ccCeSrbXmGzTGPHt9l3u5s3vSK_h1JMdTy7LZ9_Z3JX85w_qXOEIsxJUwdQqJj0pB4awxAwKa6a_uZHC56q3Td10LsGXEvBdDlPydc8YZf66LlYm7DWU3DITIjAZ5aOTyQ1qItPxzwFysECDVRLjnMucP4Jzy0oDcAQaagHO4BJzjCLBBxHN-u8t7vtV1FOOuvQDLaHoo0Kcpg\"\r\n}",

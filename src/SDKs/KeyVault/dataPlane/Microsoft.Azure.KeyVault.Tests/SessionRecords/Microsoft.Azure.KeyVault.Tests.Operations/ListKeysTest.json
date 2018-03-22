@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//keys/listkeytest0/create?api-version=2016-10-01",
+      "RequestUri": "//keys/listkeytest0/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RrZXl0ZXN0MC9jcmVhdGU/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/listkeytest1/create?api-version=2016-10-01",
+      "RequestUri": "//keys/listkeytest1/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RrZXl0ZXN0MS9jcmVhdGU/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
@@ -141,7 +141,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/listkeytest2/create?api-version=2016-10-01",
+      "RequestUri": "//keys/listkeytest2/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RrZXl0ZXN0Mi9jcmVhdGU/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
@@ -211,7 +211,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys?maxresults=1&api-version=2016-10-01",
+      "RequestUri": "//keys?maxresults=1&api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzP21heHJlc3VsdHM9MSZhcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -227,7 +227,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "321"
@@ -275,7 +275,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFeE1EUWhUVVJCZDAxRVRYbEpWM1JzWlZNNVJGVnJWa0pXUlZaRlVsVjRSbFpGVmxOU1ZVNVFWbXRXVTFWR1ZsTlNNRlpWVWxaT1ZVbFVRWGROUkVGNVQwTkZlVTFFUlROTVZFRXhURlJCTUZaRVFYaFBha0UxVDJwSk1reHFhM2hOVkdkNFRWUnNZVWxSTFMwaUxDSlVZWEpuWlhSTWIyTmhkR2x2YmlJNk1IMCZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -291,7 +291,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "298"
@@ -339,7 +339,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE9DRk5SRUYzVFVSSmVFbFhkR3hsVXpsSVVsWlNSVkpWZUVaV1JWWkZVekJXV2xaRlZsUldRMFYzVFVSQmQwMXFaMmhOYWtGNFRua3dkMDVUTUhkT1JsRjVUV3B2ZDA1NmJ6Qk5VelExVFdwbk5VMXFZekZYYVVVdElpd2lWR0Z5WjJWMFRHOWpZWFJwYjI0aU9qQjkmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -355,7 +355,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "298"
@@ -403,7 +403,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE9DRk5SRUYzVFVSSmVFbFhkR3hsVXpsS1ZGWkNVRlZzVWxSVU1GcFZVekJXV2xaRlZsUldRMFYzVFVSQmQwMXFaMmhOYWtGNFRua3dkMDVUTUhkT1JsRjNUVlJ2ZDA1cWJ6RlBVelF6VFVSRmVrNUVXVEJYYVVVdElpd2lWR0Z5WjJWMFRHOWpZWFJwYjI0aU9qQjkmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -419,7 +419,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "304"
@@ -467,7 +467,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU1pRk5SRUYzVFVSSk1FbFhkR3hsVXpsTlUxWk9WVkpGVmsxU1ZsSkdVa1ZPUmxWc1VsVlNWazVWVFZORmQwMUVRWGROYW1kb1QxUnJOVTlUTUhoTmFUQjZUVlpSZVUxNmJ6RlBWRzh4VDFNME5VOVVhelZQVkdzMVYybEZMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -483,7 +483,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "304"
@@ -531,7 +531,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU1pRk5SRUYzVFVSSk1FbFhkR3hsVXpsTlUxWk9WVkpGVmsxU1ZsSkdVa1ZPUmxWc1VsVlNWazVWVFdsRmQwMUVRWGROYW1kb1QxUnJOVTlUTUhoTmFUQjZUVlpSZVUxNmJ6RlBWRzh4VDFNME5VOVVhelZQVkdzMVYybEZMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -547,7 +547,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "304"
@@ -595,7 +595,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU1pRk5SRUYzVFVSSmVrbFhkR3hsVXpsTlUxWk9WVkpGVmsxU1ZsSkdVa1YwUmxkV1VrWlZNVkYzU1ZSQmQwMUVRWGxQUTBWNVRVUkZNMHhVUVRGTVZFRXdWa1JKZVU5cVJUSlBha0Y1VEdwbk0wOVVSWHBPZW14aFNWRXRMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -611,7 +611,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeytest0\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938189,\r\n        \"updated\": 1493938189,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeytest0\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938189,\r\n        \"updated\": 1493938189,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "471"
@@ -659,7 +659,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1rbFhkR3hsVXpsTlUxWk9WVk13VmxwV1JWWlVWa1JGYUUxRVFYZE5SRWswU1ZSSmQwMVVZM1JOUkZWMFRVUlNWVTFxU1RaTlJFVTJUVlJyZFU5RVp6Vk5lbFUxVDFadmFDSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -675,7 +675,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeytest1\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938189,\r\n        \"updated\": 1493938189,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeytest1\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938189,\r\n        \"updated\": 1493938189,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "471"
@@ -723,7 +723,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1rbFhkR3hsVXpsTlUxWk9WVk13VmxwV1JWWlVWa1JKYUUxRVFYZE5SRWswU1ZSSmQwMVVZM1JOUkZWMFRVUlNWVTFxU1RaTlJFVTJUV3BCZFU1VVJUSk9SRUY2VDBadmFDSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -739,7 +739,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeytest2\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938190,\r\n        \"updated\": 1493938190,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeytest2\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938190,\r\n        \"updated\": 1493938190,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "487"
@@ -787,7 +787,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU1pRk5SRUYzVFVSSmVrbFhkR3hsVXpsTlUxWk9WVk13VmxwV2ExWlRWVEJzVUZSc1RsVlNWazVWU1ZSQmQwMUVRWGxQUTBWNVRVUkZNMHhVUVhsTVZFVXlWa1JKZWs5cVZUVlBhazB6VEdwbk0wOUVaM3BOYWxwaFNWRXRMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -803,7 +803,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeyversionstest\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493937851,\r\n        \"updated\": 1493937851,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listkeyversionstest\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493937851,\r\n        \"updated\": 1493937851,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "478"
@@ -851,7 +851,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNE1DRk5SRUYzVFVSRk1FbFhkR3hsVXpsVVVrVjBWVkpXVGxWVE1GWmFTVlJCZDAxRVFYbFBRMFY1VFVSRk0weFVRWGxNVkVVelZrUkJkMDlxUVhoUGFrRXlUR3BuZDA1NmF6Qk9lbWhoU1ZFdExTSXNJbFJoY21kbGRFeHZZMkYwYVc5dUlqb3dmUSZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -867,7 +867,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/sdktestkey\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493937656,\r\n        \"updated\": 1493937656,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/sdktestkey\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493937656,\r\n        \"updated\": 1493937656,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "490"
@@ -915,7 +915,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/keys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
+      "RequestUri": "/keys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMSYkc2tpcHRva2VuPWV5Sk9aWGgwVFdGeWEyVnlJam9pTWlFNU5pRk5SRUYzVFVSSk0wbFhkR3hsVXpsV1ZVVlNRbFpGVmt4U1ZteENWa1pTVTFOVlNsWldSVlpVVmtWV1ZGWkRSWGROUkVGM1RXcG5hRTFxUVhoT2VUQjNUbE13ZDA1R1VYZE5WRzk0VFZSdmVFNXBORE5OZWtFMFRucFJlVmRwUlMwaUxDSlVZWEpuWlhSTWIyTmhkR2x2YmlJNk1IMCZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",

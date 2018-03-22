@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/keys?api-version=2016-10-01",
+      "RequestUri": "/keys?api-version=7.0-preview",
       "EncodedRequestUri": "L2tleXM/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",

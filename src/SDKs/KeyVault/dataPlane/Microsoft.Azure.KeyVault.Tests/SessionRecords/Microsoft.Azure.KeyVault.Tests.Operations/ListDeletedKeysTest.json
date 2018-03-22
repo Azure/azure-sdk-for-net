@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "//keys/listdeletedkeytest0/create?api-version=2016-10-01",
+      "RequestUri": "//keys/listdeletedkeytest0/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RkZWxldGVka2V5dGVzdDAvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
@@ -71,7 +71,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/listdeletedkeytest0?api-version=2016-10-01",
+      "RequestUri": "//keys/listdeletedkeytest0?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RkZWxldGVka2V5dGVzdDA/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -135,7 +135,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -199,7 +199,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -263,7 +263,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -327,7 +327,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest0?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -391,7 +391,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/listdeletedkeytest1/create?api-version=2016-10-01",
+      "RequestUri": "//keys/listdeletedkeytest1/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RkZWxldGVka2V5dGVzdDEvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
@@ -461,7 +461,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/listdeletedkeytest1?api-version=2016-10-01",
+      "RequestUri": "//keys/listdeletedkeytest1?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RkZWxldGVka2V5dGVzdDE/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -525,7 +525,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QxP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -589,7 +589,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QxP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -653,7 +653,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QxP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -717,7 +717,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest1?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QxP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -781,7 +781,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/listdeletedkeytest2/create?api-version=2016-10-01",
+      "RequestUri": "//keys/listdeletedkeytest2/create?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RkZWxldGVka2V5dGVzdDIvY3JlYXRlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"kty\": \"RSA\"\r\n}",
@@ -851,7 +851,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//keys/listdeletedkeytest2?api-version=2016-10-01",
+      "RequestUri": "//keys/listdeletedkeytest2?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9rZXlzL2xpc3RkZWxldGVka2V5dGVzdDI/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -915,7 +915,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QyP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -979,7 +979,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QyP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1043,7 +1043,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QyP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1107,7 +1107,7 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=2016-10-01",
+      "RequestUri": "//deletedkeys/listdeletedkeytest2?api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cy9saXN0ZGVsZXRlZGtleXRlc3QyP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1171,7 +1171,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "//deletedkeys?maxresults=1&api-version=2016-10-01",
+      "RequestUri": "//deletedkeys?maxresults=1&api-version=7.0-preview",
       "EncodedRequestUri": "Ly9kZWxldGVka2V5cz9tYXhyZXN1bHRzPTEmYXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1187,7 +1187,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExNTIhTURBd01EWTVJV3RsZVM5RFJWSlVRMUpGUVZSRlJFVk1SVlJGVWtWRFQxWkZVbEJWVWtkRlZFVlRWQzgwTjBKQlJqSkZORFl3UlVNME5EY3lRVGczUWpReU5Ua3pSVVV5TWtGQ1F5RXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExNTIhTURBd01EWTVJV3RsZVM5RFJWSlVRMUpGUVZSRlJFVk1SVlJGVWtWRFQxWkZVbEJWVWtkRlZFVlRWQzgwTjBKQlJqSkZORFl3UlVNME5EY3lRVGczUWpReU5Ua3pSVVV5TWtGQ1F5RXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "392"
@@ -1235,7 +1235,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExNTIhTURBd01EWTVJV3RsZVM5RFJWSlVRMUpGUVZSRlJFVk1SVlJGVWtWRFQxWkZVbEJWVWtkRlZFVlRWQzgwTjBKQlJqSkZORFl3UlVNME5EY3lRVGczUWpReU5Ua3pSVVV5TWtGQ1F5RXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExNTIhTURBd01EWTVJV3RsZVM5RFJWSlVRMUpGUVZSRlJFVk1SVlJGVWtWRFQxWkZVbEJWVWtkRlZFVlRWQzgwTjBKQlJqSkZORFl3UlVNME5EY3lRVGczUWpReU5Ua3pSVVV5TWtGQ1F5RXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhOVEloVFVSQmQwMUVXVFZKVjNSc1pWTTVSRkpXU2xWUk1VcEdVVlpTUmxKRlZrMVNWbEpHVld0V1JGUXhXa1pWYkVKV1ZXdGtSbFpGVmxSV1F6Z3dUakJLUWxKcVNrWk9SRmwzVWxWTk1FNUVZM2xSVkdjelVXcFJlVTVVYTNwU1ZWVjVUV3RHUTFGNVJYZE5SRUYzVFdwbmFFOVVhelZQVXpCNFRXa3dlazFXVVhsTmVtOHhUMVJ2TVU5VE5EVlBWR3MxVDFSck5WZHBSUzBpTENKVVlYSm5aWFJNYjJOaGRHbHZiaUk2TUgwJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1251,7 +1251,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "328"
@@ -1299,7 +1299,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMDQhTURBd01ETXlJV3RsZVM5RFVrVkJWRVZFUlV4RlZFVlNSVU5QVmtWU1VGVlNSMFZVUlZOVUlUQXdNREF5T0NFeU1ERTNMVEExTFRBMFZEQXhPakE1T2pJMkxqa3hNVGd4TVRsYUlRLS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNRFFoVFVSQmQwMUVUWGxKVjNSc1pWTTVSRlZyVmtKV1JWWkZVbFY0UmxaRlZsTlNWVTVRVm10V1UxVkdWbE5TTUZaVlVsWk9WVWxVUVhkTlJFRjVUME5GZVUxRVJUTk1WRUV4VEZSQk1GWkVRWGhQYWtFMVQycEpNa3hxYTNoTlZHZDRUVlJzWVVsUkxTMGlMQ0pVWVhKblpYUk1iMk5oZEdsdmJpSTZNSDAmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1315,7 +1315,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXhJV3RsZVM5SFJWUkVSVXhGVkVWRVEwVlNWQzh3UWtRNFJUaEJSVVEwTVRJME1rRkRPVFUyTmtFd05VRXpRakV3UlVKRU5DRXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXhJV3RsZVM5SFJWUkVSVXhGVkVWRVEwVlNWQzh3UWtRNFJUaEJSVVEwTVRJME1rRkRPVFUyTmtFd05VRXpRakV3UlVKRU5DRXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "360"
@@ -1363,7 +1363,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXhJV3RsZVM5SFJWUkVSVXhGVkVWRVEwVlNWQzh3UWtRNFJUaEJSVVEwTVRJME1rRkRPVFUyTmtFd05VRXpRakV3UlVKRU5DRXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjghTURBd01EVXhJV3RsZVM5SFJWUkVSVXhGVkVWRVEwVlNWQzh3UWtRNFJUaEJSVVEwTVRJME1rRkRPVFUyTmtFd05VRXpRakV3UlVKRU5DRXdNREF3TWpnaE9UazVPUzB4TWkwek1WUXlNem8xT1RvMU9TNDVPVGs1T1RrNVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNamdoVFVSQmQwMUVWWGhKVjNSc1pWTTVTRkpXVWtWU1ZYaEdWa1ZXUlZFd1ZsTldRemgzVVd0Uk5GSlVhRUpTVlZFd1RWUkpNRTFyUmtSUFZGVXlUbXRGZDA1VlJYcFJha1YzVWxWS1JVNURSWGROUkVGM1RXcG5hRTlVYXpWUFV6QjRUV2t3ZWsxV1VYbE5lbTh4VDFSdk1VOVRORFZQVkdzMVQxUnJOVmRwUlMwaUxDSlVZWEpuWlhSTWIyTmhkR2x2YmlJNk1IMCZtYXhyZXN1bHRzPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1379,7 +1379,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "305"
@@ -1427,7 +1427,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlIUlZSRVJVeEZWRVZFUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF5TWpvd056bzBNUzQ1TWpnNU1qYzFXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTRPQ0ZOUkVGM1RVUkplRWxYZEd4bFV6bElVbFpTUlZKVmVFWldSVlpGVXpCV1dsWkZWbFJXUTBWM1RVUkJkMDFxWjJoTmFrRjRUbmt3ZDA1VE1IZE9SbEY1VFdwdmQwNTZiekJOVXpRMVRXcG5OVTFxWXpGWGFVVXRJaXdpVkdGeVoyVjBURzlqWVhScGIyNGlPakI5Jm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1443,7 +1443,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5SlRWQlBVbFJEUlZKVU1ERXZNelpHUkVVME5qYzRRVVl4TkRkQ05EazBOVEJCUXpaQlJqUTNSVFE0UWpBaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5SlRWQlBVbFJEUlZKVU1ERXZNelpHUkVVME5qYzRRVVl4TkRkQ05EazBOVEJCUXpaQlJqUTNSVFE0UWpBaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "355"
@@ -1491,7 +1491,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5SlRWQlBVbFJEUlZKVU1ERXZNelpHUkVVME5qYzRRVVl4TkRkQ05EazBOVEJCUXpaQlJqUTNSVFE0UWpBaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5SlRWQlBVbFJEUlZKVU1ERXZNelpHUkVVME5qYzRRVVl4TkRkQ05EazBOVEJCUXpaQlJqUTNSVFE0UWpBaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNalFoVFVSQmQwMUVVVFZKVjNSc1pWTTVTbFJXUWxCVmJGSkVVbFpLVlUxRVJYWk5lbHBIVWtWVk1FNXFZelJSVlZsNFRrUmtRMDVFYXpCT1ZFSkNVWHBhUWxKcVVUTlNWRkUwVVdwQmFFMUVRWGROUkVrMFNWUnJOVTlVYTNSTlZFbDBUWHBHVlUxcVRUWk9WR3MyVGxScmRVOVVhelZQVkdzMVQxWnZhQ0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1507,7 +1507,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "305"
@@ -1555,7 +1555,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4OCFNREF3TURJeElXdGxlUzlKVFZCUFVsUlRUMFpVUzBWWlZFVlRWQ0V3TURBd01qZ2hNakF4Tnkwd05TMHdORlF3TVRvd05qbzFPUzQzTURFek5EWTBXaUUtIiwiVGFyZ2V0TG9jYXRpb24iOjB9&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTRPQ0ZOUkVGM1RVUkplRWxYZEd4bFV6bEtWRlpDVUZWc1VsUlVNRnBWVXpCV1dsWkZWbFJXUTBWM1RVUkJkMDFxWjJoTmFrRjRUbmt3ZDA1VE1IZE9SbEYzVFZSdmQwNXFiekZQVXpRelRVUkZlazVFV1RCWGFVVXRJaXdpVkdGeVoyVjBURzlqWVhScGIyNGlPakI5Jm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1571,7 +1571,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1DOHdOa001TlRSR01VSTRRek0wTlVSQ09EWkdSREEwUWtFeU1EVkVOVU5GUkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1DOHdOa001TlRSR01VSTRRek0wTlVSQ09EWkdSREEwUWtFeU1EVkVOVU5GUkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "371"
@@ -1619,7 +1619,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1DOHdOa001TlRSR01VSTRRek0wTlVSQ09EWkdSREEwUWtFeU1EVkVOVU5GUkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1DOHdOa001TlRSR01VSTRRek0wTlVSQ09EWkdSREEwUWtFeU1EVkVOVU5GUkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNelloVFVSQmQwMUVWVE5KVjNSc1pWTTVUVk5XVGxWU1JWWk5VbFpTUmxKRlRrWlZiRkpWVWxaT1ZVMURPSGRPYTAwMVRsUlNSMDFWU1RSUmVrMHdUbFZTUTA5RVdrZFNSRUV3VVd0RmVVMUVWa1ZPVlU1R1VrTkZkMDFFUVhkTmFtZG9UMVJyTlU5VE1IaE5hVEI2VFZaUmVVMTZiekZQVkc4eFQxTTBOVTlVYXpWUFZHczFWMmxGTFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1635,7 +1635,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "311"
@@ -1683,7 +1683,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTVNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTVNaUZOUkVGM1RVUkpNRWxYZEd4bFV6bE5VMVpPVlZKRlZrMVNWbEpHVWtWT1JsVnNVbFZTVms1VlRWTkZkMDFFUVhkTmFtZG9UMVJyTlU5VE1IaE5hVEI2VFZaUmVVMTZiekZQVkc4eFQxTTBOVTlVYXpWUFZHczFWMmxGTFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1699,7 +1699,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1TODNNak0xTmtGRU5qRkdPRFkwUVVSQ1FUUkJNRU5FTUVWR1FUWkNSamhFTlNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1TODNNak0xTmtGRU5qRkdPRFkwUVVSQ1FUUkJNRU5FTUVWR1FUWkNSamhFTlNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "371"
@@ -1747,7 +1747,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1TODNNak0xTmtGRU5qRkdPRFkwUVVSQ1FUUkJNRU5FTUVWR1FUWkNSamhFTlNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1TODNNak0xTmtGRU5qRkdPRFkwUVVSQ1FUUkJNRU5FTUVWR1FUWkNSamhFTlNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNelloVFVSQmQwMUVWVE5KVjNSc1pWTTVUVk5XVGxWU1JWWk5VbFpTUmxKRlRrWlZiRkpWVWxaT1ZVMVRPRE5OYWsweFRtdEdSVTVxUmtkUFJGa3dVVlZTUTFGVVVrSk5SVTVGVFVWV1IxRlVXa05TYW1oRlRsTkZkMDFFUVhkTmFtZG9UMVJyTlU5VE1IaE5hVEI2VFZaUmVVMTZiekZQVkc4eFQxTTBOVTlVYXpWUFZHczFWMmxGTFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1763,7 +1763,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "311"
@@ -1811,7 +1811,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJMElXdGxlUzlNU1ZOVVJFVk1SVlJGUkVORlVsUlVSVk5VTWlFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTVNaUZOUkVGM1RVUkpNRWxYZEd4bFV6bE5VMVpPVlZKRlZrMVNWbEpHVWtWT1JsVnNVbFZTVms1VlRXbEZkMDFFUVhkTmFtZG9UMVJyTlU5VE1IaE5hVEI2VFZaUmVVMTZiekZQVkc4eFQxTTBOVTlVYXpWUFZHczFWMmxGTFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1827,7 +1827,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1pOHdOVFV4TlRRNFJqUTFNVGswTlVaRlFqUTNNVGc1TkVSQk9EZ3dNRFZETkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1pOHdOVFV4TlRRNFJqUTFNVGswTlVaRlFqUTNNVGc1TkVSQk9EZ3dNRFZETkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "371"
@@ -1875,7 +1875,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1pOHdOVFV4TlRRNFJqUTFNVGswTlVaRlFqUTNNVGc1TkVSQk9EZ3dNRFZETkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTNJV3RsZVM5TVNWTlVSRVZNUlZSRlJFTkZVbFJVUlZOVU1pOHdOVFV4TlRRNFJqUTFNVGswTlVaRlFqUTNNVGc1TkVSQk9EZ3dNRFZETkNFd01EQXdNamdoT1RrNU9TMHhNaTB6TVZReU16bzFPVG8xT1M0NU9UazVPVGs1V2lFLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNelloVFVSQmQwMUVWVE5KVjNSc1pWTTVUVk5XVGxWU1JWWk5VbFpTUmxKRlRrWlZiRkpWVWxaT1ZVMXBPSGRPVkZWNFRsUlJORkpxVVRGTlZHc3dUbFZhUmxGcVVUTk5WR2MxVGtWU1FrOUVaM2ROUkZaRVRrTkZkMDFFUVhkTmFtZG9UMVJyTlU5VE1IaE5hVEI2VFZaUmVVMTZiekZQVkc4eFQxTTBOVTlVYXpWUFZHczFWMmxGTFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1891,7 +1891,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "311"
@@ -1939,7 +1939,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF3SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakF5TGpnM09URXpOemxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTVNaUZOUkVGM1RVUkpla2xYZEd4bFV6bE5VMVpPVlZKRlZrMVNWbEpHVWtWMFJsZFdVa1pWTVZGM1NWUkJkMDFFUVhsUFEwVjVUVVJGTTB4VVFURk1WRUV3VmtSSmVVOXFSVEpQYWtGNVRHcG5NMDlVUlhwT2VteGhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -1955,7 +1955,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/listdeletedkeytest0\",\r\n      \"deletedDate\": 1493938031,\r\n      \"scheduledPurgeDate\": 1501714031,\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listdeletedkeytest0\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938031,\r\n        \"updated\": 1493938031,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFRd0x6RkRRa0ZGTkVaQk5qQTBNelJGTmtZNE9FUXdORE5GTkRFM09FUkNPVFE1SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qUTNPakU1TGpVeU1UZ3dPVEZhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/listdeletedkeytest0\",\r\n      \"deletedDate\": 1493938031,\r\n      \"scheduledPurgeDate\": 1501714031,\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listdeletedkeytest0\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938031,\r\n        \"updated\": 1493938031,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFRd0x6RkRRa0ZGTkVaQk5qQTBNelJGTmtZNE9FUXdORE5GTkRFM09FUkNPVFE1SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qUTNPakU1TGpVeU1UZ3dPVEZhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "709"
@@ -2003,7 +2003,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFRd0x6RkRRa0ZGTkVaQk5qQTBNelJGTmtZNE9FUXdORE5GTkRFM09FUkNPVFE1SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qUTNPakU1TGpVeU1UZ3dPVEZhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFRd0x6RkRRa0ZGTkVaQk5qQTBNelJGTmtZNE9FUXdORE5GTkRFM09FUkNPVFE1SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qUTNPakU1TGpVeU1UZ3dPVEZhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNelloVFVSQmQwMUVWVEpKVjNSc1pWTTVUVk5XVGxWU1JWWk5VbFpTUmxKRmRFWlhWbEpHVlRGUmQweDZSa1JSYTBaR1RrVmFRazVxUVRCTmVsSkdUbXRaTkU5RlVYZE9SRTVHVGtSRk0wOUZVa05QVkZFMVNWUkJkMDFFUVhsUFEwVjVUVVJGTTB4VVFURk1WRUV3VmtSSmVVOXFVVE5QYWtVMVRHcFZlVTFVWjNkUFZFWmhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2019,7 +2019,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF4SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakkzTGpJM09EY3dOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF4SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakkzTGpJM09EY3dOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "311"
@@ -2067,7 +2067,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF4SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakkzTGpJM09EY3dOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF4SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPakkzTGpJM09EY3dOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTVNaUZOUkVGM1RVUkpla2xYZEd4bFV6bE5VMVpPVlZKRlZrMVNWbEpHVWtWMFJsZFdVa1pWTVZGNFNWUkJkMDFFUVhsUFEwVjVUVVJGTTB4VVFURk1WRUV3VmtSSmVVOXFSVEpQYWtrelRHcEpNMDlFWTNkT2FtaGhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2083,7 +2083,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/listdeletedkeytest1\",\r\n      \"deletedDate\": 1493938058,\r\n      \"scheduledPurgeDate\": 1501714058,\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listdeletedkeytest1\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938057,\r\n        \"updated\": 1493938057,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReEx6RkVPVEkwTWpRelJrSkJORFJDUkRVNE1rUkJORFV3TVRGRE56RXpNMEpCSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak14TGpFME9EazFOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/listdeletedkeytest1\",\r\n      \"deletedDate\": 1493938058,\r\n      \"scheduledPurgeDate\": 1501714058,\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listdeletedkeytest1\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938057,\r\n        \"updated\": 1493938057,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReEx6RkVPVEkwTWpRelJrSkJORFJDUkRVNE1rUkJORFV3TVRGRE56RXpNMEpCSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak14TGpFME9EazFOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "709"
@@ -2131,7 +2131,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReEx6RkVPVEkwTWpRelJrSkJORFJDUkRVNE1rUkJORFV3TVRGRE56RXpNMEpCSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak14TGpFME9EazFOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReEx6RkVPVEkwTWpRelJrSkJORFJDUkRVNE1rUkJORFV3TVRGRE56RXpNMEpCSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak14TGpFME9EazFOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNelloVFVSQmQwMUVWVEpKVjNSc1pWTTVUVk5XVGxWU1JWWk5VbFpTUmxKRmRFWlhWbEpHVlRGUmVFeDZSa1ZQVkVrd1RXcFJlbEpyU2tKT1JGSkRVa1JWTkUxclVrSk9SRlYzVFZSR1JFNTZSWHBOTUVwQ1NWUkJkMDFFUVhsUFEwVjVUVVJGTTB4VVFURk1WRUV3VmtSSmVVOXFSVEpQYWsxNFRHcEZNRTlFYXpGT2FtaGhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2147,7 +2147,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF5SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak0wTGpRNU9ERTNNamRhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF5SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak0wTGpRNU9ERTNNamRhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "311"
@@ -2195,7 +2195,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF5SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak0wTGpRNU9ERTNNamRhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVJFVk1SVlJGUkV0RldWUkZVMVF5SVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPak0wTGpRNU9ERTNNamRhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTVNaUZOUkVGM1RVUkpla2xYZEd4bFV6bE5VMVpPVlZKRlZrMVNWbEpHVWtWMFJsZFdVa1pWTVZGNVNWUkJkMDFFUVhsUFEwVjVUVVJGTTB4VVFURk1WRUV3VmtSSmVVOXFSVEpQYWswd1RHcFJOVTlFUlROTmFtUmhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2211,7 +2211,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/listdeletedkeytest2\",\r\n      \"deletedDate\": 1493938082,\r\n      \"scheduledPurgeDate\": 1501714082,\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listdeletedkeytest2\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938081,\r\n        \"updated\": 1493938081,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReUx6WTBOelpHTWtJd01qaENORFJFUmpBNVJURTNRVE13TmpJNE5rSXpRa0UwSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPalEyTGpVeE5qazBOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"recoveryId\": \"https://kv-sdk-test.vault-int.azure-int.net/deletedkeys/listdeletedkeytest2\",\r\n      \"deletedDate\": 1493938082,\r\n      \"scheduledPurgeDate\": 1501714082,\r\n      \"kid\": \"https://kv-sdk-test.vault-int.azure-int.net/keys/listdeletedkeytest2\",\r\n      \"attributes\": {\r\n        \"enabled\": true,\r\n        \"created\": 1493938081,\r\n        \"updated\": 1493938081,\r\n        \"recoverylevel\": \"Recoverable+Purgeable\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReUx6WTBOelpHTWtJd01qaENORFJFUmpBNVJURTNRVE13TmpJNE5rSXpRa0UwSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPalEyTGpVeE5qazBOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "709"
@@ -2259,7 +2259,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReUx6WTBOelpHTWtJd01qaENORFJFUmpBNVJURTNRVE13TmpJNE5rSXpRa0UwSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPalEyTGpVeE5qazBOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVSRVZNUlZSRlJFdEZXVlJGVTFReUx6WTBOelpHTWtJd01qaENORFJFUmpBNVJURTNRVE13TmpJNE5rSXpRa0UwSVRBd01EQXlPQ0V5TURFM0xUQTFMVEEwVkRJeU9qRTJPalEyTGpVeE5qazBOamhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNelloVFVSQmQwMUVWVEpKVjNSc1pWTTVUVk5XVGxWU1JWWk5VbFpTUmxKRmRFWlhWbEpHVlRGUmVVeDZXVEJPZWxwSFRXdEpkMDFxYUVOT1JGSkZVbXBCTlZKVVJUTlJWRTEzVG1wSk5FNXJTWHBSYTBVd1NWUkJkMDFFUVhsUFEwVjVUVVJGTTB4VVFURk1WRUV3VmtSSmVVOXFSVEpQYWxFeVRHcFZlRTVxYXpCT2FtaGhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2275,7 +2275,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRBaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU5UTTVNelF3TlZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRBaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU5UTTVNelF3TlZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "295"
@@ -2323,7 +2323,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRBaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU5UTTVNelF3TlZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRBaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU5UTTVNelF3TlZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTRNQ0ZOUkVGM1RVUkZNa2xYZEd4bFV6bE5VMVpPVlZNd1ZscFdSVlpVVmtSQmFFMUVRWGROUkVrMFNWUkpkMDFVWTNSTlJGVjBUVVJTVlUxcVNUWk5SRVUyVFZScmRVNVVUVFZOZWxGM1RsWnZhQ0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2339,7 +2339,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZEQXZPRVZGUlRFNFEwVXpOakU1TkRZeFFrRTRRakV3TTBVMVJrSXhRelk0T0VJaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZEQXZPRVZGUlRFNFEwVXpOakU1TkRZeFFrRTRRakV3TTBVMVJrSXhRelk0T0VJaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "355"
@@ -2387,7 +2387,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZEQXZPRVZGUlRFNFEwVXpOakU1TkRZeFFrRTRRakV3TTBVMVJrSXhRelk0T0VJaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZEQXZPRVZGUlRFNFEwVXpOakU1TkRZeFFrRTRRakV3TTBVMVJrSXhRelk0T0VJaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNalFoVFVSQmQwMUVVVFZKVjNSc1pWTTVUVk5XVGxWVE1GWmFWa1ZXVkZaRVFYWlBSVlpHVWxSRk5GRXdWWHBPYWtVMVRrUlplRkZyUlRSUmFrVjNUVEJWTVZKclNYaFJlbGswVDBWSmFFMUVRWGROUkVrMFNWUnJOVTlVYTNSTlZFbDBUWHBHVlUxcVRUWk9WR3MyVGxScmRVOVVhelZQVkdzMVQxWnZhQ0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2403,7 +2403,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "295"
@@ -2451,7 +2451,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRFaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TVRrdU9EZzVNelU1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTRNQ0ZOUkVGM1RVUkZNa2xYZEd4bFV6bE5VMVpPVlZNd1ZscFdSVlpVVmtSRmFFMUVRWGROUkVrMFNWUkpkMDFVWTNSTlJGVjBUVVJTVlUxcVNUWk5SRVUyVFZScmRVOUVaelZOZWxVMVQxWnZhQ0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2467,7 +2467,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZERXZNelUyTWtFeE9VSTBORGxHTkRKR00wRXdNRGxHT1RRMk56TXhSalJETmpRaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZERXZNelUyTWtFeE9VSTBORGxHTkRKR00wRXdNRGxHT1RRMk56TXhSalJETmpRaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "355"
@@ -2515,7 +2515,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZERXZNelUyTWtFeE9VSTBORGxHTkRKR00wRXdNRGxHT1RRMk56TXhSalJETmpRaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZERXZNelUyTWtFeE9VSTBORGxHTkRKR00wRXdNRGxHT1RRMk56TXhSalJETmpRaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNalFoVFVSQmQwMUVVVFZKVjNSc1pWTTVUVk5XVGxWVE1GWmFWa1ZXVkZaRVJYWk5lbFV5VFd0RmVFOVZTVEJPUkd4SFRrUktSMDB3UlhkTlJHeEhUMVJSTWs1NlRYaFNhbEpFVG1wUmFFMUVRWGROUkVrMFNWUnJOVTlVYTNSTlZFbDBUWHBHVlUxcVRUWk9WR3MyVGxScmRVOVVhelZQVkdzMVQxWnZhQ0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2531,7 +2531,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "295"
@@ -2579,7 +2579,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMklXdGxlUzlNU1ZOVVMwVlpWRVZUVkRJaE1EQXdNREk0SVRJd01UY3RNRFV0TURSVU1qSTZNREU2TWpBdU5URTJOREF6T0ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTRNQ0ZOUkVGM1RVUkZNa2xYZEd4bFV6bE5VMVpPVlZNd1ZscFdSVlpVVmtSSmFFMUVRWGROUkVrMFNWUkpkMDFVWTNSTlJGVjBUVVJTVlUxcVNUWk5SRVUyVFdwQmRVNVVSVEpPUkVGNlQwWnZhQ0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2595,7 +2595,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZESXZPVEpFTkVJMVF6bEZNRFV4TkRoRE9VSkJNRU5EUVVaRE9USXhRVUZFT0RjaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZESXZPVEpFTkVJMVF6bEZNRFV4TkRoRE9VSkJNRU5EUVVaRE9USXhRVUZFT0RjaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "355"
@@ -2643,7 +2643,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZESXZPVEpFTkVJMVF6bEZNRFV4TkRoRE9VSkJNRU5EUVVaRE9USXhRVUZFT0RjaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTVJV3RsZVM5TVNWTlVTMFZaVkVWVFZESXZPVEpFTkVJMVF6bEZNRFV4TkRoRE9VSkJNRU5EUVVaRE9USXhRVUZFT0RjaE1EQXdNREk0SVRrNU9Ua3RNVEl0TXpGVU1qTTZOVGs2TlRrdU9UazVPVGs1T1ZvaCIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNalFoVFVSQmQwMUVVVFZKVjNSc1pWTTVUVk5XVGxWVE1GWmFWa1ZXVkZaRVNYWlBWRXBGVGtWSk1WRjZiRVpOUkZWNFRrUm9SRTlWU2tKTlJVNUVVVlZhUkU5VVNYaFJWVVpGVDBSamFFMUVRWGROUkVrMFNWUnJOVTlVYTNSTlZFbDBUWHBHVlUxcVRUWk9WR3MyVGxScmRVOVVhelZQVkdzMVQxWnZhQ0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2659,7 +2659,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "311"
@@ -2707,7 +2707,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5MiFNREF3TURJeklXdGxlUzlNU1ZOVVMwVlpWa1ZTVTBsUFRsTlVSVk5VSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUyVkRJek9qVTVPak0zTGpnM09EZ3pNalphSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTVNaUZOUkVGM1RVUkpla2xYZEd4bFV6bE5VMVpPVlZNd1ZscFdhMVpUVlRCc1VGUnNUbFZTVms1VlNWUkJkMDFFUVhsUFEwVjVUVVJGTTB4VVFYbE1WRVV5VmtSSmVrOXFWVFZQYWswelRHcG5NMDlFWjNwTmFscGhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2723,7 +2723,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVTMFZaVmtWU1UwbFBUbE5VUlZOVUx6STFRVGsyUlRrM1JEWkRSVFJFT0VRNE1UbEJRa0l6UXpNMlF6a3pOamRGSVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVTMFZaVmtWU1UwbFBUbE5VUlZOVUx6STFRVGsyUlRrM1JEWkRSVFJFT0VRNE1UbEJRa0l6UXpNMlF6a3pOamRGSVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "371"
@@ -2771,7 +2771,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVTMFZaVmtWU1UwbFBUbE5VUlZOVUx6STFRVGsyUlRrM1JEWkRSVFJFT0VRNE1UbEJRa0l6UXpNMlF6a3pOamRGSVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMzYhTURBd01EVTJJV3RsZVM5TVNWTlVTMFZaVmtWU1UwbFBUbE5VUlZOVUx6STFRVGsyUlRrM1JEWkRSVFJFT0VRNE1UbEJRa0l6UXpNMlF6a3pOamRGSVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNelloVFVSQmQwMUVWVEpKVjNSc1pWTTVUVk5XVGxWVE1GWmFWbXRXVTFVd2JGQlViRTVWVWxaT1ZVeDZTVEZSVkdzeVVsUnJNMUpFV2tSU1ZGSkZUMFZSTkUxVWJFSlJhMGw2VVhwTk1sRjZhM3BPYW1SR1NWUkJkMDFFUVhsUFEwVTFUMVJyTlV4VVJYbE1WRTE0VmtSSmVrOXFWVFZQYWxVMVRHcHJOVTlVYXpWUFZHeGhTVkV0TFNJc0lsUmhjbWRsZEV4dlkyRjBhVzl1SWpvd2ZRJm1heHJlc3VsdHM9MQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2787,7 +2787,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "295"
@@ -2835,7 +2835,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE4MCFNREF3TURFMElXdGxlUzlUUkV0VVJWTlVTMFZaSVRBd01EQXlPQ0V5TURFM0xUQXlMVEUzVkRBd09qQXhPakEyTGpnd056azBOemhhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTRNQ0ZOUkVGM1RVUkZNRWxYZEd4bFV6bFVVa1YwVlZKV1RsVlRNRlphU1ZSQmQwMUVRWGxQUTBWNVRVUkZNMHhVUVhsTVZFVXpWa1JCZDA5cVFYaFBha0V5VEdwbmQwNTZhekJPZW1oaFNWRXRMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2851,7 +2851,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTNJV3RsZVM5VFJFdFVSVk5VUzBWWkx6QXhNelU0TUVVNU9URXlORFJGTkRJNE9URTRPVFpETjBSRE9EVkVRMEV6SVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTNJV3RsZVM5VFJFdFVSVk5VUzBWWkx6QXhNelU0TUVVNU9URXlORFJGTkRJNE9URTRPVFpETjBSRE9EVkVRMEV6SVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "355"
@@ -2899,7 +2899,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTNJV3RsZVM5VFJFdFVSVk5VUzBWWkx6QXhNelU0TUVVNU9URXlORFJGTkRJNE9URTRPVFpETjBSRE9EVkVRMEV6SVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiExMjQhTURBd01EUTNJV3RsZVM5VFJFdFVSVk5VUzBWWkx6QXhNelU0TUVVNU9URXlORFJGTkRJNE9URTRPVFpETjBSRE9EVkVRMEV6SVRBd01EQXlPQ0U1T1RrNUxURXlMVE14VkRJek9qVTVPalU1TGprNU9UazVPVGxhSVEtLSIsIlRhcmdldExvY2F0aW9uIjowfQ&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRXhNalFoVFVSQmQwMUVVVE5KVjNSc1pWTTVWRkpGZEZWU1ZrNVZVekJXV2t4NlFYaE5lbFUwVFVWVk5VOVVSWGxPUkZKR1RrUkpORTlVUlRSUFZGcEVUakJTUkU5RVZrVlJNRVY2U1ZSQmQwMUVRWGxQUTBVMVQxUnJOVXhVUlhsTVZFMTRWa1JKZWs5cVZUVlBhbFUxVEdwck5VOVVhelZQVkd4aFNWRXRMU0lzSWxSaGNtZGxkRXh2WTJGMGFXOXVJam93ZlEmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -2915,7 +2915,7 @@
           "Microsoft.Azure.KeyVault.KeyVaultClient/2.2.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://kv-sdk-test.vault-int.azure-int.net:443/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "316"
@@ -2963,7 +2963,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys?api-version=2016-10-01&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
+      "RequestUri": "/deletedkeys?api-version=7.0-preview&$skiptoken=eyJOZXh0TWFya2VyIjoiMiE5NiFNREF3TURJM0lXdGxlUzlWVUVSQlZFVkxSVmxCVkZSU1NVSlZWRVZUVkVWVFZDRXdNREF3TWpnaE1qQXhOeTB3TlMwd05GUXdNVG94TVRveE5pNDNNekE0TnpReVdpRS0iLCJUYXJnZXRMb2NhdGlvbiI6MH0&maxresults=1",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDEmJHNraXB0b2tlbj1leUpPWlhoMFRXRnlhMlZ5SWpvaU1pRTVOaUZOUkVGM1RVUkpNMGxYZEd4bFV6bFdWVVZTUWxaRlZreFNWbXhDVmtaU1UxTlZTbFpXUlZaVVZrVldWRlpEUlhkTlJFRjNUV3BuYUUxcVFYaE9lVEIzVGxNd2QwNUdVWGROVkc5NFRWUnZlRTVwTkROTmVrRTBUbnBSZVZkcFJTMGlMQ0pVWVhKblpYUk1iMk5oZEdsdmJpSTZNSDAmbWF4cmVzdWx0cz0x",
       "RequestMethod": "GET",
       "RequestBody": "",
@@ -3027,7 +3027,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/deletedkeys/listdeletedkeytest0?api-version=2016-10-01",
+      "RequestUri": "/deletedkeys/listdeletedkeytest0?api-version=7.0-preview",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL2xpc3RkZWxldGVka2V5dGVzdDA/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -3085,7 +3085,7 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/deletedkeys/listdeletedkeytest1?api-version=2016-10-01",
+      "RequestUri": "/deletedkeys/listdeletedkeytest1?api-version=7.0-preview",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL2xpc3RkZWxldGVka2V5dGVzdDE/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
@@ -3143,7 +3143,7 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/deletedkeys/listdeletedkeytest2?api-version=2016-10-01",
+      "RequestUri": "/deletedkeys/listdeletedkeytest2?api-version=7.0-preview",
       "EncodedRequestUri": "L2RlbGV0ZWRrZXlzL2xpc3RkZWxldGVka2V5dGVzdDI/YXBpLXZlcnNpb249MjAxNi0xMC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
