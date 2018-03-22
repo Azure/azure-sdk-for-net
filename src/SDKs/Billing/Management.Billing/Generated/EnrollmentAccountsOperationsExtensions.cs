@@ -17,23 +17,23 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Operations.
+    /// Extension methods for EnrollmentAccountsOperations.
     /// </summary>
-    public static partial class OperationsExtensions
+    public static partial class EnrollmentAccountsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available billing REST API operations.
+            /// Lists the enrollment accounts the caller has access to.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Operation> List(this IOperations operations)
+            public static EnrollmentAccountListResult List(this IEnrollmentAccountsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available billing REST API operations.
+            /// Lists the enrollment accounts the caller has access to.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EnrollmentAccountListResult> ListAsync(this IEnrollmentAccountsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -50,34 +50,34 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all of the available billing REST API operations.
+            /// Gets a enrollment account by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='name'>
+            /// Enrollment Account name.
             /// </param>
-            public static IPage<Operation> ListNext(this IOperations operations, string nextPageLink)
+            public static EnrollmentAccount Get(this IEnrollmentAccountsOperations operations, string name)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.GetAsync(name).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available billing REST API operations.
+            /// Gets a enrollment account by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
+            /// <param name='name'>
+            /// Enrollment Account name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Operation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EnrollmentAccount> GetAsync(this IEnrollmentAccountsOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -11,34 +11,36 @@
 namespace Microsoft.Azure.Management.Billing.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The Resource model definition.
+    /// An enrollment account resource.
     /// </summary>
-    public partial class Resource : IResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class EnrollmentAccount : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the EnrollmentAccount class.
         /// </summary>
-        public Resource()
+        public EnrollmentAccount()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the EnrollmentAccount class.
         /// </summary>
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="principalName">The account owner's principal
+        /// name.</param>
+        public EnrollmentAccount(string id = default(string), string name = default(string), string type = default(string), string principalName = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            PrincipalName = principalName;
             CustomInit();
         }
 
@@ -48,22 +50,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id.
+        /// Gets the account owner's principal name.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.principalName")]
+        public string PrincipalName { get; private set; }
 
     }
 }
