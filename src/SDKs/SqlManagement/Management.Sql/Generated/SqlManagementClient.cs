@@ -212,6 +212,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IFailoverGroupsOperations FailoverGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        public virtual IManagedInstancesOperations ManagedInstances { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -257,6 +262,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        public virtual IManagedDatabasesOperations ManagedDatabases { get; private set; }
+
+        /// <summary>
         /// Gets the IServerAutomaticTuningOperations.
         /// </summary>
         public virtual IServerAutomaticTuningOperations ServerAutomaticTuning { get; private set; }
@@ -280,6 +290,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolOperations.
         /// </summary>
         public virtual IElasticPoolOperations ElasticPoolOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the IInstanceFailoverGroupsOperations.
+        /// </summary>
+        public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -510,6 +525,7 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             EncryptionProtectors = new EncryptionProtectorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
+            ManagedInstances = new ManagedInstancesOperations(this);
             Operations = new Operations(this);
             ServerKeys = new ServerKeysOperations(this);
             SyncAgents = new SyncAgentsOperations(this);
@@ -519,11 +535,13 @@ namespace Microsoft.Azure.Management.Sql
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
             BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
+            ManagedDatabases = new ManagedDatabasesOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
             RestorePoints = new RestorePointsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
+            InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
