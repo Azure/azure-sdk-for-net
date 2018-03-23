@@ -1,0 +1,158 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Billing/enrollmentAccounts/465c11a0-38c3-4ecc-92e9-996c69ae9e76/providers/Microsoft.Subscription/createSubscription?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9lbnJvbGxtZW50QWNjb3VudHMvNDY1YzExYTAtMzhjMy00ZWNjLTkyZTktOTk2YzY5YWU5ZTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL2NyZWF0ZVN1YnNjcmlwdGlvbj9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"displayName\": \"TestSubscription_AzureSDK\",\r\n  \"offerType\": \"MS-AZR-0017P\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "82"
+        ],
+        "x-ms-client-request-id": [
+          "09431a58-65f2-4a5e-86e9-96103dedc8ab"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.7.2633.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.16299",
+          "Microsoft.Azure.Management.Subscription.SubscriptionClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "api-supported-versions": [
+          "2018-03-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "2ae672c3-def3-4276-934a-d590791b2abc"
+        ],
+        "x-ms-correlation-request-id": [
+          "2ae672c3-def3-4276-934a-d590791b2abc"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20180322T180126Z:2ae672c3-def3-4276-934a-d590791b2abc"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Mar 2018 18:01:26 GMT"
+        ],
+        "Location": [
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Subscription/subscriptionOperations/7a31886d-65f0-4256-bb13-dffc83cb6a9e?api-version=2018-03-01-preview"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/7a31886d-65f0-4256-bb13-dffc83cb6a9e?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbk9wZXJhdGlvbnMvN2EzMTg4NmQtNjVmMC00MjU2LWJiMTMtZGZmYzgzY2I2YTllP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.7.2633.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.16299",
+          "Microsoft.Azure.Management.Subscription.SubscriptionClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"subscriptionLink\": \"/subscriptions/7b060743-c3b4-4f44-9d98-17ff33cb155c\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "74"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "api-supported-versions": [
+          "2018-03-01-preview"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "3c5268b8-f1a1-4c30-a039-ece09feb312d"
+        ],
+        "x-ms-correlation-request-id": [
+          "3c5268b8-f1a1-4c30-a039-ece09feb312d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20180322T180227Z:3c5268b8-f1a1-4c30-a039-ece09feb312d"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 22 Mar 2018 18:02:26 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "df8cd511-7137-41f2-b2e9-48dc00a0b70f"
+  }
+}
