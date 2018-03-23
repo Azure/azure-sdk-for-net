@@ -1,31 +1,31 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Subscription/subscriptionDefinitions/MySubDefYYYY11DD2241061935?api-version=2017-11-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbkRlZmluaXRpb25zL015U3ViRGVmWVlZWTExREQyMjQxMDYxOTM1P2FwaS12ZXJzaW9uPTIwMTctMTEtMDEtcHJldmlldw==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"subscriptionDisplayName\": \"MySubDefYYYY11DD2241061935\",\r\n    \"offerType\": \"MS-AZR-0017P\"\r\n  }\r\n}",
+      "RequestUri": "/providers/Microsoft.Billing/enrollmentAccounts/465c11a0-38c3-4ecc-92e9-996c69ae9e76/providers/Microsoft.Subscription/createSubscription?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9lbnJvbGxtZW50QWNjb3VudHMvNDY1YzExYTAtMzhjMy00ZWNjLTkyZTktOTk2YzY5YWU5ZTc2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL2NyZWF0ZVN1YnNjcmlwdGlvbj9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"displayName\": \"TestSubscription_AzureSDK\",\r\n  \"offerType\": \"MS-AZR-0017P\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "123"
+          "82"
         ],
         "x-ms-client-request-id": [
-          "68faacfb-bf75-496d-bee9-a03d61dcb5ad"
+          "31deb954-79c1-414c-a09e-3c93268b4bf0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2115.0",
-          "OSName/Windows10Education",
-          "OSVersion/6.3.15063",
-          "Microsoft.Azure.Management.Subscription.SubscriptionDefinitionsClient/1.0.0.0"
+          "FxVersion/4.7.2633.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.16299",
+          "Microsoft.Azure.Management.Subscription.SubscriptionClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "\"\"",
+      "ResponseBody": "{}",
       "ResponseHeaders": {
         "Content-Length": [
           "2"
@@ -42,7 +42,10 @@
         "Retry-After": [
           "60"
         ],
-        "x-content-type-options": [
+        "api-supported-versions": [
+          "2018-03-01-preview"
+        ],
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Strict-Transport-Security": [
@@ -52,22 +55,22 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "875a349c-7257-406a-8424-5644e94e8eb6"
+          "5b2fb72d-dfdf-4e78-b5ab-1f7089e87088"
         ],
         "x-ms-correlation-request-id": [
-          "875a349c-7257-406a-8424-5644e94e8eb6"
+          "5b2fb72d-dfdf-4e78-b5ab-1f7089e87088"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171120T064205Z:875a349c-7257-406a-8424-5644e94e8eb6"
+          "CENTRALUS:20180323T215809Z:5b2fb72d-dfdf-4e78-b5ab-1f7089e87088"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 06:42:05 GMT"
+          "Fri, 23 Mar 2018 21:58:09 GMT"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Subscription/subscriptionOperations/9870eab8-492c-47e8-bd20-313624c71e7a?api-version=2017-11-01-preview"
+          "https://api-dogfood.resources.windows-int.net/providers/Microsoft.Subscription/subscriptionOperations/1a5e4e0c-108a-4cc8-9d97-d536d9e34460?api-version=2018-03-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -82,22 +85,22 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/9870eab8-492c-47e8-bd20-313624c71e7a?api-version=2017-11-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbk9wZXJhdGlvbnMvOTg3MGVhYjgtNDkyYy00N2U4LWJkMjAtMzEzNjI0YzcxZTdhP2FwaS12ZXJzaW9uPTIwMTctMTEtMDEtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Subscription/subscriptionOperations/1a5e4e0c-108a-4cc8-9d97-d536d9e34460?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9uL3N1YnNjcmlwdGlvbk9wZXJhdGlvbnMvMWE1ZTRlMGMtMTA4YS00Y2M4LTlkOTctZDUzNmQ5ZTM0NDYwP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.7.2115.0",
-          "OSName/Windows10Education",
-          "OSVersion/6.3.15063",
-          "Microsoft.Azure.Management.Subscription.SubscriptionDefinitionsClient/1.0.0.0"
+          "FxVersion/4.7.2633.0",
+          "OSName/Windows10Enterprise",
+          "OSVersion/6.3.16299",
+          "Microsoft.Azure.Management.Subscription.SubscriptionClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Subscription/subscriptionDefinitions/MySubDefYYYY11DD2241061935\",\r\n  \"name\": \"MySubDefYYYY11DD2241061935\",\r\n  \"properties\": {\r\n    \"etag\": \"rj7u2g==\",\r\n    \"subscriptionDisplayName\": \"MySubDefYYYY11DD2241061935\",\r\n    \"subscriptionId\": \"00fd1ef3-328d-4e75-a158-9dd4405585c8\",\r\n    \"offerType\": \"MS-AZR-0017P\"\r\n  },\r\n  \"type\": \"Microsoft.Subscription/subscriptionDefinitions\"\r\n}",
+      "ResponseBody": "{\r\n  \"subscriptionLink\": \"/subscriptions/3c985c10-e32f-4ac9-b854-08f14527b0f3\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "355"
+          "74"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -108,7 +111,10 @@
         "Pragma": [
           "no-cache"
         ],
-        "x-content-type-options": [
+        "api-supported-versions": [
+          "2018-03-01-preview"
+        ],
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "Strict-Transport-Security": [
@@ -118,19 +124,19 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "76b82bae-104b-4139-97a4-3c5864189983"
+          "639a728a-9798-47c7-ac1b-f32d9da84c46"
         ],
         "x-ms-correlation-request-id": [
-          "76b82bae-104b-4139-97a4-3c5864189983"
+          "639a728a-9798-47c7-ac1b-f32d9da84c46"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171120T064236Z:76b82bae-104b-4139-97a4-3c5864189983"
+          "CENTRALUS:20180323T215910Z:639a728a-9798-47c7-ac1b-f32d9da84c46"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 06:42:36 GMT"
+          "Fri, 23 Mar 2018 21:59:10 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -147,6 +153,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "f4b6d4b2-7f09-4856-84f6-b98c14642bf6"
+    "SubscriptionId": "df8cd511-7137-41f2-b2e9-48dc00a0b70f"
   }
 }

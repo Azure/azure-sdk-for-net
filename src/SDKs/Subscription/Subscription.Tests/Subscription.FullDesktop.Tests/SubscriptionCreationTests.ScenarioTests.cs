@@ -35,7 +35,7 @@ namespace FullDesktop.Tests
     /// Set-Item "env:OutputDirectory" "D:\src\xxxxxxxx\azure-sdk-for-net\xxxxxx\SessionRecords"
     ///      - invoke vs: devenv .\Resources.sln
     /// </summary>
-    public class LiveSubcriptionCreationTests : TestBase
+    public class LiveSubscriptionCreationTests : TestBase
     {
         public SubscriptionClient GetSubscriptionClient(MockContext context, RecordedDelegatingHandler handler)
         {

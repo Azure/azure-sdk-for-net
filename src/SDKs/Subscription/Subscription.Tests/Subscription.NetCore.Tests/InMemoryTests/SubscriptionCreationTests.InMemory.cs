@@ -45,7 +45,7 @@ namespace ResourceGroups.Tests
             };
             response.Headers.Add("x-ms-request-id", "1");
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-            var testPrincipal = new AdPrincipal(Guid.NewGuid(), Guid.NewGuid());
+            var testPrincipal = new AdPrincipal(Guid.NewGuid().ToString());
             var body = new SubscriptionCreationParameters()
             {
                 OfferType = "MS-AZR-0017P",
