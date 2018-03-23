@@ -1159,6 +1159,31 @@
             return asyncTask;
         }
 
+        public Task<AzureOperationResponse<Models.UploadBatchServiceLogsResult, Models.ComputeNodeUploadBatchServiceLogsHeaders>> UploadBatchServiceLogs(
+            string poolId,
+            string nodeId,
+            string containerUrl,
+            DateTime startTime,
+            DateTime? endTime,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
+        {
+            var parameters = new Models.UploadBatchServiceLogsConfiguration(containerUrl, startTime, endTime);
+            var request = new ComputeNodeUploadBatchServiceLogsBatchRequest(this._client, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.UploadBatchServiceLogsWithHttpMessagesAsync(
+                poolId,
+                nodeId,
+                parameters,
+                request.Options,
+                request.CustomHeaders,
+                lambdaCancelToken);
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
         public async Task<AzureOperationHeaderResponse<Models.ComputeNodeGetRemoteDesktopHeaders>> GetComputeNodeRDPFile(string poolId, string computeNodeId, Stream rdpStream, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new ComputeNodeGetRemoteDesktopBatchRequest(this._client, cancellationToken);
@@ -1732,9 +1757,45 @@
             return asyncTask;
         }
 
-       #endregion // IProtocolLayer
+        public Task<AzureOperationResponse<IPage<Models.PoolNodeCounts>, Models.AccountListPoolNodeCountsHeaders>> ListPoolNodeCounts(
+                string skipToken,
+                BehaviorManager bhMgr,
+                DetailLevel detailLevel,
+                CancellationToken cancellationToken)
+        {
+            Task<AzureOperationResponse<IPage<Models.PoolNodeCounts>, Models.AccountListPoolNodeCountsHeaders>> asyncTask;
 
-#region // internal/private
+            if (string.IsNullOrEmpty(skipToken))
+            {
+                var request = new AccountListPoolNodeCountsBatchRequest(this._client, cancellationToken);
+
+                bhMgr = bhMgr.CreateBehaviorManagerWithDetailLevel(detailLevel);
+
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Account.ListPoolNodeCountsWithHttpMessagesAsync(
+                    request.Options,
+                    request.CustomHeaders,
+                    lambdaCancelToken);
+
+                asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+            }
+            else
+            {
+                var request = new AccountListPoolNodeCountsNextBatchRequest(this._client, cancellationToken);
+                request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Account.ListPoolNodeCountsNextWithHttpMessagesAsync(
+                    skipToken,
+                    request.Options,
+                    request.CustomHeaders,
+                    lambdaCancelToken);
+
+                asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+            }
+
+            return asyncTask;
+        }
+
+        #endregion // IProtocolLayer
+
+        #region // internal/private
 
         private static async Task CopyStreamAsync(Stream inputStream, Stream outputStream, CancellationToken cancellationToken)
         {
