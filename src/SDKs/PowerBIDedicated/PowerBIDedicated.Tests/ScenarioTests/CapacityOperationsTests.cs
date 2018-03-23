@@ -21,7 +21,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
 {
     public class CapacityOperationsTests : TestBase
     {
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void CreateGetUpdateDeleteTest()
         {
             string executingAssemblyPath = typeof(PowerBIDedicated.Tests.ScenarioTests.CapacityOperationsTests).GetTypeInfo().Assembly.Location;
