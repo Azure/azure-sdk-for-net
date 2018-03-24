@@ -119,9 +119,9 @@ catch {
     Write-ErrorLog $_.ToString() -logToFile
 }
 finally {
-    #Get-OutputStream | Out-File -FilePath $logFile | Out-Null
-    #Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
-    [IO.File]::WriteAllLines($logFile, (Get-OutputStream))
+    Get-OutputStream | Out-File -FilePath $logFile | Out-Null
+    Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
+    #[IO.File]::WriteAllLines($logFile, (Get-OutputStream))
     Clear-OutputStreams
     Get-Module -ListAvailable "$modulePath" | Remove-Module 
 }
