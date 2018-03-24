@@ -119,8 +119,8 @@ catch {
     Write-ErrorLog $_.ToString() -logToFile
 }
 finally {
-    (Get-OutputStream) | Out-File -encoding ASCII $logFile
-    (Get-ErrorStream) | Out-File -encoding ASCII $logFile
+    Get-OutputStream | Out-File -encoding ASCII $logFile
+    Get-ErrorStream | Out-File -encoding ASCII $logFile
     Clear-OutputStreams
     Get-Module -ListAvailable "$modulePath" | Remove-Module 
 }
