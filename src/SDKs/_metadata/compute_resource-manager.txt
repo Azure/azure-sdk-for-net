@@ -1,1 +1,2 @@
+.\tools\generate.ps1 was invoked by generate.ps1
 
