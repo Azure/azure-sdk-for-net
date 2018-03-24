@@ -25,7 +25,8 @@ namespace Compute.Tests
         /// Delete VMSS Extension
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Unable Match Http")]
         public void TestVMScaleSetExtensions()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

@@ -381,7 +381,7 @@ namespace Media.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void MediaServiceListKeysTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -434,7 +434,7 @@ namespace Media.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void MediaServiceRegenerateKeyTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
