@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -43,7 +45,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// discover the vCenter.</param>
         /// <param name="fabricArmResourceName">The ARM resource name of the
         /// fabric containing this VCenter.</param>
-        public VCenterProperties(string friendlyName = default(string), string internalId = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string discoveryStatus = default(string), string processServerId = default(string), string ipAddress = default(string), string infrastructureId = default(string), string port = default(string), string runAsAccountId = default(string), string fabricArmResourceName = default(string))
+        /// <param name="healthErrors">The health errors for this
+        /// VCenter.</param>
+        public VCenterProperties(string friendlyName = default(string), string internalId = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string discoveryStatus = default(string), string processServerId = default(string), string ipAddress = default(string), string infrastructureId = default(string), string port = default(string), string runAsAccountId = default(string), string fabricArmResourceName = default(string), IList<HealthError> healthErrors = default(IList<HealthError>))
         {
             FriendlyName = friendlyName;
             InternalId = internalId;
@@ -55,6 +59,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             Port = port;
             RunAsAccountId = runAsAccountId;
             FabricArmResourceName = fabricArmResourceName;
+            HealthErrors = healthErrors;
             CustomInit();
         }
 
@@ -125,6 +130,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "fabricArmResourceName")]
         public string FabricArmResourceName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the health errors for this VCenter.
+        /// </summary>
+        [JsonProperty(PropertyName = "healthErrors")]
+        public IList<HealthError> HealthErrors { get; set; }
 
     }
 }

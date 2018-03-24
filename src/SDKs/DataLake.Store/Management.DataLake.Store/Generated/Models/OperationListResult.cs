@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// The list of available operations for Data Lake Store
+    /// The list of available operations for Data Lake Store.
     /// </summary>
     public partial class OperationListResult
     {
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the OperationListResult class.
         /// </summary>
-        /// <param name="value">the results of the list operation.</param>
-        /// <param name="nextLink">the link (url) to the next page of
+        /// <param name="value">The results of the list operation.</param>
+        /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
         public OperationListResult(IList<Operation> value = default(IList<Operation>), string nextLink = default(string))
         {

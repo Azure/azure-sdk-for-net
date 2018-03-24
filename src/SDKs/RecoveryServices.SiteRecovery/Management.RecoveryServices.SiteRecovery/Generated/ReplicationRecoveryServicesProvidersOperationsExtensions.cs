@@ -22,6 +22,137 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationRecoveryServicesProvidersOperationsExtensions
     {
             /// <summary>
+            /// Gets the list of registered recovery services providers for the fabric.
+            /// </summary>
+            /// <remarks>
+            /// Lists the registered recovery services providers for the specified fabric.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name
+            /// </param>
+            public static IPage<RecoveryServicesProvider> ListByReplicationFabrics(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName)
+            {
+                return operations.ListByReplicationFabricsAsync(fabricName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of registered recovery services providers for the fabric.
+            /// </summary>
+            /// <remarks>
+            /// Lists the registered recovery services providers for the specified fabric.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RecoveryServicesProvider>> ListByReplicationFabricsAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReplicationFabricsWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the details of a recovery services provider.
+            /// </summary>
+            /// <remarks>
+            /// Gets the details of registered recovery services provider.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name
+            /// </param>
+            public static RecoveryServicesProvider Get(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName)
+            {
+                return operations.GetAsync(fabricName, providerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of a recovery services provider.
+            /// </summary>
+            /// <remarks>
+            /// Gets the details of registered recovery services provider.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RecoveryServicesProvider> GetAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(fabricName, providerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Purges recovery service provider from fabric
+            /// </summary>
+            /// <remarks>
+            /// The operation to purge(force delete) a recovery services provider from the
+            /// vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            public static void Purge(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName)
+            {
+                operations.PurgeAsync(fabricName, providerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Purges recovery service provider from fabric
+            /// </summary>
+            /// <remarks>
+            /// The operation to purge(force delete) a recovery services provider from the
+            /// vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task PurgeAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.PurgeWithHttpMessagesAsync(fabricName, providerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Refresh details from the recovery services provider.
             /// </summary>
             /// <remarks>
@@ -121,137 +252,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Gets the details of a recovery services provider.
-            /// </summary>
-            /// <remarks>
-            /// Gets the details of registered recovery services provider.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name
-            /// </param>
-            public static RecoveryServicesProvider Get(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName)
-            {
-                return operations.GetAsync(fabricName, providerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the details of a recovery services provider.
-            /// </summary>
-            /// <remarks>
-            /// Gets the details of registered recovery services provider.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RecoveryServicesProvider> GetAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(fabricName, providerName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Purges recovery service provider from fabric
-            /// </summary>
-            /// <remarks>
-            /// The operation to purge(force delete) a recovery services provider from the
-            /// vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name.
-            /// </param>
-            public static void Purge(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName)
-            {
-                operations.PurgeAsync(fabricName, providerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Purges recovery service provider from fabric
-            /// </summary>
-            /// <remarks>
-            /// The operation to purge(force delete) a recovery services provider from the
-            /// vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task PurgeAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.PurgeWithHttpMessagesAsync(fabricName, providerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the list of registered recovery services providers for the fabric.
-            /// </summary>
-            /// <remarks>
-            /// Lists the registered recovery services providers for the specified fabric.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name
-            /// </param>
-            public static IPage<RecoveryServicesProvider> ListByReplicationFabrics(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName)
-            {
-                return operations.ListByReplicationFabricsAsync(fabricName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of registered recovery services providers for the fabric.
-            /// </summary>
-            /// <remarks>
-            /// Lists the registered recovery services providers for the specified fabric.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<RecoveryServicesProvider>> ListByReplicationFabricsAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByReplicationFabricsWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the list of registered recovery services providers in the vault. This
             /// is a view only api.
             /// </summary>
@@ -285,6 +285,51 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Purges recovery service provider from fabric
+            /// </summary>
+            /// <remarks>
+            /// The operation to purge(force delete) a recovery services provider from the
+            /// vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            public static void BeginPurge(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName)
+            {
+                operations.BeginPurgeAsync(fabricName, providerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Purges recovery service provider from fabric
+            /// </summary>
+            /// <remarks>
+            /// The operation to purge(force delete) a recovery services provider from the
+            /// vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginPurgeAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginPurgeWithHttpMessagesAsync(fabricName, providerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -384,51 +429,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task BeginDeleteAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(fabricName, providerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Purges recovery service provider from fabric
-            /// </summary>
-            /// <remarks>
-            /// The operation to purge(force delete) a recovery services provider from the
-            /// vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name.
-            /// </param>
-            public static void BeginPurge(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName)
-            {
-                operations.BeginPurgeAsync(fabricName, providerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Purges recovery service provider from fabric
-            /// </summary>
-            /// <remarks>
-            /// The operation to purge(force delete) a recovery services provider from the
-            /// vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='providerName'>
-            /// Recovery services provider name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginPurgeAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginPurgeWithHttpMessagesAsync(fabricName, providerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

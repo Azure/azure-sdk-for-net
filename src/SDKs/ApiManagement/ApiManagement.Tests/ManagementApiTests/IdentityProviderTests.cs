@@ -3,13 +3,15 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ApiManagementManagement.Tests.Helpers;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Xunit;
-using System.Threading.Tasks;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -32,34 +34,33 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     var identityProviderCreateParameters = new IdentityProviderContract(clientId, clientSecret);
 
-                    var createResponse = testBase.client.IdentityProvider.CreateOrUpdate(
+                    var identityProviderContract = testBase.client.IdentityProvider.CreateOrUpdate(
                         testBase.rgName,
                         testBase.serviceName,
                         IdentityProviderType.Facebook,
                         identityProviderCreateParameters);
 
-                    Assert.NotNull(createResponse);
+                    Assert.NotNull(identityProviderContract);                    
+                    Assert.Equal(IdentityProviderType.Facebook, identityProviderContract.IdentityProviderContractType);
+                    Assert.NotNull(identityProviderContract.ClientId);
+                    Assert.NotNull(identityProviderContract.ClientSecret);
+                    Assert.Equal(clientId, identityProviderContract.ClientId);
+                    Assert.Equal(clientSecret, identityProviderContract.ClientSecret);
+                    Assert.Equal(IdentityProviderType.Facebook, identityProviderContract.IdentityProviderContractType);
 
-                    // get to check it was created
-                    var getResponse = await testBase.client.IdentityProvider.GetWithHttpMessagesAsync(
-                        testBase.rgName, 
-                        testBase.serviceName,
-                        IdentityProviderType.Facebook);
-
-                    Assert.NotNull(getResponse);
-                    Assert.Equal(IdentityProviderType.Facebook, getResponse.Body.IdentityProviderContractType);
-                    Assert.NotNull(getResponse.Body.ClientId);
-                    Assert.NotNull(getResponse.Body.ClientSecret);
-                    Assert.Equal(clientId, getResponse.Body.ClientId);
-                    Assert.Equal(clientSecret, getResponse.Body.ClientSecret);
-                    Assert.Equal(IdentityProviderType.Facebook, getResponse.Body.IdentityProviderContractType);
-
+                    // list
                     var listIdentityProviders = testBase.client.IdentityProvider.ListByService(testBase.rgName, testBase.serviceName);
 
                     Assert.NotNull(listIdentityProviders);
+                    Assert.True(listIdentityProviders.GetEnumerator().ToIEnumerable().Count() >= 1);
 
-                    // there should be one identity Provider
-                    Assert.True(listIdentityProviders.Value.Count >= 1);
+                    // get the entity tag
+                    var identityProviderTag = await testBase.client.IdentityProvider.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        IdentityProviderType.Facebook);
+                    Assert.NotNull(identityProviderTag);
+                    Assert.NotNull(identityProviderTag.ETag);
 
                     // patch identity provider
                     string patchedSecret = TestUtilities.GenerateName("clientSecret");
@@ -71,22 +72,31 @@ namespace ApiManagement.Tests.ManagementApiTests
                         {
                             ClientSecret = patchedSecret
                         },
-                        getResponse.Headers.ETag);
+                        identityProviderTag.ETag);
 
                     // get to check it was patched
-                    getResponse = await testBase.client.IdentityProvider.GetWithHttpMessagesAsync(testBase.rgName, testBase.serviceName, IdentityProviderType.Facebook);
+                    identityProviderContract = await testBase.client.IdentityProvider.GetAsync(
+                        testBase.rgName, 
+                        testBase.serviceName,
+                        IdentityProviderType.Facebook);
 
-                    Assert.NotNull(getResponse);
-                    Assert.Equal(IdentityProviderType.Facebook, getResponse.Body.IdentityProviderContractType);
-                    Assert.Equal(patchedSecret, getResponse.Body.ClientSecret);
-                    Assert.Equal(clientId, getResponse.Body.ClientId);
+                    Assert.NotNull(identityProviderContract);
+                    Assert.Equal(IdentityProviderType.Facebook, identityProviderContract.IdentityProviderContractType);
+                    Assert.Equal(patchedSecret, identityProviderContract.ClientSecret);
+                    Assert.Equal(clientId, identityProviderContract.ClientId);
+
+                    // get the tag again
+                    identityProviderTag = await testBase.client.IdentityProvider.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        IdentityProviderType.Facebook);
 
                     // delete the identity provider
                     testBase.client.IdentityProvider.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         IdentityProviderType.Facebook,
-                        getResponse.Headers.ETag);
+                        identityProviderTag.ETag);
 
                     // get the deleted identity provider to make sure it was deleted
                     try

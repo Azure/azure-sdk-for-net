@@ -50,11 +50,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             base.InitializeAsyncHeadersToUse();
 
             // 201
+            // We are being extra permissible, we will not throw if RP sends 201 + location header, we will treat it similarly as 202+location
             if (CurrentPollingState.CurrentStatusCode == System.Net.HttpStatusCode.Created)
             {
                 if (!string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink))
                 {
-                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.AzureAsyncOperationHeaderLink;
+                    CurrentPollingState.PollingUrlToUse = CurrentPollingState.LocationHeaderLink;
+                    CurrentPollingState.FinalGETUrlToUser = CurrentPollingState.LocationHeaderLink;
                 }
                 else
                 {
@@ -76,16 +78,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     {
                         CurrentPollingState.PollingUrlToUse = CurrentPollingState.LocationHeaderLink;
                     }
-                    else
-                    {
-                        // During polling if we get location header, that needs to be used to get result for the final GET
-                        CurrentPollingState.FinalGETUrlToUser = CurrentPollingState.LocationHeaderLink;
-                    }
+
+                    // During polling if we get location header, that needs to be used to get result for the final GET
+                    CurrentPollingState.FinalGETUrlToUser = CurrentPollingState.LocationHeaderLink;
                 }
 
                 if (string.IsNullOrEmpty(CurrentPollingState.PollingUrlToUse))
                 {
-                    throw new ValidationException(ValidationRules.CannotBeNull, "Recommended patterns: POST-202-LocationHeder(Prefered)/AzureAsyncOperationHeader");
+                    throw new ValidationException(ValidationRules.CannotBeNull, "Recommended patterns: POST-202-LocationHeader(Prefered)/AzureAsyncOperationHeader");
                 }
             }
         }
@@ -110,16 +110,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             //We do an additional Get to get the resource for PUT requests
             if (AzureAsyncOperation.SuccessStatus.Equals(CurrentPollingState.Status, StringComparison.OrdinalIgnoreCase))
             {
-                if (CurrentPollingState.PollingUrlToUse.Equals(CurrentPollingState.AzureAsyncOperationHeaderLink))
+                if ((!string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink)))
                 {
-                    if ((!string.IsNullOrEmpty(CurrentPollingState.LocationHeaderLink)))
+                    // We want to call the one last time the original URI that will give you the required resource
+                    if (!string.IsNullOrEmpty(CurrentPollingState.FinalGETUrlToUser))
                     {
-                        // We want to call the one last time the original URI that will give you the required resource
-                        if (!string.IsNullOrEmpty(CurrentPollingState.FinalGETUrlToUser))
-                        {
-                            CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
-                        }
-
+                        CurrentPollingState.PollingUrlToUse = GetValidAbsoluteUri(CurrentPollingState.FinalGETUrlToUser, throwForInvalidUri: true);
                         await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
                     }
                 }

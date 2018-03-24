@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="databasesInfo">List of DatabaseInfo</param>
         /// <param name="provisioningState">The project's provisioning state.
         /// Possible values include: 'Deleting', 'Succeeded'</param>
-        public Project(string location, ProjectSourcePlatform sourcePlatform, ProjectTargetPlatform targetPlatform, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>), ProjectProvisioningState? provisioningState = default(ProjectProvisioningState?))
+        public Project(string location, string sourcePlatform, string targetPlatform, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), ConnectionInfo sourceConnectionInfo = default(ConnectionInfo), ConnectionInfo targetConnectionInfo = default(ConnectionInfo), IList<DatabaseInfo> databasesInfo = default(IList<DatabaseInfo>), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             SourcePlatform = sourcePlatform;
@@ -75,14 +75,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// include: 'SQL', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourcePlatform")]
-        public ProjectSourcePlatform SourcePlatform { get; set; }
+        public string SourcePlatform { get; set; }
 
         /// <summary>
         /// Gets or sets target platform for the project. Possible values
         /// include: 'SQLDB', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetPlatform")]
-        public ProjectTargetPlatform TargetPlatform { get; set; }
+        public string TargetPlatform { get; set; }
 
         /// <summary>
         /// Gets UTC Date and time when project was created
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Deleting', 'Succeeded'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProjectProvisioningState? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -124,6 +124,14 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public override void Validate()
         {
             base.Validate();
+            if (SourcePlatform == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SourcePlatform");
+            }
+            if (TargetPlatform == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetPlatform");
+            }
             if (DatabasesInfo != null)
             {
                 foreach (var element in DatabasesInfo)

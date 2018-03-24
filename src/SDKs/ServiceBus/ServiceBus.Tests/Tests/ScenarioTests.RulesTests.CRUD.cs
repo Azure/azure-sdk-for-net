@@ -37,7 +37,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 var location = this.ResourceManagementClient.GetLocationFromProvider();
 
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                const string strSqlExp = "myproperty='test'";               
+                const string strSqlExp = "myproperty=test";               
 
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {

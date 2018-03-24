@@ -186,22 +186,22 @@ namespace DataFactory.Tests.UnitTests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void IntegrationRuntimes_Start()
         {
             RunAyncApiTest("IntegrationRuntimes_Start", (example, client, responseCode) =>
             {
-                client.LongRunningOperationRetryTimeout = 1;
+                client.LongRunningOperationRetryTimeout = 0;
                 client.IntegrationRuntimes.Start(RGN(example), FN(example), IRN(example));
             });
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void IntegrationRuntimes_Stop()
         {
             RunAyncApiTest("IntegrationRuntimes_Stop", (example, client, responseCode) =>
             {
-                client.LongRunningOperationRetryTimeout = 1;
+                client.LongRunningOperationRetryTimeout = 0;
                 client.IntegrationRuntimes.Stop(RGN(example), FN(example), IRN(example));
             });
         }

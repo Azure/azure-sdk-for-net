@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Id.</param>
         /// <param name="primaryFabricFriendlyName">The friendly name of the
         /// primary fabric.</param>
+        /// <param name="primaryFabricProvider">The fabric provider of the
+        /// primary fabric.</param>
         /// <param name="recoveryFabricFriendlyName">The friendly name of
         /// recovery fabric.</param>
         /// <param name="recoveryFabricId">The Arm Id of recovery
@@ -66,10 +68,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// enumeration.</param>
         /// <param name="failoverHealth">The consolidated failover health for
         /// the VM.</param>
-        /// <param name="replicationHealthErrors">List of replication health
-        /// errors.</param>
-        /// <param name="failoverHealthErrors">List of failover health
-        /// errors.</param>
+        /// <param name="healthErrors">List of health errors.</param>
         /// <param name="policyId">The ID of Policy governing this PE.</param>
         /// <param name="policyFriendlyName">The name of Policy governing this
         /// PE.</param>
@@ -84,13 +83,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// custom settings.</param>
         /// <param name="recoveryContainerId">The recovery container
         /// Id.</param>
-        public ReplicationProtectedItemProperties(string friendlyName = default(string), string protectedItemType = default(string), string protectableItemId = default(string), string recoveryServicesProviderId = default(string), string primaryFabricFriendlyName = default(string), string recoveryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string primaryProtectionContainerFriendlyName = default(string), string recoveryProtectionContainerFriendlyName = default(string), string protectionState = default(string), string protectionStateDescription = default(string), string activeLocation = default(string), string testFailoverState = default(string), string testFailoverStateDescription = default(string), IList<string> allowedOperations = default(IList<string>), string replicationHealth = default(string), string failoverHealth = default(string), IList<HealthError> replicationHealthErrors = default(IList<HealthError>), IList<HealthError> failoverHealthErrors = default(IList<HealthError>), string policyId = default(string), string policyFriendlyName = default(string), System.DateTime? lastSuccessfulFailoverTime = default(System.DateTime?), System.DateTime? lastSuccessfulTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string failoverRecoveryPointId = default(string), ReplicationProviderSpecificSettings providerSpecificDetails = default(ReplicationProviderSpecificSettings), string recoveryContainerId = default(string))
+        public ReplicationProtectedItemProperties(string friendlyName = default(string), string protectedItemType = default(string), string protectableItemId = default(string), string recoveryServicesProviderId = default(string), string primaryFabricFriendlyName = default(string), string primaryFabricProvider = default(string), string recoveryFabricFriendlyName = default(string), string recoveryFabricId = default(string), string primaryProtectionContainerFriendlyName = default(string), string recoveryProtectionContainerFriendlyName = default(string), string protectionState = default(string), string protectionStateDescription = default(string), string activeLocation = default(string), string testFailoverState = default(string), string testFailoverStateDescription = default(string), IList<string> allowedOperations = default(IList<string>), string replicationHealth = default(string), string failoverHealth = default(string), IList<HealthError> healthErrors = default(IList<HealthError>), string policyId = default(string), string policyFriendlyName = default(string), System.DateTime? lastSuccessfulFailoverTime = default(System.DateTime?), System.DateTime? lastSuccessfulTestFailoverTime = default(System.DateTime?), CurrentScenarioDetails currentScenario = default(CurrentScenarioDetails), string failoverRecoveryPointId = default(string), ReplicationProviderSpecificSettings providerSpecificDetails = default(ReplicationProviderSpecificSettings), string recoveryContainerId = default(string))
         {
             FriendlyName = friendlyName;
             ProtectedItemType = protectedItemType;
             ProtectableItemId = protectableItemId;
             RecoveryServicesProviderId = recoveryServicesProviderId;
             PrimaryFabricFriendlyName = primaryFabricFriendlyName;
+            PrimaryFabricProvider = primaryFabricProvider;
             RecoveryFabricFriendlyName = recoveryFabricFriendlyName;
             RecoveryFabricId = recoveryFabricId;
             PrimaryProtectionContainerFriendlyName = primaryProtectionContainerFriendlyName;
@@ -103,8 +103,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             AllowedOperations = allowedOperations;
             ReplicationHealth = replicationHealth;
             FailoverHealth = failoverHealth;
-            ReplicationHealthErrors = replicationHealthErrors;
-            FailoverHealthErrors = failoverHealthErrors;
+            HealthErrors = healthErrors;
             PolicyId = policyId;
             PolicyFriendlyName = policyFriendlyName;
             LastSuccessfulFailoverTime = lastSuccessfulFailoverTime;
@@ -150,6 +149,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "primaryFabricFriendlyName")]
         public string PrimaryFabricFriendlyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the fabric provider of the primary fabric.
+        /// </summary>
+        [JsonProperty(PropertyName = "primaryFabricProvider")]
+        public string PrimaryFabricProvider { get; set; }
 
         /// <summary>
         /// Gets or sets the friendly name of recovery fabric.
@@ -229,16 +234,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string FailoverHealth { get; set; }
 
         /// <summary>
-        /// Gets or sets list of replication health errors.
+        /// Gets or sets list of health errors.
         /// </summary>
-        [JsonProperty(PropertyName = "replicationHealthErrors")]
-        public IList<HealthError> ReplicationHealthErrors { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of failover health errors.
-        /// </summary>
-        [JsonProperty(PropertyName = "failoverHealthErrors")]
-        public IList<HealthError> FailoverHealthErrors { get; set; }
+        [JsonProperty(PropertyName = "healthErrors")]
+        public IList<HealthError> HealthErrors { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of Policy governing this PE.

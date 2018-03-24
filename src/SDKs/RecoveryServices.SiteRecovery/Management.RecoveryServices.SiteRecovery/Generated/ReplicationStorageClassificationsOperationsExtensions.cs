@@ -22,6 +22,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationStorageClassificationsOperationsExtensions
     {
             /// <summary>
+            /// Gets the list of storage classification objects under a fabric.
+            /// </summary>
+            /// <remarks>
+            /// Lists the storage classifications available in the specified fabric.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Site name of interest.
+            /// </param>
+            public static IPage<StorageClassification> ListByReplicationFabrics(this IReplicationStorageClassificationsOperations operations, string fabricName)
+            {
+                return operations.ListByReplicationFabricsAsync(fabricName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of storage classification objects under a fabric.
+            /// </summary>
+            /// <remarks>
+            /// Lists the storage classifications available in the specified fabric.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Site name of interest.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<StorageClassification>> ListByReplicationFabricsAsync(this IReplicationStorageClassificationsOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReplicationFabricsWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the details of a storage classification.
             /// </summary>
             /// <remarks>
@@ -62,46 +102,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<StorageClassification> GetAsync(this IReplicationStorageClassificationsOperations operations, string fabricName, string storageClassificationName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(fabricName, storageClassificationName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the list of storage classification objects under a fabric.
-            /// </summary>
-            /// <remarks>
-            /// Lists the storage classifications available in the specified fabric.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Site name of interest.
-            /// </param>
-            public static IPage<StorageClassification> ListByReplicationFabrics(this IReplicationStorageClassificationsOperations operations, string fabricName)
-            {
-                return operations.ListByReplicationFabricsAsync(fabricName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of storage classification objects under a fabric.
-            /// </summary>
-            /// <remarks>
-            /// Lists the storage classifications available in the specified fabric.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Site name of interest.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<StorageClassification>> ListByReplicationFabricsAsync(this IReplicationStorageClassificationsOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByReplicationFabricsWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

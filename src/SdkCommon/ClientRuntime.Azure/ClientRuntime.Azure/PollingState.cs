@@ -237,7 +237,6 @@ namespace Microsoft.Rest.Azure
         {
             get
             {
-                //return ValidateRetryAfterValue(_retryAfterInSeconds);
                 return _retryAfterInSeconds;
             }
 

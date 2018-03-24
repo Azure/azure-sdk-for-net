@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Gets the object representing the actual WebHDFS exception being
         /// returned.
         /// </summary>
-        [JsonProperty(PropertyName = "RemoteException")]
+        [JsonProperty(PropertyName = "remoteException")]
         public AdlsRemoteException RemoteException { get; private set; }
 
     }

@@ -152,11 +152,11 @@ namespace Sql.Tests
         {
             DatabaseSecurityAlertPolicy properties = new DatabaseSecurityAlertPolicy
             {
-                State = SecurityAlertPolicyState.New,
-                EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
-                DisabledAlerts = "Preview",
+                State = SecurityAlertPolicyState.Disabled,
+                EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Disabled,
+                DisabledAlerts = string.Empty,
                 EmailAddresses = string.Empty,
-                UseServerDefault = SecurityAlertPolicyUseServerDefault.Enabled,
+                UseServerDefault = SecurityAlertPolicyUseServerDefault.Disabled,
                 StorageEndpoint = string.Empty,
                 StorageAccountAccessKey = string.Empty,
                 RetentionDays = 0,

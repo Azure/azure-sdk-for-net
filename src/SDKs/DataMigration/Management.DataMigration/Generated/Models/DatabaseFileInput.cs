@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// restoring</param>
         /// <param name="fileType">Database file type. Possible values include:
         /// 'Rows', 'Log', 'Filestream', 'NotSupported', 'Fulltext'</param>
-        public DatabaseFileInput(string id = default(string), string logicalName = default(string), string physicalFullName = default(string), string restoreFullName = default(string), DatabaseFileType? fileType = default(DatabaseFileType?))
+        public DatabaseFileInput(string id = default(string), string logicalName = default(string), string physicalFullName = default(string), string restoreFullName = default(string), string fileType = default(string))
         {
             Id = id;
             LogicalName = logicalName;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Log', 'Filestream', 'NotSupported', 'Fulltext'
         /// </summary>
         [JsonProperty(PropertyName = "fileType")]
-        public DatabaseFileType? FileType { get; set; }
+        public string FileType { get; set; }
 
     }
 }

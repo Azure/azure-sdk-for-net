@@ -6,6 +6,7 @@ Write-Host "GitHub user:" $Args[0]
 Write-Host "Branch:     " $Args[1]
 Try
 {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Write-Host "Commit:     " (Invoke-RestMethod "https://api.github.com/repos/$($Args[0])/azure-rest-api-specs/branches/$($Args[1])").commit.sha
 }
 Catch

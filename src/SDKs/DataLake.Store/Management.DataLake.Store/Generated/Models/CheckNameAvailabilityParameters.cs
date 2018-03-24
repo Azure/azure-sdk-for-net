@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store account name availability check parameters
+    /// Data Lake Store account name availability check parameters.
     /// </summary>
     public partial class CheckNameAvailabilityParameters
     {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Initializes a new instance of the CheckNameAvailabilityParameters
         /// class.
         /// </summary>
-        /// <param name="name">the Data Lake Store name to check availability
+        /// <param name="name">The Data Lake Store name to check availability
         /// for.</param>
         public CheckNameAvailabilityParameters(string name)
         {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// the Resource type. Note: This should not be set by the user, as the
+        /// The resource type. Note: This should not be set by the user, as the
         /// constant value is Microsoft.DataLakeStore/accounts
         /// </summary>
         [JsonProperty(PropertyName = "type")]

@@ -1,9 +1,25 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 0.6.0-preview
+
+### Feature Additions
+  * Added new AzureDatabricks LinkedService and DatabricksNotebook Activity
+  * Added headNodeSize and dataNodeSize properties in HDInsightOnDemand LinkedService
+  * Added LinkedService, Dataset, CopySource for SalesforceMarketingCloud
+  * Added support for SecureOutput on all activities 
+  * Added new BatchCount property on ForEach activity which control how many concurrent activities to run
+  * Added new Filter Activity
+  * Added Linked Service Parameters support
+  
 ## Version 0.5.0-preview
 
 ### Feature Additions
   * Enable AAD auth via service principal and management service identity for Azure SQL DB/DW linked service types
+  * Support integration runtime sharing across subscription and data factory
+  * Enable Azure Key Vault for all compute linked service
+  * Add SAP ECC Source
+  * GoogleBigQuery support clientId and clientSecret for UserAuthentication
+  * Add LinkedService, Dataset, CopySource for Vertica and Netezza
 
 ## Version 0.4.0-preview
 

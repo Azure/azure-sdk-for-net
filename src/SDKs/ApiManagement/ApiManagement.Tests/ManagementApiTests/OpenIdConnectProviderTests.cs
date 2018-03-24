@@ -48,21 +48,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(openIdNoSecret, createResponse.Name);
 
                     // get to check it was created
-                    var getResponse = await testBase.client.OpenIdConnectProvider.GetWithHttpMessagesAsync(
+                    var openIdConnectProviderContract = await testBase.client.OpenIdConnectProvider.GetAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         openIdNoSecret);
 
-                    Assert.NotNull(getResponse);
-                    Assert.NotNull(getResponse.Body);
-                    Assert.NotNull(getResponse.Headers.ETag);
-
-                    Assert.Equal(openIdProviderName, getResponse.Body.DisplayName);
-                    Assert.Equal(metadataEndpoint, getResponse.Body.MetadataEndpoint);
-                    Assert.Equal(clientId, getResponse.Body.ClientId);
-                    Assert.Equal(openIdNoSecret, getResponse.Body.Name);
-                    Assert.Null(getResponse.Body.ClientSecret);
-                    Assert.Null(getResponse.Body.Description);
+                    Assert.NotNull(openIdConnectProviderContract);
+                    
+                    Assert.Equal(openIdProviderName, openIdConnectProviderContract.DisplayName);
+                    Assert.Equal(metadataEndpoint, openIdConnectProviderContract.MetadataEndpoint);
+                    Assert.Equal(clientId, openIdConnectProviderContract.ClientId);
+                    Assert.Equal(openIdNoSecret, openIdConnectProviderContract.Name);
+                    Assert.Null(openIdConnectProviderContract.ClientSecret);
+                    Assert.Null(openIdConnectProviderContract.Description);
 
                     // create a Secret property
                     string openIdProviderName2 = TestUtilities.GenerateName("openIdName");
@@ -112,17 +110,23 @@ namespace ApiManagement.Tests.ManagementApiTests
                         new Microsoft.Rest.Azure.OData.ODataQuery<OpenidConnectProviderContract> { Top = 1 });
 
                     Assert.NotNull(listResponse);
-                    Assert.Equal(1, listResponse.Count());
+                    Assert.Single(listResponse);
                     Assert.NotNull(listResponse.NextPageLink);
 
+                    // get the openid connect provider tag
+                    var openIdConnectProviderTag = await testBase.client.OpenIdConnectProvider.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        openIdNoSecret);
+                    Assert.NotNull(openIdConnectProviderTag);
+                    Assert.NotNull(openIdConnectProviderTag.ETag);
+
                     // delete a OpenId Connect Provider
-                    var deleteResponse = await testBase.client.OpenIdConnectProvider.DeleteWithHttpMessagesAsync(
+                    await testBase.client.OpenIdConnectProvider.DeleteAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         openIdNoSecret, 
-                        getResponse.Headers.ETag);
-                    Assert.NotNull(deleteResponse);
-                    Assert.Equal(HttpStatusCode.NoContent, deleteResponse.Response.StatusCode);
+                        openIdConnectProviderTag.ETag);
 
                     // get the deleted openId Connect Provider to make sure it was deleted
                     try
@@ -134,6 +138,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     {
                         Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                     }
+
+                    // get the etag of openId2
+                    openIdConnectProviderTag = await testBase.client.OpenIdConnectProvider.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        openId2);
+                    Assert.NotNull(openIdConnectProviderTag);
+                    Assert.NotNull(openIdConnectProviderTag.ETag);
 
                     // patch the openId Connect Provider
                     string updateMetadataEndpoint = GetHttpsUrl();
@@ -147,7 +159,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             MetadataEndpoint = updateMetadataEndpoint,
                             ClientId = updatedClientId
                         },
-                        "*");
+                        openIdConnectProviderTag.ETag);
 
                     // get to check it was patched
                     var getResponseOpendId2 = await testBase.client.OpenIdConnectProvider.GetWithHttpMessagesAsync(

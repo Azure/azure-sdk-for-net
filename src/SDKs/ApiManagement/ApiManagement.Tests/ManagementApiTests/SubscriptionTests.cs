@@ -42,7 +42,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     new Microsoft.Rest.Azure.OData.ODataQuery<SubscriptionContract> { Top = 1 });
 
                 Assert.NotNull(listResponse);
-                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse);
                 Assert.NotNull(listResponse.NextPageLink);
 
                 // get first subscription
@@ -185,7 +185,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(subscriptionResponse.Headers.ETag);
                     Assert.NotEqual(patchedPk, subscriptionResponse.Body.PrimaryKey);
                     Assert.NotEqual(patchedSk, subscriptionResponse.Body.SecondaryKey);
-
+                    
                     // delete the subscription
                     testBase.client.Subscription.Delete(
                         testBase.rgName,

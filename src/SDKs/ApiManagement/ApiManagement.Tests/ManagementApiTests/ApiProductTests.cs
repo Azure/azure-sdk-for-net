@@ -3,13 +3,13 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.ApiManagement;
-using Microsoft.Azure.Management.ApiManagement.Models;
-using Xunit;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
+using Microsoft.Azure.Management.ApiManagement;
+using Microsoft.Azure.Management.ApiManagement.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -54,20 +54,27 @@ namespace ApiManagement.Tests.ManagementApiTests
                     new Microsoft.Rest.Azure.OData.ODataQuery<ProductContract> { Top = 1 });
 
                 Assert.NotNull(listResponse);
-                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse);
                 Assert.Equal("Starter", listResponse.First().DisplayName);
                 Assert.NotEmpty(listResponse.NextPageLink);
 
-                var listByApiResponse = await testBase.client.ApiProduct.ListByApisWithHttpMessagesAsync(
+                // check the next link returned from above query works
+                var pagedApiProducts = await testBase.client.ApiProduct.ListByApisNextAsync(listResponse.NextPageLink);
+                Assert.NotNull(pagedApiProducts);
+                Assert.Single(pagedApiProducts);
+                Assert.Equal("Unlimited", pagedApiProducts.First().DisplayName);
+
+                // try list with Skip Odata parameter
+                var listByApiResponse = await testBase.client.ApiProduct.ListByApisAsync(
                     testBase.rgName,
                     testBase.serviceName,
                     api.Name,
                     new Microsoft.Rest.Azure.OData.ODataQuery<ProductContract> { Skip = 1 });
 
                 Assert.NotNull(listByApiResponse);
-                Assert.Equal(1, listByApiResponse.Body.Count());
-                Assert.Equal("Unlimited", listByApiResponse.Body.First().DisplayName);
-                Assert.NotNull(listByApiResponse.Body.NextPageLink);
+                Assert.Single(listByApiResponse);
+                Assert.Equal("Unlimited", listByApiResponse.First().DisplayName);
+                Assert.Empty(listByApiResponse.NextPageLink);
             }
         }
     }

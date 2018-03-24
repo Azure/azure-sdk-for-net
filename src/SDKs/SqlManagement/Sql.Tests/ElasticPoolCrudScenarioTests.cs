@@ -5,9 +5,14 @@ using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
@@ -96,6 +101,75 @@ namespace Sql.Tests
                 Func<ElasticPoolUpdate> createModelFunc = () => new ElasticPoolUpdate();
                 TestUpdateElasticPool(sqlClient, resourceGroup, server, createModelFunc, updateFunc);
             };
+        }
+
+        [Fact]
+        public async Task TestCancelUpdateElasticPoolOperation()
+        {
+            /* *
+             * In this test we only test the cancel operation on resize pool from Premium to Premium
+             *    since currently we only support Cancel pool resize operation on Premium <-> Premium
+             * */
+            string testPrefix = "sqlelasticpoollistcanceloperation-";
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup("North Europe");
+                Server server = context.CreateServer(resourceGroup, "northeurope");
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Dictionary<string, string> tags = new Dictionary<string, string>()
+                {
+                    { "tagKey1", "TagValue1"}
+                };
+
+                // Create a premium elastic pool with required parameters
+                string epName = SqlManagementTestUtilities.GenerateName();
+                var epInput = new ElasticPool()
+                {
+                    Location = server.Location,
+                    Edition = DatabaseEdition.Premium,
+                    Tags = tags,
+                    Dtu = 125
+                };
+                var elasticPool = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, elasticPool, epName);
+                Assert.NotNull(elasticPool);
+
+                // Update elastic pool to Premium with 250 DTU
+                var epUpdateReponse = sqlClient.ElasticPools.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, epName, new ElasticPool()
+                {
+                    Location = server.Location,
+                    Edition = DatabaseEdition.Premium,
+                    Dtu = 250,
+                    Tags = tags
+                });
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
+                }
+
+                // Get the pool update operation for new added properties on elastic pool operations: ETA, Operation Description and IsCancellable
+                //   Expected they have null value since not been updated by operation progress
+                AzureOperationResponse<IPage<ElasticPoolOperation>> response = sqlClient.ElasticPoolOperations.ListByElasticPoolWithHttpMessagesAsync(resourceGroup.Name, server.Name, epName).Result;
+                Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
+                IList<ElasticPoolOperation> responseObject = response.Body.ToList();
+                Assert.Single(responseObject);
+                Assert.NotNull(responseObject[0].PercentComplete);
+                Assert.Null(responseObject[0].EstimatedCompletionTime);
+                Assert.Null(responseObject[0].Description);
+                Assert.Null(responseObject[0].IsCancellable);
+
+                // Cancel the elastic pool update operation
+                string requestId = responseObject[0].Name;
+                sqlClient.ElasticPoolOperations.Cancel(resourceGroup.Name, server.Name, epName, Guid.Parse(requestId));
+                CloudException ex = await Assert.ThrowsAsync<CloudException>(() => sqlClient.GetPutOrPatchOperationResultAsync(epUpdateReponse.Result, new Dictionary<string, List<string>>(), CancellationToken.None));
+                Assert.Contains("OperationCancelled", ex.Body.Code);
+
+                // Make sure the elastic pool is not updated due to cancel operation
+                var epGetResponse = sqlClient.ElasticPools.Get(resourceGroup.Name, server.Name, epName);
+                Assert.Equal(125, epGetResponse.Dtu);
+                Assert.Equal(DatabaseEdition.Premium, epGetResponse.Edition);
+            }
         }
 
         private void TestUpdateElasticPool<TUpdateModel>(

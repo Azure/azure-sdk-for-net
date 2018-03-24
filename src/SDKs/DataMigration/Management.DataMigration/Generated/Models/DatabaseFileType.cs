@@ -10,69 +10,16 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DatabaseFileType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DatabaseFileType
+    public static class DatabaseFileType
     {
-        [EnumMember(Value = "Rows")]
-        Rows,
-        [EnumMember(Value = "Log")]
-        Log,
-        [EnumMember(Value = "Filestream")]
-        Filestream,
-        [EnumMember(Value = "NotSupported")]
-        NotSupported,
-        [EnumMember(Value = "Fulltext")]
-        Fulltext
-    }
-    internal static class DatabaseFileTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this DatabaseFileType? value)
-        {
-            return value == null ? null : ((DatabaseFileType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DatabaseFileType value)
-        {
-            switch( value )
-            {
-                case DatabaseFileType.Rows:
-                    return "Rows";
-                case DatabaseFileType.Log:
-                    return "Log";
-                case DatabaseFileType.Filestream:
-                    return "Filestream";
-                case DatabaseFileType.NotSupported:
-                    return "NotSupported";
-                case DatabaseFileType.Fulltext:
-                    return "Fulltext";
-            }
-            return null;
-        }
-
-        internal static DatabaseFileType? ParseDatabaseFileType(this string value)
-        {
-            switch( value )
-            {
-                case "Rows":
-                    return DatabaseFileType.Rows;
-                case "Log":
-                    return DatabaseFileType.Log;
-                case "Filestream":
-                    return DatabaseFileType.Filestream;
-                case "NotSupported":
-                    return DatabaseFileType.NotSupported;
-                case "Fulltext":
-                    return DatabaseFileType.Fulltext;
-            }
-            return null;
-        }
+        public const string Rows = "Rows";
+        public const string Log = "Log";
+        public const string Filestream = "Filestream";
+        public const string NotSupported = "NotSupported";
+        public const string Fulltext = "Fulltext";
     }
 }

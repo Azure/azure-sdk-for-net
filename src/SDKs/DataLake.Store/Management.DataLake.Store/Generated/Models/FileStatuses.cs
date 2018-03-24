@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets the object containing the list of properties of the files.
         /// </summary>
-        [JsonProperty(PropertyName = "FileStatus")]
+        [JsonProperty(PropertyName = "fileStatus")]
         public IList<FileStatusProperties> FileStatus { get; private set; }
 
     }
