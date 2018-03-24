@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.ManagementPartner.Models
         /// <param name="id">Identifier of the partner</param>
         /// <param name="name">Name of the partner</param>
         /// <param name="partnerId">This is the partner id</param>
+        /// <param name="partnerName">This is the partner name</param>
         /// <param name="tenantId">This is the tenant id.</param>
         /// <param name="objectId">This is the object id.</param>
         /// <param name="version">This is the version.</param>
@@ -48,12 +49,13 @@ namespace Microsoft.Azure.Management.ManagementPartner.Models
         /// include: 'Active', 'Deleted'</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.ManagementPartner/partners"</param>
-        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string tenantId = default(string), string objectId = default(string), string version = default(string), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string state = default(string), string type = default(string))
+        public PartnerResponse(int? etag = default(int?), string id = default(string), string name = default(string), string partnerId = default(string), string partnerName = default(string), string tenantId = default(string), string objectId = default(string), string version = default(string), System.DateTime? updatedTime = default(System.DateTime?), System.DateTime? createdTime = default(System.DateTime?), string state = default(string), string type = default(string))
         {
             Etag = etag;
             Id = id;
             Name = name;
             PartnerId = partnerId;
+            PartnerName = partnerName;
             TenantId = tenantId;
             ObjectId = objectId;
             Version = version;
@@ -92,6 +94,12 @@ namespace Microsoft.Azure.Management.ManagementPartner.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerId")]
         public string PartnerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets this is the partner name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.partnerName")]
+        public string PartnerName { get; set; }
 
         /// <summary>
         /// Gets or sets this is the tenant id.

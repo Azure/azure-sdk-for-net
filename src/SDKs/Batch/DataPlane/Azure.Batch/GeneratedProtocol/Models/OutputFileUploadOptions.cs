@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// of files should be uploaded.
         /// </summary>
         /// <remarks>
-        /// The default is taskCompletion. Possible values include:
+        /// The default is taskcompletion. Possible values include:
         /// 'taskSuccess', 'taskFailure', 'taskCompletion'
         /// </remarks>
         [JsonProperty(PropertyName = "uploadCondition")]

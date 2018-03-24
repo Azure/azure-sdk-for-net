@@ -1000,6 +1000,38 @@ namespace BatchClientIntegrationTests
             await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public void PoolStateCount_IsReturnedFromServer()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result)
+                {
+                    var nodeCounts = batchCli.PoolOperations.ListPoolNodeCounts();
+
+                    Assert.NotEmpty(nodeCounts);
+                    var poolId = nodeCounts.First().PoolId;
+
+                    foreach (var poolNodeCount in nodeCounts)
+                    {
+                        Assert.NotEmpty(poolNodeCount.PoolId);
+                        Assert.NotNull(poolNodeCount.Dedicated);
+                        Assert.NotNull(poolNodeCount.LowPriority);
+
+                        // Check a few properties at random
+                        Assert.Equal(0, poolNodeCount.LowPriority.Unusable);
+                        Assert.Equal(0, poolNodeCount.LowPriority.Offline);
+                    }
+
+                    var filteredNodeCounts = batchCli.PoolOperations.ListPoolNodeCounts(new ODATADetailLevel(filterClause: $"poolId eq '{poolId}'")).ToList();
+                    Assert.Single(filteredNodeCounts);
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
         #region Test helpers
 
         /// <summary>

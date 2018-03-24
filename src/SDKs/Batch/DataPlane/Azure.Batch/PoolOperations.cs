@@ -1827,6 +1827,138 @@ namespace Microsoft.Azure.Batch
             return enumerable;
         }
 
-#endregion // PoolOperations
+        internal async System.Threading.Tasks.Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsyncImpl(
+            string poolId,
+            string computeNodeId,
+            string containerUrl,
+            DateTime startTime,
+            DateTime? endTime,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken)
+        {
+            var task = _parentBatchClient.ProtocolLayer.UploadBatchServiceLogs(
+                poolId,
+                computeNodeId,
+                containerUrl,
+                startTime,
+                endTime,
+                bhMgr,
+                cancellationToken);
+
+            var result = await task.ConfigureAwait(false);
+            
+            return new UploadBatchServiceLogsResult(result.Body);
+        }
+
+        /// <summary>
+        /// Upload Azure Batch service log files from the specified compute node.
+        /// </summary>
+        /// <param name="poolId">The id of the pool that contains the compute node.</param>
+        /// <param name="computeNodeId">The id of the compute node.</param>
+        /// <param name="containerUrl">
+        /// The URL of the container within Azure Blob Storage to which to upload the Batch Service log file(s). The URL must include a Shared Access Signature (SAS) granting write permissions to the container.
+        /// </param>
+        /// <param name="startTime">
+        /// The start of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded.
+        /// </param>
+        /// <param name="endTime">
+        /// The end of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded. If this is omitted, the default is the current time.
+        /// </param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <remarks>
+        /// This is for gathering Azure Batch service log files in an automated fashion from nodes if you are experiencing an error and wish to escalate to Azure support.
+        /// The Azure Batch service log files should be shared with Azure support to aid in debugging issues with the Batch service.
+        /// </remarks>
+        public System.Threading.Tasks.Task<UploadBatchServiceLogsResult> UploadComputeNodeBatchServiceLogsAsync(
+            string poolId,
+            string computeNodeId,
+            string containerUrl,
+            DateTime startTime,
+            DateTime? endTime = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // craft the behavior manager for this call
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            return UploadComputeNodeBatchServiceLogsAsyncImpl(
+                poolId,
+                computeNodeId,
+                containerUrl,
+                startTime,
+                endTime,
+                bhMgr,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Upload Azure Batch service log files from the specified compute node.
+        /// </summary>
+        /// <param name="poolId">The id of the pool that contains the compute node.</param>
+        /// <param name="computeNodeId">The id of the compute node.</param>
+        /// <param name="containerUrl">
+        /// The URL of the container within Azure Blob Storage to which to upload the Batch Service log file(s). The URL must include a Shared Access Signature (SAS) granting write permissions to the container.
+        /// </param>
+        /// <param name="startTime">
+        /// The start of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded.
+        /// </param>
+        /// <param name="endTime">
+        /// The end of the time range from which to upload Batch Service log file(s). Any log file containing a log message in the time range will be uploaded.
+        /// This means that the operation might retrieve more logs than have been requested since the entire log file is always uploaded. If this is omitted, the default is the current time.
+        /// </param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <remarks>
+        /// This is for gathering Azure Batch service log files in an automated fashion from nodes if you are experiencing an error and wish to escalate to Azure support.
+        /// The Azure Batch service log files should be shared with Azure support to aid in debugging issues with the Batch service.
+        /// </remarks>
+        /// <returns>The result of uploading the batch service logs.</returns>
+        public UploadBatchServiceLogsResult UploadComputeNodeBatchServiceLogs(
+            string poolId,
+            string computeNodeId,
+            string containerUrl,
+            DateTime startTime,
+            DateTime? endTime = null,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            var asyncTask = this.UploadComputeNodeBatchServiceLogsAsync(
+                poolId,
+                computeNodeId,
+                containerUrl,
+                startTime,
+                endTime,
+                additionalBehaviors);
+            return asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+        }
+
+        /// <summary>
+        /// Lists the number of nodes in each state, grouped by pool.
+        /// </summary>
+        /// <param name="detailLevel">A <see cref="DetailLevel"/> used for filtering the list and for controlling which properties are retrieved from the service.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/> and <paramref name="detailLevel"/>.</param>
+        /// <returns>An <see cref="IPagedEnumerable{PoolNodeCounts}"/> that can be used to enumerate pool node count details asynchronously or synchronously.</returns>
+        /// <remarks>This method returns immediately; the pool counts are retrieved from the Batch service only when the collection is enumerated.
+        /// Retrieval is non-atomic; pool counts are retrieved in pages during enumeration of the collection.</remarks>
+        public IPagedEnumerable<PoolNodeCounts> ListPoolNodeCounts(DetailLevel detailLevel = null, IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            // craft the behavior manager for this call
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            PagedEnumerable<PoolNodeCounts> enumerable = new PagedEnumerable<PoolNodeCounts>( // the lamda will be the enumerator factory
+                () =>
+                {
+                    // here is the actual strongly typed enumerator
+                    AsyncListPoolNodeCountsEnumerator typedEnumerator = new AsyncListPoolNodeCountsEnumerator(this, bhMgr, detailLevel);
+                    return typedEnumerator;
+                });
+
+            return enumerable;
+        }
+
+        #endregion // PoolOperations
     }
 }

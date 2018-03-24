@@ -46,6 +46,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "Unable Match Http")]
         public void TestVMScaleSetVMOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -74,6 +75,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "Unable Match Http")]
         public void TestVMScaleSetVMOperations_ManagedDisks()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -155,6 +157,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "Unable Match Http")]
         public void TestVMScaleSetVMOperations_Put()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -203,6 +206,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetVMOperations_Redeploy()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -242,7 +246,7 @@ namespace Compute.Tests
         /// Perform maintenance on one instance of VM Scale Set
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void TestVMScaleSetVMOperations_PerformMaintenance()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

@@ -230,6 +230,15 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.PoolUpgradeOSHeaders>> UpgradePoolOS(string poolId, string targetOSVersion, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
+        Task<AzureOperationResponse<Models.UploadBatchServiceLogsResult, Models.ComputeNodeUploadBatchServiceLogsHeaders>> UploadBatchServiceLogs(
+            string poolId,
+            string nodeId,
+            string containerUrl,
+            DateTime startTime,
+            DateTime? endTime,
+            BehaviorManager bhMgr,
+            CancellationToken cancellationToken);
+
         Task<AzureOperationHeaderResponse<Models.FileDeleteFromTaskHeaders>> DeleteNodeFileByTask(string jobId, string taskId, string filePath, bool? recursive, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.ComputeNode, Models.ComputeNodeGetHeaders>> GetComputeNode(string poolId, string nodeId, BehaviorManager bhMgr, CancellationToken cancellationToken);
@@ -290,7 +299,13 @@ namespace Microsoft.Azure.Batch
             BehaviorManager bhMgr,
             DetailLevel detailLevel,
             CancellationToken cancellationToken);
-            
+
+        Task<AzureOperationResponse<IPage<Models.PoolNodeCounts>, Models.AccountListPoolNodeCountsHeaders>> ListPoolNodeCounts(
+            string skipToken,
+            BehaviorManager bhMgr,
+            DetailLevel detailLevel,
+            CancellationToken cancellationToken);
+
         Task<AzureOperationResponse<Models.ApplicationSummary, Models.ApplicationGetHeaders>> GetApplicationSummary(string applicationId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<IPage<Models.ApplicationSummary>, Models.ApplicationListHeaders>> ListApplicationSummaries(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken);
