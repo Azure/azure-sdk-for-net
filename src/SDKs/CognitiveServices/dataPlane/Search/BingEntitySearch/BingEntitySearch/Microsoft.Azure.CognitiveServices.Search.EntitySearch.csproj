@@ -6,10 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Search.EntitySearch</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Entity Search API.</Description>
-    <VersionPrefix>1.1.0-preview</VersionPrefix>
+    <VersionPrefix>1.2.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.EntitySearch</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;EntitySearch API;BingEntitySearch API;REST HTTPclient;EntitySearchSDK;BingEntitySearchSDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Cognitive Services Entity Search SDK. Included with this release is support for Entity Search API.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a public release of the Cognitive Services Entity Search SDK. Included with this release is support for Entity Search API.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

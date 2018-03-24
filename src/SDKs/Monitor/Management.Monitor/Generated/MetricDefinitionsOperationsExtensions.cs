@@ -32,9 +32,12 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='resourceUri'>
             /// The identifier of the resource.
             /// </param>
-            public static IEnumerable<MetricDefinition> List(this IMetricDefinitionsOperations operations, string resourceUri)
+            /// <param name='metricnamespace'>
+            /// Metric namespace to query metric definitions for.
+            /// </param>
+            public static IEnumerable<MetricDefinition> List(this IMetricDefinitionsOperations operations, string resourceUri, string metricnamespace = default(string))
             {
-                return operations.ListAsync(resourceUri).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceUri, metricnamespace).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,12 +49,15 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='resourceUri'>
             /// The identifier of the resource.
             /// </param>
+            /// <param name='metricnamespace'>
+            /// Metric namespace to query metric definitions for.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<MetricDefinition>> ListAsync(this IMetricDefinitionsOperations operations, string resourceUri, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<MetricDefinition>> ListAsync(this IMetricDefinitionsOperations operations, string resourceUri, string metricnamespace = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, metricnamespace, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

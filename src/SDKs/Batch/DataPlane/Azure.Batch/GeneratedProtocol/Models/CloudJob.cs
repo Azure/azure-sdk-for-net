@@ -266,10 +266,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// tasks in the job are in the completed state.
         /// </summary>
         /// <remarks>
-        /// noAction - do nothing. The job remains active unless terminated or
-        /// disabled by some other means. terminateJob - terminate the job. The
-        /// job's terminateReason is set to 'AllTasksComplete'. The default is
-        /// noAction. Possible values include: 'noAction', 'terminateJob'
+        /// The default is noaction. Possible values include: 'noAction',
+        /// 'terminateJob'
         /// </remarks>
         [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
@@ -282,12 +280,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// A task is considered to have failed if has a failureInfo. A
         /// failureInfo is set if the task completes with a non-zero exit code
         /// after exhausting its retry count, or if there was an error starting
-        /// the task, for example due to a resource file download error.
-        /// noAction - do nothing. performExitOptionsJobAction - take the
-        /// action associated with the task exit condition in the task's
-        /// exitConditions collection. (This may still result in no action
-        /// being taken, if that is what the task specifies.) The default is
-        /// noAction. Possible values include: 'noAction',
+        /// the task, for example due to a resource file download error. The
+        /// default is noaction. Possible values include: 'noAction',
         /// 'performExitOptionsJobAction'
         /// </remarks>
         [JsonProperty(PropertyName = "onTaskFailure")]

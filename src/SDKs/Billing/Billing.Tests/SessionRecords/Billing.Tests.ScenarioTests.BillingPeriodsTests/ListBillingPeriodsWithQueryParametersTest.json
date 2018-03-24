@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2017-04-24-preview&$filter=billingPeriodEndDate%20gt%202017-01-31&$top=1",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM0N2Q2M2EtNDIxYS00M2E3LTgzNmEtNWYzODljNzljZDA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nUGVyaW9kcz9hcGktdmVyc2lvbj0yMDE3LTA0LTI0LXByZXZpZXcmJGZpbHRlcj1iaWxsaW5nUGVyaW9kRW5kRGF0ZSUyMGd0JTIwMjAxNy0wMS0zMSYkdG9wPTE=",
+      "RequestUri": "/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2018-03-01-preview&$filter=billingPeriodEndDate%20gt%202017-01-31&$top=1",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDM0N2Q2M2EtNDIxYS00M2E3LTgzNmEtNWYzODljNzljZDA3L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nUGVyaW9kcz9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXcmJGZpbHRlcj1iaWxsaW5nUGVyaW9kRW5kRGF0ZSUyMGd0JTIwMjAxNy0wMS0zMSYkdG9wPTE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -17,7 +17,7 @@
           "Microsoft.Azure.Management.Billing.BillingManagementClient/1.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods/201706-1\",\r\n      \"type\": \"Microsoft.Billing/billingPeriods\",\r\n      \"name\": \"201706-1\",\r\n      \"properties\": {\r\n        \"billingPeriodStartDate\": \"2017-04-10\",\r\n        \"billingPeriodEndDate\": \"2017-05-09\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://billing-preview.windowsazure.com/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2017-04-24-preview&$filter=billingPeriodEndDate%20gt%202017-01-31&$top=1&$skiptoken=MQ%3D%3D\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods/201706-1\",\r\n      \"type\": \"Microsoft.Billing/billingPeriods\",\r\n      \"name\": \"201706-1\",\r\n      \"properties\": {\r\n        \"billingPeriodStartDate\": \"2017-04-10\",\r\n        \"billingPeriodEndDate\": \"2017-05-09\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://billing-preview.windowsazure.com/subscriptions/0347d63a-421a-43a7-836a-5f389c79cd07/providers/Microsoft.Billing/billingPeriods?api-version=2018-03-01-preview&$filter=billingPeriodEndDate%20gt%202017-01-31&$top=1&$skiptoken=MQ%3D%3D\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"

@@ -3,11 +3,14 @@
 ## Version 0.6.0-preview
 
 ### Feature Additions
-  * SecureOutput and BatchCount
-  * Filter Activity
-  * Linked Service Parameters
-  * FilterActivity
-
+  * Added new AzureDatabricks LinkedService and DatabricksNotebook Activity
+  * Added headNodeSize and dataNodeSize properties in HDInsightOnDemand LinkedService
+  * Added LinkedService, Dataset, CopySource for SalesforceMarketingCloud
+  * Added support for SecureOutput on all activities 
+  * Added new BatchCount property on ForEach activity which control how many concurrent activities to run
+  * Added new Filter Activity
+  * Added Linked Service Parameters support
+  
 ## Version 0.5.0-preview
 
 ### Feature Additions

@@ -35,6 +35,7 @@ namespace Compute.Tests
         }
 
         [Fact]
+        [Trait("Failure", "Password policy")]
         public void TestVMExtensionOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

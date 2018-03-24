@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for NameCheckFailureReason.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum NameCheckFailureReason
+    public static class NameCheckFailureReason
     {
-        [EnumMember(Value = "AlreadyExists")]
-        AlreadyExists,
-        [EnumMember(Value = "Invalid")]
-        Invalid
-    }
-    internal static class NameCheckFailureReasonEnumExtension
-    {
-        internal static string ToSerializedValue(this NameCheckFailureReason? value)
-        {
-            return value == null ? null : ((NameCheckFailureReason)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this NameCheckFailureReason value)
-        {
-            switch( value )
-            {
-                case NameCheckFailureReason.AlreadyExists:
-                    return "AlreadyExists";
-                case NameCheckFailureReason.Invalid:
-                    return "Invalid";
-            }
-            return null;
-        }
-
-        internal static NameCheckFailureReason? ParseNameCheckFailureReason(this string value)
-        {
-            switch( value )
-            {
-                case "AlreadyExists":
-                    return NameCheckFailureReason.AlreadyExists;
-                case "Invalid":
-                    return NameCheckFailureReason.Invalid;
-            }
-            return null;
-        }
+        public const string AlreadyExists = "AlreadyExists";
+        public const string Invalid = "Invalid";
     }
 }

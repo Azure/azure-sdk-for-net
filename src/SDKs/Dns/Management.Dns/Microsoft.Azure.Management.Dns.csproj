@@ -6,12 +6,14 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Dns</PackageId>
 		<Description>Provides management capabilities for Azure Dns.</Description>
-		<Version>2.0.0-preview</Version>
+		<Version>2.2.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Dns</AssemblyName>    
 		<PackageTags>Microsoft Azure Dns;Dns;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure DNS SDK. Included with this release is support for CAA records. This release also changes the signature of the Delete operation of a DNS zone.
+        1) Support for Private DNS zones in 2018-03-01-preview API version.
+        2) Support for non-printable characters in TXT records in 2017-10-01 API version. Non-printable characters in TXT records can be specified using '\DDD' RFC 1035 format where DDD is the decimal number of the character (e.g. \000 for null character). Note that '\' also escapes non-decimal digits as meaning to interpret the next character literally as in RFC 1035, so to use a backslash itself in the TXT record resolution you must escape it (e.g. '\\').
+        3) Support for updating of DNS zones using patch semantics
       ]]>
 		</PackageReleaseNotes>    
 	</PropertyGroup>
