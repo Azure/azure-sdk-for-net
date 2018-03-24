@@ -99,7 +99,7 @@ function Start-Script {
     
     $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     Write-InfoLog "Commencing code generation"  -logToConsole
-    Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkDirectory $SdkDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName
+    #Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkDirectory $SdkDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName
     
     $invokerMessage = ".\tools\generate.ps1 was invoked by"
     if($PowershellInvoker) {
@@ -119,8 +119,10 @@ catch {
     Write-ErrorLog $_.ToString() -logToFile
 }
 finally {
-    Get-OutputStream | Out-File -FilePath $logFile | Out-Null
-    Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
+    #Get-OutputStream | Out-File -FilePath $logFile | Out-Null
+    #Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
+    [IO.File]::WriteAllLines($logFile, (Get-OutputStream))
+    [IO.File]::WriteAllLines($logFile, (Get-ErrorStream))
     Clear-OutputStreams
     Get-Module -ListAvailable "$modulePath" | Remove-Module 
 }
