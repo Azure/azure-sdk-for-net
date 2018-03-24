@@ -1205,6 +1205,66 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/sdktestbn3/relationshipLinks/testRelationshipLink2327726/operations/47cbb045571f4d5cae81575e4a49f67d?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzkwOWU5NzktZWY3MS00ZGVmLWE5NzAtYmM3YzE1NGRiOGM1L3Jlc291cmNlR3JvdXBzL1Rlc3RIdWJSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkN1c3RvbWVySW5zaWdodHMvaHVicy9zZGt0ZXN0Ym4zL3JlbGF0aW9uc2hpcExpbmtzL3Rlc3RSZWxhdGlvbnNoaXBMaW5rMjMyNzcyNi9vcGVyYXRpb25zLzQ3Y2JiMDQ1NTcxZjRkNWNhZTgxNTc1ZTRhNDlmNjdkP2FwaS12ZXJzaW9uPTIwMTctMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.CustomerInsights.CustomerInsightsManagementClient/0.0.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/sdktestbn3/relationshipLinks/testRelationshipLink2327726\",\r\n  \"name\": \"sdktestbn3/testRelationshipLink2327726\",\r\n  \"properties\": {\r\n    \"description\": {\r\n      \"en-us\": \"Link Description\"\r\n    },\r\n    \"displayName\": {\r\n      \"en-us\": \"Link DisplayName\"\r\n    },\r\n    \"interactionType\": \"TestInteractionType187\",\r\n    \"linkName\": \"testRelationshipLink2327726\",\r\n    \"profilePropertyReferences\": [\r\n      {\r\n        \"interactionPropertyName\": \"profile1\",\r\n        \"profilePropertyName\": \"ProfileId\"\r\n      }\r\n    ],\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"relatedProfilePropertyReferences\": [\r\n      {\r\n        \"interactionPropertyName\": \"profile1\",\r\n        \"profilePropertyName\": \"ProfileId\"\r\n      }\r\n    ],\r\n    \"relationshipName\": \"testRelationship2329835\",\r\n    \"tenantId\": \"sdktestbn3\"\r\n  },\r\n  \"type\": \"Microsoft.CustomerInsights/hubs/relationshipLinks\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 02 Feb 2017 20:42:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14720"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "b2cee20b-cc85-41d1-8677-053a9682b98a",
+          "ef9f862d-44e9-4f00-81d7-35528da505e1"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "36d0fdfa-ecc1-4535-ae85-25cbc286f43f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170202T204214Z:36d0fdfa-ecc1-4535-ae85-25cbc286f43f"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {

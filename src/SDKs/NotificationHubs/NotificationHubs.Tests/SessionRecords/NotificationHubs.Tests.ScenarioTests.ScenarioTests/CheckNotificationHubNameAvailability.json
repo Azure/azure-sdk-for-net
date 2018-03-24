@@ -647,6 +647,65 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/providers/Microsoft.NotificationHubs/operationresults/HydraNH-Namespace8748?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmNhYzJhMTQtYmE2Yi00NmE2LWJjZTgtMmQ5NzgxYTQxYmEyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTm90aWZpY2F0aW9uSHVicy9vcGVyYXRpb25yZXN1bHRzL0h5ZHJhTkgtTmFtZXNwYWNlODc0OD9hcGktdmVyc2lvbj0yMDE3LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"subscriptions/2cac2a14ba6b46a6bce82d9781a41ba2/operationsStatus/HydraNH-Namespace8748\",\r\n  \"name\": \"HydraNH-Namespace8748\",\r\n  \"status\": \"Completed\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 23:55:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "948aff20-e518-4826-9bb0-dd9280027aea_M0_M0"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14946"
+        ],
+        "x-ms-correlation-request-id": [
+          "1dd415f2-4a3f-4a36-b1f0-c2c6d0b8c563"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170505T235527Z:1dd415f2-4a3f-4a36-b1f0-c2c6d0b8c563"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {

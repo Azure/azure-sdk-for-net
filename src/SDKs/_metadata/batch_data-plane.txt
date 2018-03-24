@@ -1,11 +1,11 @@
-2017-11-15 17:05:24 UTC
+2018-02-05 22:01:00 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: matthchr
-Branch:      feature/batch-enum-fixes
-Commit:      9b56f851f9d33cdf831a172037dfdda1ad4f9351
+GitHub user: xingwu1
+Branch:      master
+Commit:      8461020530ea9797845d73617e52bb42ccb4c0ca
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\matthchr\AppData\Roaming\npm `-- autorest@2.0.4166  
-Latest installed version:    2.0.4168
+Bootstrapper version:    C:\Users\matthchr\AppData\Roaming\npm `-- autorest@2.0.4245  
+Latest installed version:    

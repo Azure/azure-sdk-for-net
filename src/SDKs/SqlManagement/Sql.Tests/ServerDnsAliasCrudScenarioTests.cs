@@ -14,7 +14,7 @@ namespace Sql.Tests
 {
     public class ServerDnsAliasCrudScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void TestCrudServerDnsAlias()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))

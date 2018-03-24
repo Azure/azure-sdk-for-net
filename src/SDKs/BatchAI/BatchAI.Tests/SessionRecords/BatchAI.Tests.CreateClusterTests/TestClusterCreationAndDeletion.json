@@ -1005,6 +1005,67 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/providers/Microsoft.BatchAI/locations/eastus/operationresults/82b190c1-3e61-40e7-9276-c2c95397eff6?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjIyNTRkNGEtOWEzMy00MmI3LWI1N2ItYzMxODdkNGQyODJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2hBSS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvODJiMTkwYzEtM2U2MS00MGU3LTkyNzYtYzJjOTUzOTdlZmY2P2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.BatchAI.BatchAIManagementClient/1.10.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://api-dogfood.resources.windows-int.net/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/providers/Microsoft.BatchAI/locations/eastus/operationresults/82b190c1-3e61-40e7-9276-c2c95397eff6\",\r\n  \"name\": \"82b190c1-3e61-40e7-9276-c2c95397eff6\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-05T04:11:29.478Z\",\r\n  \"endTime\": \"2017-10-05T04:14:00.974Z\",\r\n  \"properties\": {\r\n    \"resourceId\": \"62254d4a-9a33-42b7-b57b-c3187d4d282e$batchairesourcegroup7140$testclustercreationanddeletion_testcluster\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 04:14:15 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14987"
+        ],
+        "request-id": [
+          "5e6dd066-b664-42df-9dfa-d8d942cbbb64"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "dc840acb-879e-4084-9ecf-66a07bf2f597"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc840acb-879e-4084-9ecf-66a07bf2f597"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T041415Z:dc840acb-879e-4084-9ecf-66a07bf2f597"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {

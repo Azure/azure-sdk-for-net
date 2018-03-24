@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// complete. This option is therefore most commonly used with a Job
         /// Manager task; if you want to use automatic job termination without
         /// a Job Manager, you should initially set onAllTasksComplete to
-        /// noAction and update the job properties to set onAllTasksComplete to
-        /// terminateJob once you have finished adding tasks. The default is
-        /// noAction. Possible values include: 'noAction', 'terminateJob'
+        /// noaction and update the job properties to set onAllTasksComplete to
+        /// terminatejob once you have finished adding tasks. The default is
+        /// noaction. Possible values include: 'noAction', 'terminateJob'
         /// </remarks>
         [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task, for example due to a resource file download error.
         /// </summary>
         /// <remarks>
-        /// The default is noAction. Possible values include: 'noAction',
+        /// The default is noaction. Possible values include: 'noAction',
         /// 'performExitOptionsJobAction'
         /// </remarks>
         [JsonProperty(PropertyName = "onTaskFailure")]

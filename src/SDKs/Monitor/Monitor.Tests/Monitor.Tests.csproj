@@ -7,7 +7,7 @@
 		<VersionPrefix>1.0.0-preview</VersionPrefix>
 	</PropertyGroup>
 	<PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+		<TargetFrameworks>netcoreapp1.1</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -16,15 +16,6 @@
 		<None Update="SessionRecords\**\*.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-		<Reference Include="System.Net.Http" />
-        	<PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-		<PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
 	</ItemGroup>
   
 	<ItemGroup>

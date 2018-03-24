@@ -66,7 +66,9 @@ namespace Compute.Tests
         /// Capture VM
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -167,6 +169,8 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "Password policy")]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMOperations_Redeploy()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -222,6 +226,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMOperations_PerformMaintenance()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
