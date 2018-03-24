@@ -58,10 +58,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the elevation level of the auto user.
         /// </summary>
         /// <remarks>
-        /// nonAdmin - The auto user is a standard user without elevated
-        /// access. admin - The auto user is a user with elevated access and
-        /// operates with full Administrator permissions. The default value is
-        /// nonAdmin. Possible values include: 'nonAdmin', 'admin'
+        /// The default value is nonAdmin. Possible values include: 'nonAdmin',
+        /// 'admin'
         /// </remarks>
         [JsonProperty(PropertyName = "elevationLevel")]
         public ElevationLevel? ElevationLevel { get; set; }

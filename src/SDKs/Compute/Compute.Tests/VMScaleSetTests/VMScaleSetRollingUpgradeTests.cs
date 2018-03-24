@@ -25,7 +25,7 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         [Trait("Name", "TestVMScaleSetRollingUpgrade")]
         public void TestVMScaleSetRollingUpgrade()
         {
@@ -118,7 +118,7 @@ namespace Compute.Tests
         /// Cancel the rolling upgrade
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         [Trait("Name", "TestVMScaleSetRollingUpgradeAPIs")]
         public void TestVMScaleSetRollingUpgradeAPIs()
         {

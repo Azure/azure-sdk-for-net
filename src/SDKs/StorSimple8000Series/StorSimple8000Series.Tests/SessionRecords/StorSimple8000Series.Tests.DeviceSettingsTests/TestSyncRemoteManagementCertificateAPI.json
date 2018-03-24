@@ -445,6 +445,59 @@
         ]
       },
       "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/securitySettings/default/operationResults/dba2059d-23fd-4139-81ab-36386a29d236?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvc2VjdXJpdHlTZXR0aW5ncy9kZWZhdWx0L29wZXJhdGlvblJlc3VsdHMvZGJhMjA1OWQtMjNmZC00MTM5LTgxYWItMzYzODZhMjlkMjM2P2FwaS12ZXJzaW9uPTIwMTctMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 28 Jun 2017 15:50:32 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6126f2e0-4b0e-4cbf-85f4-4951f56eb1d6"
+        ],
+        "x-ms-client-request-id": [
+          "7fc0de79-5b3a-4cf7-964a-72578443a2d0",
+          "7fc0de79-5b3a-4cf7-964a-72578443a2d0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14914"
+        ],
+        "x-ms-correlation-request-id": [
+          "6126f2e0-4b0e-4cbf-85f4-4951f56eb1d6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170628T155032Z:6126f2e0-4b0e-4cbf-85f4-4951f56eb1d6"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {},

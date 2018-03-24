@@ -46,6 +46,44 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
         }
     }
 
+    /// <summary>
+    /// An <see cref="IBatchRequest"/> for the AccountListPoolNodeCounts operation.
+    /// </summary>
+    public class AccountListPoolNodeCountsBatchRequest : Protocol.BatchRequest<
+        AccountListPoolNodeCountsOptions,
+        AzureOperationResponse<IPage<PoolNodeCounts>, AccountListPoolNodeCountsHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountListPoolNodeCountsBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public AccountListPoolNodeCountsBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
+        {
+        }
+    }
+
+    /// <summary>
+    /// An <see cref="IBatchRequest"/> for the AccountListPoolNodeCountsNext operation.
+    /// </summary>
+    public class AccountListPoolNodeCountsNextBatchRequest : Protocol.BatchRequest<
+        AccountListPoolNodeCountsNextOptions,
+        AzureOperationResponse<IPage<PoolNodeCounts>, AccountListPoolNodeCountsHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountListPoolNodeCountsNextBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public AccountListPoolNodeCountsNextBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
+        {
+        }
+    }
+
     #endregion
 
     #region Application
@@ -291,6 +329,25 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
             BatchServiceClient serviceClient,
             NodeUpdateUserParameter parameters,
             CancellationToken cancellationToken) : base(serviceClient, parameters, cancellationToken)
+        {
+        }
+    }
+
+    /// <summary>
+    /// An <see cref="IBatchRequest"/> for the ComputeNodeUploadBatchServiceLogsBatchRequest operation.
+    /// </summary>
+    public class ComputeNodeUploadBatchServiceLogsBatchRequest : Protocol.BatchRequest<
+        ComputeNodeUploadBatchServiceLogsOptions,
+        AzureOperationResponse<UploadBatchServiceLogsResult, ComputeNodeUploadBatchServiceLogsHeaders>>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountListPoolNodeCountsBatchRequest" /> class.
+        /// </summary>
+        /// <param name="serviceClient">The service client to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public ComputeNodeUploadBatchServiceLogsBatchRequest(
+            BatchServiceClient serviceClient,
+            CancellationToken cancellationToken) : base(serviceClient, cancellationToken)
         {
         }
     }
