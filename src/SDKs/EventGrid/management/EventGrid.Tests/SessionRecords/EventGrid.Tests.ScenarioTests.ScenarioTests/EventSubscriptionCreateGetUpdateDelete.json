@@ -1121,6 +1121,55 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/5867C1CE-2603-4885-92C5-B13460D21BD1?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvNTg2N0MxQ0UtMjYwMy00ODg1LTkyQzUtQjEzNDYwRDIxQkQxP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 20:33:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f0368a96-2118-4f85-8b4f-8c21b99cbf5e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-correlation-request-id": [
+          "c9404348-f27f-4e7a-9ea8-097e6ee08e29"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180216T203331Z:c9404348-f27f-4e7a-9ea8-097e6ee08e29"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868?api-version=2018-01-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNTg2OD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "DELETE",
@@ -1180,6 +1229,55 @@
         ]
       },
       "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/15FA7950-3C11-4A3D-B285-81059A94F9AA?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvMTVGQTc5NTAtM0MxMS00QTNELUIyODUtODEwNTlBOTRGOUFBP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 20:33:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "cf050dfd-4f92-41c7-a091-c18c6d111032"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-correlation-request-id": [
+          "12f407b0-fbe6-4a63-88cc-cc7e8df46bfa"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180216T203341Z:12f407b0-fbe6-4a63-88cc-cc7e8df46bfa"
+        ]
+      },
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/15FA7950-3C11-4A3D-B285-81059A94F9AA?api-version=2018-01-01",

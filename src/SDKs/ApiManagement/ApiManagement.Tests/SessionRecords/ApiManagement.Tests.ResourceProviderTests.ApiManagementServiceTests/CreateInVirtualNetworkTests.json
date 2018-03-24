@@ -3333,6 +3333,61 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.ApiManagement/service/sdktestapim2185/operationresults/c2RrdGVzdGFwaW0yMTg1X01hbmFnZVJvbGVfOTg2MTNjOTA%3D?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzI5MTUvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW0yMTg1L29wZXJhdGlvbnJlc3VsdHMvYzJScmRHVnpkR0Z3YVcweU1UZzFYMDFoYm1GblpWSnZiR1ZmT1RnMk1UTmpPVEElM0Q/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.ApiManagement/service/sdktestapim2185\",\r\n  \"name\": \"sdktestapim2185\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADavIs=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2018-02-19T17:26:39.5781565Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim2185.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim2185-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim2185.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim2185.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim2185.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.131.75\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": {\r\n      \"subnetResourceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.Network/virtualNetworks/apimvnet2910/subnets/apimsubnet9238\",\r\n      \"vnetid\": \"00000000-0000-0000-0000-000000000000\",\r\n      \"subnetname\": null\r\n    },\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"External\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Feb 2018 18:17:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "75f690d8-f1fb-47fb-96c4-348486fa2721"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "78a0eb98-3a2e-42c2-949c-4166bbddf99c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180219T181701Z:78a0eb98-3a2e-42c2-949c-4166bbddf99c"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.ApiManagement/service/sdktestapim2185/networkstatus?api-version=2018-01-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzI5MTUvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW0yMTg1L25ldHdvcmtzdGF0dXM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "GET",
@@ -5158,6 +5213,61 @@
         ]
       },
       "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.ApiManagement/service/sdktestapim2185/operationresults/c2RrdGVzdGFwaW0yMTg1X1VwZGF0ZV82NWVjY2M4Mg%3D%3D?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzI5MTUvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2Uvc2RrdGVzdGFwaW0yMTg1L29wZXJhdGlvbnJlc3VsdHMvYzJScmRHVnpkR0Z3YVcweU1UZzFYMVZ3WkdGMFpWODJOV1ZqWTJNNE1nJTNEJTNEP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.ApiManagement/service/sdktestapim2185\",\r\n  \"name\": \"sdktestapim2185\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADaveE=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2018-02-19T17:26:39.5781565Z\",\r\n    \"gatewayUrl\": \"https://sdktestapim2185.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestapim2185-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestapim2185.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestapim2185.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestapim2185.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.93.94\"\r\n    ],\r\n    \"privateIPAddresses\": [\r\n      \"10.0.1.6\"\r\n    ],\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": {\r\n      \"subnetResourceId\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.Network/virtualNetworks/apimvnet2910/subnets/apimsubnet9238\",\r\n      \"vnetid\": \"00000000-0000-0000-0000-000000000000\",\r\n      \"subnetname\": null\r\n    },\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"Internal\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 19 Feb 2018 18:49:14 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "6551cde6-b015-4e1e-a889-a3cb370ee41b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a33ac5f-5bbd-4c0f-812c-dc65bbf77321"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180219T184915Z:9a33ac5f-5bbd-4c0f-812c-dc65bbf77321"
+        ]
+      },
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/sdktestrg2915/providers/Microsoft.ApiManagement/service/sdktestapim2185/operationresults/c2RrdGVzdGFwaW0yMTg1X1VwZGF0ZV82NWVjY2M4Mg%3D%3D?api-version=2018-01-01",

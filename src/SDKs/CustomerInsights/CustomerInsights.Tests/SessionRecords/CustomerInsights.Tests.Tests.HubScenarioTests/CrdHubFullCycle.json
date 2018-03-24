@@ -234,6 +234,55 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/testHub3562/operationresults/98A1BD1D-8801-4DF8-B211-E781706C9C2D?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzkwOWU5NzktZWY3MS00ZGVmLWE5NzAtYmM3YzE1NGRiOGM1L3Jlc291cmNlR3JvdXBzL1Rlc3RIdWJSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkN1c3RvbWVySW5zaWdodHMvaHVicy90ZXN0SHViMzU2Mi9vcGVyYXRpb25yZXN1bHRzLzk4QTFCRDFELTg4MDEtNERGOC1CMjExLUU3ODE3MDZDOUMyRD9hcGktdmVyc2lvbj0yMDE3LTAxLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.CustomerInsights.CustomerInsightsManagementClient/0.0.1-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 22:55:31 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "ccf8cfdf-621b-4876-9033-eb96bc4b8e5b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14369"
+        ],
+        "x-ms-correlation-request-id": [
+          "bf6e120b-41d3-4d8f-9880-4e923818f07a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170131T225531Z:bf6e120b-41d3-4d8f-9880-4e923818f07a"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {
