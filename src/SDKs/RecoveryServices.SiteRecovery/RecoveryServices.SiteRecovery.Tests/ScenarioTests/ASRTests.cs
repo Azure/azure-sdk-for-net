@@ -122,7 +122,8 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("ReRecord", "CR Changes")]
         public void RenewCertificate()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -749,7 +750,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RepairReplication()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -767,7 +768,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void TestFailover()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -803,7 +804,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void TestFailoverCleanup()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -873,7 +874,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void UnplannedFailover()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -924,7 +925,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void Reprotect()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1146,7 +1147,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RPTestFailover()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1178,7 +1179,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RPTestFailoverCleanup()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1201,7 +1202,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RPPlannedFailover()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1230,7 +1231,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RPUnplannedFailover()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1260,7 +1261,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RPFailoverCommit()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1273,7 +1274,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RPFailback()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -1303,7 +1304,7 @@ namespace RecoveryServices.SiteRecovery.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void RPReprotect()
         {
             using (var context = MockContext.Start(this.GetType().FullName))

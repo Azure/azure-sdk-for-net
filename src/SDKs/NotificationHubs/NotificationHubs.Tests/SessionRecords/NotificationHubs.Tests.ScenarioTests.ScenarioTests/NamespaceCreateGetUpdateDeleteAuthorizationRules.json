@@ -28189,6 +28189,65 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/providers/Microsoft.NotificationHubs/operationresults/HydraNH-Namespace1661?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmNhYzJhMTQtYmE2Yi00NmE2LWJjZTgtMmQ5NzgxYTQxYmEyL3Byb3ZpZGVycy9NaWNyb3NvZnQuTm90aWZpY2F0aW9uSHVicy9vcGVyYXRpb25yZXN1bHRzL0h5ZHJhTkgtTmFtZXNwYWNlMTY2MT9hcGktdmVyc2lvbj0yMDE3LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.2.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 05 May 2017 23:53:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/SN1",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "03f43d67-a23e-4706-a745-1ef08b9e9fb9_M7_M7"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/SN1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14182"
+        ],
+        "x-ms-correlation-request-id": [
+          "ba3222d9-4f79-43b0-b6bc-706e48dd16eb"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170505T235346Z:ba3222d9-4f79-43b0-b6bc-706e48dd16eb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {

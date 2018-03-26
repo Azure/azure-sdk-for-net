@@ -28,8 +28,9 @@ namespace Compute.Tests
         /// List VMSizes in an AvailabilitySet
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         [Trait("Name", "TestVMScenarioOperations")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScenarioOperations()
         {
             TestVMScenarioOperationsInternal("TestVMScenarioOperations");

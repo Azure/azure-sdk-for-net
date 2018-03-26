@@ -12,6 +12,8 @@ namespace Compute.Tests
     public class VMDiskSizeTests : VMTestBase
     {
         [Fact]
+        [Trait("Failure", "Password policy")]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMDiskSizeScenario()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
