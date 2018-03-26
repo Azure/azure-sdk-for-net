@@ -32,6 +32,7 @@ internal static partial class SdkInfo
                 new Tuple<string, string, string>("Web", "ListSourceControls", "2016-03-01"),
                 new Tuple<string, string, string>("Web", "Provider", "2016-03-01"),
                 new Tuple<string, string, string>("Web", "Recommendations", "2016-03-01"),
+                new Tuple<string, string, string>("Web", "ResourceHealthMetadata", "2016-03-01"),
                 new Tuple<string, string, string>("Web", "UpdatePublishingUser", "2016-03-01"),
                 new Tuple<string, string, string>("Web", "UpdateSourceControl", "2016-03-01"),
                 new Tuple<string, string, string>("Web", "Validate", "2016-03-01"),
