@@ -5020,6 +5020,67 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/providers/Microsoft.BatchAI/locations/eastus/operationresults/b54a399c-2ecc-4443-9eb7-1c774b3cb9ad?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjIyNTRkNGEtOWEzMy00MmI3LWI1N2ItYzMxODdkNGQyODJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2hBSS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvYjU0YTM5OWMtMmVjYy00NDQzLTllYjctMWM3NzRiM2NiOWFkP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.BatchAI.BatchAIManagementClient/1.10.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://api-dogfood.resources.windows-int.net/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/providers/Microsoft.BatchAI/locations/eastus/operationresults/b54a399c-2ecc-4443-9eb7-1c774b3cb9ad\",\r\n  \"name\": \"b54a399c-2ecc-4443-9eb7-1c774b3cb9ad\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-05T04:06:33.299Z\",\r\n  \"endTime\": \"2017-10-05T04:10:35.594Z\",\r\n  \"properties\": {\r\n    \"resourceId\": \"62254d4a-9a33-42b7-b57b-c3187d4d282e$batchairesourcegroup9615$testjobcreationanddeletion_cluster\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 04:10:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14932"
+        ],
+        "request-id": [
+          "74ce163e-75a2-4f0c-8132-76eadd2c8e21"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "99faba6e-b736-48e9-a6f7-61e55a9ba540"
+        ],
+        "x-ms-correlation-request-id": [
+          "99faba6e-b736-48e9-a6f7-61e55a9ba540"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T041035Z:99faba6e-b736-48e9-a6f7-61e55a9ba540"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/resourceGroups/BatchAIResourceGroup9615/providers/Microsoft.BatchAI/jobs/testjobcreationanddeletion_testjob?api-version=2017-09-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjIyNTRkNGEtOWEzMy00MmI3LWI1N2ItYzMxODdkNGQyODJlL3Jlc291cmNlR3JvdXBzL0JhdGNoQUlSZXNvdXJjZUdyb3VwOTYxNS9wcm92aWRlcnMvTWljcm9zb2Z0LkJhdGNoQUkvam9icy90ZXN0am9iY3JlYXRpb25hbmRkZWxldGlvbl90ZXN0am9iP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
@@ -5088,6 +5149,67 @@
         ]
       },
       "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/providers/Microsoft.BatchAI/locations/eastus/operationresults/08283778-5787-4453-a9ae-a4e3e351f19c?api-version=2017-09-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNjIyNTRkNGEtOWEzMy00MmI3LWI1N2ItYzMxODdkNGQyODJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2hBSS9sb2NhdGlvbnMvZWFzdHVzL29wZXJhdGlvbnJlc3VsdHMvMDgyODM3NzgtNTc4Ny00NDUzLWE5YWUtYTRlM2UzNTFmMTljP2FwaS12ZXJzaW9uPTIwMTctMDktMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.BatchAI.BatchAIManagementClient/1.10.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"https://api-dogfood.resources.windows-int.net/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/providers/Microsoft.BatchAI/locations/eastus/operationresults/08283778-5787-4453-a9ae-a4e3e351f19c\",\r\n  \"name\": \"08283778-5787-4453-a9ae-a4e3e351f19c\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-05T04:10:35.779Z\",\r\n  \"endTime\": \"2017-10-05T04:10:37.526Z\",\r\n  \"properties\": {\r\n    \"resourceId\": \"62254d4a-9a33-42b7-b57b-c3187d4d282e$batchairesourcegroup9615$testjobcreationanddeletion_testjob\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 05 Oct 2017 04:10:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14931"
+        ],
+        "request-id": [
+          "3e4499a2-07ac-40fe-8318-5905c9765552"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "65cf3ff8-daac-4fad-9a21-966d70515254"
+        ],
+        "x-ms-correlation-request-id": [
+          "65cf3ff8-daac-4fad-9a21-966d70515254"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171005T041051Z:65cf3ff8-daac-4fad-9a21-966d70515254"
+        ]
+      },
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/62254d4a-9a33-42b7-b57b-c3187d4d282e/providers/Microsoft.BatchAI/locations/eastus/operationresults/08283778-5787-4453-a9ae-a4e3e351f19c?api-version=2017-09-01-preview",

@@ -1711,6 +1711,59 @@
       "StatusCode": 204
     },
     {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/VolumeContainerForSDKTest/volumes/Volume1ForSDKTest/operationResults/25f63b6a-01d8-4034-aebe-de6589eedb77?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy9Wb2x1bWVDb250YWluZXJGb3JTREtUZXN0L3ZvbHVtZXMvVm9sdW1lMUZvclNES1Rlc3Qvb3BlcmF0aW9uUmVzdWx0cy8yNWY2M2I2YS0wMWQ4LTQwMzQtYWViZS1kZTY1ODllZWRiNzc/YXBpLXZlcnNpb249MjAxNy0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jun 2017 18:11:47 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d94760bc-d021-4b12-a438-7e3ac97a87bc"
+        ],
+        "x-ms-client-request-id": [
+          "8c004e42-a7a5-44c1-8fdf-d707cf66c028",
+          "8c004e42-a7a5-44c1-8fdf-d707cf66c028"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14402"
+        ],
+        "x-ms-correlation-request-id": [
+          "d94760bc-d021-4b12-a438-7e3ac97a87bc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170621T181148Z:d94760bc-d021-4b12-a438-7e3ac97a87bc"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/VolumeContainerForSDKTest/volumes?api-version=2017-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy9Wb2x1bWVDb250YWluZXJGb3JTREtUZXN0L3ZvbHVtZXM/YXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
       "RequestMethod": "GET",
@@ -1965,6 +2018,59 @@
       "StatusCode": 204
     },
     {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/VolumeContainerForSDKTest/volumes/Volume2ForSDKTest/operationResults/b8983795-c940-4020-844c-fa4f34210d3b?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy9Wb2x1bWVDb250YWluZXJGb3JTREtUZXN0L3ZvbHVtZXMvVm9sdW1lMkZvclNES1Rlc3Qvb3BlcmF0aW9uUmVzdWx0cy9iODk4Mzc5NS1jOTQwLTQwMjAtODQ0Yy1mYTRmMzQyMTBkM2I/YXBpLXZlcnNpb249MjAxNy0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jun 2017 18:12:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "788a75c1-6d52-4998-a0a4-30c3da1ed6f5"
+        ],
+        "x-ms-client-request-id": [
+          "aca1bbf1-9af7-4f57-9b4b-223cb2b13f5a",
+          "aca1bbf1-9af7-4f57-9b4b-223cb2b13f5a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14393"
+        ],
+        "x-ms-correlation-request-id": [
+          "788a75c1-6d52-4998-a0a4-30c3da1ed6f5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170621T181223Z:788a75c1-6d52-4998-a0a4-30c3da1ed6f5"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/VolumeContainerForSDKTest?api-version=2017-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy9Wb2x1bWVDb250YWluZXJGb3JTREtUZXN0P2FwaS12ZXJzaW9uPTIwMTctMDYtMDE=",
       "RequestMethod": "DELETE",
@@ -2081,6 +2187,59 @@
         ]
       },
       "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers/VolumeContainerForSDKTest/operationResults/42de1280-d632-41ab-8945-7435ab9a08f7?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvdm9sdW1lQ29udGFpbmVycy9Wb2x1bWVDb250YWluZXJGb3JTREtUZXN0L29wZXJhdGlvblJlc3VsdHMvNDJkZTEyODAtZDYzMi00MWFiLTg5NDUtNzQzNWFiOWEwOGY3P2FwaS12ZXJzaW9uPTIwMTctMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jun 2017 18:20:22 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2bc775df-6f3c-4d0b-b7c8-30588d099936"
+        ],
+        "x-ms-client-request-id": [
+          "59b76aa0-face-400c-8a07-a8c9271f7a28",
+          "59b76aa0-face-400c-8a07-a8c9271f7a28"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14864"
+        ],
+        "x-ms-correlation-request-id": [
+          "2bc775df-6f3c-4d0b-b7c8-30588d099936"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170621T182022Z:2bc775df-6f3c-4d0b-b7c8-30588d099936"
+        ]
+      },
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/volumeContainers?api-version=2017-06-01",
