@@ -15,27 +15,27 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Input directory for the job.
+    /// A collection of environment variables to set.
     /// </summary>
-    public partial class InputDirectory
+    public partial class EnvironmentVariable
     {
         /// <summary>
-        /// Initializes a new instance of the InputDirectory class.
+        /// Initializes a new instance of the EnvironmentVariable class.
         /// </summary>
-        public InputDirectory()
+        public EnvironmentVariable()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the InputDirectory class.
+        /// Initializes a new instance of the EnvironmentVariable class.
         /// </summary>
-        /// <param name="id">The id for the input directory.</param>
-        /// <param name="path">The path to the input directory.</param>
-        public InputDirectory(string id, string path)
+        /// <param name="name">The name of the environment variable.</param>
+        /// <param name="value">The value of the environment variable.</param>
+        public EnvironmentVariable(string name, string value)
         {
-            Id = id;
-            Path = path;
+            Name = name;
+            Value = value;
             CustomInit();
         }
 
@@ -45,21 +45,16 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id for the input directory.
+        /// Gets or sets the name of the environment variable.
         /// </summary>
-        /// <remarks>
-        /// The path of the input directory will be available as a value of an
-        /// environment variable with AZ_BATCHAI_INPUT_<id> name, where <id> is
-        /// the value of id attribute.
-        /// </remarks>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to the input directory.
+        /// Gets or sets the value of the environment variable.
         /// </summary>
-        [JsonProperty(PropertyName = "path")]
-        public string Path { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -69,13 +64,13 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Id == null)
+            if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (Path == null)
+            if (Value == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Path");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }

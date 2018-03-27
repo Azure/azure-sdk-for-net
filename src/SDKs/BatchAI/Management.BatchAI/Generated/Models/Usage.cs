@@ -15,28 +15,39 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// A collection of environment variables to set.
+    /// Describes Batch AI Resource Usage.
     /// </summary>
-    public partial class EnvironmentSetting
+    public partial class Usage
     {
         /// <summary>
-        /// Initializes a new instance of the EnvironmentSetting class.
+        /// Initializes a new instance of the Usage class.
         /// </summary>
-        public EnvironmentSetting()
+        public Usage()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EnvironmentSetting class.
+        /// Initializes a new instance of the Usage class.
         /// </summary>
-        /// <param name="name">The name of the environment variable.</param>
-        /// <param name="value">The value of the environment variable.</param>
-        public EnvironmentSetting(string name, string value = default(string))
+        /// <param name="currentValue">The current usage of the
+        /// resource.</param>
+        /// <param name="limit">The maximum permitted usage of the
+        /// resource.</param>
+        /// <param name="name">The name of the type of usage.</param>
+        public Usage(int currentValue, long limit, UsageName name)
         {
+            CurrentValue = currentValue;
+            Limit = limit;
             Name = name;
-            Value = value;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for Usage class.
+        /// </summary>
+        static Usage()
+        {
+            Unit = "Count";
         }
 
         /// <summary>
@@ -45,16 +56,28 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the environment variable.
+        /// Gets or sets the current usage of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "currentValue")]
+        public int CurrentValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the value of the environment variable.
+        /// Gets or sets the maximum permitted usage of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "limit")]
+        public long Limit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the type of usage.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public UsageName Name { get; set; }
+
+        /// <summary>
+        /// An enum describing the unit of usage measurement.
+        /// </summary>
+        [JsonProperty(PropertyName = "unit")]
+        public static string Unit { get; private set; }
 
         /// <summary>
         /// Validate the object.
