@@ -32,8 +32,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="name">Name of the referenced issuer object or reserved
         /// names; for example, 'Self' or 'Unknown'.</param>
         /// <param name="certificateType">Type of certificate to be requested
-        /// <param name="certificateTransparency">Indicates whether issuer should publish issued certificates to CT logs.</param>
         /// from the issuer provider.</param>
+        /// <param name="certificateTransparency">Indicates whether issuer should 
+        /// publish issued certificates to CT logs.</param>
         public IssuerParameters(string name = default(string), string certificateType = default(string), bool? certificateTransparency = default(bool?))
         {
             Name = name;
