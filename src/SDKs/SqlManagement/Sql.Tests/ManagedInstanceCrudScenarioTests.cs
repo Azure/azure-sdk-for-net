@@ -33,8 +33,8 @@ namespace Sql.Tests
                 sku.Name = "CLS3";
                 sku.Tier = "Standard";
 
-                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/RG_MIPlayground/providers/Microsoft.Network/virtualNetworks/VNET_MIPlayground/subnets/MISubnet";
-                string location = "eastus";
+                string subnetId = "/subscriptions/741fd0f5-9cb8-442c-91c3-3ef4ca231c2a/resourceGroups/cloudlifter/providers/Microsoft.ClassicNetwork/virtualNetworks/cloud-lifter-stage-sea/subnets/default";
+                string location = "southeastasia";
 
                 //Create server 
                 var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()

@@ -23,66 +23,144 @@ namespace Sql.Tests
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                ResourceGroup resourceGroup = context.CreateResourceGroup();
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                string managedInstanceName = "jugeorge-crudtests-managedinstance";
-                string login = "dummylogin";
-                string password = "Un53cuRE!";
-                Dictionary<string, string> tags = new Dictionary<string, string>()
-                    {
-                        { "tagKey1", "TagValue1" }
-                    };
+                //find names of MI on cluster
+                string resourceGroup = "testclrg";
+                string managedInstanceName = "sqlmi-msfeb18-failovertest-11-bc";
+                string managedInstanceName2 = "sqlmi-msfeb18-ppmslightup-10-bc";
 
-                Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku();
-                sku.Name = "CLS3";
-                sku.Tier = "Standard";
+                //Get MI
+                var sourceManagedInstance = sqlClient.ManagedInstances.Get(resourceGroup, managedInstanceName);
 
-                string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/RG_MIPlayground/providers/Microsoft.Network/virtualNetworks/VNET_MIPlayground/subnets/MISubnet";
-                string secondarySubnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/ReadyWorkshop/providers/Microsoft.Network/virtualNetworks/VNET_Workshop_2/subnets/MIsubnet";
-                string primaryLocation = "eastus";
-                string secondaryLocation = "westus";
-
-                //Create server 
-                var sourceManagedInstance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()
-                {
-                    AdministratorLogin = login,
-                    AdministratorLoginPassword = password,
-                    Sku = sku,
-                    SubnetId = subnetId,
-                    Tags = tags,
-                    Location = primaryLocation,
-                });
-                SqlManagementTestUtilities.ValidateManagedInstance(sourceManagedInstance, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId);
-
-                // Create second server
-                string managedInstanceName2 = "jugeorge-crudtests-managedinstance2";
-                var targetManagedInstance = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName2, new ManagedInstance()
-                {
-                    AdministratorLogin = login,
-                    AdministratorLoginPassword = password,
-                    Sku = sku,
-                    SubnetId = secondarySubnetId,
-                    Tags = tags,
-                    Location = secondaryLocation,
-                });
-                SqlManagementTestUtilities.ValidateManagedInstance(targetManagedInstance, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId);
+                // Get partner MI                
+                var targetManagedInstance = sqlClient.ManagedInstances.Get(resourceGroup, managedInstanceName2);
 
                 // Create database only required parameters
                 //
                 string mdbName = SqlManagementTestUtilities.GenerateName();
-                var mdb1 = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup.Name, sourceManagedInstance.Name, mdbName, new ManagedDatabase()
+                var mDB = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup, sourceManagedInstance.Name, mdbName, new ManagedDatabase()
                 {
                     Location = sourceManagedInstance.Location,
                 });
-                Assert.NotNull(mdb1);
+                Assert.NotNull(mDB);
+                Assert.Null(mDB.FailoverGroupId);
 
-                ManagedDatabase primaryDatabase = sqlClient.ManagedDatabases.Get(resourceGroup.Name, sourceManagedInstance.Name, mdbName);
-                Assert.Null(primaryDatabase.FailoverGroupId);
+                // Create a failover group
+                //
+                string InstanceFailoverGroupName = SqlManagementTestUtilities.GenerateName();
+                var fgInput = new InstanceFailoverGroup()
+                {
+                    ReadOnlyEndpoint = new InstanceFailoverGroupReadOnlyEndpoint()
+                    {
+                        FailoverPolicy = ReadOnlyEndpointFailoverPolicy.Disabled,
+                    },
+                    ReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint()
+                    {
+                        FailoverPolicy = ReadWriteEndpointFailoverPolicy.Manual,
+                    },
+                    PartnerRegions = new List<PartnerRegionInfo>(){
+                        new PartnerRegionInfo() { Location = targetManagedInstance.Location },
+                    },
+                    ManagedInstancePairs = new List<ManagedInstancePairInfo>()
+                    {
+                        new ManagedInstancePairInfo() { PrimaryManagedInstanceId = sourceManagedInstance.Id, PartnerManagedInstanceId = targetManagedInstance.Id },
+                    },
+                };
+                var InstanceFailoverGroup = sqlClient.InstanceFailoverGroups.CreateOrUpdate(resourceGroup, sourceManagedInstance.Location, InstanceFailoverGroupName, fgInput);
+                SqlManagementTestUtilities.ValidateInstanceFailoverGroup(fgInput, InstanceFailoverGroup, InstanceFailoverGroupName);
 
-                // Drop servers
-                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName);
-                sqlClient.ManagedInstances.Delete(resourceGroup.Name, managedInstanceName2);
+                ////var InstanceFailoverGroupOnPartner = sqlClient.InstanceFailoverGroups.Get(resourceGroup, targetManagedInstance.Location, InstanceFailoverGroupName);
+                ////Assert.NotNull(InstanceFailoverGroupOnPartner);
+
+                // A brief wait may be needed until the secondary for the pre-existing database is created
+                ManagedDatabase mDBsecondary = new ManagedDatabase();
+
+                SqlManagementTestUtilities.ExecuteWithRetry(() =>
+                {
+                    mDBsecondary = sqlClient.ManagedDatabases.Get(resourceGroup, targetManagedInstance.Name, mdbName);
+                },
+                TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
+                (CloudException e) =>
+                {
+                    return e.Response.StatusCode == HttpStatusCode.NotFound;
+                });
+                Assert.NotNull(mDB.FailoverGroupId);
+                Assert.NotNull(mDBsecondary.FailoverGroupId);
+
+                // Update a few settings
+                //
+                var fgPatchInput = new InstanceFailoverGroup()
+                {
+                    ReadOnlyEndpoint = new InstanceFailoverGroupReadOnlyEndpoint
+                    {
+                        FailoverPolicy = ReadOnlyEndpointFailoverPolicy.Enabled
+                    },
+                    ReadWriteEndpoint = new InstanceFailoverGroupReadWriteEndpoint
+                    {
+                        FailoverPolicy = ReadWriteEndpointFailoverPolicy.Automatic,
+                        FailoverWithDataLossGracePeriodMinutes = 120
+                    }
+                };
+
+                var InstanceFailoverGroupUpdated2 = sqlClient.InstanceFailoverGroups.CreateOrUpdate(resourceGroup, sourceManagedInstance.Location, InstanceFailoverGroupName, fgPatchInput);
+
+                // Set expectations and verify update
+                //
+                fgInput.ReadWriteEndpoint = fgPatchInput.ReadWriteEndpoint;
+                fgInput.ReadOnlyEndpoint = fgPatchInput.ReadOnlyEndpoint;
+                SqlManagementTestUtilities.ValidateInstanceFailoverGroup(fgInput, InstanceFailoverGroupUpdated2, InstanceFailoverGroupName);
+
+                ////// Create a database in the primary server
+                //////
+                ////string databaseName = "testdb";
+                ////var dbInput = new ManagedDatabase()
+                ////{
+                ////    Location = sourceManagedInstance.Location
+                ////};
+                ////ManagedDatabase database = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup, sourceManagedInstance.Location, databaseName, dbInput);
+                ////Assert.NotNull(database);
+
+                ////var primaryDatabase = sqlClient.ManagedDatabases.Get(resourceGroup, sourceManagedInstance.Location, databaseName);
+
+                ////// A brief wait may be needed until the secondary database is fully created
+                ////ManagedDatabase secondaryDatabase = new ManagedDatabase();
+
+                ////SqlManagementTestUtilities.ExecuteWithRetry(() =>
+                ////{
+                ////    secondaryDatabase = sqlClient.ManagedDatabases.Get(resourceGroup, targetManagedInstance.Name, databaseName);
+                ////},
+                ////TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(5),
+                ////(CloudException e) =>
+                ////{
+                ////    return e.Response.StatusCode == HttpStatusCode.NotFound;
+                ////});
+
+                ////Assert.NotNull(primaryDatabase.FailoverGroupId);
+                ////Assert.NotNull(secondaryDatabase.FailoverGroupId);
+
+                // Failover failover group
+                //
+                InstanceFailoverGroup = sqlClient.InstanceFailoverGroups.Failover(resourceGroup, targetManagedInstance.Name, InstanceFailoverGroupName);
+
+                // Get failover group on the new secondary server and verify its replication role
+                //
+                var InstanceFailoverGroupOnSecondary = sqlClient.InstanceFailoverGroups.Get(resourceGroup, sourceManagedInstance.Location, InstanceFailoverGroupName);
+                Assert.Equal(InstanceFailoverGroupReplicationRole.Secondary, InstanceFailoverGroupOnSecondary.ReplicationRole);
+                Assert.Equal(InstanceFailoverGroupReplicationRole.Primary, InstanceFailoverGroupOnSecondary.PartnerRegions.FirstOrDefault().ReplicationRole);
+                Assert.Equal(targetManagedInstance.Id, InstanceFailoverGroupOnSecondary.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId);
+                Assert.Equal(sourceManagedInstance.Id, InstanceFailoverGroupOnSecondary.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId);
+
+                // Delete failover group and verify that databases are removed from the failover group
+                //
+                sqlClient.InstanceFailoverGroups.Delete(resourceGroup, targetManagedInstance.Name, InstanceFailoverGroupName);
+                Assert.Null(mDB.FailoverGroupId);
+                Assert.Null(mDBsecondary.FailoverGroupId);
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.InstanceFailoverGroups.Get(resourceGroup, sourceManagedInstance.Location, InstanceFailoverGroupName));
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => sqlClient.InstanceFailoverGroups.Get(resourceGroup, targetManagedInstance.Name, InstanceFailoverGroupName));
+
+                sqlClient.ManagedDatabases.Delete(resourceGroup, sourceManagedInstance.Name, mdbName);
+                sqlClient.ManagedDatabases.Delete(resourceGroup, targetManagedInstance.Name, mdbName);
             }
         }
     }

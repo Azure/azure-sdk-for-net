@@ -20,9 +20,16 @@ namespace Sql.Tests
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                ResourceGroup resourceGroup = context.CreateResourceGroup();
-                ManagedInstance managedInstance = context.CreateManagedInstance(resourceGroup);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Update with values from a current MI on the region
+                //
+                string resourceGroup = "testclrg";
+                string managedInstanceName = "sqlmi-msfeb18-failovertest-11-bc";
+
+                //Get MI
+                var managedInstance = sqlClient.ManagedInstances.Get(resourceGroup, managedInstanceName);
+
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         { "tagKey1", "TagValue1" }
@@ -31,7 +38,7 @@ namespace Sql.Tests
                 // Create database only required parameters
                 //
                 string mdbName = SqlManagementTestUtilities.GenerateName();
-                var mdb1 = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup.Name, managedInstance.Name, mdbName, new ManagedDatabase()
+                var mdb1 = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup, managedInstance.Name, mdbName, new ManagedDatabase()
                 {
                     Location = managedInstance.Location,
                 });
@@ -47,12 +54,12 @@ namespace Sql.Tests
                     Tags = tags,
                     CreateMode = "Default"
                 };
-                var mdb2 = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup.Name, managedInstance.Name, mdbName, mdb2Input);
+                var mdb2 = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup, managedInstance.Name, mdbName, mdb2Input);
                 Assert.NotNull(mdb2);
                 SqlManagementTestUtilities.ValidateManagedDatabase(mdb2Input, mdb2, mdbName);
 
-                sqlClient.ManagedDatabases.DeleteAsync(resourceGroup.Name, managedInstance.Name, mdb1.Name);
-                sqlClient.ManagedDatabases.DeleteAsync(resourceGroup.Name, managedInstance.Name, mdb2.Name);
+                sqlClient.ManagedDatabases.Delete(resourceGroup, managedInstance.Name, mdb1.Name);
+                sqlClient.ManagedDatabases.Delete(resourceGroup, managedInstance.Name, mdb2.Name);
             }
         }
 
@@ -63,13 +70,19 @@ namespace Sql.Tests
 
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                ResourceGroup resourceGroup = context.CreateResourceGroup();
-                ManagedInstance managedInstance = context.CreateManagedInstance(resourceGroup);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Update with values from a current MI on the region
+                //
+                string resourceGroup = "testclrg";
+                string managedInstanceName = "sqlmi-msfeb18-failovertest-11-bc";
+
+                // Get MI
+                var managedInstance = sqlClient.ManagedInstances.Get(resourceGroup, managedInstanceName);
 
                 // Create some small databases to run the get/List tests on.
                 ManagedDatabase[] mngdDatabases = SqlManagementTestUtilities.CreateManagedDatabasesAsync(
-                    sqlClient, resourceGroup.Name, managedInstance, testPrefix, 4).Result;
+                    sqlClient, resourceGroup, managedInstance, testPrefix, 4).Result;
 
                 // Organize into a dictionary for better lookup later
                 IDictionary<string, ManagedDatabase> inputs = mngdDatabases.ToDictionary(
@@ -80,24 +93,26 @@ namespace Sql.Tests
                 //
                 foreach (var db in inputs)
                 {
-                    var response = sqlClient.ManagedDatabases.Get(resourceGroup.Name, managedInstance.Name, db.Key);
+                    var response = sqlClient.ManagedDatabases.Get(resourceGroup, managedInstance.Name, db.Key);
                     SqlManagementTestUtilities.ValidateManagedDatabaseEx(db.Value, response);
                 }
 
                 // List all databases
                 //
-                var listResponse = sqlClient.ManagedDatabases.ListByInstance(resourceGroup.Name, managedInstance.Name);
-
-                // Remove master database from the list
-                Assert.Equal(inputs.Count(), listResponse.Count());
-                foreach(var db in listResponse)
+                var listResponse = sqlClient.ManagedDatabases.ListByInstance(resourceGroup, managedInstance.Name);
+                
+                // Check that all created Managed Databases are created
+                foreach (var db in inputs.Keys)
                 {
-                    SqlManagementTestUtilities.ValidateManagedDatabase(inputs[db.Name], db, db.Name);
+                    var actualDbList = listResponse.Where(d => d.Name.Equals(db));
+                    Assert.True(actualDbList.Count() == 1);
+                    ManagedDatabase actualDb = actualDbList.FirstOrDefault();
+                    SqlManagementTestUtilities.ValidateManagedDatabase(inputs[db], actualDb, db);
                 }
 
-                foreach (var db in listResponse)
+                foreach (var db in inputs.Keys)
                 {
-                    sqlClient.ManagedDatabases.DeleteAsync(resourceGroup.Name, managedInstance.Name, db.Name);
+                    sqlClient.ManagedDatabases.Delete(resourceGroup, managedInstance.Name, db);
                 }
 
             }
