@@ -40,17 +40,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="keyUsage">List of key usages.</param>
         /// <param name="validityInMonths">The duration that the ceritifcate is
         /// valid in months.</param>
-        /// <param name="certificateTransparency">Indicates if the certificates
-        /// generated under this policy should be published to certificate
-        /// transparency logs.</param>
-        public X509CertificateProperties(string subject = default(string), IList<string> ekus = default(IList<string>), SubjectAlternativeNames subjectAlternativeNames = default(SubjectAlternativeNames), IList<string> keyUsage = default(IList<string>), int? validityInMonths = default(int?), bool? certificateTransparency = default(bool?))
+        public X509CertificateProperties(string subject = default(string), IList<string> ekus = default(IList<string>), SubjectAlternativeNames subjectAlternativeNames = default(SubjectAlternativeNames), IList<string> keyUsage = default(IList<string>), int? validityInMonths = default(int?))
         {
             Subject = subject;
             Ekus = ekus;
             SubjectAlternativeNames = subjectAlternativeNames;
             KeyUsage = keyUsage;
             ValidityInMonths = validityInMonths;
-            CertificateTransparency = certificateTransparency;
             CustomInit();
         }
 
@@ -89,13 +85,6 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "validity_months")]
         public int? ValidityInMonths { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates if the certificates generated under this
-        /// policy should be published to certificate transparency logs.
-        /// </summary>
-        [JsonProperty(PropertyName = "cert_transparency")]
-        public bool? CertificateTransparency { get; set; }
 
         /// <summary>
         /// Validate the object.
