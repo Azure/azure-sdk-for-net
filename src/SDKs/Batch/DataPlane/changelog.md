@@ -9,6 +9,9 @@
 ### REST API version
 This version of the Batch .NET client library targets version 2018-02-01.6.1 of the Azure Batch REST API.
 
+### Import Note
+The package will be renamed to Microsoft.Azure.Batch in future release.
+
 ## Changes in 8.0.1
 ### Bug fixes
 - Fixed a bug where deserializing some enum properties could fail if using Newtonsoft 10.
