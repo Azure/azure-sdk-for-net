@@ -14,28 +14,26 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the format of Error response.
+    /// The created subscription object.
     /// </summary>
-    public partial class ErrorResponse
+    public partial class SubscriptionCreationResult
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the SubscriptionCreationResult class.
         /// </summary>
-        public ErrorResponse()
+        public SubscriptionCreationResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the SubscriptionCreationResult class.
         /// </summary>
-        /// <param name="code">Error code</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorResponse(string code = default(string), string message = default(string))
+        /// <param name="subscriptionLink">The link to the new
+        /// subscription.</param>
+        public SubscriptionCreationResult(string subscriptionLink = default(string))
         {
-            Code = code;
-            Message = message;
+            SubscriptionLink = subscriptionLink;
             CustomInit();
         }
 
@@ -45,16 +43,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code
+        /// Gets or sets the link to the new subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "subscriptionLink")]
+        public string SubscriptionLink { get; set; }
 
     }
 }

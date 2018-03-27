@@ -11,31 +11,33 @@
 namespace Microsoft.Azure.Management.Subscription.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Describes the format of Error response.
+    /// A list of pending subscription operations.
     /// </summary>
-    public partial class ErrorResponse
+    public partial class SubscriptionOperationListResult
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// class.
         /// </summary>
-        public ErrorResponse()
+        public SubscriptionOperationListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// class.
         /// </summary>
-        /// <param name="code">Error code</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorResponse(string code = default(string), string message = default(string))
+        /// <param name="value">A list of pending
+        /// SubscriptionOperations</param>
+        public SubscriptionOperationListResult(IList<SubscriptionOperation> value = default(IList<SubscriptionOperation>))
         {
-            Code = code;
-            Message = message;
+            Value = value;
             CustomInit();
         }
 
@@ -45,16 +47,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code
+        /// Gets or sets a list of pending SubscriptionOperations
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<SubscriptionOperation> Value { get; set; }
 
     }
 }
