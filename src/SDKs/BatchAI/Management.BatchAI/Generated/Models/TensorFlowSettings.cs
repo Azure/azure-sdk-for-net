@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <param name="pythonScriptFilePath">The path and file name of the
         /// python script to execute the job.</param>
-        /// <param name="masterCommandLineArgs">Specifies the command line
-        /// arguments for the master task.</param>
         /// <param name="pythonInterpreterPath">The path to python
         /// interpreter.</param>
+        /// <param name="masterCommandLineArgs">Specifies the command line
+        /// arguments for the master task.</param>
         /// <param name="workerCommandLineArgs">Specifies the command line
         /// arguments for the worker task.</param>
         /// <param name="parameterServerCommandLineArgs">Specifies the command
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="workerCount">The number of worker tasks.</param>
         /// <param name="parameterServerCount">The number of parmeter server
         /// tasks.</param>
-        public TensorFlowSettings(string pythonScriptFilePath, string masterCommandLineArgs, string pythonInterpreterPath = default(string), string workerCommandLineArgs = default(string), string parameterServerCommandLineArgs = default(string), int? workerCount = default(int?), int? parameterServerCount = default(int?))
+        public TensorFlowSettings(string pythonScriptFilePath, string pythonInterpreterPath = default(string), string masterCommandLineArgs = default(string), string workerCommandLineArgs = default(string), string parameterServerCommandLineArgs = default(string), int? workerCount = default(int?), int? parameterServerCount = default(int?))
         {
             PythonScriptFilePath = pythonScriptFilePath;
             PythonInterpreterPath = pythonInterpreterPath;
@@ -136,10 +136,6 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             if (PythonScriptFilePath == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PythonScriptFilePath");
-            }
-            if (MasterCommandLineArgs == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MasterCommandLineArgs");
             }
         }
     }

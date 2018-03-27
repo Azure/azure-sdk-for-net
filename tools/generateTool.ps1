@@ -119,8 +119,8 @@ catch {
     Write-ErrorLog $_.ToString() -logToFile
 }
 finally {
-    Get-OutputStream | Out-File -FilePath $logFile | Out-Null
-    Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
+    Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
+    Get-ErrorStream | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
     Clear-OutputStreams
     Get-Module -ListAvailable "$modulePath" | Remove-Module 
 }
