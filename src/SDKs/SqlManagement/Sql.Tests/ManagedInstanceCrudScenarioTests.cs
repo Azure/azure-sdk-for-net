@@ -21,7 +21,7 @@ namespace Sql.Tests
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
-                string managedInstanceName = "mabend-crudtests-managedinstance";
+                string managedInstanceName = "sqlcl-crudtests-dotnetsdk1";
                 string login = "dummylogin";
                 string password = "Un53cuRE!";
                 Dictionary<string, string> tags = new Dictionary<string, string>()
@@ -30,8 +30,8 @@ namespace Sql.Tests
                     };
 
                 Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku();
-                sku.Name = "CLS3";
-                sku.Tier = "Standard";
+                sku.Name = "MIGP8G4";
+                sku.Tier = "GeneralPurpose";
 
                 string subnetId = "/subscriptions/741fd0f5-9cb8-442c-91c3-3ef4ca231c2a/resourceGroups/cloudlifter/providers/Microsoft.ClassicNetwork/virtualNetworks/cloud-lifter-stage-sea/subnets/default";
                 string location = "southeastasia";
@@ -49,7 +49,7 @@ namespace Sql.Tests
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance1, managedInstanceName, login, tags, TestEnvironmentUtilities.DefaultLocationId);
 
                 // Create second server
-                string managedInstanceName2 = "mabend-crudtests-managedinstance2";
+                string managedInstanceName2 = "sqlcl-crudtests-dotnetsdk2";
                 var managedInstance2 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName2, new ManagedInstance()
                 {
                     AdministratorLogin = login,
