@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD16;NETCOREAPP11</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETSTANDARD14;NETCOREAPP11</DefineConstants>
     <DebugType>portable</DebugType>
   </PropertyGroup>
 

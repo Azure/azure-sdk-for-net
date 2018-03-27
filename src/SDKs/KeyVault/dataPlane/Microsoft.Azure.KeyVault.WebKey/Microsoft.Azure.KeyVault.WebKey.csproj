@@ -15,21 +15,21 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Cng" Version="4.3.0" />
     <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
 </Project>
