@@ -88,6 +88,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                         if (!string.IsNullOrEmpty(ApiTag))
                         {
                             ApiTagPropsFile = UpdateProject(ApiTag, proj);
+                            VerifyPropsFile(ApiTag, proj);
                         }
                         else
                         {
@@ -95,6 +96,15 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                         }
                     }
                 }
+            }
+        }
+
+        private void VerifyPropsFile(string apiTag, SdkProjectMetaData sdkProject)
+        {
+            string propsFile = GetApiTagsPropsPath(sdkProject);
+            if(!File.ReadAllText(propsFile).Contains(apiTag))
+            {
+                TaskLogger.LogException(new Exception("Could not find tags "+apiTag+" in the props file "+propsFile));
             }
         }
 

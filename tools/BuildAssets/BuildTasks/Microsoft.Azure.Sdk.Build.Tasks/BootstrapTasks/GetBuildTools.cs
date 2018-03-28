@@ -178,7 +178,7 @@
                 {
                     copyFrom = Path.Combine(RemoteCopyFromRootDir, fl);
                     copyTo = Path.Combine(LocalBranchCopyToRootDir, fl);
-                    //CopyFile(copyFrom, copyTo);
+                    CopyFile(copyFrom, copyTo);
                 }
 
                 ReportErrors();
