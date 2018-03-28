@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmU3ZmU0YmQtOTBjNy00NTRlLThiYjYtZGM0NDY0OWYyN2IyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy93ZXN0dXMvdXNhZ2VzP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/providers/Microsoft.Sql/locations/West%20Europe/usages?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY3YzA1NWMtNjMxMC00Mzc0LTk4NTItMTBlZjcxY2U1Zjg1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy9XZXN0JTIwRXVyb3BlL3VzYWdlcz9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3842aaba-ccd2-4922-938b-d4051ee08290"
+          "1b989943-bc99-49a1-84e1-97f87cca83d8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.8.0.0"
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Regional Server Quota for westus\",\r\n        \"currentValue\": 3.0,\r\n        \"limit\": 20.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/ServerQuota\",\r\n      \"name\": \"ServerQuota\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Free Database Count per Subscription for westus\",\r\n        \"currentValue\": 0.0,\r\n        \"limit\": 1.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/SubscriptionFreeDatabaseCount\",\r\n      \"name\": \"SubscriptionFreeDatabaseCount\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Free to Basic Database Upgrade count-down in westus\",\r\n        \"currentValue\": 365.0,\r\n        \"limit\": 365.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/SubscriptionFreeDatabaseDaysLeft\",\r\n      \"name\": \"SubscriptionFreeDatabaseDaysLeft\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Regional Server Quota for West Europe\",\r\n        \"currentValue\": 2.0,\r\n        \"limit\": 20.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/providers/Microsoft.Sql/locations/West Europe/usages/ServerQuota\",\r\n      \"name\": \"ServerQuota\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Free Database Count per Subscription for West Europe\",\r\n        \"currentValue\": 0.0,\r\n        \"limit\": 1.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/providers/Microsoft.Sql/locations/West Europe/usages/SubscriptionFreeDatabaseCount\",\r\n      \"name\": \"SubscriptionFreeDatabaseCount\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Free to Basic Database Upgrade count-down in West Europe\",\r\n        \"currentValue\": 365.0,\r\n        \"limit\": 365.0,\r\n        \"unit\": \"Count\"\r\n      },\r\n      \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/providers/Microsoft.Sql/locations/West Europe/usages/SubscriptionFreeDatabaseDaysLeft\",\r\n      \"name\": \"SubscriptionFreeDatabaseDaysLeft\",\r\n      \"type\": \"Microsoft.Sql/locations/usages\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Nov 2017 17:51:26 GMT"
+          "Wed, 28 Mar 2018 02:06:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -44,41 +44,44 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "715c0e83-e51e-4428-8d05-6b8d05ee857c"
+          "ff4a40d2-f16a-481a-80c6-3f5214f68abd"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "8f44bd38-5c38-43e3-91fd-d3382719dbc8"
+          "c33831d6-879b-4e4c-92f8-70bf828ad6b8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171102T175126Z:8f44bd38-5c38-43e3-91fd-d3382719dbc8"
+          "WESTUS2:20180328T020645Z:c33831d6-879b-4e4c-92f8-70bf828ad6b8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/ServerQuota?api-version=2015-05-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMmU3ZmU0YmQtOTBjNy00NTRlLThiYjYtZGM0NDY0OWYyN2IyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy93ZXN0dXMvdXNhZ2VzL1NlcnZlclF1b3RhP2FwaS12ZXJzaW9uPTIwMTUtMDUtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/providers/Microsoft.Sql/locations/West%20Europe/usages/ServerQuota?api-version=2015-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY3YzA1NWMtNjMxMC00Mzc0LTk4NTItMTBlZjcxY2U1Zjg1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2xvY2F0aW9ucy9XZXN0JTIwRXVyb3BlL3VzYWdlcy9TZXJ2ZXJRdW90YT9hcGktdmVyc2lvbj0yMDE1LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ca058d6c-f3e3-4510-ab49-c98f13e961f1"
+          "a2fd5f5b-46f6-4771-a78c-97fa79d749a8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.8.0.0"
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Regional Server Quota for westus\",\r\n    \"currentValue\": 3.0,\r\n    \"limit\": 20.0,\r\n    \"unit\": \"Count\"\r\n  },\r\n  \"id\": \"/subscriptions/2e7fe4bd-90c7-454e-8bb6-dc44649f27b2/providers/Microsoft.Sql/locations/westus/usages/ServerQuota\",\r\n  \"name\": \"ServerQuota\",\r\n  \"type\": \"Microsoft.Sql/locations/usages\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Regional Server Quota for West Europe\",\r\n    \"currentValue\": 2.0,\r\n    \"limit\": 20.0,\r\n    \"unit\": \"Count\"\r\n  },\r\n  \"id\": \"/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/providers/Microsoft.Sql/locations/West Europe/usages/ServerQuota\",\r\n  \"name\": \"ServerQuota\",\r\n  \"type\": \"Microsoft.Sql/locations/usages\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -90,7 +93,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 02 Nov 2017 17:51:26 GMT"
+          "Wed, 28 Mar 2018 02:06:45 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,19 +108,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "374e917d-07e3-4576-b521-2a4d01c95bfe"
+          "cd5650d8-f2a4-47f1-861e-f10ffb5bcaee"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "7a13a25a-cf04-4010-8b84-de7a2844647e"
+          "96c7473b-8e07-45ad-bad3-ff102a7103ff"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171102T175126Z:7a13a25a-cf04-4010-8b84-de7a2844647e"
+          "WESTUS2:20180328T020645Z:96c7473b-8e07-45ad-bad3-ff102a7103ff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -125,7 +131,7 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "2e7fe4bd-90c7-454e-8bb6-dc44649f27b2",
-    "DefaultLocation": "westus"
+    "SubscriptionId": "df7c055c-6310-4374-9852-10ef71ce5f85",
+    "DefaultLocation": "West Europe"
   }
 }

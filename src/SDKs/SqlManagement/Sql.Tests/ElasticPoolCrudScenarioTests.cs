@@ -113,8 +113,8 @@ namespace Sql.Tests
             string testPrefix = "sqlelasticpoollistcanceloperation-";
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                ResourceGroup resourceGroup = context.CreateResourceGroup("North Europe");
-                Server server = context.CreateServer(resourceGroup, "northeurope");
+                ResourceGroup resourceGroup = context.CreateResourceGroup("West Europe");
+                Server server = context.CreateServer(resourceGroup, "westeurope");
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                 {
@@ -146,7 +146,7 @@ namespace Sql.Tests
 
                 if (HttpMockServer.Mode == HttpRecorderMode.Record)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(5));
+                    Thread.Sleep(TimeSpan.FromSeconds(15));
                 }
 
                 // Get the pool update operation for new added properties on elastic pool operations: ETA, Operation Description and IsCancellable
@@ -156,9 +156,9 @@ namespace Sql.Tests
                 IList<ElasticPoolOperation> responseObject = response.Body.ToList();
                 Assert.Single(responseObject);
                 Assert.NotNull(responseObject[0].PercentComplete);
-                Assert.Null(responseObject[0].EstimatedCompletionTime);
-                Assert.Null(responseObject[0].Description);
-                Assert.Null(responseObject[0].IsCancellable);
+                Assert.NotNull(responseObject[0].EstimatedCompletionTime);
+                Assert.NotNull(responseObject[0].Description);
+                Assert.NotNull(responseObject[0].IsCancellable);
 
                 // Cancel the elastic pool update operation
                 string requestId = responseObject[0].Name;

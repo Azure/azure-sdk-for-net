@@ -230,8 +230,8 @@ namespace Sql.Tests
             string testPrefix = "sqldblistcanceloperation-";
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                ResourceGroup resourceGroup = context.CreateResourceGroup("North Europe");
-                Server server = context.CreateServer(resourceGroup, "northeurope");
+                ResourceGroup resourceGroup = context.CreateResourceGroup("West Europe");
+                Server server = context.CreateServer(resourceGroup, "westeurope");
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
