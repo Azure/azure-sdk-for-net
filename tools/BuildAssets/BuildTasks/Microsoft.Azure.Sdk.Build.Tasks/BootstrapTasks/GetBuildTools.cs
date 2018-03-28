@@ -28,7 +28,7 @@
         /// <summary>
         /// Sets/Gets Local branch Root Directory
         /// </summary>
-        //[Required]
+        [Required]
         public string LocalBranchRootDir { get; set; }
         #endregion
 
@@ -116,7 +116,7 @@
         /// </summary>
         public GetBuildTools()
         {
-            Init();
+            // Init();
         }
 
         private void Init()
