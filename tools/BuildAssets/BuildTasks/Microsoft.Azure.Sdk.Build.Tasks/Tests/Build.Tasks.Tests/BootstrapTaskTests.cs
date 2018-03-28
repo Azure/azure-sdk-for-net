@@ -47,7 +47,18 @@
             getBldTools.Execute();
             Assert.False(getBldTools.unableToCopyFilePath.Count > 0);
         }
-        
+
+        [Fact]
+        public void CopyFilesFromGitHubDsgouda()
+        {
+            string localBranchDir = GetSourceRootDir();
+            string remoteRootDir = @"https://raw.githubusercontent.com/dsgouda/azure-sdk-for-net/buildtools/";
+            Assert.False(string.IsNullOrEmpty(localBranchDir));
+            GetBuildTools getBldTools = new GetBuildTools(localBranchDir, remoteRootDir);
+            getBldTools.Execute();
+            Assert.False(getBldTools.unableToCopyFilePath.Count > 0);
+        }
+
         private string GetSourceRootDir()
         {
             string srcRootDir = string.Empty;
