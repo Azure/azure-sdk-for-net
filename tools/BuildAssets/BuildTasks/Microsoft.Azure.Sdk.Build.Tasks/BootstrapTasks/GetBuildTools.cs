@@ -116,7 +116,7 @@
         /// </summary>
         public GetBuildTools()
         {
-            //Init();
+            Init();
         }
 
         private void Init()
