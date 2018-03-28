@@ -420,6 +420,14 @@ namespace Microsoft.Azure.KeyVault.WebKey
             return true;
         }
 
+        public override int GetHashCode()
+        {
+            return BCRYPT_ECC_PRIME_SHORT_WEIERSTRASS_CURVE.GetHashCode()
+                * BCRYPT_ECC_PRIME_TWISTED_EDWARDS_CURVE.GetHashCode()
+                * BCRYPT_ECC_PRIME_MONTGOMERY_CURVE.GetHashCode();
+        }
+
+
         private static bool BytesEquals( byte[] a, byte[] b )
         {
             if ( a == b )

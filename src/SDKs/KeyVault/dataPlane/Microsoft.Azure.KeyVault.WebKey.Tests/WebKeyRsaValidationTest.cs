@@ -293,7 +293,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             }
         }
 
-        public static void EmitTestData( int keySize )
+        internal static void EmitTestData( int keySize )
         {
             EmitOrdinary( keySize );
             EmitDSmallerThanN( keySize );
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             throw new Exception( "Unable to generate key with D < N." );
         }
 
-        public static void EmitVariable( string collectionName, int keySize, JsonWebKey key )
+        internal static void EmitVariable( string collectionName, int keySize, JsonWebKey key )
         {
             var text = key.ToString();
             text = text.Replace( "\"", "\\\"" );

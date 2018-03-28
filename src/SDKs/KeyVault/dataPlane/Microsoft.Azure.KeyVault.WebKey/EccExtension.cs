@@ -36,7 +36,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             return (string[]) _cngOperations[keyUsage].Clone();
         }
 
-        private static ECDsaCng GetEcdsaCng( ECDsa ecdsa )
+        private static ECDsaCng GetEcdsaCng(ECDsa ecdsa )
         {
             var ecdsaCng = ecdsa as ECDsaCng;
             if ( ecdsaCng == null )

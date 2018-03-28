@@ -5,7 +5,7 @@
     <Description>Microsoft Azure Key Vault Extensions Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Extensions</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.Extensions</AssemblyName>
-    <VersionPrefix>2.4.0-preview</VersionPrefix>
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public preview release of the Azure Key Vault SDK. Included in this preview are updates to support eliptical curve keys.  This package should not be used in production. It is subject to breaking changes, and will not be supported once the preview has ended. 
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD;NETSTANDARD15</DefineConstants>
+    <DefineConstants>$(DefineConstants);NETSTANDARD14</DefineConstants>
     <DebugType>portable</DebugType>
   </PropertyGroup>
 

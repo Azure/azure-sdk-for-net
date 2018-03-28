@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading;
 using KeyVault.TestFramework;
 using Microsoft.Azure.KeyVault.Models;
@@ -21,11 +22,11 @@ using Xunit;
 
 namespace Microsoft.Azure.KeyVault.Tests
 {
-    public class KeyVaultOperationsTest : IClassFixture<KeyVaultTestFixture>
+    public class Operations : IClassFixture<KeyVaultTestFixture>
     {
         private KeyVaultTestFixture fixture;
 
-        public KeyVaultOperationsTest(KeyVaultTestFixture fixture)
+        public Operations(KeyVaultTestFixture fixture)
         {
             this.fixture = fixture;
             _standardVaultOnly = fixture.standardVaultOnly;
@@ -95,7 +96,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultConstructor()
+        public void Constructor()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -110,7 +111,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
         #region Key Operations
         [Fact]
-        public void KeyVaultEncryptDecryptRsaOaepTest()
+        public void EncryptDecryptRsaOaepTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -121,7 +122,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEncryptDecryptRsa15Test()
+        public void EncryptDecryptRsa15Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -132,7 +133,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEncryptDecryptRsaOaep256Test()
+        public void EncryptDecryptRsaOaep256Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -143,7 +144,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEncryptDecryptWithOlderKeyVersion()
+        public void EncryptDecryptWithOlderKeyVersion()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -162,7 +163,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEncryptDecryptWithDifferentKeyVersions()
+        public void EncryptDecryptWithDifferentKeyVersions()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -184,7 +185,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultSignVerifyRS256Test()
+        public void SignVerifyRS256Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -197,7 +198,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultSignVerifyRS384Test()
+        public void SignVerifyRS384Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -210,7 +211,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultSignVerifyRS512Test()
+        public void SignVerifyRS512Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -223,7 +224,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultSignVerifyPS256Test()
+        public void SignVerifyPS256Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -236,7 +237,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultSignVerifyPS384Test()
+        public void SignVerifyPS384Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -249,7 +250,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultSignVerifyPS512Test()
+        public void SignVerifyPS512Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -262,7 +263,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultWrapUnwrapRsaOaepTest()
+        public void WrapUnwrapRsaOaepTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -275,7 +276,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultWrapUnwrapRsa15Test()
+        public void WrapUnwrapRsa15Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -288,7 +289,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultWrapUnwrapRsaOaep256Test()
+        public void WrapUnwrapRsaOaep256Test()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -301,7 +302,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEcKeyCreateSignVerifyP256()
+        public void EcKeyCreateSignVerifyP256()
         {
             using (MockContext context = MockContext.Start(GetType().FullName))
             {
@@ -314,7 +315,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEcKeyCreateSignVerifyP384()
+        public void EcKeyCreateSignVerifyP384()
         {
             using (MockContext context = MockContext.Start(GetType().FullName))
             {
@@ -327,7 +328,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEcKeyCreateSignVerifyP521()
+        public void EcKeyCreateSignVerifyP521()
         {
             using (MockContext context = MockContext.Start(GetType().FullName))
             {
@@ -340,7 +341,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultEcKeyCreateSignVerifySECP256K1()
+        public void EcKeyCreateSignVerifySECP256K1()
         {
             using (MockContext context = MockContext.Start(GetType().FullName))
             {
@@ -402,8 +403,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 #endif
         }
 
-        [Fact]
-        public void KeyVaultCreateGetDeleteKeyTest()
+        public void CreateGetDeleteKeyTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCreateHsmKeyTest()
+        public void CreateHsmKeyTest()
         {
             if (_standardVaultOnly) return;
 
@@ -511,7 +511,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultImportSoftKeyTest()
+        public void ImportSoftKeyTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -558,7 +558,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultUpdateKeyAttributesTest()
+        public void UpdateKeyAttributesTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -624,7 +624,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultUpdateKeyAttributesWithNoChangeTest()
+        public void UpdateKeyAttributesWithNoChangeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -676,7 +676,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultKeyBackupRestoreTest()
+        public void KeyBackupRestoreTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -741,7 +741,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultSecretBackupRestoreTest()
+        public void SecretBackupRestoreTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -803,7 +803,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultListKeysTest()
+        public void ListKeysTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -835,7 +835,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 {
                     if (addedObjects.Contains(m.Kid))
                     {
-                        Assert.True(m.Identifier.Name.StartsWith("listkeytest"));
+                        Assert.StartsWith("listkeytest", m.Identifier.Name);
                         addedObjects.Remove(m.Kid);
                     }
 
@@ -851,7 +851,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         if (addedObjects.Contains(m.Kid))
                         {
-                            Assert.True(m.Identifier.Name.StartsWith("listkeytest"));
+                            Assert.StartsWith("listkeytest", m.Identifier.Name);
                             addedObjects.Remove(m.Kid);
                         }
 
@@ -866,7 +866,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultListKeyVersionsTest()
+        public void ListKeyVersionsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -926,7 +926,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 #region Deleted Key Operations
 
         [Fact]
-        public void KeyVaultGetDeletedKeyTest()
+        public void GetDeletedKeyTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -968,8 +968,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultKeyCreateDeleteRecoverPurgeTest()
+        public void KeyCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1068,7 +1067,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultListDeletedKeysTest()
+        public void ListDeletedKeysTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1106,12 +1105,12 @@ namespace Microsoft.Azure.KeyVault.Tests
                 {
                     if (addedObjects.Contains(m.Kid))
                     {
-                        Assert.True(m.Identifier.Name.StartsWith(keyNamePrefix));
+                        Assert.StartsWith(keyNamePrefix, m.Identifier.Name);
                         Assert.NotNull(m.RecoveryId);
                         Assert.NotNull(m.ScheduledPurgeDate);
                         Assert.NotNull(m.DeletedDate);
                         Assert.Equal(m.RecoveryIdentifier.Name, m.Identifier.Name);
-                        Assert.True(m.RecoveryIdentifier.Name.StartsWith(keyNamePrefix));
+                        Assert.StartsWith(keyNamePrefix, m.RecoveryIdentifier.Name);
 
                         recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
 
@@ -1129,12 +1128,12 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         if (addedObjects.Contains(m.Kid))
                         {
-                            Assert.True(m.Identifier.Name.StartsWith(keyNamePrefix));
+                            Assert.StartsWith(keyNamePrefix, m.Identifier.Name);
                             Assert.NotNull(m.RecoveryId);
                             Assert.NotNull(m.ScheduledPurgeDate);
                             Assert.NotNull(m.DeletedDate);
                             Assert.Equal(m.RecoveryIdentifier.Name, m.Identifier.Name);
-                            Assert.True(m.RecoveryIdentifier.Name.StartsWith(keyNamePrefix));
+                            Assert.StartsWith(keyNamePrefix,m.RecoveryIdentifier.Name);
 
                             recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
 
@@ -1158,8 +1157,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
 #region Secret Operations
 
-        [Fact]
-        public void KeyVaultSecretCreateUpdateDeleteTest()
+        public void SecretCreateUpdateDeleteTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1235,7 +1233,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultGetSecretVersionTest()
+        public void GetSecretVersionTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1295,7 +1293,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultListSecretsTest()
+        public void ListSecretsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1326,7 +1324,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     if (addedObjects.Contains(m.Id))
                     {
                         Assert.Equal("plainText", m.ContentType);
-                        Assert.True(m.Identifier.Name.StartsWith("listsecrettest"));
+                        Assert.StartsWith("listsecrettest", m.Identifier.Name);
                         addedObjects.Remove(m.Id);
                     }
                 }
@@ -1343,7 +1341,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                             Assert.Equal("plainText", m.ContentType);
                             if (addedObjects.Contains(m.Id))
                             {
-                                Assert.True(m.Identifier.Name.StartsWith("listsecrettest"));
+                                Assert.StartsWith("listsecrettest", m.Identifier.Name);
                                 addedObjects.Remove(m.Id);
                             }
                             addedObjects.Remove(m.Id);
@@ -1357,7 +1355,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultListSecretVersionsTest()
+        public void ListSecretVersionsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1407,7 +1405,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultTestSecretExtendedAttributes()
+        public void TestSecretExtendedAttributes()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1503,7 +1501,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 #region Deleted Secret Operations
 
         [Fact]
-        public void KeyVaultGetDeletedSecretTest()
+        public void GetDeletedSecretTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1545,8 +1543,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultSecretCreateDeleteRecoverPurgeTest()
+        public void SecretCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1648,7 +1645,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultListDeletedSecretsTest()
+        public void ListDeletedSecretsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1686,11 +1683,11 @@ namespace Microsoft.Azure.KeyVault.Tests
                 {
                     if (addedObjects.Contains(m.Id))
                     {
-                        Assert.True(m.Identifier.Name.StartsWith("listdeletedsecrettest"));
+                        Assert.StartsWith("listdeletedsecrettest", m.Identifier.Name);
                         Assert.NotNull(m.RecoveryId);
                         Assert.NotNull(m.ScheduledPurgeDate);
                         Assert.NotNull(m.DeletedDate);
-                        Assert.True(m.RecoveryIdentifier.Name.StartsWith("listdeletedsecrettest"));
+                        Assert.StartsWith("listdeletedsecrettest", m.RecoveryIdentifier.Name);
 
                         recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
 
@@ -1708,11 +1705,11 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         if (addedObjects.Contains(m.Id))
                         {
-                            Assert.True(m.Identifier.Name.StartsWith("listdeletedsecrettest"));
+                            Assert.StartsWith("listdeletedsecrettest", m.Identifier.Name);
                             Assert.NotNull(m.RecoveryId);
                             Assert.NotNull(m.ScheduledPurgeDate);
                             Assert.NotNull(m.DeletedDate);
-                            Assert.True(m.RecoveryIdentifier.Name.StartsWith("listdeletedsecrettest"));
+                            Assert.StartsWith("listdeletedsecrettest", m.RecoveryIdentifier.Name);
 
                             recoveryLevelAttributeIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
 
@@ -1738,7 +1735,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
 #region Certificate Operations
         [Fact]
-        public void KeyVaultCertificateImportTest()
+        public void CertificateImportTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1860,7 +1857,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateImportTest2()
+        public void CertificateImportTest2()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -1972,7 +1969,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateImportTest3()
+        public void CertificateImportTest3()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2084,7 +2081,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateListTest()
+        public void CertificateListTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2166,8 +2163,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var certList = client.GetCertificatesAsync(_vaultAddress).GetAwaiter().GetResult();
                     Assert.NotNull(certList);
                     Assert.True(certList.Count() >= 2);
-                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X509Thumbprint), ToHexString(createdCertificateBundle01.X509Thumbprint))));
-                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X509Thumbprint), ToHexString(createdCertificateBundle02.X509Thumbprint))));
+                    Assert.Contains(certList, s => 0 == string.CompareOrdinal(ToHexString(s.X509Thumbprint), ToHexString(createdCertificateBundle01.X509Thumbprint)));
+                    Assert.Contains(certList, s => 0 == string.CompareOrdinal(ToHexString(s.X509Thumbprint), ToHexString(createdCertificateBundle02.X509Thumbprint)));
                 }
                 finally
                 {
@@ -2187,7 +2184,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateListVersionsTest()
+        public void CertificateListVersionsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2266,8 +2263,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var certList = client.GetCertificateVersionsAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
                     Assert.NotNull(certList);
                     Assert.True(2 == certList.Count());
-                    Assert.True(certList.Any(s => s.X509Thumbprint.SequenceEqual(createdCertificateBundle01.X509Thumbprint)));
-                    Assert.True(certList.Any(s => s.X509Thumbprint.SequenceEqual(createdCertificateBundle02.X509Thumbprint)));
+                    Assert.Contains(certList, s => s.X509Thumbprint.SequenceEqual(createdCertificateBundle01.X509Thumbprint));
+                    Assert.Contains(certList, s => s.X509Thumbprint.SequenceEqual(createdCertificateBundle02.X509Thumbprint));
                 }
                 finally
                 {
@@ -2282,7 +2279,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateCreateSelfSignedTest()
+        public void CertificateCreateSelfSignedTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2360,7 +2357,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateCreateLongSelfSignedTest()
+        public void CertificateCreateLongSelfSignedTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2441,7 +2438,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateCreateTestIssuerTest()
+        public void CertificateCreateTestIssuerTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2532,7 +2529,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateAsyncRequestCancellationTest()
+        public void CertificateAsyncRequestCancellationTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2605,8 +2602,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultCertificateAsyncDeleteOperationTest()
+        public void CertificateAsyncDeleteOperationTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2701,7 +2697,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateUpdateTest()
+        public void CertificateUpdateTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2789,7 +2785,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificatePolicyTest()
+        public void CertificatePolicyTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2858,7 +2854,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultCertificateContactsTest()
+        public void CertificateContactsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -2882,9 +2878,9 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.NotNull(createdContacts);
 
                 Assert.True(createdContacts.ContactList.Count() == 1);
-                Assert.True(createdContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
-                Assert.True(createdContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
-                Assert.True(createdContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+                Assert.Contains(createdContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com"));
+                Assert.Contains(createdContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "John Doe"));
+                Assert.Contains(createdContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "1111111111"));
 
                 try
                 {
@@ -2893,9 +2889,9 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.NotNull(retrievedContacts);
 
                     Assert.True(retrievedContacts.ContactList.Count() == 1);
-                    Assert.True(retrievedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
-                    Assert.True(retrievedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
-                    Assert.True(retrievedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+                    Assert.Contains(retrievedContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com"));
+                    Assert.Contains(retrievedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "John Doe"));
+                    Assert.Contains(retrievedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "1111111111"));
 
                     // Update contacts
                     retrievedContacts.ContactList = new List<Contact>
@@ -2919,26 +2915,26 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.NotNull(updatedContacts);
 
                     Assert.True(updatedContacts.ContactList.Count() == 2);
-                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
-                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
-                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+                    Assert.Contains(updatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com"));
+                    Assert.Contains(updatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "John Doe"));
+                    Assert.Contains(updatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "1111111111"));
 
-                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com")));
-                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman")));
-                    Assert.True(updatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "2222222222")));
+                    Assert.Contains(updatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com"));
+                    Assert.Contains(updatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman"));
+                    Assert.Contains(updatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "2222222222"));
 
                     // Retrieve updated
                     var retrievedUpdatedContacts = client.GetCertificateContactsAsync(_vaultAddress).GetAwaiter().GetResult();
                     Assert.NotNull(retrievedUpdatedContacts);
 
                     Assert.True(retrievedUpdatedContacts.ContactList.Count() == 2);
-                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
-                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
-                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+                    Assert.Contains(retrievedUpdatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com"));
+                    Assert.Contains(retrievedUpdatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "John Doe"));
+                    Assert.Contains(retrievedUpdatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "1111111111"));
 
-                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com")));
-                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman")));
-                    Assert.True(retrievedUpdatedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "2222222222")));
+                    Assert.Contains(retrievedUpdatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com"));
+                    Assert.Contains(retrievedUpdatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman"));
+                    Assert.Contains(retrievedUpdatedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "2222222222"));
                 }
                 finally
                 {
@@ -2947,20 +2943,20 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.NotNull(deletedContacts);
 
                     Assert.True(deletedContacts.ContactList.Count() == 2);
-                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com")));
-                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "John Doe")));
-                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "1111111111")));
+                    Assert.Contains(deletedContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso.com"));
+                    Assert.Contains(deletedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "John Doe"));
+                    Assert.Contains(deletedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "1111111111"));
 
-                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com")));
-                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman")));
-                    Assert.True(deletedContacts.ContactList.Any(s => 0 == string.CompareOrdinal(s.Phone, "2222222222")));
+                    Assert.Contains(deletedContacts.ContactList, s => 0 == string.CompareOrdinal(s.EmailAddress, "admin@contoso2.com"));
+                    Assert.Contains(deletedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Name, "Johnathan Doeman"));
+                    Assert.Contains(deletedContacts.ContactList, s => 0 == string.CompareOrdinal(s.Phone, "2222222222"));
                 }
             }
 
         }
 
         [Fact]
-        public void KeyVaultCertificateIssuersTest()
+        public void CertificateIssuersTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -3028,8 +3024,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                 var issuers = client.GetCertificateIssuersAsync(_vaultAddress).GetAwaiter().GetResult();
                 Assert.NotNull(issuers);
                 Assert.True(issuers.Count() > 1);
-                Assert.True(issuers.Any(i => i.Id.Contains(issuer01Name)));
-                Assert.True(issuers.Any(i => i.Id.Contains(issuer02Name)));
+                Assert.Contains(issuers, i => i.Id.Contains(issuer01Name));
+                Assert.Contains(issuers, i => i.Id.Contains(issuer02Name));
 
                 var deletedIssuer01 = client.DeleteCertificateIssuerAsync(_vaultAddress, issuer01Name).GetAwaiter().GetResult();
                 Assert.NotNull(deletedIssuer01);
@@ -3039,13 +3035,13 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var emptyIssuers = client.GetCertificateIssuersAsync(_vaultAddress).GetAwaiter().GetResult();
                 Assert.NotNull(emptyIssuers);
-                Assert.False(emptyIssuers.Any(i => i.Id.Contains(issuer01Name)));
-                Assert.False(emptyIssuers.Any(i => i.Id.Contains(issuer02Name)));
+                Assert.DoesNotContain(emptyIssuers, i => i.Id.Contains(issuer01Name));
+                Assert.DoesNotContain(emptyIssuers, i => i.Id.Contains(issuer02Name));
             }
         }
 
         [Fact]
-        public void KeyVaultCertificateCreateManualEnrolledTest()
+        public void CertificateCreateManualEnrolledTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -3111,7 +3107,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 #region Deleted Certificate Operations
 
         [Fact]
-        public void KeyVaultGetDeletedCertificateTest()
+        public void GetDeletedCertificateTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -3206,8 +3202,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultCertificateCreateDeleteRecoverPurgeTest()
+        public void CertificateCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -3335,7 +3330,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultListDeletedCertificatesTest()
+        public void ListDeletedCertificatesTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -3401,11 +3396,11 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         if (addedObjects.Contains(m.Id))
                         {
-                            Assert.True(m.Identifier.Name.StartsWith(namePrefix));
+                            Assert.StartsWith(namePrefix, m.Identifier.Name);
                             Assert.NotNull(m.RecoveryId);
                             Assert.NotNull(m.ScheduledPurgeDate);
                             Assert.NotNull(m.DeletedDate);
-                            Assert.True(m.RecoveryIdentifier.Name.StartsWith(namePrefix));
+                            Assert.StartsWith(namePrefix, m.RecoveryIdentifier.Name);
                             recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
 
                             addedObjects.Remove(m.Id);
@@ -3422,11 +3417,11 @@ namespace Microsoft.Azure.KeyVault.Tests
                         {
                             if (addedObjects.Contains(m.Id))
                             {
-                                Assert.True(m.Identifier.Name.StartsWith(namePrefix));
+                                Assert.StartsWith(namePrefix, m.Identifier.Name);
                                 Assert.NotNull(m.RecoveryId);
                                 Assert.NotNull(m.ScheduledPurgeDate);
                                 Assert.NotNull(m.DeletedDate);
-                                Assert.True(m.RecoveryIdentifier.Name.StartsWith(namePrefix));
+                                Assert.StartsWith(namePrefix, m.RecoveryIdentifier.Name);
                                 recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(m.Attributes, _softDeleteEnabled);
 
                                 addedObjects.Remove(m.Id);
@@ -3455,7 +3450,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 #region Storage Operations
 
         [Fact]
-        public void KeyVaultStorageCreateTest()
+        public void StorageCreateTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3478,7 +3473,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultStorageReadTest()
+        public void StorageReadTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3512,7 +3507,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultStorageDeleteTest()
+        public void StorageDeleteTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3536,7 +3531,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultStorageUpdateTest()
+        public void StorageUpdateTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3572,7 +3567,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultStorageListTest()
+        public void StorageListTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3598,7 +3593,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         if (addedObjects.Contains(m.Id))
                         {
-                            Assert.True(m.Identifier.Name.StartsWith("listStrg"));
+                            Assert.StartsWith("listStrg", m.Identifier.Name);
                             addedObjects.Remove(m.Id);
                         }
                     }
@@ -3620,7 +3615,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
         [Fact]
-        public void KeyVaultStorageRegenerateKeyTest()
+        public void StorageRegenerateKeyTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3655,8 +3650,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultStorageSasDefCreateTest()
+        public void StorageSasDefCreateTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3680,8 +3674,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultStorageSasDefReadTest()
+        public void StorageSasDefReadTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3698,7 +3691,9 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     Assert.NotNull(response.Id);
                     Assert.NotNull(response.SecretId);
-                    Assert.NotNull(response.Parameters);
+                    Assert.NotNull(response.TemplateUri);
+                    Assert.NotNull(response.SasType);
+                    Assert.NotNull(response.ValidityPeriod);
                     Assert.True(response.Attributes.Enabled);
                     Assert.Null(response.Tags);
                 }
@@ -3713,8 +3708,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultStorageSasDefDeleteTest()
+        public void StorageSasDefDeleteTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3730,14 +3724,15 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 Assert.NotNull(response.Id);
                 Assert.NotNull(response.SecretId);
-                Assert.NotNull(response.Parameters);
+                Assert.NotNull(response.TemplateUri);
+                Assert.NotNull(response.SasType);
+                Assert.NotNull(response.ValidityPeriod);
                 Assert.True(response.Attributes.Enabled);
                 Assert.Null(response.Tags);
             }
         }
 
-        [Fact]
-        public void KeyVaultStorageSasDefUpdateTest()
+        public void StorageSasDefUpdateTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3748,30 +3743,34 @@ namespace Microsoft.Azure.KeyVault.Tests
                 try
                 {
                     CreateKvStorageSasDef(client, storageAccountName, sasDefName);
-                    var updateParams = new Dictionary<string, string>
-                    {
-                        {"sasType", "account"},
-                        {"signedProtocols", "https"},
-                        {"signedServices", "tf"},
-                        {"signedResourceTypes", "myresource2"},
-                        {"signedPermissions", "r"},
-                        {"signedVersion", "2016-05-31"},
-                        {"validityPeriod", "P7D"}
-                    };
 
+                    var sasType = "account";
+                    var validityPeriod = "P7D";
+                    var storageApiVer = "2016-05-31";
+                    var templateUri = GetSasDefinitionTemplateUri(
+                        blobUri: String.Format("https://{0}.blob.core.windows.net/", storageAccountName),
+                        startTime: DateTime.UtcNow.ToString(),
+                        expiryTime: DateTime.UtcNow.AddDays(7).ToString(),
+                        resourceType: "c",  // "container"
+                        permissions: "rw",  // read/write
+                        storageServiceEndpoint: "b",    // "blob"
+                        storageServiceVersion: storageApiVer,
+                        signature: "dummySig");
                     var response = client
                         .UpdateSasDefinitionAsync(
                             _vaultAddress,
                             storageAccountName,
                             sasDefName,
-                            updateParams,
+                            templateUri.ToString(),
+                            sasType,
+                            validityPeriod,
                             new SasDefinitionAttributes(false))
                         .GetAwaiter()
                         .GetResult();
 
                     Assert.NotNull(response.Id);
                     Assert.NotNull(response.SecretId);
-                    Assert.True(response.Parameters.SequenceEqual(updateParams));
+                    Assert.Equal(response.TemplateUri, templateUri.ToString());
                     Assert.False(response.Attributes.Enabled);
                     Assert.Null(response.Tags);
                 }
@@ -3788,8 +3787,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
-        public void KeyVaultStorageSasDefListTest()
+        public void StorageSasDefListTest()
         {
             using (MockContext.Start(this.GetType().FullName))
             {
@@ -3816,7 +3814,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         if (addedObjects.Contains(m.Id))
                         {
-                            Assert.True(m.Identifier.Name.StartsWith("listStrgSasDef"));
+                            Assert.StartsWith("listStrgSasDef", m.Identifier.Name);
                             addedObjects.Remove(m.Id);
                         }
                     }
@@ -3864,7 +3862,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         }
 
 
-        public void EncryptDecrypt(KeyVaultClient client, KeyIdentifier keyIdentifier, string algorithm)
+        internal void EncryptDecrypt(KeyVaultClient client, KeyIdentifier keyIdentifier, string algorithm)
         {
             var plainText = RandomBytes(10);
             var encryptResult = client.EncryptAsync(keyIdentifier.BaseIdentifier, algorithm, plainText).GetAwaiter().GetResult();
@@ -4197,28 +4195,34 @@ namespace Microsoft.Azure.KeyVault.Tests
             string sasDefName)
         {
             CreateKvStorageAccount(client, storageAccountName);
-            var paramsDic = new Dictionary<string, string>
-            {
-                {"sasType", "account"},
-                {"signedProtocols", "https"},
-                {"signedServices", "bq"},
-                {"signedResourceTypes", "myresource"},
-                {"signedPermissions", "rw"},
-                {"signedVersion", "2016-05-31"},
-                {"validityPeriod", "PT10H"}
-            };
+
+            var sasType = "account";
+            var validityPeriod = "P10H";
+            var storageApiVer = "2016-05-31";
+            var templateUri = GetSasDefinitionTemplateUri(
+                blobUri: String.Format("https://{0}.blob.core.windows.net/", storageAccountName),
+                startTime: DateTime.UtcNow.ToString(),
+                expiryTime: DateTime.UtcNow.AddDays(7).ToString(),
+                resourceType: "c",  // "container"
+                permissions: "rw",  // read/write
+                storageServiceEndpoint: "bq",    // "blob"
+                storageServiceVersion: storageApiVer,
+                signature: "dummySig");
+
             var response = client.SetSasDefinitionAsync(
                 _vaultAddress,
                 storageAccountName,
                 sasDefName,
-                paramsDic,
+                templateUri.ToString(),
+                sasType,
+                validityPeriod,
                 new SasDefinitionAttributes(true))
                 .GetAwaiter()
                 .GetResult();
 
             Assert.NotNull(response.Id);
             Assert.NotNull(response.SecretId);
-            Assert.True(response.Parameters.SequenceEqual(paramsDic));
+            Assert.Equal(response.TemplateUri, templateUri.ToString());
             Assert.True(response.Attributes.Enabled);
             Assert.Null(response.Tags);
 
@@ -4270,6 +4274,20 @@ namespace Microsoft.Azure.KeyVault.Tests
             return !String.IsNullOrWhiteSpace(attributes.RecoveryLevel)
                 && attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Purgeable.ToLowerInvariant())
                 && !(isSoftDeleteEnabledVault ^ attributes.RecoveryLevel.ToLowerInvariant().Contains(DeletionRecoveryLevel.Recoverable.ToLowerInvariant()));
+        }
+
+        private static Uri GetSasDefinitionTemplateUri(string blobUri, string startTime, string expiryTime, string resourceType, string permissions, string storageServiceEndpoint, string storageServiceVersion, string signature)
+        {
+            StringBuilder builder = new StringBuilder(blobUri);
+            builder.AppendFormat("?sv={0}", storageServiceVersion);
+            builder.AppendFormat("&st={0}", startTime);
+            builder.AppendFormat("&se={0}", expiryTime);
+            builder.AppendFormat("&sr={0}", resourceType);
+            builder.AppendFormat("&sp={0}", permissions);
+            builder.AppendFormat("&ss={0}", storageServiceEndpoint);
+            builder.AppendFormat("&sig={0}", signature);
+
+            return new Uri(builder.ToString());
         }
 #endregion
     }
