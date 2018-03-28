@@ -403,7 +403,6 @@ namespace Microsoft.Azure.KeyVault.Tests
 #endif
         }
 
-        [Fact]
         public void CreateGetDeleteKeyTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -969,7 +968,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void KeyCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -1159,7 +1157,6 @@ namespace Microsoft.Azure.KeyVault.Tests
 
 #region Secret Operations
 
-        [Fact]
         public void SecretCreateUpdateDeleteTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -1546,7 +1543,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void SecretCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -2606,7 +2602,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void CertificateAsyncDeleteOperationTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -3207,7 +3202,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void CertificateCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -3656,7 +3650,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void StorageSasDefCreateTest()
         {
             using (MockContext.Start(this.GetType().FullName))
@@ -3681,7 +3674,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void StorageSasDefReadTest()
         {
             using (MockContext.Start(this.GetType().FullName))
@@ -3716,7 +3708,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void StorageSasDefDeleteTest()
         {
             using (MockContext.Start(this.GetType().FullName))
@@ -3741,7 +3732,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void StorageSasDefUpdateTest()
         {
             using (MockContext.Start(this.GetType().FullName))
@@ -3797,7 +3787,6 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        [Fact]
         public void StorageSasDefListTest()
         {
             using (MockContext.Start(this.GetType().FullName))
