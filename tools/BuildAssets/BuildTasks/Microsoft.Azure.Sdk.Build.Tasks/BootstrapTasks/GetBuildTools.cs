@@ -28,7 +28,7 @@
         /// <summary>
         /// Sets/Gets Local branch Root Directory
         /// </summary>
-        [Required]
+        //[Required]
         public string LocalBranchRootDir { get; set; }
         #endregion
 
