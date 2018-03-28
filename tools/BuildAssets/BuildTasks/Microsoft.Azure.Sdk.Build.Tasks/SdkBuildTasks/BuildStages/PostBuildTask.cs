@@ -101,10 +101,13 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
         private void VerifyPropsFile(string apiTag, SdkProjectMetaData sdkProject)
         {
-            string propsFile = GetApiTagsPropsPath(sdkProject);
-            if(!File.ReadAllText(propsFile).Contains(apiTag))
+            if(!string.IsNullOrEmpty(apiTag))
             {
-                TaskLogger.LogException(new Exception("Could not find tags "+apiTag+" in the props file "+propsFile));
+                string propsFile = GetApiTagsPropsPath(sdkProject);
+                if(!File.ReadAllText(propsFile).Contains(apiTag))
+                {
+                    TaskLogger.LogException(new Exception(string.Format("Could not find tags "+apiTag+" in the props file "+propsFile)));
+                }
             }
         }
 

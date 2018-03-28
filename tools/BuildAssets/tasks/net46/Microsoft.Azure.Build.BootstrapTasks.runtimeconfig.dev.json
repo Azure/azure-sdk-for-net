@@ -1,10 +1,7 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\deshank\\.dotnet\\store\\|arch|\\|tfm|",
-      "F:\\artemp\\rcm\\azure-sdk-for-net\\restoredPackages",
-      "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback",
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      "C:\\Users\\deshank\\.nuget\\packages"
     ]
   }
 }

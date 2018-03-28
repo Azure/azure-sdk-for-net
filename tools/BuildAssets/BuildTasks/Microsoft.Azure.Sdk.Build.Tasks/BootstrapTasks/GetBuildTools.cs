@@ -204,7 +204,7 @@
         {
             if(!File.Exists(LocalMetaDataFilePath))
             {
-                BuildToolsLogger.LogException(new Exception("Could not find file: "+LocalMetaDataFilePath));  
+                BuildToolsLogger.LogException(new Exception(string.Format("Could not find file: {0}", LocalMetaDataFilePath)));  
                 return; 
             }
             foreach(var f in File.ReadAllLines(LocalMetaDataFilePath))
@@ -212,7 +212,7 @@
                 var fPath = Path.Combine(LocalBranchCopyToRootDir, f);
                 if(!File.Exists(fPath))
                 {
-                    BuildToolsLogger.LogException(new Exception("Could not find file: "+fPath));   
+                    BuildToolsLogger.LogException(new Exception(string.Format("Could not find file: {0}", fPath)));   
                 }
             }
         }
