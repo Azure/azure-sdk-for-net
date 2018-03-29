@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for ExpressRouteCircuitPeeringType.
+    /// Defines values for ExpressRoutePeeringState.
     /// </summary>
-    public static class ExpressRouteCircuitPeeringType
+    public static class ExpressRoutePeeringState
     {
-        public const string AzurePublicPeering = "AzurePublicPeering";
-        public const string AzurePrivatePeering = "AzurePrivatePeering";
-        public const string MicrosoftPeering = "MicrosoftPeering";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }
