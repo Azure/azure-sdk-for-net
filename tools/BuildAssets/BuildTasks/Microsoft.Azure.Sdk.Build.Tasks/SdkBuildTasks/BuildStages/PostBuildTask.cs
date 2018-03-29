@@ -99,16 +99,18 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             }
         }
 
-        private void VerifyPropsFile(string apiTag, SdkProjectMetaData sdkProject)
+        public bool VerifyPropsFile(string apiTag, SdkProjectMetaData sdkProject)
         {
             if(!string.IsNullOrEmpty(apiTag))
             {
                 string propsFile = GetApiTagsPropsPath(sdkProject);
                 if(!File.ReadAllText(propsFile).Contains(apiTag))
                 {
-                    TaskLogger.LogException(new Exception(string.Format("Could not find tags "+apiTag+" in the props file "+propsFile)));
+                    TaskLogger.LogInfo("Could not find tags {0} in the props file {1}", apiTag, propsFile);
+                    return false;
                 }
             }
+            return true;
         }
 
         private SdkProjectMetaData GetProject(ITaskItem[] sdkProjects)
