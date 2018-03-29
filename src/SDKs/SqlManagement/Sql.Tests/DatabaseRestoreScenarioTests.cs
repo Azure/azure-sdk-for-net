@@ -339,5 +339,75 @@ namespace Sql.Tests
                     });
             }
         }
+
+        [Fact]
+        public void TestDatabaseRestorePoint()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                string restoreLabel = "restorePointLabel";
+
+                // Create database with only required parameters
+                var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Edition = DatabaseEdition.DataWarehouse,
+                        RequestedServiceObjectiveName = ServiceObjectiveName.DW100
+                    });
+                Assert.NotNull(db);
+
+                CreateDatabaseRestorePointDefinition restoreDefinition = new CreateDatabaseRestorePointDefinition { RestorePointLabel = restoreLabel };
+
+                RestorePoint postResponse = sqlClient.RestorePoints.Create(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name,
+                        restoreDefinition);
+
+                Assert.True(postResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(postResponse.RestorePointLabel == restoreLabel);
+                Assert.True(!string.IsNullOrWhiteSpace(postResponse.RestorePointCreationDate.ToString()));
+
+                IEnumerable<RestorePoint> listResponse =
+                    sqlClient.RestorePoints.ListByDatabase(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name);
+
+                IEnumerable<RestorePoint> restorePointList = listResponse.ToList<RestorePoint>();
+
+                Assert.True(restorePointList.Any());
+
+                RestorePoint getResponse =
+                    sqlClient.RestorePoints.Get(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name,
+                        postResponse.Name);
+
+                Assert.True(getResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(!string.IsNullOrWhiteSpace(getResponse.RestorePointCreationDate.ToString()));
+                Assert.True(getResponse.Name == postResponse.Name);
+
+                sqlClient.RestorePoints.Delete(
+                    resourceGroup.Name,
+                    server.Name,
+                    db.Name,
+                    getResponse.Name);
+
+                IEnumerable<RestorePoint> listResponseAfterDelete =
+                    sqlClient.RestorePoints.ListByDatabase(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name);
+
+                Assert.True(!listResponseAfterDelete.Any()
+                    || !listResponseAfterDelete.Where(x => x.Name == postResponse.Name).Any());
+            }
+        }
     }
 }
