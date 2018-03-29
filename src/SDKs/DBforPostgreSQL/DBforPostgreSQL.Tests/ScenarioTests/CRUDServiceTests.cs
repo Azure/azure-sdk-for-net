@@ -60,8 +60,6 @@ namespace DBforPostgreSQL.Tests.ScenarioTests
                 var createResult = CreateDBForPostgreSQLInstance(context, client, resourceGroup, ServerName);
                 var getResult = client.Servers.Get(resourceGroup.Name, ServerName);
                 client.Servers.Delete(resourceGroup.Name, ServerName);
-
-                var x = Assert.Throws<Exception>(() => client.Servers.Get(ResourceGroupName, ServerName));
             }
             // Wait for resource group deletion to complete.
             Utilities.WaitIfNotInPlaybackMode();
