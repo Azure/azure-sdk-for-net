@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for LeaseState.
+    /// Defines values for ImmutabilityPolicyUpdateType.
     /// </summary>
-    public static class LeaseState
+    public static class ImmutabilityPolicyUpdateType
     {
-        public const string Available = "Available";
-        public const string Leased = "Leased";
-        public const string Expired = "Expired";
-        public const string Breaking = "Breaking";
-        public const string Broken = "Broken";
+        public const string Put = "put";
+        public const string Lock = "lock";
+        public const string Extend = "extend";
     }
 }

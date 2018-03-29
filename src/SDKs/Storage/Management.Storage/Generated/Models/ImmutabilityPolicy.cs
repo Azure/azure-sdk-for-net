@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="immutabilityPeriodSinceCreationInDays">The
         /// immutability period for the blobs in the container since the policy
         /// creation, in days.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
+        /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="state">The ImmutabilityPolicy state of a blob
         /// container, possible values include: Locked and Unlocked. Possible
         /// values include: 'Locked', 'Unlocked'</param>
-        public ImmutabilityPolicy(int immutabilityPeriodSinceCreationInDays, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?))
+        public ImmutabilityPolicy(int immutabilityPeriodSinceCreationInDays, string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string state = default(string))
             : base(id, name, type, etag)
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'Locked', 'Unlocked'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public ImmutabilityPolicyState? State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ListContainerItem class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
+        /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// been created for this container. The hasImmutabilityPolicy public
         /// property is set to false by SRP if ImmutabilityPolicy has not been
         /// created for this container.</param>
-        public ListContainerItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), LeaseStatus? leaseStatus = default(LeaseStatus?), LeaseState? leaseState = default(LeaseState?), LeaseDuration? leaseDuration = default(LeaseDuration?), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHold legalHold = default(LegalHold), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
+        public ListContainerItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
             : base(id, name, type, etag)
         {
             PublicAccess = publicAccess;
@@ -110,14 +110,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'Locked', 'Unlocked'
         /// </summary>
         [JsonProperty(PropertyName = "properties.leaseStatus")]
-        public LeaseStatus? LeaseStatus { get; private set; }
+        public string LeaseStatus { get; private set; }
 
         /// <summary>
         /// Gets lease state of the container. Possible values include:
         /// 'Available', 'Leased', 'Expired', 'Breaking', 'Broken'
         /// </summary>
         [JsonProperty(PropertyName = "properties.leaseState")]
-        public LeaseState? LeaseState { get; private set; }
+        public string LeaseState { get; private set; }
 
         /// <summary>
         /// Gets specifies whether the lease on a container is of infinite or
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include: 'Infinite', 'Fixed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.leaseDuration")]
-        public LeaseDuration? LeaseDuration { get; private set; }
+        public string LeaseDuration { get; private set; }
 
         /// <summary>
         /// Gets or sets a name-value pair to associate with the container as
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets the LegalHold property of the container.
         /// </summary>
         [JsonProperty(PropertyName = "properties.legalHold")]
-        public LegalHold LegalHold { get; private set; }
+        public LegalHoldProperties LegalHold { get; private set; }
 
         /// <summary>
         /// Gets the hasLegalHold public property is set to true by SRP if

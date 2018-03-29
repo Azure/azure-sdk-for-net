@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Storage
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The Service API version.
+        /// The version of the service to call.
         /// </summary>
         string ApiVersion { get; }
 

@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LeaseDuration.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LeaseDuration
+    public static class LeaseDuration
     {
-        [EnumMember(Value = "Infinite")]
-        Infinite,
-        [EnumMember(Value = "Fixed")]
-        Fixed
-    }
-    internal static class LeaseDurationEnumExtension
-    {
-        internal static string ToSerializedValue(this LeaseDuration? value)
-        {
-            return value == null ? null : ((LeaseDuration)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this LeaseDuration value)
-        {
-            switch( value )
-            {
-                case LeaseDuration.Infinite:
-                    return "Infinite";
-                case LeaseDuration.Fixed:
-                    return "Fixed";
-            }
-            return null;
-        }
-
-        internal static LeaseDuration? ParseLeaseDuration(this string value)
-        {
-            switch( value )
-            {
-                case "Infinite":
-                    return LeaseDuration.Infinite;
-                case "Fixed":
-                    return LeaseDuration.Fixed;
-            }
-            return null;
-        }
+        public const string Infinite = "Infinite";
+        public const string Fixed = "Fixed";
     }
 }

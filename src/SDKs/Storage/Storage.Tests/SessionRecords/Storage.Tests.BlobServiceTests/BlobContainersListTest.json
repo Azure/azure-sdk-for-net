@@ -327,7 +327,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
       "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9290/providers/Microsoft.Storage/storageAccounts/sto1590/blobServices/default/containers/container1644?api-version=2017-10-01",
@@ -473,7 +473,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
       "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res9290/providers/Microsoft.Storage/storageAccounts/sto1590/listKeys?api-version=2017-10-01",

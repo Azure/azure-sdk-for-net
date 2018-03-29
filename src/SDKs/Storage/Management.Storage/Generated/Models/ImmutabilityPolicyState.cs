@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ImmutabilityPolicyState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ImmutabilityPolicyState
+    public static class ImmutabilityPolicyState
     {
-        [EnumMember(Value = "Locked")]
-        Locked,
-        [EnumMember(Value = "Unlocked")]
-        Unlocked
-    }
-    internal static class ImmutabilityPolicyStateEnumExtension
-    {
-        internal static string ToSerializedValue(this ImmutabilityPolicyState? value)
-        {
-            return value == null ? null : ((ImmutabilityPolicyState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ImmutabilityPolicyState value)
-        {
-            switch( value )
-            {
-                case ImmutabilityPolicyState.Locked:
-                    return "Locked";
-                case ImmutabilityPolicyState.Unlocked:
-                    return "Unlocked";
-            }
-            return null;
-        }
-
-        internal static ImmutabilityPolicyState? ParseImmutabilityPolicyState(this string value)
-        {
-            switch( value )
-            {
-                case "Locked":
-                    return ImmutabilityPolicyState.Locked;
-                case "Unlocked":
-                    return ImmutabilityPolicyState.Unlocked;
-            }
-            return null;
-        }
+        public const string Locked = "Locked";
+        public const string Unlocked = "Unlocked";
     }
 }

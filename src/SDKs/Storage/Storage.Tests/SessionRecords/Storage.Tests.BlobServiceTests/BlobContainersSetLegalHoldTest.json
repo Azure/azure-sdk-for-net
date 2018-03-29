@@ -266,7 +266,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
       "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res4303/providers/Microsoft.Storage/storageAccounts/sto7280/blobServices/default/containers/container8723/setLegalHold?api-version=2017-10-01",

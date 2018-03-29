@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LeaseStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LeaseStatus
+    public static class LeaseStatus
     {
-        [EnumMember(Value = "Locked")]
-        Locked,
-        [EnumMember(Value = "Unlocked")]
-        Unlocked
-    }
-    internal static class LeaseStatusEnumExtension
-    {
-        internal static string ToSerializedValue(this LeaseStatus? value)
-        {
-            return value == null ? null : ((LeaseStatus)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this LeaseStatus value)
-        {
-            switch( value )
-            {
-                case LeaseStatus.Locked:
-                    return "Locked";
-                case LeaseStatus.Unlocked:
-                    return "Unlocked";
-            }
-            return null;
-        }
-
-        internal static LeaseStatus? ParseLeaseStatus(this string value)
-        {
-            switch( value )
-            {
-                case "Locked":
-                    return LeaseStatus.Locked;
-                case "Unlocked":
-                    return LeaseStatus.Unlocked;
-            }
-            return null;
-        }
+        public const string Locked = "Locked";
+        public const string Unlocked = "Unlocked";
     }
 }

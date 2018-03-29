@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -41,11 +43,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// container, possible values include: Locked and Unlocked. Possible
         /// values include: 'Locked', 'Unlocked'</param>
         /// <param name="etag">ImmutabilityPolicy Etag.</param>
-        public ImmutabilityPolicyProperties(int immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state = default(ImmutabilityPolicyState?), string etag = default(string))
+        /// <param name="updateHistory">The ImmutabilityPolicy update history
+        /// of the blob container.</param>
+        public ImmutabilityPolicyProperties(int immutabilityPeriodSinceCreationInDays, string state = default(string), string etag = default(string), IList<UpdateHistoryProperty> updateHistory = default(IList<UpdateHistoryProperty>))
         {
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             State = state;
             Etag = etag;
+            UpdateHistory = updateHistory;
             CustomInit();
         }
 
@@ -67,13 +72,19 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'Locked', 'Unlocked'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public ImmutabilityPolicyState? State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets immutabilityPolicy Etag.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets the ImmutabilityPolicy update history of the blob container.
+        /// </summary>
+        [JsonProperty(PropertyName = "updateHistory")]
+        public IList<UpdateHistoryProperty> UpdateHistory { get; private set; }
 
         /// <summary>
         /// Validate the object.

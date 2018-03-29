@@ -327,7 +327,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
       "RequestUri": "/subscriptions/45b60d85-fd72-427a-a708-f994d26e593e/resourceGroups/res1286/providers/Microsoft.Storage/storageAccounts/sto2135/blobServices/default/containers/container2194/immutabilityPolicies/default?api-version=2017-10-01",
