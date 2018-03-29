@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.DBforPostgreSQL</PackageId>
+		<Description>Provides developers with libraries for the Azure Database for PostgreSQL under Azure Resource manager to deploy an instance of PostgreSQL. Create, Update, Delete, Restore, and more.</Description>
+		<Version>0.1.0</Version>
+		<AssemblyName>Microsoft.Azure.Management.DBforPostgreSQL</AssemblyName>
+		<PackageTags>DBforPostgreSQL;DB for PostgreSQL;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+        This is a release of the Azure Database for PostgreSQL SDK.
+      ]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>
