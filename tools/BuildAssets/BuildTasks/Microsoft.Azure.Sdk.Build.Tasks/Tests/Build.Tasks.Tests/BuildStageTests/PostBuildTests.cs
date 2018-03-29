@@ -116,7 +116,8 @@ namespace Build.Tasks.Tests
         [Fact]
         public void VerifyPropsFileTest()
         {
-            Assert.False(new PostBuildTask().VerifyPropsFile(null, null));
+            // if apitags is null or empty we should not consider that as an error
+            Assert.True(new PostBuildTask().VerifyPropsFile(null, null));
         }
         
         [Fact]
