@@ -52,6 +52,11 @@ namespace Microsoft.Azure.Management.Network
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client API version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -80,6 +85,11 @@ namespace Microsoft.Azure.Management.Network
         IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; }
 
         /// <summary>
+        /// Gets the IDdosProtectionPlansOperations.
+        /// </summary>
+        IDdosProtectionPlansOperations DdosProtectionPlans { get; }
+
+        /// <summary>
         /// Gets the IAvailableEndpointServicesOperations.
         /// </summary>
         IAvailableEndpointServicesOperations AvailableEndpointServices { get; }
@@ -95,6 +105,11 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; }
 
         /// <summary>
+        /// Gets the IExpressRouteCircuitConnectionsOperations.
+        /// </summary>
+        IExpressRouteCircuitConnectionsOperations ExpressRouteCircuitConnections { get; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitsOperations.
         /// </summary>
         IExpressRouteCircuitsOperations ExpressRouteCircuits { get; }
@@ -103,6 +118,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRouteServiceProvidersOperations.
         /// </summary>
         IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteCrossConnectionsOperations.
+        /// </summary>
+        IExpressRouteCrossConnectionsOperations ExpressRouteCrossConnections { get; }
+
+        /// <summary>
+        /// Gets the IExpressRouteCrossConnectionPeeringsOperations.
+        /// </summary>
+        IExpressRouteCrossConnectionPeeringsOperations ExpressRouteCrossConnectionPeerings { get; }
 
         /// <summary>
         /// Gets the ILoadBalancersOperations.
