@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for the task that validates connection to Azure SQL Database
     /// Managed Instance.
     /// </summary>
-    public partial class ConnectToTargetSqlMITaskOutput : TaskOutput
+    public partial class ConnectToTargetSqlMITaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the ConnectToTargetSqlMITaskOutput
@@ -38,12 +38,17 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="targetServerVersion">Target server version</param>
         /// <param name="targetServerBrandVersion">Target server brand
         /// version</param>
+        /// <param name="logins">List of logins on the target server.</param>
+        /// <param name="agentJobs">List of agent jobs on the target
+        /// server.</param>
         /// <param name="validationErrors">Validation errors</param>
-        public ConnectToTargetSqlMITaskOutput(string id = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<ReportableException> validationErrors = default(IList<ReportableException>))
-            : base(id)
+        public ConnectToTargetSqlMITaskOutput(string id = default(string), string targetServerVersion = default(string), string targetServerBrandVersion = default(string), IList<string> logins = default(IList<string>), IList<string> agentJobs = default(IList<string>), IList<ReportableException> validationErrors = default(IList<ReportableException>))
         {
+            Id = id;
             TargetServerVersion = targetServerVersion;
             TargetServerBrandVersion = targetServerBrandVersion;
+            Logins = logins;
+            AgentJobs = agentJobs;
             ValidationErrors = validationErrors;
             CustomInit();
         }
@@ -52,6 +57,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets result identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets target server version
@@ -64,6 +75,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetServerBrandVersion")]
         public string TargetServerBrandVersion { get; private set; }
+
+        /// <summary>
+        /// Gets list of logins on the target server.
+        /// </summary>
+        [JsonProperty(PropertyName = "Logins")]
+        public IList<string> Logins { get; private set; }
+
+        /// <summary>
+        /// Gets list of agent jobs on the target server.
+        /// </summary>
+        [JsonProperty(PropertyName = "AgentJobs")]
+        public IList<string> AgentJobs { get; private set; }
 
         /// <summary>
         /// Gets validation errors
