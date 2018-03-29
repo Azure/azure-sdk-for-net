@@ -185,6 +185,10 @@
             }
             catch (Exception ex)
             {
+                if (ex is FileNotFoundException)
+                {
+                    unableToCopyFilePath.Add(((FileNotFoundException)ex).FileName);
+                }
                 BuildToolsLogger.LogException(ex);
             }
             finally
@@ -256,10 +260,6 @@
             foreach (string fileNotCopied in unableToCopyFilePath)
             {
                 BuildToolsLogger.LogError(string.Format("Unable to copy '{0}'", fileNotCopied));
-            }
-            if(unableToCopyFilePath.Count == 0)
-            {
-                throw new Exception("Failed to copy files");
             }
         }
     }
