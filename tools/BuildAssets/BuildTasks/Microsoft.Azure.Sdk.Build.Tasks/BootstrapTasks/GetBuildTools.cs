@@ -190,31 +190,9 @@
             finally
             {
                 WebCopier?.Dispose();
-                VerifyCopiedFiles();
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Verify whether all files have been copied
-        /// </summary>
-        /// <returns></returns>
-        private void VerifyCopiedFiles()
-        {
-            if(!File.Exists(LocalMetaDataFilePath))
-            {
-                BuildToolsLogger.LogException(new Exception(string.Format("Could not find file: {0}", LocalMetaDataFilePath)));  
-                return; 
-            }
-            foreach(var f in File.ReadAllLines(LocalMetaDataFilePath))
-            {
-                var fPath = Path.Combine(LocalBranchCopyToRootDir, f);
-                if(!File.Exists(fPath))
-                {
-                    BuildToolsLogger.LogException(new Exception(string.Format("Could not find file: {0}", fPath)));   
-                }
-            }
         }
 
         /// <summary>
@@ -278,6 +256,10 @@
             foreach (string fileNotCopied in unableToCopyFilePath)
             {
                 BuildToolsLogger.LogError(string.Format("Unable to copy '{0}'", fileNotCopied));
+            }
+            if(unableToCopyFilePath.Count == 0)
+            {
+                throw new Exception("Failed to copy files");
             }
         }
     }

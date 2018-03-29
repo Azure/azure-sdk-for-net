@@ -114,6 +114,12 @@ namespace Build.Tasks.Tests
         }
 
         [Fact]
+        public void VerifyPropsFileTest()
+        {
+            Assert.False(new PostBuildTask().VerifyPropsFile(null, null));
+        }
+        
+        [Fact]
         public void GetApiMapSplitPartialClass()
         {
             string asmPath = Assembly.GetExecutingAssembly().CodeBase;
