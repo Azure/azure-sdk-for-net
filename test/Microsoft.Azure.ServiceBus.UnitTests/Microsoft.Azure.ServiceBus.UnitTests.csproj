@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
     <AssemblyOriginatorKeyFile>../../build/keyfile.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
@@ -22,6 +22,8 @@
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageQueueTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionQueueTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\RetryTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\TransactionTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\SubscriptionClientTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\ExtractActivityTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\QueueClientDiagnosticsTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SubscriptionClientDiagnosticsTests.cs" />
@@ -30,19 +32,24 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageTopicSubscriptionTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\TopicClientTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionTopicSubscriptionTests.cs" />    
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.2" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="PublicApiGenerator" Version="6.5.0" />
     <PackageReference Include="ApprovalTests" Version="3.0.13" NoWarn="NU1701" />
     <PackageReference Include="ApprovalUtilities" Version="3.0.13" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+    <Reference Include="System.Transactions" />
   </ItemGroup>
 
   <ItemGroup>

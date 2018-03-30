@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 
     public class MessageInteropTests
     {
-        public static IEnumerable<object> TestSerializerPermutations => new object[]
+        public static IEnumerable<object[]> TestSerializerPermutations => new object[][]
         {
             new object[] { new DataContractBinarySerializer(typeof(TestBook)) },
             new object[] { new DataContractSerializer(typeof(TestBook)) }

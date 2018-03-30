@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class OnMessageTopicSubscriptionTests : SenderReceiverClientTestBase
     {
-        public static IEnumerable<object> TestPermutations => new object[]
+        public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             new object[] { TestConstants.NonPartitionedTopicName, 5 },
             new object[] { TestConstants.PartitionedTopicName, 5 },

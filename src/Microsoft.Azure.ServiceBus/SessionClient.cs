@@ -87,8 +87,7 @@ namespace Microsoft.Azure.ServiceBus
                   null,
                   receiveMode,
                   prefetchCount,
-                  new ServiceBusNamespaceConnection(connectionString),
-                  null,
+                  new ServiceBusConnection(connectionString),
                   null,
                   retryPolicy,
                   null)
@@ -96,10 +95,6 @@ namespace Microsoft.Azure.ServiceBus
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
-            }
-            if (string.IsNullOrWhiteSpace(entityPath))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
 
             this.ownsConnection = true;
@@ -130,22 +125,40 @@ namespace Microsoft.Azure.ServiceBus
                 null,
                 receiveMode,
                 prefetchCount,
-                new ServiceBusNamespaceConnection(endpoint, transportType, retryPolicy),
-                tokenProvider,
+                new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider},
                 null,
                 retryPolicy,
                 null)
         {
-            if (tokenProvider == null)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(tokenProvider));
-            }
-            if (string.IsNullOrWhiteSpace(entityPath))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
-            }
-
             this.ownsConnection = true;
+        }
+
+        /// <summary>
+        /// Creates a new SessionClient on a given <see cref="ServiceBusConnection"/>
+        /// </summary>
+        /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
+        /// <param name="entityPath">The path of the entity for this receiver. For Queues this will be the name, but for Subscriptions this will be the full path.</param>
+        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with ServiceBus. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <param name="prefetchCount">The <see cref="PrefetchCount"/> that specifies the upper limit of messages the session object
+        /// will actively receive regardless of whether a receive operation is pending. Defaults to 0.</param>
+        public SessionClient(
+            ServiceBusConnection serviceBusConnection,
+            string entityPath,
+            ReceiveMode receiveMode,
+            RetryPolicy retryPolicy = null,
+            int prefetchCount = DefaultPrefetchCount)
+            : this(nameof(SessionClient),
+                entityPath,
+                null,
+                receiveMode,
+                prefetchCount,
+                serviceBusConnection,
+                null,
+                retryPolicy,
+                null)
+        {
+            this.ownsConnection = false;
         }
 
         internal SessionClient(
@@ -155,19 +168,35 @@ namespace Microsoft.Azure.ServiceBus
             ReceiveMode receiveMode,
             int prefetchCount,
             ServiceBusConnection serviceBusConnection,
-            ITokenProvider tokenProvider,
             ICbsTokenProvider cbsTokenProvider,
             RetryPolicy retryPolicy,
             IList<ServiceBusPlugin> registeredPlugins)
             : base(clientTypeName, entityPath, retryPolicy ?? RetryPolicy.Default)
         {
+            if (string.IsNullOrWhiteSpace(entityPath))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
+            }
+
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.EntityPath = entityPath;
             this.EntityType = entityType;
             this.ReceiveMode = receiveMode;
             this.PrefetchCount = prefetchCount;
-            tokenProvider = tokenProvider ?? this.ServiceBusConnection.CreateTokenProvider();
-            this.CbsTokenProvider = cbsTokenProvider ?? new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
+
+            if (cbsTokenProvider != null)
+            {
+                this.CbsTokenProvider = cbsTokenProvider;
+            }
+            else if (this.ServiceBusConnection.TokenProvider != null)
+            {
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+            }
+            else
+            {
+                throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
+            }
+
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             // Register plugins on the message session.
@@ -188,6 +217,11 @@ namespace Microsoft.Azure.ServiceBus
         public string EntityPath { get; }
 
         /// <summary>
+        /// Gets the path of the entity. This is either the name of the queue, or the full path of the subscription.
+        /// </summary>
+        public override string Path => this.EntityPath;
+
+        /// <summary>
         /// Duration after which individual operations will timeout.
         /// </summary>
         public override TimeSpan OperationTimeout
@@ -196,11 +230,14 @@ namespace Microsoft.Azure.ServiceBus
             set => this.ServiceBusConnection.OperationTimeout = value;
         }
 
+        /// <summary>
+        /// Connection object to the service bus namespace.
+        /// </summary>
+        public override ServiceBusConnection ServiceBusConnection { get; }
+
         MessagingEntityType? EntityType { get; }
 
         internal int PrefetchCount { get; set; }
-
-        ServiceBusConnection ServiceBusConnection { get; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
 

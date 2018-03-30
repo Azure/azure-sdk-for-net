@@ -38,11 +38,6 @@ namespace Microsoft.Azure.ServiceBus.Core
         int PrefetchCount { get; set; }
 
         /// <summary>
-        /// Gets the path of the <see cref="IReceiverClient"/>. This is either the name of the queue, or the full path of the subscription.
-        /// </summary>
-        string Path { get; }
-
-        /// <summary>
         /// Gets the <see cref="ServiceBus.ReceiveMode"/> of the current receiver.
         /// </summary>
         ReceiveMode ReceiveMode { get; }

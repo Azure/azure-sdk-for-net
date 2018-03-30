@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             Assert.Null(activity.Id);
 
             var baggage = activity.Baggage.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            Assert.Equal(1, baggage.Count);
+            Assert.Single(baggage);
             Assert.Contains("k1", baggage.Keys);
             Assert.Equal("v1", baggage["k1"]);
         }
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             Assert.Null(activity.Id);
 
             var baggage = activity.Baggage.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            Assert.Equal(0, baggage.Count);
+            Assert.Empty(baggage);
         }
 
 
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             Assert.Null(activity.Id);
 
             var baggage = activity.Baggage.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            Assert.Equal(0, baggage.Count);
+            Assert.Empty(baggage);
         }
 
         [Theory]
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
             var baggage = activity.Baggage.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             // baggage is ignored in absence of Id
-            Assert.Equal(0, baggage.Count);
+            Assert.Empty(baggage);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class OnSessionTopicSubscriptionTests
     {
-        public static IEnumerable<object> TestPermutations => new object[]
+        public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             new object[] { TestConstants.NonPartitionedSessionTopicName, 1 },
             new object[] { TestConstants.NonPartitionedSessionTopicName, 5 },

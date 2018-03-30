@@ -9,7 +9,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public sealed class QueueClientTests : SenderReceiverClientTestBase
     {
-        public static IEnumerable<object> TestPermutations => new object[]
+        public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             new object[] { TestConstants.NonPartitionedQueueName },
             new object[] { TestConstants.PartitionedQueueName }

@@ -79,23 +79,13 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>Creates a new connection to the subscription, which is opened during the first receive operation.</remarks>
         public SubscriptionClient(string connectionString, string topicPath, string subscriptionName, ReceiveMode receiveMode = ReceiveMode.PeekLock, RetryPolicy retryPolicy = null)
-            : this(new ServiceBusNamespaceConnection(connectionString), topicPath, subscriptionName, receiveMode, retryPolicy ?? RetryPolicy.Default)
+            : this(new ServiceBusConnection(connectionString), topicPath, subscriptionName, receiveMode, retryPolicy ?? RetryPolicy.Default)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
-            if (string.IsNullOrWhiteSpace(topicPath))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(topicPath);
-            }
-            if (string.IsNullOrWhiteSpace(subscriptionName))
-            {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(subscriptionName);
-            }
 
-            var tokenProvider = this.ServiceBusConnection.CreateTokenProvider();
-            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.ownsConnection = true;
         }
 
@@ -118,20 +108,31 @@ namespace Microsoft.Azure.ServiceBus
             TransportType transportType = TransportType.Amqp,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
             RetryPolicy retryPolicy = null)
-            : this(new ServiceBusNamespaceConnection(endpoint, transportType, retryPolicy), topicPath, subscriptionName, receiveMode, retryPolicy)
+            : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, topicPath, subscriptionName, receiveMode, retryPolicy)
         {
-            if (tokenProvider == null)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(tokenProvider));
-            }
-
-            this.CbsTokenProvider = new TokenProviderAdapter(tokenProvider, this.ServiceBusConnection.OperationTimeout);
             this.ownsConnection = true;
         }
 
-        SubscriptionClient(ServiceBusNamespaceConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, RetryPolicy retryPolicy)
+        /// <summary>
+        /// Creates a new instance of the Subscription client on a given <see cref="ServiceBusConnection"/>
+        /// </summary>
+        /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
+        /// <param name="topicPath">Topic path.</param>
+        /// <param name="subscriptionName">Subscription name.</param>
+        /// <param name="receiveMode">Mode of receive of messages. Defaults to <see cref="ReceiveMode"/>.PeekLock.</param>
+        /// <param name="retryPolicy">Retry policy for subscription operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        public SubscriptionClient(ServiceBusConnection serviceBusConnection, string topicPath, string subscriptionName, ReceiveMode receiveMode, RetryPolicy retryPolicy)
             : base(nameof(SubscriptionClient), $"{topicPath}/{subscriptionName}", retryPolicy)
         {
+            if (string.IsNullOrWhiteSpace(topicPath))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(topicPath);
+            }
+            if (string.IsNullOrWhiteSpace(subscriptionName))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(subscriptionName);
+            }
+
             MessagingEventSource.Log.SubscriptionClientCreateStart(serviceBusConnection?.Endpoint.Authority, topicPath, subscriptionName, receiveMode.ToString());
 
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
@@ -141,6 +142,15 @@ namespace Microsoft.Azure.ServiceBus
             this.Path = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.SubscriptionName);
             this.ReceiveMode = receiveMode;
             this.diagnosticSource = new ServiceBusDiagnosticSource(this.Path, serviceBusConnection.Endpoint);
+            this.ownsConnection = false;
+            if (this.ServiceBusConnection.TokenProvider != null)
+            {
+                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+            }
+            else
+            {
+                throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
+            }
 
             MessagingEventSource.Log.SubscriptionClientCreateStop(serviceBusConnection.Endpoint.Authority, topicPath, subscriptionName, this.ClientId);
         }
@@ -154,7 +164,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets the formatted path of the subscription client.
         /// </summary>
         /// <seealso cref="EntityNameHelper.FormatSubscriptionPath(string, string)"/>
-        public string Path { get; }
+        public override string Path { get; }
 
         /// <summary>
         /// Gets the name of the subscription.
@@ -215,6 +225,11 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
+        /// <summary>
+        /// Connection object to the service bus namespace.
+        /// </summary>
+        public override ServiceBusConnection ServiceBusConnection { get; }
+
         internal IInnerSubscriptionClient InnerSubscriptionClient
         {
             get
@@ -254,7 +269,6 @@ namespace Microsoft.Azure.ServiceBus
                                 this.ReceiveMode,
                                 this.PrefetchCount,
                                 this.ServiceBusConnection,
-                                null,
                                 this.CbsTokenProvider,
                                 this.RetryPolicy,
                                 this.RegisteredPlugins);
@@ -288,8 +302,6 @@ namespace Microsoft.Azure.ServiceBus
                 return this.sessionPumpHost;
             }
         }
-
-        internal ServiceBusNamespaceConnection ServiceBusConnection { get; }
 
         ICbsTokenProvider CbsTokenProvider { get; }
 

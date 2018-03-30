@@ -25,6 +25,11 @@ namespace Microsoft.Azure.ServiceBus
         bool IsClosedOrClosing { get; }
 
         /// <summary>
+        /// Gets the entity path.
+        /// </summary>
+        string Path { get; }
+
+        /// <summary>
         /// Duration after which individual operations will timeout.
         /// </summary>
         TimeSpan OperationTimeout { get; set; }
@@ -34,6 +39,11 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <returns>The asynchronous operation</returns>
         Task CloseAsync();
+
+        /// <summary>
+        /// Connection object to the service bus namespace.
+        /// </summary>
+        ServiceBusConnection ServiceBusConnection { get; }
 
         /// <summary>
         /// Gets a list of currently registered plugins for this client.

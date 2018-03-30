@@ -41,21 +41,21 @@ namespace Microsoft.Azure.ServiceBus.Core
         long LastPeekedSequenceNumber { get; }
 
         /// <summary>
-        /// Receive a message from the entity defined by <see cref="IReceiverClient.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receive a message from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <returns>The message received. Returns null if no message is found.</returns>
         /// <remarks>Operation will time out after duration of <see cref="ClientEntity.OperationTimeout"/></remarks>
         Task<Message> ReceiveAsync();
 
         /// <summary>
-        /// Receive a message from the entity defined by <see cref="IReceiverClient.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receive a message from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>
         /// <returns>The message received. Returns null if no message is found.</returns>
         Task<Message> ReceiveAsync(TimeSpan operationTimeout);
 
         /// <summary>
-        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IReceiverClient.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <returns>List of messages received. Returns null if no message is found.</returns>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         Task<IList<Message>> ReceiveAsync(int maxMessageCount);
 
         /// <summary>
-        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IReceiverClient.Path"/> using <see cref="ReceiveMode"/> mode.
+        /// Receives a maximum of <paramref name="maxMessageCount"/> messages from the entity defined by <see cref="IClientEntity.Path"/> using <see cref="ReceiveMode"/> mode.
         /// </summary>
         /// <param name="maxMessageCount">The maximum number of messages that will be received.</param>
         /// <param name="operationTimeout">The time span the client waits for receiving a message before it times out.</param>

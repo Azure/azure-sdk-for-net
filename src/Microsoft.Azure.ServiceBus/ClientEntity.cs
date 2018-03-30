@@ -50,6 +50,16 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Connection object to the service bus namespace.
+        /// </summary>
+        public abstract ServiceBusConnection ServiceBusConnection { get; }
+
+        /// <summary>
+        /// Gets the name of the entity.
+        /// </summary>
+        public abstract string Path { get; }
+
+        /// <summary>
         /// Duration after which individual operations will timeout.
         /// </summary>
         public abstract TimeSpan OperationTimeout { get; set; }

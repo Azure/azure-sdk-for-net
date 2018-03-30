@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public sealed class SubscriptionClientTests : SenderReceiverClientTestBase
     {
-        public static IEnumerable<object> TestPermutations => new object[]
+        public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             new object[] { TestConstants.NonPartitionedTopicName },
             new object[] { TestConstants.PartitionedTopicName }
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task CorrelationFilterTestCase(string topicName, int messageCount = 10)
+        async Task CorrelationFilterTestCase(string topicName)
         {
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
             var subscriptionClient = new SubscriptionClient(
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
                 Assert.NotNull(messages);
                 Assert.True(messages.Count == 1);
-                Assert.True(messageId2.Equals(messages.First().MessageId));
+                Assert.Equal(messageId2, messages.First().MessageId);
             }
             finally
             {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task SqlFilterTestCase(string topicName, int messageCount = 10)
+        async Task SqlFilterTestCase(string topicName)
         {
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
             var subscriptionClient = new SubscriptionClient(
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
                 Assert.NotNull(messages);
                 Assert.True(messages.Count == 1);
-                Assert.True(messageId2.Equals(messages.First().MessageId));                
+                Assert.Equal(messageId2, messages.First().MessageId);
             }
             finally
             {
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task SqlActionTestCase(string topicName, int messageCount = 10)
+        async Task SqlActionTestCase(string topicName)
         {
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
             var subscriptionClient = new SubscriptionClient(
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var messages = await subscriptionClient.InnerSubscriptionClient.InnerReceiver.ReceiveAsync(maxMessageCount: 2);
                 Assert.NotNull(messages);
                 Assert.True(messages.Count == 1);
-                Assert.True(messageId2.Equals(messages.First().MessageId));
+                Assert.Equal(messageId2, messages.First().MessageId);
                 Assert.True(messages.First().UserProperties["color"].Equals("RedSqlActionProcessed"));
             }
             finally
@@ -219,21 +219,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 TestConstants.NonPartitionedTopicName,
                 TestConstants.SubscriptionName,
                 ReceiveMode.ReceiveAndDelete);
-            string sqlRuleName = "sqlRule";
-            string correlationRuleName = "correlationRule";
+            var sqlRuleName = "sqlRule";
+            var correlationRuleName = "correlationRule";
 
             try
             {
                 var rules = (await subscriptionClient.GetRulesAsync()).ToList();
-                Assert.Equal(1, rules.Count);
+                Assert.Single(rules);
                 var firstRule = rules[0];
                 Assert.Equal(RuleDescription.DefaultRuleName, firstRule.Name);
                 Assert.IsType<SqlFilter>(firstRule.Filter);
                 Assert.Null(firstRule.Action);
-                
+
                 await subscriptionClient.AddRuleAsync(sqlRuleName, new SqlFilter("price > 10"));
-                
-                RuleDescription ruleDescription = new RuleDescription(correlationRuleName)
+
+                var ruleDescription = new RuleDescription(correlationRuleName)
                 {
                     Filter = new CorrelationFilter
                     {

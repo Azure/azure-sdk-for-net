@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public sealed class QueueSessionTests
     {
-        public static IEnumerable<object> TestPermutations => new object[]
+        public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             new object[] { TestConstants.SessionNonPartitionedQueueName },
             new object[] { TestConstants.SessionPartitionedQueueName },
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task PeekSessionAsyncTest(string queueName, int messageCount = 10)
+        async Task PeekSessionAsyncTest(string queueName)
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
             var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);

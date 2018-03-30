@@ -5,7 +5,7 @@ $configuration = if ($CONFIGURATION -ne $null) { $CONFIGURATION  } else { 'Debug
 $platform = if ($PLATFORM -ne $null) { $PLATFORM } else { 'Any CPU' }
 $projectFolder = if ($ENV:APPVEYOR_BUILD_FOLDER -ne $null) { "$ENV:APPVEYOR_BUILD_FOLDER" } else { $(Get-Location).path }
 $buildFolder = $projectFolder + '\build\'
-$runtime = if ($ENV:DotNetRunTime -ne $null) { $ENV:DotNetRunTime } else { 'netcoreapp1.0' }
+$runtime = if ($ENV:DotNetRunTime -ne $null) { $ENV:DotNetRunTime } else { 'netcoreapp2.0' }
 $artifactsFolder = $buildFolder + 'artifacts\'
 $appProject = $projectFolder + '\src\Microsoft.Azure.ServiceBus\Microsoft.Azure.ServiceBus.csproj'
 $testProject = $projectFolder + '\test\Microsoft.Azure.ServiceBus.UnitTests\Microsoft.Azure.ServiceBus.UnitTests.csproj'
@@ -157,10 +157,22 @@ function Run-UnitTests
     }
     if ([bool]$codeCovSecret)
     {
-        $ENV:PATH = 'C:\\Python34;C:\\Python34\\Scripts;' + $ENV:PATH
-        python -m pip install --upgrade pip
-        pip install git+git://github.com/codecov/codecov-python.git
-        codecov -f $coverageFile -t $codeCovSecret -X gcov   
+        try
+        {
+            $ENV:PATH = 'C:\\Python34;C:\\Python34\\Scripts;' + $ENV:PATH
+            python -m pip install --upgrade pip
+            pip install git+git://github.com/codecov/codecov-python.git
+            codecov -f $coverageFile -t $codeCovSecret -X gcov   
+
+            #choco install codecov
+            #codecov.exe -f $coverageFile -t $codeCovSecret -X gcov 
+        }
+        catch
+        {
+            $error | Format-List *
+            $_ |select -expandproperty invocationinfo
+            Write-Host -ForegroundColor Red "Codecov failed"
+        }
     }
     else
     {
@@ -200,13 +212,35 @@ function Delete-AzureResources
     Write-Host "Completed deleting Azure resources"
 }
 
+function Cleanup-EnvironmentVariables
+{
+    Write-Host "Cleaning Environment variables"
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/CodeCovSecret', ' ', "Machine")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/ClientSecret', ' ', "Machine")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/TenantId', ' ', "Machine")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/AppId', ' ', "Machine")
+
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/CodeCovSecret', ' ', "User")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/ClientSecret', ' ', "User")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/TenantId', ' ', "User")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/AppId', ' ', "User")
+
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/CodeCovSecret', ' ', "Process")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/ClientSecret', ' ', "Process")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/TenantId', ' ', "Process")
+    [Environment]::SetEnvironmentVariable('azure-service-bus-dotnet/AppId', ' ', "Process")
+}
+
+Cleanup-EnvironmentVariables
 Build-Solution
 if (-Not $canDeploy -and -Not [bool][Environment]::GetEnvironmentVariable($connectionStringVariableName)) {
+    Write-Host "Build exiting. CanDeploy: " + $canDeploy
     return
 }
 try {
     if ($canDeploy -and -not [bool][Environment]::GetEnvironmentVariable($connectionStringVariableName)) {
         Deploy-AzureResources
+
     }
     if ([bool][Environment]::GetEnvironmentVariable($connectionStringVariableName)) {
         Run-UnitTests

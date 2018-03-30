@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class OnSessionQueueTests
     {
-        public static IEnumerable<object> TestPermutations => new object[]
+        public static IEnumerable<object[]> TestPermutations => new object[][]
         {
             new object[] { TestConstants.SessionNonPartitionedQueueName, 1 },
             new object[] { TestConstants.SessionNonPartitionedQueueName, 5 },
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { TestConstants.SessionPartitionedQueueName, 5 },
         };
 
-        public static IEnumerable<object> PartitionedNonPartitionedTestPermutations => new object[]
+        public static IEnumerable<object[]> PartitionedNonPartitionedTestPermutations => new object[][]
         {
             new object[] { TestConstants.SessionNonPartitionedQueueName, 5 },
             new object[] { TestConstants.SessionPartitionedQueueName, 5 },

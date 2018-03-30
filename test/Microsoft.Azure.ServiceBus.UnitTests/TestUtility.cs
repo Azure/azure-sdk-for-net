@@ -83,6 +83,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             return messagesToReturn;
         }
 
+        /// <summary>
+        /// This utility method is required since for a partitioned entity, the messages could have been received from different partitions,
+        /// and we cannot receive all the deferred messages from different partitions in a single call.
+        /// </summary>
+        internal static async Task<IList<Message>> ReceiveDeferredMessagesAsync(IMessageReceiver messageReceiver, IEnumerable<long> sequenceNumbers)
+        {
+            var messagesToReturn = new List<Message>();
+            foreach(var sequenceNumber in sequenceNumbers)
+            {
+                var msg = await messageReceiver.ReceiveDeferredMessageAsync(sequenceNumber);
+                if (msg != null)
+                {
+                    messagesToReturn.Add(msg); 
+                }
+            }
+
+            return messagesToReturn;
+        }
+
         internal static async Task<Message> PeekMessageAsync(IMessageReceiver messageReceiver)
         {
             var message = await messageReceiver.PeekAsync();
@@ -186,6 +205,16 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     }
                 }
             }
+        }
+
+        internal static string GetString(this byte[] bytes)
+        {
+            return Encoding.ASCII.GetString(bytes);
+        }
+
+        internal static byte[] GetBytes(this string str)
+        {
+            return Encoding.ASCII.GetBytes(str);
         }
     }
 }

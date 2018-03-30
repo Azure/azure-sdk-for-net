@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus
             int prefetchCount = Constants.DefaultClientPrefetchCount,
             string sessionId = null,
             bool isSessionReceiver = false)
-            : base(entityPath, entityType, receiveMode, serviceBusConnection, null, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
+            : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
         {
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }

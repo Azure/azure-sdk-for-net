@@ -90,7 +90,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var csBuilder = new ServiceBusConnectionStringBuilder(connectionString);
             Assert.Equal("amqps://hello.servicebus.windows.net", csBuilder.Endpoint);
             Assert.Equal("myQ", csBuilder.EntityPath);
-            Assert.Equal(1, csBuilder.ConnectionStringProperties.Count);
+            Assert.Single(csBuilder.ConnectionStringProperties);
             Assert.True(csBuilder.ConnectionStringProperties.ContainsKey("secretmessage"));
             Assert.Equal("h=llo", csBuilder.ConnectionStringProperties["secretmessage"]);
         }

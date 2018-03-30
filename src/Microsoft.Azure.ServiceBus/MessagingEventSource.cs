@@ -7,6 +7,7 @@ namespace Microsoft.Azure.ServiceBus
     using System.Collections.Generic;
     using System.Diagnostics.Tracing;
     using System.Reflection;
+    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
@@ -1253,6 +1254,89 @@ namespace Microsoft.Azure.ServiceBus
         void AmqpSendAuthenticationTokenException(string clientId, string exception)
         {
             this.WriteEvent(107, clientId, exception);
+        }
+
+        [NonEvent]
+        public void AmqpTransactionInitializeException(string transactionId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpTransactionInitializeException(transactionId, exception.ToString()); 
+            }
+        }
+
+        [Event(108, Level = EventLevel.Error, Message = "AmqpTransactionInitializeException for TransactionId: {0} Exception: {1}.")]
+        void AmqpTransactionInitializeException(string transactionId, string exception)
+        {
+            this.WriteEvent(108, transactionId, exception);
+        }
+
+        [NonEvent]
+        public void AmqpTransactionDeclared(string localTransactionId, ArraySegment<byte> amqpTransactionId)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpTransactionDeclared(localTransactionId, amqpTransactionId.GetAsciiString());
+            }
+        }
+
+        [Event(109, Level = EventLevel.Informational, Message = "AmqpTransactionDeclared for LocalTransactionId: {0} AmqpTransactionId: {1}.")]
+        void AmqpTransactionDeclared(string transactionId, string amqpTransactionId)
+        {
+            this.WriteEvent(109, transactionId, amqpTransactionId);
+        }
+
+        [NonEvent]
+        public void AmqpTransactionDischarged(string localTransactionId, ArraySegment<byte> amqpTransactionId, bool rollback)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpTransactionDischarged(localTransactionId, amqpTransactionId.GetAsciiString(), rollback);
+            }
+        }
+
+        [Event(110, Level = EventLevel.Informational, Message = "AmqpTransactionDischarged for LocalTransactionId: {0} AmqpTransactionId: {1} Rollback: {2}.")]
+        void AmqpTransactionDischarged(string transactionId, string amqpTransactionId, bool rollback)
+        {
+            this.WriteEvent(110, transactionId, amqpTransactionId, rollback);
+        }
+
+        [NonEvent]
+        public void AmqpTransactionDischargeException(string transactionId, ArraySegment<byte> amqpTransactionId, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpTransactionDischargeException(transactionId, amqpTransactionId.GetAsciiString(), exception.ToString());
+            }
+        }
+
+        [Event(111, Level = EventLevel.Error, Message = "AmqpTransactionDischargeException for TransactionId: {0} AmqpTransactionId: {1} Exception: {2}.")]
+        void AmqpTransactionDischargeException(string transactionId, string amqpTransactionId, string exception)
+        {
+            this.WriteEvent(111, transactionId, amqpTransactionId, exception);
+        }
+
+        [NonEvent]
+        public void AmqpCreateControllerException(string connectionManager, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.AmqpCreateControllerException(connectionManager, exception.ToString());
+            }
+        }
+
+        [Event(112, Level = EventLevel.Error, Message = "AmqpCreateControllerException for ConnectionManager: {0} Exception: {1}.")]
+        void AmqpCreateControllerException(string connectionManager, string exception)
+        {
+            this.WriteEvent(112, connectionManager, exception);
+        }
+    }
+
+    internal static class TraceHelper
+    {
+        public static string GetAsciiString(this ArraySegment<byte> arraySegment)
+        {
+            return arraySegment.Array == null ? string.Empty : Encoding.ASCII.GetString(arraySegment.Array, arraySegment.Offset, arraySegment.Count);
         }
     }
 }
