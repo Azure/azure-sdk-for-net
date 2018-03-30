@@ -356,7 +356,8 @@ namespace Sql.Tests
                 Properties = new VaultProperties()
                 {
                     AccessPolicies = accessPolicy,
-                    TenantId = server.Identity.TenantId.Value
+                    TenantId = server.Identity.TenantId.Value,
+                    EnableSoftDelete = true
                 }
             });
 
