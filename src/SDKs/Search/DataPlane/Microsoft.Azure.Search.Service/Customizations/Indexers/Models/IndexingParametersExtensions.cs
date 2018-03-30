@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Search.Models
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Common;
 
     /// <summary>
@@ -15,20 +16,6 @@ namespace Microsoft.Azure.Search.Models
     public static class IndexingParametersExtensions
     {
         private const string ParsingModeKey = "parsingMode";
-
-        /// <summary> 
-        /// Specifies that the indexer will index only the storage metadata and completely skip the document extraction process. This is useful when 
-        /// you don't need the document content, nor do you need any of the content type-specific metadata properties. 
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details. 
-        /// </summary> 
-        /// <param name="parameters">IndexingParameters to configure.</param> 
-        /// <remarks> 
-        /// This option only applies to indexers that index Azure Blob Storage. 
-        /// </remarks> 
-        /// <returns>The IndexingParameters instance.</returns> 
-        [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.StorageMetadata).")]
-        public static IndexingParameters IndexStorageMetadataOnly(this IndexingParameters parameters) =>
-            parameters.SetBlobExtractionMode(BlobExtractionMode.StorageMetadata); 
  
         /// <summary>
         /// Specifies that the indexer will index only the blobs with the file name extensions you specify. Each string is a file extensions with a
@@ -79,20 +66,6 @@ namespace Microsoft.Azure.Search.Models
 
             return parameters;
         }
-
-        /// <summary>
-        /// Specifies that the indexer will extract metadata, but skip content extraction for all blobs. If you want to skip content extraction for 
-        /// only some blobs, add AzureSearch_SkipContent metadata to those blobs individually instead of using this option. 
-        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage" /> for details. 
-        /// </summary> 
-        /// <param name="parameters">IndexingParameters to configure.</param> 
-        /// <remarks> 
-        /// This option only applies to indexers that index Azure Blob Storage. 
-        /// </remarks> 
-        /// <returns>The IndexingParameters instance.</returns> 
-        [Obsolete("This method is obsolete. Please use SetBlobExtractionMode(BlobExtractionMode.AllMetadata).")]
-        public static IndexingParameters SkipContent(this IndexingParameters parameters) =>
-            parameters.SetBlobExtractionMode(BlobExtractionMode.AllMetadata); 
 
         /// <summary>
         /// Specifies which parts of a blob will be indexed by the blob storage indexer. 
@@ -177,8 +150,33 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
+        /// Tells the indexer to assume that blobs should be parsed as text files in UTF-8 encoding.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#indexing-plain-text"/>
+        /// </summary>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters ParseText(this IndexingParameters parameters) => 
+            ParseText(parameters, Encoding.UTF8);
+
+        /// <summary>
+        /// Tells the indexer to assume that blobs should be parsed as text files in the desired encoding.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-howto-indexing-azure-blob-storage#indexing-plain-text"/>
+        /// </summary>
+        /// <param name="parameters">IndexingParameters to configure.</param>
+        /// <param name="encoding">Encoding used to read the text stored in blobs.</param>
+        /// <returns>The IndexingParameters instance.</returns>
+        public static IndexingParameters ParseText(this IndexingParameters parameters, Encoding encoding)
+        {
+            Throw.IfArgumentNull(encoding, nameof(encoding));
+
+            Configure(parameters, ParsingModeKey, "text");
+            Configure(parameters, "encoding", encoding.WebName);
+            return parameters;
+        }
+
+        /// <summary>
         /// Specifies that <c cref="BlobExtractionMode.StorageMetadata">BlobExtractionMode.StorageMetadata</c> blob extraction mode will be
-        /// automatically used for blobs of unsupported content types. The default is false.
+        /// automatically used for blobs of unsupported content types. This behavior is enabled by default.
         /// </summary>
         /// <remarks>
         /// This option only applies to indexers that index Azure Blob Storage.
@@ -186,6 +184,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <returns></returns>
         /// <returns>The IndexingParameters instance.</returns>
+        [Obsolete("This behavior is enabled by default in API version 2016-09-01-Preview and calling this method is no longer necessary")]
         public static IndexingParameters DoNotFailOnUnsupportedContentType(this IndexingParameters parameters) =>
             Configure(parameters, "failOnUnsupportedContentType", false);
 

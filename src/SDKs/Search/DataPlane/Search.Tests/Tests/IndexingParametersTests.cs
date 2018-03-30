@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
     using Microsoft.Azure.Search.Models;
     using Xunit;
 
@@ -73,13 +74,6 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void DoNotFailOnUnsupportedContentTypeSetCorrectly()
-        {
-            var parameters = new IndexingParameters().DoNotFailOnUnsupportedContentType();
-            AssertHasConfigItem(parameters, "failOnUnsupportedContentType", false);
-        }
-
-        [Fact]
         public void ParseJsonArraysWithNullDocumentRootSetCorrectly()
         {
             var parameters = new IndexingParameters().ParseJsonArrays();
@@ -121,6 +115,26 @@ namespace Microsoft.Azure.Search.Tests
             var parameters = new IndexingParameters().ParseDelimitedTextFiles("id", "name", "address");
             AssertHasConfigItem(parameters, ExpectedParsingModeKey, "delimitedText", ExpectedCount);
             AssertHasConfigItem(parameters, "delimitedTextHeaders", "id,name,address", ExpectedCount);
+        }
+
+        [Fact]
+        public void ParseTextSetCorrectly()
+        {
+            const int ExpectedCount = 2;
+
+            var parameters = new IndexingParameters().ParseText();
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "text", ExpectedCount);
+            AssertHasConfigItem(parameters, "encoding", "utf-8", ExpectedCount);
+        }
+
+        [Fact]
+        public void ParseTextWithEncodingSetCorrectly()
+        {
+            const int ExpectedCount = 2;
+
+            var parameters = new IndexingParameters().ParseText(Encoding.ASCII);
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "text", ExpectedCount);
+            AssertHasConfigItem(parameters, "encoding", "us-ascii", ExpectedCount);
         }
 
         private static void AssertHasConfigItem(

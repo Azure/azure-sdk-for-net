@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an item- or document-level indexing error.
+    /// Represents an item-level warning.
     /// </summary>
-    public partial class ItemError
+    public partial class ItemWarning
     {
         /// <summary>
-        /// Initializes a new instance of the ItemError class.
+        /// Initializes a new instance of the ItemWarning class.
         /// </summary>
-        public ItemError()
+        public ItemWarning()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ItemError class.
+        /// Initializes a new instance of the ItemWarning class.
         /// </summary>
-        /// <param name="key">The key of the item for which indexing
-        /// failed.</param>
-        /// <param name="errorMessage">The message describing the error that
+        /// <param name="key">The key of the item which generated a
+        /// warning.</param>
+        /// <param name="message">The message describing the warning that
         /// occurred while processing the item.</param>
-        public ItemError(string key = default(string), string errorMessage = default(string))
+        public ItemWarning(string key = default(string), string message = default(string))
         {
             Key = key;
-            ErrorMessage = errorMessage;
+            Message = message;
             CustomInit();
         }
 
@@ -46,17 +46,17 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the key of the item for which indexing failed.
+        /// Gets the key of the item which generated a warning.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public string Key { get; private set; }
 
         /// <summary>
-        /// Gets the message describing the error that occurred while
+        /// Gets the message describing the warning that occurred while
         /// processing the item.
         /// </summary>
-        [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessage { get; private set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
 
     }
 }
