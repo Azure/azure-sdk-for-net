@@ -307,6 +307,10 @@ namespace Microsoft.Azure.Search.Tests
 
                 Assert.Equal("121713", oldestResult.Errors[1].Key);
                 Assert.Equal("Item is too large", oldestResult.Errors[1].ErrorMessage);
+
+                Assert.Equal(1, oldestResult.Warnings.Count);
+                Assert.Equal("2", oldestResult.Warnings[0].Key);
+                Assert.Equal("This is the first and last warning", oldestResult.Warnings[0].Message);
             });
         }
 
