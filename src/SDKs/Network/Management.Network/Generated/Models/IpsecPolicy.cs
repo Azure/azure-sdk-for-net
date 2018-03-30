@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'GCMAES128', 'GCMAES192', 'GCMAES256'</param>
         /// <param name="ikeEncryption">The IKE encryption algorithm (IKE phase
         /// 2). Possible values include: 'DES', 'DES3', 'AES128', 'AES192',
-        /// 'AES256'</param>
+        /// 'AES256', 'GCMAES256', 'GCMAES128'</param>
         /// <param name="ikeIntegrity">The IKE integrity algorithm (IKE phase
         /// 2). Possible values include: 'MD5', 'SHA1', 'SHA256',
         /// 'SHA384'</param>
