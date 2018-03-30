@@ -6,10 +6,16 @@
     <AssemblyName>Microsoft.Azure.Sdk.Build.Tasks</AssemblyName>
     <Version>1.0.0</Version>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(CmdLineBuild)' == 'true'">
+    <TaskBinaryOutput>bin\$(Configuration)\</TaskBinaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CmdLineBuild)' != 'true'">
+    <TaskBinaryOutput>..\..\..\tasks</TaskBinaryOutput>
+  </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
-	<OutputPath>..\..\..\tasks</OutputPath>
-  </PropertyGroup>
+    <OutputPath>$(TaskBinaryOutput)</OutputPath>
+  </PropertyGroup>  
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />

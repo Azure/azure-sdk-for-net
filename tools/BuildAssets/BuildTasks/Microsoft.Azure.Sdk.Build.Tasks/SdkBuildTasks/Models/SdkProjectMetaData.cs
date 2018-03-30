@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
 
         public bool IsFxNetCore { get; set; }
 
+        public bool IsNonSdkProject { get; set; }
+
         public SdkProjectMetaData(ITaskItem project, Project msbuildProject, TargetFrameworkMoniker fxMoniker, string fxMonikerString, string fullProjectPath, string targetOutputPath, bool isTargetFxSupported, SdkProjctType projectType = SdkProjctType.Sdk)
         {
             ProjectTaskItem = project;
@@ -50,7 +52,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                                     Project msbuildProject, TargetFrameworkMoniker fxMoniker, string fxMonikerString, 
                                     string fullProjectPath, string targetOutputPath, bool isTargetFxSupported, 
                                     SdkProjctType projectType,
-                                    bool isProjectDataPlaneProject)
+                                    bool isProjectDataPlaneProject,
+                                    bool isNonSdkProject = true)
         {
             //, bool isTargetFxFullDesktop, bool isTargetNetCore
 
@@ -65,6 +68,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
             IsProjectDataPlane = isProjectDataPlaneProject;
             IsFxFullDesktopVersion = IsExpectedFxCategory(fxMoniker, TargetFxCategory.FullDesktop);
             IsFxNetCore = IsExpectedFxCategory(fxMoniker, TargetFxCategory.NetCore);
+            IsNonSdkProject = isNonSdkProject;
         }
 
         public SdkProjectMetaData(string fullProjectPath, TargetFrameworkMoniker priorityFxVersion = TargetFrameworkMoniker.net452)

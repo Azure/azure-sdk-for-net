@@ -73,7 +73,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                 if (_allProjs == null)
                 {
                     _allProjs = new List<string>();
+                }
 
+                if(_allProjs?.Count <= 0)
+                { 
                     _allProjs = SearchProjects(RootDirForSearch);
                 }
 
@@ -88,6 +91,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                 if (_testProjs == null)
                 {
                     _testProjs = new List<string>();
+                }
+
+                if(_testProjs?.Count <= 0)
+                { 
                     _testProjs = SearchTestProjects(RootDirForSearch);
                 }
 
@@ -95,14 +102,18 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             }
         }
 
-        public IReadOnlyList<string> IgnoredProjectList
+        //public IReadOnlyList<string> IgnoredProjectList
+        public List<string> IgnoredProjectList
         {
             get
             {
                 if (_ignoreProjs == null)
                 {
                     _ignoreProjs = new List<string>();
+                }
 
+                if (_ignoreProjs?.Count <= 0)
+                {
                     foreach (string iP in IgnorePathTokenList)
                     {
                         var ignorePaths = from proj in AllProjectList where proj.Contains(iP) select proj;
@@ -113,7 +124,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                     }
                 }
 
-                return _ignoreProjs.AsReadOnly();
+                return _ignoreProjs;
+                //return _ignoreProjs.AsReadOnly();
             }
         }
 
@@ -128,6 +140,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         {
             Check.DirectoryExists(rootDirPath);
             RootDirForSearch = rootDirPath;
+
+            _projExtList = null;
+            _ignorePathTokenList = null;
+            _testProjectTokenList = null;
+            _allProjs = null;
+            _testProjs = null;
+            _ignoreProjs = null;
         }
 
         public ProjectSearchUtility(string rootDirPath, List<string> ignorePathTokens) : this(rootDirPath)
@@ -209,17 +228,17 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         #region Search
         private List<string> SearchProjects(string searchDirPath)
         {
-            List<string> _allProjs = new List<string>();
+            List<string> searchProjs = new List<string>();
             foreach (string ext in ProjectExtensionList)
             {
                 var searchedProjects = Directory.EnumerateFiles(searchDirPath, ext, SearchOption.AllDirectories);
                 if (searchedProjects.Any<string>())
                 {
-                    _allProjs.AddRange(searchedProjects);
+                    searchProjs.AddRange(searchedProjects);
                 }
             }
 
-            return _allProjs;
+            return searchProjs;
         }
         
         private List<string> SearchTestProjects(string searchDirPath)
@@ -259,6 +278,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                 if (!Directory.Exists(searchProjInDirPath))
                 {
                     searchProjInDirPath = string.Empty;
+                }
+                else
+                {
+                    // update root dir where search will be preformed
+                    RootDirForSearch = searchProjInDirPath;
                 }
             }
 

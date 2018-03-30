@@ -25,7 +25,36 @@ namespace Build.Tasks.Tests
             ignoreDir = @"Microsoft.Azure.KeyVault.Samples";
             //System.Environment.SetEnvironmentVariable("MSBuildSDKsPath", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\Sdks");
         }
+        
+        [Fact]
+        public void GetProjectsWithNonSupportedFxVersion()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"tools\BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks\BootstrapTasks";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 0);
+            }
+        }
+
+        [Fact]
+        public void GetNonSdkProjects()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"tools\BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.nonSdkProjectToBuild.ToList().Count, 2);
+            }
+        }
 
         [Fact]
         public void EmptyProjectExtList()

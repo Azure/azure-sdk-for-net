@@ -45,11 +45,13 @@
 		  <PropertyGroup>
 			<AddProjectReferenceForDebuggingPurpose>true</AddProjectReferenceForDebuggingPurpose>
 			<Scope Condition=" '$(Scope)' == 'All' ">IdeScope</Scope>
+			<CmdLineBuild>false</CmdLineBuild>
 		  </PropertyGroup>
 		</When>
 		<Otherwise>
 		  <PropertyGroup>
 			<AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+			<CmdLineBuild>true</CmdLineBuild>
 		  </PropertyGroup>
 		</Otherwise>
 	</Choose>
