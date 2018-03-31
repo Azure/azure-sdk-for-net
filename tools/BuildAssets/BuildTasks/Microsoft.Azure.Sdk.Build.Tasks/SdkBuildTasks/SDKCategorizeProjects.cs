@@ -159,23 +159,28 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// <returns></returns>
         public override bool Execute()
         {
+            return Categorize();
+        }
+
+        private bool Categorize()
+        {
             List<string> sdkProjects = new List<string>();
             List<string> testProjects = new List<string>();
             List<string> allProjects = new List<string>();
             List<string> ignorePathList = new List<string>();
 
-            if(BuildScope.Contains(@"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks"))
+            if (BuildScope.Contains(@"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks"))
             {
                 IgnoreDirNameForSearchingProjects = string.Join(" ", IgnoreDirNameForSearchingProjects, @"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks\Tests");
             }
 
-            string[] ignoreTokens = IgnoreDirNameForSearchingProjects.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);            
+            string[] ignoreTokens = IgnoreDirNameForSearchingProjects.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string igTkn in ignoreTokens)
             {
                 ignorePathList.Add(igTkn);
             }
 
-            if(!ignorePathList.Contains(KV_IGNOREDIRNAME))
+            if (!ignorePathList.Contains(KV_IGNOREDIRNAME))
             {
                 ignorePathList.Add(KV_IGNOREDIRNAME);
             }
@@ -243,10 +248,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             ConcurrentBag<SdkProjectMetaData> projCollection = new ConcurrentBag<SdkProjectMetaData>();
 
-            foreach (ITaskItem proj in projList)
+            //foreach (ITaskItem proj in projList)
+            //{
+            ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
             {
-                //ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
-                //{
                 try
                 {
                     projCollection.Add(new SdkProjectMetaData() { MsBuildProject = new Project(proj.ItemSpec), ProjectTaskItem = proj });
@@ -262,8 +267,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         Debug.WriteLine(ex.Message);
                     }
                 }
-            //});
-            }
+            });
+            //}
             
 
             foreach(SdkProjectMetaData sdkProjMD in projCollection)
@@ -305,7 +310,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         isProjDataPlane = true;
                     }
 
-                    if (sdkProjMD.ProjectTaskItem.ItemSpec.ToLower().Contains(@"\tools"))
+                    if (sdkProjMD.ProjectTaskItem.ItemSpec.ToLower().Contains(@"\tools\buildassets"))
                     {
                         isNonSdkProjectKind = true;
                     }

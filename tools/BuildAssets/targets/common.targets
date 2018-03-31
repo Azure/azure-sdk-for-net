@@ -279,6 +279,7 @@
   </Target>
 
   <Target Name="CategorizeProjects">
+    <DebugTask Condition=" '$(DebugMode)' == 'true'"/>
     <SDKCategorizeProjects
       SourceRootDirPath="$(LibrarySourceFolder)"
       BuildScope="$(Scope)"
@@ -312,9 +313,10 @@
     <Message Text=" "/>
     <Message Text="TestSDKProjects ....... @(FilteredTestProjects->Count())"/>
     <Message Text="%(FilteredTestProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text=" "/>
     <Message Text="UnSupported Projects ....... @(unsupportedProj->Count())"/>
     <Message Text="%(unsupportedProj.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
-
+    <Message Text=" "/>
     <Message Text="NonSdk Projects......... @(nonSdkProj->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="%(nonSdkProj.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
 
