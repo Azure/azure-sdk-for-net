@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.BotService", "Microsoft.Azure.Management.BotService\Microsoft.Azure.Management.BotService.csproj", "{B2F064F7-8834-47CB-8D4E-E636C3DD1224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.BotService", "Management.BotService\Microsoft.Azure.Management.BotService.csproj", "{B2F064F7-8834-47CB-8D4E-E636C3DD1224}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotService.Tests", "BotService.Tests\BotService.Tests.csproj", "{745CA4AF-FB9C-4DF6-97BD-0AE0480A8DEA}"
 EndProject

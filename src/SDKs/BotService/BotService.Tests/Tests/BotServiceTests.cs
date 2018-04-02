@@ -4,6 +4,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using BotService.Tests.Helpers;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
@@ -27,6 +28,66 @@ namespace BotService.Tests
         }
 
         [Fact]
+        public async Task BotCreateEmailChannel()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = BotServiceManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Verify that there are no results when querying an empty resource group
+                var bots = botServiceMgmtClient.Bots.ListByResourceGroup(rgname);
+                Assert.Empty(bots);
+
+                // Create bot services
+                Bot bot1 = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
+                
+                // Enable email channel for the demo bot
+                var emailChannel = botServiceMgmtClient.Channels.Create(rgname, bot1.Name, "EmailChannel",
+                    new BotChannel(location: "global", properties:
+                        new EmailChannel()
+                        {
+                            Properties = new EmailChannelProperties("carlostestsdk2@outlook.com", "Carlos.Test1", true),
+                        }));
+            }
+        }
+
+        [Fact]
+        public void BotCreateWebAppBot()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = BotServiceManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var botServiceMgmtClient = BotServiceManagementTestUtilities.GetBotServiceManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = BotServiceManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Verify that there are no results when querying an empty resource group
+                var bots = botServiceMgmtClient.Bots.ListByResourceGroup(rgname);
+                Assert.Empty(bots);
+
+                // Create bot services
+                Bot bot1 = BotServiceManagementTestUtilities.CreateAndValidateWebBot(botServiceMgmtClient, rgname, Kind.Bot);
+                Bot bot2 = BotServiceManagementTestUtilities.CreateAndValidateWebBot(botServiceMgmtClient, rgname, Kind.Function);
+
+                // Verify that there are no results when querying an empty resource group
+                bots = botServiceMgmtClient.Bots.ListByResourceGroup(rgname);
+                Assert.Equal(2, bots.Count());
+
+                Assert.Contains(bots, b => b.Name == bot1.Name);
+                Assert.Contains(bots, b => b.Name == bot2.Name);
+            }
+        }
+
+        [Fact]
         public void BotCreateAndListByResourceGroupTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -40,15 +101,15 @@ namespace BotService.Tests
                 var rgname = BotServiceManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Verify that there are no results when querying an empty resource group
-                var bots = botServiceMgmtClient.BotServices.ListByResourceGroup(rgname);
+                var bots = botServiceMgmtClient.Bots.ListByResourceGroup(rgname);
                 Assert.Empty(bots);
 
                 // Create bot services
-                BotResource bot1 = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
-                BotResource bot2 = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
+                Bot bot1 = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
+                Bot bot2 = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
 
                 // Verify that there are no results when querying an empty resource group
-                bots = botServiceMgmtClient.BotServices.ListByResourceGroup(rgname);
+                bots = botServiceMgmtClient.Bots.ListByResourceGroup(rgname);
                 Assert.Equal(2, bots.Count());
 
                 Assert.Contains(bots, b => b.Name == bot1.Name);
@@ -70,10 +131,10 @@ namespace BotService.Tests
                 var rgname = BotServiceManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Create bot resource
-                BotResource bot = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
+                Bot bot = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
 
                 // Verify that we can get the bot
-                var createdBot = botServiceMgmtClient.BotServices.Get(rgname, bot.Name);
+                var createdBot = botServiceMgmtClient.Bots.Get(rgname, bot.Name);
 
                 Assert.NotNull(createdBot);
                 Assert.Equal(bot.Name, createdBot.Name);
@@ -84,7 +145,7 @@ namespace BotService.Tests
                 var properties = createdBot.Properties;
                 properties.Endpoint = newEndpoint;
 
-                var updatedBot = botServiceMgmtClient.BotServices.Update(rgname, bot.Name, 
+                var updatedBot = botServiceMgmtClient.Bots.Update(rgname, bot.Name,
                     properties: properties,
                     location: bot.Location,
                     sku: bot.Sku,
@@ -97,20 +158,20 @@ namespace BotService.Tests
 
                 // Get the updated bot to verify
                 // Verify that we can get the bot
-                var updatedAndRetrievedBot = botServiceMgmtClient.BotServices.Get(rgname, bot.Name);
+                var updatedAndRetrievedBot = botServiceMgmtClient.Bots.Get(rgname, bot.Name);
 
                 Assert.NotNull(updatedAndRetrievedBot);
                 Assert.Equal(updatedAndRetrievedBot.Name, updatedBot.Name);
                 Assert.Equal(newEndpoint, updatedBot.Properties.Endpoint);
 
                 // Delete the updated bot
-                botServiceMgmtClient.BotServices.Delete(rgname, bot.Name);
+                botServiceMgmtClient.Bots.Delete(rgname, bot.Name);
 
                 try
                 {
                     // Get the deleted bot to verify it does not exist
                     // Verify that we can get the bot
-                    var deletedBot = botServiceMgmtClient.BotServices.Get(rgname, bot.Name);
+                    var deletedBot = botServiceMgmtClient.Bots.Get(rgname, bot.Name);
                 }
                 catch (ErrorException e)
                 {
@@ -133,10 +194,10 @@ namespace BotService.Tests
                 var rgname = BotServiceManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Create bot resource
-                BotResource bot = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
+                Bot bot = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
 
                 // Verify that we can get the bot
-                var createdBot = botServiceMgmtClient.BotServices.Get(rgname, bot.Name);
+                var createdBot = botServiceMgmtClient.Bots.Get(rgname, bot.Name);
 
                 Assert.NotNull(createdBot);
                 Assert.Equal(bot.Name, createdBot.Name);
@@ -145,7 +206,7 @@ namespace BotService.Tests
                 // Update the bot endpoint
                 var properties = createdBot.Properties;
 
-                var updatedBot = botServiceMgmtClient.BotServices.Update(rgname, bot.Name,
+                var updatedBot = botServiceMgmtClient.Bots.Update(rgname, bot.Name,
                     properties: properties,
                     location: bot.Location,
                     sku: new Sku("F0"),
@@ -174,7 +235,7 @@ namespace BotService.Tests
                 try
                 {
                     // Create bot resource
-                    BotResource bot = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, nonExistentResourceGroup);
+                    Bot bot = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, nonExistentResourceGroup);
                 }
                 catch (ErrorException e)
                 {

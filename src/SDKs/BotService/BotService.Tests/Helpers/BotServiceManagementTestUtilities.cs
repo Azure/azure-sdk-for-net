@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.Azure.Management.BotService;
+using Microsoft.Azure.Management.BotService.Customizations;
 using Microsoft.Azure.Management.BotService.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
@@ -27,7 +28,7 @@ namespace BotService.Tests.Helpers
 
         // These are used to create default accounts
         public const string DefaultLocation = "global";
-        public const string DefaultSkuName = SkuName.S1;
+        public const string DefaultSkuName = SkuName.F0;
         public const string DefaultKind = Kind.Sdk;
 
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
@@ -73,20 +74,21 @@ namespace BotService.Tests.Helpers
             return Handler;
         }
 
-        public static BotResource CreateDefaultBotResource()
+        public static Bot CreateDefaultBotResource()
         {
-            return new BotResource()
+            return new Bot()
             {
                 Kind = DefaultKind,
                 Location = DefaultLocation,
                 Sku = new Microsoft.Azure.Management.BotService.Models.Sku(DefaultSkuName),
                 Tags = DefaultTags,
-                Properties = new BotResourceProperties()
+                Properties = new BotProperties()
                 {
                     Description = "Default bot description",
                     DisplayName = "Default bot display name",
                     Endpoint = "https://mybot.coffee",
-                    MsaAppId = Guid.NewGuid().ToString()
+                    MsaAppId = Guid.NewGuid().ToString(),
+                    MsaAppPassword = Guid.NewGuid().ToString()
                 }
             };
         }
@@ -109,11 +111,11 @@ namespace BotService.Tests.Helpers
             return rgname;
         }
 
-        public static BotResource CreateAndValidateBot(AzureBotServiceClient botServiceMgmtClient, string rgname, string kind = null)
+        public static Bot CreateAndValidateBot(AzureBotServiceClient botServiceMgmtClient, string rgname, string kind = null)
         {
             string botid = TestUtilities.GenerateName("botservice");
 
-            BotResource resource = CreateDefaultBotResource();
+            Bot resource = CreateDefaultBotResource();
 
             if (!string.IsNullOrEmpty(kind))
             {
@@ -121,7 +123,7 @@ namespace BotService.Tests.Helpers
             }
             
             var responseResource =
-                botServiceMgmtClient.BotServices.CreateWithHttpMessagesAsync(rgname, botid, resource).GetAwaiter().GetResult().Body;
+                botServiceMgmtClient.Bots.CreateWithHttpMessagesAsync(rgname, botid, resource).GetAwaiter().GetResult().Body;
 
 
             VerifyBotServiceProperties(resource, responseResource);
@@ -129,7 +131,36 @@ namespace BotService.Tests.Helpers
             return responseResource;
         }
 
-        public static void VerifyBotServiceProperties(BotResource expected, BotResource actual, bool isCreation = false)
+        public static Bot CreateAndValidateWebBot(AzureBotServiceClient botServiceMgmtClient, string rgname,
+            string kind = null)
+        {
+            string botid = TestUtilities.GenerateName("botservice");
+
+            Bot resource = CreateDefaultBotResource();
+
+            if (string.IsNullOrEmpty(kind))
+            {
+                resource.Kind = Kind.Function;
+            }
+
+            BotDeploymentInfo deployInfo = new BotDeploymentInfo();
+            Bot responseResource = null;
+
+            if (resource.Kind == Kind.Function)
+            {
+                responseResource = botServiceMgmtClient.Bots.CreateFunctionBot(rgname, botid, resource, deployInfo);
+                VerifyBotServiceProperties(resource, responseResource, isRegistrationBot: false);
+            }
+            else
+            {
+                responseResource = botServiceMgmtClient.Bots.CreateWebAppBot(rgname, botid, resource, deployInfo);
+                VerifyBotServiceProperties(resource, responseResource, isRegistrationBot: false);
+            }
+            
+            return responseResource;
+        }
+
+        public static void VerifyBotServiceProperties(Bot expected, Bot actual, bool isCreation = false, bool isRegistrationBot = true)
         {
             Assert.NotNull(actual);
             Assert.NotNull(actual.Id);
@@ -143,9 +174,14 @@ namespace BotService.Tests.Helpers
 
             Assert.NotNull(actual.Properties);
 
-            Assert.Equal(expected.Properties.Description, actual.Properties.Description);
-            Assert.Equal(expected.Properties.DisplayName, actual.Properties.DisplayName);
-            Assert.Equal(expected.Properties.Endpoint, actual.Properties.Endpoint);
+            if (isRegistrationBot)
+            {
+                Assert.Equal(expected.Properties.Description, actual.Properties.Description);
+                Assert.Equal(expected.Properties.DisplayName, actual.Properties.DisplayName);
+                Assert.Equal(expected.Properties.Endpoint, actual.Properties.Endpoint);
+            }
+
+            
         }
 
         public static void ValidateExpectedException(Action action, string expectedErrorCode)
