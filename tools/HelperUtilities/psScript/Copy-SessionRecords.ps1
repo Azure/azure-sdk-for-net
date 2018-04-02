@@ -35,10 +35,10 @@ foreach($srcFile in $srcFiles)
     {
         if($srcFile.Name -eq $destFile.Name)
         {
-            if($srcFile.LastWriteTimeTime -lt $destFile.LastWriteTime)
+            if($srcFile.LastWriteTime -lt $destFile.LastWriteTime)
             {
-                Write-Debug "Source file creation time: $($srcFile.LastWriteTime)"
-                Write-Debug "Destination file creation time: $($destFile.LastWriteTime)"
+                Write-Verbose "Source file last modified: $($srcFile.LastWriteTime)"
+                Write-Verbose "Destination file last modified: $($destFile.LastWriteTime)"
                 Write-Host "Copying source file: $($srcFile.FullName)"
                 Write-Host "To destination: $($destFile.FullName)"
                 Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Force
