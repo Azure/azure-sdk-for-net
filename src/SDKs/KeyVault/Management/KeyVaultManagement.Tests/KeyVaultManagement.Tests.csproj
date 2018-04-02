@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>KeyVaultManagement.Tests</PackageId>
     <Description>KeyVault.Tests Class Library</Description>
-    <VersionPrefix>2.1.0-alpha</VersionPrefix>
+    <VersionPrefix>2.1.1-alpha</VersionPrefix>
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>KeyVaultManagement.Tests</AssemblyName>    
   </PropertyGroup>
