@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for Protocol.
+    /// Defines values for ConnectionMonitorSourceStatus.
     /// </summary>
-    public static class Protocol
+    public static class ConnectionMonitorSourceStatus
     {
-        public const string Tcp = "Tcp";
-        public const string Http = "Http";
-        public const string Https = "Https";
-        public const string Icmp = "Icmp";
+        public const string Uknown = "Uknown";
+        public const string Active = "Active";
+        public const string Inactive = "Inactive";
     }
 }

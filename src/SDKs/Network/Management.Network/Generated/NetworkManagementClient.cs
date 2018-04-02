@@ -56,11 +56,6 @@ namespace Microsoft.Azure.Management.Network
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -525,7 +520,6 @@ namespace Microsoft.Azure.Management.Network
             VirtualNetworkGatewayConnections = new VirtualNetworkGatewayConnectionsOperations(this);
             LocalNetworkGateways = new LocalNetworkGatewaysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -601,14 +595,11 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "domainNameLabel");
             }
-            if (ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
             if (SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            string apiVersion = "2018-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -618,6 +609,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("domainNameLabel", domainNameLabel);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckDnsNameAvailability", tracingParameters);
             }
@@ -631,9 +623,9 @@ namespace Microsoft.Azure.Management.Network
             {
                 _queryParameters.Add(string.Format("domainNameLabel={0}", System.Uri.EscapeDataString(domainNameLabel)));
             }
-            if (ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

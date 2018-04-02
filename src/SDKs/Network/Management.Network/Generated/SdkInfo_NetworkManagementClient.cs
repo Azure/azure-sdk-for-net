@@ -11,8 +11,8 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("Compute", "NetworkInterfaces", "2018-02-01"),
-                new Tuple<string, string, string>("Compute", "PublicIPAddresses", "2018-02-01"),
+                new Tuple<string, string, string>("Compute", "NetworkInterfaces", "2017-03-30"),
+                new Tuple<string, string, string>("Compute", "PublicIPAddresses", "2017-03-30"),
                 new Tuple<string, string, string>("Network", "ApplicationGateways", "2018-02-01"),
                 new Tuple<string, string, string>("Network", "ApplicationSecurityGroups", "2018-02-01"),
                 new Tuple<string, string, string>("Network", "AvailableEndpointServices", "2018-02-01"),
