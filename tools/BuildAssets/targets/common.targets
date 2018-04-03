@@ -1,6 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\tasks\common.tasks"/>
-  <Import Project="signing.targets"/>
+  <Import Project="..\tasks\common.tasks"/>  
+  <Import Project="signing.targets"/>  
   <Import Project="additional.targets"/>
 
   <PropertyGroup>
@@ -58,6 +58,10 @@
       DisplayHelp
     </HelpDependsOn>
   </PropertyGroup>
+  <PropertyGroup>
+      <ProjectRootDir>$(ProjRootDir)</ProjectRootDir>
+  </PropertyGroup>
+
 
   <Target Name="GetBuildEnv" Condition=" '$(BuildWideDebugTrace)' == 'true' ">
     <Message Text="OnPremiseBuild .... $(OnPremiseBuild)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
