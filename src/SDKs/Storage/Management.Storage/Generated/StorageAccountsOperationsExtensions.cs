@@ -555,6 +555,151 @@ namespace Microsoft.Azure.Management.Storage
             }
 
             /// <summary>
+            /// Gets the data policy rules associated with the specified storage account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static StorageAccountDataPolicies GetDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                return operations.GetDataPoliciesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the data policy rules associated with the specified storage account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StorageAccountDataPolicies> GetDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDataPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Sets the data policy rules associated with the specified storage account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='rules'>
+            /// The Storage Account DataPolicies Rules, in JSON format. //TODO: Link of the
+            /// sample rules.
+            /// </param>
+            public static StorageAccountDataPolicies CreateOrUpdateDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string rules = default(string))
+            {
+                return operations.CreateOrUpdateDataPoliciesAsync(resourceGroupName, accountName, rules).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets the data policy rules associated with the specified storage account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='rules'>
+            /// The Storage Account DataPolicies Rules, in JSON format. //TODO: Link of the
+            /// sample rules.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<StorageAccountDataPolicies> CreateOrUpdateDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string rules = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateDataPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, rules, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the data policy rules associated with the specified storage
+            /// account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            public static void DeleteDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            {
+                operations.DeleteDataPoliciesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the data policy rules associated with the specified storage
+            /// account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the storage account within the specified resource group.
+            /// Storage account names must be between 3 and 24 characters in length and use
+            /// numbers and lower-case letters only.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteDataPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Asynchronously creates a new storage account with the specified parameters.
             /// If an account is already created and a subsequent create request is issued
             /// with different properties, the account properties will be updated. If an

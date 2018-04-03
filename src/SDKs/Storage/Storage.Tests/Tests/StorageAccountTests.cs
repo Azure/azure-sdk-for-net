@@ -831,29 +831,6 @@ namespace Storage.Tests
             }
         }
 
-        [Fact]
-        public void StorageAccountLocationUsageTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
-
-                // Query usage
-                string Location = StorageManagementTestUtilities.DefaultLocation;
-                var usages = storageMgmtClient.Usage.ListByLocation(Location);
-                Assert.Equal(1, usages.Count());
-                Assert.Equal(UsageUnit.Count, usages.First().Unit);
-                Assert.NotNull(usages.First().CurrentValue);
-                Assert.Equal(250, usages.First().Limit);
-                Assert.NotNull(usages.First().Name);
-                Assert.Equal("StorageAccounts", usages.First().Name.Value);
-                Assert.Equal("Storage Accounts", usages.First().Name.LocalizedValue);
-            }
-        }
-
         // [Fact]
         public void StorageAccountGetOperationsTest()
         {
@@ -1146,7 +1123,7 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(account.Tags.Count, parameters.Tags.Count);
 
-                // 1. Update storage encryption by enable Blob/File Encyrption
+                // 1. Update storage encryption
                 parameters = new StorageAccountUpdateParameters
                 {
                     Encryption = new Encryption()
@@ -1170,12 +1147,27 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                // 2. Update storage encryption by enable Blob Encyrption
+                //// 2. Explicitly disable file encryption service.
+                //parameters.Encryption.Services.File.Enabled = false;
+                //account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
+                //Assert.NotNull(account.Encryption);
+
+                //// Validate
+                //account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+
+                //Assert.NotNull(account.Encryption);
+                //Assert.NotNull(account.Encryption.Services.Blob);
+                //Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
+                //Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
+
+                //Assert.Null(account.Encryption.Services.File);
+
+                // 3. Restore storage encryption
                 parameters = new StorageAccountUpdateParameters
                 {
                     Encryption = new Encryption()
                     {
-                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }},
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true }, File = new EncryptionService { Enabled = true } },
                         KeySource = KeySource.MicrosoftStorage
                     }
                 };
@@ -1194,11 +1186,12 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                // 3. Update storage encryption by only Keysource
+                // 4. Remove file encryption service field.
                 parameters = new StorageAccountUpdateParameters
                 {
                     Encryption = new Encryption()
                     {
+                        Services = new EncryptionServices { Blob = new EncryptionService { Enabled = true } },
                         KeySource = KeySource.MicrosoftStorage
                     }
                 };
@@ -1325,7 +1318,7 @@ namespace Storage.Tests
                 string keyName = TestUtilities.GenerateName("keyvaultkey");
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
-                parameters.Identity = new Identity {};
+                parameters.Identity = new Identity { };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
@@ -1631,6 +1624,39 @@ namespace Storage.Tests
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(account.Kind, Kind.StorageV2);
                 Assert.True(account.EnableHttpsTrafficOnly);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountSetGetDeleteDataPolicy()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                //// Create resource group
+                //var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                //// Create storage account
+                //string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
+
+                string rgname = "weitry";
+                string accountName = "weistoragetry2";
+
+                //string rules = "{\"Policy\":{ \"Rule\":{ \"Filters\":{ \"BlobTypes\":{ \"BlobType\":\"BlockBlob\" }, \"NameMatch\":\"/container/blobname*\" }, \"BlobLifeCycle\":{ \"BaseBlob\":{ \"TierToCool\":{ \"DaysAfterLastModified\":\"10\", \"DaysAfterLastAccessTime\":\"5\" }, \"TierToArchive\":{ \"DaysAfterLastAccessTime\":\"90\" }, \"Delete\":{ \"DaysAfterLastModified\":\"365\" } }, \"Snapshot\":{ \"TierToCool\":{ \"DaysAfterSnapshotCreated\":\"1\" }, \"TierToArchive\":{ \"DaysAfterSnapshotCreated\":\"30\" }, \"Delete\":{\"DaysAfterSnapshotCreated\":\"90\"}}}}}}";
+                string rules = "{\"Policy\":{ }}";
+                StorageAccountDataPolicies policy = storageMgmtClient.DataPolicies.CreateOrUpdate(rgname, accountName, rules);
+                Assert.Equal(policy.Rules, rules);
+
+                policy = storageMgmtClient.DataPolicies.Get(rgname, accountName);
+                Assert.Equal(policy.Rules, rules);
+
+                storageMgmtClient.DataPolicies.Delete(rgname, accountName);
+                policy = storageMgmtClient.DataPolicies.Get(rgname, accountName);
+                Assert.Null(policy.Rules);
             }
         }
     }
