@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Automation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for TestJobsOperations.
+    /// Extension methods for TestJobOperations.
     /// </summary>
-    public static partial class TestJobsOperationsExtensions
+    public static partial class TestJobOperationsExtensions
     {
             /// <summary>
             /// Create a test job of the runbook.
@@ -28,6 +28,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
@@ -37,9 +40,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The parameters supplied to the create test job operation.
             /// </param>
-            public static TestJob Create(this ITestJobsOperations operations, string automationAccountName, string runbookName, TestJobCreateParameters parameters)
+            public static TestJob Create(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName, TestJobCreateParameters parameters)
             {
-                return operations.CreateAsync(automationAccountName, runbookName, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, automationAccountName, runbookName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,6 +52,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
@@ -61,9 +67,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TestJob> CreateAsync(this ITestJobsOperations operations, string automationAccountName, string runbookName, TestJobCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestJob> CreateAsync(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName, TestJobCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(automationAccountName, runbookName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -76,15 +82,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
-            public static TestJob Get(this ITestJobsOperations operations, string automationAccountName, string runbookName)
+            public static TestJob Get(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                return operations.GetAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -93,6 +102,9 @@ namespace Microsoft.Azure.Management.Automation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
@@ -103,9 +115,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TestJob> GetAsync(this ITestJobsOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TestJob> GetAsync(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -118,15 +130,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
-            public static void Resume(this ITestJobsOperations operations, string automationAccountName, string runbookName)
+            public static void Resume(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                operations.ResumeAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                operations.ResumeAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -136,6 +151,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
@@ -145,9 +163,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ResumeAsync(this ITestJobsOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ResumeAsync(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ResumeWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ResumeWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -157,15 +175,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
             /// </param>
-            public static void Stop(this ITestJobsOperations operations, string automationAccountName, string runbookName)
+            public static void Stop(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
-                operations.StopAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
+                operations.StopAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -175,44 +196,8 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
-            /// </param>
-            /// <param name='runbookName'>
-            /// The runbook name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task StopAsync(this ITestJobsOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.StopWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Suspend the test job.
-            /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
-            /// </param>
-            /// <param name='runbookName'>
-            /// The runbook name.
-            /// </param>
-            public static void Suspend(this ITestJobsOperations operations, string automationAccountName, string runbookName)
-            {
-                operations.SuspendAsync(automationAccountName, runbookName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Suspend the test job.
-            /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
@@ -223,9 +208,54 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SuspendAsync(this ITestJobsOperations operations, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task StopAsync(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.SuspendWithHttpMessagesAsync(automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.StopWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Suspend the test job.
+            /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The automation account name.
+            /// </param>
+            /// <param name='runbookName'>
+            /// The runbook name.
+            /// </param>
+            public static void Suspend(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
+            {
+                operations.SuspendAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Suspend the test job.
+            /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The automation account name.
+            /// </param>
+            /// <param name='runbookName'>
+            /// The runbook name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SuspendAsync(this ITestJobOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SuspendWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

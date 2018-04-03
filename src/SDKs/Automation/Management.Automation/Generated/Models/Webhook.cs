@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the webhook type.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Webhook
+    public partial class Webhook : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Webhook class.
@@ -34,8 +34,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the Webhook class.
         /// </summary>
-        /// <param name="id">Gets or sets the id of the resource.</param>
-        /// <param name="name">Gets or sets the name of the webhook.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="isEnabled">Gets or sets the value of the enabled flag
         /// of the webhook.</param>
         /// <param name="uri">Gets or sets the webhook uri.</param>
@@ -53,10 +55,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public Webhook(string id = default(string), string name = default(string), bool? isEnabled = default(bool?), string uri = default(string), System.DateTime? expiryTime = default(System.DateTime?), System.DateTime? lastInvokedTime = default(System.DateTime?), IDictionary<string, string> parameters = default(IDictionary<string, string>), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string runOn = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string))
+        public Webhook(string id = default(string), string name = default(string), string type = default(string), bool? isEnabled = default(bool?), string uri = default(string), System.DateTimeOffset expiryTime = default(System.DateTimeOffset), System.DateTimeOffset lastInvokedTime = default(System.DateTimeOffset), IDictionary<string, string> parameters = default(IDictionary<string, string>), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string runOn = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
             IsEnabled = isEnabled;
             Uri = uri;
             ExpiryTime = expiryTime;
@@ -76,18 +77,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the webhook.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the value of the enabled flag of the webhook.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isEnabled")]
@@ -103,13 +92,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the expiry time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expiryTime")]
-        public System.DateTime? ExpiryTime { get; set; }
+        public System.DateTimeOffset ExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last invoked time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastInvokedTime")]
-        public System.DateTime? LastInvokedTime { get; set; }
+        public System.DateTimeOffset LastInvokedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters of the job that is created when the
@@ -135,13 +124,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the description.

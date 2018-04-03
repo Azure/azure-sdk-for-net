@@ -48,21 +48,6 @@ namespace Microsoft.Azure.Management.Automation
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The resource group name.
-        /// </summary>
-        string ResourceGroupName { get; set; }
-
-        /// <summary>
-        /// Identifies this specific client request.
-        /// </summary>
-        string ClientRequestId { get; set; }
-
-        /// <summary>
-        /// The name of the automation account.
-        /// </summary>
-        string AutomationAccountName { get; set; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -101,6 +86,11 @@ namespace Microsoft.Azure.Management.Automation
         IUsagesOperations Usages { get; }
 
         /// <summary>
+        /// Gets the IKeysOperations.
+        /// </summary>
+        IKeysOperations Keys { get; }
+
+        /// <summary>
         /// Gets the ICertificateOperations.
         /// </summary>
         ICertificateOperations Certificate { get; }
@@ -121,34 +111,9 @@ namespace Microsoft.Azure.Management.Automation
         ICredentialOperations Credential { get; }
 
         /// <summary>
-        /// Gets the IDscCompilationJobOperations.
-        /// </summary>
-        IDscCompilationJobOperations DscCompilationJob { get; }
-
-        /// <summary>
         /// Gets the IDscConfigurationOperations.
         /// </summary>
         IDscConfigurationOperations DscConfiguration { get; }
-
-        /// <summary>
-        /// Gets the IAgentRegistrationInformationOperations.
-        /// </summary>
-        IAgentRegistrationInformationOperations AgentRegistrationInformation { get; }
-
-        /// <summary>
-        /// Gets the IDscNodeOperations.
-        /// </summary>
-        IDscNodeOperations DscNode { get; }
-
-        /// <summary>
-        /// Gets the INodeReportsOperations.
-        /// </summary>
-        INodeReportsOperations NodeReports { get; }
-
-        /// <summary>
-        /// Gets the IDscNodeConfigurationOperations.
-        /// </summary>
-        IDscNodeConfigurationOperations DscNodeConfiguration { get; }
 
         /// <summary>
         /// Gets the IHybridRunbookWorkerGroupOperations.
@@ -156,19 +121,14 @@ namespace Microsoft.Azure.Management.Automation
         IHybridRunbookWorkerGroupOperations HybridRunbookWorkerGroup { get; }
 
         /// <summary>
-        /// Gets the IJobOperations.
-        /// </summary>
-        IJobOperations Job { get; }
-
-        /// <summary>
-        /// Gets the IJobStreamOperations.
-        /// </summary>
-        IJobStreamOperations JobStream { get; }
-
-        /// <summary>
         /// Gets the IJobScheduleOperations.
         /// </summary>
         IJobScheduleOperations JobSchedule { get; }
+
+        /// <summary>
+        /// Gets the ILinkedWorkspaceOperations.
+        /// </summary>
+        ILinkedWorkspaceOperations LinkedWorkspace { get; }
 
         /// <summary>
         /// Gets the IActivityOperations.
@@ -206,9 +166,9 @@ namespace Microsoft.Azure.Management.Automation
         ITestJobStreamsOperations TestJobStreams { get; }
 
         /// <summary>
-        /// Gets the ITestJobsOperations.
+        /// Gets the ITestJobOperations.
         /// </summary>
-        ITestJobsOperations TestJobs { get; }
+        ITestJobOperations TestJob { get; }
 
         /// <summary>
         /// Gets the IScheduleOperations.
@@ -239,6 +199,56 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the ISoftwareUpdateConfigurationMachineRunsOperations.
         /// </summary>
         ISoftwareUpdateConfigurationMachineRunsOperations SoftwareUpdateConfigurationMachineRuns { get; }
+
+        /// <summary>
+        /// Gets the ISourceControlOperations.
+        /// </summary>
+        ISourceControlOperations SourceControl { get; }
+
+        /// <summary>
+        /// Gets the ISourceControlSyncJobOperations.
+        /// </summary>
+        ISourceControlSyncJobOperations SourceControlSyncJob { get; }
+
+        /// <summary>
+        /// Gets the IJobOperations.
+        /// </summary>
+        IJobOperations Job { get; }
+
+        /// <summary>
+        /// Gets the IJobStreamOperations.
+        /// </summary>
+        IJobStreamOperations JobStream { get; }
+
+        /// <summary>
+        /// Gets the IAgentRegistrationInformationOperations.
+        /// </summary>
+        IAgentRegistrationInformationOperations AgentRegistrationInformation { get; }
+
+        /// <summary>
+        /// Gets the IDscNodeOperations.
+        /// </summary>
+        IDscNodeOperations DscNode { get; }
+
+        /// <summary>
+        /// Gets the INodeReportsOperations.
+        /// </summary>
+        INodeReportsOperations NodeReports { get; }
+
+        /// <summary>
+        /// Gets the IDscCompilationJobOperations.
+        /// </summary>
+        IDscCompilationJobOperations DscCompilationJob { get; }
+
+        /// <summary>
+        /// Gets the IDscCompilationJobStreamOperations.
+        /// </summary>
+        IDscCompilationJobStreamOperations DscCompilationJobStream { get; }
+
+        /// <summary>
+        /// Gets the IDscNodeConfigurationOperations.
+        /// </summary>
+        IDscNodeConfigurationOperations DscNodeConfiguration { get; }
 
     }
 }

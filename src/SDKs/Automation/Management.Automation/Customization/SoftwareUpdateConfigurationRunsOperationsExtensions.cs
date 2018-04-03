@@ -35,7 +35,7 @@
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection
         /// </param>
-        public static SoftwareUpdateConfigurationRunListResult ListByConfigurationName(this ISoftwareUpdateConfigurationRunsOperations operations, string configurationName, string skip = default(string), string top = default(string))
+        public static SoftwareUpdateConfigurationRunListResult ListByConfigurationName(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, string configurationName, string skip = default(string), string top = default(string))
         {
             return operations.ListByConfigurationNameAsync(configurationName, skip, top).GetAwaiter().GetResult();
         }
@@ -59,10 +59,10 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByConfigurationNameAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string configurationName, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByConfigurationNameAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, string configurationName, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, ConfigurationNameProperty, configurationName);
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync("", "", null, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -86,7 +86,7 @@
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection
         /// </param>
-        public static SoftwareUpdateConfigurationRunListResult ListByOsType(this ISoftwareUpdateConfigurationRunsOperations operations, string osType, string skip = default(string), string top = default(string))
+        public static SoftwareUpdateConfigurationRunListResult ListByOsType(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, string osType, string skip = default(string), string top = default(string))
         {
             return operations.ListByOsTypeAsync(osType, skip, top).GetAwaiter().GetResult();
         }
@@ -110,10 +110,10 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByOsTypeAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string osType, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByOsTypeAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, string osType, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, OsTypeProperty, osType);
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -137,9 +137,9 @@
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection
         /// </param>
-        public static SoftwareUpdateConfigurationRunListResult ListByStatus(this ISoftwareUpdateConfigurationRunsOperations operations, string status, string skip = default(string), string top = default(string))
+        public static SoftwareUpdateConfigurationRunListResult ListByStatus(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, string status, string skip = default(string), string top = default(string))
         {
-            return operations.ListByStatusAsync(status, skip, top).GetAwaiter().GetResult();
+            return operations.ListByStatusAsync(resourceGroupName, automationAccountName, status, skip, top).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -161,10 +161,10 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByStatusAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string status, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByStatusAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, string status, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, StatusProperty, status);
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -188,9 +188,9 @@
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection
         /// </param>
-        public static SoftwareUpdateConfigurationRunListResult ListByStartTime(this ISoftwareUpdateConfigurationRunsOperations operations, DateTime startTime, string skip = default(string), string top = default(string))
+        public static SoftwareUpdateConfigurationRunListResult ListByStartTime(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, DateTime startTime, string skip = default(string), string top = default(string))
         {
-            return operations.ListByStartTimeAsync(startTime, skip, top).GetAwaiter().GetResult();
+            return operations.ListByStartTimeAsync(resourceGroupName, automationAccountName, startTime, skip, top).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -212,10 +212,10 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByStartTimeAsync(this ISoftwareUpdateConfigurationRunsOperations operations, DateTime startTime, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationRunListResult> ListByStartTimeAsync(this ISoftwareUpdateConfigurationRunsOperations operations, string resourceGroupName, string automationAccountName, DateTime startTime, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatGreaterEqual, StartTimeProperty, startTime.ToString("o"));
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

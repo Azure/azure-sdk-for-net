@@ -19,22 +19,25 @@ namespace Microsoft.Azure.Management.Automation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TestJobsOperations operations.
+    /// SourceControlSyncJobOperations operations.
     /// </summary>
-    public partial interface ITestJobsOperations
+    public partial interface ISourceControlSyncJobOperations
     {
         /// <summary>
-        /// Create a test job of the runbook.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Creates the sync job for a source control.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
-        /// <param name='runbookName'>
-        /// The parameters supplied to the create test job operation.
+        /// <param name='sourceControlName'>
+        /// The source control name.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the create test job operation.
+        /// <param name='sourceControlSyncJobId'>
+        /// The source control sync job id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,16 +54,22 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TestJob>> CreateWithHttpMessagesAsync(string automationAccountName, string runbookName, TestJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SourceControlSyncJob>> CreateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string sourceControlName, System.Guid sourceControlSyncJobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve the test job for the specified runbook.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Retrieve the source control sync job identified by job id.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='sourceControlName'>
+        /// The source control name.
+        /// </param>
+        /// <param name='sourceControlSyncJobId'>
+        /// The source control sync job id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,16 +86,22 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TestJob>> GetWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SourceControlSyncJobById>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string sourceControlName, System.Guid sourceControlSyncJobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Resume the test job.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Retrieve a list of source control sync jobs.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='sourceControlName'>
+        /// The source control name.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -97,19 +112,19 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ResumeWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SourceControlSyncJob>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string sourceControlName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Stop the test job.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Retrieve a list of source control sync jobs.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -120,32 +135,12 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> StopWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Suspend the test job.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
-        /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SuspendWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SourceControlSyncJob>>> ListByAutomationAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
