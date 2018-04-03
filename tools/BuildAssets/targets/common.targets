@@ -55,9 +55,8 @@
     </HelpDependsOn>
   </PropertyGroup>
   <PropertyGroup>
-      <ProjectRootDir>$(ProjRootDir)</ProjectRootDir>
+      <ProjectRootDir/>
   </PropertyGroup>
-
 
   <Target Name="GetBuildEnv" Condition=" '$(BuildWideDebugTrace)' == 'true' ">
     <Message Text="OnPremiseBuild .... $(OnPremiseBuild)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
@@ -148,7 +147,7 @@
     </MSBuild>
 
     <!--Test Project-->
-	<Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
+	  <Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
              Projects="@(netCore11TestProj)"
              Properties="TargetFramework=$(NetCore11)"
@@ -156,7 +155,7 @@
              ContinueOnError="true">
     </MSBuild>
 
-	<Message Text="Building SDK Projects ..... @(net452TestProj) for $(net452TestProj)"  Condition=" '@(net452TestProj)' != '' " />
+	  <Message Text="Building SDK Projects ..... @(net452TestProj) for $(net452TestProj)"  Condition=" '@(net452TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
               Projects="@(net452TestProj)"
               Properties="TargetFramework=$(NetFx452)"
@@ -342,16 +341,16 @@
     </ItemGroup>
 
     <Message Text=" "/>
-    <Message Text="Project Root Directory......... $(ProjectRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="ProjectRootDir......... $(ProjectRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
   </Target>
   
   <Target Name="UpdateTools">
-  <PropertyGroup>
-	<RemoteRootDir Condition=" '$(RemoteRootDir)' == '' ">D:\myFork\SdkBuildTools</RemoteRootDir>
-  </PropertyGroup>
-	<Message Text="Updating tools ...."/>
-	<!-- https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/ -->
-	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)"/>
+    <PropertyGroup>
+    <RemoteRootDir Condition=" '$(RemoteRootDir)' == '' ">D:\myFork\SdkBuildTools</RemoteRootDir>
+    </PropertyGroup>
+    <Message Text="Updating tools ...."/>
+    <!-- https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/ -->
+    <GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)"/>
   </Target>
 
   <Target Name="DisplayHelp">
@@ -368,10 +367,10 @@
     <Message Text="----- will Build Compute nuget package and run compute test" />
 	
 	<!--
-	<Message Text="msbuild build.proj /t:PublishNuget /p:NugetPackageName={Nuget package name} /p:PackageOutputPath={Package output path} /p:PublishNugetToPath={Nuget publish path}" />
-	
-	<Message Text="NugetPackageName Name Of Package from .csproj under ProjectId xml tag"/>
-	/p:PackageOutputPath=<Defaulted to build output if not provided> /p:PublishNugetToPath=<Defaulted to https://www.nuget.org if not provided, or provide local path /p:Scope=SDKs\Compute" />
+    <Message Text="msbuild build.proj /t:PublishNuget /p:NugetPackageName={Nuget package name} /p:PackageOutputPath={Package output path} /p:PublishNugetToPath={Nuget publish path}" />
+    
+    <Message Text="NugetPackageName Name Of Package from .csproj under ProjectId xml tag"/>
+    /p:PackageOutputPath=<Defaulted to build output if not provided> /p:PublishNugetToPath=<Defaulted to https://www.nuget.org if not provided, or provide local path /p:Scope=SDKs\Compute" />
     <Message Text=" will Build Compute nuget package and run compute test" />
 	-->
   </Target>
