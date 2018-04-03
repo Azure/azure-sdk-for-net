@@ -12,36 +12,61 @@
 .DESCRIPTION
     This script copies newly recorded session records from source to destination
 
-.PARAMETER Source
+.PARAMETER SourceRootDirectory
     Full path to directory where session records are (usually the bin directory of recorded test)
 
-.PARAMETER Destination
+.PARAMETER DestinationRootDirectory
     Location where to copy the files
 #>
 
+[cmdletbinding(SupportsShouldProcess=$True)]
 Param(
     [Parameter(Mandatory = $true)]
-    [string] $Source,
+    [string] $SourceRootDirectory,
     [Parameter(Mandatory = $true)]
-    [string] $Destination
+    [string] $DestinationRootDirectory
 )
 
-$srcFiles = (Get-ChildItem -Path $Source -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
-$destFiles = (Get-ChildItem -Path $Destination -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
+Begin {
+    if (-not $PSBoundParameters.ContainsKey('Confirm')) {
+        $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
+    }
+    if (-not $PSBoundParameters.ContainsKey('WhatIf')) {
+        $WhatIfPreference = $PSCmdlet.SessionState.PSVariable.GetValue('WhatIfPreference')
+    }
+    Write-Verbose ('[{0}] Confirm={1} ConfirmPreference={2} WhatIf={3} WhatIfPreference={4}' -f $MyInvocation.MyCommand, $Confirm, $ConfirmPreference, $WhatIf, $WhatIfPreference)
+}
 
-foreach($srcFile in $srcFiles)
+Process
 {
-    foreach($destFile in $destFiles)
+    $srcFiles = (Get-ChildItem -Path $SourceRootDirectory -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
+    $destFiles = (Get-ChildItem -Path $DestinationRootDirectory -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
+
+    foreach($srcFile in $srcFiles)
     {
-        if($srcFile.Name -eq $destFile.Name)
+        foreach($destFile in $destFiles)
         {
-            if($srcFile.LastWriteTime -lt $destFile.LastWriteTime)
+            if($srcFile.Name -eq $destFile.Name)
             {
-                Write-Verbose "Source file last modified: $($srcFile.LastWriteTime)"
-                Write-Verbose "Destination file last modified: $($destFile.LastWriteTime)"
-                Write-Host "Copying source file: $($srcFile.FullName)"
-                Write-Host "To destination: $($destFile.FullName)"
-                Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Force
+                if($srcFile.LastWriteTime -gt $destFile.LastWriteTime)
+                {
+                    Write-Verbose "Source file last modified: $($srcFile.LastWriteTime)"
+                    Write-Verbose "Destination file last modified: $($destFile.LastWriteTime)"
+                    Write-Host "Copying source file: $($srcFile.FullName)"
+                    Write-Host "To destination: $($destFile.FullName)"
+                    
+                    if ($WhatIfPreference -eq $True) {
+                        Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -WhatIf
+                    } 
+                    elseif($ConfirmPreference -ne "High")
+                    {
+                        Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Confirm
+                    }
+                    else
+                    {
+                        Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Force
+                    }
+                }
             }
         }
     }
