@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-
 namespace Microsoft.WindowsAzure.Build.Tasks
 {
+    using System;
+    using Microsoft.Build.Framework;
+    using Microsoft.Build.Utilities;
+
     /// <summary>
     /// A simple Microsoft Build task for validating the strong name signature
     /// on a .NET assembly.

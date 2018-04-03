@@ -1,15 +1,17 @@
-﻿using NuGet.Packaging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Build.Tasks.Tests
 {
+    using NuGet.Packaging;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using Xunit;
+
+
     public class SdkInfoTests
     {
         const string NUGET_PKG_NAME = "Build.Tasks.Tests.1.0.0.nupkg";

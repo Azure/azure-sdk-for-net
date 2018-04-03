@@ -16,15 +16,83 @@ namespace Build.Tasks.Tests
 {
     public class CategorizeProjectTaskTest
     {
+        internal string rootDir = string.Empty;
         internal string sourceRootDir = string.Empty;
         internal string ignoreDir = string.Empty;
         public CategorizeProjectTaskTest()
         {
-            sourceRootDir = GetSourceRootDir();
-            sourceRootDir = Path.Combine(sourceRootDir, "src");
+            rootDir = GetSourceRootDir();
+            sourceRootDir = Path.Combine(rootDir, "src");
             ignoreDir = @"Microsoft.Azure.KeyVault.Samples";
             //System.Environment.SetEnvironmentVariable("MSBuildSDKsPath", @"C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\Sdks");
         }
+        
+        [Fact]
+        public void GetProjectsWithNonSupportedFxVersion()
+        {
+            string scopeDir = @"tools\BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks\BootstrapTasks";
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = scopeDir;
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 1);
+                Assert.Contains(Path.Combine(rootDir, "tools"), cproj.ProjectRootDir);
+            }
+        }
+
+        [Fact]
+        public void GetNonSdkProjects()
+        {
+            string scopeDir = @"tools\BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks\BootstrapTasks";
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = scopeDir;
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(2, cproj.nonSdkProjectToBuild.ToList().Count);
+                Assert.Contains(Path.Combine(rootDir, "tools"), cproj.ProjectRootDir);
+            }
+        }
+
+        [Fact]
+        public void EmptyProjectExtList()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SearchProjectFileExt = null;
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"tools\ProjectTemplates\AzureDotNetSDK-TestProject";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 0);
+            }
+        }
+
+        [Fact]
+        public void GetProjectOutsideSourceDir()
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SearchProjectFileExt = "*.xproj";
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = @"tools\ProjectTemplates\AzureDotNetSDK-TestProject";
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+            
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.UnFilteredProjects.Count<string>(), 1);
+            }
+        }
+
 
         [Fact]
         public void IgnoreDirTokens()
@@ -60,39 +128,27 @@ namespace Build.Tasks.Tests
                 Assert.True(totalSdkProjectCount > 112);
                 Assert.True(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>() > 54);
                 Assert.True(cproj.net452TestProjectsToBuild.Count<ITaskItem>() > 7);
+
+                Assert.Contains(sourceRootDir, cproj.ProjectRootDir);
             }
         }
 
         [Fact]
         public void ScopedProject()
         {
+            string scopeDir = @"SDKs\Compute";
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
-            cproj.BuildScope = @"SDKs\Compute";
+            cproj.BuildScope = scopeDir;
             cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
 
             if (cproj.Execute())
             {
                 Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
                 Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Contains(sourceRootDir, cproj.ProjectRootDir);
             }
         }
-
-        [Fact]
-        public void ScopedProject_1()
-        {
-            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
-            cproj.SourceRootDirPath = sourceRootDir;
-            cproj.BuildScope = @"SDKs\Compute";
-            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
-
-            if (cproj.Execute())
-            {
-                Assert.Equal(cproj.net452SdkProjectsToBuild.Count<ITaskItem>(), 1);
-                Assert.Equal(cproj.netCore11TestProjectsToBuild.Count<ITaskItem>(), 1);
-            }
-        }
-
 
         [Fact]
         public void UnSupportedProjects()

@@ -5,6 +5,8 @@ namespace Microsoft.Azure.Build.Tasks
 {
     using Microsoft.Build.Utilities;
     using System;
+    using System.Diagnostics;
+    using System.Reflection;
     using ThreadTask = System.Threading.Tasks;
 
 
@@ -31,11 +33,18 @@ namespace Microsoft.Azure.Build.Tasks
             ThreadTask.Task waitingTask = ThreadTask.Task.Run(() =>
             {
                 Console.WriteLine("Press any key to continue or it will continue in {0} seconds", (Timeoutmiliseconds / 1000));
+                GetProcessInfo();
                 Console.ReadLine();
             });
 
             waitingTask.Wait(TimeSpan.FromMilliseconds(Timeoutmiliseconds));
             return true;
+        }
+
+        private void GetProcessInfo()
+        {
+            Process proc = Process.GetCurrentProcess();
+            Console.WriteLine("{0}: {1}", proc.ProcessName, proc.Id.ToString());
         }
     }
 }

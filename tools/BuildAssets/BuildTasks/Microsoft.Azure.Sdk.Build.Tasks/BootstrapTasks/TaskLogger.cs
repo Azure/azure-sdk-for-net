@@ -1,6 +1,8 @@
-﻿namespace Microsoft.Azure.Build.BootstrapTasks
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Azure.Build.BootstrapTasks
 {
-    //using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
     using System.Diagnostics;
     using System;
