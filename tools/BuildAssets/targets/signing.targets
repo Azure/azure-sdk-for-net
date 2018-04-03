@@ -1,12 +1,16 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  
+  <PropertyGroup>
+    <StrongNameToken/>
+    <ScopeScanPath/>
+    <CorporateScanPaths/>
+  </PropertyGroup>  
   <Target Name="PreSign" >
     <PropertyGroup>
-        <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
-        <ScopeScanPath Condition=" '$(Scope)' != 'All' ">$(ProjectRootDir)</ScopeScanPath>
-        <ScopeScanPath Condition=" '$(ScopeScanPath)' == '' AND '$(Scope)' != 'All' ">$(LibrarySourceFolder)\$(Scope.TrimEnd('\'))</ScopeScanPath>
-        <ScopeScanPath Condition=" '$(ScopeScanPath)' == '' AND '$(Scope)' != 'All' ">$(LibraryRoot)\$(Scope.TrimEnd('\'))</ScopeScanPath>
-        <CorporateScanPaths Condition=" Exists($(ScopeScanPath))">$(ScopeScanPath)</CorporateScanPaths>
+      <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
+      <ScopeScanPath Condition=" '$(Scope)' != 'All' ">$(ProjectRootDir)</ScopeScanPath>
+      <ScopeScanPath Condition=" '$(ScopeScanPath)' == '' AND '$(Scope)' != 'All' ">$(LibrarySourceFolder)\$(Scope.TrimEnd('\'))</ScopeScanPath>
+      <ScopeScanPath Condition=" '$(ScopeScanPath)' == '' AND '$(Scope)' != 'All' ">$(LibraryRoot)\$(Scope.TrimEnd('\'))</ScopeScanPath>
+      <CorporateScanPaths Condition=" Exists($(ScopeScanPath))">$(ScopeScanPath)</CorporateScanPaths>
     </PropertyGroup>
 
     <Message Text="Scope..... $(Scope)" Condition=" '$(DebugTrace)' == 'true' "/>

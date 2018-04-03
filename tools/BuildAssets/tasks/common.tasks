@@ -1,8 +1,8 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <CustomTaskDirectory Condition="Exists('$(BuildAssetsDir)\tasks\net46')">$(BuildAssetsDir)\tasks\net46</CustomTaskDirectory>
-	<CustomTaskDirectory Condition="Exists('$(SdkBuildToolsDir)\tasks\net46') AND '$(CustomTaskDirectory)' == '' ">$(SdkBuildToolsDir)\tasks\net46</CustomTaskDirectory>
-	<CustomTaskDirectory Condition="'$(CustomTaskDirectory)' == '' ">$(LibraryToolsFolder)\BuildAssets\tasks\net46</CustomTaskDirectory>
+	  <CustomTaskDirectory Condition="Exists('$(SdkBuildToolsDir)\tasks\net46') AND '$(CustomTaskDirectory)' == '' ">$(SdkBuildToolsDir)\tasks\net46</CustomTaskDirectory>
+	  <CustomTaskDirectory Condition="'$(CustomTaskDirectory)' == '' ">$(LibraryToolsFolder)\BuildAssets\tasks\net46</CustomTaskDirectory>
   </PropertyGroup>
   
   <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll" />

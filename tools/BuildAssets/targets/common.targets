@@ -1,8 +1,4 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\tasks\common.tasks"/>  
-  <Import Project="signing.targets"/>  
-  <Import Project="additional.targets"/>
-
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
@@ -382,4 +378,7 @@
   
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
+  <Import Project="signing.targets"/>  
+  <Import Project="additional.targets"/>
+  <Import Project="..\tasks\common.tasks"/>  
 </Project>
