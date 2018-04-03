@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     /// Azure Storage blob container information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageContainer
+    public partial class StorageContainer : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the StorageContainer class.
@@ -32,17 +32,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageContainer class.
         /// </summary>
-        /// <param name="id">the unique identifier of the blob
-        /// container.</param>
-        /// <param name="name">the name of the blob container.</param>
-        /// <param name="type">the type of the blob container.</param>
-        /// <param name="lastModifiedTime">the last modified time of the blob
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
+        /// <param name="lastModifiedTime">The last modified time of the blob
         /// container.</param>
         public StorageContainer(string id = default(string), string name = default(string), string type = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             LastModifiedTime = lastModifiedTime;
             CustomInit();
         }
@@ -51,24 +48,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the unique identifier of the blob container.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the blob container.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the blob container.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
         /// <summary>
         /// Gets the last modified time of the blob container.

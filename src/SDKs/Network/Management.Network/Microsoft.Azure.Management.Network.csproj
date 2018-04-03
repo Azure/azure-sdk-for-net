@@ -7,13 +7,16 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>17.0.0-preview</Version>
+		<Version>18.0.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			1) Added IPTags for Public IP;Updated LB InboundNatPool API
-			2) Removed extraneous tags field from RouteFilterRule
-        ]]></PackageReleaseNotes>
+			- DDoS Protection Plans
+			- Express Route Circuit Connection
+			- Express Route Provider APIs
+			- GetTopologyOperation supports query parameter
+			- Custom IPsec/IKE policy for Virtual Network Gateway point-to-site clients
+		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

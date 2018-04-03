@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// user, mask and other permissions.</param>
         /// <param name="stickyBit">the indicator of whether the sticky bit is
         /// on or off.</param>
-        public AclStatus(IList<string> entries = default(IList<string>), string group = default(string), string owner = default(string), int? permission = default(int?), bool? stickyBit = default(bool?))
+        public AclStatus(IList<string> entries = default(IList<string>), string group = default(string), string owner = default(string), string permission = default(string), bool? stickyBit = default(bool?))
         {
             Entries = entries;
             Group = group;
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// other permissions.
         /// </summary>
         [JsonProperty(PropertyName = "permission")]
-        public int? Permission { get; set; }
+        public string Permission { get; set; }
 
         /// <summary>
         /// Gets the indicator of whether the sticky bit is on or off.

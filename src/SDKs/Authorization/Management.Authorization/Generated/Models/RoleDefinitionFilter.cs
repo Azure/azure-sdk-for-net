@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         /// <param name="roleName">Returns role definition with the specific
         /// name.</param>
-        public RoleDefinitionFilter(string roleName = default(string))
+        /// <param name="type">Returns role definition with the specific
+        /// type.</param>
+        public RoleDefinitionFilter(string roleName = default(string), string type = default(string))
         {
             RoleName = roleName;
+            Type = type;
             CustomInit();
         }
 
@@ -47,6 +50,12 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         [JsonProperty(PropertyName = "roleName")]
         public string RoleName { get; set; }
+
+        /// <summary>
+        /// Gets or sets returns role definition with the specific type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
     }
 }

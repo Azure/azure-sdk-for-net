@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ProjectProvisioningState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProjectProvisioningState
+    public static class ProjectProvisioningState
     {
-        [EnumMember(Value = "Deleting")]
-        Deleting,
-        [EnumMember(Value = "Succeeded")]
-        Succeeded
-    }
-    internal static class ProjectProvisioningStateEnumExtension
-    {
-        internal static string ToSerializedValue(this ProjectProvisioningState? value)
-        {
-            return value == null ? null : ((ProjectProvisioningState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ProjectProvisioningState value)
-        {
-            switch( value )
-            {
-                case ProjectProvisioningState.Deleting:
-                    return "Deleting";
-                case ProjectProvisioningState.Succeeded:
-                    return "Succeeded";
-            }
-            return null;
-        }
-
-        internal static ProjectProvisioningState? ParseProjectProvisioningState(this string value)
-        {
-            switch( value )
-            {
-                case "Deleting":
-                    return ProjectProvisioningState.Deleting;
-                case "Succeeded":
-                    return ProjectProvisioningState.Succeeded;
-            }
-            return null;
-        }
+        public const string Deleting = "Deleting";
+        public const string Succeeded = "Succeeded";
     }
 }

@@ -548,7 +548,7 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Equal(1, subscriptionLevelUsages.Count());
 
                 var defaultUsage = subscriptionLevelUsages.First();
-                Assert.Equal(8, defaultUsage.Limit);
+                Assert.Equal(25, defaultUsage.Limit);
                 Assert.Equal(0, defaultUsage.CurrentValue);
 
                 // Create resource group
@@ -574,7 +574,7 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Equal(1, subscriptionLevelUsages.Count());
 
                 var usageAfterCreation = subscriptionLevelUsages.First();
-                Assert.Equal(8, usageAfterCreation.Limit);
+                Assert.Equal(25, usageAfterCreation.Limit);
                 Assert.Equal(1, usageAfterCreation.CurrentValue);
 
                 // test Profile level usage

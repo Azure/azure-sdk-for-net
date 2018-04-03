@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The start task has started running on the compute node, but
         /// waitForSuccess is set and the start task has not yet completed.
         /// </summary>
-        [EnumMember(Value = "waitingForStartTask")]
+        [EnumMember(Value = "waitingforstarttask")]
         WaitingForStartTask,
         /// <summary>
         /// The start task has failed on the compute node (and exhausted all
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                 case ComputeNodeState.Starting:
                     return "starting";
                 case ComputeNodeState.WaitingForStartTask:
-                    return "waitingForStartTask";
+                    return "waitingforstarttask";
                 case ComputeNodeState.StartTaskFailed:
                     return "starttaskfailed";
                 case ComputeNodeState.Unknown:
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeState.Creating;
                 case "starting":
                     return ComputeNodeState.Starting;
-                case "waitingForStartTask":
+                case "waitingforstarttask":
                     return ComputeNodeState.WaitingForStartTask;
                 case "starttaskfailed":
                     return ComputeNodeState.StartTaskFailed;

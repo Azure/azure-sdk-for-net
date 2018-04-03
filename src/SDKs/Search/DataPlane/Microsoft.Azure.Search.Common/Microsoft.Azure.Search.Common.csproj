@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSearch.DataPlane.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Search.Common</PackageId>
+    <Description>Common types needed by the Azure Search .NET libraries. This is not the package you are looking for; It is only meant to be used as a dependency.</Description>
+    <AssemblyTitle>Microsoft Azure Search Common Library</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Search.Common</AssemblyName>
+    <VersionPrefix>5.0.0-preview</VersionPrefix>
+    <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
+  </ItemGroup>
+</Project>

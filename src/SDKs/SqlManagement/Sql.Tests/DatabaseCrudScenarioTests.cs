@@ -126,7 +126,7 @@ namespace Sql.Tests
                 });
                 Assert.NotNull(db1);
 
-                // Rename
+                // Rename using id
                 string newSuffix = "_renamed";
                 string newName = db1.Name + newSuffix;
                 string newId = db1.Id + newSuffix;
@@ -136,8 +136,18 @@ namespace Sql.Tests
                 });
 
                 // Get database at its new id
-                Database db2 = sqlClient.Databases.Get(resourceGroup.Name, server.Name, newName);
-                Assert.Equal(newId, db2.Id);
+                Database newDb = sqlClient.Databases.Get(resourceGroup.Name, server.Name, newName);
+                Assert.Equal(newId, newDb.Id);
+
+                // Rename using new name
+                string newSuffix2 = "2";
+                string newName2 = newName + newSuffix2;
+                string newId2 = newId + newSuffix2;
+                sqlClient.Databases.Rename(resourceGroup.Name, server.Name, newName, newName2);
+
+                // Get database at its new id
+                Database newDb2 = sqlClient.Databases.Get(resourceGroup.Name, server.Name, newName2);
+                Assert.Equal(newId2, newDb2.Id);
             }
         }
 
@@ -317,7 +327,14 @@ namespace Sql.Tests
                     resourceGroup.Name, server.Name, dbName).Result;
                 Assert.Equal(response.Response.StatusCode, HttpStatusCode.OK);
                 IList<DatabaseOperation> responseObject = response.Body.ToList();
-                Assert.Equal(responseObject.Count(), 1);
+                Assert.Equal(1, responseObject.Count());
+                Assert.Equal(0, responseObject[0].PercentComplete);
+
+                // Also get the listOperation response for new added properties on database operations: ETA, Operation Description and IsCancellable
+                //   Expected they have null value since not been updated by operation progress
+                Assert.Null(responseObject[0].Description);
+                Assert.Null(responseObject[0].IsCancellable);
+                Assert.Null(responseObject[0].EstimatedCompletionTime);
 
                 // Cancel the database updateslo operation
                 //

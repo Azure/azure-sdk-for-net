@@ -107,6 +107,11 @@ namespace Microsoft.Azure.Management.WebSites
         public virtual IRecommendationsOperations Recommendations { get; private set; }
 
         /// <summary>
+        /// Gets the IResourceHealthMetadataOperations.
+        /// </summary>
+        public virtual IResourceHealthMetadataOperations ResourceHealthMetadata { get; private set; }
+
+        /// <summary>
         /// Gets the IWebAppsOperations.
         /// </summary>
         public virtual IWebAppsOperations WebApps { get; private set; }
@@ -329,6 +334,7 @@ namespace Microsoft.Azure.Management.WebSites
             DeletedWebApps = new DeletedWebAppsOperations(this);
             Provider = new ProviderOperations(this);
             Recommendations = new RecommendationsOperations(this);
+            ResourceHealthMetadata = new ResourceHealthMetadataOperations(this);
             WebApps = new WebAppsOperations(this);
             AppServiceEnvironments = new AppServiceEnvironmentsOperations(this);
             AppServicePlans = new AppServicePlansOperations(this);

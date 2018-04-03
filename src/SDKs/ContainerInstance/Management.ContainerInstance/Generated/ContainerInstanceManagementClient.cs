@@ -83,6 +83,11 @@ namespace Microsoft.Azure.Management.ContainerInstance
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IContainerGroupUsageOperations.
+        /// </summary>
+        public virtual IContainerGroupUsageOperations ContainerGroupUsage { get; private set; }
+
+        /// <summary>
         /// Gets the IContainerLogsOperations.
         /// </summary>
         public virtual IContainerLogsOperations ContainerLogs { get; private set; }
@@ -290,9 +295,10 @@ namespace Microsoft.Azure.Management.ContainerInstance
         {
             ContainerGroups = new ContainerGroupsOperations(this);
             Operations = new Operations(this);
+            ContainerGroupUsage = new ContainerGroupUsageOperations(this);
             ContainerLogs = new ContainerLogsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-10-01-preview";
+            ApiVersion = "2018-02-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

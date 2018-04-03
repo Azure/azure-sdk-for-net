@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public GetUserTablesSqlTaskProperties(IList<ODataError> errors = default(IList<ODataError>), TaskState? state = default(TaskState?), GetUserTablesSqlTaskInput input = default(GetUserTablesSqlTaskInput), IList<GetUserTablesSqlTaskOutput> output = default(IList<GetUserTablesSqlTaskOutput>))
+        public GetUserTablesSqlTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), GetUserTablesSqlTaskInput input = default(GetUserTablesSqlTaskInput), IList<GetUserTablesSqlTaskOutput> output = default(IList<GetUserTablesSqlTaskOutput>))
             : base(errors, state)
         {
             Input = input;

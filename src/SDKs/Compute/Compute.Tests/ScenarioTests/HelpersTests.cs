@@ -12,7 +12,11 @@ namespace Compute.Tests
         public void TestUtilityFunctions()
         {
             Assert.Equal("Compute.Tests.HelpersTests", this.GetType().FullName);
+#if NET46
+            Assert.Equal("TestUtilityFunctions", TestUtilities.GetCurrentMethodName(1));
+#else
             Assert.Equal("TestUtilityFunctions", TestUtilities.GetCurrentMethodName());
+#endif
         }
     }
 }

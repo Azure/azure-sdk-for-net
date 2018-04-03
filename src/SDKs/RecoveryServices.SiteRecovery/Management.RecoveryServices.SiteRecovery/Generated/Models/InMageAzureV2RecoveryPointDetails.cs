@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// InMage Azure V2 provider specific recovery point details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("InMageAzureV2")]
     public partial class InMageAzureV2RecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
         /// <summary>
@@ -31,14 +32,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the InMageAzureV2RecoveryPointDetails
         /// class.
         /// </summary>
-        /// <param name="type">Gets the provider type.</param>
-        /// <param name="instanceType">Gets the instance type.</param>
         /// <param name="isMultiVmSyncPoint">A value indicating whether the
         /// recovery point is multi VM consistent.</param>
-        public InMageAzureV2RecoveryPointDetails(string type = default(string), string instanceType = default(string), string isMultiVmSyncPoint = default(string))
-            : base(type)
+        public InMageAzureV2RecoveryPointDetails(string isMultiVmSyncPoint = default(string))
         {
-            InstanceType = instanceType;
             IsMultiVmSyncPoint = isMultiVmSyncPoint;
             CustomInit();
         }
@@ -47,12 +44,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the instance type.
-        /// </summary>
-        [JsonProperty(PropertyName = "instanceType")]
-        public string InstanceType { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the recovery point is multi

@@ -62,7 +62,7 @@ namespace Monitor.Tests.BasicTests
             var startTime = DateTimeOffset.Parse("2014-03-11T01:00:00.00Z");
             var endTime = DateTimeOffset.Parse("2014-03-11T02:00:00.00Z");
 
-            var insightsClient = GetMonitorClient(handler);
+            var insightsClient = GetMonitorManagementClient(handler);
 
             var filterString = new ODataQuery<EventData>(p => (p.EventTimestamp >= startTime) && (p.EventTimestamp < endTime));
                
@@ -86,7 +86,7 @@ namespace Monitor.Tests.BasicTests
             };
 
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-            var insightsClient = GetMonitorClient(handler);
+            var insightsClient = GetMonitorManagementClient(handler);
 
             var actualEventDataCollection = insightsClient.ActivityLogs.ListNext("http://www.microsoft.com");
 
@@ -130,7 +130,7 @@ namespace Monitor.Tests.BasicTests
                 Assert.Equal(exp.Description, act.Description);
                 Assert.Equal(exp.EventDataId, act.EventDataId);
                 Utilities.AreEqual(exp.EventName, act.EventName);
-                Assert.Equal(exp.EventTimestamp.ToUniversalTime(), act.EventTimestamp.ToUniversalTime());
+                Assert.Equal(exp.EventTimestamp?.ToUniversalTime(), act.EventTimestamp?.ToUniversalTime());
                 AreEqual(exp.HttpRequest, act.HttpRequest);
                 Assert.Equal(exp.Level, act.Level);
                 Assert.Equal(exp.OperationId, act.OperationId);
@@ -140,7 +140,7 @@ namespace Monitor.Tests.BasicTests
                 Utilities.AreEqual(exp.ResourceProviderName, act.ResourceProviderName);
                 Utilities.AreEqual(exp.Status, act.Status);
                 Utilities.AreEqual(exp.SubStatus, act.SubStatus);
-                Assert.Equal(exp.SubmissionTimestamp.ToUniversalTime(), act.SubmissionTimestamp.ToUniversalTime());
+                Assert.Equal(exp.SubmissionTimestamp?.ToUniversalTime(), act.SubmissionTimestamp?.ToUniversalTime());
                 Assert.Equal(exp.SubscriptionId, act.SubscriptionId);
 
                 // TODO: This cannot be verified for now. Should fix this in the next mmilestone.

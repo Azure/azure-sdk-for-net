@@ -1185,6 +1185,73 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/providers/Microsoft.KeyVault/locations/eastus2/operationResults/VVR8MDYzNjMxMDg3NDM0MTI2MzQ3M3xBMTZCRTM1NjYyREI0MEI4OUEwNzA3MjkyRThDNzg4Ng?api-version=2016-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZmYjQxYmEtNTM4Ny00ZGZmLTg5ZjUtMjRhZTQ1N2FkZTk5L3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL2Vhc3R1czIvb3BlcmF0aW9uUmVzdWx0cy9WVlI4TURZek5qTXhNRGczTkRNME1USTJNelEzTTN4Qk1UWkNSVE0xTmpZeVJFSTBNRUk0T1VFd056QTNNamt5UlRoRE56ZzROZz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient/2.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"createdDateTime\": \"2017-05-22 22:03:53Z\",\r\n  \"lastActionDateTime\": \"2017-05-22 22:04:09Z\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 22 May 2017 22:04:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.1.754"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14168"
+        ],
+        "x-ms-request-id": [
+          "b09e4e82-36bd-4830-8267-8a330c17e493"
+        ],
+        "x-ms-correlation-request-id": [
+          "b09e4e82-36bd-4830-8267-8a330c17e493"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170522T220426Z:b09e4e82-36bd-4830-8267-8a330c17e493"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/providers/Microsoft.KeyVault/locations/East%20US%202/deletedVaults/sdktestvault5208/purge?api-version=2016-10-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZmYjQxYmEtNTM4Ny00ZGZmLTg5ZjUtMjRhZTQ1N2FkZTk5L3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL0Vhc3QlMjBVUyUyMDIvZGVsZXRlZFZhdWx0cy9zZGt0ZXN0dmF1bHQ1MjA4L3B1cmdlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
@@ -1325,6 +1392,73 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/providers/Microsoft.KeyVault/locations/eastus2/operationResults/VVR8MDYzNjMxMDg3NDY1OTQwMDUyMXwxMzhCQTVERDJGNEE0NzQzQjdBOEUyRkM3MjRDOTlBMA?api-version=2016-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZmYjQxYmEtNTM4Ny00ZGZmLTg5ZjUtMjRhZTQ1N2FkZTk5L3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL2Vhc3R1czIvb3BlcmF0aW9uUmVzdWx0cy9WVlI4TURZek5qTXhNRGczTkRZMU9UUXdNRFV5TVh3eE16aENRVFZFUkRKR05FRTBOelF6UWpkQk9FVXlSa00zTWpSRE9UbEJNQT9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient/2.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"createdDateTime\": \"2017-05-22 22:04:24Z\",\r\n  \"lastActionDateTime\": \"2017-05-22 22:04:39Z\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 22 May 2017 22:04:57 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.1.754"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14163"
+        ],
+        "x-ms-request-id": [
+          "707b69cb-f83b-46fc-b649-982882c2e62f"
+        ],
+        "x-ms-correlation-request-id": [
+          "707b69cb-f83b-46fc-b649-982882c2e62f"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170522T220457Z:707b69cb-f83b-46fc-b649-982882c2e62f"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/providers/Microsoft.KeyVault/locations/East%20US%202/deletedVaults/sdktestvault3516/purge?api-version=2016-10-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZmYjQxYmEtNTM4Ny00ZGZmLTg5ZjUtMjRhZTQ1N2FkZTk5L3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL0Vhc3QlMjBVUyUyMDIvZGVsZXRlZFZhdWx0cy9zZGt0ZXN0dmF1bHQzNTE2L3B1cmdlP2FwaS12ZXJzaW9uPTIwMTYtMTAtMDE=",
       "RequestMethod": "POST",
@@ -1396,6 +1530,73 @@
         ]
       },
       "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/providers/Microsoft.KeyVault/locations/eastus2/operationResults/VVR8MDYzNjMxMDg3NDk2OTM2NTQ5OHw3RjNGQThBQkVDNkM0OUE2ODc4QUYyMjk1RDdEMUY0Ng?api-version=2016-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZmYjQxYmEtNTM4Ny00ZGZmLTg5ZjUtMjRhZTQ1N2FkZTk5L3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvbG9jYXRpb25zL2Vhc3R1czIvb3BlcmF0aW9uUmVzdWx0cy9WVlI4TURZek5qTXhNRGczTkRrMk9UTTJOVFE1T0h3M1JqTkdRVGhCUWtWRE5rTTBPVUUyT0RjNFFVWXlNamsxUkRkRU1VWTBOZz9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.KeyVault.KeyVaultManagementClient/2.3.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"createdDateTime\": \"2017-05-22 22:04:55Z\",\r\n  \"lastActionDateTime\": \"2017-05-22 22:05:10Z\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 22 May 2017 22:05:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-keyvault-service-version": [
+          "1.0.1.754"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14252"
+        ],
+        "x-ms-request-id": [
+          "d9d74463-f1c9-4d7c-9ba0-daf7252ec7fe"
+        ],
+        "x-ms-correlation-request-id": [
+          "d9d74463-f1c9-4d7c-9ba0-daf7252ec7fe"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170522T220528Z:d9d74463-f1c9-4d7c-9ba0-daf7252ec7fe"
+        ]
+      },
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/providers/Microsoft.KeyVault/locations/eastus2/operationResults/VVR8MDYzNjMxMDg3NDk2OTM2NTQ5OHw3RjNGQThBQkVDNkM0OUE2ODc4QUYyMjk1RDdEMUY0Ng?api-version=2016-10-01",

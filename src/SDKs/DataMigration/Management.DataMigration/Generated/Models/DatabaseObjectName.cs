@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="objectType">Type of the object in the database.
         /// Possible values include: 'StoredProcedures', 'Table', 'User',
         /// 'View', 'Function'</param>
-        public DatabaseObjectName(string databaseName = default(string), string objectName = default(string), string schemaName = default(string), ObjectType? objectType = default(ObjectType?))
+        public DatabaseObjectName(string databaseName = default(string), string objectName = default(string), string schemaName = default(string), string objectType = default(string))
         {
             DatabaseName = databaseName;
             ObjectName = objectName;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// include: 'StoredProcedures', 'Table', 'User', 'View', 'Function'
         /// </summary>
         [JsonProperty(PropertyName = "objectType")]
-        public ObjectType? ObjectType { get; set; }
+        public string ObjectType { get; set; }
 
     }
 }

@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ResourceSkuRestrictionsReasonCode.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResourceSkuRestrictionsReasonCode
+    public static class ResourceSkuRestrictionsReasonCode
     {
-        [EnumMember(Value = "QuotaId")]
-        QuotaId,
-        [EnumMember(Value = "NotAvailableForSubscription")]
-        NotAvailableForSubscription
-    }
-    internal static class ResourceSkuRestrictionsReasonCodeEnumExtension
-    {
-        internal static string ToSerializedValue(this ResourceSkuRestrictionsReasonCode? value)
-        {
-            return value == null ? null : ((ResourceSkuRestrictionsReasonCode)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ResourceSkuRestrictionsReasonCode value)
-        {
-            switch( value )
-            {
-                case ResourceSkuRestrictionsReasonCode.QuotaId:
-                    return "QuotaId";
-                case ResourceSkuRestrictionsReasonCode.NotAvailableForSubscription:
-                    return "NotAvailableForSubscription";
-            }
-            return null;
-        }
-
-        internal static ResourceSkuRestrictionsReasonCode? ParseResourceSkuRestrictionsReasonCode(this string value)
-        {
-            switch( value )
-            {
-                case "QuotaId":
-                    return ResourceSkuRestrictionsReasonCode.QuotaId;
-                case "NotAvailableForSubscription":
-                    return ResourceSkuRestrictionsReasonCode.NotAvailableForSubscription;
-            }
-            return null;
-        }
+        public const string QuotaId = "QuotaId";
+        public const string NotAvailableForSubscription = "NotAvailableForSubscription";
     }
 }

@@ -141,6 +141,37 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// </exception>
         Task<AzureOperationResponse<ContainerGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, ContainerGroup containerGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Update container groups.
+        /// </summary>
+        /// <remarks>
+        /// Updates container group tags with specified values.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='containerGroupName'>
+        /// The name of the container group.
+        /// </param>
+        /// <param name='resource'>
+        /// The container group resource with just the tags to be updated.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ContainerGroup>> UpdateWithHttpMessagesAsync(string resourceGroupName, string containerGroupName, Resource resource = default(Resource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Delete the specified container group.
         /// </summary>
         /// <remarks>

@@ -1691,8 +1691,8 @@ namespace Microsoft.CognitiveServices.ContentModerator
             }
             if (vTTfile != null && vTTfile != Stream.Null)
             {
-              _httpRequest.Content = new StreamContent(vTTfile);
-              _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("text/plain");
+                _httpRequest.Content = new StreamContent(vTTfile);
+                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("text/plain");
             }
             // Set Credentials
             if (Client.Credentials != null)
@@ -2292,7 +2292,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
             if (frameImageZip != null)
             {
-                 StreamContent _frameImageZip = new StreamContent(frameImageZip);
+                StreamContent _frameImageZip = new StreamContent(frameImageZip);
                 _frameImageZip.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 FileStream _frameImageZipAsFileStream = frameImageZip as FileStream;
                 if (_frameImageZipAsFileStream != null)

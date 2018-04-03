@@ -352,6 +352,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
 
             yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.NoContent)
+            {
+                Content = new StringContent(@"")
+            };
+
+            yield return response3;
         }
 
         static internal IEnumerable<HttpResponseMessage> MockPatchWithRetryAfterTwoTries()
@@ -785,6 +792,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
 
             yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.NoContent)
+            {
+                Content = new StringContent(@"
+                {
+                    ""name"": ""FooBar""
+                }")
+            };
+            yield return response3;
         }
 
         static internal IEnumerable<HttpResponseMessage> MockDeleteOperaionWithNoRetryableErrorInResponse()
@@ -859,6 +875,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
                 Content = new StringContent("")
             };
             yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NoContent)
+            {
+                Content = new StringContent("")
+            };
+            yield return response4;
         }
         
         static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithAsyncHeaderAnd202()
@@ -969,6 +991,16 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
 
             yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""Capacity"": ""1"",
+                    ""Family"": ""Family""
+                }")
+            };
+            yield return response4;
         }
 
         static internal IEnumerable<HttpResponseMessage> MockCreateOrUpdateWithNoAsyncHeader()
@@ -1225,6 +1257,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
 
             yield return response2;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent("")
+            };
+            yield return response4;
         }
 
         static internal IEnumerable<HttpResponseMessage> MockDeleteWithLocationHeaderError()
@@ -1611,25 +1649,22 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 
             yield return response1;
 
-            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
             {
-                Content = new StringContent(@"
-                {
-                  ""https://mdsbrketwprodsn1prod.blob.core.windows.net/cmakexe/abbd1dc4-44eb-4a66-9d90-156f7e5191a7/vpnclientconfiguration.zip?sv=2015-04-05&sr=b&sig=Ec6g2tlP0xktQSipQCTO55mnNjwOxTsge4Ot3sjX8Z8%3D&st=2017-08-28T21%3A25%3A34Z&se=2017-08-28T22%3A25%3A34Z&sp=r&fileExtension=.zip""
-                }
-            ")
+                Content = new StringContent(@"{}")
             };
-
             yield return response2;
 
 
             var response3 = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(@"
-                {
-                  ""https://mdsbrketwprodsn1prod.blob.core.windows.net/cmakexe/abbd1dc4-44eb-4a66-9d90-156f7e5191a7/vpnclientconfiguration.zip?sv=2015-04-05&sr=b&sig=Ec6g2tlP0xktQSipQCTO55mnNjwOxTsge4Ot3sjX8Z8%3D&st=2017-08-28T21%3A25%3A34Z&se=2017-08-28T22%3A25%3A34Z&sp=r&fileExtension=.zip""
-                }
-            ")
+                Content = new StringContent(@"'https://mdsbrketwprodsn1prod.blob.core.windows.net/cmakexe/abbd1dc4-44eb-4a66-9d90-156f7e5191a7/vpnclientconfiguration.zip?sv=2015-04-05&sr=b&sig=Ec6g2tlP0xktQSipQCTO55mnNjwOxTsge4Ot3sjX8Z8%3D&st=2017-08-28T21%3A25%3A34Z&se=2017-08-28T22%3A25%3A34Z&sp=r&fileExtension=.zip'")
+
+            //    Content = new StringContent(@"
+            //    {
+            //      ""https://mdsbrketwprodsn1prod.blob.core.windows.net/cmakexe/abbd1dc4-44eb-4a66-9d90-156f7e5191a7/vpnclientconfiguration.zip?sv=2015-04-05&sr=b&sig=Ec6g2tlP0xktQSipQCTO55mnNjwOxTsge4Ot3sjX8Z8%3D&st=2017-08-28T21%3A25%3A34Z&se=2017-08-28T22%3A25%3A34Z&sp=r&fileExtension=.zip""
+            //    }
+            //")
             };
 
             yield return response3;
@@ -1684,8 +1719,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             response2.Headers.Add("Retry-After", "12");
 
             yield return response2;
-
-
+            
             var response3 = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"
@@ -1710,8 +1744,172 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
             };
 
             yield return response4;
-
         }
 
+
+        /// <summary>
+        /// DELETE operatoin with multiple operations with 202
+        /// Location is passed in the first round
+        /// AsyncOperaiton header is passed in the second round
+        /// This will enable to finish the polling using AsyncOperaiton after second round
+        /// 
+        /// It will finally use Location header to do final GET and will succeed
+        /// </summary>
+        /// <returns></returns>
+        static internal IEnumerable<HttpResponseMessage> MockLRO_DeleteSuccessWithLocationHeaderFinalGetNotFound()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""location"": ""East US"",
+                      ""etag"": ""9d8d7ed9-7422-46be-82b3-94c5345f6099"",
+                      ""tags"": {},
+                      ""properties"": {
+                            ""clusterVersion"": ""0.0.1000.0"",
+                            ""osType"": ""Linux"",                            
+                            ""provisioningState"": ""InProgress"",
+                            ""clusterState"": ""Accepted"",
+                            ""createdDate"": ""2017-07-25T21:48:17.427"",
+                            ""quotaInfo"": 
+                                {
+                                    ""coresUsed"": ""200""
+                                },
+                            }
+                    }
+            ")
+            };
+            response1.Headers.Add("Location", "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI3ODkxLVNPVVRIRUFTVEFTSUEiLCJqb2JMb2NhdGlvbiI6InNvdXRoZWFzdGFzaWEifQ?api-version=2017-05-10");
+            response1.Headers.Add("Retry-After", "5");
+            yield return response1;
+
+            // Even if Async-Operation header is passed, but initially LocationHeader was used
+            // we cache it and use it because for 202, we prefere Location header over Async-Operation
+            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            //response2.Headers.Add("Azure-AsyncOperation", "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/a467a7f3-d2e3-493c-9996-9b212a941154?api-version=2017-03-30");
+            //response2.Headers.Add("Retry-After", "12");
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("")
+            };
+
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(@"")
+            };
+
+            yield return response4;
+        }
+
+        /// <summary>
+        /// Delete with location header.
+        /// Final GET returns NoContent
+        /// </summary>
+        /// <returns></returns>
+        static internal IEnumerable<HttpResponseMessage> MockLRO_DeleteSuccessWithLocationHeaderFinalGetNoContent()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            response1.Headers.Add("Location", "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVI3ODkxLVNPVVRIRUFTVEFTSUEiLCJqb2JMb2NhdGlvbiI6InNvdXRoZWFzdGFzaWEifQ?api-version=2017-05-10");
+            response1.Headers.Add("Retry-After", "5");
+            yield return response1;
+
+            // Even if Async-Operation header is passed, but initially LocationHeader was used
+            // we cache it and use it because for 202, we prefere Location header over Async-Operation
+            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            //response2.Headers.Add("Azure-AsyncOperation", "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/a467a7f3-d2e3-493c-9996-9b212a941154?api-version=2017-03-30");
+            //response2.Headers.Add("Retry-After", "12");
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("")
+            };
+
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NoContent)
+            {
+                Content = new StringContent(@"")
+            };
+
+            yield return response4;
+        }
+
+        /// <summary>
+        /// Pass Azure-async header as well as location header.
+        /// </summary>
+        /// <returns></returns>
+        static internal IEnumerable<HttpResponseMessage> MockLRO_POST_LocAsyncHeaderFinalGetSuccess()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            response1.Headers.Add("Azure-AsyncOperation", "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/DiskOperations/a467a7f3-d2e3-493c-9996-9b212a941154?api-version=2017-03-30");
+            //response1.Headers.Add("Retry-After", "5");
+            yield return response1;
+            
+            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent(@"
+                   {
+                    ""startTime"": ""2018-02-08T16:03:10.266925-08:00"",
+                    ""status"": ""InProgress"",
+                    ""name"": ""ef936d96-9f17-4226-b6ea-0d8590f7bdb5""
+                   }")
+            };            
+            response2.Headers.Add("Location", "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.Compute/locations/southeastasia/operations/ef936d96-9f17-4226-b6ea-0d8590f7bdb5?monitor=true&api-version=2017-12-01");
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                   {
+                    ""startTime"": ""2018-02-08T16:03:10.266925-08:00"",
+                    ""status"": ""InProgress"",
+                    ""name"": ""ef936d96-9f17-4226-b6ea-0d8590f7bdb5""
+                   }")
+            };
+
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""startTime"": ""2018-02-08T16:03:10.266925-08:00"",
+                    ""endTime"": ""2018-02-08T16:04:25.3955911-08:00"",
+                    ""status"": ""Succeeded"",
+                    ""name"": ""ef936d96-9f17-4226-b6ea-0d8590f7bdb5""
+                }")
+            };
+
+            yield return response4;
+
+            var response5 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""name"": ""foo""
+                }")
+            };
+
+            yield return response5;
+        }
     }
 }

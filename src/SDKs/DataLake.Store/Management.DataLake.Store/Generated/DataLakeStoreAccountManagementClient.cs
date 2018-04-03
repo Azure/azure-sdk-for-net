@@ -76,6 +76,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IAccountsOperations.
+        /// </summary>
+        public virtual IAccountsOperations Accounts { get; private set; }
+
+        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
@@ -86,19 +91,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public virtual ITrustedIdProvidersOperations TrustedIdProviders { get; private set; }
 
         /// <summary>
-        /// Gets the IAccountOperations.
+        /// Gets the IOperations.
         /// </summary>
-        public virtual IAccountOperations Account { get; private set; }
+        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
@@ -301,11 +301,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </summary>
         private void Initialize()
         {
+            Accounts = new AccountsOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             TrustedIdProviders = new TrustedIdProvidersOperations(this);
-            Account = new AccountOperations(this);
-            Locations = new LocationsOperations(this);
             Operations = new Operations(this);
+            Locations = new LocationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2016-11-01";
             AcceptLanguage = "en-US";

@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="sku">Required. Gets or sets the SKU of the
         /// resource.</param>
         /// <param name="kind">Required. Gets or sets the Kind of the resource.
-        /// Possible values include: 'Academic', 'Bing.Autosuggest',
-        /// 'Bing.Autosuggest.v7', 'Bing.CustomSearch', 'Bing.Search',
-        /// 'Bing.Search.v7', 'Bing.Speech', 'Bing.SpellCheck',
+        /// Possible values include: 'Bing.Autosuggest.v7',
+        /// 'Bing.CustomSearch', 'Bing.Search.v7', 'Bing.Speech',
         /// 'Bing.SpellCheck.v7', 'ComputerVision', 'ContentModerator',
-        /// 'CustomSpeech', 'Emotion', 'Face', 'LUIS', 'Recommendations',
-        /// 'SpeakerRecognition', 'Speech', 'SpeechTranslation',
-        /// 'TextAnalytics', 'TextTranslation', 'WebLM'</param>
+        /// 'CustomSpeech', 'CustomVision.Prediction', 'CustomVision.Training',
+        /// 'Emotion', 'Face', 'LUIS', 'QnAMaker', 'SpeakerRecognition',
+        /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation',
+        /// 'WebLM'</param>
         /// <param name="location">Required. Gets or sets the location of the
         /// resource. This will be one of the supported and registered Azure
         /// Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo
@@ -81,13 +81,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets required. Gets or sets the Kind of the resource.
-        /// Possible values include: 'Academic', 'Bing.Autosuggest',
-        /// 'Bing.Autosuggest.v7', 'Bing.CustomSearch', 'Bing.Search',
-        /// 'Bing.Search.v7', 'Bing.Speech', 'Bing.SpellCheck',
+        /// Possible values include: 'Bing.Autosuggest.v7',
+        /// 'Bing.CustomSearch', 'Bing.Search.v7', 'Bing.Speech',
         /// 'Bing.SpellCheck.v7', 'ComputerVision', 'ContentModerator',
-        /// 'CustomSpeech', 'Emotion', 'Face', 'LUIS', 'Recommendations',
-        /// 'SpeakerRecognition', 'Speech', 'SpeechTranslation',
-        /// 'TextAnalytics', 'TextTranslation', 'WebLM'
+        /// 'CustomSpeech', 'CustomVision.Prediction', 'CustomVision.Training',
+        /// 'Emotion', 'Face', 'LUIS', 'QnAMaker', 'SpeakerRecognition',
+        /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation', 'WebLM'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

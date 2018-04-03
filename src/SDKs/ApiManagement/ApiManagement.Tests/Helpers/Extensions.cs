@@ -37,5 +37,13 @@ namespace ApiManagementManagement.Tests.Helpers
             stream.Position = 0;
             return stream;
         }
+
+        public static IEnumerable<T> ToIEnumerable<T>(this IEnumerator<T> enumerator)
+        {
+            while (enumerator.MoveNext())
+            {
+                yield return enumerator.Current;
+            }
+        }
     }
 }

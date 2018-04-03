@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Storage account parameters for a storage account being added to a Data
-    /// Lake Analytics account.
+    /// The parameters used to add a new Azure Storage account.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AddStorageAccountParameters
@@ -35,9 +34,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the AddStorageAccountParameters
         /// class.
         /// </summary>
-        /// <param name="accessKey">the access key associated with this Azure
+        /// <param name="accessKey">The access key associated with this Azure
         /// Storage account that will be used to connect to it.</param>
-        /// <param name="suffix">the optional suffix for the storage
+        /// <param name="suffix">The optional suffix for the storage
         /// account.</param>
         public AddStorageAccountParameters(string accessKey, string suffix = default(string))
         {

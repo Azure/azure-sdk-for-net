@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         /// <param name="skus">The SKU of the resource.</param>
         /// <param name="kind">The Kind of the resource. Possible values
-        /// include: 'Academic', 'Bing.Autosuggest', 'Bing.Autosuggest.v7',
-        /// 'Bing.CustomSearch', 'Bing.Search', 'Bing.Search.v7',
-        /// 'Bing.Speech', 'Bing.SpellCheck', 'Bing.SpellCheck.v7',
-        /// 'ComputerVision', 'ContentModerator', 'CustomSpeech', 'Emotion',
-        /// 'Face', 'LUIS', 'Recommendations', 'SpeakerRecognition', 'Speech',
+        /// include: 'Bing.Autosuggest.v7', 'Bing.CustomSearch',
+        /// 'Bing.Search.v7', 'Bing.Speech', 'Bing.SpellCheck.v7',
+        /// 'ComputerVision', 'ContentModerator', 'CustomSpeech',
+        /// 'CustomVision.Prediction', 'CustomVision.Training', 'Emotion',
+        /// 'Face', 'LUIS', 'QnAMaker', 'SpeakerRecognition',
         /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation',
         /// 'WebLM'</param>
         /// <param name="type">The Type of the resource.</param>
@@ -65,12 +65,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets the Kind of the resource. Possible values include:
-        /// 'Academic', 'Bing.Autosuggest', 'Bing.Autosuggest.v7',
-        /// 'Bing.CustomSearch', 'Bing.Search', 'Bing.Search.v7',
-        /// 'Bing.Speech', 'Bing.SpellCheck', 'Bing.SpellCheck.v7',
-        /// 'ComputerVision', 'ContentModerator', 'CustomSpeech', 'Emotion',
-        /// 'Face', 'LUIS', 'Recommendations', 'SpeakerRecognition', 'Speech',
-        /// 'SpeechTranslation', 'TextAnalytics', 'TextTranslation', 'WebLM'
+        /// 'Bing.Autosuggest.v7', 'Bing.CustomSearch', 'Bing.Search.v7',
+        /// 'Bing.Speech', 'Bing.SpellCheck.v7', 'ComputerVision',
+        /// 'ContentModerator', 'CustomSpeech', 'CustomVision.Prediction',
+        /// 'CustomVision.Training', 'Emotion', 'Face', 'LUIS', 'QnAMaker',
+        /// 'SpeakerRecognition', 'SpeechTranslation', 'TextAnalytics',
+        /// 'TextTranslation', 'WebLM'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

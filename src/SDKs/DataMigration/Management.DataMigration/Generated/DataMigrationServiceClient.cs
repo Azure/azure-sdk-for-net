@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.DataMigration
             Usages = new UsagesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-11-15-preview";
+            ApiVersion = "2018-03-31-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -341,10 +341,12 @@ namespace Microsoft.Azure.Management.DataMigration
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectionInfo>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConnectionInfo>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlDbTaskOutput>("resultType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<MigrateSqlServerSqlMITaskOutput>("resultType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<MigrateSqlServerSqlMITaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ConnectToSourceSqlServerTaskOutput>("resultType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ConnectToSourceSqlServerTaskOutput>("resultType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ProjectTaskProperties>("taskType"));

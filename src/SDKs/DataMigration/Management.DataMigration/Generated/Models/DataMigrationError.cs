@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="message">Error description</param>
         /// <param name="type">Possible values include: 'Default', 'Warning',
         /// 'Error'</param>
-        public DataMigrationError(string message = default(string), ErrorType? type = default(ErrorType?))
+        public DataMigrationError(string message = default(string), string type = default(string))
         {
             Message = message;
             Type = type;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// Gets or sets possible values include: 'Default', 'Warning', 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public ErrorType? Type { get; set; }
+        public string Type { get; set; }
 
     }
 }
