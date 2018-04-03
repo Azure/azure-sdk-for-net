@@ -15,41 +15,41 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    [Newtonsoft.Json.JsonObject("DatabaseLevelOutput")]
-    public partial class MigrateSqlServerSqlMITaskOutputDatabaseLevel : MigrateSqlServerSqlMITaskOutput
+    [Newtonsoft.Json.JsonObject("LoginLevelOutput")]
+    public partial class MigrateSqlServerSqlMITaskOutputLoginLevel : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlMITaskOutputDatabaseLevel class.
+        /// MigrateSqlServerSqlMITaskOutputLoginLevel class.
         /// </summary>
-        public MigrateSqlServerSqlMITaskOutputDatabaseLevel()
+        public MigrateSqlServerSqlMITaskOutputLoginLevel()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlMITaskOutputDatabaseLevel class.
+        /// MigrateSqlServerSqlMITaskOutputLoginLevel class.
         /// </summary>
         /// <param name="id">Result identifier</param>
-        /// <param name="databaseName">Name of the database</param>
-        /// <param name="sizeMB">Size of the database in megabytes</param>
-        /// <param name="state">Current state of migration. Possible values
+        /// <param name="loginName">Login name.</param>
+        /// <param name="state">Current state of login. Possible values
         /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
         /// 'Skipped', 'Stopped'</param>
-        /// <param name="stage">Current stage of migration. Possible values
-        /// include: 'None', 'Initialize', 'Backup', 'FileCopy', 'Restore',
-        /// 'Completed'</param>
-        /// <param name="startedOn">Migration start time</param>
-        /// <param name="endedOn">Migration end time</param>
-        /// <param name="message">Migration progress message</param>
-        /// <param name="exceptionsAndWarnings">Migration exceptions and
-        /// warnings</param>
-        public MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), double? sizeMB = default(double?), string state = default(string), string stage = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        /// <param name="stage">Current stage of login. Possible values
+        /// include: 'None', 'Initialize', 'LoginMigration',
+        /// 'EstablishUserMapping', 'AssignRoleMembership',
+        /// 'AssignRoleOwnership', 'EstablishServerPermissions',
+        /// 'EstablishObjectPermissions', 'Completed'</param>
+        /// <param name="startedOn">Login migration start time</param>
+        /// <param name="endedOn">Login migration end time</param>
+        /// <param name="message">Login migration progress message</param>
+        /// <param name="exceptionsAndWarnings">Login migration errors and
+        /// warnings per login</param>
+        public MigrateSqlServerSqlMITaskOutputLoginLevel(string id = default(string), string loginName = default(string), string state = default(string), LoginMigrationStage? stage = default(LoginMigrationStage?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
-            DatabaseName = databaseName;
-            SizeMB = sizeMB;
+            LoginName = loginName;
             State = state;
             Stage = stage;
             StartedOn = startedOn;
@@ -65,19 +65,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets name of the database
+        /// Gets login name.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
-        public string DatabaseName { get; private set; }
+        [JsonProperty(PropertyName = "loginName")]
+        public string LoginName { get; private set; }
 
         /// <summary>
-        /// Gets size of the database in megabytes
-        /// </summary>
-        [JsonProperty(PropertyName = "sizeMB")]
-        public double? SizeMB { get; private set; }
-
-        /// <summary>
-        /// Gets current state of migration. Possible values include: 'None',
+        /// Gets current state of login. Possible values include: 'None',
         /// 'InProgress', 'Failed', 'Warning', 'Completed', 'Skipped',
         /// 'Stopped'
         /// </summary>
@@ -85,32 +79,35 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets current stage of migration. Possible values include: 'None',
-        /// 'Initialize', 'Backup', 'FileCopy', 'Restore', 'Completed'
+        /// Gets current stage of login. Possible values include: 'None',
+        /// 'Initialize', 'LoginMigration', 'EstablishUserMapping',
+        /// 'AssignRoleMembership', 'AssignRoleOwnership',
+        /// 'EstablishServerPermissions', 'EstablishObjectPermissions',
+        /// 'Completed'
         /// </summary>
         [JsonProperty(PropertyName = "stage")]
-        public string Stage { get; private set; }
+        public LoginMigrationStage? Stage { get; private set; }
 
         /// <summary>
-        /// Gets migration start time
+        /// Gets login migration start time
         /// </summary>
         [JsonProperty(PropertyName = "startedOn")]
         public System.DateTimeOffset? StartedOn { get; private set; }
 
         /// <summary>
-        /// Gets migration end time
+        /// Gets login migration end time
         /// </summary>
         [JsonProperty(PropertyName = "endedOn")]
         public System.DateTimeOffset? EndedOn { get; private set; }
 
         /// <summary>
-        /// Gets migration progress message
+        /// Gets login migration progress message
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets migration exceptions and warnings
+        /// Gets login migration errors and warnings per login
         /// </summary>
         [JsonProperty(PropertyName = "exceptionsAndWarnings")]
         public IList<ReportableException> ExceptionsAndWarnings { get; private set; }

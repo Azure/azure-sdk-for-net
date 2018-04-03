@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     public static class ProjectTargetPlatform
     {
         public const string SQLDB = "SQLDB";
+        public const string SQLMI = "SQLMI";
         public const string Unknown = "Unknown";
     }
 }

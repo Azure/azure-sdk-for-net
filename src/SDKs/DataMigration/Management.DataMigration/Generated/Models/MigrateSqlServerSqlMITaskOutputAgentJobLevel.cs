@@ -15,43 +15,39 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    [Newtonsoft.Json.JsonObject("DatabaseLevelOutput")]
-    public partial class MigrateSqlServerSqlMITaskOutputDatabaseLevel : MigrateSqlServerSqlMITaskOutput
+    [Newtonsoft.Json.JsonObject("AgentJobLevelOutput")]
+    public partial class MigrateSqlServerSqlMITaskOutputAgentJobLevel : MigrateSqlServerSqlMITaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlMITaskOutputDatabaseLevel class.
+        /// MigrateSqlServerSqlMITaskOutputAgentJobLevel class.
         /// </summary>
-        public MigrateSqlServerSqlMITaskOutputDatabaseLevel()
+        public MigrateSqlServerSqlMITaskOutputAgentJobLevel()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// MigrateSqlServerSqlMITaskOutputDatabaseLevel class.
+        /// MigrateSqlServerSqlMITaskOutputAgentJobLevel class.
         /// </summary>
         /// <param name="id">Result identifier</param>
-        /// <param name="databaseName">Name of the database</param>
-        /// <param name="sizeMB">Size of the database in megabytes</param>
+        /// <param name="name">AgentJob name.</param>
+        /// <param name="isEnabled">The state of the original AgentJob.</param>
         /// <param name="state">Current state of migration. Possible values
         /// include: 'None', 'InProgress', 'Failed', 'Warning', 'Completed',
         /// 'Skipped', 'Stopped'</param>
-        /// <param name="stage">Current stage of migration. Possible values
-        /// include: 'None', 'Initialize', 'Backup', 'FileCopy', 'Restore',
-        /// 'Completed'</param>
         /// <param name="startedOn">Migration start time</param>
         /// <param name="endedOn">Migration end time</param>
         /// <param name="message">Migration progress message</param>
-        /// <param name="exceptionsAndWarnings">Migration exceptions and
-        /// warnings</param>
-        public MigrateSqlServerSqlMITaskOutputDatabaseLevel(string id = default(string), string databaseName = default(string), double? sizeMB = default(double?), string state = default(string), string stage = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
+        /// <param name="exceptionsAndWarnings">Migration errors and warnings
+        /// per job</param>
+        public MigrateSqlServerSqlMITaskOutputAgentJobLevel(string id = default(string), string name = default(string), bool? isEnabled = default(bool?), string state = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string message = default(string), IList<ReportableException> exceptionsAndWarnings = default(IList<ReportableException>))
             : base(id)
         {
-            DatabaseName = databaseName;
-            SizeMB = sizeMB;
+            Name = name;
+            IsEnabled = isEnabled;
             State = state;
-            Stage = stage;
             StartedOn = startedOn;
             EndedOn = endedOn;
             Message = message;
@@ -65,16 +61,16 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets name of the database
+        /// Gets agentJob name.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
-        public string DatabaseName { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets size of the database in megabytes
+        /// Gets the state of the original AgentJob.
         /// </summary>
-        [JsonProperty(PropertyName = "sizeMB")]
-        public double? SizeMB { get; private set; }
+        [JsonProperty(PropertyName = "isEnabled")]
+        public bool? IsEnabled { get; private set; }
 
         /// <summary>
         /// Gets current state of migration. Possible values include: 'None',
@@ -83,13 +79,6 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; private set; }
-
-        /// <summary>
-        /// Gets current stage of migration. Possible values include: 'None',
-        /// 'Initialize', 'Backup', 'FileCopy', 'Restore', 'Completed'
-        /// </summary>
-        [JsonProperty(PropertyName = "stage")]
-        public string Stage { get; private set; }
 
         /// <summary>
         /// Gets migration start time
@@ -110,7 +99,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets migration exceptions and warnings
+        /// Gets migration errors and warnings per job
         /// </summary>
         [JsonProperty(PropertyName = "exceptionsAndWarnings")]
         public IList<ReportableException> ExceptionsAndWarnings { get; private set; }

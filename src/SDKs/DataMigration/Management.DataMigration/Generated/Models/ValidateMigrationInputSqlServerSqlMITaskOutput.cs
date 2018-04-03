@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for task that validates migration input for SQL to Azure SQL
     /// Managed Instance migrations
     /// </summary>
-    public partial class ValidateMigrationInputSqlServerSqlMITaskOutput : TaskOutput
+    public partial class ValidateMigrationInputSqlServerSqlMITaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="backupStorageAccountErrors">Errors associated with the
         /// storage account provided.</param>
         public ValidateMigrationInputSqlServerSqlMITaskOutput(string id = default(string), string name = default(string), IList<ReportableException> restoreDatabaseNameErrors = default(IList<ReportableException>), IList<ReportableException> backupFolderErrors = default(IList<ReportableException>), IList<ReportableException> backupShareCredentialsErrors = default(IList<ReportableException>), IList<ReportableException> backupStorageAccountErrors = default(IList<ReportableException>))
-            : base(id)
         {
+            Id = id;
             Name = name;
             RestoreDatabaseNameErrors = restoreDatabaseNameErrors;
             BackupFolderErrors = backupFolderErrors;
@@ -59,6 +59,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets result identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets name of database

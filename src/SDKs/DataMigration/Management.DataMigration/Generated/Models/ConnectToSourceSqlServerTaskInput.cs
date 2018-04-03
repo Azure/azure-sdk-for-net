@@ -38,10 +38,16 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="checkPermissionsGroup">Permission group for
         /// validations. Possible values include: 'Default',
         /// 'MigrationFromSqlServerToAzureDB'</param>
-        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, string checkPermissionsGroup = default(string))
+        /// <param name="collectLogins">Flag for whether to collect logins from
+        /// source server.</param>
+        /// <param name="collectAgentJobs">Flag for whether to collect agent
+        /// jobs from source server.</param>
+        public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, string checkPermissionsGroup = default(string), bool? collectLogins = default(bool?), bool? collectAgentJobs = default(bool?))
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
+            CollectLogins = collectLogins;
+            CollectAgentJobs = collectAgentJobs;
             CustomInit();
         }
 
@@ -62,6 +68,19 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "checkPermissionsGroup")]
         public string CheckPermissionsGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether to collect logins from source server.
+        /// </summary>
+        [JsonProperty(PropertyName = "CollectLogins")]
+        public bool? CollectLogins { get; set; }
+
+        /// <summary>
+        /// Gets or sets flag for whether to collect agent jobs from source
+        /// server.
+        /// </summary>
+        [JsonProperty(PropertyName = "CollectAgentJobs")]
+        public bool? CollectAgentJobs { get; set; }
 
         /// <summary>
         /// Validate the object.
