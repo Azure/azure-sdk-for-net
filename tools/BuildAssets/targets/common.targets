@@ -292,6 +292,7 @@
       <Output TaskParameter="net452TestProjectsToBuild" ItemName="net452TestProj" />
       <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
       <Output TaskParameter="nonSdkProjectToBuild" ItemName="nonSdkProj" />
+      <Output TaskParameter="ProjectRootDir" PropertyName="ProjRootDir" />
     </SDKCategorizeProjects>
 
     <Message Text="Categorizing Projects....."/>
@@ -320,6 +321,9 @@
     <Message Text="NonSdk Projects......... @(nonSdkProj->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="%(nonSdkProj.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
 
+    <PropertyGroup>
+      <ProjectRootDir>$(ProjRootDir)</ProjectRootDir>
+    </PropertyGroup>
     <ItemGroup>
       <net452SDKProjects Include="@(net452SDKProj)"/>
       <netStd14SDKProjects Include="@(netStd14SDKProj)"/>
@@ -336,6 +340,9 @@
       <ProjectToScanDirs Include="%(FilteredSdkProjects.RootDir)%(FilteredSdkProjects.Directory)"/>
       <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
     </ItemGroup>
+
+    <Message Text=" "/>
+    <Message Text="Project Root Directory......... $(ProjectRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
   </Target>
   
   <Target Name="UpdateTools">

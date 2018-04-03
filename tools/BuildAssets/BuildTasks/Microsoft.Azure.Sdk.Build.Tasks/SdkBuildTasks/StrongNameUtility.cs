@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 
 namespace Microsoft.WindowsAzure.Build.Tasks
 {
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+
     /// <summary>
     /// Utility class for managing the Process used to work with the sn.exe
     /// tool in the Windows SDK.

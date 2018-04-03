@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Build.Utilities;
-using System.Diagnostics;
-using Microsoft.Build.Framework;
-using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
 {
+    using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
+    using Microsoft.Build.Framework;
+    using Microsoft.Build.Utilities;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+
     internal class NetSdkTaskLogger
     {
         bool _isBuildEngineInitialized;

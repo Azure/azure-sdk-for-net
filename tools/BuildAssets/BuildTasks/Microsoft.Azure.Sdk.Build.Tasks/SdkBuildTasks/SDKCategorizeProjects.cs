@@ -121,7 +121,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// <summary>
         /// List of .NET 452 projects that will be separated from the list of projects that 
         /// are multi targeting
-        /// 
         /// </summary>
         [Output]
         public ITaskItem[] netCore11TestProjectsToBuild { get; private set; }
@@ -134,6 +133,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         [Output]
         public ITaskItem[] nonSdkProjectToBuild { get; private set; }
+
+        [Output]
+        public string ProjectRootDir { get; private set; }
         
 
         /// <summary>
@@ -169,6 +171,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             List<string> allProjects = new List<string>();
             List<string> ignorePathList = new List<string>();
 
+            // We try to guess if build tasks projects are being built, if yes we ignore tests being built
             if (BuildScope.Contains(@"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks"))
             {
                 IgnoreDirNameForSearchingProjects = string.Join(" ", IgnoreDirNameForSearchingProjects, @"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks\Tests");
@@ -191,11 +194,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             {
                 sdkProjects = ProjUtil.GetAllSDKProjects();
                 testProjects = ProjUtil.GetFilteredTestProjects();
+                ProjectRootDir = ProjUtil.RootDirForSearch;
             }
             else //We set default scope to All if empty/null, so safe to evaluate to Else in this case
             {
                 sdkProjects = ProjUtil.GetScopedSDKProjects(BuildScope);
                 testProjects = ProjUtil.GetScopedTestProjects(BuildScope);
+                ProjectRootDir = ProjUtil.ProjectRootDir;
             }
 
             allProjects.AddRange(sdkProjects);

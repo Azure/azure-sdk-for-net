@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
     public class ProjectSearchUtility
     {
         #region Fields
@@ -102,8 +102,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             }
         }
 
-        //public IReadOnlyList<string> IgnoredProjectList
-        public List<string> IgnoredProjectList
+        
+        public IReadOnlyList<string> IgnoredProjectList
         {
             get
             {
@@ -124,15 +124,19 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                     }
                 }
 
-                return _ignoreProjs;
-                //return _ignoreProjs.AsReadOnly();
+                return _ignoreProjs.AsReadOnly();
             }
         }
 
         /// <summary>
-        /// In Azure SDK For NET repo, this path will be until src e.g 'C:\Azure-SDK-FOR-NET\src'
+        /// This will be path especially when we run a CI run and search all possible projects
         /// </summary>
         public string RootDirForSearch { get; private set; }
+
+        /// <summary>
+        /// This will be the root directory where projects are being discovered
+        /// </summary>
+        public string ProjectRootDir { get; private set; }
         #endregion
 
         #region Constructor
@@ -192,10 +196,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         public List<string> GetScopedSDKProjects(string scopePath)
         {
             List<string> scopedProjects = new List<string>();
-            //string searchProjInDirPath = Path.Combine(RootDirForSearch, scopePath);
             string searchProjInDirPath = AdjustPathForScopedProjects(RootDirForSearch, scopePath);
             if (Directory.Exists(searchProjInDirPath))
             {
+                ProjectRootDir = searchProjInDirPath;
                 scopedProjects = SearchProjects(searchProjInDirPath);
                 List<string> testProjs = SearchTestProjects(searchProjInDirPath);
 
@@ -211,8 +215,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         public List<string> GetScopedTestProjects(string scopePath)
         {
             List<string> testScopedProjects = new List<string>();
-
-            //string searchDir = Path.Combine(RootDirForSearch, scopePath);
+            
             string searchDir = AdjustPathForScopedProjects(RootDirForSearch, scopePath);
             if (Directory.Exists(searchDir))
             {

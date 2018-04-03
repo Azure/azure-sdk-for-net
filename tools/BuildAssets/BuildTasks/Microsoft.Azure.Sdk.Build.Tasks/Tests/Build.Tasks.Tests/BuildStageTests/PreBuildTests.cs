@@ -1,4 +1,7 @@
-﻿using Build.Tasks.Tests.UtilityTests;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Build.Tasks.Tests.UtilityTests;
 using Microsoft.Azure.Sdk.Build.Tasks.BuildStages;
 using Microsoft.Build.Evaluation;
 using Microsoft.WindowsAzure.Build.Tasks;
