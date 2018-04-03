@@ -48,13 +48,13 @@ Process
         {
             if($srcFile.Name -eq $destFile.Name)
             {
-                if($srcFile.LastWriteTime -gt $destFile.LastWriteTime)
+                if($srcFile.LastWriteTime -lt $destFile.LastWriteTime)
                 {
                     Write-Verbose "Source file last modified: $($srcFile.LastWriteTime)"
                     Write-Verbose "Destination file last modified: $($destFile.LastWriteTime)"
                     Write-Host "Copying source file: $($srcFile.FullName)"
                     Write-Host "To destination: $($destFile.FullName)"
-                    
+
                     if ($WhatIfPreference -eq $True) {
                         Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -WhatIf
                     } 
