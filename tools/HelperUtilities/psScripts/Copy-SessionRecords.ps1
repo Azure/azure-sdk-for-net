@@ -21,52 +21,58 @@
 
 [cmdletbinding(SupportsShouldProcess=$True)]
 Param(
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true, HelpMessage="The source directory; usually under bin/ where tests are recorded")]
     [string] $SourceRootDirectory,
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true, HelpMessage="The destination directory; usually where the committed session records files are")]
     [string] $DestinationRootDirectory
 )
 
-Begin {
-    if (-not $PSBoundParameters.ContainsKey('Confirm')) {
-        $ConfirmPreference = $PSCmdlet.SessionState.PSVariable.GetValue('ConfirmPreference')
-    }
-    if (-not $PSBoundParameters.ContainsKey('WhatIf')) {
-        $WhatIfPreference = $PSCmdlet.SessionState.PSVariable.GetValue('WhatIfPreference')
-    }
-    Write-Verbose ('[{0}] Confirm={1} ConfirmPreference={2} WhatIf={3} WhatIfPreference={4}' -f $MyInvocation.MyCommand, $Confirm, $ConfirmPreference, $WhatIf, $WhatIfPreference)
+$srcFiles = (Get-ChildItem -Path $SourceRootDirectory -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
+if($srcFiles.Count -eq 0)
+{
+    Write-Host "No json files found under $SourceRootDirectory. Skipping Copy"
 }
 
-Process
+$destFiles = (Get-ChildItem -Path $DestinationRootDirectory -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
+if($destFiles.Count -eq 0)
 {
-    $srcFiles = (Get-ChildItem -Path $SourceRootDirectory -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
-    $destFiles = (Get-ChildItem -Path $DestinationRootDirectory -Recurse) | Where-Object {$_ -is [System.IO.FileInfo]}
+    Write-Host "No json files found under $DestinationRootDirectory. Skipping Copy"
+}
 
-    foreach($srcFile in $srcFiles)
+Write-Host "Script decides what files to copy based on the LastWriteTime timestamp."
+
+foreach($srcFile in $srcFiles)
+{
+    foreach($destFile in $destFiles)
     {
-        foreach($destFile in $destFiles)
+        if($srcFile.Name -eq $destFile.Name)
         {
-            if($srcFile.Name -eq $destFile.Name)
+            if($srcFile.LastWriteTime -gt $destFile.LastWriteTime)
             {
-                if($srcFile.LastWriteTime -lt $destFile.LastWriteTime)
+                Write-Host "Source file last modified: $($srcFile.LastWriteTime)"
+                Write-Host "Destination file last modified: $($destFile.LastWriteTime)"
+
+                if ($PSBoundParameters.ContainsKey('WhatIf'))
                 {
-                    Write-Verbose "Source file last modified: $($srcFile.LastWriteTime)"
-                    Write-Verbose "Destination file last modified: $($destFile.LastWriteTime)"
+                    Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -WhatIf
+                } 
+                elseif ($PSBoundParameters.ContainsKey('Confirm'))
+                {
+                    Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Confirm
+                }
+                else
+                {
                     Write-Host "Copying source file: $($srcFile.FullName)"
                     Write-Host "To destination: $($destFile.FullName)"
-
-                    if ($WhatIfPreference -eq $True) {
-                        Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -WhatIf
-                    } 
-                    elseif($ConfirmPreference -ne "High")
-                    {
-                        Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Confirm
-                    }
-                    else
-                    {
-                        Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Force
-                    }
+                    Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Force
                 }
+            }
+            elseif($srcFile.LastWriteTime -lt $destFile.LastWriteTime)
+            {
+                Write-Host "Source File: $($srcFile.FullName) has a last write time of $($srcFile.LastWriteTime)"
+                Write-Host "which is less than"
+                Write-Host "Destination File: $($destFile.FullName) has a last write time of $($destFile.LastWriteTime)"
+                Write-Host "Skipping copy"
             }
         }
     }
