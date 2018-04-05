@@ -40,67 +40,8 @@ namespace Microsoft.Azure.Search.Tests
                 };
 
                 ServiceStatistics stats = searchClient.GetServiceStatistics();
-                AssertEquals(expectedStats, stats);
+                Assert.Equal(expectedStats, stats, new ModelComparer<ServiceStatistics>());
             });
-        }
-
-        private static void AssertEquals(ServiceStatistics expected, ServiceStatistics actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-                return;
-            }
-
-            Assert.NotNull(actual);
-            AssertEquals(expected.Counters, actual.Counters);
-            AssertEquals(expected.Limits, actual.Limits);
-        }
-
-        private static void AssertEquals(ServiceLimits expected, ServiceLimits actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-                return;
-            }
-
-            Assert.NotNull(actual);
-            Assert.Equal(expected.MaxFieldsPerIndex, actual.MaxFieldsPerIndex);
-            Assert.Equal(expected.MaxFieldNestingDepthPerIndex, actual.MaxFieldNestingDepthPerIndex);
-            Assert.Equal(expected.MaxIndexerRunTime, actual.MaxIndexerRunTime);
-            Assert.Equal(expected.MaxFileExtractionSize, actual.MaxFileExtractionSize);
-            Assert.Equal(expected.MaxFileContentCharactersToExtract, actual.MaxFileContentCharactersToExtract);
-            Assert.Equal(expected.MaxComplexCollectionFieldsPerIndex, actual.MaxComplexCollectionFieldsPerIndex);
-        }
-
-        private static void AssertEquals(ServiceCounters expected, ServiceCounters actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-                return;
-            }
-
-            Assert.NotNull(actual);
-            AssertEquals(expected.DocumentCounter, actual.DocumentCounter);
-            AssertEquals(expected.IndexCounter, actual.IndexCounter);
-            AssertEquals(expected.IndexerCounter, actual.IndexerCounter);
-            AssertEquals(expected.DataSourceCounter, actual.DataSourceCounter);
-            AssertEquals(expected.StorageSizeCounter, actual.StorageSizeCounter);
-        }
-
-        private static void AssertEquals(ResourceCounter expected, ResourceCounter actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-                return;
-            }
-
-            Assert.NotNull(actual);
-            Assert.Equal(expected.Usage, actual.Usage);
-            Assert.Equal(expected.Quota, actual.Quota);
         }
     }
 }
