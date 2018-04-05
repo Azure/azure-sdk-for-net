@@ -8,31 +8,30 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.DataMigration.Models
+namespace Microsoft.Azure.Management.Network.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Base class for all DMS task outputs
+    /// Configuration of the protocol.
     /// </summary>
-    public partial class TaskOutput
+    public partial class ProtocolConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the TaskOutput class.
+        /// Initializes a new instance of the ProtocolConfiguration class.
         /// </summary>
-        public TaskOutput()
+        public ProtocolConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TaskOutput class.
+        /// Initializes a new instance of the ProtocolConfiguration class.
         /// </summary>
-        /// <param name="id">Result identifier</param>
-        public TaskOutput(string id = default(string))
+        public ProtocolConfiguration(HTTPConfiguration hTTPConfiguration = default(HTTPConfiguration))
         {
-            Id = id;
+            HTTPConfiguration = hTTPConfiguration;
             CustomInit();
         }
 
@@ -42,10 +41,9 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets result identifier
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "HTTPConfiguration")]
+        public HTTPConfiguration HTTPConfiguration { get; set; }
 
     }
 }

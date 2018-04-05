@@ -42,12 +42,16 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="selectedDatabases">Databases to migrate</param>
         /// <param name="backupBlobShare">SAS URI of Azure Storage Account
         /// Container to be used for storing backup files.</param>
+        /// <param name="selectedLogins">Logins to migrate.</param>
+        /// <param name="selectedAgentJobs">Agent Jobs to migrate.</param>
         /// <param name="backupFileShare">Backup file share information for all
         /// selected databases.</param>
-        public MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, FileShare backupFileShare = default(FileShare))
+        public MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, BlobShare backupBlobShare, IList<string> selectedLogins = default(IList<string>), IList<string> selectedAgentJobs = default(IList<string>), FileShare backupFileShare = default(FileShare))
             : base(sourceConnectionInfo, targetConnectionInfo)
         {
             SelectedDatabases = selectedDatabases;
+            SelectedLogins = selectedLogins;
+            SelectedAgentJobs = selectedAgentJobs;
             BackupFileShare = backupFileShare;
             BackupBlobShare = backupBlobShare;
             CustomInit();
@@ -63,6 +67,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "selectedDatabases")]
         public IList<MigrateSqlServerSqlMIDatabaseInput> SelectedDatabases { get; set; }
+
+        /// <summary>
+        /// Gets or sets logins to migrate.
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedLogins")]
+        public IList<string> SelectedLogins { get; set; }
+
+        /// <summary>
+        /// Gets or sets agent Jobs to migrate.
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedAgentJobs")]
+        public IList<string> SelectedAgentJobs { get; set; }
 
         /// <summary>
         /// Gets or sets backup file share information for all selected

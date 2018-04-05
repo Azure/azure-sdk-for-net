@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output of the task that collects user tables for the given list of
     /// databases
     /// </summary>
-    public partial class GetUserTablesSqlTaskOutput : TaskOutput
+    public partial class GetUserTablesSqlTaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the GetUserTablesSqlTaskOutput class.
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// of tables</param>
         /// <param name="validationErrors">Validation errors</param>
         public GetUserTablesSqlTaskOutput(string id = default(string), IDictionary<string, IList<DatabaseTable>> databasesToTables = default(IDictionary<string, IList<DatabaseTable>>), IList<ReportableException> validationErrors = default(IList<ReportableException>))
-            : base(id)
         {
+            Id = id;
             DatabasesToTables = databasesToTables;
             ValidationErrors = validationErrors;
             CustomInit();
@@ -48,6 +48,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets result identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets mapping from database name to list of tables

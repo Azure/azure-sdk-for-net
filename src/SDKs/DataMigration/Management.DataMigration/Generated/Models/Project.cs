@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="sourcePlatform">Source platform for the project.
         /// Possible values include: 'SQL', 'Unknown'</param>
         /// <param name="targetPlatform">Target platform for the project.
-        /// Possible values include: 'SQLDB', 'Unknown'</param>
+        /// Possible values include: 'SQLDB', 'SQLMI', 'Unknown'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
 
         /// <summary>
         /// Gets or sets target platform for the project. Possible values
-        /// include: 'SQLDB', 'Unknown'
+        /// include: 'SQLDB', 'SQLMI', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetPlatform")]
         public string TargetPlatform { get; set; }

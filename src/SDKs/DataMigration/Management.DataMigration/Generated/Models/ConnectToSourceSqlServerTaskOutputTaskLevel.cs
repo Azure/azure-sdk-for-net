@@ -38,14 +38,20 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="id">Result identifier</param>
         /// <param name="databases">Source databases as a map from database
         /// name to database id</param>
+        /// <param name="logins">Source logins as a map from login name to
+        /// login id.</param>
+        /// <param name="agentJobs">Source agent jobs as a map from agent job
+        /// name to id.</param>
         /// <param name="sourceServerVersion">Source server version</param>
         /// <param name="sourceServerBrandVersion">Source server brand
         /// version</param>
         /// <param name="validationErrors">Validation errors</param>
-        public ConnectToSourceSqlServerTaskOutputTaskLevel(string id = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), IList<ReportableException> validationErrors = default(IList<ReportableException>))
+        public ConnectToSourceSqlServerTaskOutputTaskLevel(string id = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), IDictionary<string, string> logins = default(IDictionary<string, string>), IDictionary<string, string> agentJobs = default(IDictionary<string, string>), string sourceServerVersion = default(string), string sourceServerBrandVersion = default(string), IList<ReportableException> validationErrors = default(IList<ReportableException>))
             : base(id)
         {
             Databases = databases;
+            Logins = logins;
+            AgentJobs = agentJobs;
             SourceServerVersion = sourceServerVersion;
             SourceServerBrandVersion = sourceServerBrandVersion;
             ValidationErrors = validationErrors;
@@ -62,6 +68,18 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// </summary>
         [JsonProperty(PropertyName = "databases")]
         public IDictionary<string, string> Databases { get; private set; }
+
+        /// <summary>
+        /// Gets source logins as a map from login name to login id.
+        /// </summary>
+        [JsonProperty(PropertyName = "Logins")]
+        public IDictionary<string, string> Logins { get; private set; }
+
+        /// <summary>
+        /// Gets source agent jobs as a map from agent job name to id.
+        /// </summary>
+        [JsonProperty(PropertyName = "AgentJobs")]
+        public IDictionary<string, string> AgentJobs { get; private set; }
 
         /// <summary>
         /// Gets source server version
