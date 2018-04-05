@@ -14,7 +14,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the supported rest operation.
+    /// Describes the supported REST operation.
     /// </summary>
     public partial class Operation
     {
@@ -29,11 +29,11 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">The name of the operation being performed on
-        /// this particular object. It should match the action name that
-        /// appears in RBAC / the event service.</param>
+        /// <param name="name">The name of the operation performed on the
+        /// object. The name should match the action name that appears in RBAC
+        /// or the event service.</param>
         /// <param name="display">Contains the localized display information
-        /// for this particular operation / action..</param>
+        /// for this particular operation or action.</param>
         public Operation(string name = default(string), Display display = default(Display))
         {
             Name = name;
@@ -47,16 +47,16 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the operation being performed on this
-        /// particular object. It should match the action name that appears in
-        /// RBAC / the event service.
+        /// Gets or sets the name of the operation performed on the object. The
+        /// name should match the action name that appears in RBAC or the event
+        /// service.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets contains the localized display information for this
-        /// particular operation / action..
+        /// particular operation or action.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public Display Display { get; set; }

@@ -51,7 +51,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         public CommerceAdminClient Client { get; private set; }
 
         /// <summary>
-        /// Get the list of supported rest operations.
+        /// Returns the list of supported REST operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -224,7 +224,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         }
 
         /// <summary>
-        /// Get the list of supported rest operations.
+        /// Returns the list of supported REST operations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -56,7 +56,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client API Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 

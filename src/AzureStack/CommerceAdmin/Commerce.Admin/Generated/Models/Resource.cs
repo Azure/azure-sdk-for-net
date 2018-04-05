@@ -37,7 +37,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
         /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of resource.</param>
         /// <param name="location">Location where resource is location.</param>
-        /// <param name="tags">List of key value pairs.</param>
+        /// <param name="tags">List of key-value pairs.</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
@@ -78,7 +78,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
         public string Location { get; private set; }
 
         /// <summary>
-        /// Gets list of key value pairs.
+        /// Gets list of key-value pairs.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; private set; }

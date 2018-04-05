@@ -38,19 +38,19 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
         /// <param name="name">Name of the resource.</param>
         /// <param name="type">Type of resource.</param>
         /// <param name="location">Location where resource is location.</param>
-        /// <param name="tags">List of key value pairs.</param>
-        /// <param name="subscriptionId">Subscription id of tenant using
+        /// <param name="tags">List of key-value pairs.</param>
+        /// <param name="subscriptionId">Subscription ID of tenant using
         /// plan.</param>
-        /// <param name="usageStartTime">UTC start time for the usage bucket to
-        /// which this usage aggregate belongs.</param>
-        /// <param name="usageEndTime">UTC end time for the usage bucket to
+        /// <param name="usageStartTime">UTC start time for the usage category
+        /// to which this usage aggregate belongs.</param>
+        /// <param name="usageEndTime">UTC end time for the usage category to
         /// which this usage aggregate belongs.</param>
         /// <param name="instanceData">Key-value pairs of instance details
         /// represented as a string.</param>
         /// <param name="quantity">The amount of the resource consumption that
         /// occurred in this time frame.</param>
-        /// <param name="meterId">Unique ID for the resource that was consumed
-        /// (aka ResourceID).</param>
+        /// <param name="meterId">Unique ID for the resource that was consumed,
+        /// for example, the Resource ID.</param>
         public UsageAggregate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string subscriptionId = default(string), System.DateTime? usageStartTime = default(System.DateTime?), System.DateTime? usageEndTime = default(System.DateTime?), string instanceData = default(string), string quantity = default(string), string meterId = default(string))
             : base(id, name, type, location, tags)
         {
@@ -69,21 +69,21 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets subscription id of tenant using plan.
+        /// Gets or sets subscription ID of tenant using plan.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets UTC start time for the usage bucket to which this
+        /// Gets or sets UTC start time for the usage category to which this
         /// usage aggregate belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.usageStartTime")]
         public System.DateTime? UsageStartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets UTC end time for the usage bucket to which this usage
-        /// aggregate belongs.
+        /// Gets or sets UTC end time for the usage category to which this
+        /// usage aggregate belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.usageEndTime")]
         public System.DateTime? UsageEndTime { get; set; }
@@ -103,8 +103,8 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin.Models
         public string Quantity { get; set; }
 
         /// <summary>
-        /// Gets or sets unique ID for the resource that was consumed (aka
-        /// ResourceID).
+        /// Gets or sets unique ID for the resource that was consumed, for
+        /// example, the Resource ID.
         /// </summary>
         [JsonProperty(PropertyName = "properties.meterId")]
         public string MeterId { get; set; }
