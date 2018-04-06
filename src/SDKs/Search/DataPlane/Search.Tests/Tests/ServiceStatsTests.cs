@@ -31,9 +31,6 @@ namespace Microsoft.Azure.Search.Tests
                     Limits = new ServiceLimits
                     {
                         MaxFieldsPerIndex = 1000,
-                        MaxIndexerRunTime = TimeSpan.FromMinutes(1),
-                        MaxFileExtractionSize = 16777216,
-                        MaxFileContentCharactersToExtract = 32768,
                         MaxFieldNestingDepthPerIndex = 10,
                         MaxComplexCollectionFieldsPerIndex = 100
                     }

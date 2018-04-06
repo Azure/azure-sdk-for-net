@@ -31,28 +31,15 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="maxFieldsPerIndex">The maximum allowed fields per
         /// index.</param>
-        /// <param name="maxIndexerRunTime">The maximum time an indexer will
-        /// run in a single execution. In the next run, indexing will resume at
-        /// the point where it stopped.</param>
-        /// <param name="maxFileExtractionSize">When using a blob indexer, if
-        /// the size in bytes of a blob's content is larger than this size, it
-        /// results in an error.</param>
-        /// <param name="maxFileContentCharactersToExtract">The maximum number
-        /// of characters extracted from a blob when using a blob indexer. If a
-        /// blob has more content, it is not indexed and a warning is added to
-        /// the indexer execution result.</param>
         /// <param name="maxFieldNestingDepthPerIndex">The maximum depth which
         /// you can nest sub-fields in an index, including the top-level
         /// complex field. For example, a/b/c has a nesting depth of 3.</param>
         /// <param name="maxComplexCollectionFieldsPerIndex">The maximum number
         /// of fields of type Collection(Edm.ComplexType) allowed in an
         /// index.</param>
-        public ServiceLimits(int? maxFieldsPerIndex = default(int?), System.TimeSpan? maxIndexerRunTime = default(System.TimeSpan?), long? maxFileExtractionSize = default(long?), int? maxFileContentCharactersToExtract = default(int?), int? maxFieldNestingDepthPerIndex = default(int?), int? maxComplexCollectionFieldsPerIndex = default(int?))
+        public ServiceLimits(int? maxFieldsPerIndex = default(int?), int? maxFieldNestingDepthPerIndex = default(int?), int? maxComplexCollectionFieldsPerIndex = default(int?))
         {
             MaxFieldsPerIndex = maxFieldsPerIndex;
-            MaxIndexerRunTime = maxIndexerRunTime;
-            MaxFileExtractionSize = maxFileExtractionSize;
-            MaxFileContentCharactersToExtract = maxFileContentCharactersToExtract;
             MaxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
             MaxComplexCollectionFieldsPerIndex = maxComplexCollectionFieldsPerIndex;
             CustomInit();
@@ -68,29 +55,6 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxFieldsPerIndex")]
         public int? MaxFieldsPerIndex { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum time an indexer will run in a single
-        /// execution. In the next run, indexing will resume at the point where
-        /// it stopped.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxIndexerRunTime")]
-        public System.TimeSpan? MaxIndexerRunTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets when using a blob indexer, if the size in bytes of a
-        /// blob's content is larger than this size, it results in an error.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxFileExtractionSize")]
-        public long? MaxFileExtractionSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum number of characters extracted from a blob
-        /// when using a blob indexer. If a blob has more content, it is not
-        /// indexed and a warning is added to the indexer execution result.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxFileContentCharactersToExtract")]
-        public int? MaxFileContentCharactersToExtract { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum depth which you can nest sub-fields in an
