@@ -19,29 +19,13 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SubscriberUsageAggregatesOperations operations.
+    /// Operations operations.
     /// </summary>
-    public partial interface ISubscriberUsageAggregatesOperations
+    public partial interface IOperations
     {
         /// <summary>
-        /// Gets a collection of SubscriberUsageAggregates, which are
-        /// UsageAggregates from users.
+        /// Returns the list of supported REST operations.
         /// </summary>
-        /// <param name='reportedStartTime'>
-        /// The reported start time (inclusive).
-        /// </param>
-        /// <param name='reportedEndTime'>
-        /// The reported end time (exclusive).
-        /// </param>
-        /// <param name='aggregationGranularity'>
-        /// The aggregation granularity.
-        /// </param>
-        /// <param name='subscriberId'>
-        /// The tenant subscription identifier.
-        /// </param>
-        /// <param name='continuationToken'>
-        /// The continuation token.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -57,10 +41,9 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<UsageAggregate>>> ListWithHttpMessagesAsync(System.DateTime reportedStartTime, System.DateTime reportedEndTime, string aggregationGranularity = default(string), string subscriberId = default(string), string continuationToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a collection of SubscriberUsageAggregates, which are
-        /// UsageAggregates from users.
+        /// Returns the list of supported REST operations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -80,6 +63,6 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<UsageAggregate>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

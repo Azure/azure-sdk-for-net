@@ -23,12 +23,12 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SubscriberUsageAggregatesOperations operations.
+    /// Operations operations.
     /// </summary>
-    internal partial class SubscriberUsageAggregatesOperations : IServiceOperations<CommerceAdminClient>, ISubscriberUsageAggregatesOperations
+    internal partial class Operations : IServiceOperations<CommerceAdminClient>, IOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriberUsageAggregatesOperations class.
+        /// Initializes a new instance of the Operations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SubscriberUsageAggregatesOperations(CommerceAdminClient client)
+        internal Operations(CommerceAdminClient client)
         {
             if (client == null)
             {
@@ -51,24 +51,8 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         public CommerceAdminClient Client { get; private set; }
 
         /// <summary>
-        /// Gets a collection of SubscriberUsageAggregates, which are UsageAggregates
-        /// from users.
+        /// Returns the list of supported REST operations.
         /// </summary>
-        /// <param name='reportedStartTime'>
-        /// The reported start time (inclusive).
-        /// </param>
-        /// <param name='reportedEndTime'>
-        /// The reported end time (exclusive).
-        /// </param>
-        /// <param name='aggregationGranularity'>
-        /// The aggregation granularity.
-        /// </param>
-        /// <param name='subscriberId'>
-        /// The tenant subscription identifier.
-        /// </param>
-        /// <param name='continuationToken'>
-        /// The continuation token.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -90,12 +74,8 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<UsageAggregate>>> ListWithHttpMessagesAsync(System.DateTime reportedStartTime, System.DateTime reportedEndTime, string aggregationGranularity = default(string), string subscriberId = default(string), string continuationToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Operation>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -107,36 +87,16 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("reportedStartTime", reportedStartTime);
-                tracingParameters.Add("reportedEndTime", reportedEndTime);
-                tracingParameters.Add("aggregationGranularity", aggregationGranularity);
-                tracingParameters.Add("subscriberId", subscriberId);
-                tracingParameters.Add("continuationToken", continuationToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Commerce.Admin/subscriberUsageAggregates").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Commerce.Admin/operations").ToString();
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            _queryParameters.Add(string.Format("reportedStartTime={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(reportedStartTime, Client.SerializationSettings).Trim('"'))));
-            _queryParameters.Add(string.Format("reportedEndTime={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(reportedEndTime, Client.SerializationSettings).Trim('"'))));
-            if (aggregationGranularity != null)
-            {
-                _queryParameters.Add(string.Format("aggregationGranularity={0}", System.Uri.EscapeDataString(aggregationGranularity)));
-            }
-            if (subscriberId != null)
-            {
-                _queryParameters.Add(string.Format("subscriberId={0}", System.Uri.EscapeDataString(subscriberId)));
-            }
-            if (continuationToken != null)
-            {
-                _queryParameters.Add(string.Format("continuationToken={0}", System.Uri.EscapeDataString(continuationToken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -231,7 +191,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<UsageAggregate>>();
+            var _result = new AzureOperationResponse<IPage<Operation>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -244,7 +204,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<UsageAggregate>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -264,8 +224,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         }
 
         /// <summary>
-        /// Gets a collection of SubscriberUsageAggregates, which are UsageAggregates
-        /// from users.
+        /// Returns the list of supported REST operations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -291,7 +250,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<UsageAggregate>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Operation>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -405,7 +364,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<UsageAggregate>>();
+            var _result = new AzureOperationResponse<IPage<Operation>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -418,7 +377,7 @@ namespace Microsoft.AzureStack.Management.Commerce.Admin
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<UsageAggregate>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Operation>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
