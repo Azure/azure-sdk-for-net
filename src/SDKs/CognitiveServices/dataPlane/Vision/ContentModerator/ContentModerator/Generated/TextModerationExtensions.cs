@@ -7,6 +7,7 @@
 namespace Microsoft.CognitiveServices.ContentModerator
 {
     using Models;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -47,7 +48,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='classify'>
             /// Classify input.
             /// </param>
-            public static Screen ScreenText(this ITextModeration operations, string language, string textContentType, string textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false)
+            public static Screen ScreenText(this ITextModeration operations, string language, string textContentType, Stream textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false)
             {
                 return operations.ScreenTextAsync(language, textContentType, textContent, autocorrect, pII, listId, classify).GetAwaiter().GetResult();
             }
@@ -87,7 +88,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Screen> ScreenTextAsync(this ITextModeration operations, string language, string textContentType, string textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Screen> ScreenTextAsync(this ITextModeration operations, string language, string textContentType, Stream textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ScreenTextWithHttpMessagesAsync(language, textContentType, textContent, autocorrect, pII, listId, classify, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -111,7 +112,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='textContent'>
             /// Content to screen.
             /// </param>
-            public static DetectedLanguage DetectLanguage(this ITextModeration operations, string textContentType, string textContent)
+            public static DetectedLanguage DetectLanguage(this ITextModeration operations, string textContentType, Stream textContent)
             {
                 return operations.DetectLanguageAsync(textContentType, textContent).GetAwaiter().GetResult();
             }
@@ -135,7 +136,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DetectedLanguage> DetectLanguageAsync(this ITextModeration operations, string textContentType, string textContent, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DetectedLanguage> DetectLanguageAsync(this ITextModeration operations, string textContentType, Stream textContent, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectLanguageWithHttpMessagesAsync(textContentType, textContent, null, cancellationToken).ConfigureAwait(false))
                 {
