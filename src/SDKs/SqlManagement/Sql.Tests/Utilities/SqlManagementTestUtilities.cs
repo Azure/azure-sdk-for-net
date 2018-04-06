@@ -350,13 +350,9 @@ namespace Sql.Tests
             Assert.Equal(expected.ReadOnlyEndpoint.FailoverPolicy, actual.ReadOnlyEndpoint.FailoverPolicy);
             Assert.Equal(expected.ReadWriteEndpoint.FailoverPolicy, actual.ReadWriteEndpoint.FailoverPolicy);
             Assert.Equal(expected.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes, actual.ReadWriteEndpoint.FailoverWithDataLossGracePeriodMinutes);
-
-            Assert.Equal(expected.ReplicationRole, actual.ReplicationRole);
-            Assert.Equal(expected.ReplicationState, actual.ReplicationState);
-
-            AssertCollection(expected.ManagedInstancePairs, actual.ManagedInstancePairs);
-            AssertCollection(expected.PartnerRegions.Select(s => s.Location), actual.PartnerRegions.Select(s => s.Location));
-            AssertCollection(expected.PartnerRegions.Select(s => s.ReplicationRole), actual.PartnerRegions.Select(s => s.ReplicationRole));
+            
+            Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PrimaryManagedInstanceId);
+            Assert.Equal(expected.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId, actual.ManagedInstancePairs.FirstOrDefault().PartnerManagedInstanceId);
         }
 
         public static void ValidateFirewallRule(FirewallRule expected, FirewallRule actual, string name)
