@@ -33,7 +33,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName);
 
                 Assert.NotNull(byApiResponse);
-                Assert.Equal(1, byApiResponse.Count());
+                Assert.Single(byApiResponse);
                 Assert.NotNull(byApiResponse.First().ApiId);
 
                 var byGeoResponse = testBase.client.Reports.ListByGeo(
@@ -45,7 +45,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     });
 
                 Assert.NotNull(byGeoResponse);
-                Assert.Equal(0, byGeoResponse.Count());                
+                Assert.NotNull(byGeoResponse.First().Region);
 
                 var byOperationResponse = testBase.client.Reports.ListByOperation(
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>
@@ -57,6 +57,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(byOperationResponse);
                 Assert.Equal(6, byOperationResponse.Count());
+                Assert.NotNull(byOperationResponse.First().OperationId);
 
                 var byProductResponse = testBase.client.Reports.ListByProduct(
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>
@@ -81,6 +82,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(bySubscriptionResponse);
                 Assert.Equal(2, bySubscriptionResponse.Count());
                 Assert.NotNull(bySubscriptionResponse.First().SubscriptionId);
+                Assert.NotNull(bySubscriptionResponse.First().ProductId);
 
                 var byTimeResponse = testBase.client.Reports.ListByTime(
                     testBase.rgName,
@@ -91,8 +93,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Filter = "timestamp ge datetime'2017-06-22T00:00:00'"
                     });
 
-                Assert.NotNull(byTimeResponse);
-                Assert.Equal(0, byTimeResponse.Count());
+                Assert.NotNull(byTimeResponse);                
 
                 var byUserResponse = testBase.client.Reports.ListByUser(
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>()
@@ -115,8 +116,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName);
 
                 Assert.NotNull(byRequestResponse);
-                Assert.Equal(2, byRequestResponse.Count());
+                Assert.NotEmpty(byRequestResponse);
                 Assert.NotNull(byRequestResponse.First().RequestId);
+                Assert.NotNull(byRequestResponse.First().ApiId);
+                Assert.NotNull(byRequestResponse.First().OperationId);
+                Assert.NotNull(byRequestResponse.First().ProductId);
             }
         }
     }

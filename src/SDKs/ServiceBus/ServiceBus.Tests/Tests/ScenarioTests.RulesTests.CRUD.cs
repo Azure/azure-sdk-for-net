@@ -19,6 +19,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using System;
     using System.Linq;
     using System.Net;
+    using System.Collections.Generic;
     using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Azure.Management.ServiceBus.Models;
     using Microsoft.Rest.Azure;
@@ -90,6 +91,15 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(createRulesResponse);
                 Assert.Equal(createRulesResponse.Name, ruleName);
 
+                // Create Rule with CorrelationFilter.
+                var ruleName_CorrelationFilter = TestUtilities.GenerateName(ServiceBusManagementHelper.RulesPrefix);
+                var createRulesResponse_CorrelationFilter = ServiceBusManagementClient.Rules.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, ruleName_CorrelationFilter, new Rule() {
+                    FilterType = FilterType.CorrelationFilter,
+                    CorrelationFilter = new CorrelationFilter { Properties = new Dictionary<string, string> { { "topichint","topicname"} }  }
+                });
+                Assert.NotNull(createRulesResponse_CorrelationFilter);
+                Assert.Equal(createRulesResponse_CorrelationFilter.Name, ruleName_CorrelationFilter);
+
                 // Get Created Rules
                 var ruleGetResponse = ServiceBusManagementClient.Rules.Get(resourceGroup, namespaceName, topicName, subscriptionName, ruleName);
                 Assert.NotNull(ruleGetResponse);
@@ -101,18 +111,18 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getRulesListAllResponse.Count() >= 1);
                 Assert.True(getRulesListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
-                // Update Rule with Filter and Action
+                // Update Rule with Sql Filter and Action
 
                 var updateRulesParameter = new Rule()
                 {
                     Action = new SqlRuleAction()
                     {
                         RequiresPreprocessing = true,
-                        SqlExpression = strSqlExp,
+                        SqlExpression = "SET " + strSqlExp,
                     },
                     SqlFilter = new SqlFilter() { SqlExpression = strSqlExp },
                     FilterType = FilterType.SqlFilter,
-                    CorrelationFilter =  new CorrelationFilter()                                      
+                    CorrelationFilter =  new CorrelationFilter()                     
                 };
 
                 var updateRulesResponse = ServiceBusManagementClient.Rules.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, ruleName, updateRulesParameter);

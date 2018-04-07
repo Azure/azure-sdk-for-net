@@ -79,6 +79,11 @@ namespace Microsoft.Azure.Management.BatchAI
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IUsageOperations.
+        /// </summary>
+        public virtual IUsageOperations Usage { get; private set; }
+
+        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         public virtual IClustersOperations Clusters { get; private set; }
@@ -295,11 +300,12 @@ namespace Microsoft.Azure.Management.BatchAI
         private void Initialize()
         {
             Operations = new Operations(this);
+            Usage = new UsageOperations(this);
             Clusters = new ClustersOperations(this);
             Jobs = new JobsOperations(this);
             FileServers = new FileServersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-09-01-preview";
+            ApiVersion = "2018-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

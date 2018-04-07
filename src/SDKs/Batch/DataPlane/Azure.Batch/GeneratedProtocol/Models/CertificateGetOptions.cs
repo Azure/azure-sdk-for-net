@@ -61,14 +61,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets an OData $select clause.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public string Select { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum time that the server can spend processing
         /// the request, in seconds. The default is 30 seconds.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public int? Timeout { get; set; }
 
         /// <summary>
@@ -76,14 +76,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// a GUID with no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public System.Guid? ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the server should return the client-request-id
         /// in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// explicitly if you are calling the REST API directly.
         /// </summary>
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public System.DateTime? OcpDate { get; set; }
 
     }

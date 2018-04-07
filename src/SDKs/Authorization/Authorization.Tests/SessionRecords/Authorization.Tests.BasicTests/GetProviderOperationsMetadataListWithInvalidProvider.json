@@ -7,14 +7,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b53963e0-035e-409b-b040-ad30ecd7bb6f"
+          "647c6af1-b4bc-4678-9dcf-61c06d391bd7"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.6.0.0"
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ProviderNotFound\",\r\n    \"message\": \"Provider 'InvalidProvider' not found.\"\r\n  }\r\n}",
@@ -32,19 +32,19 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 01:47:35 GMT"
+          "Sat, 10 Mar 2018 00:22:48 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
         ],
         "x-ms-request-id": [
-          "08147079-1166-4f76-8078-fafb0db47285"
+          "860504f1-1dc1-4078-840d-77fee2c70776"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -56,13 +56,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14977"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "d415584c-aab7-4457-8cb2-f977cd3da1d2"
+          "85135bd6-e157-4d12-a640-b9691f03f5cd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20180216T014736Z:d415584c-aab7-4457-8cb2-f977cd3da1d2"
+          "WESTUS2:20180310T002249Z:85135bd6-e157-4d12-a640-b9691f03f5cd"
         ]
       },
       "StatusCode": 404

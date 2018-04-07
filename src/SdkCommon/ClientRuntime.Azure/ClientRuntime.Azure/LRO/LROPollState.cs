@@ -25,6 +25,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
         IAzureClient SdkClient { get; set; }
 
+        /// <summary>
+        /// Ability for operatoins to participate in Error Status checking during polling
+        /// This provides ability for certain operations to continue with legacy behavior
+        /// </summary>
+        internal Func<HttpResponseMessage, bool> IgnoreOperationErrorStatusCallBack;
+
         internal AzureAsyncOperation AsyncOperationResponseBody { get; set; }
 
         internal AzureOperationResponse<JObject, JObject> RawResponse { get; set; }
@@ -34,7 +40,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         internal JObject RawBody { get; set; }
         string ResponseContent { get; set; }
 
-        internal HttpStatusCode InitialResponseStatusCode { get; }
+        internal HttpStatusCode InitialResponseStatusCode { get; private set; }
 
         internal HttpOperationResponse<TResourceBody, TRequestHeaders> InitialResponse { get; private set; }
 
@@ -48,6 +54,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             CurrentStatusCode = InitialResponseStatusCode;
         }
         
+
         internal async Task Poll(Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
         {
@@ -213,6 +220,94 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             
             HttpStatusCode statusCode = httpResponse.StatusCode;
 
+            // execute callback, if operations have set the callback to participate in status checking
+            bool ignoreCheckingErrorStatus = IgnoreOperationErrorStatusCallBack != null ? IgnoreOperationErrorStatusCallBack(httpResponse) : false;
+
+            if(ignoreCheckingErrorStatus == false)
+            {
+                await CheckErrorStatusAndThrowAsync(httpRequest, httpResponse);
+            }
+
+            JObject body = null;
+            if (!string.IsNullOrWhiteSpace(responseContent))
+            {
+                try
+                {
+                    body = ParseContent(responseContent);
+
+                    // We only keep last serialization expcetion that occured in the last LRO poll cycle
+                    // even if we got serialziation exception in the last iteration but the next response does not result
+                    // in serialization error
+                    if (!string.IsNullOrEmpty(this.LastSerializationExceptionMessage))
+                    {
+                        this.LastSerializationExceptionMessage = string.Empty;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    // failed to deserialize, return empty body
+                    this.LastSerializationExceptionMessage = string.Format("Error - '{0}', Response - '{1}'", ex.Message, responseContent);
+                }
+            }
+
+            // TODO: have a way to pick the last successfully response depending upon the result of the LRO operation for various conditions where
+            // the response status code is success but the payload cannot be used or deserialzied
+            return new AzureOperationResponse<JObject, JObject>
+            {
+                Request = httpRequest,
+                Response = httpResponse,
+                Body = body,
+                Headers = httpResponse.Headers?.ToJson()                
+            };
+        }
+
+        /// <summary>
+        /// Currently the only way to parse non application/json content type is to try to parse and convert non application/json
+        /// to application/json
+        /// </summary>
+        /// <param name="responseContent"></param>
+        /// <returns></returns>
+        private JObject ParseContent(string responseContent)
+        {
+            bool serializationFailed = false;
+            JObject body = null;
+            try
+            {
+                body = JObject.Parse(responseContent);
+            }
+            catch
+            {
+                serializationFailed = true;
+            }
+
+            if (serializationFailed)
+            {
+                JToken jt = JToken.Parse(responseContent);
+                body = new JObject();
+                body.Add("id", jt);
+            }
+
+            return body;
+        }
+
+        /// <summary>
+        /// Check for status.
+        /// Throw if error status.
+        /// </summary>
+        /// <param name="request">HttpRequsest</param>
+        /// <param name="response">HttpResponse</param>
+        /// <returns></returns>
+        internal async Task CheckErrorStatusAndThrowAsync(HttpRequestMessage request, HttpResponseMessage response)
+        {
+            string responseContent = string.Empty;
+            if (response.Content != null)
+            {
+                //responseContent = Task.Run(async () => await response.Content.ReadAsStringAsync().ConfigureAwait(false)).Result;
+                responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+
+            HttpStatusCode statusCode = response.StatusCode;
+
             if (statusCode != HttpStatusCode.OK &&
                 statusCode != HttpStatusCode.Accepted &&
                 statusCode != HttpStatusCode.Created &&
@@ -232,40 +327,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     Resources.LongRunningOperationFailed, statusCode))
                 {
                     Body = errorBody,
-                    Request = new HttpRequestMessageWrapper(httpRequest, null),
-                    Response = new HttpResponseMessageWrapper(httpResponse, responseContent)
+                    Request = new HttpRequestMessageWrapper(request, null),
+                    Response = new HttpResponseMessageWrapper(response, responseContent)
                 };
             }
 
-            JObject body = null;
-            if (!string.IsNullOrWhiteSpace(responseContent))
-            {
-                try
-                {
-                    body = JObject.Parse(responseContent);
-
-                    // We only keep last serialization expcetion that occured in the last LRO poll cycle
-                    // even if we got serialziation exception in the last iteration but the next response does not result
-                    // 
-                    if(!string.IsNullOrEmpty(this.LastSerializationExceptionMessage))
-                    {
-                        this.LastSerializationExceptionMessage = string.Empty;
-                    }
-                }
-                catch(Exception ex)
-                {
-                    // failed to deserialize, return empty body
-                    this.LastSerializationExceptionMessage = string.Format("Error - '{0}', Response - '{1}'", ex.Message, responseContent);
-                }
-            }
-
-            return new AzureOperationResponse<JObject, JObject>
-            {
-                Request = httpRequest,
-                Response = httpResponse,
-                Body = body,
-                Headers = httpResponse.Headers?.ToJson()                
-            };
+            return;
         }
     }
 }

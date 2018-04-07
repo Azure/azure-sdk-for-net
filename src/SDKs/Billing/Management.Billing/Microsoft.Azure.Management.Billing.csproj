@@ -5,11 +5,16 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure Billing Management Library</Description>
-		<Version>2.0.0-preview</Version>
+		<Version>2.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Billing</PackageId>
 		<PackageTags>Microsoft Azure Billing management;Billing;Billing management;</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>
+			<![CDATA[
+			This is a public preview release of the Azure Billing SDK. Included with this release is support for enrollment accounts.
+			]]>
+		</PackageReleaseNotes>
+
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

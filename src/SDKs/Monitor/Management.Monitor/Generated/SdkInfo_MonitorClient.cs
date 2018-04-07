@@ -22,8 +22,8 @@ internal static partial class SdkInfo
                 new Tuple<string, string, string>("insights", "EventCategories", "2015-04-01"),
                 new Tuple<string, string, string>("insights", "LogProfiles", "2016-03-01"),
                 new Tuple<string, string, string>("insights", "MetricBaseline", "2017-11-01-preview"),
-                new Tuple<string, string, string>("insights", "MetricDefinitions", "2017-05-01-preview"),
-                new Tuple<string, string, string>("insights", "Metrics", "2017-05-01-preview"),
+                new Tuple<string, string, string>("insights", "MetricDefinitions", "2018-01-01"),
+                new Tuple<string, string, string>("insights", "Metrics", "2018-01-01"),
                 new Tuple<string, string, string>("insights", "Operations", "2015-04-01"),
                 new Tuple<string, string, string>("insights", "TenantActivityLogs", "2015-04-01"),
             }.AsEnumerable();

@@ -210,9 +210,9 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse<IPage<Job>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, JobsListByResourceGroupOptions jobsListByResourceGroupOptions = default(JobsListByResourceGroupOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all files inside the given output directory (Only if the
-        /// output directory is on Azure File Share or Azure Storage
-        /// container).
+        /// List all directories and files inside the given directory of the
+        /// output directory (Only if the output directory is on Azure File
+        /// Share or Azure Storage container).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -392,9 +392,9 @@ namespace Microsoft.Azure.Management.BatchAI
         /// </exception>
         Task<AzureOperationResponse<IPage<Job>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all files inside the given output directory (Only if the
-        /// output directory is on Azure File Share or Azure Storage
-        /// container).
+        /// List all directories and files inside the given directory of the
+        /// output directory (Only if the output directory is on Azure File
+        /// Share or Azure Storage container).
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

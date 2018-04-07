@@ -3,22 +3,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Net;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Dns;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.Test;
-using Xunit;
 using Microsoft.Azure.Management.Dns.Models;
+using Microsoft.Azure.Management.Network;
+using Microsoft.Azure.Management.Network.Models;
+using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Rest.Azure;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
+using SubResource = Microsoft.Azure.Management.Dns.Models.SubResource;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
-    using Rest.Azure;
-    using Rest.ClientRuntime.Azure.TestFramework;
-
     public class RecordSetScenarioTests
     {
         public class SingleRecordSetTestContext
@@ -33,9 +29,17 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
             public DnsManagementClient DnsClient { get; set; }
 
+            public NetworkManagementClient NetworkClient { get; set; }
+
             public RecordedDelegatingHandler DnsHandler { get; set; }
 
             public RecordedDelegatingHandler ResourcesHandler { get; set; }
+
+            public RecordedDelegatingHandler NetworkHandler { get; set; }
+
+            public IList<VirtualNetwork> RegistationVirtualNetworks { get; set; }
+
+            public IList<VirtualNetwork> ResolutionVirtualNetworks { get; set; }
 
             public RecordSet TestRecordSkeleton
                 => this.GetNewTestRecordSkeleton(this.RecordSetName);
@@ -52,7 +56,17 @@ namespace Microsoft.Azure.Management.Dns.Testing
             }
         }
 
-        private static SingleRecordSetTestContext SetupSingleRecordSetTest(
+        private static IEnumerable<SingleRecordSetTestContext> SetupSingleRecordSetTestContexts(
+            MockContext context)
+        {
+            return new[]
+            {
+                SetupSingleRecordSetTestForPublicZone(context),
+                SetupSingleRecordSetTestForPrivateZone(context),
+            };
+        }
+
+        private static SingleRecordSetTestContext SetupSingleRecordSetTestForPublicZone(
             MockContext context)
         {
             var testContext = new SingleRecordSetTestContext();
@@ -90,6 +104,62 @@ namespace Microsoft.Azure.Management.Dns.Testing
             return testContext;
         }
 
+        private static SingleRecordSetTestContext SetupSingleRecordSetTestForPrivateZone(
+            MockContext context)
+        {
+            var testContext = new SingleRecordSetTestContext();
+            testContext.ResourcesHandler = new RecordedDelegatingHandler
+            {
+                StatusCodeToReturn = System.Net.HttpStatusCode.OK
+            };
+            testContext.DnsHandler = new RecordedDelegatingHandler
+            {
+                StatusCodeToReturn = System.Net.HttpStatusCode.OK
+            };
+            testContext.NetworkHandler = new RecordedDelegatingHandler
+            {
+                StatusCodeToReturn = System.Net.HttpStatusCode.OK
+            };
+
+            testContext.DnsClient = ResourceGroupHelper.GetDnsClient(
+                context,
+                testContext.DnsHandler);
+            testContext.NetworkClient = ResourceGroupHelper.GetNetworkClient(
+                context,
+                testContext.NetworkHandler);
+            var resourceManagementClient =
+                ResourceGroupHelper.GetResourcesClient(
+                    context,
+                    testContext.ResourcesHandler);
+            testContext.ZoneName =
+                TestUtilities.GenerateName("hydratest.dnszone.com");
+            testContext.RecordSetName =
+                TestUtilities.GenerateName("hydratestdnsrec");
+            testContext.Location =
+                ResourceGroupHelper.GetResourceLocation(
+                    resourceManagementClient,
+                    "microsoft.network/dnszones");
+            testContext.ResourceGroup =
+                ResourceGroupHelper.CreateResourceGroup(
+                    resourceManagementClient);
+            testContext.RegistationVirtualNetworks = new List<VirtualNetwork>
+            {
+                ResourceGroupHelper.CreateVirtualNetwork(testContext.ResourceGroup.Name, testContext.NetworkClient)
+            };
+            testContext.ResolutionVirtualNetworks = new List<VirtualNetwork>
+            {
+                ResourceGroupHelper.CreateVirtualNetwork(testContext.ResourceGroup.Name, testContext.NetworkClient)
+            };
+            ResourceGroupHelper.CreatePrivateZone(
+                testContext.DnsClient,
+                testContext.ZoneName,
+                testContext.Location,
+                testContext.RegistationVirtualNetworks.Select(vNet => new SubResource { Id = vNet.Id }).ToList(),
+                testContext.ResolutionVirtualNetworks.Select(vNet => new SubResource { Id = vNet.Id }).ToList(),
+                testContext.ResourceGroup);
+            return testContext;
+        }
+
         [Fact]
         public void CrudRecordSetFullCycle()
         {
@@ -97,103 +167,104 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
-                SingleRecordSetTestContext testContext =
-                    SetupSingleRecordSetTest(context);
-                var recordSetToBeCreated = testContext.TestRecordSkeleton;
-                recordSetToBeCreated.ARecords = new List<ARecord>
+                var testContexts = SetupSingleRecordSetTestContexts(context);
+                foreach (var testContext in testContexts)
                 {
-                    new ARecord {Ipv4Address = "123.32.1.0"}
-                };
-                recordSetToBeCreated.TTL = 60;
+                    var recordSetToBeCreated = testContext.TestRecordSkeleton;
+                    recordSetToBeCreated.ARecords = new List<ARecord>
+                    {
+                        new ARecord {Ipv4Address = "123.32.1.0"}
+                    };
+                    recordSetToBeCreated.TTL = 60;
 
-                // Create the records clean, verify response
-                var createResponse = testContext.DnsClient.RecordSets
-                    .CreateOrUpdate(
+                    // Create the records clean, verify response
+                    var createResponse = testContext.DnsClient.RecordSets
+                        .CreateOrUpdate(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            testContext.RecordSetName,
+                            RecordType.A,
+                            ifMatch: null,
+                            ifNoneMatch: null,
+                            parameters: recordSetToBeCreated);
+
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            recordSetToBeCreated,
+                            createResponse,
+                            ignoreEtag: true),
+                        "Response body of Create does not match expectations");
+                    Assert.False(string.IsNullOrWhiteSpace(createResponse.Etag));
+
+                    // Retrieve the zone after create, verify response
+                    var getresponse = testContext.DnsClient.RecordSets.Get(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         testContext.RecordSetName,
-                        RecordType.A,
-                        ifMatch: null,
-                        ifNoneMatch: null,
-                        parameters: recordSetToBeCreated);
+                        RecordType.A);
 
-                Assert.True(
-                    TestHelpers.AreEqual(
-                        recordSetToBeCreated,
-                        createResponse,
-                        ignoreEtag: true),
-                    "Response body of Create does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(createResponse.Etag));
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            createResponse,
+                            getresponse,
+                            ignoreEtag: false),
+                        "Response body of Get does not match expectations");
 
-                // Retrieve the zone after create, verify response
-                var getresponse = testContext.DnsClient.RecordSets.Get(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    RecordType.A);
+                    // Call Update on the object returned by Create (important distinction from Get below)
+                    Models.RecordSet createdRecordSet = createResponse;
 
-                Assert.True(
-                    TestHelpers.AreEqual(
-                        createResponse,
-                        getresponse,
-                        ignoreEtag: false),
-                    "Response body of Get does not match expectations");
+                    createdRecordSet.TTL = 120;
+                    createdRecordSet.Metadata = new Dictionary<string, string>
+                    {
+                        {"tag1", "value1"},
+                        {"tag2", "value2"}
+                    };
+                    createdRecordSet.ARecords = new List<ARecord>
+                    {
+                        new ARecord {Ipv4Address = "123.32.1.0"},
+                        new ARecord {Ipv4Address = "101.10.0.1"}
+                    };
 
-                // Call Update on the object returned by Create (important distinction from Get below)
-                Models.RecordSet createdRecordSet = createResponse;
+                    var updateResponse = testContext.DnsClient.RecordSets
+                        .CreateOrUpdate(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            testContext.RecordSetName,
+                            RecordType.A,
+                            ifMatch: null,
+                            ifNoneMatch: null,
+                            parameters: createdRecordSet);
 
-                createdRecordSet.TTL = 120;
-                createdRecordSet.Metadata = new Dictionary<string, string>
-                {
-                    {"tag1", "value1"},
-                    {"tag2", "value2"}
-                };
-                createdRecordSet.ARecords = new List<ARecord>
-                {
-                    new ARecord {Ipv4Address = "123.32.1.0"},
-                    new ARecord {Ipv4Address = "101.10.0.1"}
-                };
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            createdRecordSet,
+                            updateResponse,
+                            ignoreEtag: true),
+                        "Response body of Update does not match expectations");
+                    Assert.False(string.IsNullOrWhiteSpace(updateResponse.Etag));
 
-                var updateResponse = testContext.DnsClient.RecordSets
-                    .CreateOrUpdate(
+                    // Retrieve the records after create, verify response
+                    getresponse = testContext.DnsClient.RecordSets.Get(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         testContext.RecordSetName,
-                        RecordType.A,
-                        ifMatch: null,
-                        ifNoneMatch: null,
-                        parameters: createdRecordSet);
+                        RecordType.A);
 
-                Assert.True(
-                    TestHelpers.AreEqual(
-                        createdRecordSet,
-                        updateResponse,
-                        ignoreEtag: true),
-                    "Response body of Update does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(updateResponse.Etag));
+                    Assert.True(
+                        TestHelpers.AreEqual(updateResponse, getresponse),
+                        "Response body of Get does not match expectations");
 
-                // Retrieve the records after create, verify response
-                getresponse = testContext.DnsClient.RecordSets.Get(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    RecordType.A);
+                    // Call Update on the object returned by Get (important distinction from Create above)
+                    Models.RecordSet retrievedRecordSet = getresponse;
+                    retrievedRecordSet.TTL = 180;
+                    retrievedRecordSet.ARecords = new List<ARecord>
+                    {
+                        new ARecord {Ipv4Address = "123.32.1.0"},
+                        new ARecord {Ipv4Address = "101.10.0.1"},
+                        new ARecord {Ipv4Address = "22.33.44.55"},
+                    };
 
-                Assert.True(
-                    TestHelpers.AreEqual(updateResponse, getresponse),
-                    "Response body of Get does not match expectations");
-
-                // Call Update on the object returned by Get (important distinction from Create above)
-                Models.RecordSet retrievedRecordSet = getresponse;
-                retrievedRecordSet.TTL = 180;
-                retrievedRecordSet.ARecords = new List<ARecord>
-                {
-                    new ARecord {Ipv4Address = "123.32.1.0"},
-                    new ARecord {Ipv4Address = "101.10.0.1"},
-                    new ARecord {Ipv4Address = "22.33.44.55"},
-                };
-
-                updateResponse = testContext.DnsClient.RecordSets.CreateOrUpdate
+                    updateResponse = testContext.DnsClient.RecordSets.CreateOrUpdate
                     (
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
@@ -203,27 +274,28 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         ifNoneMatch: null,
                         parameters: retrievedRecordSet);
 
-                Assert.True(
-                    TestHelpers.AreEqual(
-                        retrievedRecordSet,
-                        updateResponse,
-                        ignoreEtag: true),
-                    "Response body of Update does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(updateResponse.Etag));
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            retrievedRecordSet,
+                            updateResponse,
+                            ignoreEtag: true),
+                        "Response body of Update does not match expectations");
+                    Assert.False(string.IsNullOrWhiteSpace(updateResponse.Etag));
 
-                // Delete the record set
-                testContext.DnsClient.RecordSets.Delete(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    RecordType.A,
-                    ifMatch: null);
+                    // Delete the record set
+                    testContext.DnsClient.RecordSets.Delete(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        RecordType.A,
+                        ifMatch: null);
 
-                // Delete the zone
-                testContext.DnsClient.Zones.Delete(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    ifMatch: null);
+                    // Delete the zone
+                    testContext.DnsClient.Zones.Delete(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        ifMatch: null);
+                }
             }
         }
 
@@ -241,7 +313,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.A, setTestRecords);
+            this.RecordSetCreateGet(RecordType.A, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -258,7 +330,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.AAAA, setTestRecords);
+            this.RecordSetCreateGet(RecordType.AAAA, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -275,7 +347,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.MX, setTestRecords);
+            this.RecordSetCreateGet(RecordType.MX, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -292,7 +364,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.NS, setTestRecords);
+            this.RecordSetCreateGet(RecordType.NS, setTestRecords, isPrivateZoneEnabled: false);
         }
 
         [Fact]
@@ -309,7 +381,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.PTR, setTestRecords);
+            this.RecordSetCreateGet(RecordType.PTR, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -338,7 +410,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.SRV, setTestRecords);
+            this.RecordSetCreateGet(RecordType.SRV, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -355,7 +427,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.TXT, setTestRecords);
+            this.RecordSetCreateGet(RecordType.TXT, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -372,7 +444,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.CAA, setTestRecords);
+            this.RecordSetCreateGet(RecordType.CAA, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -388,7 +460,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 return;
             };
 
-            this.RecordSetCreateGet(RecordType.CNAME, setTestRecords);
+            this.RecordSetCreateGet(RecordType.CNAME, setTestRecords, isPrivateZoneEnabled: true);
         }
 
         [Fact]
@@ -398,59 +470,60 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
-                SingleRecordSetTestContext testContext =
-                    SetupSingleRecordSetTest(context);
-
-                // SOA for the zone should already exist
-                var getresponse = testContext.DnsClient.RecordSets.Get(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    "@",
-                    RecordType.SOA);
-
-                RecordSet soaResource = getresponse;
-                Assert.NotNull(soaResource);
-                Assert.NotNull(soaResource.SoaRecord);
-
-                soaResource.SoaRecord.ExpireTime = 123;
-                soaResource.SoaRecord.MinimumTtl = 1234;
-                soaResource.SoaRecord.RefreshTime = 12345;
-                soaResource.SoaRecord.RetryTime = 123456;
-
-                var updateParameters = soaResource;
-
-                var updateResponse = testContext.DnsClient.RecordSets
-                    .CreateOrUpdate(
+                var testContexts = SetupSingleRecordSetTestContexts(context);
+                foreach (var testContext in testContexts)
+                {
+                    // SOA for the zone should already exist
+                    var getresponse = testContext.DnsClient.RecordSets.Get(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         "@",
-                        RecordType.SOA,
-                        ifMatch: null,
-                        ifNoneMatch: null,
-                        parameters: updateParameters);
+                        RecordType.SOA);
 
-                Assert.True(
-                    TestHelpers.AreEqual(
-                        soaResource,
-                        updateResponse,
-                        ignoreEtag: true),
-                    "Response body of Update does not match expectations");
+                    RecordSet soaResource = getresponse;
+                    Assert.NotNull(soaResource);
+                    Assert.NotNull(soaResource.SoaRecord);
 
-                getresponse = testContext.DnsClient.RecordSets.Get(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    "@",
-                    RecordType.SOA);
+                    soaResource.SoaRecord.ExpireTime = 123;
+                    soaResource.SoaRecord.MinimumTtl = 1234;
+                    soaResource.SoaRecord.RefreshTime = 12345;
+                    soaResource.SoaRecord.RetryTime = 123456;
 
-                Assert.True(
-                    TestHelpers.AreEqual(updateResponse, getresponse),
-                    "Response body of Get does not match expectations");
+                    var updateParameters = soaResource;
 
-                // SOA will get deleted with the zone
-                testContext.DnsClient.Zones.Delete(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    ifMatch: null);
+                    var updateResponse = testContext.DnsClient.RecordSets
+                        .CreateOrUpdate(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            "@",
+                            RecordType.SOA,
+                            ifMatch: null,
+                            ifNoneMatch: null,
+                            parameters: updateParameters);
+
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            soaResource,
+                            updateResponse,
+                            ignoreEtag: true),
+                        "Response body of Update does not match expectations");
+
+                    getresponse = testContext.DnsClient.RecordSets.Get(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        "@",
+                        RecordType.SOA);
+
+                    Assert.True(
+                        TestHelpers.AreEqual(updateResponse, getresponse),
+                        "Response body of Get does not match expectations");
+
+                    // SOA will get deleted with the zone
+                    testContext.DnsClient.Zones.Delete(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        ifMatch: null);
+                }
             }
         }
 
@@ -466,18 +539,17 @@ namespace Microsoft.Azure.Management.Dns.Testing
             ListRecordsInZone(isCrossType: true);
         }
 
-        [Fact(Skip = "needs re-recording. XUnit released version will not support overloaded test names")]
+        [Fact]
         public void ListRecordsInZoneWithSuffixAcrossTypes()
         {
             ListRecordsInZoneWithSuffixCrossType(isCrossType: true);
         }
 
-        [Fact(Skip ="needs re-recording. XUnit released version will not support overloaded test names")]
+        [Fact]
         public void ListRecordsInZoneWithSuffix()
         {
             ListRecordsInZoneWithSuffixCrossType(isCrossType: false);
         }
-
 
         private void ListRecordsInZone(
             bool isCrossType,
@@ -489,79 +561,89 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     this.GetType().FullName,
                     methodName))
             {
-                SingleRecordSetTestContext testContext =
-                    SetupSingleRecordSetTest(context);
-
-                var recordSetNames = new[]
+                var testContexts = SetupSingleRecordSetTestContexts(context);
+                foreach (var testContext in testContexts)
                 {
-                    TestUtilities.GenerateName("hydratestrec"),
-                    TestUtilities.GenerateName("hydratestrec"),
-                    TestUtilities.GenerateName("hydratestrec")
-                };
+                    var recordSetNames = new[]
+                    {
+                        TestUtilities.GenerateName("hydratestrec"),
+                        TestUtilities.GenerateName("hydratestrec"),
+                        TestUtilities.GenerateName("hydratestrec")
+                    };
 
-                RecordSetScenarioTests.CreateRecordSets(
-                    testContext,
-                    recordSetNames);
+                    RecordSetScenarioTests.CreateRecordSets(
+                        testContext,
+                        recordSetNames);
 
-                if (isCrossType)
-                {
-                    var listresponse = testContext.DnsClient.RecordSets
-                        .ListByDnsZone(
-                            testContext.ResourceGroup.Name,
-                            testContext.ZoneName);
+                    if (isCrossType)
+                    {
+                        var listresponse1 = testContext.DnsClient.RecordSets
+                            .ListByDnsZone(
+                                testContext.ResourceGroup.Name,
+                                testContext.ZoneName);
 
-                    // not checking for the record count as this will return standard SOA and auth NS records as well
-                    Assert.NotNull(listresponse);
-                    Assert.True(
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[0],
-                                    recordSetReturned.Name))
-                        &&
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[1],
-                                    recordSetReturned.Name))
-                        &&
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[2],
-                                    recordSetReturned.Name)),
-                        "The returned records do not meet expectations");
+                        var listresponse2 = testContext.DnsClient.RecordSets
+                            .ListAllByDnsZone(
+                                testContext.ResourceGroup.Name,
+                                testContext.ZoneName);
+
+                        foreach (var listresponse in new[] { listresponse1, listresponse2 })
+                        {
+                            // not checking for the record count as this will return standard SOA and auth NS records as well
+                            Assert.NotNull(listresponse);
+                            Assert.True(
+                                listresponse.Any(
+                                    recordSetReturned =>
+                                        string.Equals(
+                                            recordSetNames[0],
+                                            recordSetReturned.Name))
+                                &&
+                                listresponse.Any(
+                                    recordSetReturned =>
+                                        string.Equals(
+                                            recordSetNames[1],
+                                            recordSetReturned.Name))
+                                &&
+                                listresponse.Any(
+                                    recordSetReturned =>
+                                        string.Equals(
+                                            recordSetNames[2],
+                                            recordSetReturned.Name)),
+                                "The returned records do not meet expectations");
+                        }
+                    }
+                    else
+                    {
+                        var listresponse = testContext.DnsClient.RecordSets
+                            .ListByType(
+                                testContext.ResourceGroup.Name,
+                                testContext.ZoneName,
+                                RecordType.TXT);
+
+                        Assert.NotNull(listresponse);
+                        Assert.Equal(2, listresponse.Count());
+                        Assert.True(
+                            listresponse.Any(
+                                recordSetReturned =>
+                                    string.Equals(
+                                        recordSetNames[0],
+                                        recordSetReturned.Name))
+                            &&
+                            listresponse.Any(
+                                recordSetReturned =>
+                                    string.Equals(
+                                        recordSetNames[1],
+                                        recordSetReturned.Name)),
+                            "The returned records do not meet expectations");
+                    }
+
+                    RecordSetScenarioTests.DeleteRecordSetsAndZone(
+                        testContext,
+                        recordSetNames);
                 }
-                else
-                {
-                    var listresponse = testContext.DnsClient.RecordSets
-                        .ListByType(
-                            testContext.ResourceGroup.Name,
-                            testContext.ZoneName,
-                            RecordType.TXT);
-
-                    Assert.NotNull(listresponse);
-                    Assert.Equal(2, listresponse.Count());
-                    Assert.True(
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[0],
-                                    recordSetReturned.Name))
-                        &&
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[1],
-                                    recordSetReturned.Name)),
-                        "The returned records do not meet expectations");
-                }
-
-                RecordSetScenarioTests.DeleteRecordSetsAndZone(
-                    testContext,
-                    recordSetNames);
             }
         }
+
         private void ListRecordsInZoneWithSuffixCrossType(
             bool isCrossType,
             [System.Runtime.CompilerServices.CallerMemberName] string methodName
@@ -572,81 +654,82 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     this.GetType().FullName,
                     methodName))
             {
-                SingleRecordSetTestContext testContext =
-                    SetupSingleRecordSetTest(context);
-
-                string subzoneName = "contoso";
-
-                var recordSetNames = new[]
+                var testContexts = SetupSingleRecordSetTestContexts(context);
+                foreach (var testContext in testContexts)
                 {
-                    TestUtilities.GenerateName("hydratestrec"),
-                    TestUtilities.GenerateName("hydratestrec"),
-                    TestUtilities.GenerateName("hydratestrec")
-                }.Select(x => x + "." + subzoneName).ToArray();
+                    string subzoneName = "contoso";
 
-                RecordSetScenarioTests.CreateRecordSets(
-                    testContext,
-                    recordSetNames);
+                    var recordSetNames = new[]
+                    {
+                        TestUtilities.GenerateName("hydratestrec"),
+                        TestUtilities.GenerateName("hydratestrec"),
+                        TestUtilities.GenerateName("hydratestrec")
+                    }.Select(x => x + "." + subzoneName).ToArray();
 
-                if (isCrossType)
-                {
-                    var listresponse = testContext.DnsClient.RecordSets
-                        .ListByDnsZone(
-                            testContext.ResourceGroup.Name,
-                            testContext.ZoneName,
-                            recordsetnamesuffix: subzoneName);
+                    RecordSetScenarioTests.CreateRecordSets(
+                        testContext,
+                        recordSetNames);
 
-                    Assert.NotNull(listresponse);
-                    Assert.Equal(listresponse.Count(), recordSetNames.Length);
-                    Assert.True(
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[0],
-                                    recordSetReturned.Name))
-                        &&
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[1],
-                                    recordSetReturned.Name))
-                        &&
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[2],
-                                    recordSetReturned.Name)),
-                        "The returned records do not meet expectations");
+                    if (isCrossType)
+                    {
+                        var listresponse = testContext.DnsClient.RecordSets
+                            .ListByDnsZone(
+                                testContext.ResourceGroup.Name,
+                                testContext.ZoneName,
+                                recordsetnamesuffix: subzoneName);
+
+                        Assert.NotNull(listresponse);
+                        Assert.Equal(listresponse.Count(), recordSetNames.Length);
+                        Assert.True(
+                            listresponse.Any(
+                                recordSetReturned =>
+                                    string.Equals(
+                                        recordSetNames[0],
+                                        recordSetReturned.Name))
+                            &&
+                            listresponse.Any(
+                                recordSetReturned =>
+                                    string.Equals(
+                                        recordSetNames[1],
+                                        recordSetReturned.Name))
+                            &&
+                            listresponse.Any(
+                                recordSetReturned =>
+                                    string.Equals(
+                                        recordSetNames[2],
+                                        recordSetReturned.Name)),
+                            "The returned records do not meet expectations");
+                    }
+                    else
+                    {
+                        var listresponse = testContext.DnsClient.RecordSets
+                            .ListByType(
+                                testContext.ResourceGroup.Name,
+                                testContext.ZoneName,
+                                RecordType.TXT,
+                                recordsetnamesuffix: subzoneName);
+
+                        Assert.NotNull(listresponse);
+                        Assert.Equal(2, listresponse.Count());
+                        Assert.True(
+                            listresponse.Any(
+                                recordSetReturned =>
+                                    string.Equals(
+                                        recordSetNames[0],
+                                        recordSetReturned.Name))
+                            &&
+                            listresponse.Any(
+                                recordSetReturned =>
+                                    string.Equals(
+                                        recordSetNames[1],
+                                        recordSetReturned.Name)),
+                            "The returned records do not meet expectations");
+                    }
+
+                    RecordSetScenarioTests.DeleteRecordSetsAndZone(
+                        testContext,
+                        recordSetNames);
                 }
-                else
-                {
-                    var listresponse = testContext.DnsClient.RecordSets
-                        .ListByType(
-                            testContext.ResourceGroup.Name,
-                            testContext.ZoneName,
-                            RecordType.TXT,
-                            recordsetnamesuffix: subzoneName);
-
-                    Assert.NotNull(listresponse);
-                    Assert.Equal(2, listresponse.Count());
-                    Assert.True(
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[0],
-                                    recordSetReturned.Name))
-                        &&
-                        listresponse.Any(
-                            recordSetReturned =>
-                                string.Equals(
-                                    recordSetNames[1],
-                                    recordSetReturned.Name)),
-                        "The returned records do not meet expectations");
-                }
-
-                RecordSetScenarioTests.DeleteRecordSetsAndZone(
-                    testContext,
-                    recordSetNames);
             }
         }
 
@@ -673,60 +756,62 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     this.GetType().FullName,
                     methodName))
             {
-                SingleRecordSetTestContext testContext =
-                    RecordSetScenarioTests.SetupSingleRecordSetTest(context);
-
-                var recordSetNames = new[]
+                var testContexts = SetupSingleRecordSetTestContexts(context);
+                foreach (var testContext in testContexts)
                 {
-                    TestUtilities.GenerateName("hydratestrec") + ".com",
-                    TestUtilities.GenerateName("hydratestrec") + ".com",
-                    TestUtilities.GenerateName("hydratestrec") + ".com"
-                };
 
-                RecordSetScenarioTests.CreateRecordSets(
-                    testContext,
-                    recordSetNames);
+                    var recordSetNames = new[]
+                    {
+                        TestUtilities.GenerateName("hydratestrec") + ".com",
+                        TestUtilities.GenerateName("hydratestrec") + ".com",
+                        TestUtilities.GenerateName("hydratestrec") + ".com"
+                    };
 
-                IPage<RecordSet> listResponse;
+                    RecordSetScenarioTests.CreateRecordSets(
+                        testContext,
+                        recordSetNames);
 
-                if (isCrossType)
-                {
-                    // Using top = 3, it will pick up SOA, NS and the first TXT
-                    listResponse = testContext.DnsClient.RecordSets
-                        .ListByDnsZone(
+                    IPage<RecordSet> listResponse;
+
+                    if (isCrossType)
+                    {
+                        // Using top = 3, it will pick up SOA, NS and the first TXT
+                        listResponse = testContext.DnsClient.RecordSets
+                            .ListByDnsZone(
+                                testContext.ResourceGroup.Name,
+                                testContext.ZoneName,
+                                3);
+                        // verify if TXT is in the list
+                        Assert.True(
+                            listResponse.Where(rs => rs.Type == "TXT")
+                                .All(
+                                    listedRecordSet =>
+                                        recordSetNames.Any(
+                                            createdName =>
+                                                createdName == listedRecordSet.Name)),
+                            "The returned records do not meet expectations");
+                    }
+                    else
+                    {
+                        // Using top = 3, it will pick up SOA, NS and the first TXT, process it and return just the TXT
+                        listResponse = testContext.DnsClient.RecordSets.ListByType(
                             testContext.ResourceGroup.Name,
                             testContext.ZoneName,
+                            RecordType.TXT,
                             3);
-                    // verify if TXT is in the list
-                    Assert.True(
-                        listResponse.Where(rs => rs.Type == "TXT")
-                            .All(
+                        Assert.True(
+                            listResponse.All(
                                 listedRecordSet =>
                                     recordSetNames.Any(
                                         createdName =>
                                             createdName == listedRecordSet.Name)),
-                        "The returned records do not meet expectations");
-                }
-                else
-                {
-                    // Using top = 3, it will pick up SOA, NS and the first TXT, process it and return just the TXT
-                    listResponse = testContext.DnsClient.RecordSets.ListByType(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        RecordType.TXT,
-                        3);
-                    Assert.True(
-                        listResponse.All(
-                            listedRecordSet =>
-                                recordSetNames.Any(
-                                    createdName =>
-                                        createdName == listedRecordSet.Name)),
-                        "The returned records do not meet expectations");
-                }
+                            "The returned records do not meet expectations");
+                    }
 
-                RecordSetScenarioTests.DeleteRecordSetsAndZone(
-                    testContext,
-                    recordSetNames);
+                    RecordSetScenarioTests.DeleteRecordSetsAndZone(
+                        testContext,
+                        recordSetNames);
+                }
             }
         }
 
@@ -737,65 +822,68 @@ namespace Microsoft.Azure.Management.Dns.Testing
                 MockContext context = MockContext.Start(this.GetType().FullName)
                 )
             {
-                SingleRecordSetTestContext testContext =
-                    SetupSingleRecordSetTest(context);
-                var createParameters = testContext.TestRecordSkeleton;
-                createParameters.CnameRecord = new CnameRecord
+                var testContexts = SetupSingleRecordSetTestContexts(context);
+                foreach (var testContext in testContexts)
                 {
-                    Cname = "www.contoso.example.com"
-                };
+                    var createParameters = testContext.TestRecordSkeleton;
+                    createParameters.CnameRecord = new CnameRecord
+                    {
+                        Cname = "www.contoso.example.com"
+                    };
 
-                var createResponse = testContext.DnsClient.RecordSets
-                    .CreateOrUpdate(
+                    var createResponse = testContext.DnsClient.RecordSets
+                        .CreateOrUpdate(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            testContext.RecordSetName,
+                            RecordType.CNAME,
+                            ifMatch: null,
+                            ifNoneMatch: null,
+                            parameters: createParameters);
+
+                    var updateParameters = createResponse;
+
+                    // expect Precondition Failed 412
+                    TestHelpers.AssertThrows<CloudException>(
+                        () => testContext.DnsClient.RecordSets.CreateOrUpdate(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            testContext.RecordSetName,
+                            RecordType.CNAME,
+                            ifMatch: "somegibberish",
+                            ifNoneMatch: null,
+                            parameters: updateParameters),
+                        exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
+
+                    // expect Precondition Failed 412
+                    TestHelpers.AssertThrows<CloudException>(
+                        () => testContext.DnsClient.RecordSets.Delete(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            testContext.RecordSetName,
+                            RecordType.CNAME,
+                            ifMatch: "somegibberish"),
+                        exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
+
+                    testContext.DnsClient.RecordSets.Delete(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         RecordType.CNAME,
-                        ifMatch: null,
-                        ifNoneMatch: null,
-                        parameters: createParameters);
+                        ifMatch: null);
 
-                var updateParameters = createResponse;
-
-                // expect Precondition Failed 412
-                TestHelpers.AssertThrows<CloudException>(
-                    () => testContext.DnsClient.RecordSets.CreateOrUpdate(
+                    testContext.DnsClient.Zones.Delete(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
-                        testContext.RecordSetName,
-                        RecordType.CNAME,
-                        ifMatch: "somegibberish",
-                        ifNoneMatch: null,
-                        parameters: updateParameters),
-                    exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
-
-                // expect Precondition Failed 412
-                TestHelpers.AssertThrows<CloudException>(
-                    () => testContext.DnsClient.RecordSets.Delete(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        testContext.RecordSetName,
-                        RecordType.CNAME,
-                        ifMatch: "somegibberish"),
-                    exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
-
-                testContext.DnsClient.RecordSets.Delete(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    RecordType.CNAME,
-                    ifMatch: null);
-
-                testContext.DnsClient.Zones.Delete(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    ifMatch: null);
+                        ifMatch: null);
+                }
             }
         }
 
         private void RecordSetCreateGet(
             RecordType recordType,
             Action<RecordSet> setRecordsAction,
+            bool isPrivateZoneEnabled,
             [System.Runtime.CompilerServices.CallerMemberName] string methodName
                 = "testframework_failed")
         {
@@ -804,54 +892,59 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     this.GetType().FullName,
                     methodName))
             {
-                SingleRecordSetTestContext testContext =
-                    SetupSingleRecordSetTest(context);
-                var createParameters = testContext.TestRecordSkeleton;
-                setRecordsAction(createParameters);
+                var testContexts = isPrivateZoneEnabled 
+                    ? SetupSingleRecordSetTestContexts(context) 
+                    : new [] { SetupSingleRecordSetTestForPublicZone(context) };
 
-                var createResponse = testContext.DnsClient.RecordSets
-                    .CreateOrUpdate(
+                foreach (var testContext in testContexts)
+                {
+                    var createParameters = testContext.TestRecordSkeleton;
+                    setRecordsAction(createParameters);
+
+                    var createResponse = testContext.DnsClient.RecordSets
+                        .CreateOrUpdate(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            testContext.RecordSetName,
+                            recordType,
+                            ifMatch: null,
+                            ifNoneMatch: null,
+                            parameters: createParameters);
+
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            createParameters,
+                            createResponse,
+                            ignoreEtag: true),
+                        "Response body of Create does not match expectations");
+                    Assert.False(string.IsNullOrWhiteSpace(createResponse.Etag));
+
+                    var getresponse = testContext.DnsClient.RecordSets.Get(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        recordType);
+
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            createResponse,
+                            getresponse,
+                            ignoreEtag: false),
+                        "Response body of Get does not match expectations");
+
+                    // BUG 2364951: should work without specifying ETag
+                    testContext.DnsClient.RecordSets.Delete(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         recordType,
-                        ifMatch: null,
-                        ifNoneMatch: null,
-                        parameters: createParameters);
+                        ifMatch: null);
 
-                Assert.True(
-                    TestHelpers.AreEqual(
-                        createParameters,
-                        createResponse,
-                        ignoreEtag: true),
-                    "Response body of Create does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(createResponse.Etag));
-
-                var getresponse = testContext.DnsClient.RecordSets.Get(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    recordType);
-
-                Assert.True(
-                    TestHelpers.AreEqual(
-                        createResponse,
-                        getresponse,
-                        ignoreEtag: false),
-                    "Response body of Get does not match expectations");
-
-                // BUG 2364951: should work without specifying ETag
-                testContext.DnsClient.RecordSets.Delete(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    recordType,
-                    ifMatch: null);
-
-                testContext.DnsClient.Zones.Delete(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    ifMatch: null);
+                    testContext.DnsClient.Zones.Delete(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        ifMatch: null);
+                }
             }
         }
 

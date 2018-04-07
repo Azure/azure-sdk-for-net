@@ -12,11 +12,11 @@ internal static partial class SdkInfo
             return new Tuple<string, string, string>[]
             {
                 new Tuple<string, string, string>("Compute", "AvailabilitySets", "2017-12-01"),
-                new Tuple<string, string, string>("Compute", "Disks", "2017-03-30"),
+                new Tuple<string, string, string>("Compute", "Disks", "2018-04-01"),
                 new Tuple<string, string, string>("Compute", "Images", "2017-12-01"),
                 new Tuple<string, string, string>("Compute", "LogAnalytics", "2017-12-01"),
                 new Tuple<string, string, string>("Compute", "ResourceSkus", "2017-09-01"),
-                new Tuple<string, string, string>("Compute", "Snapshots", "2017-03-30"),
+                new Tuple<string, string, string>("Compute", "Snapshots", "2018-04-01"),
                 new Tuple<string, string, string>("Compute", "Usage", "2017-12-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineExtensionImages", "2017-12-01"),
                 new Tuple<string, string, string>("Compute", "VirtualMachineExtensions", "2017-12-01"),

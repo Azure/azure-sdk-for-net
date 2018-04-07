@@ -33,13 +33,18 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="publisher">Publisher of the image.</param>
         /// <param name="offer">Offer of the image.</param>
         /// <param name="sku">SKU of the image.</param>
-        /// <param name="version">Version of the image</param>
-        public ImageReference(string publisher, string offer, string sku, string version = default(string))
+        /// <param name="version">Version of the image.</param>
+        /// <param name="virtualMachineImageId">The ARM resource identifier of
+        /// the virtual machine image. Computes nodes of the cluster will be
+        /// created using this custom image. This is of the form
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}</param>
+        public ImageReference(string publisher, string offer, string sku, string version = default(string), string virtualMachineImageId = default(string))
         {
             Publisher = publisher;
             Offer = offer;
             Sku = sku;
             Version = version;
+            VirtualMachineImageId = virtualMachineImageId;
             CustomInit();
         }
 
@@ -67,10 +72,28 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public string Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets version of the image
+        /// Gets or sets version of the image.
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ARM resource identifier of the virtual machine
+        /// image. Computes nodes of the cluster will be created using this
+        /// custom image. This is of the form
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}
+        /// </summary>
+        /// <remarks>
+        /// The virtual machine image must be in the same region and
+        /// subscription as the cluster. For information about the firewall
+        /// settings for the Batch node agent to communicate with the Batch
+        /// service see
+        /// https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// Note, you need to provide publisher, offer and sku of the base OS
+        /// image of which the custom image has been derived from.
+        /// </remarks>
+        [JsonProperty(PropertyName = "virtualMachineImageId")]
+        public string VirtualMachineImageId { get; set; }
 
         /// <summary>
         /// Validate the object.

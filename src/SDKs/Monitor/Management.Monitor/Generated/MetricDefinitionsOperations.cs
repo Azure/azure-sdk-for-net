@@ -56,6 +56,9 @@ namespace Microsoft.Azure.Management.Monitor
         /// <param name='resourceUri'>
         /// The identifier of the resource.
         /// </param>
+        /// <param name='metricnamespace'>
+        /// Metric namespace to query metric definitions for.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -77,13 +80,13 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListWithHttpMessagesAsync(string resourceUri, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<MetricDefinition>>> ListWithHttpMessagesAsync(string resourceUri, string metricnamespace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceUri");
             }
-            string apiVersion = "2017-05-01-preview";
+            string apiVersion = "2018-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -93,6 +96,7 @@ namespace Microsoft.Azure.Management.Monitor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("metricnamespace", metricnamespace);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -104,6 +108,10 @@ namespace Microsoft.Azure.Management.Monitor
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (metricnamespace != null)
+            {
+                _queryParameters.Add(string.Format("metricnamespace={0}", System.Uri.EscapeDataString(metricnamespace)));
             }
             if (_queryParameters.Count > 0)
             {
