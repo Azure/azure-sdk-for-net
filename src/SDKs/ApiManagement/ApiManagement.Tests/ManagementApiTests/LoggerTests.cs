@@ -31,7 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 string newloggerId = TestUtilities.GenerateName("newlogger");
                 string eventHubNameSpaceName = TestUtilities.GenerateName("eventHubNamespace");
                 string eventHubName = TestUtilities.GenerateName("eventhubname");
-
+                
                 try
                 {
                     // first create the event hub namespace
@@ -131,6 +131,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(newloggerId, loggerContract.Name);
                     Assert.Equal(patchedDescription, loggerContract.Description);
                     Assert.NotNull(loggerContract.Credentials);
+                    Assert.NotNull(loggerContract.CredentialsPropertyName);
 
                     // get the logger tag
                     loggerTag = await testBase.client.Logger.GetEntityTagAsync(
@@ -161,6 +162,18 @@ namespace ApiManagement.Tests.ManagementApiTests
                 finally
                 {
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, newloggerId, "*");
+                    // clean up all properties
+                    var listOfProperties = testBase.client.Property.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var property in listOfProperties)
+                    {
+                        testBase.client.Property.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            property.Name,
+                            "*");                    
+                    }
                     testBase.eventHubClient.EventHubs.Delete(testBase.rgName, eventHubNameSpaceName, eventHubName);
                     testBase.eventHubClient.Namespaces.Delete(testBase.rgName, eventHubNameSpaceName);
                 }
@@ -177,7 +190,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 testBase.TryCreateApiManagementService();
 
                 string newloggerId = TestUtilities.GenerateName("applicationInsight");
-                
+
                 try
                 {
                     // now create logger using the event
@@ -241,6 +254,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(newloggerId, loggerContract.Name);
                     Assert.Equal(patchedDescription, loggerContract.Description);
                     Assert.NotNull(loggerContract.Credentials);
+                    Assert.NotNull(loggerContract.CredentialsPropertyName);
 
                     // get the logger tag
                     loggerTag = await testBase.client.Logger.GetEntityTagAsync(
@@ -270,7 +284,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                 }
                 finally
                 {
-                    testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, newloggerId, "*");                    
+                    testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, newloggerId, "*");
+                    var listOfProperties = testBase.client.Property.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+
+                    foreach (var property in listOfProperties)
+                    {
+                        testBase.client.Property.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            property.Name,
+                            "*");
+                    }
                 }
             }
         }        

@@ -83,6 +83,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IApplicationSecurityGroupsOperations ApplicationSecurityGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IDdosProtectionPlansOperations.
+        /// </summary>
+        public virtual IDdosProtectionPlansOperations DdosProtectionPlans { get; private set; }
+
+        /// <summary>
         /// Gets the IAvailableEndpointServicesOperations.
         /// </summary>
         public virtual IAvailableEndpointServicesOperations AvailableEndpointServices { get; private set; }
@@ -98,6 +103,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteCircuitPeeringsOperations ExpressRouteCircuitPeerings { get; private set; }
 
         /// <summary>
+        /// Gets the IExpressRouteCircuitConnectionsOperations.
+        /// </summary>
+        public virtual IExpressRouteCircuitConnectionsOperations ExpressRouteCircuitConnections { get; private set; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitsOperations.
         /// </summary>
         public virtual IExpressRouteCircuitsOperations ExpressRouteCircuits { get; private set; }
@@ -106,6 +116,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IExpressRouteServiceProvidersOperations.
         /// </summary>
         public virtual IExpressRouteServiceProvidersOperations ExpressRouteServiceProviders { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteCrossConnectionsOperations.
+        /// </summary>
+        public virtual IExpressRouteCrossConnectionsOperations ExpressRouteCrossConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IExpressRouteCrossConnectionPeeringsOperations.
+        /// </summary>
+        public virtual IExpressRouteCrossConnectionPeeringsOperations ExpressRouteCrossConnectionPeerings { get; private set; }
 
         /// <summary>
         /// Gets the ILoadBalancersOperations.
@@ -460,11 +480,15 @@ namespace Microsoft.Azure.Management.Network
         {
             ApplicationGateways = new ApplicationGatewaysOperations(this);
             ApplicationSecurityGroups = new ApplicationSecurityGroupsOperations(this);
+            DdosProtectionPlans = new DdosProtectionPlansOperations(this);
             AvailableEndpointServices = new AvailableEndpointServicesOperations(this);
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
+            ExpressRouteCircuitConnections = new ExpressRouteCircuitConnectionsOperations(this);
             ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
             ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
+            ExpressRouteCrossConnections = new ExpressRouteCrossConnectionsOperations(this);
+            ExpressRouteCrossConnectionPeerings = new ExpressRouteCrossConnectionPeeringsOperations(this);
             LoadBalancers = new LoadBalancersOperations(this);
             LoadBalancerBackendAddressPools = new LoadBalancerBackendAddressPoolsOperations(this);
             LoadBalancerFrontendIPConfigurations = new LoadBalancerFrontendIPConfigurationsOperations(this);
@@ -575,7 +599,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-01-01";
+            string apiVersion = "2018-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

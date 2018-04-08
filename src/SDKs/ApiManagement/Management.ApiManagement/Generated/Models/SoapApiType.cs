@@ -16,7 +16,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// </summary>
     public static class SoapApiType
     {
-        public const string Http = "http";
-        public const string Soap = "soap";
+        /// <summary>
+        /// Imports a SOAP API having a RESTful front end.
+        /// </summary>
+        public const string SoapToRest = "http";
+        /// <summary>
+        /// Imports the Soap API having a SOAP front end.
+        /// </summary>
+        public const string SoapPassThrough = "soap";
     }
 }

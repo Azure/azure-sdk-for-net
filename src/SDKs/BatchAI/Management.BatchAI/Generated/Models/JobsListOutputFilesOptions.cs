@@ -33,13 +33,15 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="outputdirectoryid">Id of the job output directory.
         /// This is the OutputDirectory--&gt;id parameter that is given by the
         /// user during Create Job.</param>
+        /// <param name="directory">The path to the directory.</param>
         /// <param name="linkexpiryinminutes">The number of minutes after which
         /// the download link will expire.</param>
         /// <param name="maxResults">The maximum number of items to return in
         /// the response. A maximum of 1000 files can be returned.</param>
-        public JobsListOutputFilesOptions(string outputdirectoryid, int? linkexpiryinminutes = default(int?), int? maxResults = default(int?))
+        public JobsListOutputFilesOptions(string outputdirectoryid, string directory = default(string), int? linkexpiryinminutes = default(int?), int? maxResults = default(int?))
         {
             Outputdirectoryid = outputdirectoryid;
+            Directory = directory;
             Linkexpiryinminutes = linkexpiryinminutes;
             MaxResults = maxResults;
             CustomInit();
@@ -55,21 +57,27 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// OutputDirectory--&amp;gt;id parameter that is given by the user
         /// during Create Job.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public string Outputdirectoryid { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path to the directory.
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public string Directory { get; set; }
 
         /// <summary>
         /// Gets or sets the number of minutes after which the download link
         /// will expire.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public int? Linkexpiryinminutes { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
         /// A maximum of 1000 files can be returned.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public int? MaxResults { get; set; }
 
         /// <summary>

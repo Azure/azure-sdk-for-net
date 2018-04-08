@@ -3265,5 +3265,27 @@ namespace DataFactory.Tests.JsonSamples
         ]
     }
 }";
-    }
+        [JsonSample]
+        public const string DatabrickNotebookActivity = @"
+{
+  ""name"": ""MyPipeline"",
+  ""properties"": {
+    ""activities"": [
+      {
+        ""name"": ""MyActivity"",
+        ""type"": ""DatabricksNotebook"",
+        ""typeProperties"": {
+          ""notebookPath"": ""/testing"",
+          ""baseParameters"":
+            {
+                ""test"":""test""
+            }
+        }, 
+        ""linkedServiceName"": { ""referenceName"": ""MyLinkedServiceName"", ""type"": ""LinkedServiceReference"" }
+      } 
+    ]
+  }
+}
+";
+	}
 }

@@ -94,6 +94,7 @@ namespace Microsoft.Rest.Azure
 
             IAzureLRO<TResourceBody, TRequestHeaders> aLro = null;
 
+            //TODO: create factory
             if (initialRequestMethod.Equals(HttpMethod.Put))
             {
                 aLro = new PutLRO<TResourceBody, TRequestHeaders>(client, response, customHeaders, cancellationToken);
@@ -571,19 +572,6 @@ namespace Microsoft.Rest.Azure
 
             return pollingState.AzureOperationResponse;
         }
-
-
-
-        public static async Task<AzureOperationResponse<TBody, THeader>> GetLROResults<TBody, THeader>(
-          this IAzureClient client,
-          AzureOperationResponse<TBody, THeader> response,
-          Dictionary<string, List<string>> customHeaders,
-          CancellationToken cancellationToken) where TBody : class where THeader : class
-        {
-
-            throw new Exception();
-        }
-
 
         /// <summary>
         /// Updates PollingState from Location header.

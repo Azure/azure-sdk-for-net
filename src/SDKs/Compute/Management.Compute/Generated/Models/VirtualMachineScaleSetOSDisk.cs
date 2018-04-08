@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vhdContainers">Specifies the container urls that are
         /// used to store operating system disks for the scale set.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
+        public VirtualMachineScaleSetOSDisk(string createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
         {
             Name = name;
             Caching = caching;
@@ -115,7 +116,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Empty', 'Attach'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
-        public DiskCreateOptionTypes CreateOption { get; set; }
+        public string CreateOption { get; set; }
 
         /// <summary>
         /// Gets or sets this property allows you to specify the type of the OS
@@ -151,11 +152,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (CreateOption == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "CreateOption");
+            }
         }
     }
 }

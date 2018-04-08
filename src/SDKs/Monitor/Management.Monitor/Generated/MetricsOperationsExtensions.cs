@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='metricnamespace'>
             /// Metric namespace to query metric definitions for.
             /// </param>
-            public static Response List(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), double? top = default(double?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string))
+            public static Response List(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), int? top = default(int?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string))
             {
                 return operations.ListAsync(resourceUri, odataQuery, timespan, interval, metricnames, aggregation, top, orderby, resultType, metricnamespace).GetAwaiter().GetResult();
             }
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Response> ListAsync(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), double? top = default(double?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Response> ListAsync(this IMetricsOperations operations, string resourceUri, ODataQuery<MetadataValue> odataQuery = default(ODataQuery<MetadataValue>), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string metricnames = default(string), string aggregation = default(string), int? top = default(int?), string orderby = default(string), ResultType? resultType = default(ResultType?), string metricnamespace = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, odataQuery, timespan, interval, metricnames, aggregation, top, orderby, resultType, metricnamespace, null, cancellationToken).ConfigureAwait(false))
                 {

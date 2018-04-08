@@ -23,7 +23,11 @@ namespace Microsoft.Azure.EventGrid.Tests.TestHelper
             {
                 handler.IsPassThrough = true;
                 EventGridManagementClient eventGridManagementClient = context.GetServiceClient<EventGridManagementClient>(handlers: handler);
-                eventGridManagementClient.LongRunningOperationRetryTimeout = 2;
+
+                // By default test framework sets this to 0 during playback, and during record mode it uses default client timeout sets by the generated code
+                // If you want to change that time out during recording, please use HttpMockServer.Mode to detect Record/Playback
+                // Tests execution should not take more than 1 second during playback.
+                //eventGridManagementClient.LongRunningOperationRetryTimeout = 2;
                 return eventGridManagementClient;
             }
 
@@ -49,7 +53,11 @@ namespace Microsoft.Azure.EventGrid.Tests.TestHelper
             {
                 handler.IsPassThrough = true;
                 ResourceManagementClient resourceManagementClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
-                resourceManagementClient.LongRunningOperationRetryTimeout = 5;
+
+                // By default test framework sets this to 0 during playback, and during record mode it uses default client timeout sets by the generated code
+                // If you want to change that time out during recording, please use HttpMockServer.Mode to detect Record/Playback
+                // Tests execution should not take more than 1 second during playback.
+                //resourceManagementClient.LongRunningOperationRetryTimeout = 5;
                 return resourceManagementClient;
             }
 

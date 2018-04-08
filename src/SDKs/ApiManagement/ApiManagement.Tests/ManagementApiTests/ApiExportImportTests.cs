@@ -166,7 +166,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Path = path,
                         ContentFormat = ContentFormat.Wsdl,
                         ContentValue = wsdlApiContent,
-                        SoapApiType = SoapApiType.Soap, // create Soap Pass through API
+                        SoapApiType = SoapApiType.SoapPassThrough, // create Soap Pass through API
                         WsdlSelector = new ApiCreateOrUpdatePropertiesWsdlSelector()
                         {
                             WsdlServiceName = "Weather",
@@ -181,7 +181,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                             apiCreateOrUpdate);
 
                     Assert.NotNull(wsdlApiResponse);
-                    Assert.Equal(SoapApiType.Soap, wsdlApiResponse.ApiType);
+                    Assert.Equal(SoapApiType.SoapPassThrough, wsdlApiResponse.ApiType);
 
                     // get the api to check it was created
                     var apiContract = testBase.client.Api.Get(

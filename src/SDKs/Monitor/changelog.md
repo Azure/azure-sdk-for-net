@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.Monitor release notes
 
+### Changes in 0.19.1-preview
+
+**Notes**
+
+- Fixing bug #2655: specify the top argument of the metrics API as integer instead of double
+
 ### Changes in 0.19.0-preview
 
 **Notes**
