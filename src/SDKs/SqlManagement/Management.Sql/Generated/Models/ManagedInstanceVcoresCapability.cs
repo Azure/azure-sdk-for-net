@@ -11,38 +11,38 @@
 namespace Microsoft.Azure.Management.Sql.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The max per-database DTU capability.
+    /// The managed instance virtual cores capability.
     /// </summary>
-    public partial class ElasticPoolPerDatabaseMaxDtuCapability
+    public partial class ManagedInstanceVcoresCapability
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ElasticPoolPerDatabaseMaxDtuCapability class.
+        /// Initializes a new instance of the ManagedInstanceVcoresCapability
+        /// class.
         /// </summary>
-        public ElasticPoolPerDatabaseMaxDtuCapability()
+        public ManagedInstanceVcoresCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ElasticPoolPerDatabaseMaxDtuCapability class.
+        /// Initializes a new instance of the ManagedInstanceVcoresCapability
+        /// class.
         /// </summary>
-        /// <param name="limit">The maximum DTUs per database.</param>
+        /// <param name="name">The virtual cores identifier.</param>
+        /// <param name="value">The virtual cores value.</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
-        /// <param name="supportedPerDatabaseMinDtus">The list of supported min
-        /// database DTUs.</param>
-        public ElasticPoolPerDatabaseMaxDtuCapability(long? limit = default(long?), CapabilityStatus? status = default(CapabilityStatus?), IList<ElasticPoolPerDatabaseMinDtuCapability> supportedPerDatabaseMinDtus = default(IList<ElasticPoolPerDatabaseMinDtuCapability>))
+        /// <param name="reason">The reason for the capability not being
+        /// available.</param>
+        public ManagedInstanceVcoresCapability(string name = default(string), int? value = default(int?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
-            Limit = limit;
+            Name = name;
+            Value = value;
             Status = status;
-            SupportedPerDatabaseMinDtus = supportedPerDatabaseMinDtus;
+            Reason = reason;
             CustomInit();
         }
 
@@ -52,10 +52,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the maximum DTUs per database.
+        /// Gets the virtual cores identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "limit")]
-        public long? Limit { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the virtual cores value.
+        /// </summary>
+        [JsonProperty(PropertyName = "value")]
+        public int? Value { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:
@@ -65,10 +71,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
-        /// Gets the list of supported min database DTUs.
+        /// Gets or sets the reason for the capability not being available.
         /// </summary>
-        [JsonProperty(PropertyName = "supportedPerDatabaseMinDtus")]
-        public IList<ElasticPoolPerDatabaseMinDtuCapability> SupportedPerDatabaseMinDtus { get; private set; }
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
 
     }
 }
