@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Iothub.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
@@ -31,16 +31,20 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Initializes a new instance of the EventHubConsumerGroupInfo class.
         /// </summary>
-        /// <param name="tags">The tags.</param>
+        /// <param name="properties">The tags.</param>
         /// <param name="id">The Event Hub-compatible consumer group
         /// identifier.</param>
         /// <param name="name">The Event Hub-compatible consumer group
         /// name.</param>
-        public EventHubConsumerGroupInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string))
+        /// <param name="type">the resource type.</param>
+        /// <param name="etag">The etag.</param>
+        public EventHubConsumerGroupInfo(IDictionary<string, string> properties = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
         {
-            Tags = tags;
+            Properties = properties;
             Id = id;
             Name = name;
+            Type = type;
+            Etag = etag;
             CustomInit();
         }
 
@@ -52,20 +56,32 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets or sets the tags.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public IDictionary<string, string> Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets the Event Hub-compatible consumer group identifier.
+        /// Gets the Event Hub-compatible consumer group identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Event Hub-compatible consumer group name.
+        /// Gets the Event Hub-compatible consumer group name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets the etag.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
     }
 }

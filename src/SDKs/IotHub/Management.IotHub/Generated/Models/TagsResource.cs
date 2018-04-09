@@ -11,31 +11,31 @@
 namespace Iothub.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The JSON-serialized leaf certificate
+    /// A container holding only the Tags for a resource, allowing the user to
+    /// update the tags on an IoT Hub instance.
     /// </summary>
-    public partial class CertificateVerificationDescription
+    public partial class TagsResource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// CertificateVerificationDescription class.
+        /// Initializes a new instance of the TagsResource class.
         /// </summary>
-        public CertificateVerificationDescription()
+        public TagsResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// CertificateVerificationDescription class.
+        /// Initializes a new instance of the TagsResource class.
         /// </summary>
-        /// <param name="certificate">base-64 representation of X509
-        /// certificate .cer file or just .pem file content.</param>
-        public CertificateVerificationDescription(string certificate = default(string))
+        /// <param name="tags">Resource tags</param>
+        public TagsResource(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Certificate = certificate;
+            Tags = tags;
             CustomInit();
         }
 
@@ -45,11 +45,10 @@ namespace Iothub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets base-64 representation of X509 certificate .cer file
-        /// or just .pem file content.
+        /// Gets or sets resource tags
         /// </summary>
-        [JsonProperty(PropertyName = "certificate")]
-        public string Certificate { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
     }
 }
