@@ -11,6 +11,7 @@ namespace Compute.Tests
     public class VMSizesTests
     {
         [Fact]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestListVMSizes()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

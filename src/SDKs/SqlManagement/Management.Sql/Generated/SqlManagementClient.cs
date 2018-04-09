@@ -72,21 +72,6 @@ namespace Microsoft.Azure.Management.Sql
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IBackupLongTermRetentionPoliciesOperations.
-        /// </summary>
-        public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IBackupLongTermRetentionVaultsOperations.
-        /// </summary>
-        public virtual IBackupLongTermRetentionVaultsOperations BackupLongTermRetentionVaults { get; private set; }
-
-        /// <summary>
-        /// Gets the IRestorePointsOperations.
-        /// </summary>
-        public virtual IRestorePointsOperations RestorePoints { get; private set; }
-
-        /// <summary>
         /// Gets the IRecoverableDatabasesOperations.
         /// </summary>
         public virtual IRecoverableDatabasesOperations RecoverableDatabases { get; private set; }
@@ -97,9 +82,9 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; private set; }
 
         /// <summary>
-        /// Gets the ICapabilitiesOperations.
+        /// Gets the IServersOperations.
         /// </summary>
-        public virtual ICapabilitiesOperations Capabilities { get; private set; }
+        public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
         /// Gets the IServerConnectionPoliciesOperations.
@@ -142,6 +127,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolsOperations ElasticPools { get; private set; }
 
         /// <summary>
+        /// Gets the IRecommendedElasticPoolsOperations.
+        /// </summary>
+        public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationLinksOperations.
         /// </summary>
         public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
@@ -162,11 +152,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServiceObjectivesOperations ServiceObjectives { get; private set; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        public virtual IServersOperations Servers { get; private set; }
-
-        /// <summary>
         /// Gets the IElasticPoolActivitiesOperations.
         /// </summary>
         public virtual IElasticPoolActivitiesOperations ElasticPoolActivities { get; private set; }
@@ -175,11 +160,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolDatabaseActivitiesOperations.
         /// </summary>
         public virtual IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; private set; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
 
         /// <summary>
         /// Gets the IServiceTierAdvisorsOperations.
@@ -210,6 +190,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseBlobAuditingPoliciesOperations.
         /// </summary>
         public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseAutomaticTuningOperations.
+        /// </summary>
+        public virtual IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; private set; }
 
         /// <summary>
         /// Gets the IEncryptionProtectorsOperations.
@@ -247,9 +232,39 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISyncMembersOperations SyncMembers { get; private set; }
 
         /// <summary>
+        /// Gets the ISubscriptionUsagesOperations.
+        /// </summary>
+        public virtual ISubscriptionUsagesOperations SubscriptionUsages { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        public virtual ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupLongTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerAutomaticTuningOperations.
+        /// </summary>
+        public virtual IServerAutomaticTuningOperations ServerAutomaticTuning { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerDnsAliasesOperations.
+        /// </summary>
+        public virtual IServerDnsAliasesOperations ServerDnsAliases { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorePointsOperations.
+        /// </summary>
+        public virtual IRestorePointsOperations RestorePoints { get; private set; }
 
         /// <summary>
         /// Gets the IDatabaseOperations.
@@ -257,9 +272,14 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseOperations DatabaseOperations { get; private set; }
 
         /// <summary>
-        /// Gets the IServerDnsAliasesOperations.
+        /// Gets the IElasticPoolOperations.
         /// </summary>
-        public virtual IServerDnsAliasesOperations ServerDnsAliases { get; private set; }
+        public virtual IElasticPoolOperations ElasticPoolOperations { get; private set; }
+
+        /// <summary>
+        /// Gets the ICapabilitiesOperations.
+        /// </summary>
+        public virtual ICapabilitiesOperations Capabilities { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -462,12 +482,9 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         private void Initialize()
         {
-            BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
-            BackupLongTermRetentionVaults = new BackupLongTermRetentionVaultsOperations(this);
-            RestorePoints = new RestorePointsOperations(this);
             RecoverableDatabases = new RecoverableDatabasesOperations(this);
             RestorableDroppedDatabases = new RestorableDroppedDatabasesOperations(this);
-            Capabilities = new CapabilitiesOperations(this);
+            Servers = new ServersOperations(this);
             ServerConnectionPolicies = new ServerConnectionPoliciesOperations(this);
             DatabaseThreatDetectionPolicies = new DatabaseThreatDetectionPoliciesOperations(this);
             DataMaskingPolicies = new DataMaskingPoliciesOperations(this);
@@ -476,20 +493,20 @@ namespace Microsoft.Azure.Management.Sql
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);
             Databases = new DatabasesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
+            RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ReplicationLinks = new ReplicationLinksOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             ServiceObjectives = new ServiceObjectivesOperations(this);
-            Servers = new ServersOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
-            RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServiceTierAdvisors = new ServiceTierAdvisorsOperations(this);
             TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
             DatabaseUsages = new DatabaseUsagesOperations(this);
             DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
+            DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             EncryptionProtectors = new EncryptionProtectorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
             Operations = new Operations(this);
@@ -497,9 +514,16 @@ namespace Microsoft.Azure.Management.Sql
             SyncAgents = new SyncAgentsOperations(this);
             SyncGroups = new SyncGroupsOperations(this);
             SyncMembers = new SyncMembersOperations(this);
+            SubscriptionUsages = new SubscriptionUsagesOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
-            DatabaseOperations = new DatabaseOperations(this);
+            LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
+            BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
+            ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
+            RestorePoints = new RestorePointsOperations(this);
+            DatabaseOperations = new DatabaseOperations(this);
+            ElasticPoolOperations = new ElasticPoolOperations(this);
+            Capabilities = new CapabilitiesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

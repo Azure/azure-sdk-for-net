@@ -48,11 +48,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets the id for the input directory.
         /// </summary>
         /// <remarks>
-        /// It will be available for the job as an environment variable under
-        /// AZ_BATCHAI_INPUT_id. The service will also provide the following
-        /// environment variable: AZ_BATCHAI_PREV_OUTPUT_Name. The value of the
-        /// variable will be populated if the job is being retried after a
-        /// previous failure, otherwise it will be set to nothing.
+        /// The path of the input directory will be available as a value of an
+        /// environment variable with AZ_BATCHAI_INPUT_<id> name, where <id> is
+        /// the value of id attribute.
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

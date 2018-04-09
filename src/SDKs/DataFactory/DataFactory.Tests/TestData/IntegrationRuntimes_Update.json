@@ -4,32 +4,38 @@
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleIntegrationRuntime",
-    "ifMatch": null,
-    "integrationRuntime": {
-      "properties": {
-        "type": "SelfHosted",
-        "description": "Update description"
-      }
+    "updateIntegrationRuntimeRequest": {
+      "autoUpdate": "Off",
+      "updateDelayOffset": "\"PT3H\""
     },
     "api-version": "2017-09-01-preview"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:50 GMT",
-        "x-ms-request-id": "3ec5982c-3567-4dce-a721-bd50d9fa6591",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1191",
-        "x-ms-correlation-request-id": "3a0c819a-37d7-48f7-b609-3ca53f7214cc"
+        "Date": "Wed, 29 Nov 2017 04:14:01 GMT",
+        "x-ms-request-id": "7ee6d3ac-d71b-426a-9023-f87616161540",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
         "name": "exampleIntegrationRuntime",
         "properties": {
+          "state": "NeedRegistration",
           "type": "SelfHosted",
-          "description": "Update description"
-        },
-        "etag": "28031ba7-0000-0000-0000-59b971260000"
+          "typeProperties": {
+            "autoUpdate": "Off",
+            "taskQueueId": "00bb6126-79e3-46f1-a7ea-0d192a3efc26",
+            "nodes": [],
+            "updateDelayOffset": "PT3H",
+            "serviceUrls": [
+              "wu.frontend.int.clouddatahub-int.net",
+              "*.servicebus.windows.net"
+            ],
+            "versionStatus": "UpToDate",
+            "capabilities": {},
+            "createTime": "2017-11-29T04:13:56.3605984Z"
+          }
+        }
       }
     }
   }

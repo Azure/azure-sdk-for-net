@@ -14,7 +14,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 {
     public class TenantGitTests : TestBase
     {
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public async Task ValidateSaveDeploy()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");

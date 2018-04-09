@@ -57,8 +57,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets the name for the output directory.
         /// </summary>
         /// <remarks>
-        /// It will be available for the job as an environment variable under
-        /// AZ_BATCHAI_OUTPUT_id.
+        /// The path of the output directory will be available as a value of an
+        /// environment variable with AZ_BATCHAI_OUTPUT_<id> name, where <id>
+        /// is the value of id attribute.
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
@@ -69,7 +70,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// NOTE: This is an absolute path to prefix. E.g.
-        /// $AZ_BATCHAI_MOUNT_ROOT/MyNFS/MyLogs.
+        /// $AZ_BATCHAI_MOUNT_ROOT/MyNFS/MyLogs. You can find the full path to
+        /// the output directory by combining pathPrefix,
+        /// jobOutputDirectoryPathSegment (reported by get job) and pathSuffix.
         /// </remarks>
         [JsonProperty(PropertyName = "pathPrefix")]
         public string PathPrefix { get; set; }
@@ -79,7 +82,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// created.
         /// </summary>
         /// <remarks>
-        /// The suffix path where the output directory will be created.
+        /// The suffix path where the output directory will be created. E.g.
+        /// models. You can find the full path to the output directory by
+        /// combining pathPrefix, jobOutputDirectoryPathSegment (reported by
+        /// get job) and pathSuffix.
         /// </remarks>
         [JsonProperty(PropertyName = "pathSuffix")]
         public string PathSuffix { get; set; }

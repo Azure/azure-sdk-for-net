@@ -49,12 +49,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the scope for the auto user
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// pool - specifies that the task runs as the common auto user account
-        /// which is created on every node in a pool.
-        /// task - specifies that the service should create a new user for the
-        /// task.
         /// The default value is task. Possible values include: 'task', 'pool'
         /// </remarks>
         [JsonProperty(PropertyName = "scope")]
@@ -64,10 +58,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the elevation level of the auto user.
         /// </summary>
         /// <remarks>
-        /// nonAdmin - The auto user is a standard user without elevated
-        /// access. admin - The auto user is a user with elevated access and
-        /// operates with full Administrator permissions. The default value is
-        /// nonAdmin. Possible values include: 'nonAdmin', 'admin'
+        /// The default value is nonAdmin. Possible values include: 'nonAdmin',
+        /// 'admin'
         /// </remarks>
         [JsonProperty(PropertyName = "elevationLevel")]
         public ElevationLevel? ElevationLevel { get; set; }

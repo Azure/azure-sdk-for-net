@@ -20,7 +20,6 @@
 	<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
-    <DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples Gallery Intune AzureBatchFileConventions.IntegrationTests Batch.FileStaging.Tests Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests</DefaultPathTokenToIgnore>	
   </PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>

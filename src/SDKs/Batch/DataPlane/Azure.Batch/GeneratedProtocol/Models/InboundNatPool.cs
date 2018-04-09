@@ -103,8 +103,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Acceptable values range between 1 and 65534 except ports from 50000
         /// to 55000 which are reserved. All ranges within a pool must be
-        /// distinct and cannot overlap. If any reserved or overlapping values
-        /// are provided the request fails with HTTP status code 400.
+        /// distinct and cannot overlap. Each range must contain at least 40
+        /// ports. If any reserved or overlapping values are provided the
+        /// request fails with HTTP status code 400.
         /// </remarks>
         [JsonProperty(PropertyName = "frontendPortRangeStart")]
         public int FrontendPortRangeStart { get; set; }
@@ -117,9 +118,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Acceptable values range between 1 and 65534 except ports from 50000
         /// to 55000 which are reserved by the Batch service. All ranges within
-        /// a pool must be distinct and cannot overlap. If any reserved or
-        /// overlapping values are provided the request fails with HTTP status
-        /// code 400.
+        /// a pool must be distinct and cannot overlap. Each range must contain
+        /// at least 40 ports. If any reserved or overlapping values are
+        /// provided the request fails with HTTP status code 400.
         /// </remarks>
         [JsonProperty(PropertyName = "frontendPortRangeEnd")]
         public int FrontendPortRangeEnd { get; set; }

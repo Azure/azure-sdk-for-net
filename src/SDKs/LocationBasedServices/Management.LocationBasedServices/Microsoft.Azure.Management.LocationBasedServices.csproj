@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.LocationBasedServices</PackageId>
+    <Description>Microsoft Azure Management Location Based Services Library</Description>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.Management.LocationBasedServices</AssemblyName>
+    <PackageTags>Microsoft Azure Location Based Services management;Location Services;Location Services management;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+</Project>

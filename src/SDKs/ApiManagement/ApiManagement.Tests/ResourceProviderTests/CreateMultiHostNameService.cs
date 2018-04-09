@@ -30,23 +30,25 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 var hostnameConfig1 = new HostnameConfiguration()
                 {
                     Type = HostnameType.Proxy,
-                    HostName = "gateway1.powershelltest.net",
+                    HostName = "gateway1.msitesting.net",
                     EncodedCertificate = testBase.base64EncodedTestCertificateData,
-                    CertificatePassword = testBase.testCertificatePassword
+                    CertificatePassword = testBase.testCertificatePassword,
+                    DefaultSslBinding = true
                 };
 
                 var hostnameConfig2 = new HostnameConfiguration()
                 {
                     Type = HostnameType.Proxy,
-                    HostName = "gateway2.powershelltest.net",
+                    HostName = "gateway2.msitesting.net",
                     EncodedCertificate = testBase.base64EncodedTestCertificateData,
-                    CertificatePassword = testBase.testCertificatePassword
+                    CertificatePassword = testBase.testCertificatePassword,
+                    NegotiateClientCertificate = true
                 };
 
                 var hostnameConfig3 = new HostnameConfiguration()
                 {
                     Type = HostnameType.Portal,
-                    HostName = "portal1.powershelltest.net",
+                    HostName = "portal1.msitesting.net",
                     EncodedCertificate = testBase.base64EncodedTestCertificateData,
                     CertificatePassword = testBase.testCertificatePassword
                 };
@@ -87,7 +89,23 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     Assert.NotNull(hostnameConfiguration.Certificate);
                     Assert.NotNull(hostnameConfiguration.Certificate.Subject);
                     Assert.Equal(cert.Thumbprint, hostnameConfiguration.Certificate.Thumbprint);
-                    Assert.Equal(false, hostnameConfiguration.NegotiateClientCertificate);
+                    if (HostnameType.Proxy == hostnameConfiguration.Type)
+                    {
+                        Assert.True(hostnameConfiguration.DefaultSslBinding);
+                    }
+                    else
+                    {
+                        Assert.False(hostnameConfiguration.DefaultSslBinding);
+                    }
+
+                    if (hostnameConfig2.HostName.Equals(hostnameConfiguration.HostName))
+                    {
+                        Assert.True(hostnameConfiguration.NegotiateClientCertificate);
+                    }
+                    else
+                    {
+                        Assert.False(hostnameConfiguration.NegotiateClientCertificate);
+                    }
                 }
 
                 // Delete

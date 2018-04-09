@@ -1,0 +1,114 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects/e222c033-5f5d-4a23-bde9-8343f19c0a01/iterations",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2UyMjJjMDMzLTVmNWQtNGEyMy1iZGU5LTgzNDNmMTljMGEwMS9pdGVyYXRpb25z",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Id\": \"e925ea5b-4db0-4c1e-8d62-e35c74fffeed\",\r\n    \"Name\": \"Iteration 2\",\r\n    \"IsDefault\": false,\r\n    \"Status\": \"New\",\r\n    \"Created\": \"2018-02-08T08:22:42.0666667\",\r\n    \"LastModified\": \"2018-02-22T06:36:57.9288784\",\r\n    \"ProjectId\": \"e222c033-5f5d-4a23-bde9-8343f19c0a01\",\r\n    \"Exportable\": false,\r\n    \"DomainId\": null\r\n  },\r\n  {\r\n    \"Id\": \"015deca4-aa39-4d20-81fe-73de4efd6acf\",\r\n    \"Name\": \"New Iteration Name\",\r\n    \"IsDefault\": false,\r\n    \"Status\": \"Completed\",\r\n    \"Created\": \"2018-02-08T08:22:06.2999139\",\r\n    \"LastModified\": \"2018-02-22T14:57:08.2219686\",\r\n    \"TrainedAt\": \"2018-02-08T08:22:46.3582771\",\r\n    \"ProjectId\": \"e222c033-5f5d-4a23-bde9-8343f19c0a01\",\r\n    \"Exportable\": false,\r\n    \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "632"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 15:04:12 GMT"
+        ],
+        "apim-request-id": [
+          "a9ae758f-16a9-4888-8ef6-fc3868deee0e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects/e222c033-5f5d-4a23-bde9-8343f19c0a01/iterations/015deca4-aa39-4d20-81fe-73de4efd6acf",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2UyMjJjMDMzLTVmNWQtNGEyMy1iZGU5LTgzNDNmMTljMGEwMS9pdGVyYXRpb25zLzAxNWRlY2E0LWFhMzktNGQyMC04MWZlLTczZGU0ZWZkNmFjZg==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 15:04:12 GMT"
+        ],
+        "apim-request-id": [
+          "31f5ad79-e001-4357-9b5c-72c2644b7e5f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects/e222c033-5f5d-4a23-bde9-8343f19c0a01/train",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2UyMjJjMDMzLTVmNWQtNGEyMy1iZGU5LTgzNDNmMTljMGEwMS90cmFpbg==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"e925ea5b-4db0-4c1e-8d62-e35c74fffeed\",\r\n  \"Name\": \"Iteration 2\",\r\n  \"IsDefault\": false,\r\n  \"Status\": \"Training\",\r\n  \"Created\": \"2018-02-08T08:22:42.0666667\",\r\n  \"LastModified\": \"2018-02-22T15:04:12.8142288\",\r\n  \"ProjectId\": \"e222c033-5f5d-4a23-bde9-8343f19c0a01\",\r\n  \"Exportable\": false,\r\n  \"DomainId\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "275"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 15:04:13 GMT"
+        ],
+        "apim-request-id": [
+          "fb717df6-b3b2-4092-95a8-cddaaf9aae0f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -203,18 +203,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the pool.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// active - The pool is available to run tasks subject to the
-        /// availability of compute nodes.
-        /// deleting - The user has requested that the pool be deleted, but the
-        /// delete operation has not yet completed.
-        /// upgrading - The user has requested that the operating system of the
-        /// pool's nodes be upgraded, but the upgrade operation has not yet
-        /// completed (that is, some nodes in the pool have not yet been
-        /// upgraded). While upgrading, the pool may be able to run tasks (with
-        /// reduced capacity) but this is not guaranteed. Possible values
-        /// include: 'active', 'deleting', 'upgrading'
+        /// Possible values include: 'active', 'deleting', 'upgrading'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public PoolState? State { get; set; }
@@ -229,18 +218,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether the pool is resizing.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// steady - The pool is not resizing. There are no changes to the
-        /// number of nodes in the pool in progress. A pool enters this state
-        /// when it is created and when no operations are being performed on
-        /// the pool to change the number of dedicated nodes.
-        /// resizing - The pool is resizing; that is, compute nodes are being
-        /// added to or removed from the pool.
-        /// stopping - The pool was resizing, but the user has requested that
-        /// the resize be stopped, but the stop request has not yet been
-        /// completed. Possible values include: 'steady', 'resizing',
-        /// 'stopping'
+        /// Possible values include: 'steady', 'resizing', 'stopping'
         /// </remarks>
         [JsonProperty(PropertyName = "allocationState")]
         public AllocationState? AllocationState { get; set; }

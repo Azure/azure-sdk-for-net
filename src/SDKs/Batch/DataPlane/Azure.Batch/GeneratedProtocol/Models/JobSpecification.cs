@@ -67,7 +67,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// each job created under this schedule as metadata.</param>
         public JobSpecification(PoolInformation poolInfo, int? priority = default(int?), string displayName = default(string), bool? usesTaskDependencies = default(bool?), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?), OnTaskFailure? onTaskFailure = default(OnTaskFailure?), JobConstraints constraints = default(JobConstraints), JobManagerTask jobManagerTask = default(JobManagerTask), JobPreparationTask jobPreparationTask = default(JobPreparationTask), JobReleaseTask jobReleaseTask = default(JobReleaseTask), IList<EnvironmentSetting> commonEnvironmentSettings = default(IList<EnvironmentSetting>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
         {
-            PoolInfo = new PoolInformation();
             Priority = priority;
             DisplayName = displayName;
             UsesTaskDependencies = usesTaskDependencies;
@@ -128,9 +127,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// complete. This option is therefore most commonly used with a Job
         /// Manager task; if you want to use automatic job termination without
         /// a Job Manager, you should initially set onAllTasksComplete to
-        /// noAction and update the job properties to set onAllTasksComplete to
-        /// terminateJob once you have finished adding tasks. The default is
-        /// noAction. Possible values include: 'noAction', 'terminateJob'
+        /// noaction and update the job properties to set onAllTasksComplete to
+        /// terminatejob once you have finished adding tasks. The default is
+        /// noaction. Possible values include: 'noAction', 'terminateJob'
         /// </remarks>
         [JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
@@ -144,7 +143,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// task, for example due to a resource file download error.
         /// </summary>
         /// <remarks>
-        /// The default is noAction. Possible values include: 'noAction',
+        /// The default is noaction. Possible values include: 'noAction',
         /// 'performExitOptionsJobAction'
         /// </remarks>
         [JsonProperty(PropertyName = "onTaskFailure")]

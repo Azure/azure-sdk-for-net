@@ -74,6 +74,11 @@ namespace Microsoft.Azure.Management.BatchAI
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IUsageOperations.
+        /// </summary>
+        IUsageOperations Usage { get; }
+
+        /// <summary>
         /// Gets the IClustersOperations.
         /// </summary>
         IClustersOperations Clusters { get; }
