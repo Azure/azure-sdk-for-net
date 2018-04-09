@@ -1021,6 +1021,76 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/providers/Microsoft.PowerBIDedicated/locations/westcentralus/operationresults/65534A34-F1BE-4C98-BFAF-D8510632ECDC?api-version=2017-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjY4MDMzOWEtOWM5Zi00YjM3LTk0NjgtYTNkZTFmMTlmNzRmL3Byb3ZpZGVycy9NaWNyb3NvZnQuUG93ZXJCSURlZGljYXRlZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9vcGVyYXRpb25yZXN1bHRzLzY1NTM0QTM0LUYxQkUtNEM5OC1CRkFGLUQ4NTEwNjMyRUNEQz9hcGktdmVyc2lvbj0yMDE3LTAxLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.PowerBIDedicated.PowerBIDedicatedManagementClient/2.0.1.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2680339a-9c9f-4b37-9468-a3de1f19f74f/locations/westcentralus/operationstatuses/65534A34-F1BE-4C98-BFAF-D8510632ECDC\",\r\n  \"name\": \"65534A34-F1BE-4C98-BFAF-D8510632ECDC\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-10-10T09:35:17.073Z\",\r\n  \"endTime\": \"2017-10-10T09:35:18.93Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "290"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 10 Oct 2017 09:35:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Frame-Options": [
+          "deny"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-XSS-Protection": [
+          "1; mode=block"
+        ],
+        "Content-Security-Policy": [
+          "script-src 'self'"
+        ],
+        "x-ms-request-id": [
+          "fa0bb953-c2b9-4a2b-b97b-66039170a6c0"
+        ],
+        "x-ms-current-utc-date": [
+          "10/10/2017 9:35:48 AM"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "x-ms-correlation-request-id": [
+          "d113b9f7-eb3e-42ce-9aa6-61ec8a76986e"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20171010T093548Z:d113b9f7-eb3e-42ce-9aa6-61ec8a76986e"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {},

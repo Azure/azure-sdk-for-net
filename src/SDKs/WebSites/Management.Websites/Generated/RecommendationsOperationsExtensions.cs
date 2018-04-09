@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.WebSites
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -43,7 +41,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
             /// duration'[PT1H|PT1M|P1D]
             /// </param>
-            public static IList<Recommendation> List(this IRecommendationsOperations operations, bool? featured = default(bool?), string filter = default(string))
+            public static IPage<Recommendation> List(this IRecommendationsOperations operations, bool? featured = default(bool?), string filter = default(string))
             {
                 return operations.ListAsync(featured, filter).GetAwaiter().GetResult();
             }
@@ -71,7 +69,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Recommendation>> ListAsync(this IRecommendationsOperations operations, bool? featured = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Recommendation>> ListAsync(this IRecommendationsOperations operations, bool? featured = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(featured, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -111,6 +109,47 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Disables the specified rule so it will not apply to a subscription in the
+            /// future.
+            /// </summary>
+            /// <remarks>
+            /// Disables the specified rule so it will not apply to a subscription in the
+            /// future.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Rule name
+            /// </param>
+            public static void DisableRecommendationForSubscription(this IRecommendationsOperations operations, string name)
+            {
+                operations.DisableRecommendationForSubscriptionAsync(name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disables the specified rule so it will not apply to a subscription in the
+            /// future.
+            /// </summary>
+            /// <remarks>
+            /// Disables the specified rule so it will not apply to a subscription in the
+            /// future.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Rule name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisableRecommendationForSubscriptionAsync(this IRecommendationsOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisableRecommendationForSubscriptionWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Get past recommendations for an app, optionally specified by the time
             /// range.
             /// </summary>
@@ -133,7 +172,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// and endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
             /// duration'[PT1H|PT1M|P1D]
             /// </param>
-            public static IList<Recommendation> ListHistoryForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string filter = default(string))
+            public static IPage<Recommendation> ListHistoryForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string filter = default(string))
             {
                 return operations.ListHistoryForWebAppAsync(resourceGroupName, siteName, filter).GetAwaiter().GetResult();
             }
@@ -164,7 +203,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Recommendation>> ListHistoryForWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Recommendation>> ListHistoryForWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListHistoryForWebAppWithHttpMessagesAsync(resourceGroupName, siteName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -197,7 +236,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// OData syntax. Example: $filter=channels eq 'Api' or channel eq
             /// 'Notification'
             /// </param>
-            public static IList<Recommendation> ListRecommendedRulesForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? featured = default(bool?), string filter = default(string))
+            public static IPage<Recommendation> ListRecommendedRulesForWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? featured = default(bool?), string filter = default(string))
             {
                 return operations.ListRecommendedRulesForWebAppAsync(resourceGroupName, siteName, featured, filter).GetAwaiter().GetResult();
             }
@@ -230,7 +269,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Recommendation>> ListRecommendedRulesForWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? featured = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Recommendation>> ListRecommendedRulesForWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, bool? featured = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListRecommendedRulesForWebAppWithHttpMessagesAsync(resourceGroupName, siteName, featured, filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -346,9 +385,13 @@ namespace Microsoft.Azure.Management.WebSites
             /// Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of
             /// the recommendation object.
             /// </param>
-            public static RecommendationRule GetRuleDetailsByWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?))
+            /// <param name='recommendationId'>
+            /// The GUID of the recommedation object if you query an expired one. You don't
+            /// need to specify it to query an active entry.
+            /// </param>
+            public static RecommendationRule GetRuleDetailsByWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?), string recommendationId = default(string))
             {
-                return operations.GetRuleDetailsByWebAppAsync(resourceGroupName, siteName, name, updateSeen).GetAwaiter().GetResult();
+                return operations.GetRuleDetailsByWebAppAsync(resourceGroupName, siteName, name, updateSeen, recommendationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -373,12 +416,189 @@ namespace Microsoft.Azure.Management.WebSites
             /// Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of
             /// the recommendation object.
             /// </param>
+            /// <param name='recommendationId'>
+            /// The GUID of the recommedation object if you query an expired one. You don't
+            /// need to specify it to query an active entry.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecommendationRule> GetRuleDetailsByWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecommendationRule> GetRuleDetailsByWebAppAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?), string recommendationId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetRuleDetailsByWebAppWithHttpMessagesAsync(resourceGroupName, siteName, name, updateSeen, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetRuleDetailsByWebAppWithHttpMessagesAsync(resourceGroupName, siteName, name, updateSeen, recommendationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Disables the specific rule for a web site permanently.
+            /// </summary>
+            /// <remarks>
+            /// Disables the specific rule for a web site permanently.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='siteName'>
+            /// Site name
+            /// </param>
+            /// <param name='name'>
+            /// Rule name
+            /// </param>
+            public static void DisableRecommendationForSite(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name)
+            {
+                operations.DisableRecommendationForSiteAsync(resourceGroupName, siteName, name).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disables the specific rule for a web site permanently.
+            /// </summary>
+            /// <remarks>
+            /// Disables the specific rule for a web site permanently.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='siteName'>
+            /// Site name
+            /// </param>
+            /// <param name='name'>
+            /// Rule name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisableRecommendationForSiteAsync(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisableRecommendationForSiteWithHttpMessagesAsync(resourceGroupName, siteName, name, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// List all recommendations for a subscription.
+            /// </summary>
+            /// <remarks>
+            /// List all recommendations for a subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Recommendation> ListNext(this IRecommendationsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List all recommendations for a subscription.
+            /// </summary>
+            /// <remarks>
+            /// List all recommendations for a subscription.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Recommendation>> ListNextAsync(this IRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </summary>
+            /// <remarks>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Recommendation> ListHistoryForWebAppNext(this IRecommendationsOperations operations, string nextPageLink)
+            {
+                return operations.ListHistoryForWebAppNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </summary>
+            /// <remarks>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Recommendation>> ListHistoryForWebAppNextAsync(this IRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListHistoryForWebAppNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Recommendation> ListRecommendedRulesForWebAppNext(this IRecommendationsOperations operations, string nextPageLink)
+            {
+                return operations.ListRecommendedRulesForWebAppNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Recommendation>> ListRecommendedRulesForWebAppNextAsync(this IRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRecommendedRulesForWebAppNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

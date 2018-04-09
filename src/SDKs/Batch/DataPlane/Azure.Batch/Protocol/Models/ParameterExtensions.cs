@@ -2,6 +2,8 @@
 {
     public partial class AccountListNodeAgentSkusOptions : ITimeoutOptions, IODataFilter { }
     public partial class AccountListNodeAgentSkusNextOptions : IOptions { }
+    public partial class AccountListPoolNodeCountsOptions : ITimeoutOptions, IODataFilter { }
+    public partial class AccountListPoolNodeCountsNextOptions : IOptions { }
     public partial class ApplicationGetOptions : ITimeoutOptions { }
     public partial class ApplicationListOptions : ITimeoutOptions { }
     public partial class ApplicationListNextOptions : IOptions { }
@@ -22,6 +24,7 @@
     public partial class ComputeNodeReimageOptions : ITimeoutOptions { }
     public partial class PoolRemoveNodesOptions : ITimeoutOptions { }
     public partial class ComputeNodeUpdateUserOptions : ITimeoutOptions { }
+    public partial class ComputeNodeUploadBatchServiceLogsOptions : ITimeoutOptions { }
     public partial class FileDeleteFromComputeNodeOptions : ITimeoutOptions { }
     public partial class FileDeleteFromTaskOptions : ITimeoutOptions { }
     public partial class FileGetFromComputeNodeOptions : ITimeoutOptions { }

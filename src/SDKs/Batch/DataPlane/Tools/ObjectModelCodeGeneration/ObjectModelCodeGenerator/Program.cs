@@ -15,7 +15,7 @@ namespace ObjectModelCodeGenerator
         {
             GenerateModelFiles();
 
-            //GenerateSomeRoslynFiles(); TODO: Temporarily disabled, see: https://github.com/dotnet/roslyn/issues/16886
+            // GenerateSomeRoslynFiles(); Temporarily disabled, see: https://github.com/dotnet/roslyn/issues/17974
         }
 
         private static void GenerateModelFiles()

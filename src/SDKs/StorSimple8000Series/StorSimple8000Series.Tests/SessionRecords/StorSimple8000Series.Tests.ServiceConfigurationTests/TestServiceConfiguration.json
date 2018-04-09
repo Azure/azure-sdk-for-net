@@ -1167,6 +1167,59 @@
       "StatusCode": 204
     },
     {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/storageAccountCredentials/SACForTest/operationResults/73259ce1-5b6f-4f70-bf06-c13f2d39767e?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvc3RvcmFnZUFjY291bnRDcmVkZW50aWFscy9TQUNGb3JUZXN0L29wZXJhdGlvblJlc3VsdHMvNzMyNTljZTEtNWI2Zi00ZjcwLWJmMDYtYzEzZjJkMzk3NjdlP2FwaS12ZXJzaW9uPTIwMTctMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jun 2017 16:34:12 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "f8464c27-711b-4a7d-9157-f75643117d88"
+        ],
+        "x-ms-client-request-id": [
+          "4a797697-06b8-41c4-97f5-2a7e1bafb9cf",
+          "4a797697-06b8-41c4-97f5-2a7e1bafb9cf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14431"
+        ],
+        "x-ms-correlation-request-id": [
+          "f8464c27-711b-4a7d-9157-f75643117d88"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170621T163412Z:f8464c27-711b-4a7d-9157-f75643117d88"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/storageAccountCredentials?api-version=2017-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvc3RvcmFnZUFjY291bnRDcmVkZW50aWFscz9hcGktdmVyc2lvbj0yMDE3LTA2LTAx",
       "RequestMethod": "GET",
@@ -1353,6 +1406,59 @@
       "StatusCode": 204
     },
     {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/accessControlRecords/ACRForTest/operationResults/712ebcdc-f28c-42fc-b005-367bee419cd9?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvYWNjZXNzQ29udHJvbFJlY29yZHMvQUNSRm9yVGVzdC9vcGVyYXRpb25SZXN1bHRzLzcxMmViY2RjLWYyOGMtNDJmYy1iMDA1LTM2N2JlZTQxOWNkOT9hcGktdmVyc2lvbj0yMDE3LTAxLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jun 2017 16:36:51 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4cc67ee1-e37c-4bea-8657-908ab0c64c49"
+        ],
+        "x-ms-client-request-id": [
+          "873a296c-7965-4384-9cc0-21c7670432c7",
+          "873a296c-7965-4384-9cc0-21c7670432c7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14676"
+        ],
+        "x-ms-correlation-request-id": [
+          "4cc67ee1-e37c-4bea-8657-908ab0c64c49"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170621T163651Z:4cc67ee1-e37c-4bea-8657-908ab0c64c49"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/accessControlRecords?api-version=2017-06-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvYWNjZXNzQ29udHJvbFJlY29yZHM/YXBpLXZlcnNpb249MjAxNy0wNi0wMQ==",
       "RequestMethod": "GET",
@@ -1537,6 +1643,59 @@
         ]
       },
       "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/bandwidthSettings/BWSForTest/operationResults/32690e1b-2fb1-44f1-8a1d-a4106fa33ab5?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvYmFuZHdpZHRoU2V0dGluZ3MvQldTRm9yVGVzdC9vcGVyYXRpb25SZXN1bHRzLzMyNjkwZTFiLTJmYjEtNDRmMS04YTFkLWE0MTA2ZmEzM2FiNT9hcGktdmVyc2lvbj0yMDE3LTAxLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Jun 2017 16:37:38 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7118ac10-9721-42a6-b1c0-b66921416fc3"
+        ],
+        "x-ms-client-request-id": [
+          "2caf81cb-0fe8-4900-8f72-49a52fb0da8a",
+          "2caf81cb-0fe8-4900-8f72-49a52fb0da8a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14669"
+        ],
+        "x-ms-correlation-request-id": [
+          "7118ac10-9721-42a6-b1c0-b66921416fc3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTEUROPE:20170621T163738Z:7118ac10-9721-42a6-b1c0-b66921416fc3"
+        ]
+      },
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/bandwidthSettings?api-version=2017-06-01",

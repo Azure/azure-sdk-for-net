@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for the managed disk. Possible values are: Standard_LRS or
         /// Premium_LRS. Possible values include: 'Standard_LRS',
         /// 'Premium_LRS'</param>
-        public ManagedDiskParameters(string id = default(string), StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
+        public ManagedDiskParameters(string id = default(string), string storageAccountType = default(string))
             : base(id)
         {
             StorageAccountType = storageAccountType;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// values include: 'Standard_LRS', 'Premium_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
-        public StorageAccountTypes? StorageAccountType { get; set; }
+        public string StorageAccountType { get; set; }
 
     }
 }

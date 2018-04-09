@@ -12,13 +12,14 @@
 		<PackageReleaseNotes>
 			<![CDATA[
         Updates in this release:
-			- Enabled the AAD authentication via service principal and management service identity for Azure SQL DB/DW linked service types
-			- Added support for integration runtime sharing across subscriptions and data factories
-			- Enabled Azure Key Vault for all compute linked service
-			- Added SAP ECC Source
-			- Added new properties clientId and clientSecret for GoogleBigQuery LinkedService which allow user authentication with Google application secrets
-			- Added LinkedService, Dataset, CopySource for Vertica and Netezza
-      ]]>
+  			- Added new AzureDatabricks LinkedService and DatabricksNotebook Activity
+  			- Added headNodeSize and dataNodeSize properties in HDInsightOnDemand LinkedService
+  			- Added LinkedService, Dataset, CopySource for SalesforceMarketingCloud
+  			- Added support for SecureOutput on all activities 
+  			- Added new BatchCount property on ForEach activity which control how many concurrent activities to run
+  			- Added new Filter Activity
+  			- Added Linked Service Parameters support
+                        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

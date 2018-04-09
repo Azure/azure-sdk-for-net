@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="exitCode">The exit code of the job.</param>
         /// <param name="errors">Contains details of various errors encountered
         /// by the service during job execution</param>
-        public JobPropertiesExecutionInfo(System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), IList<BatchAIError> errors = default(IList<BatchAIError>))
+        public JobPropertiesExecutionInfo(System.DateTime startTime, System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), IList<BatchAIError> errors = default(IList<BatchAIError>))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// the running or completed state.
         /// </remarks>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the job completed.
@@ -89,5 +89,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         [JsonProperty(PropertyName = "errors")]
         public IList<BatchAIError> Errors { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

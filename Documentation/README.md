@@ -47,6 +47,7 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 | Machine Learning Compute | Microsoft.Azure.Management.MachineLearningCompute |
 | Network | Microsoft.Azure.Management.Network |
 | NotificationHubs | Microsoft.Azure.Management.NotificationHubs |
+| Policy Insights | Microsoft.Azure.Management.PolicyInsights |
 | PowerBI | Microsoft.Azure.Management.PowerBIEmbedded |
 | Redis Cache | Microsoft.Azure.Management.Redis |
 | Resource Manager (ARM) | Microsoft.Azure.Management.ResourceManager |
