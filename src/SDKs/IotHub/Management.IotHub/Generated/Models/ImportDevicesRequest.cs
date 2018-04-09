@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Iothub.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets or sets the input blob container URI.
         /// </summary>
-        [JsonProperty(PropertyName = "InputBlobContainerUri")]
+        [JsonProperty(PropertyName = "inputBlobContainerUri")]
         public string InputBlobContainerUri { get; set; }
 
         /// <summary>
         /// Gets or sets the output blob container URI.
         /// </summary>
-        [JsonProperty(PropertyName = "OutputBlobContainerUri")]
+        [JsonProperty(PropertyName = "outputBlobContainerUri")]
         public string OutputBlobContainerUri { get; set; }
 
         /// <summary>

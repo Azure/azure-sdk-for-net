@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Iothub.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
@@ -50,25 +50,25 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "Code")]
+        [JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
         /// Gets the HTTP status code.
         /// </summary>
-        [JsonProperty(PropertyName = "HttpStatusCode")]
+        [JsonProperty(PropertyName = "httpStatusCode")]
         public string HttpStatusCode { get; private set; }
 
         /// <summary>
         /// Gets the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "Message")]
+        [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
         /// Gets the error details.
         /// </summary>
-        [JsonProperty(PropertyName = "Details")]
+        [JsonProperty(PropertyName = "details")]
         public string Details { get; private set; }
 
     }

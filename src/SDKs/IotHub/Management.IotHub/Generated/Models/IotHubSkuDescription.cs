@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Iothub.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Initializes a new instance of the IotHubSkuDescription class.
         /// </summary>
+        /// <param name="sku">The type of the resource.</param>
         /// <param name="resourceType">The type of the resource.</param>
         public IotHubSkuDescription(IotHubSkuInfo sku, IotHubCapacity capacity, string resourceType = default(string))
         {
@@ -51,6 +52,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string ResourceType { get; private set; }
 
         /// <summary>
+        /// Gets or sets the type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public IotHubSkuInfo Sku { get; set; }
