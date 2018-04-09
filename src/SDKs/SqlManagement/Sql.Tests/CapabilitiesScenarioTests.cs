@@ -33,11 +33,11 @@ namespace Sql.Tests
                         foreach (ServiceObjectiveCapability o in e.SupportedServiceLevelObjectives)
                         {
                             Assert.NotNull(o.Name);
-                            Assert.NotNull(o.Unit);
-                            foreach (MaxSizeCapability m in o.SupportedMaxSizes)
+                            Assert.NotNull(o.PerformanceLevel);
+                            foreach (MaxSizeRangeCapability m in o.SupportedMaxSizes)
                             {
-                                Assert.NotNull(m.Limit);
-                                Assert.NotNull(m.Unit);
+                                Assert.NotNull(m.MinValue);
+                                Assert.NotNull(m.MaxValue);
                             }
                         }
                     }

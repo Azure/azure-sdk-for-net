@@ -895,7 +895,7 @@ namespace ContentModeratorTests
 		/// <param name="contentType"></param>
 		/// <param name="textContent"></param>
 		/// <returns></returns>
-		public static Responses GetTextResponse(ContentModeratorClient client, ContentModeratorAPI api, string listid, string textContent, string contentType = "text/plain", string language = "eng",bool? isAutoCorrect = false, bool? isPii = false, bool? isClassify = false)
+		public static Responses GetTextResponse(ContentModeratorClient client, ContentModeratorAPI api, string listid, Stream textContent, string contentType = "text/plain", string language = "eng",bool? isAutoCorrect = false, bool? isPii = false, bool? isClassify = false)
 		{
             Responses r = new Responses();
             Utilities u = new Utilities();

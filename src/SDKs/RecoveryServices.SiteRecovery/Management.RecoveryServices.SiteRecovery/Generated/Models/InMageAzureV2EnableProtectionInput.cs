@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// network Id.</param>
         /// <param name="targetAzureSubnetId">The selected target Azure subnet
         /// Id.</param>
-        /// <param name="enableRDPOnTargetOption">The selected option to enable
+        /// <param name="enableRdpOnTargetOption">The selected option to enable
         /// RDP\SSH on target vm after failover. String value of
         /// {SrsDataContract.EnableRDPOnTargetOption} enum.</param>
         /// <param name="targetAzureVmName">The target azure Vm Name.</param>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover VM is to be created.</param>
         /// <param name="useManagedDisks">A value indicating whether managed
         /// disks should be used during failover.</param>
-        public InMageAzureV2EnableProtectionInput(string storageAccountId, string masterTargetId = default(string), string processServerId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRDPOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
+        public InMageAzureV2EnableProtectionInput(string storageAccountId, string masterTargetId = default(string), string processServerId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<string> disksToInclude = default(IList<string>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRdpOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string useManagedDisks = default(string))
         {
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             DisksToInclude = disksToInclude;
             TargetAzureNetworkId = targetAzureNetworkId;
             TargetAzureSubnetId = targetAzureSubnetId;
-            EnableRDPOnTargetOption = enableRDPOnTargetOption;
+            EnableRdpOnTargetOption = enableRdpOnTargetOption;
             TargetAzureVmName = targetAzureVmName;
             LogStorageAccountId = logStorageAccountId;
             TargetAzureV1ResourceGroupId = targetAzureV1ResourceGroupId;
@@ -144,8 +144,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// after failover. String value of
         /// {SrsDataContract.EnableRDPOnTargetOption} enum.
         /// </summary>
-        [JsonProperty(PropertyName = "enableRDPOnTargetOption")]
-        public string EnableRDPOnTargetOption { get; set; }
+        [JsonProperty(PropertyName = "enableRdpOnTargetOption")]
+        public string EnableRdpOnTargetOption { get; set; }
 
         /// <summary>
         /// Gets or sets the target azure Vm Name.

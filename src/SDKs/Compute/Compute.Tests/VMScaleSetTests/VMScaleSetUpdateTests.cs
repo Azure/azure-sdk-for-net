@@ -26,6 +26,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMScaleSetScalingOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -86,6 +87,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMScaleSetUpdateOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -148,6 +150,7 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMScaleSetPatchOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

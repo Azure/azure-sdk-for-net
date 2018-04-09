@@ -47,10 +47,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="experimentName">Describe the experiment information of
         /// the job</param>
         /// <param name="priority">Priority associated with the job.</param>
+        /// <param name="mountVolumes">Information on mount volumes to be used
+        /// by the job.</param>
         /// <param name="containerSettings">If provided the job will run in the
         /// specified container.</param>
         /// <param name="cntkSettings">Specifies the settings for CNTK (aka
         /// Microsoft Cognitive Toolkit) job.</param>
+        /// <param name="pyTorchSettings">Specifies the settings for pyTorch
+        /// job.</param>
         /// <param name="tensorFlowSettings">Specifies the settings for Tensor
         /// Flow job.</param>
         /// <param name="caffeSettings">Specifies the settings for Caffe
@@ -66,21 +70,25 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="inputDirectories">Specifies the list of input
         /// directories for the Job.</param>
         /// <param name="outputDirectories">Specifies the list of output
-        /// directories where the models will be created. .</param>
+        /// directories.</param>
         /// <param name="environmentVariables">Additional environment variables
         /// to set on the job.</param>
+        /// <param name="secrets">Additional environment variables with secret
+        /// values to set on the job.</param>
         /// <param name="constraints">Constraints associated with the
         /// Job.</param>
-        public JobCreateParameters(string location, ResourceId cluster, int nodeCount, string stdOutErrPathPrefix, IDictionary<string, string> tags = default(IDictionary<string, string>), string experimentName = default(string), int? priority = default(int?), ContainerSettings containerSettings = default(ContainerSettings), CNTKsettings cntkSettings = default(CNTKsettings), TensorFlowSettings tensorFlowSettings = default(TensorFlowSettings), CaffeSettings caffeSettings = default(CaffeSettings), Caffe2Settings caffe2Settings = default(Caffe2Settings), ChainerSettings chainerSettings = default(ChainerSettings), CustomToolkitSettings customToolkitSettings = default(CustomToolkitSettings), JobPreparation jobPreparation = default(JobPreparation), IList<InputDirectory> inputDirectories = default(IList<InputDirectory>), IList<OutputDirectory> outputDirectories = default(IList<OutputDirectory>), IList<EnvironmentSetting> environmentVariables = default(IList<EnvironmentSetting>), JobBasePropertiesConstraints constraints = default(JobBasePropertiesConstraints))
+        public JobCreateParameters(string location, ResourceId cluster, int nodeCount, string stdOutErrPathPrefix, IDictionary<string, string> tags = default(IDictionary<string, string>), string experimentName = default(string), int? priority = default(int?), MountVolumes mountVolumes = default(MountVolumes), ContainerSettings containerSettings = default(ContainerSettings), CNTKsettings cntkSettings = default(CNTKsettings), PyTorchSettings pyTorchSettings = default(PyTorchSettings), TensorFlowSettings tensorFlowSettings = default(TensorFlowSettings), CaffeSettings caffeSettings = default(CaffeSettings), Caffe2Settings caffe2Settings = default(Caffe2Settings), ChainerSettings chainerSettings = default(ChainerSettings), CustomToolkitSettings customToolkitSettings = default(CustomToolkitSettings), JobPreparation jobPreparation = default(JobPreparation), IList<InputDirectory> inputDirectories = default(IList<InputDirectory>), IList<OutputDirectory> outputDirectories = default(IList<OutputDirectory>), IList<EnvironmentVariable> environmentVariables = default(IList<EnvironmentVariable>), IList<EnvironmentVariableWithSecretValue> secrets = default(IList<EnvironmentVariableWithSecretValue>), JobBasePropertiesConstraints constraints = default(JobBasePropertiesConstraints))
         {
             Location = location;
             Tags = tags;
             ExperimentName = experimentName;
             Priority = priority;
             Cluster = cluster;
+            MountVolumes = mountVolumes;
             NodeCount = nodeCount;
             ContainerSettings = containerSettings;
             CntkSettings = cntkSettings;
+            PyTorchSettings = pyTorchSettings;
             TensorFlowSettings = tensorFlowSettings;
             CaffeSettings = caffeSettings;
             Caffe2Settings = caffe2Settings;
@@ -91,6 +99,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             InputDirectories = inputDirectories;
             OutputDirectories = outputDirectories;
             EnvironmentVariables = environmentVariables;
+            Secrets = secrets;
             Constraints = constraints;
             CustomInit();
         }
@@ -137,6 +146,18 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public ResourceId Cluster { get; set; }
 
         /// <summary>
+        /// Gets or sets information on mount volumes to be used by the job.
+        /// </summary>
+        /// <remarks>
+        /// These volumes will be mounted before the job execution and will be
+        /// unmouted after the job completion. The volumes will be mounted at
+        /// location specified by $AZ_BATCHAI_JOB_MOUNT_ROOT environment
+        /// variable.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.mountVolumes")]
+        public MountVolumes MountVolumes { get; set; }
+
+        /// <summary>
         /// Gets or sets number of compute nodes to run the job on.
         /// </summary>
         /// <remarks>
@@ -163,6 +184,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.cntkSettings")]
         public CNTKsettings CntkSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the settings for pyTorch job.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pyTorchSettings")]
+        public PyTorchSettings PyTorchSettings { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the settings for Tensor Flow job.
@@ -219,8 +246,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public IList<InputDirectory> InputDirectories { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the list of output directories where the
-        /// models will be created. .
+        /// Gets or sets specifies the list of output directories.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outputDirectories")]
         public IList<OutputDirectory> OutputDirectories { get; set; }
@@ -229,14 +255,22 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets additional environment variables to set on the job.
         /// </summary>
         /// <remarks>
-        /// Batch AI service sets the following environment variables for all
-        /// jobs: AZ_BATCHAI_INPUT_id, AZ_BATCHAI_OUTPUT_id,
-        /// AZ_BATCHAI_NUM_GPUS_PER_NODE. For distributed TensorFlow jobs,
-        /// following additional environment variables are set by the Batch AI
-        /// Service: AZ_BATCHAI_PS_HOSTS, AZ_BATCHAI_WORKER_HOSTS
+        /// Batch AI will setup these additional environment variables for the
+        /// job.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.environmentVariables")]
-        public IList<EnvironmentSetting> EnvironmentVariables { get; set; }
+        public IList<EnvironmentVariable> EnvironmentVariables { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional environment variables with secret values to
+        /// set on the job.
+        /// </summary>
+        /// <remarks>
+        /// Batch AI will setup these additional environment variables for the
+        /// job. Server will never report values of these variables back.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.secrets")]
+        public IList<EnvironmentVariableWithSecretValue> Secrets { get; set; }
 
         /// <summary>
         /// Gets or sets constraints associated with the Job.
@@ -271,6 +305,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
             if (ContainerSettings != null)
             {
                 ContainerSettings.Validate();
+            }
+            if (PyTorchSettings != null)
+            {
+                PyTorchSettings.Validate();
             }
             if (TensorFlowSettings != null)
             {
@@ -315,6 +353,16 @@ namespace Microsoft.Azure.Management.BatchAI.Models
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (Secrets != null)
+            {
+                foreach (var element3 in Secrets)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
                     }
                 }
             }

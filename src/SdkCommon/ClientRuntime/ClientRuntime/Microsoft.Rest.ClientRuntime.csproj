@@ -4,17 +4,12 @@
     <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>2.3.10</Version>
+    <Version>2.3.11</Version>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
-    <ReleaseNotes>
-      <![CDATA[
-        1) Fixed polymorphic deserialization bug when Descriminator type is provided for nested types that are multi level deep inheritance chain
-      ]]>
-    </ReleaseNotes>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Fixed polymorphic deserialization bug when Descriminator type is provided for nested types that are multi level deep inheritance chain
+        1) Fixed serialization/deserializtion of additional properties
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

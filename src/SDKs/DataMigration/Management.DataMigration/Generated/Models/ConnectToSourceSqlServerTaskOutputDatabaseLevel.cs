@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// include: 'Online', 'Restoring', 'Recovering', 'RecoveryPending',
         /// 'Suspect', 'Emergency', 'Offline', 'Copying',
         /// 'OfflineSecondary'</param>
-        public ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id = default(string), string name = default(string), double? sizeMB = default(double?), IList<DatabaseFileInfo> databaseFiles = default(IList<DatabaseFileInfo>), DatabaseCompatLevel? compatibilityLevel = default(DatabaseCompatLevel?), DatabaseState? databaseState = default(DatabaseState?))
+        public ConnectToSourceSqlServerTaskOutputDatabaseLevel(string id = default(string), string name = default(string), double? sizeMB = default(double?), IList<DatabaseFileInfo> databaseFiles = default(IList<DatabaseFileInfo>), string compatibilityLevel = default(string), string databaseState = default(string))
             : base(id)
         {
             Name = name;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'CompatLevel140'
         /// </summary>
         [JsonProperty(PropertyName = "compatibilityLevel")]
-        public DatabaseCompatLevel? CompatibilityLevel { get; private set; }
+        public string CompatibilityLevel { get; private set; }
 
         /// <summary>
         /// Gets state of the database. Possible values include: 'Online',
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Emergency', 'Offline', 'Copying', 'OfflineSecondary'
         /// </summary>
         [JsonProperty(PropertyName = "databaseState")]
-        public DatabaseState? DatabaseState { get; private set; }
+        public string DatabaseState { get; private set; }
 
     }
 }

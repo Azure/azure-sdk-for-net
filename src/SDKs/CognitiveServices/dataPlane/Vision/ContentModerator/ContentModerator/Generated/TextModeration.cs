@@ -96,7 +96,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Screen>> ScreenTextWithHttpMessagesAsync(string language, string textContentType, string textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Screen>> ScreenTextWithHttpMessagesAsync(string language, string textContentType, Stream textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BaseUrl == null)
             {
@@ -182,11 +182,14 @@ namespace Microsoft.CognitiveServices.ContentModerator
 
             // Serialize Request
             string _requestContent = null;
-            if(textContent != null)
+            if(textContent == null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(textContent, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("text/plain");
+              throw new System.ArgumentNullException("textContent");
+            }
+            if (textContent != null && textContent != Stream.Null)
+            {
+                _httpRequest.Content = new StreamContent(textContent);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse(textContentType);
             }
             // Set Credentials
             if (Client.Credentials != null)
@@ -300,7 +303,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DetectedLanguage>> DetectLanguageWithHttpMessagesAsync(string textContentType, string textContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<DetectedLanguage>> DetectLanguageWithHttpMessagesAsync(string textContentType, Stream textContent, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BaseUrl == null)
             {
@@ -352,11 +355,14 @@ namespace Microsoft.CognitiveServices.ContentModerator
 
             // Serialize Request
             string _requestContent = null;
-            if(textContent != null)
+            if(textContent == null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(textContent, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("text/plain");
+              throw new System.ArgumentNullException("textContent");
+            }
+            if (textContent != null && textContent != Stream.Null)
+            {
+                _httpRequest.Content = new StreamContent(textContent);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse(textContentType);
             }
             // Set Credentials
             if (Client.Credentials != null)

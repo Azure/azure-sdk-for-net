@@ -1,20 +1,20 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Authorization/providerOperations/InvalidProvider?api-version=2015-07-01&$expand=resourceTypes",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wcm92aWRlck9wZXJhdGlvbnMvSW52YWxpZFByb3ZpZGVyP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEmJGV4cGFuZD1yZXNvdXJjZVR5cGVz",
+      "RequestUri": "/providers/Microsoft.Authorization/providerOperations/InvalidProvider?api-version=2018-01-01-preview&$expand=resourceTypes",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wcm92aWRlck9wZXJhdGlvbnMvSW52YWxpZFByb3ZpZGVyP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDEtcHJldmlldyYkZXhwYW5kPXJlc291cmNlVHlwZXM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e023fef6-bd15-4ec3-b6ed-5aecd36a1b04"
+          "647c6af1-b4bc-4678-9dcf-61c06d391bd7"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.6.0.0"
+          "Microsoft.Azure.Management.Authorization.AuthorizationManagementClient/2.8.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ProviderNotFound\",\r\n    \"message\": \"Provider 'InvalidProvider' not found.\"\r\n  }\r\n}",
@@ -32,19 +32,19 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 27 Nov 2017 23:57:18 GMT"
+          "Sat, 10 Mar 2018 00:22:48 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "Set-Cookie": [
           "x-ms-gateway-slice=productionb; path=/; secure; HttpOnly"
         ],
         "x-ms-request-id": [
-          "554a595f-ad9c-43fe-b418-dc430e611ef3"
+          "860504f1-1dc1-4078-840d-77fee2c70776"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -56,13 +56,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14973"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "f1cb4567-8664-4d6e-aea0-9c60b859f0fe"
+          "85135bd6-e157-4d12-a640-b9691f03f5cd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20171127T235719Z:f1cb4567-8664-4d6e-aea0-9c60b859f0fe"
+          "WESTUS2:20180310T002249Z:85135bd6-e157-4d12-a640-b9691f03f5cd"
         ]
       },
       "StatusCode": 404

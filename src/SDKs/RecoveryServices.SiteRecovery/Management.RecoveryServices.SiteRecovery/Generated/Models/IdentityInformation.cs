@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="identityProviderType">The identity provider type.
         /// Value is the ToString() of a IdentityProviderType value. Possible
-        /// values include: 'RecoveryServicesActiveDirectory',
-        /// 'CustomerActiveDirectory'</param>
+        /// values include: 'RecoveryServicesActiveDirectory'</param>
         /// <param name="tenantId">The tenant Id for the service principal with
         /// which the on-premise management/data plane components would
         /// communicate with our Azure services.</param>
@@ -70,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets the identity provider type. Value is the ToString() of
         /// a IdentityProviderType value. Possible values include:
-        /// 'RecoveryServicesActiveDirectory', 'CustomerActiveDirectory'
+        /// 'RecoveryServicesActiveDirectory'
         /// </summary>
         [JsonProperty(PropertyName = "identityProviderType")]
         public IdentityProviderType? IdentityProviderType { get; set; }

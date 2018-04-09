@@ -36,10 +36,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// to the SRS Service.</param>
         /// <param name="rcmServiceEndpoint">The endpoint for making requests
         /// to the RCM Service.</param>
-        public VMwareV2FabricSpecificDetails(string srsServiceEndpoint = default(string), string rcmServiceEndpoint = default(string))
+        /// <param name="keyVaultUrl">The Key Vault URL.</param>
+        /// <param name="keyVaultResourceArmId">The Key Vault ARM Id.</param>
+        public VMwareV2FabricSpecificDetails(string srsServiceEndpoint = default(string), string rcmServiceEndpoint = default(string), string keyVaultUrl = default(string), string keyVaultResourceArmId = default(string))
         {
             SrsServiceEndpoint = srsServiceEndpoint;
             RcmServiceEndpoint = rcmServiceEndpoint;
+            KeyVaultUrl = keyVaultUrl;
+            KeyVaultResourceArmId = keyVaultResourceArmId;
             CustomInit();
         }
 
@@ -59,6 +63,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "rcmServiceEndpoint")]
         public string RcmServiceEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Key Vault URL.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyVaultUrl")]
+        public string KeyVaultUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Key Vault ARM Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "keyVaultResourceArmId")]
+        public string KeyVaultResourceArmId { get; set; }
 
     }
 }

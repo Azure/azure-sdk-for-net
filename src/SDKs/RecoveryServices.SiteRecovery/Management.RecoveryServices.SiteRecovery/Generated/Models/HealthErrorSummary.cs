@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="summaryCode">The code of the health error.</param>
         /// <param name="category">The category of the health error. Possible
-        /// values include: 'Replication', 'TestFailover',
-        /// 'Configuration'</param>
+        /// values include: 'None', 'Replication', 'TestFailover',
+        /// 'Configuration', 'FabricInfrastructure', 'VersionExpiry'</param>
         /// <param name="severity">Severity of error. Possible values include:
         /// 'NONE', 'Warning', 'Error', 'Info'</param>
         /// <param name="summaryMessage">The summary message of the health
@@ -73,7 +73,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 
         /// <summary>
         /// Gets or sets the category of the health error. Possible values
-        /// include: 'Replication', 'TestFailover', 'Configuration'
+        /// include: 'None', 'Replication', 'TestFailover', 'Configuration',
+        /// 'FabricInfrastructure', 'VersionExpiry'
         /// </summary>
         [JsonProperty(PropertyName = "category")]
         public HealthErrorCategory? Category { get; set; }

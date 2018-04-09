@@ -19,7 +19,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet to an Application gateway
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithApplciationGateway()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -77,7 +78,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with DnsSettings
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithDnsSettings()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -141,6 +143,7 @@ namespace Compute.Tests
         /// Associates a VMScaleSet with PublicIp
         /// </summary>
         [Fact]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithPublicIP()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -209,7 +212,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with Nsg
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithnNsg()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -273,7 +277,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with ipv6
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithnIpv6()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -334,7 +339,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with multiple IPConfigurations on a single NIC
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMSSWithMultiCA()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -394,7 +400,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with a NIC that has accelerated networking enabled.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMSSAccelNtwkng()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

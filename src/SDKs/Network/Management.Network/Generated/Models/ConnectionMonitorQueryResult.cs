@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ConnectionMonitorQueryResult
         /// class.
         /// </summary>
+        /// <param name="sourceStatus">Status of connection monitor source.
+        /// Possible values include: 'Uknown', 'Active', 'Inactive'</param>
         /// <param name="states">Information about connection states.</param>
-        public ConnectionMonitorQueryResult(IList<ConnectionStateSnapshot> states = default(IList<ConnectionStateSnapshot>))
+        public ConnectionMonitorQueryResult(string sourceStatus = default(string), IList<ConnectionStateSnapshot> states = default(IList<ConnectionStateSnapshot>))
         {
+            SourceStatus = sourceStatus;
             States = states;
             CustomInit();
         }
@@ -44,6 +47,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets status of connection monitor source. Possible values
+        /// include: 'Uknown', 'Active', 'Inactive'
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceStatus")]
+        public string SourceStatus { get; set; }
 
         /// <summary>
         /// Gets or sets information about connection states.

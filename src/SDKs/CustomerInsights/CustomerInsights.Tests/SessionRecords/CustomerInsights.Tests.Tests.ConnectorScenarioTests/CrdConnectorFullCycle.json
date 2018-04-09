@@ -323,6 +323,66 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/sdktestbn3/connectors/testConnector9355/operations/2aae80c54ebc4040848f09b9afda01b8?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzkwOWU5NzktZWY3MS00ZGVmLWE5NzAtYmM3YzE1NGRiOGM1L3Jlc291cmNlR3JvdXBzL1Rlc3RIdWJSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkN1c3RvbWVySW5zaWdodHMvaHVicy9zZGt0ZXN0Ym4zL2Nvbm5lY3RvcnMvdGVzdENvbm5lY3RvcjkzNTUvb3BlcmF0aW9ucy8yYWFlODBjNTRlYmM0MDQwODQ4ZjA5YjlhZmRhMDFiOD9hcGktdmVyc2lvbj0yMDE3LTAxLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.CustomerInsights.CustomerInsightsManagementClient/0.0.1-preview"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c909e979-ef71-4def-a970-bc7c154db8c5/resourceGroups/TestHubRG/providers/Microsoft.CustomerInsights/hubs/sdktestbn3/connectors/testConnector9355\",\r\n  \"name\": \"sdktestbn3/testConnector9355\",\r\n  \"properties\": {\r\n    \"connectorId\": 75,\r\n    \"connectorName\": \"testConnector9355\",\r\n    \"connectorProperties\": {\r\n      \"connectionKeyVaultUrl\": \"vault=off;DefaultEndpointsProtocol=https;AccountName=XXX;AccountKey=XXX\"\r\n    },\r\n    \"connectorType\": \"AzureBlob\",\r\n    \"created\": \"2017-01-31T20:04:27.16\",\r\n    \"description\": \"Test connector\",\r\n    \"displayName\": \"testConnector9355\",\r\n    \"lastModified\": \"2017-01-31T20:04:35.957\",\r\n    \"state\": \"Created\",\r\n    \"tenantId\": \"sdktestbn3\"\r\n  },\r\n  \"type\": \"Microsoft.CustomerInsights/hubs/connectors\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 31 Jan 2017 20:05:55 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14446"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "00ddce12-cbe1-426f-8337-8ceccc010822",
+          "2fc3edb6-64d2-4827-9180-bea6cada5ff5"
+        ],
+        "OData-Version": [
+          "4.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "999a677b-ef0f-4977-987a-e51aef5429a2"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20170131T200556Z:999a677b-ef0f-4977-987a-e51aef5429a2"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {

@@ -58,6 +58,13 @@ namespace Microsoft.Azure.Management.CognitiveServices
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// An OData filter expression that describes a subset of usages to return. The
+        /// supported parameter is name.value (name of the metric, can have an or of
+        /// multiple names).
+        /// </summary>
+        public string Filter { get; set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }

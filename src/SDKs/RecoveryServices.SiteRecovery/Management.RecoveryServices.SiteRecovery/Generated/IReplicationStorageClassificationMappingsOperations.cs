@@ -24,6 +24,35 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public partial interface IReplicationStorageClassificationMappingsOperations
     {
         /// <summary>
+        /// Gets the list of storage classification mappings objects under a
+        /// storage.
+        /// </summary>
+        /// <remarks>
+        /// Lists the storage classification mappings for the fabric.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='storageClassificationName'>
+        /// Storage classfication name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<StorageClassificationMapping>>> ListByReplicationStorageClassificationsWithHttpMessagesAsync(string fabricName, string storageClassificationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets the details of a storage classification mapping.
         /// </summary>
         /// <remarks>
@@ -116,35 +145,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string fabricName, string storageClassificationName, string storageClassificationMappingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the list of storage classification mappings objects under a
-        /// storage.
-        /// </summary>
-        /// <remarks>
-        /// Lists the storage classification mappings for the fabric.
-        /// </remarks>
-        /// <param name='fabricName'>
-        /// Fabric name.
-        /// </param>
-        /// <param name='storageClassificationName'>
-        /// Storage classfication name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<StorageClassificationMapping>>> ListByReplicationStorageClassificationsWithHttpMessagesAsync(string fabricName, string storageClassificationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of storage classification mappings objects under a
         /// vault.

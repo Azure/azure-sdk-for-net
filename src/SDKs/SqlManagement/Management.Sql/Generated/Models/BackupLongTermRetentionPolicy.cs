@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A backup long term retention policy
+    /// A long term retention policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class BackupLongTermRetentionPolicy : ProxyResource
@@ -34,21 +34,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the BackupLongTermRetentionPolicy
         /// class.
         /// </summary>
-        /// <param name="state">The status of the backup long term retention
-        /// policy. Possible values include: 'Disabled', 'Enabled'</param>
-        /// <param name="recoveryServicesBackupPolicyResourceId">The azure
-        /// recovery services backup protection policy resource id</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="location">The geo-location where the resource
-        /// lives</param>
-        public BackupLongTermRetentionPolicy(BackupLongTermRetentionPolicyState state, string recoveryServicesBackupPolicyResourceId, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+        /// <param name="weeklyRetention">The weekly retention policy for an
+        /// LTR backup in an ISO 8601 format.</param>
+        /// <param name="monthlyRetention">The montly retention policy for an
+        /// LTR backup in an ISO 8601 format.</param>
+        /// <param name="yearlyRetention">The yearly retention policy for an
+        /// LTR backup in an ISO 8601 format.</param>
+        /// <param name="weekOfYear">The week of year to take the yearly backup
+        /// in an ISO 8601 format.</param>
+        public BackupLongTermRetentionPolicy(string id = default(string), string name = default(string), string type = default(string), string weeklyRetention = default(string), string monthlyRetention = default(string), string yearlyRetention = default(string), int? weekOfYear = default(int?))
             : base(id, name, type)
         {
-            Location = location;
-            State = state;
-            RecoveryServicesBackupPolicyResourceId = recoveryServicesBackupPolicyResourceId;
+            WeeklyRetention = weeklyRetention;
+            MonthlyRetention = monthlyRetention;
+            YearlyRetention = yearlyRetention;
+            WeekOfYear = weekOfYear;
             CustomInit();
         }
 
@@ -58,37 +61,32 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the geo-location where the resource lives
+        /// Gets or sets the weekly retention policy for an LTR backup in an
+        /// ISO 8601 format.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
+        [JsonProperty(PropertyName = "properties.weeklyRetention")]
+        public string WeeklyRetention { get; set; }
 
         /// <summary>
-        /// Gets or sets the status of the backup long term retention policy.
-        /// Possible values include: 'Disabled', 'Enabled'
+        /// Gets or sets the montly retention policy for an LTR backup in an
+        /// ISO 8601 format.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.state")]
-        public BackupLongTermRetentionPolicyState State { get; set; }
+        [JsonProperty(PropertyName = "properties.monthlyRetention")]
+        public string MonthlyRetention { get; set; }
 
         /// <summary>
-        /// Gets or sets the azure recovery services backup protection policy
-        /// resource id
+        /// Gets or sets the yearly retention policy for an LTR backup in an
+        /// ISO 8601 format.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.recoveryServicesBackupPolicyResourceId")]
-        public string RecoveryServicesBackupPolicyResourceId { get; set; }
+        [JsonProperty(PropertyName = "properties.yearlyRetention")]
+        public string YearlyRetention { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the week of year to take the yearly backup in an ISO
+        /// 8601 format.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (RecoveryServicesBackupPolicyResourceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryServicesBackupPolicyResourceId");
-            }
-        }
+        [JsonProperty(PropertyName = "properties.weekOfYear")]
+        public int? WeekOfYear { get; set; }
+
     }
 }

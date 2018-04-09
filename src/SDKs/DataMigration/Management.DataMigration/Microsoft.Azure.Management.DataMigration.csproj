@@ -5,8 +5,8 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataMigration</PackageId>
-		<Description>Provides developers with libraries for the Data Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Create project, Start Migration, and more.</Description>
-		<Version>0.1.2-preview</Version>
+		<Description>Provides developers with libraries for the Database Migration Service (DMS) under Azure Resource manager to deploy an instance of DMS. Create, Delete, Create project, Start Migration, and more.</Description>
+		<Version>0.3.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataMigration</AssemblyName>
 		<PackageTags>DataMigration;Data Migration;</PackageTags>
 		<PackageReleaseNotes>

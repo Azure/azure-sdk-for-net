@@ -6,12 +6,22 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.BatchAI</PackageId>
 		<Description>Provides management capabilities for Azure Batch AI.</Description>
-		<Version>1.0.0-preview</Version>
+		<Version>1.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.BatchAI</AssemblyName>    
 		<PackageTags>Microsoft Azure BatchAI;BatchAI;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure BatchAI SDK. Included with this release is support for all cluster, job and file server related APIs.
+        This is GA release of the Azure BatchAI SDK. New features included in this releases are:
+        1. added support for job level mounting
+        2. added support for environment variables with secret values
+        3. added support for performance counters reporting in Azure Application Insights
+        4. added support for custom images
+        5. added support for pyTorch deep learning framework
+        6. added API for usage and limits reporting
+        7. added API for listing job files in subdirectories
+        8. now user can choose caching type during NFS creation
+        9. get cluster now reports a path segment generated for storing start task output logs
+        10. get job now reports a path segment generated for job's output directories
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
