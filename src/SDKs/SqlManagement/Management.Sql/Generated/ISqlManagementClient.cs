@@ -77,11 +77,6 @@ namespace Microsoft.Azure.Management.Sql
         IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
 
         /// <summary>
-        /// Gets the ICapabilitiesOperations.
-        /// </summary>
-        ICapabilitiesOperations Capabilities { get; }
-
-        /// <summary>
         /// Gets the IServersOperations.
         /// </summary>
         IServersOperations Servers { get; }
@@ -90,11 +85,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerConnectionPoliciesOperations.
         /// </summary>
         IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
-
-        /// <summary>
-        /// Gets the IDatabasesOperations.
-        /// </summary>
-        IDatabasesOperations Databases { get; }
 
         /// <summary>
         /// Gets the IDatabaseThreatDetectionPoliciesOperations.
@@ -112,11 +102,6 @@ namespace Microsoft.Azure.Management.Sql
         IDataMaskingRulesOperations DataMaskingRules { get; }
 
         /// <summary>
-        /// Gets the IElasticPoolsOperations.
-        /// </summary>
-        IElasticPoolsOperations ElasticPools { get; }
-
-        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         IFirewallRulesOperations FirewallRules { get; }
@@ -125,6 +110,21 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IGeoBackupPoliciesOperations.
         /// </summary>
         IGeoBackupPoliciesOperations GeoBackupPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDatabasesOperations.
+        /// </summary>
+        IDatabasesOperations Databases { get; }
+
+        /// <summary>
+        /// Gets the IElasticPoolsOperations.
+        /// </summary>
+        IElasticPoolsOperations ElasticPools { get; }
+
+        /// <summary>
+        /// Gets the IRecommendedElasticPoolsOperations.
+        /// </summary>
+        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
         /// <summary>
         /// Gets the IReplicationLinksOperations.
@@ -155,11 +155,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolDatabaseActivitiesOperations.
         /// </summary>
         IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
         /// <summary>
         /// Gets the IServiceTierAdvisorsOperations.
@@ -275,6 +270,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolOperations.
         /// </summary>
         IElasticPoolOperations ElasticPoolOperations { get; }
+
+        /// <summary>
+        /// Gets the ICapabilitiesOperations.
+        /// </summary>
+        ICapabilitiesOperations Capabilities { get; }
 
     }
 }

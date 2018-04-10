@@ -11,7 +11,7 @@ namespace Sql.Tests
 {
     public class ServerKeyScenarioTests
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestCreateUpdateDropServerKey()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))

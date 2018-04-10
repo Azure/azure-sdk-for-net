@@ -14,30 +14,31 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The minimum per-database DTU capability.
+    /// The license type capability
     /// </summary>
-    public partial class ElasticPoolPerDatabaseMinDtuCapability
+    public partial class LicenseTypeCapability
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ElasticPoolPerDatabaseMinDtuCapability class.
+        /// Initializes a new instance of the LicenseTypeCapability class.
         /// </summary>
-        public ElasticPoolPerDatabaseMinDtuCapability()
+        public LicenseTypeCapability()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ElasticPoolPerDatabaseMinDtuCapability class.
+        /// Initializes a new instance of the LicenseTypeCapability class.
         /// </summary>
-        /// <param name="limit">The maximum DTUs per database.</param>
+        /// <param name="name">License type identifier.</param>
         /// <param name="status">The status of the capability. Possible values
         /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
-        public ElasticPoolPerDatabaseMinDtuCapability(long? limit = default(long?), CapabilityStatus? status = default(CapabilityStatus?))
+        /// <param name="reason">The reason for the capability not being
+        /// available.</param>
+        public LicenseTypeCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
-            Limit = limit;
+            Name = name;
             Status = status;
+            Reason = reason;
             CustomInit();
         }
 
@@ -47,10 +48,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the maximum DTUs per database.
+        /// Gets license type identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "limit")]
-        public long? Limit { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the status of the capability. Possible values include:
@@ -58,6 +59,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public CapabilityStatus? Status { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the reason for the capability not being available.
+        /// </summary>
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
 
     }
 }

@@ -1,10 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2/providers/Microsoft.Sql/checkNameAvailability?api-version=2014-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjZhNmUwYzUtZTc5Yy00YzZkLWE4NzgtNzJlYWZiY2E0Y2YyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2NoZWNrTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
+      "RequestUri": "/subscriptions/df7c055c-6310-4374-9852-10ef71ce5f85/providers/Microsoft.Sql/checkNameAvailability?api-version=2014-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZGY3YzA1NWMtNjMxMC00Mzc0LTk4NTItMTBlZjcxY2U1Zjg1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3FsL2NoZWNrTmFtZUF2YWlsYWJpbGl0eT9hcGktdmVyc2lvbj0yMDE0LTA0LTAx",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"SQLCRUDTEST-9835\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"SQLCRUDTEST-9660\",\r\n  \"type\": \"Microsoft.Sql/servers\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -13,17 +13,17 @@
           "70"
         ],
         "x-ms-client-request-id": [
-          "06605977-69c3-41d1-99c5-502400017071"
+          "900d0b7f-8d66-4251-9ac1-7c18b2789486"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.7.0.0"
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Sql.SqlManagementClient/1.13.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"SQLCRUDTEST-9835\",\r\n  \"available\": false,\r\n  \"reason\": \"Invalid\",\r\n  \"message\": \"Specified server name contains unsupported characters or is too long. Server name must be no longer than 63 characters long, contain only lower-case characters or digits, cannot contain '.' or '_' characters and can't start or end with '-' character.\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"SQLCRUDTEST-9660\",\r\n  \"available\": false,\r\n  \"reason\": \"Invalid\",\r\n  \"message\": \"Specified server name contains unsupported characters or is too long. Server name must be no longer than 63 characters long, contain only lower-case characters or digits, cannot contain '.' or '_' characters and can't start or end with '-' character.\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
@@ -32,7 +32,7 @@
           "no-store, no-cache"
         ],
         "Date": [
-          "Wed, 02 Aug 2017 00:30:59 GMT"
+          "Tue, 27 Mar 2018 21:29:53 GMT"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -44,7 +44,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "7b85c508-ed77-409d-9d2a-85ec5ce6b7b8"
+          "9bad2d5b-26af-4e0c-ae70-e2ae5133069c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -59,13 +59,13 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "57873d05-02f8-4d1b-9de2-cf2e7a0dad70"
+          "c307ecbc-a8e6-427d-bce2-6f11b91061bc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170802T003059Z:57873d05-02f8-4d1b-9de2-cf2e7a0dad70"
+          "WESTUS2:20180327T212953Z:c307ecbc-a8e6-427d-bce2-6f11b91061bc"
         ]
       },
       "StatusCode": 200
@@ -73,10 +73,10 @@
   ],
   "Names": {
     "TestCheckServerNameInvalid": [
-      "sqlcrudtest-9835"
+      "sqlcrudtest-9660"
     ]
   },
   "Variables": {
-    "SubscriptionId": "b6a6e0c5-e79c-4c6d-a878-72eafbca4cf2"
+    "SubscriptionId": "df7c055c-6310-4374-9852-10ef71ce5f85"
   }
 }

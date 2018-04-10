@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.Sql.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,7 +18,6 @@ namespace Microsoft.Azure.Management.Sql.Models
     /// <summary>
     /// The service objectives capability.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class ServiceObjectiveCapability
     {
         /// <summary>
@@ -34,27 +31,30 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ServiceObjectiveCapability class.
         /// </summary>
-        /// <param name="name">The service objective name.</param>
-        /// <param name="status">The status of the service objective. Possible
-        /// values include: 'Visible', 'Available', 'Default',
-        /// 'Disabled'</param>
-        /// <param name="unit">Unit type used to measure service objective
-        /// performance level. Possible values include: 'DTU'</param>
-        /// <param name="value">Performance level value.</param>
         /// <param name="id">The unique ID of the service objective.</param>
+        /// <param name="name">The service objective name.</param>
         /// <param name="supportedMaxSizes">The list of supported maximum
-        /// database sizes for this service objective.</param>
-        /// <param name="includedMaxSize">The included (free) max size for this
-        /// service level objective.</param>
-        public ServiceObjectiveCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), PerformanceLevelUnit? unit = default(PerformanceLevelUnit?), int? value = default(int?), System.Guid id = default(System.Guid), IList<MaxSizeCapability> supportedMaxSizes = default(IList<MaxSizeCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability))
+        /// database sizes.</param>
+        /// <param name="performanceLevel">The performance level.</param>
+        /// <param name="sku">The sku.</param>
+        /// <param name="supportedLicenseTypes">List of supported license
+        /// types.</param>
+        /// <param name="includedMaxSize">The included (free) max size.</param>
+        /// <param name="status">The status of the capability. Possible values
+        /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
+        /// <param name="reason">The reason for the capability not being
+        /// available.</param>
+        public ServiceObjectiveCapability(System.Guid? id = default(System.Guid?), string name = default(string), IList<MaxSizeRangeCapability> supportedMaxSizes = default(IList<MaxSizeRangeCapability>), PerformanceLevelCapability performanceLevel = default(PerformanceLevelCapability), Sku sku = default(Sku), IList<LicenseTypeCapability> supportedLicenseTypes = default(IList<LicenseTypeCapability>), MaxSizeCapability includedMaxSize = default(MaxSizeCapability), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
-            Name = name;
-            Status = status;
-            Unit = unit;
-            Value = value;
             Id = id;
+            Name = name;
             SupportedMaxSizes = supportedMaxSizes;
+            PerformanceLevel = performanceLevel;
+            Sku = sku;
+            SupportedLicenseTypes = supportedLicenseTypes;
             IncludedMaxSize = includedMaxSize;
+            Status = status;
+            Reason = reason;
             CustomInit();
         }
 
@@ -64,49 +64,72 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the unique ID of the service objective.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public System.Guid? Id { get; private set; }
+
+        /// <summary>
         /// Gets the service objective name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the status of the service objective. Possible values include:
+        /// Gets the list of supported maximum database sizes.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedMaxSizes")]
+        public IList<MaxSizeRangeCapability> SupportedMaxSizes { get; private set; }
+
+        /// <summary>
+        /// Gets the performance level.
+        /// </summary>
+        [JsonProperty(PropertyName = "performanceLevel")]
+        public PerformanceLevelCapability PerformanceLevel { get; private set; }
+
+        /// <summary>
+        /// Gets the sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; private set; }
+
+        /// <summary>
+        /// Gets list of supported license types.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedLicenseTypes")]
+        public IList<LicenseTypeCapability> SupportedLicenseTypes { get; private set; }
+
+        /// <summary>
+        /// Gets the included (free) max size.
+        /// </summary>
+        [JsonProperty(PropertyName = "includedMaxSize")]
+        public MaxSizeCapability IncludedMaxSize { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the capability. Possible values include:
         /// 'Visible', 'Available', 'Default', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
-        /// Gets unit type used to measure service objective performance level.
-        /// Possible values include: 'DTU'
+        /// Gets or sets the reason for the capability not being available.
         /// </summary>
-        [JsonProperty(PropertyName = "performanceLevel.unit")]
-        public PerformanceLevelUnit? Unit { get; private set; }
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
 
         /// <summary>
-        /// Gets performance level value.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "performanceLevel.value")]
-        public int? Value { get; private set; }
-
-        /// <summary>
-        /// Gets the unique ID of the service objective.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public System.Guid Id { get; private set; }
-
-        /// <summary>
-        /// Gets the list of supported maximum database sizes for this service
-        /// objective.
-        /// </summary>
-        [JsonProperty(PropertyName = "supportedMaxSizes")]
-        public IList<MaxSizeCapability> SupportedMaxSizes { get; private set; }
-
-        /// <summary>
-        /// Gets the included (free) max size for this service level objective.
-        /// </summary>
-        [JsonProperty(PropertyName = "includedMaxSize")]
-        public MaxSizeCapability IncludedMaxSize { get; private set; }
-
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }
