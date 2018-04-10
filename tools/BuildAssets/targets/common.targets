@@ -1,8 +1,4 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\tasks\common.tasks"/>
-  <Import Project="signing.targets"/>
-  <Import Project="additional.targets"/>
-
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
     <NetStd14>netstandard1.4</NetStd14>
@@ -10,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildStaticAnalysisTargets>
-	  GetBuildEnv;
+	    GetBuildEnv;
       BuildCiSign;
       CategorizeProjects;
     </PreBuildStaticAnalysisTargets>
@@ -58,6 +54,9 @@
       DisplayHelp
     </HelpDependsOn>
   </PropertyGroup>
+  <PropertyGroup>
+      <ProjectRootDir/>
+  </PropertyGroup>
 
   <Target Name="GetBuildEnv" Condition=" '$(BuildWideDebugTrace)' == 'true' ">
     <Message Text="OnPremiseBuild .... $(OnPremiseBuild)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
@@ -67,6 +66,9 @@
     <Message Text="PackageOutputPath .... $(PackageOutputPath)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
     <Message Text="Scope .... $(Scope)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
     <Message Text="BuildInParallel .... $(BuildInParallel)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
+
+    <Message Text="NetSdkBuildTargetsDir .... $(NetSdkBuildTargetsDir)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
+    <Message Text="NetSdkBuildToolsDir .... $(NetSdkBuildToolsDir)" Condition=" '$(BuildWideDebugTrace)' == 'true' "/>
   </Target>
 
   <Target Name="CleanLatestProjects" Condition=" '$(SkipClean)' != 'true' ">
@@ -101,20 +103,18 @@
             BuildInParallel="$(BuildInParallel)"
             ContinueOnError="ErrorAndStop" />
 	
-	<MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
-            Projects="@(unsupportedProj)"
-            BuildInParallel="$(BuildInParallel)"
-            ContinueOnError="ErrorAndStop" />
-			
+    <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
+              Projects="@(unsupportedProj)"
+              BuildInParallel="$(BuildInParallel)"
+              ContinueOnError="ErrorAndStop" />
+        
   </Target>
-<!--
-  <Target Name="PreAzSdkBuild" BeforeTargets="BeforeBuild">
-	<Message Text="Should run before build" Importance="High" />
-  </Target>
-  -->
+
   <Target Name="BuildAzSdkProjects" Condition=" '$(SkipBuild)' != 'true' ">
     <Message Text="IsBuildingInVS: $(AddProjectReferenceForDebuggingPurpose)"/>
     <Message Text="IsCIBuild: $(AddNugetReferenceForCIandCmdlineBuild)"/>
+    <Message Text="CmdLineBuild status ... $(CmdLineBuild)"/> 
+    
     <PropertyGroup>
       <LatestProjectDefaultBuildTarget Condition=" '$(LatestProjectDefaultBuildTarget)' == '' ">Build</LatestProjectDefaultBuildTarget>
     </PropertyGroup>
@@ -147,7 +147,7 @@
     </MSBuild>
 
     <!--Test Project-->
-	<Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
+	  <Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
              Projects="@(netCore11TestProj)"
              Properties="TargetFramework=$(NetCore11)"
@@ -155,7 +155,7 @@
              ContinueOnError="true">
     </MSBuild>
 
-	<Message Text="Building SDK Projects ..... @(net452TestProj) for $(net452TestProj)"  Condition=" '@(net452TestProj)' != '' " />
+	  <Message Text="Building SDK Projects ..... @(net452TestProj) for $(net452TestProj)"  Condition=" '@(net452TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
               Projects="@(net452TestProj)"
               Properties="TargetFramework=$(NetFx452)"
@@ -172,17 +172,20 @@
             ContinueOnError="ErrorAndStop">
     </MSBuild>
 
+    <Message Text="Building NonSdk projects ..... @(nonSdkProj)" Condition=" '@(nonSdkProj)' != '' " />       
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+            Projects="@(unsupportedProj)"
+            Properties="CmdLineBuild=$(CmdLineBuild)"
+            BuildInParallel="$(BuildInParallel)"
+            ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="nonSdkAssemblies"/>
+    </MSBuild>
+
     <ItemGroup>
-      <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies);@(netCore11Assemblies)" />
+      <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies);@(netCore11Assemblies);@(nonSdkAssemblies)" />
     </ItemGroup>
   </Target>
 
-  <!--
-  <Target Name="PostAzSdkBuild" AfterTargets="AfterBuild">
-	<Message Text="Should run After build" Importance="High" />
-  </Target>
-  -->
-  
   <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
     <Message Text="Executing Tests......"/>
     <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
@@ -193,9 +196,14 @@
   </Target>
 
   <Target Name="Package">
-    <Message Text="Packaging..... @(net452SDKProj);@(netStd14SDKProj)" />
+    <Message Text="Packaging..... @(net452SDKProj);@(netStd14SDKProj);@(nonSdkProject)" />
+    <PropertyGroup>
+      <!-- <SkipPublishingForNonSdkPackages Condition=" '@(nonSdkProj)' != '' ">true</SkipPublishingForNonSdkPackages> -->
+      <NonSdkPackageOutputPath>$(PackageOutputPath)\ToolsPackage</NonSdkPackageOutputPath>
+    </PropertyGroup>
     <ItemGroup>
       <ProjectsToPackage Include="@(SDKProject)" />
+      <NonSdkProjectsToPackage Include="@(nonSdkProject)" />
     </ItemGroup>
     <MSBuild
         Projects="@(ProjectsToPackage)"
@@ -209,31 +217,43 @@
       <Output TaskParameter="TargetOutputs" ItemName="SdkNuGetPackages" />
     </MSBuild>
 
-    <Message Text="Built Nugets @(SdkNuGetPackages)"/>
+    <MSBuild
+        Projects="@(NonSdkProjectsToPackage)"
+        Targets="Pack"
+        Properties="Configuration=$(Configuration);
+        VisualStudioVersion=$(VisualStudioVersion); 
+        PackageOutputPath=$(NonSdkPackageOutputPath); 
+        NoPackageAnalysis=true; 
+        IncludeSymbols=true;
+        NoBuild=true;" Condition=" '@(NonSdkProjectsToPackage)' != '' ">
+      <Output TaskParameter="TargetOutputs" ItemName="NonSdkNuGetPackages" />
+    </MSBuild>
+
+    <Message Text="Built Nugets @(SdkNuGetPackages);@(NonSdkNugetPackages)"/>
   </Target>
   
   <Target Name="PublishingNuget">
-	<Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
+    <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
     <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
-	<PropertyGroup>
+    <PropertyGroup>
       <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
-	  <TaskDebugOutput Condition=" '$(TaskDebugOutput)' == '' ">false</TaskDebugOutput>
-	  <SkipNugetPublishing Condition=" '$(SkipNugetPublishing)' == '' ">false</SkipNugetPublishing>
-	  <SkipSymbolPublishing Condition=" '$(SkipSymbolPublishing)' == '' ">false</SkipSymbolPublishing>
+      <TaskDebugOutput Condition=" '$(TaskDebugOutput)' == '' ">false</TaskDebugOutput>
+      <SkipNugetPublishing Condition=" '$(SkipNugetPublishing)' == '' ">false</SkipNugetPublishing>
+      <SkipSymbolPublishing Condition=" '$(SkipSymbolPublishing)' == '' ">false</SkipSymbolPublishing>
     </PropertyGroup>
-	
-	<MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
-	<PublishSDKNuget 
-		NugetPackageName="$(NugetPackageName)" 
-		PackageOutputPath="$(PackageOutputPath)" 
-		PublishNugetToPath="$(PublishNugetToDir)" 
-		NugetExePath="$(NuGetCommand)"
-		UserId="$(UserId)"
-		SkipNugetPublishing="$(SkipNugetPublishing)"
-		SkipSymbolPublishing="$(SkipSymbolPublishing)"
-		TaskDebugOutput="$(TaskDebugOutput)"
-		ApiKey="$(ApiKey)"
-		/>
+    
+    <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
+    <PublishSDKNuget 
+      NugetPackageName="$(NugetPackageName)" 
+      PackageOutputPath="$(PackageOutputPath)" 
+      PublishNugetToPath="$(PublishNugetToDir)" 
+      NugetExePath="$(NuGetCommand)"
+      UserId="$(UserId)"
+      SkipNugetPublishing="$(SkipNugetPublishing)"
+      SkipSymbolPublishing="$(SkipSymbolPublishing)"
+      TaskDebugOutput="$(TaskDebugOutput)"
+      ApiKey="$(ApiKey)"
+      />
   </Target>
 
   <Target Name="PublishingNuget_Original">
@@ -258,6 +278,7 @@
   </Target>
 
   <Target Name="CategorizeProjects">
+    <DebugTask Condition=" '$(DebugMode)' == 'true'"/>
     <SDKCategorizeProjects
       SourceRootDirPath="$(LibrarySourceFolder)"
       BuildScope="$(Scope)"
@@ -269,6 +290,8 @@
       <Output TaskParameter="netCore11TestProjectsToBuild" ItemName="netCore11TestProj" />
       <Output TaskParameter="net452TestProjectsToBuild" ItemName="net452TestProj" />
       <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
+      <Output TaskParameter="nonSdkProjectToBuild" ItemName="nonSdkProj" />
+      <Output TaskParameter="ProjectRootDir" PropertyName="ProjRootDir" />
     </SDKCategorizeProjects>
 
     <Message Text="Categorizing Projects....."/>
@@ -286,13 +309,20 @@
     </RemoveDuplicates>
 
     <Message Text="SDKProjects ....... @(FilteredSdkProjects->Count())"/>
-    <Message Text="%(FilteredSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true'"/>
+    <Message Text="%(FilteredSdkProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
     <Message Text="TestSDKProjects ....... @(FilteredTestProjects->Count())"/>
-    <Message Text="%(FilteredTestProjects.Identity)" Condition=" '$(DebugTrace)' == 'true'"/>
-    <Message Text="UnSupported Projects ....... @(unSupportedProjectsToBuild->Count())"/>
-    <Message Text="%(unSupportedProjectsToBuild.Identity)" Condition=" '$(DebugTrace)' == 'true'"/>
+    <Message Text="%(FilteredTestProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text=" "/>
+    <Message Text="UnSupported Projects ....... @(unsupportedProj->Count())"/>
+    <Message Text="%(unsupportedProj.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text=" "/>
+    <Message Text="NonSdk Projects......... @(nonSdkProj->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
+    <Message Text="%(nonSdkProj.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
 
+    <PropertyGroup>
+      <ProjectRootDir>$(ProjRootDir)</ProjectRootDir>
+    </PropertyGroup>
     <ItemGroup>
       <net452SDKProjects Include="@(net452SDKProj)"/>
       <netStd14SDKProjects Include="@(netStd14SDKProj)"/>
@@ -300,6 +330,7 @@
       <netCore11TestProjects Include="@(netCore11TestProj)"/>
       <net452TestProjects Include="@(net452TestProj)"/>
       <unSupportedProject Include="@(unsupportedProj)"/>
+      <nonSdkProject Include="@(nonSdkProj)"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -308,15 +339,18 @@
       <ProjectToScanDirs Include="%(FilteredSdkProjects.RootDir)%(FilteredSdkProjects.Directory)"/>
       <ProjectToScanDirs Include="%(FilteredTestProjects.RootDir)%(FilteredTestProjects.Directory)"/>
     </ItemGroup>
+
+    <Message Text=" "/>
+    <Message Text="ProjectRootDir......... $(ProjectRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
   </Target>
   
   <Target Name="UpdateTools">
-  <PropertyGroup>
-	<RemoteRootDir Condition=" '$(RemoteRootDir)' == '' ">D:\myFork\SdkBuildTools</RemoteRootDir>
-  </PropertyGroup>
-	<Message Text="Updating tools ...."/>
-	<!-- https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/ -->
-	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)"/>
+    <PropertyGroup>
+    <RemoteRootDir Condition=" '$(RemoteRootDir)' == '' ">D:\myFork\SdkBuildTools</RemoteRootDir>
+    </PropertyGroup>
+    <Message Text="Updating tools ...."/>
+    <!-- https://raw.githubusercontent.com/shahabhijeet/azure-sdk-for-net/addSep/ -->
+    <GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)"/>
   </Target>
 
   <Target Name="DisplayHelp">
@@ -333,14 +367,17 @@
     <Message Text="----- will Build Compute nuget package and run compute test" />
 	
 	<!--
-	<Message Text="msbuild build.proj /t:PublishNuget /p:NugetPackageName={Nuget package name} /p:PackageOutputPath={Package output path} /p:PublishNugetToPath={Nuget publish path}" />
-	
-	<Message Text="NugetPackageName Name Of Package from .csproj under ProjectId xml tag"/>
-	/p:PackageOutputPath=<Defaulted to build output if not provided> /p:PublishNugetToPath=<Defaulted to https://www.nuget.org if not provided, or provide local path /p:Scope=SDKs\Compute" />
+    <Message Text="msbuild build.proj /t:PublishNuget /p:NugetPackageName={Nuget package name} /p:PackageOutputPath={Package output path} /p:PublishNugetToPath={Nuget publish path}" />
+    
+    <Message Text="NugetPackageName Name Of Package from .csproj under ProjectId xml tag"/>
+    /p:PackageOutputPath=<Defaulted to build output if not provided> /p:PublishNugetToPath=<Defaulted to https://www.nuget.org if not provided, or provide local path /p:Scope=SDKs\Compute" />
     <Message Text=" will Build Compute nuget package and run compute test" />
 	-->
   </Target>
   
   <!--Do not delete-->
   <Target Name="PreBuildStaticAnalysis" DependsOnTargets="$(PreBuildStaticAnalysisTargets)"/>
+  <Import Project="signing.targets"/>  
+  <Import Project="additional.targets"/>
+  <Import Project="..\tasks\common.tasks"/>  
 </Project>

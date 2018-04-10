@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
     public class ProjectSearchUtility
     {
         #region Fields
@@ -73,7 +73,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                 if (_allProjs == null)
                 {
                     _allProjs = new List<string>();
+                }
 
+                if(_allProjs?.Count <= 0)
+                { 
                     _allProjs = SearchProjects(RootDirForSearch);
                 }
 
@@ -88,6 +91,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                 if (_testProjs == null)
                 {
                     _testProjs = new List<string>();
+                }
+
+                if(_testProjs?.Count <= 0)
+                { 
                     _testProjs = SearchTestProjects(RootDirForSearch);
                 }
 
@@ -95,6 +102,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             }
         }
 
+        
         public IReadOnlyList<string> IgnoredProjectList
         {
             get
@@ -102,7 +110,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                 if (_ignoreProjs == null)
                 {
                     _ignoreProjs = new List<string>();
+                }
 
+                if (_ignoreProjs?.Count <= 0)
+                {
                     foreach (string iP in IgnorePathTokenList)
                     {
                         var ignorePaths = from proj in AllProjectList where proj.Contains(iP) select proj;
@@ -118,9 +129,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         }
 
         /// <summary>
-        /// In Azure SDK For NET repo, this path will be until src e.g 'C:\Azure-SDK-FOR-NET\src'
+        /// This will be path especially when we run a CI run and search all possible projects
         /// </summary>
         public string RootDirForSearch { get; private set; }
+
+        /// <summary>
+        /// This will be the root directory where projects are being discovered
+        /// </summary>
+        public string ProjectRootDir { get; private set; }
         #endregion
 
         #region Constructor
@@ -128,6 +144,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         {
             Check.DirectoryExists(rootDirPath);
             RootDirForSearch = rootDirPath;
+
+            _projExtList = null;
+            _ignorePathTokenList = null;
+            _testProjectTokenList = null;
+            _allProjs = null;
+            _testProjs = null;
+            _ignoreProjs = null;
         }
 
         public ProjectSearchUtility(string rootDirPath, List<string> ignorePathTokens) : this(rootDirPath)
@@ -173,9 +196,10 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         public List<string> GetScopedSDKProjects(string scopePath)
         {
             List<string> scopedProjects = new List<string>();
-            string searchProjInDirPath = Path.Combine(RootDirForSearch, scopePath);
+            string searchProjInDirPath = AdjustPathForScopedProjects(RootDirForSearch, scopePath);
             if (Directory.Exists(searchProjInDirPath))
             {
+                ProjectRootDir = searchProjInDirPath;
                 scopedProjects = SearchProjects(searchProjInDirPath);
                 List<string> testProjs = SearchTestProjects(searchProjInDirPath);
 
@@ -191,8 +215,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         public List<string> GetScopedTestProjects(string scopePath)
         {
             List<string> testScopedProjects = new List<string>();
-
-            string searchDir = Path.Combine(RootDirForSearch, scopePath);
+            
+            string searchDir = AdjustPathForScopedProjects(RootDirForSearch, scopePath);
             if (Directory.Exists(searchDir))
             {
                 testScopedProjects = SearchTestProjects(searchDir);
@@ -207,17 +231,17 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         #region Search
         private List<string> SearchProjects(string searchDirPath)
         {
-            List<string> _allProjs = new List<string>();
+            List<string> searchProjs = new List<string>();
             foreach (string ext in ProjectExtensionList)
             {
                 var searchedProjects = Directory.EnumerateFiles(searchDirPath, ext, SearchOption.AllDirectories);
                 if (searchedProjects.Any<string>())
                 {
-                    _allProjs.AddRange(searchedProjects);
+                    searchProjs.AddRange(searchedProjects);
                 }
             }
 
-            return _allProjs;
+            return searchProjs;
         }
         
         private List<string> SearchTestProjects(string searchDirPath)
@@ -234,6 +258,38 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             }
 
             return _testProjs;
+        }
+        #endregion
+
+        #region Private functions
+        /// <summary>
+        /// This function checks if the scope path (which is a relative path) is found under src directory
+        /// If not found, it will adjust the root directory from the actul root of repo (one level up)
+        /// Earlier: RootDirForSearch use to be <root>\src
+        /// But we adjust and move one level up and then search again (if prior attempt resulted in no matching directories)
+        /// </summary>
+        /// <param name="rootDir"></param>
+        /// <param name="scopePath"></param>
+        /// <returns></returns>
+        private string AdjustPathForScopedProjects(string rootDir, string scopePath)
+        {
+            string rootParentDir = Directory.GetParent(rootDir).FullName;
+            string searchProjInDirPath = Path.Combine(RootDirForSearch, scopePath);
+            if (!Directory.Exists(searchProjInDirPath))
+            {
+                searchProjInDirPath = Path.Combine(rootParentDir, scopePath);
+                if (!Directory.Exists(searchProjInDirPath))
+                {
+                    searchProjInDirPath = string.Empty;
+                }
+                else
+                {
+                    // update root dir where search will be preformed
+                    RootDirForSearch = searchProjInDirPath;
+                }
+            }
+
+            return searchProjInDirPath;
         }
         #endregion
     }

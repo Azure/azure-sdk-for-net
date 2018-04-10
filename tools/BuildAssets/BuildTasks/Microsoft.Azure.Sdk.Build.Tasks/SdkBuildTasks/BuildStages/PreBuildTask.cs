@@ -1,16 +1,18 @@
-﻿namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 {
-    using System;
-    using Microsoft.Build.Utilities;
-    using Microsoft.Build.Framework;
     using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
-    using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
     using Microsoft.Azure.Sdk.Build.Tasks.Models;
+    using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
+    using Microsoft.Build.Framework;
+    using Microsoft.WindowsAzure.Build.Tasks.Utilities;
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using static Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants;
-    using Microsoft.WindowsAzure.Build.Tasks.Utilities;
 
     /// <summary>
     /// 

@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Azure.Build.BootstrapTasks
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Azure.Build.BootstrapTasks
 {
     using System;
     using Microsoft.Build.Framework;
@@ -136,7 +139,15 @@
 
             if (string.IsNullOrEmpty(RemoteRootDir))
             {
-                RemoteRootDir = DEFAULT_REMOTE_ROOT_DIR;
+                string localCopyFrom = Path.Combine(LocalBranchRootDir, COPY_FROM_RELATIVEPATH);
+                if(!Directory.Exists(localCopyFrom))
+                {
+                    RemoteRootDir = DEFAULT_REMOTE_ROOT_DIR;
+                }
+                else
+                {
+                    RemoteRootDir = LocalBranchRootDir;
+                }
             }
 
             if (RemoteRootDir.StartsWith("http"))

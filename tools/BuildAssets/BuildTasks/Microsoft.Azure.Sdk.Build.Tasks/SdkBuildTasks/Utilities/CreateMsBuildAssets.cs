@@ -1,17 +1,12 @@
-﻿using Microsoft.Build.Evaluation;
-using Microsoft.Build.Execution;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
 {
-
+    using System;
+    using System.IO;
+    using System.Xml;
+    using System.Xml.Linq;
 
     public class MsBuildProjectFile : IFileSystemAsset
     {

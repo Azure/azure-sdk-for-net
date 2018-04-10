@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
 using System;
@@ -11,6 +14,7 @@ using Xunit;
 
 namespace Build.Tasks.Tests.UtilityTests
 {
+
     public class FileSystemAssetTests : IClassFixture<FileSystemAssetFixture>
     {
         FileSystemAssetFixture fixture;

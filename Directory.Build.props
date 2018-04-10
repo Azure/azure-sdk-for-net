@@ -8,7 +8,7 @@
     <AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
     <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
-	<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
+	  <BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
     <PoliCheckOutputDir>$(LibraryRoot)PolicheckOutput</PoliCheckOutputDir>
     <BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
@@ -17,7 +17,7 @@
     <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
     <BuildInParallel>true</BuildInParallel>
-	<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
+	  <SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
   </PropertyGroup>
@@ -38,7 +38,7 @@
 	<!-- <NetSdkBuildTargetsDir Condition=" '$(NetSdkBuildTargetsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildTargetsDir> -->
 	
 	<NetSdkBuildToolsDir Condition="Exists('$(BuildAssetsDir)')">$(BuildAssetsDir)</NetSdkBuildToolsDir>
-	<NetSdkBuildToolsDir Condition="Exists('$(SdkBuildToolsDir)')">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
+	<NetSdkBuildToolsDir Condition="Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
 	<!-- <NetSdkBuildToolsDir Condition=" '$(NetSdkBuildToolsDir)' == '' ">$(LibraryToolsFolder)\buildTargets</NetSdkBuildToolsDir> -->
   </PropertyGroup>
  

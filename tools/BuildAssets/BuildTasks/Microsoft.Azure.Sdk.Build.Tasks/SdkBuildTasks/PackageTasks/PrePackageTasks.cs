@@ -1,10 +1,9 @@
-﻿namespace Microsoft.Azure.Sdk.Build.Tasks.PackageTasks
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Azure.Sdk.Build.Tasks.PackageTasks
 {
-    using System;
-    using Microsoft.Build.Utilities;
-    using System.Collections.Generic;
     using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
-    using Microsoft.Azure.Sdk.Build.Tasks.Models;
     using Microsoft.Build.Framework;
 
     /// <summary>

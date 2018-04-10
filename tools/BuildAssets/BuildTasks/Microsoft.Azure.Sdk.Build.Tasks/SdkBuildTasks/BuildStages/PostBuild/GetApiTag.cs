@@ -1,17 +1,17 @@
-﻿using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
-using Microsoft.Azure.Sdk.Build.Tasks.Models;
-using Microsoft.Build.Framework;
-using Microsoft.WindowsAzure.Build.Tasks.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
+﻿namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 {
     /*
+        using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
+    using Microsoft.Azure.Sdk.Build.Tasks.Models;
+    using Microsoft.Build.Framework;
+    using Microsoft.WindowsAzure.Build.Tasks.Utilities;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
+    
     public class GetApiTag : NetSdkTask
     {
         #region Properties/Inputs

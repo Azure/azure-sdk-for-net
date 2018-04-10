@@ -1,20 +1,21 @@
-﻿using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
-using Microsoft.Azure.Sdk.Build.Tasks.Models;
-using Microsoft.Build.Evaluation;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-using Microsoft.WindowsAzure.Build.Tasks.Utilities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Microsoft.Azure.Sdk.Build.Tasks.BuildStages;
-using static Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 {
+    using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
+    using Microsoft.Azure.Sdk.Build.Tasks.Models;
+    using Microsoft.Build.Evaluation;
+    using Microsoft.Build.Framework;
+    using Microsoft.WindowsAzure.Build.Tasks.Utilities;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+    using static Microsoft.WindowsAzure.Build.Tasks.Utilities.Constants;
+
     public class PostBuildTask : NetSdkTask
     {
         protected override INetSdkTask TaskInstance { get => this; }
