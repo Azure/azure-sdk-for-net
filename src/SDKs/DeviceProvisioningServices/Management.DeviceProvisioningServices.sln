@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.DeviceProvisioningServices", "Management.DeviceProvisioningServices\Microsoft.Azure.Management.DeviceProvisioningServices.csproj", "{8B1E153F-90A7-49C3-99EA-C502627380A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeviceProvisioningServices.Tests", "DeviceProvisioningServices.Tests\DeviceProvisioningServices.Tests.csproj", "{C716AD7C-9F09-4206-B0DA-C779CBB2F1CA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.IotHub", "..\IotHub\Management.IotHub\Microsoft.Azure.Management.IotHub.csproj", "{15FABBE1-F329-4F7A-AA06-9B755DDB72D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{C716AD7C-9F09-4206-B0DA-C779CBB2F1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C716AD7C-9F09-4206-B0DA-C779CBB2F1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C716AD7C-9F09-4206-B0DA-C779CBB2F1CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15FABBE1-F329-4F7A-AA06-9B755DDB72D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15FABBE1-F329-4F7A-AA06-9B755DDB72D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15FABBE1-F329-4F7A-AA06-9B755DDB72D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15FABBE1-F329-4F7A-AA06-9B755DDB72D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

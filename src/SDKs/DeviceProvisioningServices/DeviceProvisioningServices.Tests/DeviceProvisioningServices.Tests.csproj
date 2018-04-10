@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\IotHub\Management.IotHub\Microsoft.Azure.Management.IotHub.csproj" />
     <ProjectReference Include="..\Management.DeviceProvisioningServices\Microsoft.Azure.Management.DeviceProvisioningServices.csproj" />
   </ItemGroup>
   
