@@ -1,0 +1,464 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/mapreduce/streaming?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2Uvc3RyZWFtaW5nP3VzZXIubmFtZT1hZG1pbg==",
+      "RequestMethod": "POST",
+      "RequestBody": "input=%2Fexample%2Fdata%2Fgutenberg%2Fdavinci.txt&output=%2Fexample%2Fdata%2Fgutenberg%2Fwcount%2Fc5f96688-84c4-4ca7-928b-24b950d60b0f&mapper=cat.exe&reducer=wc.exe&files=%2Fexample%2Fapps%2Fwc.exe%2C%2Fexample%2Fapps%2Fcat.exe&statusdir=2016-05-09T21-09-10-27f0c077-184a-49fa-8876-c400eba8b8fb",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "294"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1461849598908_0127\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1462864150702&s=6YpNKBizm0kMRmYPTceenIK+gg4=\"; Path=/; Expires=Tue, 10-May-2016 07:09:10 GMT; HttpOnly"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 21:09:13 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/ws/v1/cluster/apps/application_1461849598908_0127/state",
+      "EncodedRequestUri": "L3dzL3YxL2NsdXN0ZXIvYXBwcy9hcHBsaWNhdGlvbl8xNDYxODQ5NTk4OTA4XzAxMjcvc3RhdGU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"state\": \"ACCEPTED\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "20"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "Mon, 09 May 2016 21:09:14 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 21:09:13 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/ws/v1/cluster/apps/application_1461849598908_0127/state",
+      "EncodedRequestUri": "L3dzL3YxL2NsdXN0ZXIvYXBwcy9hcHBsaWNhdGlvbl8xNDYxODQ5NTk4OTA4XzAxMjcvc3RhdGU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"state\": \"RUNNING\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "19"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "Mon, 09 May 2016 21:09:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 21:09:43 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/ws/v1/cluster/apps/application_1461849598908_0127/state",
+      "EncodedRequestUri": "L3dzL3YxL2NsdXN0ZXIvYXBwcy9hcHBsaWNhdGlvbl8xNDYxODQ5NTk4OTA4XzAxMjcvc3RhdGU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"state\": \"RUNNING\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "19"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "Mon, 09 May 2016 21:10:14 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 21:10:13 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/ws/v1/cluster/apps/application_1461849598908_0127/state",
+      "EncodedRequestUri": "L3dzL3YxL2NsdXN0ZXIvYXBwcy9hcHBsaWNhdGlvbl8xNDYxODQ5NTk4OTA4XzAxMjcvc3RhdGU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"state\": \"FINISHED\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "20"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "Mon, 09 May 2016 21:10:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 21:10:43 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1461849598908_0127?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYxODQ5NTk4OTA4XzAxMjc/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1462828162583,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/05/09/000000/job_1461849598908_0127_conf.xml\",\r\n    \"finishTime\": 1462828215206,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"headnode0.pattipakawin33.d6.internal.cloudapp.net:19888/jobhistory/job/job_1461849598908_0127\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobID\": {\r\n      \"id\": 127,\r\n      \"jtIdentifier\": \"1461849598908\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1461849598908_0127\",\r\n    \"username\": \"admin\",\r\n    \"state\": \"SUCCEEDED\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/05/09/000000/job_1461849598908_0127_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 127,\r\n      \"jtIdentifier\": \"1461849598908\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1461849598908_0127\"\r\n  },\r\n  \"id\": \"job_1461849598908_0127\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"map 100% reduce 100%\",\r\n  \"exitValue\": 0,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-05-09T21-09-10-27f0c077-184a-49fa-8876-c400eba8b8fb\",\r\n    \"reducer\": \"wc.exe\",\r\n    \"files\": \"/example/apps/wc.exe,/example/apps/cat.exe\",\r\n    \"define\": [],\r\n    \"mapper\": \"cat.exe\",\r\n    \"enablejobreconnect\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"input\": [\r\n      \"/example/data/gutenberg/davinci.txt\"\r\n    ],\r\n    \"inputreader\": null,\r\n    \"cmdenv\": [],\r\n    \"user.name\": \"admin\",\r\n    \"file\": [],\r\n    \"callback\": null,\r\n    \"combiner\": null,\r\n    \"output\": \"/example/data/gutenberg/wcount/c5f96688-84c4-4ca7-928b-24b950d60b0f\"\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1788"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 21:10:44 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1461849598908_0127?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYxODQ5NTk4OTA4XzAxMjc/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 1.0,\r\n    \"reduceProgress\": 1.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 2,\r\n    \"startTime\": 1462828162583,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/05/09/000000/job_1461849598908_0127_conf.xml\",\r\n    \"finishTime\": 1462828215206,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"headnode0.pattipakawin33.d6.internal.cloudapp.net:19888/jobhistory/job/job_1461849598908_0127\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobID\": {\r\n      \"id\": 127,\r\n      \"jtIdentifier\": \"1461849598908\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobId\": \"job_1461849598908_0127\",\r\n    \"username\": \"admin\",\r\n    \"state\": \"SUCCEEDED\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"wasb://pattipakawin33@pattipakastorageaccount.blob.core.windows.net/mapred/history/done/2016/05/09/000000/job_1461849598908_0127_conf.xml\",\r\n    \"url\": null,\r\n    \"queueName\": \"default\",\r\n    \"jobID\": {\r\n      \"id\": 127,\r\n      \"jtIdentifier\": \"1461849598908\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobId\": \"job_1461849598908_0127\"\r\n  },\r\n  \"id\": \"job_1461849598908_0127\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": \"map 100% reduce 100%\",\r\n  \"exitValue\": 0,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": \"done\",\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-05-09T21-09-10-27f0c077-184a-49fa-8876-c400eba8b8fb\",\r\n    \"reducer\": \"wc.exe\",\r\n    \"files\": \"/example/apps/wc.exe,/example/apps/cat.exe\",\r\n    \"define\": [],\r\n    \"mapper\": \"cat.exe\",\r\n    \"enablejobreconnect\": null,\r\n    \"arg\": [],\r\n    \"enablelog\": \"false\",\r\n    \"input\": [\r\n      \"/example/data/gutenberg/davinci.txt\"\r\n    ],\r\n    \"inputreader\": null,\r\n    \"cmdenv\": [],\r\n    \"user.name\": \"admin\",\r\n    \"file\": [],\r\n    \"callback\": null,\r\n    \"combiner\": null,\r\n    \"output\": \"/example/data/gutenberg/wcount/c5f96688-84c4-4ca7-928b-24b950d60b0f\"\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1788"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "x-ms-hdi-servedby": [
+          "GATEWAY1"
+        ],
+        "x-ms-hdi-active": [
+          "headnode0.pattipakawin33.d6.internal.cloudapp.net"
+        ],
+        "x-ms-leader-detect-time": [
+          "0"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 21:10:44 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

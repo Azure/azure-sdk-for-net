@@ -1,0 +1,138 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/templeton/v1/mapreduce/jar?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9tYXByZWR1Y2UvamFyP3VzZXIubmFtZT1hZG1pbg==",
+      "RequestMethod": "POST",
+      "RequestBody": "jar=%2Fexample%2Fjars%2Fhadoop-mapreduce-examples.jar&class=pi&arg=10&arg=1000&define=mapreduce.map.maxattempts%3D10&define=mapreduce.reduce.maxattempts%3D10&define=mapreduce.task.timeout%3D60000&statusdir=2016-05-09T20-35-15-671a6305-96a5-4b95-9cd4-32bbc28e8757",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/text"
+        ],
+        "Content-Length": [
+          "262"
+        ],
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"job_1462754318084_0044\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "31"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Set-Cookie": [
+          "hadoop.auth=\"u=admin&p=admin&t=simple&e=1462862115746&s=Qiwz/rAT9ATLu32isKveCCzkbKs=\"; Path=/; HttpOnly; path=/; secure"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 20:35:18 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1462754318084_0044?user.name=admin&fields=*",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYyNzU0MzE4MDg0XzAwNDQ/dXNlci5uYW1lPWFkbWluJmZpZWxkcz0q",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 4,\r\n    \"startTime\": 1462826118601,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1462754318084_0044/job.xml\",\r\n    \"finishTime\": 0,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn0-pattip.5myeek1qjnme1m5xbpq3oj3vbh.dx.internal.cloudapp.net:8088/proxy/application_1462754318084_0044/\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1462754318084_0044\",\r\n    \"username\": \"admin\",\r\n    \"jobID\": {\r\n      \"id\": 44,\r\n      \"jtIdentifier\": \"1462754318084\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": false,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"PREP\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1462754318084_0044/job.xml\",\r\n    \"url\": \"http://hn0-pattip.5myeek1qjnme1m5xbpq3oj3vbh.dx.internal.cloudapp.net:8088/proxy/application_1462754318084_0044/\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1462754318084_0044\",\r\n    \"jobID\": {\r\n      \"id\": 44,\r\n      \"jtIdentifier\": \"1462754318084\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1462754318084_0044\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-05-09T20-35-15-671a6305-96a5-4b95-9cd4-32bbc28e8757\",\r\n    \"define\": [\r\n      \"mapreduce.map.maxattempts=10\",\r\n      \"mapreduce.reduce.maxattempts=10\",\r\n      \"mapreduce.task.timeout=60000\"\r\n    ],\r\n    \"arg\": [\r\n      \"10\",\r\n      \"1000\"\r\n    ],\r\n    \"files\": null,\r\n    \"enablelog\": \"false\",\r\n    \"libjars\": null,\r\n    \"user.name\": \"admin\",\r\n    \"jar\": \"/example/jars/hadoop-mapreduce-examples.jar\",\r\n    \"callback\": null,\r\n    \"class\": \"pi\",\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1658"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 20:35:18 GMT"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/templeton/v1/jobs/job_1462754318084_0044?user.name=admin",
+      "EncodedRequestUri": "L3RlbXBsZXRvbi92MS9qb2JzL2pvYl8xNDYyNzU0MzE4MDg0XzAwNDQ/dXNlci5uYW1lPWFkbWlu",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "accept": [
+          "application/json"
+        ],
+        "useragent": [
+          "HDInsight Job SDK .Net 2.0.3.0"
+        ],
+        "User-Agent": [
+          "HDInsight",
+          "Job",
+          "SDK",
+          ".Net",
+          "2.0.3.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": {\r\n    \"mapProgress\": 0.0,\r\n    \"reduceProgress\": 0.0,\r\n    \"cleanupProgress\": 0.0,\r\n    \"setupProgress\": 0.0,\r\n    \"runState\": 5,\r\n    \"startTime\": 1462826118601,\r\n    \"queue\": \"default\",\r\n    \"priority\": \"NORMAL\",\r\n    \"schedulingInfo\": \"NA\",\r\n    \"failureInfo\": \"NA\",\r\n    \"jobACLs\": {},\r\n    \"jobName\": \"TempletonControllerJob\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1462754318084_0044/job.xml\",\r\n    \"finishTime\": 1462826119921,\r\n    \"historyFile\": \"\",\r\n    \"trackingUrl\": \"http://hn0-pattip.5myeek1qjnme1m5xbpq3oj3vbh.dx.internal.cloudapp.net:8088/cluster/app/application_1462754318084_0044\",\r\n    \"numUsedSlots\": 0,\r\n    \"numReservedSlots\": 0,\r\n    \"usedMem\": 0,\r\n    \"reservedMem\": 0,\r\n    \"neededMem\": 0,\r\n    \"jobId\": \"job_1462754318084_0044\",\r\n    \"username\": \"admin\",\r\n    \"jobID\": {\r\n      \"id\": 44,\r\n      \"jtIdentifier\": \"1462754318084\"\r\n    },\r\n    \"jobPriority\": \"NORMAL\",\r\n    \"jobComplete\": true,\r\n    \"retired\": false,\r\n    \"uber\": false,\r\n    \"state\": \"KILLED\"\r\n  },\r\n  \"profile\": {\r\n    \"user\": \"admin\",\r\n    \"jobFile\": \"/mapreducestaging/admin/.staging/job_1462754318084_0044/job.xml\",\r\n    \"url\": \"http://hn0-pattip.5myeek1qjnme1m5xbpq3oj3vbh.dx.internal.cloudapp.net:8088/cluster/app/application_1462754318084_0044\",\r\n    \"queueName\": \"default\",\r\n    \"jobId\": \"job_1462754318084_0044\",\r\n    \"jobID\": {\r\n      \"id\": 44,\r\n      \"jtIdentifier\": \"1462754318084\"\r\n    },\r\n    \"jobName\": \"TempletonControllerJob\"\r\n  },\r\n  \"id\": \"job_1462754318084_0044\",\r\n  \"parentId\": null,\r\n  \"percentComplete\": null,\r\n  \"exitValue\": null,\r\n  \"user\": \"admin\",\r\n  \"callback\": null,\r\n  \"completed\": null,\r\n  \"userargs\": {\r\n    \"statusdir\": \"2016-05-09T20-35-15-671a6305-96a5-4b95-9cd4-32bbc28e8757\",\r\n    \"define\": [\r\n      \"mapreduce.map.maxattempts=10\",\r\n      \"mapreduce.reduce.maxattempts=10\",\r\n      \"mapreduce.task.timeout=60000\"\r\n    ],\r\n    \"arg\": [\r\n      \"10\",\r\n      \"1000\"\r\n    ],\r\n    \"files\": null,\r\n    \"enablelog\": \"false\",\r\n    \"libjars\": null,\r\n    \"user.name\": \"admin\",\r\n    \"jar\": \"/example/jars/hadoop-mapreduce-examples.jar\",\r\n    \"callback\": null,\r\n    \"class\": \"pi\",\r\n    \"enablejobreconnect\": null\r\n  },\r\n  \"msg\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1681"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-Powered-By": [
+          "ARR/3.0",
+          "ASP.NET"
+        ],
+        "Date": [
+          "Mon, 09 May 2016 20:35:20 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
