@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.ContainerInstance
         public virtual IContainerLogsOperations ContainerLogs { get; private set; }
 
         /// <summary>
+        /// Gets the IStartContainerOperations.
+        /// </summary>
+        public virtual IStartContainerOperations StartContainer { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ContainerInstanceManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -297,8 +302,9 @@ namespace Microsoft.Azure.Management.ContainerInstance
             Operations = new Operations(this);
             ContainerGroupUsage = new ContainerGroupUsageOperations(this);
             ContainerLogs = new ContainerLogsOperations(this);
+            StartContainer = new StartContainerOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-02-01-preview";
+            ApiVersion = "2018-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

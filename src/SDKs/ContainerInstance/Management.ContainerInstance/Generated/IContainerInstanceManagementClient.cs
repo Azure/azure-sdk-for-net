@@ -89,5 +89,10 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// </summary>
         IContainerLogsOperations ContainerLogs { get; }
 
+        /// <summary>
+        /// Gets the IStartContainerOperations.
+        /// </summary>
+        IStartContainerOperations StartContainer { get; }
+
     }
 }
