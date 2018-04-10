@@ -1,0 +1,56 @@
+{
+    "version": "2.0.6",
+    "title": "Microsoft Azure HDInsight Job Management Library",
+    "description": "The HDInsight job management client.",
+    "authors": [ "Microsoft" ],
+
+    "packOptions": {
+        "summary": "The HDInsight job management client.",
+        "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+        "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+        "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+        "tags": [ "Microsoft", "Microsoft Azure", "Azure", "cloud", "management", "resource management", "REST", "HTTP", "client", "core", "common", "azureofficial", "windowsazureofficial" ],
+        "requireLicenseAcceptance": true
+    },
+
+    "buildOptions": {
+        "delaySign": true,
+        "publicSign": false,
+        "keyFile": "../../../../tools/MSSharedLibKey.snk"
+    },
+
+  "dependencies": {
+    "Microsoft.Azure.Common": "2.1.2",
+    "WindowsAzure.Storage": "8.1.1"
+  },
+
+  "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "debugType": "portable"
+      },
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD15", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
+      }
+    },
+    "netstandard1.1": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD11", "PORTABLE" ],
+        "debugType": "portable"
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "Microsoft.NETCore.Platforms": "1.1.0"
+      }
+    }
+  }
+}
