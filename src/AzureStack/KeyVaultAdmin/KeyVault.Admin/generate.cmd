@@ -4,4 +4,7 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/keyvault latest deathly809 azs.keyvault.admin azure-rest-api-specs %CD%
+rd /S /Q Generated
+call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/keyvault latest Azure master azure-rest-api-specs %CD%
+move KeyVault\KeyVault.Admin\Generated .
+rd /S /Q KeyVault

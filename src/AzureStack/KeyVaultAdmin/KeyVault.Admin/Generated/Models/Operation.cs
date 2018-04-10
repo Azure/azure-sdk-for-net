@@ -33,7 +33,7 @@ namespace Microsoft.AzureStack.Management.KeyVault.Admin.Models
         /// this particular object. It should match the action name that
         /// appears in RBAC / the event service.</param>
         /// <param name="display">Contains the localized display information
-        /// for this particular operation / action..</param>
+        /// for this particular operation / action.</param>
         public Operation(string name = default(string), Display display = default(Display))
         {
             Name = name;
@@ -56,7 +56,7 @@ namespace Microsoft.AzureStack.Management.KeyVault.Admin.Models
 
         /// <summary>
         /// Gets or sets contains the localized display information for this
-        /// particular operation / action..
+        /// particular operation / action.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
         public Display Display { get; set; }

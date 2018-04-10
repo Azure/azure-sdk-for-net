@@ -15,7 +15,7 @@ namespace Microsoft.AzureStack.Management.KeyVault.Admin.Models
 
     /// <summary>
     /// Contains the localized display information for this particular
-    /// operation / action..
+    /// operation / action.
     /// </summary>
     public partial class Display
     {
@@ -31,12 +31,12 @@ namespace Microsoft.AzureStack.Management.KeyVault.Admin.Models
         /// Initializes a new instance of the Display class.
         /// </summary>
         /// <param name="provider">The localized friendly form of the resource
-        /// provider name � it is expected to also include the
-        /// publisher/company responsible. It should use Title Casing and begin
-        /// with "Microsoft" for 1st party services. e.g. "Microsoft Monitoring
-        /// Insights" or "Microsoft Compute."</param>
+        /// provider name; it is expected to also include the publisher/company
+        /// responsible. It should use Title Casing and begin with "Microsoft"
+        /// for 1st party services. e.g. "Microsoft Monitoring Insights" or
+        /// "Microsoft Compute."</param>
         /// <param name="resource">The localized friendly form of the resource
-        /// type related to this action/operation � it should match the public
+        /// type related to this action/operation; it should match the public
         /// documentation for the resource provider.</param>
         /// <param name="operation">The localized friendly name for the
         /// operation, as it should be shown to the user.</param>
@@ -60,7 +60,7 @@ namespace Microsoft.AzureStack.Management.KeyVault.Admin.Models
 
         /// <summary>
         /// Gets or sets the localized friendly form of the resource provider
-        /// name � it is expected to also include the publisher/company
+        /// name; it is expected to also include the publisher/company
         /// responsible. It should use Title Casing and begin with "Microsoft"
         /// for 1st party services. e.g. "Microsoft Monitoring Insights" or
         /// "Microsoft Compute."
@@ -70,7 +70,7 @@ namespace Microsoft.AzureStack.Management.KeyVault.Admin.Models
 
         /// <summary>
         /// Gets or sets the localized friendly form of the resource type
-        /// related to this action/operation � it should match the public
+        /// related to this action/operation; it should match the public
         /// documentation for the resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
