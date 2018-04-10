@@ -8,10 +8,9 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Iothub.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
     /// <summary>
     /// The common properties of an Azure resource.
     /// </summary>
-    public partial class Resource : IResource
+    public partial class Resource
     {
         /// <summary>
         /// Initializes a new instance of the Resource class.

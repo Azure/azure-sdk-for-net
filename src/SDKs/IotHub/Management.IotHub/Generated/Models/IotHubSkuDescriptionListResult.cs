@@ -16,25 +16,30 @@ namespace Iothub.Models
     using System.Linq;
 
     /// <summary>
-    /// The JSON-serialized array of Certificate objects.
+    /// The JSON-serialized array of IotHubSkuDescription objects with a next
+    /// link.
     /// </summary>
-    public partial class CertificateListDescription
+    public partial class IotHubSkuDescriptionListResult
     {
         /// <summary>
-        /// Initializes a new instance of the CertificateListDescription class.
+        /// Initializes a new instance of the IotHubSkuDescriptionListResult
+        /// class.
         /// </summary>
-        public CertificateListDescription()
+        public IotHubSkuDescriptionListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CertificateListDescription class.
+        /// Initializes a new instance of the IotHubSkuDescriptionListResult
+        /// class.
         /// </summary>
-        /// <param name="value">The array of Certificate objects.</param>
-        public CertificateListDescription(IList<CertificateDescription> value = default(IList<CertificateDescription>))
+        /// <param name="value">The array of IotHubSkuDescription.</param>
+        /// <param name="nextLink">The next link.</param>
+        public IotHubSkuDescriptionListResult(IList<IotHubSkuDescription> value = default(IList<IotHubSkuDescription>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -44,10 +49,16 @@ namespace Iothub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the array of Certificate objects.
+        /// Gets or sets the array of IotHubSkuDescription.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<CertificateDescription> Value { get; set; }
+        public IList<IotHubSkuDescription> Value { get; set; }
+
+        /// <summary>
+        /// Gets the next link.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
     }
 }

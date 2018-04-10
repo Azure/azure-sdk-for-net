@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Iothub.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

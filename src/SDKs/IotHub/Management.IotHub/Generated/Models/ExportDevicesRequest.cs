@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Iothub.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
@@ -50,14 +50,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets or sets the export blob container URI.
         /// </summary>
-        [JsonProperty(PropertyName = "ExportBlobContainerUri")]
+        [JsonProperty(PropertyName = "exportBlobContainerUri")]
         public string ExportBlobContainerUri { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether keys should be excluded
         /// during export.
         /// </summary>
-        [JsonProperty(PropertyName = "ExcludeKeys")]
+        [JsonProperty(PropertyName = "excludeKeys")]
         public bool ExcludeKeys { get; set; }
 
         /// <summary>

@@ -7,8 +7,8 @@
 namespace IotHub.Tests.Helpers
 {
     using System.Net;
+    using Iothub;
     using Microsoft.Azure.Management.EventHub;
-    using Microsoft.Azure.Management.IotHub;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
