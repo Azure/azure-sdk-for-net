@@ -49,10 +49,13 @@ foreach($srcFile in $srcFiles)
         {
             if($srcFile.LastWriteTime -gt $destFile.LastWriteTime)
             {
-                Write-Host "Source file last modified:"
-                Write-Host "$($srcFile.LastWriteTime)" -ForegroundColor Green -BackgroundColor Yellow
-                Write-Host "Destination file last modified:"
-                Write-Host "$($destFile.LastWriteTime)" -ForegroundColor Green -BackgroundColor Yellow
+                if ($PSBoundParameters.ContainsKey('Verbose'))
+                {
+                    Write-Host "Source file last modified: " -NoNewline
+                    Write-Host "$($srcFile.LastWriteTime)" -ForegroundColor Green -BackgroundColor DarkGreen
+                    Write-Host "Destination file last modified: " -NoNewline
+                    Write-Host "$($destFile.LastWriteTime)" -ForegroundColor Green -BackgroundColor DarkGreen
+                }
 
                 if ($PSBoundParameters.ContainsKey('WhatIf'))
                 {
@@ -64,23 +67,18 @@ foreach($srcFile in $srcFiles)
                 }
                 else
                 {
-                    Write-Host "Copying source file:" 
-                    Write-Host "$($srcFile.FullName)" -ForegroundColor Green
-                    Write-Host "To destination:"
-                    Write-Host "$($destFile.FullName)" -ForegroundColor Green
+                    Write-Host "Copying source file: " -NoNewline
+                    Write-Host "$($srcFile.Name)" -ForegroundColor Green
                     Copy-item -Path $srcFile.FullName -Destination $destFile.FullName -Force
                 }
             }
             elseif($srcFile.LastWriteTime -lt $destFile.LastWriteTime)
             {
-                Write-Host "Source File:"
-                Write-Host "$($srcFile.FullName)" -ForegroundColor Red
-                Write-Host "has a last write time of"
-                Write-Host "$($srcFile.LastWriteTime)" -ForegroundColor Red
-                Write-Host "which is less than"
-                Write-Host "Destination File:"
-                Write-Host "$($destFile.FullName)" -ForegroundColor Red
-                Write-Host "has a last write time of"
+                Write-Host "Source File: " -NoNewline
+                Write-Host "$($srcFile.Name) " -ForegroundColor Red -NoNewline
+                Write-Host "has a last write time of " -NoNewline
+                Write-Host "$($srcFile.LastWriteTime) " -ForegroundColor Red -NoNewline
+                Write-Host "which is less than destination Last Write Time of " -NoNewline
                 Write-Host "$($destFile.LastWriteTime)" -ForegroundColor Red
                 Write-Host "Skipping copy"
             }
