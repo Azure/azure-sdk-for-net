@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Storage
             Usage = new UsageOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-10-01";
+            ApiVersion = "2018-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
