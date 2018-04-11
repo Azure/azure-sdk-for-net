@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <returns></returns>
         /// <returns>The IndexingParameters instance.</returns>
-        [Obsolete("This behavior is enabled by default in API version 2016-09-01-Preview and calling this method is no longer necessary")]
+        [Obsolete("This behavior is now enabled by default, so calling this method is no longer necessary.")]
         public static IndexingParameters DoNotFailOnUnsupportedContentType(this IndexingParameters parameters) =>
             Configure(parameters, "failOnUnsupportedContentType", false);
 
