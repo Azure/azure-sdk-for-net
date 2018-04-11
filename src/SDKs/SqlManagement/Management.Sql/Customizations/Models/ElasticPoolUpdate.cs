@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets the edition of the elastic pool. Possible values include: 'Basic', 'Standard', 'Premium'
         /// </summary>
+        [JsonIgnore]
         public string Edition
         {
             get
@@ -24,6 +25,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets the total shared DTU for the database elastic pool.
         /// </summary>
+        [JsonIgnore]
         public int? Dtu
         {
             get
@@ -35,6 +37,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets storage limit for the database elastic pool in MB.
         /// </summary>
+        [JsonIgnore]
         public int? StorageMB
         {
             get
