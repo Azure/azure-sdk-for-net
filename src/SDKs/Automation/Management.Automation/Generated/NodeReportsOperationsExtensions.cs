@@ -12,8 +12,8 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
-    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -29,18 +29,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeId'>
             /// The parameters supplied to the list operation.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<DscNodeReport> ListByNode(this INodeReportsOperations operations, string automationAccountName, string nodeId, string filter = default(string))
+            public static IPage<DscNodeReport> ListByNode(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, ODataQuery<DscNodeReport> odataQuery = default(ODataQuery<DscNodeReport>))
             {
-                return operations.ListByNodeAsync(automationAccountName, nodeId, filter).GetAwaiter().GetResult();
+                return operations.ListByNodeAsync(resourceGroupName, automationAccountName, nodeId, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,21 +53,24 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeId'>
             /// The parameters supplied to the list operation.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DscNodeReport>> ListByNodeAsync(this INodeReportsOperations operations, string automationAccountName, string nodeId, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DscNodeReport>> ListByNodeAsync(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, ODataQuery<DscNodeReport> odataQuery = default(ODataQuery<DscNodeReport>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNodeWithHttpMessagesAsync(automationAccountName, nodeId, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNodeWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeId, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -77,8 +83,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeId'>
             /// The Dsc node id.
@@ -86,9 +95,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='reportId'>
             /// The report id.
             /// </param>
-            public static DscNodeReport Get(this INodeReportsOperations operations, string automationAccountName, string nodeId, string reportId)
+            public static DscNodeReport Get(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
             {
-                return operations.GetAsync(automationAccountName, nodeId, reportId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, nodeId, reportId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,8 +107,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeId'>
             /// The Dsc node id.
@@ -110,9 +122,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DscNodeReport> GetAsync(this INodeReportsOperations operations, string automationAccountName, string nodeId, string reportId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DscNodeReport> GetAsync(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, nodeId, reportId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeId, reportId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -125,8 +137,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeId'>
             /// The Dsc node id.
@@ -134,9 +149,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='reportId'>
             /// The report id.
             /// </param>
-            public static Stream GetContent(this INodeReportsOperations operations, string automationAccountName, string nodeId, string reportId)
+            public static object GetContent(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
             {
-                return operations.GetContentAsync(automationAccountName, nodeId, reportId).GetAwaiter().GetResult();
+                return operations.GetContentAsync(resourceGroupName, automationAccountName, nodeId, reportId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,8 +161,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeId'>
             /// The Dsc node id.
@@ -158,11 +176,12 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GetContentAsync(this INodeReportsOperations operations, string automationAccountName, string nodeId, string reportId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetContentAsync(this INodeReportsOperations operations, string resourceGroupName, string automationAccountName, string nodeId, string reportId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetContentWithHttpMessagesAsync(automationAccountName, nodeId, reportId, null, cancellationToken).ConfigureAwait(false);
-                _result.Request.Dispose();
-                return _result.Body;
+                using (var _result = await operations.GetContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeId, reportId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

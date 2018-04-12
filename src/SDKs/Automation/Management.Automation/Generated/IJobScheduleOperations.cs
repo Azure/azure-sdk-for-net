@@ -27,6 +27,9 @@ namespace Microsoft.Azure.Management.Automation
         /// Delete the job schedule identified by job schedule name.
         /// <see href="http://aka.ms/azureautomationsdk/jobscheduleoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -45,11 +48,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string automationAccountName, System.Guid jobScheduleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, System.Guid jobScheduleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the job schedule identified by job schedule name.
         /// <see href="http://aka.ms/azureautomationsdk/jobscheduleoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -71,11 +77,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JobSchedule>> GetWithHttpMessagesAsync(string automationAccountName, System.Guid jobScheduleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobSchedule>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, System.Guid jobScheduleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a job schedule.
         /// <see href="http://aka.ms/azureautomationsdk/jobscheduleoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -100,11 +109,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JobSchedule>> CreateWithHttpMessagesAsync(string automationAccountName, System.Guid jobScheduleId, JobScheduleCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobSchedule>> CreateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, System.Guid jobScheduleId, JobScheduleCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of job schedules.
         /// <see href="http://aka.ms/azureautomationsdk/jobscheduleoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -123,7 +135,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JobSchedule>>> ListByAutomationAccountWithHttpMessagesAsync(string automationAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobSchedule>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of job schedules.
         /// <see href="http://aka.ms/azureautomationsdk/jobscheduleoperations" />

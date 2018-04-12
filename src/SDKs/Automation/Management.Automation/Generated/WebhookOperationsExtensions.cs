@@ -28,12 +28,15 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
-            public static string GenerateUri(this IWebhookOperations operations, string automationAccountName)
+            public static string GenerateUri(this IWebhookOperations operations, string resourceGroupName, string automationAccountName)
             {
-                return operations.GenerateUriAsync(automationAccountName).GetAwaiter().GetResult();
+                return operations.GenerateUriAsync(resourceGroupName, automationAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,15 +46,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> GenerateUriAsync(this IWebhookOperations operations, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> GenerateUriAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GenerateUriWithHttpMessagesAsync(automationAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GenerateUriWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -64,15 +70,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
             /// </param>
-            public static void Delete(this IWebhookOperations operations, string automationAccountName, string webhookName)
+            public static void Delete(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName)
             {
-                operations.DeleteAsync(automationAccountName, webhookName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, automationAccountName, webhookName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -82,44 +91,8 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
-            /// </param>
-            /// <param name='webhookName'>
-            /// The webhook name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IWebhookOperations operations, string automationAccountName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(automationAccountName, webhookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieve the webhook identified by webhook name.
-            /// <see href="http://aka.ms/azureautomationsdk/webhookoperations" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
-            /// </param>
-            /// <param name='webhookName'>
-            /// The webhook name.
-            /// </param>
-            public static Webhook Get(this IWebhookOperations operations, string automationAccountName, string webhookName)
-            {
-                return operations.GetAsync(automationAccountName, webhookName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieve the webhook identified by webhook name.
-            /// <see href="http://aka.ms/azureautomationsdk/webhookoperations" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
@@ -130,9 +103,54 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> GetAsync(this IWebhookOperations operations, string automationAccountName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, webhookName, null, cancellationToken).ConfigureAwait(false))
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, webhookName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Retrieve the webhook identified by webhook name.
+            /// <see href="http://aka.ms/azureautomationsdk/webhookoperations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The automation account name.
+            /// </param>
+            /// <param name='webhookName'>
+            /// The webhook name.
+            /// </param>
+            public static Webhook Get(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName)
+            {
+                return operations.GetAsync(resourceGroupName, automationAccountName, webhookName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieve the webhook identified by webhook name.
+            /// <see href="http://aka.ms/azureautomationsdk/webhookoperations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The automation account name.
+            /// </param>
+            /// <param name='webhookName'>
+            /// The webhook name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Webhook> GetAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, webhookName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -145,6 +163,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
@@ -154,9 +175,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The create or update parameters for webhook.
             /// </param>
-            public static Webhook CreateOrUpdate(this IWebhookOperations operations, string automationAccountName, string webhookName, WebhookCreateOrUpdateParameters parameters)
+            public static Webhook CreateOrUpdate(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName, WebhookCreateOrUpdateParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(automationAccountName, webhookName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, automationAccountName, webhookName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -166,6 +187,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
@@ -178,9 +202,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> CreateOrUpdateAsync(this IWebhookOperations operations, string automationAccountName, string webhookName, WebhookCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Webhook> CreateOrUpdateAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName, WebhookCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(automationAccountName, webhookName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, webhookName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -193,6 +217,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
@@ -202,9 +229,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The update parameters for webhook.
             /// </param>
-            public static Webhook Update(this IWebhookOperations operations, string automationAccountName, string webhookName, WebhookUpdateParameters parameters)
+            public static Webhook Update(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName, WebhookUpdateParameters parameters)
             {
-                return operations.UpdateAsync(automationAccountName, webhookName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, automationAccountName, webhookName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -213,6 +240,9 @@ namespace Microsoft.Azure.Management.Automation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
@@ -226,9 +256,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Webhook> UpdateAsync(this IWebhookOperations operations, string automationAccountName, string webhookName, WebhookUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Webhook> UpdateAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string webhookName, WebhookUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(automationAccountName, webhookName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, webhookName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -241,15 +271,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static IPage<Webhook> ListByAutomationAccount(this IWebhookOperations operations, string automationAccountName, string filter = default(string))
+            public static IPage<Webhook> ListByAutomationAccount(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string filter = default(string))
             {
-                return operations.ListByAutomationAccountAsync(automationAccountName, filter).GetAwaiter().GetResult();
+                return operations.ListByAutomationAccountAsync(resourceGroupName, automationAccountName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -258,6 +291,9 @@ namespace Microsoft.Azure.Management.Automation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
@@ -268,9 +304,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Webhook>> ListByAutomationAccountAsync(this IWebhookOperations operations, string automationAccountName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Webhook>> ListByAutomationAccountAsync(this IWebhookOperations operations, string resourceGroupName, string automationAccountName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(automationAccountName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(resourceGroupName, automationAccountName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

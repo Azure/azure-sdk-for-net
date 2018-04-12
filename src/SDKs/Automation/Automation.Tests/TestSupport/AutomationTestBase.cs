@@ -44,8 +44,6 @@ namespace Automation.Tests.TestSupport
                         Location = Location,
                         Sku = new Sku {Name = "Free", Family = "Test", Capacity = 1}
                     });
-
-                AutomationClient.ResourceGroupName = ResourceGroup;
             }
             catch (CloudException ex)
             {
@@ -64,7 +62,7 @@ namespace Automation.Tests.TestSupport
 
         public void CleanUpRunbooks()
         {
-            var runbooks = AutomationClient.Runbook.ListByAutomationAccount(AutomationAccount);
+            var runbooks = AutomationClient.Runbook.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
             foreach (var rb in runbooks)
             {
@@ -74,7 +72,7 @@ namespace Automation.Tests.TestSupport
 
         public void CleanUpSchedules()
         {
-            var schedules = AutomationClient.Schedule.ListByAutomationAccount(AutomationAccount);
+            var schedules = AutomationClient.Schedule.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
             foreach (var schedule in schedules)
             {
@@ -84,7 +82,7 @@ namespace Automation.Tests.TestSupport
 
         public void CleanUpVariables()
         {
-            var variables = AutomationClient.Variable.ListByAutomationAccount(AutomationAccount);
+            var variables = AutomationClient.Variable.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
             foreach (var variable in variables)
             {
@@ -95,7 +93,7 @@ namespace Automation.Tests.TestSupport
         public void CleanUpWebhooks()
         {
             var webhooks =
-                AutomationClient.Webhook.ListByAutomationAccount(AutomationAccount);
+                AutomationClient.Webhook.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
             foreach (var webhook in webhooks)
             {
@@ -106,7 +104,7 @@ namespace Automation.Tests.TestSupport
         public Credential CreateCredential(string credentialName, string userName, string password,
             string description = null)
         {
-            var credential = AutomationClient.Credential.CreateOrUpdate(AutomationAccount,
+            var credential = AutomationClient.Credential.CreateOrUpdate(ResourceGroup, AutomationAccount,
             credentialName,
                 new CredentialCreateOrUpdateParameters(credentialName,
                     userName,
@@ -117,7 +115,7 @@ namespace Automation.Tests.TestSupport
 
         public Webhook CreateWebhook(string webhookName, string runbookName, string uri, string description = null)
         {
-            var webhook = AutomationClient.Webhook.CreateOrUpdate(AutomationAccount, webhookName,
+            var webhook = AutomationClient.Webhook.CreateOrUpdate(ResourceGroup, AutomationAccount, webhookName,
                 new WebhookCreateOrUpdateParameters
                 {
                     Name = webhookName,
@@ -131,12 +129,12 @@ namespace Automation.Tests.TestSupport
 
         public string GenerateUriForWebhook()
         {
-            return AutomationClient.Webhook.GenerateUri(AutomationAccount);
+            return AutomationClient.Webhook.GenerateUri(ResourceGroup, AutomationAccount);
         }
 
         public void CreateRunbook(string runbookName, string runbookContent, string description = null)
         {
-            AutomationClient.Runbook.CreateOrUpdate(AutomationAccount, runbookName,
+            AutomationClient.Runbook.CreateOrUpdate(ResourceGroup, AutomationAccount, runbookName,
                 new RunbookCreateOrUpdateParameters
                 {
                     Name = runbookName,
@@ -152,7 +150,7 @@ namespace Automation.Tests.TestSupport
         public Schedule CreateHourlySchedule(string scheduleName, DateTimeOffset startTime,
             DateTimeOffset expiryTime, string description = null, byte hourInterval = 1)
         {
-            var schedule = AutomationClient.Schedule.CreateOrUpdate(AutomationAccount, scheduleName,
+            var schedule = AutomationClient.Schedule.CreateOrUpdate(ResourceGroup, AutomationAccount, scheduleName,
                 new ScheduleCreateOrUpdateParameters
                 {
                     Name = scheduleName,
@@ -169,7 +167,7 @@ namespace Automation.Tests.TestSupport
         #region Module Methods
         public Module CreateAutomationModule(string moduleName, string contentLink)
         {
-            var module = AutomationClient.Module.CreateOrUpdate(AutomationAccount, moduleName,
+            var module = AutomationClient.Module.CreateOrUpdate(ResourceGroup, AutomationAccount, moduleName,
                 new ModuleCreateOrUpdateParameters
                 {
                     Name = moduleName,
@@ -182,7 +180,7 @@ namespace Automation.Tests.TestSupport
 
         public Module GetAutomationModule(string moduleName)
         {
-            var module = AutomationClient.Module.Get(AutomationAccount, moduleName);
+            var module = AutomationClient.Module.Get(ResourceGroup, AutomationAccount, moduleName);
             return module;
         }
 
@@ -190,7 +188,7 @@ namespace Automation.Tests.TestSupport
         {
             try
             {
-                AutomationClient.Module.Delete(AutomationAccount, moduleName);
+                AutomationClient.Module.Delete(ResourceGroup, AutomationAccount, moduleName);
             }
             catch (ErrorResponseException)
             {
@@ -208,13 +206,13 @@ namespace Automation.Tests.TestSupport
 
         public Job WaitForJobCompletion(Guid jobId, string expectedState = "Completed", int numRetries = 50)
         {
-            var job = AutomationClient.Job.Get(AutomationAccount, jobId);
+            var job = AutomationClient.Job.Get(ResourceGroup, AutomationAccount, jobId.ToString());
             var endStates = new[] {"Stopped", "Suspended", "Failed", "Completed"};
             var retry = 0;
             while (job.Status != expectedState && retry < numRetries && !Array.Exists(endStates, s => s == job.Status))
             {
                 TestUtilities.Wait(6000);
-                job = AutomationClient.Job.Get(AutomationAccount, jobId);
+                job = AutomationClient.Job.Get(ResourceGroup, AutomationAccount, jobId.ToString());
                 retry++;
             }
 
@@ -223,7 +221,7 @@ namespace Automation.Tests.TestSupport
 
         public void UpdateRunbook(Runbook runbook)
         {
-            AutomationClient.Runbook.Update(AutomationAccount, runbook.Name, new RunbookUpdateParameters
+            AutomationClient.Runbook.Update(ResourceGroup, AutomationAccount, runbook.Name, new RunbookUpdateParameters
             {
                 Name = runbook.Name,
                 Description = runbook.Description,
@@ -235,24 +233,12 @@ namespace Automation.Tests.TestSupport
         public void UpdateRunbookContent(string runbookName, string runbookContent)
         {
             var byteArray = Encoding.ASCII.GetBytes(runbookContent);
-            AutomationClient.RunbookDraft.BeginCreateOrUpdate(AutomationAccount, runbookName,
-                new MemoryStream(byteArray));
+            AutomationClient.RunbookDraft.ReplaceContent(ResourceGroup, AutomationAccount, runbookName, byteArray.ToString());
         }
 
         public void PublishRunbook(string runbookName)
         {
-            AutomationClient.RunbookDraft.BeginPublish(AutomationAccount, runbookName);
-        }
-
-        public Job StartRunbook(string runbookName, IDictionary<string, string> parameters = null)
-        {
-            var job = AutomationClient.Job.Create(AutomationAccount, Guid.NewGuid(),
-                new JobCreateParameters
-                {
-                    Name = runbookName,
-                    Parameters = parameters
-                });
-            return job;
+            AutomationClient.RunbookDraft.BeginPublish(ResourceGroup, AutomationAccount, runbookName);
         }
 
         public IPage<JobStream> GetJobStreams(Guid jobId, string streamType, DateTime startTime)
@@ -263,20 +249,20 @@ namespace Automation.Tests.TestSupport
 
         public Runbook GetRunbook(string runbookName)
         {
-            var runbook = AutomationClient.Runbook.Get(AutomationAccount, runbookName);
+            var runbook = AutomationClient.Runbook.Get(ResourceGroup, AutomationAccount, runbookName);
             return runbook;
         }
 
-        public Stream GetRunbookContent(string runbookName)
+        public string GetRunbookContent(string runbookName)
         {
             var runbookContentStream =
-                AutomationClient.RunbookDraft.GetContent(AutomationAccount, runbookName);
+                AutomationClient.RunbookDraft.GetContent(ResourceGroup, AutomationAccount, runbookName);
             return runbookContentStream;
         }
 
         public void DeleteRunbook(string runbookName)
         {
-            AutomationClient.Runbook.Delete(AutomationAccount, runbookName);
+            AutomationClient.Runbook.Delete(ResourceGroup, AutomationAccount, runbookName);
         }
 
         #endregion
@@ -285,7 +271,7 @@ namespace Automation.Tests.TestSupport
 
         public void UpdateVariable(Variable variable)
         {
-            AutomationClient.Variable.Update(AutomationAccount,
+            AutomationClient.Variable.Update(ResourceGroup, AutomationAccount,
                 variable.Name, new VariableUpdateParameters
                 {
                     Value = variable.Value,
@@ -296,7 +282,7 @@ namespace Automation.Tests.TestSupport
 
         public void DeleteVariable(string variableName)
         {
-            AutomationClient.Variable.Delete(AutomationAccount, variableName);
+            AutomationClient.Variable.Delete(ResourceGroup, AutomationAccount, variableName);
         }
 
         #endregion
@@ -305,7 +291,7 @@ namespace Automation.Tests.TestSupport
 
         public void UpdateSchedule(Schedule schedule)
         {
-            AutomationClient.Schedule.Update(AutomationAccount, schedule.Name,
+            AutomationClient.Schedule.Update(ResourceGroup, AutomationAccount, schedule.Name,
                 new ScheduleUpdateParameters
                 {
                     Name = schedule.Name,
@@ -316,13 +302,13 @@ namespace Automation.Tests.TestSupport
 
         public Schedule GetSchedule(string scheduleName)
         {
-            var schedule = AutomationClient.Schedule.Get(AutomationAccount, scheduleName);
+            var schedule = AutomationClient.Schedule.Get(ResourceGroup, AutomationAccount, scheduleName);
             return schedule;
         }
 
         public void DeleteSchedule(string scheduleName)
         {
-            AutomationClient.Schedule.Delete(AutomationAccount, scheduleName);
+            AutomationClient.Schedule.Delete(ResourceGroup, AutomationAccount, scheduleName);
         }
 
         #endregion
@@ -331,19 +317,19 @@ namespace Automation.Tests.TestSupport
 
         public Credential GetCredential(string credentialName)
         {
-            return AutomationClient.Credential.Get(AutomationAccount, credentialName);
+            return AutomationClient.Credential.Get(ResourceGroup, AutomationAccount, credentialName);
         }
 
         public IPage<Credential> GetCredentials()
         {
             IPage<Credential> credentials =
-                AutomationClient.Credential.ListByAutomationAccount(AutomationAccount);
+                AutomationClient.Credential.ListByAutomationAccount(ResourceGroup, AutomationAccount);
             return credentials;
         }
 
         public void UpdateCredential(Credential credential, string password = null, string userName = null)
         {
-            AutomationClient.Credential.Update(AutomationAccount, credential.Name,
+            AutomationClient.Credential.Update(ResourceGroup, AutomationAccount, credential.Name,
                 new CredentialUpdateParameters
                 {
                     Name = userName,
@@ -355,7 +341,7 @@ namespace Automation.Tests.TestSupport
 
         public void CleanUpCredentials()
         {
-            var credentials = AutomationClient.Credential.ListByAutomationAccount(AutomationAccount);
+            var credentials = AutomationClient.Credential.ListByAutomationAccount(ResourceGroup, AutomationAccount);
 
             foreach (var cr in credentials)
             {
@@ -365,7 +351,7 @@ namespace Automation.Tests.TestSupport
 
         public Variable CreateVariable(string variableName, object value, string description = null)
         {
-            var variable = AutomationClient.Variable.CreateOrUpdate(AutomationAccount, variableName,
+            var variable = AutomationClient.Variable.CreateOrUpdate(ResourceGroup, AutomationAccount, variableName,
                 new VariableCreateOrUpdateParameters
                 {
                     Name = variableName,
@@ -378,7 +364,7 @@ namespace Automation.Tests.TestSupport
 
         public void DeleteCredential(string credentialName)
         {
-            AutomationClient.Credential.Delete(AutomationAccount, credentialName);
+            AutomationClient.Credential.Delete(ResourceGroup, AutomationAccount, credentialName);
         }
 
         #endregion
@@ -387,24 +373,24 @@ namespace Automation.Tests.TestSupport
 
         public Variable GetVariable(string variableName)
         {
-            var variable = AutomationClient.Variable.Get(AutomationAccount, variableName);
+            var variable = AutomationClient.Variable.Get(ResourceGroup, AutomationAccount, variableName);
             return variable;
         }
 
         public IPage<Variable> GetVariables()
         {
-            var variables = AutomationClient.Variable.ListByAutomationAccount(AutomationAccount);
+            var variables = AutomationClient.Variable.ListByAutomationAccount(ResourceGroup, AutomationAccount);
             return variables;
         }
 
         public void DeleteWebhook(string webhookName)
         {
-            AutomationClient.Webhook.Delete(AutomationAccount, webhookName);
+            AutomationClient.Webhook.Delete(ResourceGroup, AutomationAccount, webhookName);
         }
 
         public void UpdateWebhook(Webhook webhook)
         {
-            AutomationClient.Webhook.Update(AutomationAccount, webhook.Name, new WebhookUpdateParameters
+            AutomationClient.Webhook.Update(ResourceGroup, AutomationAccount, webhook.Name, new WebhookUpdateParameters
             {
                 Name = webhook.Name,
                 IsEnabled = webhook.IsEnabled
@@ -423,13 +409,13 @@ namespace Automation.Tests.TestSupport
             {
                 filter = string.Join(null, odataFilter);
             }
-            var webhooks = AutomationClient.Webhook.ListByAutomationAccount(AutomationAccount, filter);
+            var webhooks = AutomationClient.Webhook.ListByAutomationAccount(ResourceGroup, AutomationAccount, filter);
             return webhooks;
         }
 
         public Webhook GetWebhook(string webhookName)
         {
-            var webhook = AutomationClient.Webhook.Get(AutomationAccount, webhookName);
+            var webhook = AutomationClient.Webhook.Get(ResourceGroup, AutomationAccount, webhookName);
             return webhook;
         }
 
@@ -441,7 +427,7 @@ namespace Automation.Tests.TestSupport
             string description = null, string contentHashValue = null,
             string contentHashAlgorithm = "sha256", string contentType = null)
         {
-            return AutomationClient.DscConfiguration.CreateOrUpdate(AutomationAccount, configName,
+            return AutomationClient.DscConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount, configName,
                 new DscConfigurationCreateOrUpdateParameters
                 {
                     Location = Location,
@@ -462,26 +448,26 @@ namespace Automation.Tests.TestSupport
 
         public DscConfiguration GetDscConfiguration(string configName)
         {
-            return AutomationClient.DscConfiguration.Get(AutomationAccount, configName);
+            return AutomationClient.DscConfiguration.Get(ResourceGroup, AutomationAccount, configName);
         }
 
         public IPage<DscConfiguration> GetDscConfigurations()
         {
             var dscConfigurations =
-                AutomationClient.DscConfiguration.ListByAutomationAccount(AutomationAccount);
+                AutomationClient.DscConfiguration.ListByAutomationAccount(ResourceGroup, AutomationAccount);
             return dscConfigurations;
         }
 
         public void DeleteDscConfiguration(string configName)
         {
-            AutomationClient.DscConfiguration.Delete(AutomationAccount, configName);
+            AutomationClient.DscConfiguration.Delete(ResourceGroup, AutomationAccount, configName);
         }
 
         public void UpdateDscConfiguration(DscConfiguration configuration, string configContent,
             string description = null, string contentHashValue = null,
             string contentHashAlgorithm = "sha256", string contentType = null)
         {
-            AutomationClient.DscConfiguration.CreateOrUpdate(AutomationAccount, configuration.Name,
+            AutomationClient.DscConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount, configuration.Name,
                 new DscConfigurationCreateOrUpdateParameters
                 {
                     Description = configuration.Description,
@@ -508,8 +494,8 @@ namespace Automation.Tests.TestSupport
             string nodeConfigurationContent, string contentHashValue, string contentHashAlgorithm, string contentType,
             string contentVersion)
         {
-            return AutomationClient.DscNodeConfiguration.CreateOrUpdate(AutomationAccount,
-                nodeConfigurationName, new DscNodeConfigurationCreateOrUpdateParameters
+            return AutomationClient.DscNodeConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount,
+                nodeConfigurationName, new DscNodeConfigurationCreateOrUpdateParametersProperties
                 {
                     Name = nodeConfigurationName,
                     Configuration = new DscConfigurationAssociationProperty(configurationName),
@@ -529,14 +515,14 @@ namespace Automation.Tests.TestSupport
 
         public DscNodeConfiguration GetDscNodeConfiguration(string nodeConfigName)
         {
-            return AutomationClient.DscNodeConfiguration.Get(AutomationAccount, nodeConfigName);
+            return AutomationClient.DscNodeConfiguration.Get(ResourceGroup, AutomationAccount, nodeConfigName);
         }
 
         public void UpdateDscNodeConfiguration(DscNodeConfiguration nodeConfig, string configContent,
             string contentHashValue, string contentHashAlgorithm, string contentType, string contentVersion)
         {
-            AutomationClient.DscNodeConfiguration.CreateOrUpdate(AutomationAccount,
-                nodeConfig.Name, new DscNodeConfigurationCreateOrUpdateParameters
+            AutomationClient.DscNodeConfiguration.CreateOrUpdate(ResourceGroup, AutomationAccount,
+                nodeConfig.Name, new DscNodeConfigurationCreateOrUpdateParametersProperties
                 {
                     Name = nodeConfig.Name,
                     Configuration = new DscConfigurationAssociationProperty(nodeConfig.Configuration.Name),
@@ -556,12 +542,12 @@ namespace Automation.Tests.TestSupport
 
         public void DeleteDscNodeConfiguration(string configName)
         {
-            AutomationClient.DscNodeConfiguration.Delete(AutomationAccount, configName);
+            AutomationClient.DscNodeConfiguration.Delete(ResourceGroup, AutomationAccount, configName);
         }
 
         public IPage<DscNodeConfiguration> GetDscNodeConfigurations()
         {
-            return AutomationClient.DscNodeConfiguration.ListByAutomationAccount(AutomationAccount);
+            return AutomationClient.DscNodeConfiguration.ListByAutomationAccount(ResourceGroup, AutomationAccount);
         }
 
         #endregion

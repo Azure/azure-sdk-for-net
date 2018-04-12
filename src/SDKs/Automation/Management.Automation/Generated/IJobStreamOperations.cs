@@ -27,15 +27,21 @@ namespace Microsoft.Azure.Management.Automation
         /// Retrieve the job stream identified by job stream id.
         /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='jobId'>
-        /// The job id.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='jobStreamId'>
         /// The job stream id.
         /// </param>
+        /// <param name='clientRequestId'>
+        /// Identifies this specific client request.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -51,20 +57,26 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JobStream>> GetWithHttpMessagesAsync(string automationAccountName, string jobId, string jobStreamId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobStream>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string jobName, string jobStreamId, string clientRequestId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve a list of jobs streams identified by job id.
+        /// Retrieve a list of jobs streams identified by job name.
         /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='jobId'>
-        /// The job Id.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='jobName'>
+        /// The job name.
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation.
         /// </param>
+        /// <param name='clientRequestId'>
+        /// Identifies this specific client request.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -80,14 +92,17 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JobStream>>> ListByJobWithHttpMessagesAsync(string automationAccountName, string jobId, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobStream>>> ListByJobWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string jobName, string filter = default(string), string clientRequestId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve a list of jobs streams identified by job id.
+        /// Retrieve a list of jobs streams identified by job name.
         /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
+        /// <param name='clientRequestId'>
+        /// Identifies this specific client request.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -103,6 +118,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JobStream>>> ListByJobNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobStream>>> ListByJobNextWithHttpMessagesAsync(string nextPageLink, string clientRequestId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

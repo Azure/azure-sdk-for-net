@@ -48,8 +48,7 @@ namespace Automation.Tests.ScenarioTests
                     testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
 
                     var updatedContent = testFixture.GetRunbookContent(runbookName);
-                    var reader = new StreamReader(updatedContent);
-                    Assert.Equal(runbookContentV2, reader.ReadToEnd());
+                    Assert.Equal(runbookContentV2, updatedContent);
 
                     testFixture.DeleteRunbook(runbookName);
 
