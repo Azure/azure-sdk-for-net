@@ -35,14 +35,14 @@ namespace Update.Tests
                 Assert.Equal(expected.Name, found.Name);
                 Assert.Equal(expected.StartTimeUtc, found.StartTimeUtc);
                 Assert.Equal(expected.Status, found.Status);
-                if (expected.StepProperty == null)
+                if (expected.Steps == null)
                 {
-                    Assert.Null(found.StepProperty);
+                    Assert.Null(found.Steps);
                 }
                 else
                 {
-                    Assert.NotNull(found.StepProperty);
-                    Assert.Equal(expected.StepProperty.Count, found.StepProperty.Count);
+                    Assert.NotNull(found.Steps);
+                    Assert.Equal(expected.Steps.Count, found.Steps.Count);
                 }
             }
         }
