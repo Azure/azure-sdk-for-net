@@ -103,9 +103,9 @@ namespace Backup.Tests
 
                 var backupLocation = client.BackupLocations.Get(ResourceGroupName, "local");
 
-                backupLocation.Path = @"\\100.68.71.192\Share";
-                backupLocation.UserName = @"AzureStack\AzureStackAdmin";
-                backupLocation.Password = "!!123abc";
+                backupLocation.Path = @"\\100.68.73.194\Share";
+                backupLocation.UserName = @"Administrator";
+                backupLocation.Password = "password";
                 backupLocation.EncryptionKeyBase64 = "YVVOa0J3S2xTamhHZ1lyRU9wQ1pKQ0xWanhjaHlkaU5ZQnNDeHRPTGFQenJKdWZsRGtYT25oYmlaa1RMVWFKeQ==";
 
                 var result = client.BackupLocations.Update(ResourceGroupName, "local", backupLocation);

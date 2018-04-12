@@ -68,7 +68,7 @@
       "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourcegroups/System.local/providers/Microsoft.Backup.Admin/backupLocations/local?api-version=2016-05-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlZ3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWw/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"externalStoreDefault\": {\r\n      \"path\": \"\\\\\\\\100.68.71.192\\\\Share\",\r\n      \"userName\": \"AzureStack\\\\AzureStackAdmin\",\r\n      \"password\": \"!!123abc\",\r\n      \"encryptionKeyBase64\": \"YVVOa0J3S2xTamhHZ1lyRU9wQ1pKQ0xWanhjaHlkaU5ZQnNDeHRPTGFQenJKdWZsRGtYT25oYmlaa1RMVWFKeQ==\",\r\n      \"backupFrequencyInHours\": \"\",\r\n      \"availableCapacity\": \"10GB\",\r\n      \"isBackupSchedulerEnabled\": false\r\n    }\r\n  },\r\n  \"location\": \"local\",\r\n  \"tags\": {}\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"externalStoreDefault\": {\r\n      \"path\": \"\\\\\\\\100.68.71.192\\\\Share\",\r\n      \"userName\": \"Administrator\",\r\n      \"password\": \"password\",\r\n      \"encryptionKeyBase64\": \"YVVOa0J3S2xTamhHZ1lyRU9wQ1pKQ0xWanhjaHlkaU5ZQnNDeHRPTGFQenJKdWZsRGtYT25oYmlaa1RMVWFKeQ==\",\r\n      \"backupFrequencyInHours\": \"\",\r\n      \"availableCapacity\": \"10GB\",\r\n      \"isBackupSchedulerEnabled\": false\r\n    }\r\n  },\r\n  \"location\": \"local\",\r\n  \"tags\": {}\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -87,7 +87,7 @@
           "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourcegroups/System.local/providers/Microsoft.Backup.Admin/backupLocations/local\",\r\n  \"name\": \"local\",\r\n  \"type\": \"Microsoft.Backup.Admin/backupLocations\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"externalStoreDefault\": {\r\n      \"path\": \"\\\\\\\\100.68.71.192\\\\Share\",\r\n      \"userName\": \"AzureStack\\\\AzureStackAdmin\",\r\n      \"password\": \"\",\r\n      \"encryptionKeyBase64\": \"\",\r\n      \"backupFrequencyInHours\": \"\",\r\n      \"availableCapacity\": \"10GB\",\r\n      \"isBackupSchedulerEnabled\": false,\r\n      \"nextBackupTime\": null,\r\n      \"lastBackupTime\": null\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourcegroups/System.local/providers/Microsoft.Backup.Admin/backupLocations/local\",\r\n  \"name\": \"local\",\r\n  \"type\": \"Microsoft.Backup.Admin/backupLocations\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"externalStoreDefault\": {\r\n      \"path\": \"\\\\\\\\100.68.71.192\\\\Share\",\r\n      \"userName\": \"Administrator\",\r\n      \"password\": \"\",\r\n      \"encryptionKeyBase64\": \"\",\r\n      \"backupFrequencyInHours\": \"\",\r\n      \"availableCapacity\": \"10GB\",\r\n      \"isBackupSchedulerEnabled\": false,\r\n      \"nextBackupTime\": null,\r\n      \"lastBackupTime\": null\r\n    }\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "523"
