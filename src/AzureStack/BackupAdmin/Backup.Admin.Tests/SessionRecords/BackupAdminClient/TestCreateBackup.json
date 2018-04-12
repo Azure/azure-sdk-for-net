@@ -1,0 +1,377 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourcegroups/System.local/providers/Microsoft.Backup.Admin/backupLocations/local/createBackup?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlZ3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWwvY3JlYXRlQmFja3VwP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5b8dde23-91ae-44d8-a505-dd16e6a51e5f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 22:57:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvnPlhjyUnXXQzDecqQCWAjmnU8AR2S2XaH536gagyisjTRKyC71duAI2gNcWwMSLFGIkUy5DMMHdF1pEaWVNtY46P80fnBa52KjHI8bPYzdmtdWf8MrBIvnWaPMTCwpspScg9V/WzPxu8F1lL3EK/"
+        ],
+        "x-ms-correlation-request-id": [
+          "5e3691b8-bad0-407c-8f88-9bc2b65e6bbb"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "5e3691b8-bad0-407c-8f88-9bc2b65e6bbb"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180216T225703Z:5e3691b8-bad0-407c-8f88-9bc2b65e6bbb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL3N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWwvb3BlcmF0aW9uUmVzdWx0cy8yOTBiNDcyNi1hOWExLTQwYmEtYTgzNy04OTVhMTE3M2RjNzM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 22:58:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv0f0WO9/pvDqAP3nEzlaaAgzCv2FYVWR9pR6YP9GNmLIjLwi66lUY4TyY3VsdtCSSHAfG5Tcj5keEMhZSKis5Te0HXjBLkvr5pbf4OU7ePYFot9pnNHlkkQipN1ggReJGexnimQA8hp1NTSK+KwNS"
+        ],
+        "x-ms-correlation-request-id": [
+          "3f5f8730-2272-4c7e-9159-48b2bde2026b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14590"
+        ],
+        "x-ms-request-id": [
+          "3f5f8730-2272-4c7e-9159-48b2bde2026b"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180216T225803Z:3f5f8730-2272-4c7e-9159-48b2bde2026b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL3N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWwvb3BlcmF0aW9uUmVzdWx0cy8yOTBiNDcyNi1hOWExLTQwYmEtYTgzNy04OTVhMTE3M2RjNzM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 22:59:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvc+sRS7tFi3U3ILdmhNU2TJpZ9Uy7rl0jTygQDqyvwfnalvrepWP+qdNoRy1BOdKre3CN9NMYwf+d6oWTPoU0oW1gh1WU7fv3EXSr+4SDLvmH4EKhnsNG5tYFA8yWccaAhB9eIOpCjNxvpOznAwbP"
+        ],
+        "x-ms-correlation-request-id": [
+          "3babf530-4b7f-4f2f-ad21-19cd363cf0e3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14582"
+        ],
+        "x-ms-request-id": [
+          "3babf530-4b7f-4f2f-ad21-19cd363cf0e3"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180216T225903Z:3babf530-4b7f-4f2f-ad21-19cd363cf0e3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL3N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWwvb3BlcmF0aW9uUmVzdWx0cy8yOTBiNDcyNi1hOWExLTQwYmEtYTgzNy04OTVhMTE3M2RjNzM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 23:00:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvd9Cauj/H0GG6QR5acUhTWLr+lySitsNWEMt/Ly/E5YIfKc9kKMl9mcUaKLRJA1zPMTum45S9DGrRQuUcPS6OlkI7jb7iZp8kS6jXdSP0etJVMBBzOgenn1XT64XCBWMpzISkDKAu36U/0XOkitCt"
+        ],
+        "x-ms-correlation-request-id": [
+          "5f5c910d-de0f-4bca-80e2-8d3613919535"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14607"
+        ],
+        "x-ms-request-id": [
+          "5f5c910d-de0f-4bca-80e2-8d3613919535"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180216T230004Z:5f5c910d-de0f-4bca-80e2-8d3613919535"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL3N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWwvb3BlcmF0aW9uUmVzdWx0cy8yOTBiNDcyNi1hOWExLTQwYmEtYTgzNy04OTVhMTE3M2RjNzM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 23:01:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01"
+        ],
+        "Retry-After": [
+          "60"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvTK2BR1pG1cSuh4T8KSdasbSoU44NYuj3uB+JMes5M1uU8WsC91oPgRVmefkjh3eBl8ZmdPjBcQmiWeGMhNKiDWJ7gDahqDMU2YZgMeG40LFdAWTOsKySQSoXKHSum+NUlvtMRlvRHisyFtMuj7Ba"
+        ],
+        "x-ms-correlation-request-id": [
+          "c4c1f73f-b53b-4f20-a195-15273503f561"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14599"
+        ],
+        "x-ms-request-id": [
+          "c4c1f73f-b53b-4f20-a195-15273503f561"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180216T230104Z:c4c1f73f-b53b-4f20-a195-15273503f561"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/operationResults/290b4726-a9a1-40ba-a837-895a1173dc73?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL3N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkJhY2t1cC5BZG1pbi9iYWNrdXBMb2NhdGlvbnMvbG9jYWwvb3BlcmF0aW9uUmVzdWx0cy8yOTBiNDcyNi1hOWExLTQwYmEtYTgzNy04OTVhMTE3M2RjNzM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Backup.Admin.BackupAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/system.local/providers/Microsoft.Backup.Admin/backupLocations/local/backups/290b4726-a9a1-40ba-a837-895a1173dc73\",\r\n  \"name\": \"290b4726-a9a1-40ba-a837-895a1173dc73\",\r\n  \"type\": \"Microsoft.Backup.Admin/backupLocations/backups\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"backupInfo\": {\r\n      \"backupId\": \"290b4726-a9a1-40ba-a837-895a1173dc73\",\r\n      \"roleStatus\": [\r\n        {\r\n          \"roleName\": \"NRP\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"SRP\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"CRP\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"KeyVaultInternalControlPlane\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"KeyVaultInternalDataPlane\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"KeyVaultControlPlane\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"KeyVaultDataPlane\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"KeyVaultNamingService\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"WAS\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"ECE\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"CA\",\r\n          \"status\": 6\r\n        },\r\n        {\r\n          \"roleName\": \"ACS\",\r\n          \"status\": 6\r\n        }\r\n      ],\r\n      \"status\": 6,\r\n      \"createdDateTime\": \"2018-02-16T23:01:56.2015457Z\",\r\n      \"timeTakenToCreate\": \"PT4M54.5150429S\"\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "967"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 16 Feb 2018 23:02:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv1DnA0r+bNmUojiCV/+lKqHKpti37idp6fyG3G6EfBRfpf/Vn0EBw8XB/i9hljHMpBO6FhKz3Av8oV7G3nOWQB40DUwPCNafdrdTreX79sZYA6IU7TR27boCudPiaKo86snxQVmQSyV3JfOhXHgjW"
+        ],
+        "x-ms-correlation-request-id": [
+          "04f9c80c-c6e8-47f0-95b0-3260386dfdc5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14591"
+        ],
+        "x-ms-request-id": [
+          "04f9c80c-c6e8-47f0-95b0-3260386dfdc5"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180216T230204Z:04f9c80c-c6e8-47f0-95b0-3260386dfdc5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "8158498d-27b1-4ccf-9aa1-de0f925731e6"
+  }
+}
