@@ -1,6 +1,7 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <NetFx452>net452</NetFx452>
+	<NetFx461>net461</NetFx461>
     <NetStd14>netstandard1.4</NetStd14>
     <NetCore11>netcoreapp1.1</NetCore11>
   </PropertyGroup>
@@ -127,6 +128,15 @@
              ContinueOnError="ErrorAndStop">
       <Output TaskParameter="TargetOutputs" ItemName="net452Assemblies" />
     </MSBuild>
+	
+	<Message Text="Building SDK Projects ..... @(net461SDKProj) for $(NetFx461)" Condition=" '@(net461SDKProj)' != '' " />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+             Projects="@(net461SDKProj)"
+             Properties="TargetFramework=$(NetFx461)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="net461Assemblies" />
+    </MSBuild>
 
     <Message Text="Building SDK Projects ..... @(netStd14SDKProj) for $(NetStd14)" Condition=" '@(netStd14SDKProj)' != '' " />
     <MSBuild Targets="Build"
@@ -155,10 +165,18 @@
              ContinueOnError="true">
     </MSBuild>
 
-	  <Message Text="Building SDK Projects ..... @(net452TestProj) for $(net452TestProj)"  Condition=" '@(net452TestProj)' != '' " />
+	<Message Text="Building SDK Projects ..... @(net452TestProj) for $(net452TestProj)"  Condition=" '@(net452TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
               Projects="@(net452TestProj)"
               Properties="TargetFramework=$(NetFx452)"
+              BuildInParallel="$(BuildInParallel)"
+              ContinueOnError="true">
+    </MSBuild>
+	
+	<Message Text="Building SDK Projects ..... @(net461TestProj) for $(net461TestProj)"  Condition=" '@(net461TestProj)' != '' " />
+    <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
+              Projects="@(net461TestProj)"
+              Properties="TargetFramework=$(NetFx461)"
               BuildInParallel="$(BuildInParallel)"
               ContinueOnError="true">
     </MSBuild>
@@ -182,17 +200,20 @@
     </MSBuild>
 
     <ItemGroup>
-      <FilesToSign Include="@(net452Assemblies);@(netStd14Assemblies);@(netCore11Assemblies);@(nonSdkAssemblies)" />
+      <FilesToSign Include="@(net452Assemblies);@(net461Assemblies);@(netStd14Assemblies);@(netCore11Assemblies);@(nonSdkAssemblies)" />
     </ItemGroup>
   </Target>
 
   <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
     <Message Text="Executing Tests......"/>
     <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\netCore11\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
+    <Exec Command="dotnet test --no-compile -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\netCore11\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
 
     <Message Text="Running .NET 4.5.2 Tests .... @(net452TestProj)" Condition=" '@(net452TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
+    <Exec Command="dotnet test --no-compile -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
+	
+	<Message Text="Running .NET 4.6.1 Tests .... @(net461TestProj)" Condition=" '@(net461TestProj)' != '' " />
+    <Exec Command="dotnet test --no-compile -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
   </Target>
 
   <Target Name="Package">
@@ -285,10 +306,12 @@
       IgnoreDirNameForSearchingProjects="$(DefaultPathTokenToIgnore)"
       >
       <Output TaskParameter="net452SdkProjectsToBuild" ItemName="net452SDKProj" />
+	  <Output TaskParameter="net461SdkProjectsToBuild" ItemName="net461SDKProj" />
       <Output TaskParameter="netStd14SdkProjectsToBuild" ItemName="netStd14SDKProj" />
       <Output TaskParameter="netCore11SdkProjectsToBuild" ItemName="netCore11SDKProj" />
       <Output TaskParameter="netCore11TestProjectsToBuild" ItemName="netCore11TestProj" />
       <Output TaskParameter="net452TestProjectsToBuild" ItemName="net452TestProj" />
+	  <Output TaskParameter="net461TestProjectsToBuild" ItemName="net461TestProj" />
       <Output TaskParameter="unSupportedProjectsToBuild" ItemName="unsupportedProj" />
       <Output TaskParameter="nonSdkProjectToBuild" ItemName="nonSdkProj" />
       <Output TaskParameter="ProjectRootDir" PropertyName="ProjRootDir" />
@@ -296,8 +319,8 @@
 
     <Message Text="Categorizing Projects....."/>
     <ItemGroup>
-      <TotalSdkProjects Include="@(net452SDKProj);@(netStd14SDKProj);@(netCore11SDKProj)"/>
-      <TotalTestProjects Include="@(netCore11TestProj);@(net452TestProj)"/>
+      <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netCore11SDKProj)"/>
+      <TotalTestProjects Include="@(netCore11TestProj);@(net452TestProj);@(net461TestProj)"/>
     </ItemGroup>
 
     <RemoveDuplicates Inputs="@(TotalSdkProjects)">
@@ -314,7 +337,7 @@
     <Message Text="TestSDKProjects ....... @(FilteredTestProjects->Count())"/>
     <Message Text="%(FilteredTestProjects.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
-    <Message Text="UnSupported Projects ....... @(unsupportedProj->Count())"/>
+    <Message Text="UnSupported Projects ....... @(unsupportedProj->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text="%(unsupportedProj.Identity)" Condition=" '$(DebugTrace)' == 'true' "/>
     <Message Text=" "/>
     <Message Text="NonSdk Projects......... @(nonSdkProj->Count())" Condition=" '$(DebugTrace)' == 'true' "/>
@@ -325,10 +348,12 @@
     </PropertyGroup>
     <ItemGroup>
       <net452SDKProjects Include="@(net452SDKProj)"/>
+	  <net461SDKProjects Include="@(net461SDKProj)"/>
       <netStd14SDKProjects Include="@(netStd14SDKProj)"/>
       <netCore11SDKProjects Include="@(netCore11SDKProj)"/>
       <netCore11TestProjects Include="@(netCore11TestProj)"/>
       <net452TestProjects Include="@(net452TestProj)"/>
+	  <net461TestProjects Include="@(net461TestProj)"/>
       <unSupportedProject Include="@(unsupportedProj)"/>
       <nonSdkProject Include="@(nonSdkProj)"/>
     </ItemGroup>

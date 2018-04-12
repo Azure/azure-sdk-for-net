@@ -150,6 +150,22 @@ namespace Build.Tasks.Tests
             }
         }
 
+        [Fact(Skip ="Enabled when repo is updated")]
+        public void AdditionalFxProject()
+        {
+            string scopeDir = @"SdkCommon\Auth\Az.Auth\Az.Authentication";
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = sourceRootDir;
+            cproj.BuildScope = scopeDir;
+            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+
+            if (cproj.Execute())
+            {
+                Assert.Equal(cproj.net461SdkProjectsToBuild.Count<ITaskItem>(), 1);
+                Assert.Contains(sourceRootDir, cproj.ProjectRootDir);
+            }
+        }
+
         [Fact]
         public void UnSupportedProjects()
         {

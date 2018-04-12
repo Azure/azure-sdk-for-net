@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
 
                 case "net461":
                     validMoniker = TargetFrameworkMoniker.net461;
-                    fxSupported = false;
+                    fxSupported = true;
                     break;
                 default:
                     validMoniker = TargetFrameworkMoniker.UnSupported;
