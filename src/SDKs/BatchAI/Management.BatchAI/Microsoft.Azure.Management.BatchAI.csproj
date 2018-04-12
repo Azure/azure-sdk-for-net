@@ -11,7 +11,7 @@
 		<PackageTags>Microsoft Azure BatchAI;BatchAI;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is GA release of the Azure BatchAI SDK. New features included in this releases are:
+        New features included in this releases are:
         1. added support for job level mounting
         2. added support for environment variables with secret values
         3. added support for performance counters reporting in Azure Application Insights
