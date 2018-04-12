@@ -207,13 +207,13 @@
   <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
     <Message Text="Executing Tests......"/>
     <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
-    <Exec Command="dotnet test --no-compile -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\netCore11\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
+    <Exec Command="dotnet test --no-build -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\netCore11\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
 
     <Message Text="Running .NET 4.5.2 Tests .... @(net452TestProj)" Condition=" '@(net452TestProj)' != '' " />
-    <Exec Command="dotnet test --no-compile -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
+    <Exec Command="dotnet test --no-build -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
 	
 	<Message Text="Running .NET 4.6.1 Tests .... @(net461TestProj)" Condition=" '@(net461TestProj)' != '' " />
-    <Exec Command="dotnet test --no-compile -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
+    <Exec Command="dotnet test --no-build -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
   </Target>
 
   <Target Name="Package">
