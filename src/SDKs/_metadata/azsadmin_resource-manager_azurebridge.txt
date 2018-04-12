@@ -1,0 +1,5 @@
+﻿Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/azurebridge/readme.md --csharp --csharp-sdks-folder=E:\github\azure-sdk-for-net\src\AzureStack\AzureBridgeAdmin\AzureBridge.Admin --version=latest --reflect-api-versions
+
+AutoRest code generation for https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/azurebridge/readme.md failed. Please try again
+

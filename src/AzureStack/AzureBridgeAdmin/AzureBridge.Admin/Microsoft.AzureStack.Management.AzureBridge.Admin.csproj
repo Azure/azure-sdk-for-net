@@ -1,0 +1,20 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.AzureStack.Management.AzureBridge.Admin</PackageId>
+    <Description>Provides developers with libraries for the AzureBridge admin under AzureStack to manage plans and stuff.</Description>
+    <VersionPrefix>0.1.0-preview</VersionPrefix>
+    <AssemblyName>Microsoft.AzureStack.Management.AzureBridge.Admin</AssemblyName>
+    <PackageTags>Microsoft Azure Stack;AzureBridge;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
+    <PackageReleaseNotes>This is a preview release of the AzureStack AzureBridge Admin SDK.</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="node_modules\JSONSelect\site\css\droid_sans.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+</Project>
