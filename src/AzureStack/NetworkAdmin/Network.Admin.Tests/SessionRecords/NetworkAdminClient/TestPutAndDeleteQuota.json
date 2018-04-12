@@ -1,0 +1,407 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/local/quotas/TestQuotaForRemoval?api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODgyN2IwZmItNjAzOS00N2ViLWE3ZTgtMzVjYTlkMmE3YTAwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RRdW90YUZvclJlbW92YWw/YXBpLXZlcnNpb249MjAxNS0wNi0xNQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e544ce72-2e97-4c9d-9a76-89796744be46"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotFound\",\r\n    \"message\": \"Resource /subscriptions/17f638c8-a0e3-404b-92b8-04c749c03b58/resourceGroups//providers/Microsoft.Network.Admin/quotas/TestQuotaForRemoval not found.\",\r\n    \"details\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "235"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Jan 2018 23:31:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvuFmUH13cIQR53jvlNwNDgVh03oyVkhaQEOYBAYGkA/KjJEPC0EM3cgVXE5x3BAArrW/c05ZZNkwJqXVP4SmK56XAJVcpZ3ZFWQ/SxvsB5FFp8pdgJHIO7C8qHwTtPaLK73flyI1S7BPEOyHM5ZAN"
+        ],
+        "x-ms-request-id": [
+          "0ab04908-5cb9-48b9-8c13-a2395563d02b"
+        ],
+        "x-ms-correlation-request-id": [
+          "38d3805b-3ae8-4228-97fd-d94a93845446"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14751"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180126T233144Z:38d3805b-3ae8-4228-97fd-d94a93845446"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/local/quotas/TestQuotaForRemoval?api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODgyN2IwZmItNjAzOS00N2ViLWE3ZTgtMzVjYTlkMmE3YTAwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RRdW90YUZvclJlbW92YWw/YXBpLXZlcnNpb249MjAxNS0wNi0xNQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6a76969b-4f09-4f34-aa6f-82935c1e7a7c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"TestQuotaForRemoval\",\r\n  \"etag\": \"W/\\\"3e32ab3c-5e41-4f8d-a947-e3a71d17f4c7\\\"\",\r\n  \"type\": \"Microsoft.Network.Admin/quotas\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"maxPublicIpsPerSubscription\": 32,\r\n    \"maxVnetsPerSubscription\": 32,\r\n    \"maxVirtualNetworkGatewaysPerSubscription\": 32,\r\n    \"maxVirtualNetworkGatewayConnectionsPerSubscription\": 32,\r\n    \"maxLoadBalancersPerSubscription\": 32,\r\n    \"maxNicsPerSubscription\": 4,\r\n    \"maxSecurityGroupsPerSubscription\": 2,\r\n    \"migrationPhase\": \"None\"\r\n  },\r\n  \"id\": \"/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/local/quotas/TestQuotaForRemoval\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "688"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Jan 2018 23:31:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "W/\"3e32ab3c-5e41-4f8d-a947-e3a71d17f4c7\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvipUwevaRsr6pwaozoYgc7Fg+Uu0SUAkbcRvsQik/cVqPKVHnxoY+Xz5CogiClrlzc/op+fIX/Z5iaaxI4Jlo+cZJCKyHAkgBIZBHi/KD3OmAOOZponudrfw9cNM719yhnQAUC061PaPRwUzQtd6b"
+        ],
+        "x-ms-correlation-request-id": [
+          "817479b2-d012-4af0-856d-0b9992853dfd"
+        ],
+        "x-ms-request-id": [
+          "316d4dd3-5eee-4d9d-be22-5c40eb7df092"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14750"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180126T233144Z:817479b2-d012-4af0-856d-0b9992853dfd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/local/quotas/TestQuotaForRemoval?api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODgyN2IwZmItNjAzOS00N2ViLWE3ZTgtMzVjYTlkMmE3YTAwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RRdW90YUZvclJlbW92YWw/YXBpLXZlcnNpb249MjAxNS0wNi0xNQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a2273444-6750-4c29-822a-447f22dbcd9f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"NotFound\",\r\n    \"message\": \"Resource /subscriptions/17f638c8-a0e3-404b-92b8-04c749c03b58/resourceGroups//providers/Microsoft.Network.Admin/quotas/TestQuotaForRemoval not found.\",\r\n    \"details\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "235"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Jan 2018 23:32:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv3Dt6FzGNWpOS5Ru5Mn6WmFapLsWlGmnLDTt84LRJKglFHFLwew7SoxAIPJmV6ZpjDqO8FiCHOstaL1dZiI9g2xRbYO8FIAdJV8VmxdxGc7kVlt502cjc4oObdxjHfhabrtO7SwmYJ/BVncaXlfUX"
+        ],
+        "x-ms-request-id": [
+          "a2e1e61a-7516-4057-bc3a-b9b1dbc18268"
+        ],
+        "x-ms-correlation-request-id": [
+          "5608baf5-fa11-4af0-a8a4-5b340f08e518"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14743"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180126T233200Z:5608baf5-fa11-4af0-a8a4-5b340f08e518"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/local/quotas/TestQuotaForRemoval?api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODgyN2IwZmItNjAzOS00N2ViLWE3ZTgtMzVjYTlkMmE3YTAwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RRdW90YUZvclJlbW92YWw/YXBpLXZlcnNpb249MjAxNS0wNi0xNQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"maxPublicIpsPerSubscription\": 32,\r\n    \"maxVnetsPerSubscription\": 32,\r\n    \"maxVirtualNetworkGatewaysPerSubscription\": 32,\r\n    \"maxVirtualNetworkGatewayConnectionsPerSubscription\": 32,\r\n    \"maxLoadBalancersPerSubscription\": 32,\r\n    \"maxNicsPerSubscription\": 4,\r\n    \"maxSecurityGroupsPerSubscription\": 2\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "341"
+        ],
+        "x-ms-client-request-id": [
+          "21c3dbeb-5cf1-482f-807e-b4553a1e2e52"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"TestQuotaForRemoval\",\r\n  \"etag\": \"W/\\\"facfec6c-d83d-4316-b1a7-2ed93a5b764c\\\"\",\r\n  \"type\": \"Microsoft.Network.Admin/quotas\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Updating\",\r\n    \"maxPublicIpsPerSubscription\": 32,\r\n    \"maxVnetsPerSubscription\": 32,\r\n    \"maxVirtualNetworkGatewaysPerSubscription\": 32,\r\n    \"maxVirtualNetworkGatewayConnectionsPerSubscription\": 32,\r\n    \"maxLoadBalancersPerSubscription\": 32,\r\n    \"maxNicsPerSubscription\": 4,\r\n    \"maxSecurityGroupsPerSubscription\": 2,\r\n    \"migrationPhase\": \"None\"\r\n  },\r\n  \"id\": \"/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/local/quotas/TestQuotaForRemoval\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "687"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Jan 2018 23:31:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvX8x+/2FDX9gAwTzT9pghrqjJqCzw5Kc5bKlGfAj/QrX4I+hnqjjyyEhzX6tvgHaAfobtjYIQxNwk2b+sSPp+knhXmveZrzTc2BMijcedY9rFrTEKZGNzsPy+f3NVMPmp5KzgH3//g4d+rX6nk14F"
+        ],
+        "x-ms-correlation-request-id": [
+          "bc24e003-5f46-4881-ba90-2a2cff2145de"
+        ],
+        "x-ms-request-id": [
+          "b5bf566a-f171-4f40-8617-a71bb705066f"
+        ],
+        "Azure-AsyncOperation": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/westus/operations/b5bf566a-f171-4f40-8617-a71bb705066f?api-version=2015-06-15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180126T233144Z:bc24e003-5f46-4881-ba90-2a2cff2145de"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/local/quotas/TestQuotaForRemoval?api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODgyN2IwZmItNjAzOS00N2ViLWE3ZTgtMzVjYTlkMmE3YTAwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay5BZG1pbi9sb2NhdGlvbnMvbG9jYWwvcXVvdGFzL1Rlc3RRdW90YUZvclJlbW92YWw/YXBpLXZlcnNpb249MjAxNS0wNi0xNQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "75c0333b-d5a6-4699-ad64-266ee477d56f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Jan 2018 23:31:44 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/westus/operationResults/6ef3138d-5d25-4016-818c-bfa7983811b2?api-version=2015-06-15"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvQ8cB17s1B7xk32ldq4GStUjs1a0w8R57fjae0ECvheo19wkUTTdYfMnA1EH79Uv99KWlTqVaZMcURinjaGpoxq74znUdoImWvdaUfM46+VOvkKaWpFFZYEB1x4v06kL2a4ew9KQ7F+9/zfYphZrg"
+        ],
+        "x-ms-correlation-request-id": [
+          "5a48683c-bbc7-46f3-9726-84428ae42577"
+        ],
+        "x-ms-request-id": [
+          "6ef3138d-5d25-4016-818c-bfa7983811b2"
+        ],
+        "Azure-AsyncOperation": [
+          "https://adminmanagement.local.azurestack.external/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/westus/operations/6ef3138d-5d25-4016-818c-bfa7983811b2?api-version=2015-06-15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180126T233144Z:5a48683c-bbc7-46f3-9726-84428ae42577"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/8827b0fb-6039-47eb-a7e8-35ca9d2a7a00/providers/Microsoft.Network.Admin/locations/westus/operations/6ef3138d-5d25-4016-818c-bfa7983811b2?api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODgyN2IwZmItNjAzOS00N2ViLWE3ZTgtMzVjYTlkMmE3YTAwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTmV0d29yay5BZG1pbi9sb2NhdGlvbnMvd2VzdHVzL29wZXJhdGlvbnMvNmVmMzEzOGQtNWQyNS00MDE2LTgxOGMtYmZhNzk4MzgxMWIyP2FwaS12ZXJzaW9uPTIwMTUtMDYtMTU=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.AzureStack.Management.Network.Admin.NetworkAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "29"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Jan 2018 23:31:55 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvFLzZP42n7sQaNC/O1ANCNTkieL65eM8x8WNvvPU5CAgw80k41jVegXAYU8NTWZAMetcxZOAO0ypg2fWpq5EcunP6t9LEeMKJfpxDwRqYwyE3NcwViZr7+i306pVPE/vxGIsmlXSINlpzmRu/BZmb"
+        ],
+        "x-ms-correlation-request-id": [
+          "27ca8853-df15-4736-aaf9-95315aadfa7b"
+        ],
+        "x-ms-request-id": [
+          "c754f718-dfed-4872-a9f1-e416ec24d6aa"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14749"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180126T233155Z:27ca8853-df15-4736-aaf9-95315aadfa7b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "8827b0fb-6039-47eb-a7e8-35ca9d2a7a00"
+  }
+}
