@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         /// </summary>
         public GetBuildTools()
         {
-            //Init();
+            // Init();
         }
 
         private void Init()
@@ -196,6 +196,10 @@ namespace Microsoft.Azure.Build.BootstrapTasks
             }
             catch (Exception ex)
             {
+                if (ex is FileNotFoundException)
+                {
+                    unableToCopyFilePath.Add(((FileNotFoundException)ex).FileName);
+                }
                 BuildToolsLogger.LogException(ex);
             }
             finally

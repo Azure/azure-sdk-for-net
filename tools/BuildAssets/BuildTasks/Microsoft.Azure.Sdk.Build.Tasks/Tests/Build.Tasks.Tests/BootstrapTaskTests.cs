@@ -50,7 +50,19 @@ namespace Build.Tasks.Tests
             getBldTools.Execute();
             Assert.False(getBldTools.unableToCopyFilePath.Count > 0);
         }
-        
+
+        [Fact]
+        public void CopyFilesFromLocalDir()
+        {
+            string localBranchDir = GetSourceRootDir();
+            Assert.False(string.IsNullOrEmpty(localBranchDir));
+
+            string remoteRootDir = new Uri(Path.Combine(Directory.GetCurrentDirectory(), "BootStrapperTestResources")).LocalPath;
+            GetBuildTools getBldTools = new GetBuildTools(localBranchDir, remoteRootDir);
+            getBldTools.Execute();
+            Assert.True(getBldTools.unableToCopyFilePath.Count > 0);
+        }
+
         private string GetSourceRootDir()
         {
             string srcRootDir = string.Empty;
