@@ -7,14 +7,21 @@
     <AssemblyTitle>Authentication for Azure Management Clients</AssemblyTitle>
     <Version>2.3.3</Version>    
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
-	<PackageReleaseNotes>Switched to taking ADAL dependency as range.</PackageReleaseNotes>
+	<PackageReleaseNotes>
+		<![CDATA[
+			1) TokenAudience URI is no longer formatted to add trailing '/'. Provided URI is honored.
+			2) Added Net 461 target framework
+			3) For .NET 452 target, added exact version of ADAL. We will no longer be supporting ADAL 3.x.x in .NET 452. If you need support for ADAL 3.x.x please use .NET 461 target version
+			4) Due to braking changes in adal, no support for ADAL 3.x.x for .net 452. please use .NET 461 target framework.
+		]]>
+	</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;net462;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>net452;net461;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)'=='net462' ">
-    <DefineConstants>net46;FullNetFx</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net461' ">
+    <DefineConstants>net461;FullNetFx</DefineConstants>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
@@ -25,7 +32,7 @@
    </ItemGroup>
 
   <!--The minimum recommended version for ADAL 3.x.x is 3.13.1, but we want to start at 3.14.0-->
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />

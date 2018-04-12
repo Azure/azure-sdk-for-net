@@ -64,9 +64,9 @@ namespace Microsoft.Rest.Azure.Authentication
             this._userid = userId;
         }
 
-        #region .NET 46
+        #region .NET 461
         // please remove this preprocessor #if whenever ADAL will go public with the new library 
-#if net46
+#if net461
         /// <summary>
         /// Log in to azure active directory using device code authentication.
         /// </summary>
