@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.SpellCheck
+namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
 {
     using Models;
     using System.Threading;
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.CognitiveServices.SpellCheck
             /// Proof—Finds most spelling and grammar mistakes. 2) Spell—Finds most
             /// spelling mistakes but does not find some of the grammar errors that Proof
             /// catches (for example, capitalization and repeated words). Possible values
-            /// include: 'Proof', 'Spell'
+            /// include: 'proof', 'spell'
             /// </param>
             /// <param name='preContextText'>
             /// A string that gives context to the text string. For example, the text
