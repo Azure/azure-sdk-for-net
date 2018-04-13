@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Cognitive Services SpellCheck Client Library")]
 [assembly: AssemblyDescription("Provides API functions for consuming the Microsoft Azure Cognitive Services SpellCheck API.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
