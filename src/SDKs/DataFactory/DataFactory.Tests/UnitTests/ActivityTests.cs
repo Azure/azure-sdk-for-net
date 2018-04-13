@@ -7,6 +7,7 @@ using DataFactory.Tests.Utils;
 using Microsoft.Azure.Management.DataFactory.Models;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Xunit;
@@ -57,6 +58,34 @@ namespace DataFactory.Tests.UnitTests
         public void ExecuteSsisPackageActivity_SDKSample()
         {
             string triggeredPipelineName = "MyExecuteSsisPackagePipelineActivity";
+            var projectParameters = new Dictionary<string, SSISExecutionParameter>();
+            projectParameters["project_param_1"] = new SSISExecutionParameter()
+            {
+                Value = "123",
+            };
+            projectParameters["project_param_2"] = new SSISExecutionParameter()
+            {
+                Value = 1,
+            };
+            var packageParameters = new Dictionary<string, SSISExecutionParameter>();
+            packageParameters["package_param_1"] = new SSISExecutionParameter()
+            {
+                Value = "06A9E439-6C23-43A1-AF56-F73A54B0F17D",
+            };
+            packageParameters["project_param_2"] = new SSISExecutionParameter()
+            {
+                Value = DateTimeOffset.UtcNow,
+            };
+            var projectCMs = new Dictionary<string, IDictionary<string, SSISExecutionParameter>>();
+            projectCMs["MyOledbCM"] = new Dictionary<string, SSISExecutionParameter>();
+            projectCMs["MyOledbCM"]["userName"] = new SSISExecutionParameter() { Value = "sa" };
+            projectCMs["MyOledbCM"]["passWord"] = new SSISExecutionParameter() { Value = new SecureString() { Value = "123" } };
+            var packageCMs = new Dictionary<string, IDictionary<string, SSISExecutionParameter>>();
+            packageCMs["MyOledbCM"] = new Dictionary<string, SSISExecutionParameter>();
+            packageCMs["MyOledbCM"]["userName"] = new SSISExecutionParameter() { Value = "sa" };
+            packageCMs["MyOledbCM"]["passWord"] = new SSISExecutionParameter() { Value = new SecureString() { Value = "123" } };
+            var propertyOverrides = new Dictionary<string, SSISPropertyOverride>();
+            propertyOverrides["\\package.dtsx\\maxparralcount"] = new SSISPropertyOverride() { Value = 3, IsSensitive = false };
             ExecuteSSISPackageActivity activity = new ExecuteSSISPackageActivity
             {
                 Name = triggeredPipelineName,
@@ -71,7 +100,12 @@ namespace DataFactory.Tests.UnitTests
                 ConnectVia = new IntegrationRuntimeReference
                 {
                     ReferenceName = "myIntegrationRuntime"
-                }
+                },
+                ProjectParameters = projectParameters,
+                PackageParameters = packageParameters,
+                ProjectConnectionManagers = projectCMs,
+                PackageConnectionManagers = packageCMs,
+                PropertyOverrides = propertyOverrides
             };
             var handler = new RecordedDelegatingHandler();
             var client = this.CreateWorkflowClient(handler);

@@ -45,7 +45,7 @@ namespace ContainerInstance.Tests
                     name: containerGroupName,
                     image: "alpine",
                     ports: new List<ContainerPort>() { new ContainerPort(80) },
-                    command: new List<string>() { "echo", "hello" },
+                    command: new List<string>() { "/bin/sh", "-c", "while true; do sleep 10; done" },
                     resources: new ResourceRequirements(requests: new ResourceRequests(memoryInGB: 1.5, cpu: 1.0)))
             };
 
