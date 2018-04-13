@@ -11,6 +11,24 @@ namespace Network.Tests
 {
     public class LoadBalancers : NetworkTestBase
     {
+        private bool ValidateBaseResourceTenant(LoadBalancer tenant)
+        {
+            return tenant != null &&
+                tenant.SubscriptionId == null &&
+                tenant.TenantResourceUri != null;
+        }
+
+        private bool CheckBaseResourceTenantAreSame(LoadBalancer expected, LoadBalancer found)
+        {
+            if (expected == null)
+            {
+                return found == null;
+            }
+            return expected.ProvisioningState == found.ProvisioningState &&
+                expected.SubscriptionId == found.SubscriptionId &&
+                expected.TenantResourceUri == found.TenantResourceUri;
+        }
+
         private void AssertLoadBalancersAreSame(LoadBalancer expected, LoadBalancer found)
         {
             if (expected == null)
@@ -21,7 +39,7 @@ namespace Network.Tests
             {
                 Assert.True(NetworkCommon.CheckBaseResourcesAreSame(expected, found));
 
-                Assert.True(NetworkCommon.CheckBaseResourceTenantAreSame(expected, found));
+                Assert.True(CheckBaseResourceTenantAreSame(expected, found));
 
                 Assert.Equal(expected.PublicIpAddresses, found.PublicIpAddresses);
             }
@@ -43,7 +61,7 @@ namespace Network.Tests
 
                         NetworkCommon.ValidateBaseResources(loadBalancer);
 
-                        NetworkCommon.ValidateBaseResourceTenant(loadBalancer);
+                        ValidateBaseResourceTenant(loadBalancer);
 
                         Assert.NotNull(loadBalancer.PublicIpAddresses);
                         foreach(string IpAddress in loadBalancer.PublicIpAddresses) {

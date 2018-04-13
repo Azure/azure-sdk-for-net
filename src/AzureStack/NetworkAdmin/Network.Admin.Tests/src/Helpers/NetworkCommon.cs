@@ -28,24 +28,5 @@ namespace Network.Tests {
                 resource.Id == null &&
                 resource.Name != null;
         }
-
-        public static bool ValidateBaseResourceTenant(ResourceTenant tenant)
-        {
-            return tenant != null &&
-                tenant.SubscriptionId == null &&
-                tenant.TenantResourceUri != null;
-        }
-
-        public static bool CheckBaseResourceTenantAreSame(ResourceTenant expected, ResourceTenant found)
-        {
-            if (expected == null)
-            {
-                return found == null;
-            }
-            return expected.ProvisioningState == found.ProvisioningState &&
-                expected.SubscriptionId == found.SubscriptionId &&
-                expected.TenantResourceUri == found.TenantResourceUri;
-        }
-
     }
 }

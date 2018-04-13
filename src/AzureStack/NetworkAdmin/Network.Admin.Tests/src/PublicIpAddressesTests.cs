@@ -11,6 +11,12 @@ namespace Network.Tests
 {
     public class PublicIPAddressesTests : NetworkTestBase
     {
+        private bool ValidateBaseResourceTenant(PublicIpAddress tenant)
+        {
+            return tenant != null &&
+                tenant.SubscriptionId == null &&
+                tenant.TenantResourceUri != null;
+        }
 
         [Fact]
         public void TestGetAllPublicIpAddresses()
@@ -26,7 +32,7 @@ namespace Network.Tests
                     {
                         NetworkCommon.ValidateBaseResources(address);
 
-                        NetworkCommon.ValidateBaseResourceTenant(address);
+                        ValidateBaseResourceTenant(address);
 
                         Assert.NotNull(address.IpAddress);
                         Assert.NotNull(address.IpPool);
@@ -51,7 +57,7 @@ namespace Network.Tests
                     {
                         NetworkCommon.ValidateBaseResources(address);
 
-                        NetworkCommon.ValidateBaseResourceTenant(address);
+                        ValidateBaseResourceTenant(address);
 
                         Assert.NotNull(address.IpAddress);
                         Assert.NotNull(address.IpPool);

@@ -11,6 +11,13 @@ namespace Network.Tests
 {
     public class VirtualNetworksTests : NetworkTestBase
     {
+        private bool ValidateBaseResourceTenant(VirtualNetwork tenant)
+        {
+            return tenant != null &&
+                tenant.SubscriptionId == null &&
+                tenant.TenantResourceUri != null;
+        }
+
         private void AssertVirtualNetworksAreSame(VirtualNetwork expected, VirtualNetwork found)
         {
             if (expected == null)
@@ -42,7 +49,7 @@ namespace Network.Tests
                 {
                     NetworkCommon.ValidateBaseResources(network);
 
-                    NetworkCommon.ValidateBaseResourceTenant(network);
+                    ValidateBaseResourceTenant(network);
 
                     ValidateConfigurationState(network.ConfigurationState);
                 });
@@ -63,7 +70,7 @@ namespace Network.Tests
                 {
                     NetworkCommon.ValidateBaseResources(network);
 
-                    NetworkCommon.ValidateBaseResourceTenant(network);
+                    ValidateBaseResourceTenant(network);
 
                     ValidateConfigurationState(network.ConfigurationState);
                 });
