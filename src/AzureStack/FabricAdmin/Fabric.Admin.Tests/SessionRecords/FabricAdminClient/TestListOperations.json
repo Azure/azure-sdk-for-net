@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Fabric.Admin/operations?api-version=2016-05-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRmFicmljLkFkbWluL29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "135f8e39-053c-478d-885e-59467a137007"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/scaleUnits/ScaleIn\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Scale Unit\",\r\n        \"operation\": \"Add a Node to a Scale Unit\",\r\n        \"description\": \"Add a Node to a Scale Unit\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/scaleUnitNodes/PowerOff\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Scale Unit Node\",\r\n        \"operation\": \"Power off Scale Unit Node\",\r\n        \"description\": \"Powers off a Scale Unit Node\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/scaleUnitNodes/PowerOn\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Scale Unit Node\",\r\n        \"operation\": \"Power on Scale Unit Node\",\r\n        \"description\": \"Powers on a Scale Unit Node\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/scaleUnitNodes/ShutDown\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Scale Unit Node\",\r\n        \"operation\": \"Shut down Scale Unit Node\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/scaleUnitNodes/StartMaintenanceMode\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Scale Unit Node\",\r\n        \"operation\": \"Start maintenance Scale Unit Node\",\r\n        \"description\": \"Starts maintenance on a Scale Unit Node\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/scaleUnitNodes/StopMaintenanceMode\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Scale Unit Node\",\r\n        \"operation\": \"Stop maintenance Scale Unit Node\",\r\n        \"description\": \"Stops maintenance on a Scale Unit Node\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/scaleUnitNodes/Repair\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Scale Unit Node\",\r\n        \"operation\": \"Repair Scale Unit Node\",\r\n        \"description\": \"Repairs a Scale Unit Node\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/infraRoleInstances/PowerOff\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Infrastructure Role Instance\",\r\n        \"operation\": \"Power off Infrastructure Role Instance\",\r\n        \"description\": \"Powers off an Infrastructure Role Instance\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/infraRoleInstances/PowerOn\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Infrastructure Role Instance\",\r\n        \"operation\": \"Power on Infrastructure Role Instance\",\r\n        \"description\": \"Powers on an Infrastructure Role Instance\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/infraRoleInstances/Shutdown\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Infrastructure Role Instance\",\r\n        \"operation\": \"Shutdown an Infrastructure Role Instance\",\r\n        \"description\": \"Shutdown an Infrastructure Role Instance\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/infraRoleInstances/Reboot\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"Infrastructure Role Instance\",\r\n        \"operation\": \"Reboot an Infrastructure Role Instance\",\r\n        \"description\": \"Reboot an Infrastructure Role Instance\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Fabric.Admin/ipPools/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Fabric Resource Provider\",\r\n        \"resource\": \"IP Pool\",\r\n        \"operation\": \"Create or update IP Pool\",\r\n        \"description\": \"Creates or updates an IP Pool\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2937"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 12 Feb 2018 15:33:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv4aIM5t+ZEMO9m3ZMRN0ss/u+7mtq3+i9B1Jt+Qe7sMue3CEryS4QOiEVG9CexWPBECsbqjso2KZOn4GhdNoBk6dP2zsb4I74/LNNYuG9aJw9oDzuQGPVxj6EgrDkhWn5pz+F5ZfvtZqe0HM8106z"
+        ],
+        "x-ms-correlation-request-id": [
+          "a09b563c-dcdc-4701-b74d-afe7107ac09c"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "a09b563c-dcdc-4701-b74d-afe7107ac09c"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180212T153343Z:a09b563c-dcdc-4701-b74d-afe7107ac09c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "8158498d-27b1-4ccf-9aa1-de0f925731e6"
+  }
+}

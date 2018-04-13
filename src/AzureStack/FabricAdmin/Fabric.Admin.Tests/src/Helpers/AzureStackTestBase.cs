@@ -2,13 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Net;
-
 namespace Fabric.Tests
 {
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Net;
+
     /// <summary>
     /// Base class for all AzureStack tests.  This class should not be modified but extended through a child class.
     /// </summary>
@@ -28,9 +27,18 @@ namespace Fabric.Tests
         protected abstract void ValidateClient(T client);
 
         /// <summary>
-        /// The default location for all admin actions.  Override in derived class as needed.
+        /// The default resource group for all admin actions.  Override in derived class as needed.
         /// </summary>
-        protected string Location = "local";
+        protected string ResourceGroupName = "System.local";
+
+        protected string ExtractName(string name) {
+            if (name.Contains("/"))
+            {
+                var idx = name.LastIndexOf('/');
+                name = name.Substring(idx + 1);
+            }
+            return name;
+        }
 
         /// <summary>
         /// Run a test that accepts no arguments.  An exception can be 

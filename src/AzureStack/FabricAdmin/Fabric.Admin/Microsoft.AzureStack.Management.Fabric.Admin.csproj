@@ -1,9 +1,6 @@
 ﻿
 <Project Sdk="Microsoft.NET.Sdk">
-    <!-- Please do not move/edit code below this line -->
-    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-    <!-- Please do not move/edit code below this line -->
-
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.AzureStack.Management.Fabric.Admin</PackageId>
     <Description>Provides developers with libraries for the fabric admin under AzureStack to manage fabric infrastructure.</Description>
