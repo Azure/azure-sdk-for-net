@@ -10,6 +10,9 @@ namespace Microsoft.Azure.OperationalInsights
         /// </summary>
         IList<string> AdditionalWorkspaces { get; set; }
 
+        /// <summary>
+        /// Query preferences.
+        /// </summary>
         ApiPreferences Preferences { get; set; }
 
         /// <summary>

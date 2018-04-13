@@ -16,7 +16,9 @@ namespace Compute.Tests.DiskRPTests
         /// This test tests the new managedby feature that is replacing ownerid.
         /// It creates a VM, then gets the disk from that VM to check for the vm name in the manageby field
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
+        [Trait("Failure", "New Unable Match Http")]
         public void DiskManagedByTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -35,7 +37,7 @@ namespace Compute.Tests.DiskRPTests
                 var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                 // Create the VM, whose OS disk will be used in creating the image
-                var createdVM = CreateVM_NoAsyncTracking(rgName, avSet, storageAccountOutput, imageRef, out inputVM, hasManagedDisks: true);
+                var createdVM = CreateVM(rgName, avSet, storageAccountOutput, imageRef, out inputVM, hasManagedDisks: true);
                 var listResponse = m_CrpClient.VirtualMachines.ListAll();
                 Assert.True(listResponse.Count() >= 1);
                 var vmName = createdVM.Name;

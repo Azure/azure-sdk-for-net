@@ -22,34 +22,44 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class CapabilitiesOperationsExtensions
     {
             /// <summary>
-            /// Gets the capabilities available for the specified location.
+            /// Gets the subscription capabilities available for the specified location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='locationId'>
-            /// The location id whose capabilities are retrieved.
+            /// <param name='locationName'>
+            /// The location name whose capabilities are retrieved.
             /// </param>
-            public static LocationCapabilities ListByLocation(this ICapabilitiesOperations operations, string locationId)
+            /// <param name='include'>
+            /// If specified, restricts the response to only include the selected item.
+            /// Possible values include: 'supportedEditions',
+            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
+            /// </param>
+            public static LocationCapabilities ListByLocation(this ICapabilitiesOperations operations, string locationName, string include = default(string))
             {
-                return operations.ListByLocationAsync(locationId).GetAwaiter().GetResult();
+                return operations.ListByLocationAsync(locationName, include).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the capabilities available for the specified location.
+            /// Gets the subscription capabilities available for the specified location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='locationId'>
-            /// The location id whose capabilities are retrieved.
+            /// <param name='locationName'>
+            /// The location name whose capabilities are retrieved.
+            /// </param>
+            /// <param name='include'>
+            /// If specified, restricts the response to only include the selected item.
+            /// Possible values include: 'supportedEditions',
+            /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LocationCapabilities> ListByLocationAsync(this ICapabilitiesOperations operations, string locationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LocationCapabilities> ListByLocationAsync(this ICapabilitiesOperations operations, string locationName, string include = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByLocationWithHttpMessagesAsync(locationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByLocationWithHttpMessagesAsync(locationName, include, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

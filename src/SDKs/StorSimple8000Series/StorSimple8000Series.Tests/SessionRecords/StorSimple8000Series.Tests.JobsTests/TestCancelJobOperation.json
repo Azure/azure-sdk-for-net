@@ -450,6 +450,59 @@
       "StatusCode": 204
     },
     {
+      "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/jobs/993db21d-101b-41af-9e12-f593d78b99e9/operationResults/1e4a08d3-306c-4d9b-8679-70812c0f06c9?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvam9icy85OTNkYjIxZC0xMDFiLTQxYWYtOWUxMi1mNTkzZDc4Yjk5ZTkvb3BlcmF0aW9uUmVzdWx0cy8xZTRhMDhkMy0zMDZjLTRkOWItODY3OS03MDgxMmMwZjA2Yzk/YXBpLXZlcnNpb249MjAxNy0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.StorSimple8000Series.StorSimple8000SeriesManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 28 Jun 2017 09:13:43 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fe62531e-916c-4c7c-af8e-77ece0042811"
+        ],
+        "x-ms-client-request-id": [
+          "b1d4510a-b6b2-4231-997c-2cbbb384a69e",
+          "b1d4510a-b6b2-4231-997c-2cbbb384a69e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14865"
+        ],
+        "x-ms-correlation-request-id": [
+          "fe62531e-916c-4c7c-af8e-77ece0042811"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20170628T091344Z:fe62531e-916c-4c7c-af8e-77ece0042811"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.StorSimple/managers/ManagerForSDKTest1/devices/Device05ForSDKTest/jobs/993db21d-101b-41af-9e12-f593d78b99e9?api-version=2017-01-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDM4NWNmMDAtMmQzYS00MjVhLTgzMmYtZjQyODViMWM5ZGNlL3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvclNpbXBsZS9tYW5hZ2Vycy9NYW5hZ2VyRm9yU0RLVGVzdDEvZGV2aWNlcy9EZXZpY2UwNUZvclNES1Rlc3Qvam9icy85OTNkYjIxZC0xMDFiLTQxYWYtOWUxMi1mNTkzZDc4Yjk5ZTk/YXBpLXZlcnNpb249MjAxNy0wMS0wMQ==",
       "RequestMethod": "GET",

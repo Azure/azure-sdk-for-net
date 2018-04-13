@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The database edition capabilities.
+    /// The edition capability.
     /// </summary>
     public partial class EditionCapability
     {
@@ -31,19 +31,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the EditionCapability class.
         /// </summary>
-        /// <param name="name">The edition name.</param>
-        /// <param name="status">The status of the edition. Possible values
-        /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
+        /// <param name="name">The database edition name.</param>
         /// <param name="supportedServiceLevelObjectives">The list of supported
         /// service objectives for the edition.</param>
         /// <param name="zoneRedundant">Whether or not zone redundancy is
         /// supported for the edition.</param>
-        public EditionCapability(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>), bool? zoneRedundant = default(bool?))
+        /// <param name="status">The status of the capability. Possible values
+        /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
+        /// <param name="reason">The reason for the capability not being
+        /// available.</param>
+        public EditionCapability(string name = default(string), IList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default(IList<ServiceObjectiveCapability>), bool? zoneRedundant = default(bool?), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
-            Status = status;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
             ZoneRedundant = zoneRedundant;
+            Status = status;
+            Reason = reason;
             CustomInit();
         }
 
@@ -53,17 +56,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the edition name.
+        /// Gets the database edition name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the status of the edition. Possible values include: 'Visible',
-        /// 'Available', 'Default', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "status")]
-        public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
         /// Gets the list of supported service objectives for the edition.
@@ -76,6 +72,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "zoneRedundant")]
         public bool? ZoneRedundant { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the capability. Possible values include:
+        /// 'Visible', 'Available', 'Default', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public CapabilityStatus? Status { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the reason for the capability not being available.
+        /// </summary>
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
 
     }
 }

@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     }
                 }
 
-                return true;
+                return !ys.MoveNext();
             }
 
             private static bool ComparePolymorphicObjects(Type derivedType, object x, object y) => CompareRecursive(derivedType, x, y);

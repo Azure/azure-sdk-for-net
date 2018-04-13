@@ -3,7 +3,6 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 // </auto-generated>
-
 namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
 {
     using Microsoft.Rest;
@@ -252,7 +251,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// mistakes. 2) Spell—Finds most spelling mistakes but does not find
         /// some of the grammar errors that Proof catches (for example,
         /// capitalization and repeated words). Possible values include:
-        /// 'proof', 'spell'
+        /// 'Proof', 'Spell'
         /// </param>
         /// <param name='preContextText'>
         /// A string that gives context to the text string. For example, the

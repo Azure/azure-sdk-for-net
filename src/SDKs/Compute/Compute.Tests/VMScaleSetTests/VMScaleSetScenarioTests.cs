@@ -29,6 +29,7 @@ namespace Compute.Tests
         /// </summary>
         [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations")]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMScaleSetScenarioOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -50,7 +51,7 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks")]
         public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage()
         {
@@ -61,20 +62,41 @@ namespace Compute.Tests
         }
 
         /// <summary>
-        /// To record this test case, you need to run it again zone supported regions like eastus2.
+        /// To record this test case, you need to run it again zone supported regions like eastus2euap.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone")]
+        public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
+        /// To record this test case, you need to run it again zone supported regions like eastus2euap.
+        /// </summary>
+        [Fact(Skip = "ReRecord due to CR change")]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones")]
         public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                 using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
-
-                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1", "3" });
                 }
             }
             finally

@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// not specified this defaults to the start time of the last
         /// aggregation interval currently available.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// specified this defaults to the end time of the last aggregation
         /// interval currently available.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
@@ -98,21 +98,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// constructing this filter, see
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
         /// A maximum of 1000 results will be returned.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public int? MaxResults { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum time that the server can spend processing
         /// the request, in seconds. The default is 30 seconds.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public int? Timeout { get; set; }
 
         /// <summary>
@@ -120,14 +120,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// a GUID with no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public System.Guid? ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the server should return the client-request-id
         /// in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// explicitly if you are calling the REST API directly.
         /// </summary>
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public System.DateTime? OcpDate { get; set; }
 
     }

@@ -8,9 +8,8 @@
 
 namespace Management.HDInsight.Tests.UnitTests
 {
+    using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
-    using Microsoft.HDInsight;
-    using Microsoft.HDInsight.Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;

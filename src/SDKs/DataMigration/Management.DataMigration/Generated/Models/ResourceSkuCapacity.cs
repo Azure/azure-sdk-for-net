@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="defaultProperty">The default capacity.</param>
         /// <param name="scaleType">The scale type applicable to the SKU.
         /// Possible values include: 'Automatic', 'Manual', 'None'</param>
-        public ResourceSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? defaultProperty = default(long?), ResourceSkuCapacityScaleType? scaleType = default(ResourceSkuCapacityScaleType?))
+        public ResourceSkuCapacity(long? minimum = default(long?), long? maximum = default(long?), long? defaultProperty = default(long?), string scaleType = default(string))
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Automatic', 'Manual', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
-        public ResourceSkuCapacityScaleType? ScaleType { get; private set; }
+        public string ScaleType { get; private set; }
 
     }
 }

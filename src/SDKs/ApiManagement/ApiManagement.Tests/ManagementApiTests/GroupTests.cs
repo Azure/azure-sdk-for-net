@@ -3,13 +3,14 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using ApiManagementManagement.Tests.Helpers;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Xunit;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
+using Xunit;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -30,8 +31,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName,
                     null);
                 
-                Assert.True(groupsList.IsAny());
-                Assert.Equal(3, groupsList.Count());
+                Assert.NotEmpty(groupsList);
+                Assert.Equal(3, groupsList.GetEnumerator().ToIEnumerable().Count());
                 Assert.NotNull(groupsList.NextPageLink);
 
                 // list by paging using ODATA query
@@ -44,7 +45,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     });
 
                 Assert.NotNull(groupsList);
-                Assert.Equal(1, groupsList.Count());
+                Assert.Single(groupsList);
                 Assert.NotNull(groupsList.NextPageLink);
 
                 // create a new group
@@ -58,28 +59,24 @@ namespace ApiManagement.Tests.ManagementApiTests
                         Description = "Group created from Sdk client"
                     };
 
-                    var createResponse = testBase.client.Group.CreateOrUpdate(
+                    var groupContract = testBase.client.Group.CreateOrUpdate(
                         testBase.rgName,
                         testBase.serviceName,
                         newGroupId,
                         parameters);
-                    Assert.NotNull(createResponse);
-                    Assert.Equal(newGroupDisplayName, createResponse.DisplayName);
-                    Assert.Equal(false, createResponse.BuiltIn);
-                    Assert.NotNull(createResponse.Description);
-                    Assert.Equal(GroupType.Custom, createResponse.GroupContractType);
+                    Assert.NotNull(groupContract);
+                    Assert.Equal(newGroupDisplayName, groupContract.DisplayName);
+                    Assert.False(groupContract.BuiltIn);
+                    Assert.NotNull(groupContract.Description);
+                    Assert.Equal(GroupType.Custom, groupContract.GroupContractType);
 
-                    // get the group
-                    var getResponse = await testBase.client.Group.GetWithHttpMessagesAsync(
+                    // get the group tag
+                    var groupTag= await testBase.client.Group.GetEntityTagAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newGroupId);
-                    Assert.NotNull(getResponse);
-                    Assert.Equal(newGroupDisplayName, getResponse.Body.DisplayName);
-                    Assert.Equal(false, getResponse.Body.BuiltIn);
-                    Assert.NotNull(getResponse.Body.Description);
-                    Assert.Equal(GroupType.Custom, getResponse.Body.GroupContractType);
-                    Assert.NotNull(getResponse.Headers.ETag);
+                    Assert.NotNull(groupTag);
+                    Assert.NotNull(groupTag.ETag);
 
                     // update the group
                     var updateParameters = new GroupUpdateParameters()
@@ -92,28 +89,33 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         newGroupId,
                         updateParameters,
-                        getResponse.Headers.ETag);
+                        groupTag.ETag);
 
                     // get the updatedGroup
-                    var updatedResponse = await testBase.client.Group.GetWithHttpMessagesAsync(
+                    var updatedResponse = await testBase.client.Group.GetAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newGroupId);
                     Assert.NotNull(updatedResponse);
-                    Assert.Equal(newGroupDisplayName, updatedResponse.Body.DisplayName);
-                    Assert.Equal(false, updatedResponse.Body.BuiltIn);
-                    Assert.NotNull(updatedResponse.Body.Description);
-                    Assert.Equal(updateParameters.Description, updatedResponse.Body.Description);
-                    Assert.Equal(GroupType.Custom, updatedResponse.Body.GroupContractType);
-                    Assert.NotNull(updatedResponse.Headers.ETag);
-                    Assert.NotEqual(getResponse.Headers.ETag, updatedResponse.Headers.ETag);
+                    Assert.Equal(newGroupDisplayName, updatedResponse.DisplayName);
+                    Assert.False(updatedResponse.BuiltIn);
+                    Assert.NotNull(updatedResponse.Description);
+                    Assert.Equal(updateParameters.Description, updatedResponse.Description);
+                    Assert.Equal(GroupType.Custom, updatedResponse.GroupContractType);
+
+                    groupTag = await testBase.client.Group.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newGroupId);
+                    Assert.NotNull(groupTag);
+                    Assert.NotNull(groupTag.ETag);
 
                     // delete the group
                     testBase.client.Group.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         newGroupId,
-                        updatedResponse.Headers.ETag);
+                        groupTag.ETag);
 
                     Assert.Throws<ErrorResponseException>(() =>
                     {

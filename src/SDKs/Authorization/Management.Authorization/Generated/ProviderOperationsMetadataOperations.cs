@@ -56,9 +56,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// <param name='resourceProviderNamespace'>
         /// The namespace of the resource provider.
         /// </param>
-        /// <param name='apiVersion'>
-        /// The API version to use for the operation.
-        /// </param>
         /// <param name='expand'>
         /// Specifies whether to expand the values.
         /// </param>
@@ -83,16 +80,13 @@ namespace Microsoft.Azure.Management.Authorization
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ProviderOperationsMetadata>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string apiVersion, string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ProviderOperationsMetadata>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceProviderNamespace == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceProviderNamespace");
             }
-            if (apiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
-            }
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -247,9 +241,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Gets provider operations metadata for all resource providers.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='expand'>
         /// Specifies whether to expand the values.
         /// </param>
@@ -265,21 +256,12 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ProviderOperationsMetadata>>> ListWithHttpMessagesAsync(string apiVersion, string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ProviderOperationsMetadata>>> ListWithHttpMessagesAsync(string expand = "resourceTypes", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (apiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "apiVersion");
-            }
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

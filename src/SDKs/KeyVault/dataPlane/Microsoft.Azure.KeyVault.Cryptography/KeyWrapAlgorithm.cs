@@ -25,7 +25,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         public abstract ICryptoTransform CreateEncryptor( byte[] key, byte[] iv );
 
         /// <summary>
-        /// Crea a decryptor for the specified key
+        /// Create a decryptor for the specified key
         /// </summary>
         /// <param name="key">The key</param>
         /// <param name="iv">The initialization vector</param>

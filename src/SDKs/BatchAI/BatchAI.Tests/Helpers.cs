@@ -55,7 +55,7 @@ namespace BatchAI.Tests
                 {
                     return;
                 }
-                Thread.Sleep(TimeSpan.FromSeconds(5));
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
             }
         }
 
@@ -79,7 +79,7 @@ namespace BatchAI.Tests
                 }
                 else
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(5));
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
                 }
             }
         }

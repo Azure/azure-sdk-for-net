@@ -151,9 +151,10 @@ namespace Sql.Tests
             Assert.Equal(expected.RetentionDays, actual.RetentionDays);
             Assert.Equal(expected.StorageEndpoint, actual.StorageEndpoint);
             Assert.Equal(string.Empty, actual.StorageAccountAccessKey);
-            if (expected.AuditActionsAndGroups == null)
+            if (expected.AuditActionsAndGroups == null || actual.AuditActionsAndGroups == null)
             {
-                Assert.Equal(null, actual.AuditActionsAndGroups);
+                Assert.Null(expected.AuditActionsAndGroups);
+                Assert.Null(actual.AuditActionsAndGroups);
             }
             else
             {
@@ -175,8 +176,8 @@ namespace Sql.Tests
                 State = BlobAuditingPolicyState.Disabled,
                 RetentionDays = 0,
                 StorageAccountAccessKey = string.Empty,
-                StorageEndpoint = string.Empty,
-                AuditActionsAndGroups = new List<string>(),
+                StorageEndpoint = null,
+                AuditActionsAndGroups = null,
                 StorageAccountSubscriptionId = new Guid("00000000-0000-0000-0000-000000000000"),
                 IsStorageSecondaryKeyInUse = false,
             };

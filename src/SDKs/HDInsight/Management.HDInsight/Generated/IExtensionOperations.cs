@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.HDInsight
+namespace Microsoft.Azure.Management.HDInsight
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

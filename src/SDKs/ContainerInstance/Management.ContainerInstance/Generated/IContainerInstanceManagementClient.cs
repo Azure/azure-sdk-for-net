@@ -80,9 +80,19 @@ namespace Microsoft.Azure.Management.ContainerInstance
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IContainerGroupUsageOperations.
+        /// </summary>
+        IContainerGroupUsageOperations ContainerGroupUsage { get; }
+
+        /// <summary>
         /// Gets the IContainerLogsOperations.
         /// </summary>
         IContainerLogsOperations ContainerLogs { get; }
+
+        /// <summary>
+        /// Gets the IStartContainerOperations.
+        /// </summary>
+        IStartContainerOperations StartContainer { get; }
 
     }
 }

@@ -45,12 +45,13 @@ namespace ContainerInstance.Tests
                     name: containerGroupName,
                     image: "alpine",
                     ports: new List<ContainerPort>() { new ContainerPort(80) },
-                    command: new List<string>() { "echo", "hello" },
+                    command: new List<string>() { "/bin/sh", "-c", "while true; do sleep 10; done" },
                     resources: new ResourceRequirements(requests: new ResourceRequests(memoryInGB: 1.5, cpu: 1.0)))
             };
 
             var ipAddress = new IpAddress(
-                new List<Port>() { new Port(80, "TCP") });
+                ports: new List<Port>() { new Port(80, "TCP") },
+                dnsNameLabel: containerGroupName);
 
             var containerGroup = new ContainerGroup(
                 name: containerGroupName,
@@ -74,6 +75,7 @@ namespace ContainerInstance.Tests
             Assert.Equal(1, actual.Containers.Count);
             Assert.NotNull(actual.IpAddress);
             Assert.NotNull(actual.IpAddress.Ip);
+            Assert.Equal(expected.IpAddress.DnsNameLabel, actual.IpAddress.DnsNameLabel);
             Assert.Equal(expected.Containers[0].Name, actual.Containers[0].Name);
             Assert.Equal(expected.Containers[0].Image, actual.Containers[0].Image);
             Assert.Equal(expected.Containers[0].Resources.Requests.Cpu, actual.Containers[0].Resources.Requests.Cpu);

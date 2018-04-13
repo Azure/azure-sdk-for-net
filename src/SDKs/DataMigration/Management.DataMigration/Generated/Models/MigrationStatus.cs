@@ -10,99 +10,21 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for MigrationStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MigrationStatus
+    public static class MigrationStatus
     {
-        [EnumMember(Value = "Default")]
-        Default,
-        [EnumMember(Value = "Connecting")]
-        Connecting,
-        [EnumMember(Value = "SourceAndTargetSelected")]
-        SourceAndTargetSelected,
-        [EnumMember(Value = "SelectLogins")]
-        SelectLogins,
-        [EnumMember(Value = "Configured")]
-        Configured,
-        [EnumMember(Value = "Running")]
-        Running,
-        [EnumMember(Value = "Error")]
-        Error,
-        [EnumMember(Value = "Stopped")]
-        Stopped,
-        [EnumMember(Value = "Completed")]
-        Completed,
-        [EnumMember(Value = "CompletedWithWarnings")]
-        CompletedWithWarnings
-    }
-    internal static class MigrationStatusEnumExtension
-    {
-        internal static string ToSerializedValue(this MigrationStatus? value)
-        {
-            return value == null ? null : ((MigrationStatus)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this MigrationStatus value)
-        {
-            switch( value )
-            {
-                case MigrationStatus.Default:
-                    return "Default";
-                case MigrationStatus.Connecting:
-                    return "Connecting";
-                case MigrationStatus.SourceAndTargetSelected:
-                    return "SourceAndTargetSelected";
-                case MigrationStatus.SelectLogins:
-                    return "SelectLogins";
-                case MigrationStatus.Configured:
-                    return "Configured";
-                case MigrationStatus.Running:
-                    return "Running";
-                case MigrationStatus.Error:
-                    return "Error";
-                case MigrationStatus.Stopped:
-                    return "Stopped";
-                case MigrationStatus.Completed:
-                    return "Completed";
-                case MigrationStatus.CompletedWithWarnings:
-                    return "CompletedWithWarnings";
-            }
-            return null;
-        }
-
-        internal static MigrationStatus? ParseMigrationStatus(this string value)
-        {
-            switch( value )
-            {
-                case "Default":
-                    return MigrationStatus.Default;
-                case "Connecting":
-                    return MigrationStatus.Connecting;
-                case "SourceAndTargetSelected":
-                    return MigrationStatus.SourceAndTargetSelected;
-                case "SelectLogins":
-                    return MigrationStatus.SelectLogins;
-                case "Configured":
-                    return MigrationStatus.Configured;
-                case "Running":
-                    return MigrationStatus.Running;
-                case "Error":
-                    return MigrationStatus.Error;
-                case "Stopped":
-                    return MigrationStatus.Stopped;
-                case "Completed":
-                    return MigrationStatus.Completed;
-                case "CompletedWithWarnings":
-                    return MigrationStatus.CompletedWithWarnings;
-            }
-            return null;
-        }
+        public const string Default = "Default";
+        public const string Connecting = "Connecting";
+        public const string SourceAndTargetSelected = "SourceAndTargetSelected";
+        public const string SelectLogins = "SelectLogins";
+        public const string Configured = "Configured";
+        public const string Running = "Running";
+        public const string Error = "Error";
+        public const string Stopped = "Stopped";
+        public const string Completed = "Completed";
+        public const string CompletedWithWarnings = "CompletedWithWarnings";
     }
 }
