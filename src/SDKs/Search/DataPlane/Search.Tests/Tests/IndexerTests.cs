@@ -307,6 +307,10 @@ namespace Microsoft.Azure.Search.Tests
 
                 Assert.Equal("121713", oldestResult.Errors[1].Key);
                 Assert.Equal("Item is too large", oldestResult.Errors[1].ErrorMessage);
+
+                Assert.Equal(1, oldestResult.Warnings.Count);
+                Assert.Equal("2", oldestResult.Warnings[0].Key);
+                Assert.Equal("This is the first and last warning", oldestResult.Warnings[0].Message);
             });
         }
 
@@ -370,8 +374,7 @@ namespace Microsoft.Azure.Search.Tests
                 expectedIndexer.Parameters
                     .ExcludeFileNameExtensions(".pdf")
                     .IndexFileNameExtensions(".docx")
-                    .SetBlobExtractionMode(BlobExtractionMode.StorageMetadata)
-                    .DoNotFailOnUnsupportedContentType();
+                    .SetBlobExtractionMode(BlobExtractionMode.StorageMetadata);
 
                 Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
                 ExpectSameStartTime(expectedIndexer, actualIndexer);
@@ -379,6 +382,38 @@ namespace Microsoft.Azure.Search.Tests
                 AssertIndexersEqual(expectedIndexer, actualIndexer);
             });
         }
+
+        [Fact]
+        public void CanRoundtripIndexerWithFieldMappingFunctions() =>
+            Run(() =>
+            {
+                Indexer expectedIndexer = new Indexer(SearchTestUtilities.GenerateName(), Data.DataSourceName, Data.TargetIndexName)
+                {
+                    FieldMappings = new[]
+                    {
+                        // Try all the field mapping functions and parameters (even if they don't make sense in the context of the test DB).
+                        new FieldMapping("feature_id", "a", FieldMappingFunction.Base64Encode()),
+                        new FieldMapping("feature_id", "b", FieldMappingFunction.Base64Encode(useHttpServerUtilityUrlTokenEncode: true)),
+                        new FieldMapping("feature_id", "c", FieldMappingFunction.ExtractTokenAtPosition(delimiter: " ", position: 0)),
+                        new FieldMapping("feature_id", "d", FieldMappingFunction.Base64Decode()),
+                        new FieldMapping("feature_id", "e", FieldMappingFunction.Base64Decode(useHttpServerUtilityUrlTokenDecode: false)),
+                        new FieldMapping("feature_id", "f", FieldMappingFunction.JsonArrayToStringCollection())
+                    }
+                };
+
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                // We need to add desired fields to the index before those fields can be referenced by the field mappings
+                Index index = searchClient.Indexes.Get(Data.TargetIndexName);
+                string[] fieldNames = new[] { "a", "b", "c", "d", "e", "f" };
+                index.Fields = index.Fields.Concat(fieldNames.Select(name => new Field(name, DataType.String))).ToList();
+                searchClient.Indexes.CreateOrUpdate(index);
+
+                searchClient.Indexers.Create(expectedIndexer);
+
+                Indexer actualIndexer = searchClient.Indexers.Get(expectedIndexer.Name);
+                AssertIndexersEqual(expectedIndexer, actualIndexer);
+            });
 
         private static void AssertStartAndEndTimeValid(IndexerExecutionResult result)
         {

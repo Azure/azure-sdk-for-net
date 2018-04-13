@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a database elastic pool.
+    /// An elastic pool.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ElasticPool : TrackedResource
@@ -39,37 +39,33 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="creationDate">The creation date of the elastic pool
-        /// (ISO8601 format).</param>
+        /// <param name="kind">Kind of elastic pool. This is metadata used for
+        /// the Azure portal experience.</param>
         /// <param name="state">The state of the elastic pool. Possible values
         /// include: 'Creating', 'Ready', 'Disabled'</param>
-        /// <param name="edition">The edition of the elastic pool. Possible
-        /// values include: 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="dtu">The total shared DTU for the database elastic
-        /// pool.</param>
-        /// <param name="databaseDtuMax">The maximum DTU any one database can
-        /// consume.</param>
-        /// <param name="databaseDtuMin">The minimum DTU all databases are
-        /// guaranteed.</param>
-        /// <param name="storageMB">Gets storage limit for the database elastic
-        /// pool in MB.</param>
-        /// <param name="zoneRedundant">Whether or not this database elastic
-        /// pool is zone redundant, which means the replicas of this database
-        /// will be spread across multiple availability zones.</param>
-        /// <param name="kind">Kind of elastic pool.  This is metadata used for
-        /// the Azure portal experience.</param>
-        public ElasticPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? creationDate = default(System.DateTime?), string state = default(string), string edition = default(string), int? dtu = default(int?), int? databaseDtuMax = default(int?), int? databaseDtuMin = default(int?), int? storageMB = default(int?), bool? zoneRedundant = default(bool?), string kind = default(string))
+        /// <param name="creationDate">The creation date of the elastic pool
+        /// (ISO8601 format).</param>
+        /// <param name="maxSizeBytes">The storage limit for the database
+        /// elastic pool in bytes.</param>
+        /// <param name="perDatabaseSettings">The per database settings for the
+        /// elastic pool.</param>
+        /// <param name="zoneRedundant">Whether or not this elastic pool is
+        /// zone redundant, which means the replicas of this elastic pool will
+        /// be spread across multiple availability zones.</param>
+        /// <param name="licenseType">The license type to apply for this
+        /// elastic pool. Possible values include: 'LicenseIncluded',
+        /// 'BasePrice'</param>
+        public ElasticPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string state = default(string), System.DateTime? creationDate = default(System.DateTime?), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string))
             : base(location, id, name, type, tags)
         {
-            CreationDate = creationDate;
-            State = state;
-            Edition = edition;
-            Dtu = dtu;
-            DatabaseDtuMax = databaseDtuMax;
-            DatabaseDtuMin = databaseDtuMin;
-            StorageMB = storageMB;
-            ZoneRedundant = zoneRedundant;
+            Sku = sku;
             Kind = kind;
+            State = state;
+            CreationDate = creationDate;
+            MaxSizeBytes = maxSizeBytes;
+            PerDatabaseSettings = perDatabaseSettings;
+            ZoneRedundant = zoneRedundant;
+            LicenseType = licenseType;
             CustomInit();
         }
 
@@ -79,10 +75,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the creation date of the elastic pool (ISO8601 format).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; private set; }
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets kind of elastic pool. This is metadata used for the Azure
+        /// portal experience.
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; private set; }
 
         /// <summary>
         /// Gets the state of the elastic pool. Possible values include:
@@ -92,50 +94,38 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string State { get; private set; }
 
         /// <summary>
-        /// Gets or sets the edition of the elastic pool. Possible values
-        /// include: 'Basic', 'Standard', 'Premium'
+        /// Gets the creation date of the elastic pool (ISO8601 format).
         /// </summary>
-        [JsonProperty(PropertyName = "properties.edition")]
-        public string Edition { get; set; }
+        [JsonProperty(PropertyName = "properties.creationDate")]
+        public System.DateTime? CreationDate { get; private set; }
 
         /// <summary>
-        /// Gets or sets the total shared DTU for the database elastic pool.
+        /// Gets or sets the storage limit for the database elastic pool in
+        /// bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dtu")]
-        public int? Dtu { get; set; }
+        [JsonProperty(PropertyName = "properties.maxSizeBytes")]
+        public long? MaxSizeBytes { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum DTU any one database can consume.
+        /// Gets or sets the per database settings for the elastic pool.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.databaseDtuMax")]
-        public int? DatabaseDtuMax { get; set; }
+        [JsonProperty(PropertyName = "properties.perDatabaseSettings")]
+        public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum DTU all databases are guaranteed.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.databaseDtuMin")]
-        public int? DatabaseDtuMin { get; set; }
-
-        /// <summary>
-        /// Gets storage limit for the database elastic pool in MB.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageMB")]
-        public int? StorageMB { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether or not this database elastic pool is zone
-        /// redundant, which means the replicas of this database will be spread
-        /// across multiple availability zones.
+        /// Gets or sets whether or not this elastic pool is zone redundant,
+        /// which means the replicas of this elastic pool will be spread across
+        /// multiple availability zones.
         /// </summary>
         [JsonProperty(PropertyName = "properties.zoneRedundant")]
         public bool? ZoneRedundant { get; set; }
 
         /// <summary>
-        /// Gets kind of elastic pool.  This is metadata used for the Azure
-        /// portal experience.
+        /// Gets or sets the license type to apply for this elastic pool.
+        /// Possible values include: 'LicenseIncluded', 'BasePrice'
         /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
+        [JsonProperty(PropertyName = "properties.licenseType")]
+        public string LicenseType { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -146,6 +136,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         public override void Validate()
         {
             base.Validate();
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
         }
     }
 }

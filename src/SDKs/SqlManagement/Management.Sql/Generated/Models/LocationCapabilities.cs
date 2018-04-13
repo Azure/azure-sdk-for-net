@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// The capabilities for a location.
+    /// The location capability.
     /// </summary>
     public partial class LocationCapabilities
     {
@@ -32,16 +32,21 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the LocationCapabilities class.
         /// </summary>
         /// <param name="name">The location name.</param>
-        /// <param name="status">Azure SQL Database's status for the location.
-        /// Possible values include: 'Visible', 'Available', 'Default',
-        /// 'Disabled'</param>
         /// <param name="supportedServerVersions">The list of supported server
         /// versions.</param>
-        public LocationCapabilities(string name = default(string), CapabilityStatus? status = default(CapabilityStatus?), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>))
+        /// <param name="supportedManagedInstanceVersions">The list of
+        /// supported managed instance versions.</param>
+        /// <param name="status">The status of the capability. Possible values
+        /// include: 'Visible', 'Available', 'Default', 'Disabled'</param>
+        /// <param name="reason">The reason for the capability not being
+        /// available.</param>
+        public LocationCapabilities(string name = default(string), IList<ServerVersionCapability> supportedServerVersions = default(IList<ServerVersionCapability>), IList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions = default(IList<ManagedInstanceVersionCapability>), CapabilityStatus? status = default(CapabilityStatus?), string reason = default(string))
         {
             Name = name;
-            Status = status;
             SupportedServerVersions = supportedServerVersions;
+            SupportedManagedInstanceVersions = supportedManagedInstanceVersions;
+            Status = status;
+            Reason = reason;
             CustomInit();
         }
 
@@ -57,17 +62,29 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets azure SQL Database's status for the location. Possible values
-        /// include: 'Visible', 'Available', 'Default', 'Disabled'
+        /// Gets the list of supported server versions.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedServerVersions")]
+        public IList<ServerVersionCapability> SupportedServerVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the list of supported managed instance versions.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedManagedInstanceVersions")]
+        public IList<ManagedInstanceVersionCapability> SupportedManagedInstanceVersions { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the capability. Possible values include:
+        /// 'Visible', 'Available', 'Default', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public CapabilityStatus? Status { get; private set; }
 
         /// <summary>
-        /// Gets the list of supported server versions.
+        /// Gets or sets the reason for the capability not being available.
         /// </summary>
-        [JsonProperty(PropertyName = "supportedServerVersions")]
-        public IList<ServerVersionCapability> SupportedServerVersions { get; private set; }
+        [JsonProperty(PropertyName = "reason")]
+        public string Reason { get; set; }
 
     }
 }

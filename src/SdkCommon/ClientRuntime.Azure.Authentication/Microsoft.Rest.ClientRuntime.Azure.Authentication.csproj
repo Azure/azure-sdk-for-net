@@ -5,7 +5,7 @@
     <Description>Provides ADAL based authentication for Azure management client libraries</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.Authentication</AssemblyName>
     <AssemblyTitle>Authentication for Azure Management Clients</AssemblyTitle>
-    <VersionPrefix>2.3.2</VersionPrefix>    
+    <VersionPrefix>2.3.3</VersionPrefix>    
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
 	<PackageReleaseNotes>Switched to taking ADAL dependency as range.</PackageReleaseNotes>
   </PropertyGroup>

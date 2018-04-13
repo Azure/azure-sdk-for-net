@@ -5,13 +5,13 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure Container Instance Management Library</Description>
-		<Version>1.0.2-preview</Version>
+		<Version>1.1.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerInstance</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ContainerInstance</PackageId>
 		<PackageTags>Microsoft Azure Container Instance Management;Container Instance;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure Container Instance SDK. Included with this release is DNS name label support.
+        This is a release of the Azure Container Instance SDK. Included with this release is async operation.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

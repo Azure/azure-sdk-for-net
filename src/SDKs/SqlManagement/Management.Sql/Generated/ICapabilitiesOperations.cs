@@ -24,10 +24,16 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface ICapabilitiesOperations
     {
         /// <summary>
-        /// Gets the capabilities available for the specified location.
+        /// Gets the subscription capabilities available for the specified
+        /// location.
         /// </summary>
-        /// <param name='locationId'>
-        /// The location id whose capabilities are retrieved.
+        /// <param name='locationName'>
+        /// The location name whose capabilities are retrieved.
+        /// </param>
+        /// <param name='include'>
+        /// If specified, restricts the response to only include the selected
+        /// item. Possible values include: 'supportedEditions',
+        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,6 +50,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationName, string include = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

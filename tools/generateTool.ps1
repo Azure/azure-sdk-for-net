@@ -2,7 +2,7 @@
     # Copyright (c) Microsoft Corporation. All rights reserved.
     # Licensed under the MIT License. See License.txt in the project root for
     # license information.
-# ---------------------------------------------------------------------------------- 
+# ----------------------------------------------------------------------------------
 
 <#
 
@@ -30,7 +30,7 @@
 .PARAMETER SpecsRepoName
     The name of the repo that contains the config file (Can only be either of azure-rest-api-specs or azure-rest-api-specs-pr)
 
-.PARAMETER SdkFolder
+.PARAMETER SdkDirectory
     The path where to generate the code
     
 #>
@@ -86,11 +86,11 @@ function Start-Script {
     Write-InfoLog "Importing code generation module" -logToConsole
 
     Install-AutoRest $AutoRestVersion
-    
+
     $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     Write-InfoLog "Commencing code generation"  -logToConsole
     Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkDirectory $SdkDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName
-    
+
     $invokerMessage = ".\tools\generate.ps1 was invoked by"
     if($PowershellInvoker) {
         Write-InfoLog "$invokerMessage generate.ps1" -logToFile
@@ -112,5 +112,5 @@ finally {
     Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
     Get-ErrorStream | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
     Clear-OutputStreams
-    Get-Module -ListAvailable "$modulePath" | Remove-Module 
+    Get-Module -ListAvailable "$modulePath" | Remove-Module
 }

@@ -12,6 +12,7 @@ internal static partial class SdkInfo
             return new Tuple<string, string, string>[]
             {
                 new Tuple<string, string, string>("SearchServiceClient", "DataSources", "2016-09-01-Preview"),
+                new Tuple<string, string, string>("SearchServiceClient", "GetServiceStatistics", "2016-09-01-Preview"),
                 new Tuple<string, string, string>("SearchServiceClient", "Indexers", "2016-09-01-Preview"),
                 new Tuple<string, string, string>("SearchServiceClient", "Indexes", "2016-09-01-Preview"),
                 new Tuple<string, string, string>("SearchServiceClient", "SynonymMaps", "2016-09-01-Preview"),

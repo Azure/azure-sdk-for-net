@@ -13,7 +13,7 @@ namespace Sql.Tests
 {
     public class ActiveDirectoryAdministratorTest
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestSetServerActiveDirectoryAdministrator()
         {
             string aadAdmin = "DSEngAll";

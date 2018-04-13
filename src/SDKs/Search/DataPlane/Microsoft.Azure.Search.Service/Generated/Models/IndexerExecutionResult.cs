@@ -41,6 +41,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="endTime">The end time of this indexer execution, if
         /// the execution has already completed.</param>
         /// <param name="errors">The item-level indexing errors.</param>
+        /// <param name="warnings">The item-level indexing warnings.</param>
         /// <param name="itemCount">The number of items that were processed
         /// during this indexer execution. This includes both successfully
         /// processed items and items where indexing was attempted but
@@ -51,13 +52,14 @@ namespace Microsoft.Azure.Search.Models
         /// an indexer execution started.</param>
         /// <param name="finalTrackingState">Change tracking state with which
         /// an indexer execution finished.</param>
-        public IndexerExecutionResult(IndexerExecutionStatus status = default(IndexerExecutionStatus), string errorMessage = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), IList<ItemError> errors = default(IList<ItemError>), int itemCount = default(int), int failedItemCount = default(int), string initialTrackingState = default(string), string finalTrackingState = default(string))
+        public IndexerExecutionResult(IndexerExecutionStatus status = default(IndexerExecutionStatus), string errorMessage = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), IList<ItemError> errors = default(IList<ItemError>), IList<ItemWarning> warnings = default(IList<ItemWarning>), int itemCount = default(int), int failedItemCount = default(int), string initialTrackingState = default(string), string finalTrackingState = default(string))
         {
             Status = status;
             ErrorMessage = errorMessage;
             StartTime = startTime;
             EndTime = endTime;
             Errors = errors;
+            Warnings = warnings;
             ItemCount = itemCount;
             FailedItemCount = failedItemCount;
             InitialTrackingState = initialTrackingState;
@@ -101,6 +103,12 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
         public IList<ItemError> Errors { get; private set; }
+
+        /// <summary>
+        /// Gets the item-level indexing warnings.
+        /// </summary>
+        [JsonProperty(PropertyName = "warnings")]
+        public IList<ItemWarning> Warnings { get; private set; }
 
         /// <summary>
         /// Gets the number of items that were processed during this indexer
