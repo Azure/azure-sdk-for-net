@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Net.Http.Headers;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest.Azure.Authentication.Internal;
-using Microsoft.Rest.ClientRuntime.Azure.Authentication.Properties;
-using System.Collections.Generic;
-
 namespace Microsoft.Rest.Azure.Authentication
 {
+    using System;
+    using System.Net.Http.Headers;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.Rest.Azure.Authentication.Internal;
+    using Microsoft.Rest.ClientRuntime.Azure.Authentication.Properties;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Provides tokens for Azure Active Directory applications. 
     /// </summary>
@@ -131,6 +131,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         #endregion
 
+        #region static methods
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. Uses the default token cache and the default 
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
@@ -194,14 +195,13 @@ namespace Microsoft.Rest.Azure.Authentication
         {
             return await LoginSilentAsync(domain, clientId, certificate, password, ActiveDirectoryServiceSettings.Azure, cache);
         }
+        
+        #region ActiveDirSvcSettings static
 
-
-        #region ActiveDirSvcSettings
-
-        public async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId)
-        {
-            return null;
-        }
+        //public async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId)
+        //{
+        //    return null;
+        //}
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. 
@@ -271,7 +271,7 @@ namespace Microsoft.Rest.Azure.Authentication
             string domain, string clientId, byte[] certificate, string password,
            ActiveDirectoryServiceSettings settings, TokenCache cache)
         {
-#if !FullNetFx
+#if !net452
             return await LoginSilentAsync(domain, new ClientAssertionCertificate(clientId, certificate, password), 
                 settings, cache);
 #else
@@ -502,6 +502,8 @@ namespace Microsoft.Rest.Azure.Authentication
                 authResult.UserInfo == null ? null : authResult.UserInfo.DisplayableId);
         }
 #endif
+        #endregion static
+
         /// <summary>
         /// Gets an access token from the token cache or from AD authentication endpoint. 
         /// Attempts to refresh the access token if it has expired.
