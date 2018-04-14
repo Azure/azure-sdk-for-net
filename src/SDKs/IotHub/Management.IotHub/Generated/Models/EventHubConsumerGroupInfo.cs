@@ -8,8 +8,10 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub.Models
+namespace Microsoft.Azure.Management.IotHub.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace Iothub.Models
     /// <summary>
     /// The properties of the EventHubConsumerGroupInfo object.
     /// </summary>
-    public partial class EventHubConsumerGroupInfo
+    public partial class EventHubConsumerGroupInfo : IResource
     {
         /// <summary>
         /// Initializes a new instance of the EventHubConsumerGroupInfo class.

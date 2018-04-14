@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub.Models
+namespace Microsoft.Azure.Management.IotHub.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;

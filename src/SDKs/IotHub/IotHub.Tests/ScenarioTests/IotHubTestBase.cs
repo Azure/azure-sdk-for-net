@@ -8,11 +8,11 @@ namespace IotHub.Tests.ScenarioTests
     using System;
     using System.Collections.Generic;
     using System.Net;
-    using Iothub;
-    using Iothub.Models;
     using IotHub.Tests.Helpers;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.EventHub.Models;
+    using Microsoft.Azure.Management.IotHub;
+    using Microsoft.Azure.Management.IotHub.Models;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.ServiceBus;

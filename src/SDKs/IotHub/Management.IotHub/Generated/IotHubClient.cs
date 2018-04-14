@@ -8,21 +8,23 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub
+namespace Microsoft.Azure.Management.IotHub
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
 
     /// <summary>
     /// Use this API to manage the IoT hubs in your Azure subscription.
     /// </summary>
-    public partial class IotHubClient : ServiceClient<IotHubClient>, IIotHubClient
+    public partial class IotHubClient : ServiceClient<IotHubClient>, IIotHubClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -38,7 +40,7 @@ namespace Iothub
         /// Gets or sets json deserialization settings.
         /// </summary>
         public JsonSerializerSettings DeserializationSettings { get; private set; }
-       
+
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
@@ -70,21 +72,21 @@ namespace Iothub
         /// included in each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-        
+
         /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IIotHubResource.
+        /// Gets the IIotHubResourceOperations.
         /// </summary>
-        public virtual IIotHubResource IotHubResource { get; private set; }
+        public virtual IIotHubResourceOperations IotHubResource { get; private set; }
 
         /// <summary>
-        /// Gets the ICertificates.
+        /// Gets the ICertificatesOperations.
         /// </summary>
-        public virtual ICertificates Certificates { get; private set; }
+        public virtual ICertificatesOperations Certificates { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the IotHubClient class.
@@ -92,7 +94,7 @@ namespace Iothub
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public IotHubClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected IotHubClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
@@ -106,7 +108,7 @@ namespace Iothub
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public IotHubClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected IotHubClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
@@ -123,7 +125,7 @@ namespace Iothub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public IotHubClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected IotHubClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -147,7 +149,7 @@ namespace Iothub
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public IotHubClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected IotHubClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -280,7 +282,7 @@ namespace Iothub
 
         /// <summary>
         /// An optional partial-method to perform custom initialization.
-        ///</summary>
+        /// </summary>
         partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
@@ -288,8 +290,8 @@ namespace Iothub
         private void Initialize()
         {
             Operations = new Operations(this);
-            IotHubResource = new IotHubResource(this);
-            Certificates = new Certificates(this);
+            IotHubResource = new IotHubResourceOperations(this);
+            Certificates = new CertificatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-04-01";
             AcceptLanguage = "en-US";
@@ -321,6 +323,7 @@ namespace Iothub
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }
 }

@@ -8,9 +8,10 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub
+namespace Microsoft.Azure.Management.IotHub
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace Iothub
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Certificates operations.
+    /// CertificatesOperations operations.
     /// </summary>
-    public partial interface ICertificates
+    public partial interface ICertificatesOperations
     {
         /// <summary>
         /// Get the certificate list.
@@ -49,7 +50,7 @@ namespace Iothub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CertificateListDescription>> ListByIotHubWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateListDescription>> ListByIotHubWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the certificate.
         /// </summary>
@@ -80,7 +81,7 @@ namespace Iothub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CertificateDescription>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateDescription>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Upload the certificate to the IoT hub.
         /// </summary>
@@ -118,7 +119,7 @@ namespace Iothub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an X509 certificate.
         /// </summary>
@@ -150,7 +151,7 @@ namespace Iothub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Generate verification code for proof of possession flow.
         /// </summary>
@@ -185,7 +186,7 @@ namespace Iothub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CertificateWithNonceDescription>> GenerateVerificationCodeWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateWithNonceDescription>> GenerateVerificationCodeWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Verify certificate's private key possession.
         /// </summary>
@@ -223,6 +224,6 @@ namespace Iothub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CertificateDescription>> VerifyWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateDescription>> VerifyWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

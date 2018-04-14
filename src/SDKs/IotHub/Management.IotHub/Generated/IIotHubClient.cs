@@ -8,9 +8,10 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub
+namespace Microsoft.Azure.Management.IotHub
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
 
@@ -33,7 +34,7 @@ namespace Iothub
         /// Gets or sets json deserialization settings.
         /// </summary>
         JsonSerializerSettings DeserializationSettings { get; }
-        
+
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
@@ -66,20 +67,21 @@ namespace Iothub
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
         /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IIotHubResource.
+        /// Gets the IIotHubResourceOperations.
         /// </summary>
-        IIotHubResource IotHubResource { get; }
+        IIotHubResourceOperations IotHubResource { get; }
 
         /// <summary>
-        /// Gets the ICertificates.
+        /// Gets the ICertificatesOperations.
         /// </summary>
-        ICertificates Certificates { get; }
+        ICertificatesOperations Certificates { get; }
 
     }
 }

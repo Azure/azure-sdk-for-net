@@ -8,16 +8,18 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub
+namespace Microsoft.Azure.Management.IotHub
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Certificates.
+    /// Extension methods for CertificatesOperations.
     /// </summary>
-    public static partial class CertificatesExtensions
+    public static partial class CertificatesOperationsExtensions
     {
             /// <summary>
             /// Get the certificate list.
@@ -34,7 +36,7 @@ namespace Iothub
             /// <param name='resourceName'>
             /// The name of the IoT hub.
             /// </param>
-            public static CertificateListDescription ListByIotHub(this ICertificates operations, string resourceGroupName, string resourceName)
+            public static CertificateListDescription ListByIotHub(this ICertificatesOperations operations, string resourceGroupName, string resourceName)
             {
                 return operations.ListByIotHubAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
@@ -57,7 +59,7 @@ namespace Iothub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateListDescription> ListByIotHubAsync(this ICertificates operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateListDescription> ListByIotHubAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByIotHubWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -83,7 +85,7 @@ namespace Iothub
             /// <param name='certificateName'>
             /// The name of the certificate
             /// </param>
-            public static CertificateDescription Get(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName)
+            public static CertificateDescription Get(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName)
             {
                 return operations.GetAsync(resourceGroupName, resourceName, certificateName).GetAwaiter().GetResult();
             }
@@ -109,7 +111,7 @@ namespace Iothub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDescription> GetAsync(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateDescription> GetAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -142,7 +144,7 @@ namespace Iothub
             /// ETag of the Certificate. Do not specify for creating a brand new
             /// certificate. Required to update an existing certificate.
             /// </param>
-            public static CertificateDescription CreateOrUpdate(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string))
+            public static CertificateDescription CreateOrUpdate(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, certificateName, certificateDescription, ifMatch).GetAwaiter().GetResult();
             }
@@ -175,7 +177,7 @@ namespace Iothub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateDescription> CreateOrUpdateAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, certificateDescription, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -204,7 +206,7 @@ namespace Iothub
             /// <param name='ifMatch'>
             /// ETag of the Certificate.
             /// </param>
-            public static void Delete(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
+            public static void Delete(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
             {
                 operations.DeleteAsync(resourceGroupName, resourceName, certificateName, ifMatch).GetAwaiter().GetResult();
             }
@@ -233,7 +235,7 @@ namespace Iothub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -260,7 +262,7 @@ namespace Iothub
             /// <param name='ifMatch'>
             /// ETag of the Certificate.
             /// </param>
-            public static CertificateWithNonceDescription GenerateVerificationCode(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
+            public static CertificateWithNonceDescription GenerateVerificationCode(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
             {
                 return operations.GenerateVerificationCodeAsync(resourceGroupName, resourceName, certificateName, ifMatch).GetAwaiter().GetResult();
             }
@@ -290,7 +292,7 @@ namespace Iothub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateWithNonceDescription> GenerateVerificationCodeAsync(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateWithNonceDescription> GenerateVerificationCodeAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GenerateVerificationCodeWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -323,7 +325,7 @@ namespace Iothub
             /// <param name='ifMatch'>
             /// ETag of the Certificate.
             /// </param>
-            public static CertificateDescription Verify(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch)
+            public static CertificateDescription Verify(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch)
             {
                 return operations.VerifyAsync(resourceGroupName, resourceName, certificateName, certificateVerificationBody, ifMatch).GetAwaiter().GetResult();
             }
@@ -356,7 +358,7 @@ namespace Iothub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDescription> VerifyAsync(this ICertificates operations, string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateDescription> VerifyAsync(this ICertificatesOperations operations, string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.VerifyWithHttpMessagesAsync(resourceGroupName, resourceName, certificateName, certificateVerificationBody, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {

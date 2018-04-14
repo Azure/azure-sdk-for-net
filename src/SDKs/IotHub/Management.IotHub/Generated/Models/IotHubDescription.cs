@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub.Models
+namespace Microsoft.Azure.Management.IotHub.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;

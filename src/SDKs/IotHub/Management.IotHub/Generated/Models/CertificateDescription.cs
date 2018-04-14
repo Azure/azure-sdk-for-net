@@ -8,15 +8,17 @@
 // regenerated.
 // </auto-generated>
 
-namespace Iothub.Models
+namespace Microsoft.Azure.Management.IotHub.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The X509 Certificate.
     /// </summary>
-    public partial class CertificateDescription
+    public partial class CertificateDescription : IResource
     {
         /// <summary>
         /// Initializes a new instance of the CertificateDescription class.
