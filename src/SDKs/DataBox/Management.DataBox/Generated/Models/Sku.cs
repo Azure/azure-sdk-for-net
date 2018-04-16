@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +33,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="name">The sku name.</param>
         /// <param name="displayName">The display name of the sku.</param>
         /// <param name="family">The sku family.</param>
-        public Sku(string name = default(string), string displayName = default(string), string family = default(string))
+        public Sku(string name, string displayName = default(string), string family = default(string))
         {
             Name = name;
             DisplayName = displayName;
@@ -63,5 +64,18 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

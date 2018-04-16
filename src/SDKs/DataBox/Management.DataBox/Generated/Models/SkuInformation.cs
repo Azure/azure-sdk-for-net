@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="sku">The Sku.</param>
         /// <param name="enabled">The sku is enabled or not.</param>
-        /// <param name="destinationToServiceLocationMap">The map of
-        /// destination location to service location.</param>
         /// <param name="capacity">Capacity of the Sku.</param>
         /// <param name="costs">Cost of the Sku.</param>
         /// <param name="apiVersions">Api versions that support this
         /// Sku.</param>
+        /// <param name="destinationToServiceLocationMap">The map of
+        /// destination location to service location.</param>
         /// <param name="disabledReason">Reason why the Sku is
         /// disabled.</param>
-        public SkuInformation(Sku sku, bool enabled, IList<DestinationToServiceLocationMap> destinationToServiceLocationMap, SkuCapacity capacity, IList<SkuCost> costs, IList<string> apiVersions, string disabledReason = default(string))
+        public SkuInformation(Sku sku, bool enabled, SkuCapacity capacity, IList<SkuCost> costs, IList<string> apiVersions, IList<DestinationToServiceLocationMap> destinationToServiceLocationMap = default(IList<DestinationToServiceLocationMap>), string disabledReason = default(string))
         {
             Sku = sku;
             Enabled = enabled;
@@ -115,10 +115,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
             }
-            if (DestinationToServiceLocationMap == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationToServiceLocationMap");
-            }
             if (Capacity == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Capacity");
@@ -130,6 +126,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (ApiVersions == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ApiVersions");
+            }
+            if (Sku != null)
+            {
+                Sku.Validate();
             }
             if (Capacity != null)
             {

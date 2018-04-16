@@ -82,10 +82,5 @@ namespace Microsoft.Azure.Management.DataBox
         /// </summary>
         IServiceOperations Service { get; }
 
-        /// <summary>
-        /// Gets the IListSecretsOperations.
-        /// </summary>
-        IListSecretsOperations ListSecrets { get; }
-
     }
 }

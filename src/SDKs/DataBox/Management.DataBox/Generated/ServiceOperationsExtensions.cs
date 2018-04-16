@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            public static ServiceHealthResponseList GetServiceHealth(this IServiceOperations operations, string location)
+            public static ServiceHealthResponseList GetHealth(this IServiceOperations operations, string location)
             {
-                return operations.GetServiceHealthAsync(location).GetAwaiter().GetResult();
+                return operations.GetHealthAsync(location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -99,9 +99,9 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceHealthResponseList> GetServiceHealthAsync(this IServiceOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServiceHealthResponseList> GetHealthAsync(this IServiceOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetServiceHealthWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetHealthWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -500,6 +500,50 @@ namespace Microsoft.Azure.Management.DataBox
             }
 
             /// <summary>
+            /// This method gets the unencrypted secrets related to the job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the job Resource within the specified resource group. job names
+            /// must be between 3 and 24 characters in length and use any alphanumeric and
+            /// underscore only
+            /// </param>
+            public static UnencryptedSecrets ListSecrets(this IJobsOperations operations, string resourceGroupName, string jobName)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, jobName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// This method gets the unencrypted secrets related to the job.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='jobName'>
+            /// The name of the job Resource within the specified resource group. job names
+            /// must be between 3 and 24 characters in length and use any alphanumeric and
+            /// underscore only
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UnencryptedSecrets> ListSecretsAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, jobName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Reports an issue.
             /// </summary>
             /// <param name='operations'>

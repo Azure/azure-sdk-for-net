@@ -20,6 +20,11 @@ namespace DataBox.Tests.Tests
             {
                 var skus = this.Client.Service.ListAvailableSkus(TestConstants.DefaultResourceLocation, "US", "westus");
                 Assert.True(skus != null, "List call for available skus was not successful.");
+
+                foreach (var sku in skus)
+                {
+                    sku.Validate();
+                }
             }
             catch (Exception e)
             {
@@ -33,7 +38,7 @@ namespace DataBox.Tests.Tests
         {
             try
             {
-                var serviceHealth = this.Client.Service.GetServiceHealth(TestConstants.DefaultResourceLocation);
+                var serviceHealth = this.Client.Service.GetHealth(TestConstants.DefaultResourceLocation);
                 Assert.True(serviceHealth != null, "Get call for Service health was not successful.");
             }
             catch (Exception e)

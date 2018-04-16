@@ -38,11 +38,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// East US, Southeast Asia, etc.). The region of a resource cannot be
         /// changed once it is created, but if an identical region is specified
         /// on update the request will succeed.</param>
+        /// <param name="sku">The sku type.</param>
         /// <param name="tags">The list of key value pairs that describe the
         /// resource. These tags can be used in viewing and grouping this
         /// resource (across resource groups).</param>
-        /// <param name="sku">The sku type.</param>
-        public Resource(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
+        public Resource(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Location = location;
             Tags = tags;
@@ -90,6 +90,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (Location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (Sku != null)
+            {
+                Sku.Validate();
             }
         }
     }

@@ -46,7 +46,7 @@ namespace DataBox.Tests.Tests
         {
             try
             {
-                var secrets = this.Client.ListSecrets.ListByJobs(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName);
+                var secrets = this.Client.Jobs.ListSecrets(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName);
                 Assert.True(secrets != null, "Call for list secrets was not successful.");
             }
             catch (Exception e)

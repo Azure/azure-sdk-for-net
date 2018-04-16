@@ -140,6 +140,7 @@ namespace DataBox.Tests
             Sku sku, JobResource job, bool cancellableCheck = true)
         {
             Assert.NotNull(job);
+            job.Validate();
             Assert.NotNull(job.DestinationAccountDetails);
             Assert.NotNull(job.Id);
             Assert.NotNull(job.Type);

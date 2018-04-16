@@ -39,14 +39,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// East US, Southeast Asia, etc.). The region of a resource cannot be
         /// changed once it is created, but if an identical region is specified
         /// on update the request will succeed.</param>
+        /// <param name="sku">The sku type.</param>
         /// <param name="destinationAccountDetails">Destination account
         /// details.</param>
-        /// <param name="details">Details of a job run. This field will only be
-        /// sent for expand details filter.</param>
         /// <param name="tags">The list of key value pairs that describe the
         /// resource. These tags can be used in viewing and grouping this
         /// resource (across resource groups).</param>
-        /// <param name="sku">The sku type.</param>
         /// <param name="deviceType">Type of the device to be used for the job.
         /// Possible values include: 'Pod', 'Disk', 'Cabinet'</param>
         /// <param name="isCancellable">Describes whether the job is
@@ -66,12 +64,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// details.</param>
         /// <param name="returnPackage">Return package shipping
         /// details.</param>
+        /// <param name="details">Details of a job run. This field will only be
+        /// sent for expand details filter.</param>
         /// <param name="cancellationReason">Reason for cancellation.</param>
         /// <param name="name">Name of the object.</param>
         /// <param name="id">Id of the object.</param>
         /// <param name="type">Type of the object.</param>
-        public JobResource(string location, IList<DestinationAccountDetails> destinationAccountDetails, JobDetails details, IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), DeviceType? deviceType = default(DeviceType?), bool? isCancellable = default(bool?), bool? isShippingAddressEditable = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), Error error = default(Error), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), string cancellationReason = default(string), string name = default(string), string id = default(string), string type = default(string))
-            : base(location, tags, sku)
+        public JobResource(string location, Sku sku, IList<DestinationAccountDetails> destinationAccountDetails, IDictionary<string, string> tags = default(IDictionary<string, string>), DeviceType? deviceType = default(DeviceType?), bool? isCancellable = default(bool?), bool? isShippingAddressEditable = default(bool?), StageName? status = default(StageName?), System.DateTime? startTime = default(System.DateTime?), Error error = default(Error), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), JobDetails details = default(JobDetails), string cancellationReason = default(string), string name = default(string), string id = default(string), string type = default(string))
+            : base(location, sku, tags)
         {
             DeviceType = deviceType;
             IsCancellable = isCancellable;
@@ -200,10 +200,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (DestinationAccountDetails == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DestinationAccountDetails");
-            }
-            if (Details == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Details");
             }
             if (Error != null)
             {

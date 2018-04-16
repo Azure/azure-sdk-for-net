@@ -86,11 +86,6 @@ namespace Microsoft.Azure.Management.DataBox
         public virtual IServiceOperations Service { get; private set; }
 
         /// <summary>
-        /// Gets the IListSecretsOperations.
-        /// </summary>
-        public virtual IListSecretsOperations ListSecrets { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the DataBoxManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -294,7 +289,6 @@ namespace Microsoft.Azure.Management.DataBox
             Operations = new Operations(this);
             Jobs = new JobsOperations(this);
             Service = new ServiceOperations(this);
-            ListSecrets = new ListSecretsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-01-01";
             AcceptLanguage = "en-US";

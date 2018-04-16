@@ -40,12 +40,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="stageStatus">Status of the job stage. Possible values
         /// include: 'None', 'InProgress', 'Succeeded', 'Failed', 'Cancelled',
         /// 'Cancelling', 'SucceededWithErrors'</param>
+        /// <param name="displayName">Display name of the job stage.</param>
         /// <param name="stageTime">Time for the job stage in UTC ISO 8601
         /// format.</param>
-        /// <param name="displayName">Display name of the job stage.</param>
         /// <param name="jobStageDetails">Job Stage Details</param>
         /// <param name="errorDetails">Error details for the stage.</param>
-        public JobStages(StageName stageName, StageStatus stageStatus, System.DateTime stageTime, string displayName = default(string), object jobStageDetails = default(object), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>))
+        public JobStages(StageName stageName, StageStatus stageStatus, string displayName = default(string), System.DateTime? stageTime = default(System.DateTime?), object jobStageDetails = default(object), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>))
         {
             StageName = stageName;
             DisplayName = displayName;
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Gets or sets time for the job stage in UTC ISO 8601 format.
         /// </summary>
         [JsonProperty(PropertyName = "stageTime")]
-        public System.DateTime StageTime { get; set; }
+        public System.DateTime? StageTime { get; set; }
 
         /// <summary>
         /// Gets or sets job Stage Details
