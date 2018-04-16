@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/providers/Microsoft.DataBox/locations/westus/serviceHealth?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M2NmRhMjEtNjA3ZS00OWI0LThiZGYtZjI1ZmJiOGY3MDVmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3NlcnZpY2VIZWFsdGg/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "22f94fae-4bc1-4dd7-a15e-7869353d0eda"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"serviceVersion\": \"1.0.9.104\",\r\n  \"dependencies\": [\r\n    {\r\n      \"connectorType\": \"CustomerCommunicator\",\r\n      \"startTime\": \"2018-04-13T10:39:00.252957Z\",\r\n      \"endTime\": \"2018-04-13T10:39:06.6822315Z\",\r\n      \"status\": true\r\n    },\r\n    {\r\n      \"connectorType\": \"DataCenterManager\",\r\n      \"startTime\": \"2018-04-13T10:37:03.8357355Z\",\r\n      \"endTime\": \"2018-04-13T10:37:03.8825891Z\",\r\n      \"status\": true\r\n    },\r\n    {\r\n      \"connectorType\": \"DeviceManager\",\r\n      \"startTime\": \"2018-04-13T10:39:02.705352Z\",\r\n      \"endTime\": \"2018-04-13T10:39:02.705352Z\",\r\n      \"status\": false\r\n    },\r\n    {\r\n      \"connectorType\": \"InventoryManager\",\r\n      \"startTime\": \"2018-04-13T10:38:00.533589Z\",\r\n      \"status\": true\r\n    },\r\n    {\r\n      \"connectorType\": \"Transport\",\r\n      \"startTime\": \"2018-04-13T10:38:33.757616Z\",\r\n      \"endTime\": \"2018-04-13T10:38:33.757616Z\",\r\n      \"status\": false\r\n    },\r\n    {\r\n      \"connectorType\": \"XTServiceManager\",\r\n      \"startTime\": \"2018-04-13T10:37:14.3963987Z\",\r\n      \"endTime\": \"2018-04-13T10:37:14.5057615Z\",\r\n      \"status\": false\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Apr 2018 10:39:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "20519bb6-58c1-49e9-a8ff-a11272c93cc7"
+        ],
+        "x-ms-client-request-id": [
+          "22f94fae-4bc1-4dd7-a15e-7869353d0eda"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14924"
+        ],
+        "x-ms-correlation-request-id": [
+          "6bb74c7c-a91c-4950-8a99-c62fee86a8a5"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20180413T103907Z:6bb74c7c-a91c-4950-8a99-c62fee86a8a5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
+    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+  }
+}
