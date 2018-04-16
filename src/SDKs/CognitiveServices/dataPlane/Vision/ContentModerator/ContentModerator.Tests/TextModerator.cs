@@ -95,12 +95,11 @@ namespace ContentModeratorTests
                 using (MockContext context = MockContext.Start("TextModerator"))
                 {
                     HttpMockServer.Initialize("TextModerator", "ScreenText");
-                    TermListId = "";
                     byte[] byteArray = Encoding.UTF8.GetBytes("crap 764-87-9887");
                     MemoryStream stream = new MemoryStream(byteArray);
                     api = ContentModeratorAPI.SCREEN_TEXT;
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                    results = Constants.GetTextResponse(client, api, TermListId, stream);
+                    results = Constants.GetTextResponse(client, api, "", stream);
                     var screenText = results.ScreenText;
                     Assert.NotNull(screenText);
                     Assert.Equal(HttpStatusCode.OK, screenText.Response.StatusCode);
