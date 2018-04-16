@@ -108,7 +108,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Action = new SqlRuleAction()
                     {
                         RequiresPreprocessing = true,
-                        SqlExpression = strSqlExp,
+                        SqlExpression = "SET " + strSqlExp,
                     },
                     SqlFilter = new SqlFilter() { SqlExpression = strSqlExp },
                     FilterType = FilterType.SqlFilter,

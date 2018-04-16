@@ -106,12 +106,14 @@ namespace Sql.Tests
                 Assert.StartsWith(db1.Name, droppedDatabase.Name);
 
                 // Restore the deleted database using restorable dropped database id
+                //   In new DB API (Version 2017), if use restorable dropped database id, need to specify the RestorableDroppedDatabaseId,
+                //       which include the source database id and deletion time
                 var db3Name = SqlManagementTestUtilities.GenerateName();
                 var db3Input = new Database
                 {
                     Location = server.Location,
                     CreateMode = CreateMode.Restore,
-                    SourceDatabaseId = droppedDatabase.Id,
+                    RestorableDroppedDatabaseId = droppedDatabase.Id,
                     RestorePointInTime = droppedDatabase.EarliestRestoreDate // optional param for Restore
                 };
                 var db3Response = sqlClient.Databases.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, db3Name, db3Input);
@@ -262,16 +264,16 @@ namespace Sql.Tests
                 LongTermRetentionBackup backup = sqlClient.LongTermRetentionBackups.Get(locationName, serverName, databaseName, backups.First().Name);
                 Assert.NotNull(backup);
 
-                // Restore the backup - TODO After Database 2017-03-01-Preview is done
+                // Restore the backup
                 //
-                /* Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
+                Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
                     resourceGroupName, serverName, databaseName: SqlManagementTestUtilities.GenerateName(),
                     parameters: new Database
                     {
                         Location = locationName,
                         CreateMode = CreateMode.RestoreLongTermRetentionBackup,
-                        RecoveryServicesRecoveryPointResourceId = ""
-                    });*/
+                        LongTermRetentionBackupResourceId = backup.Id
+                    });
 
                 // Delete the backup.
                 //
@@ -337,6 +339,75 @@ namespace Sql.Tests
                         CreateMode = CreateMode.Recovery,
                         SourceDatabaseId = recoverableDatabase.Id
                     });
+            }
+        }
+
+        [Fact]
+        public void TestDatabaseRestorePoint()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                string restoreLabel = "restorePointLabel";
+
+                // Create database with only required parameters
+                var db = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.DW100)
+                    });
+                Assert.NotNull(db);
+
+                CreateDatabaseRestorePointDefinition restoreDefinition = new CreateDatabaseRestorePointDefinition { RestorePointLabel = restoreLabel };
+
+                RestorePoint postResponse = sqlClient.RestorePoints.Create(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name,
+                        restoreDefinition);
+
+                Assert.True(postResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(postResponse.RestorePointLabel == restoreLabel);
+                Assert.True(!string.IsNullOrWhiteSpace(postResponse.RestorePointCreationDate.ToString()));
+
+                IEnumerable<RestorePoint> listResponse =
+                    sqlClient.RestorePoints.ListByDatabase(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name);
+
+                IEnumerable<RestorePoint> restorePointList = listResponse.ToList<RestorePoint>();
+
+                Assert.True(restorePointList.Any());
+
+                RestorePoint getResponse =
+                    sqlClient.RestorePoints.Get(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name,
+                        postResponse.Name);
+
+                Assert.True(getResponse.RestorePointType == RestorePointType.DISCRETE);
+                Assert.True(!string.IsNullOrWhiteSpace(getResponse.RestorePointCreationDate.ToString()));
+                Assert.True(getResponse.Name == postResponse.Name);
+
+                sqlClient.RestorePoints.Delete(
+                    resourceGroup.Name,
+                    server.Name,
+                    db.Name,
+                    getResponse.Name);
+
+                IEnumerable<RestorePoint> listResponseAfterDelete =
+                    sqlClient.RestorePoints.ListByDatabase(
+                        resourceGroup.Name,
+                        server.Name,
+                        db.Name);
+
+                Assert.True(!listResponseAfterDelete.Any()
+                    || !listResponseAfterDelete.Where(x => x.Name == postResponse.Name).Any());
             }
         }
     }

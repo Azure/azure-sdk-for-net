@@ -50,10 +50,8 @@ namespace Sql.Tests
                 {
                     Location = server.Location,
                     Collation = SqlTestConstants.DefaultCollation,
-                    Edition = SqlTestConstants.DefaultDatabaseEdition,
-                    MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
-                    RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
-                    RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
+                    Sku = SqlTestConstants.DefaultDatabaseSku(),
+                    MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
                     Tags = tags,
                     CreateMode = "Default",
                     SampleName = SampleName.AdventureWorksLT
@@ -62,50 +60,22 @@ namespace Sql.Tests
                 Assert.NotNull(db2);
                 SqlManagementTestUtilities.ValidateDatabase(db2Input, db2, dbName);
 
-                // Service Objective ID
-                //
-                dbName = SqlManagementTestUtilities.GenerateName();
-                var db3Input = new Database()
-                {
-                    Location = server.Location,
-                    RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
-                    Tags = tags,
-                };
-                var db3 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db3Input);
-                Assert.NotNull(db3);
-                SqlManagementTestUtilities.ValidateDatabase(db3Input, db3, dbName);
-
                 // Service Objective Name
                 //
                 dbName = SqlManagementTestUtilities.GenerateName();
                 var db4Input = new Database()
                 {
                     Location = server.Location,
-                    RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0),
                     Tags = tags,
                 };
                 var db4 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db4Input);
                 Assert.NotNull(db4);
                 SqlManagementTestUtilities.ValidateDatabase(db4Input, db4, dbName);
 
-                // Edition
-                //
-                dbName = SqlManagementTestUtilities.GenerateName();
-                var db5Input = new Database()
-                {
-                    Location = server.Location,
-                    Edition = SqlTestConstants.DefaultDatabaseEdition,
-                    Tags = tags,
-                };
-                var db5 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db5Input);
-                Assert.NotNull(db5);
-                SqlManagementTestUtilities.ValidateDatabase(db5Input, db5, dbName);
-
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db2.Name);
-                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db3.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db4.Name);
-                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db5.Name);
             }
         }
 
@@ -205,22 +175,20 @@ namespace Sql.Tests
             {
                 Location = server.Location,
                 Collation = SqlTestConstants.DefaultCollation,
-                Edition = SqlTestConstants.DefaultDatabaseEdition,
-                MaxSizeBytes = (2 * 1024L * 1024L * 1024L).ToString(),
-                RequestedServiceObjectiveName = SqlTestConstants.DefaultDatabaseEdition,
-                RequestedServiceObjectiveId = ServiceObjectiveId.Basic,
+                MaxSizeBytes = 2 * 1024L * 1024L * 1024L,
+                Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0),
                 Tags = tags,
             };
             var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
             Assert.NotNull(db1);
             SqlManagementTestUtilities.ValidateDatabase(dbInput, db1, dbName);
 
-            // Create zone redundant database
+            // Update Zone Redundancy
             //
             var dbInput2 = new Database()
             {
                 Location = server.Location,
-                Edition = "Premium",
+                Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1),
                 ZoneRedundant = true,
             };
             var db8 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput2);
@@ -230,33 +198,9 @@ namespace Sql.Tests
             // Upgrade Edition + SLO Name
             //
             dynamic updateEditionAndSloInput = createModelFunc();
-            updateEditionAndSloInput.Edition = DatabaseEdition.Standard;
-            updateEditionAndSloInput.RequestedServiceObjectiveName = ServiceObjectiveName.S0;
+            updateEditionAndSloInput.Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0, DatabaseEdition.Standard);
             var db2 = updateFunc(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput);
             SqlManagementTestUtilities.ValidateDatabase(updateEditionAndSloInput, db2, dbName);
-
-            // Upgrade Edition + SLO ID
-            //
-            dynamic updateEditionAndSloInput2 = createModelFunc();
-            updateEditionAndSloInput2.Edition = SqlTestConstants.DefaultDatabaseEdition;
-            updateEditionAndSloInput2.RequestedServiceObjectiveId = ServiceObjectiveId.Basic;
-            var db3 = updateFunc(resourceGroup.Name, server.Name, dbName, updateEditionAndSloInput2);
-            SqlManagementTestUtilities.ValidateDatabase(updateEditionAndSloInput2, db3, dbName);
-
-            // Upgrade Edition
-            //
-            dynamic updateEditionInput = createModelFunc();
-            updateEditionInput.Edition = DatabaseEdition.Premium;
-            var db4 = updateFunc(resourceGroup.Name, server.Name, dbName, updateEditionInput);
-            SqlManagementTestUtilities.ValidateDatabase(updateEditionInput, db4, dbName);
-
-            // Upgrade SLO ID & Slo Name
-            //
-            dynamic updateSloInput2 = createModelFunc();
-            updateSloInput2.RequestedServiceObjectiveName = ServiceObjectiveName.P2;
-            updateSloInput2.RequestedServiceObjectiveId = ServiceObjectiveId.P2;
-            var db5 = updateFunc(resourceGroup.Name, server.Name, dbName, updateSloInput2);
-            SqlManagementTestUtilities.ValidateDatabase(updateSloInput2, db5, dbName);
 
             // Sometimes we get CloudException "Operation on server '{0}' and database '{1}' is in progress."
             // Mitigate by adding brief sleep while recording
@@ -268,7 +212,7 @@ namespace Sql.Tests
             // Update max size
             //
             dynamic updateMaxSize = createModelFunc();
-            updateMaxSize.MaxSizeBytes = (250 * 1024L * 1024L * 1024L).ToString();
+            updateMaxSize.MaxSizeBytes = 250 * 1024L * 1024L * 1024L;
             var db6 = updateFunc(resourceGroup.Name, server.Name, dbName, updateMaxSize);
             SqlManagementTestUtilities.ValidateDatabase(updateMaxSize, db6, dbName);
 
@@ -278,14 +222,6 @@ namespace Sql.Tests
             updateTags.Tags = new Dictionary<string, string> { { "asdf", "zxcv" } };
             var db7 = updateFunc(resourceGroup.Name, server.Name, dbName, updateTags);
             SqlManagementTestUtilities.ValidateDatabase(updateTags, db7, dbName);
-
-            // Update Zone Redundancy
-            //
-            dynamic updateZoneRedundant = createModelFunc();
-            updateZoneRedundant.Edition = "Premium";
-            updateZoneRedundant.ZoneRedundant = true;
-            var db9 = updateFunc(resourceGroup.Name, server.Name, dbName, updateZoneRedundant);
-            SqlManagementTestUtilities.ValidateDatabase(updateZoneRedundant, db9, dbName);
         }
 
         [Fact]
@@ -294,8 +230,8 @@ namespace Sql.Tests
             string testPrefix = "sqldblistcanceloperation-";
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
             {
-                ResourceGroup resourceGroup = context.CreateResourceGroup("North Europe");
-                Server server = context.CreateServer(resourceGroup, "northeurope");
+                ResourceGroup resourceGroup = context.CreateResourceGroup("West Europe");
+                Server server = context.CreateServer(resourceGroup, "westeurope");
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
                 Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
@@ -307,7 +243,7 @@ namespace Sql.Tests
                 string dbName = SqlManagementTestUtilities.GenerateName(testPrefix);
                 var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
                 {
-                    RequestedServiceObjectiveName = ServiceObjectiveName.S0,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.S0),
                     Location = server.Location,
                 });
                 Assert.NotNull(db1);
@@ -316,7 +252,7 @@ namespace Sql.Tests
                 //
                 var dbUpdateResponse = sqlClient.Databases.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, dbName, new Database()
                 {
-                    RequestedServiceObjectiveName = ServiceObjectiveName.P2,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P2),
                     Location = server.Location,
                 });
                 TestUtilities.Wait(TimeSpan.FromSeconds(3));
@@ -327,14 +263,7 @@ namespace Sql.Tests
                     resourceGroup.Name, server.Name, dbName).Result;
                 Assert.Equal(response.Response.StatusCode, HttpStatusCode.OK);
                 IList<DatabaseOperation> responseObject = response.Body.ToList();
-                Assert.Equal(1, responseObject.Count());
-                Assert.Equal(0, responseObject[0].PercentComplete);
-
-                // Also get the listOperation response for new added properties on database operations: ETA, Operation Description and IsCancellable
-                //   Expected they have null value since not been updated by operation progress
-                Assert.Null(responseObject[0].Description);
-                Assert.Null(responseObject[0].IsCancellable);
-                Assert.Null(responseObject[0].EstimatedCompletionTime);
+                Assert.Equal(responseObject.Count(), 1);
 
                 // Cancel the database updateslo operation
                 //
@@ -381,21 +310,12 @@ namespace Sql.Tests
 
                 // List all databases
                 //
-                var listResponse = sqlClient.Databases.ListByServer(resourceGroup.Name, server.Name);
+                IEnumerable<Database> listResponse = sqlClient.Databases.ListByServer(resourceGroup.Name, server.Name);
 
                 // Remove master database from the list
                 listResponse = listResponse.Where(db => db.Name != "master");
                 Assert.Equal(inputs.Count(), listResponse.Count());
                 foreach(var db in listResponse)
-                {
-                    SqlManagementTestUtilities.ValidateDatabase(inputs[db.Name], db, db.Name);
-                }
-
-                // List databases with filter
-                //
-                listResponse = sqlClient.Databases.ListByServer(resourceGroup.Name, server.Name, filter: "properties/edition ne 'System'");
-                Assert.Equal(inputs.Count(), listResponse.Count());
-                foreach (var db in listResponse)
                 {
                     SqlManagementTestUtilities.ValidateDatabase(inputs[db.Name], db, db.Name);
                 }
@@ -422,9 +342,8 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = SqlTestConstants.DefaultElasticPoolEdition,
+                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
-                    Dtu = 100,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
                 };
@@ -436,15 +355,15 @@ namespace Sql.Tests
                 var dbInput = new Database()
                 {
                     Location = server.Location,
-                    ElasticPoolName = epName
+                    ElasticPoolId = returnedEp.Id
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
                 // Remove the database from the pool
                 dbInput = new Database()
                 {
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.Basic),
                     Location = server.Location,
-                    RequestedServiceObjectiveName = ServiceObjectiveName.Basic
                 };
                 var dbResult = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 

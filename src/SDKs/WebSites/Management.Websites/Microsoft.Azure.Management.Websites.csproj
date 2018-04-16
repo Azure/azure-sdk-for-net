@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Websites</PackageId>
 		<Description>Provides website management capabilities for Microsoft Azure.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Websites</AssemblyName>
-		<Version>1.8.0-preview</Version>
+		<Version>1.9.0-preview</Version>
 		<PackageTags>Microsoft Azure website management;website management;</PackageTags>
 		<PackageReleaseNotes>
-			<![CDATA[This is the Azure App Service SDK for .NET, based on the Azure App Service REST API, version 2016-03-01 of Certificates, Recommendations, and DeletedWebApps, 2016-08-01 of WebApps, and 2016-09-01 of AppServiceEnvironments and AppServicePlans.]]>
+			<![CDATA[This is the Azure App Service SDK for .NET, based on the Azure App Service REST API, version 2016-03-01 of Certificates, Recommendations, ResourceHealthMetadata, and DeletedWebApps, 2016-08-01 of WebApps, and 2016-09-01 of AppServiceEnvironments and AppServicePlans.]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

@@ -27,9 +27,10 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// <summary>
         /// Initializes a new instance of the PII class.
         /// </summary>
-        public PII(IList<Email> email = default(IList<Email>), IList<IPA> iPA = default(IList<IPA>), IList<Phone> phone = default(IList<Phone>), IList<Address> address = default(IList<Address>))
+        public PII(IList<Email> email = default(IList<Email>), IList<SSN> sSN = default(IList<SSN>), IList<IPA> iPA = default(IList<IPA>), IList<Phone> phone = default(IList<Phone>), IList<Address> address = default(IList<Address>))
         {
             Email = email;
+            SSN = sSN;
             IPA = iPA;
             Phone = phone;
             Address = address;
@@ -45,6 +46,11 @@ namespace Microsoft.CognitiveServices.ContentModerator.Models
         /// </summary>
         [JsonProperty(PropertyName = "Email")]
         public IList<Email> Email { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "SSN")]
+        public IList<SSN> SSN { get; set; }
 
         /// <summary>
         /// </summary>

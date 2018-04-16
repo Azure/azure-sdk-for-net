@@ -20,5 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string SHA1 = "SHA1";
         public const string SHA256 = "SHA256";
         public const string SHA384 = "SHA384";
+        public const string GCMAES256 = "GCMAES256";
+        public const string GCMAES128 = "GCMAES128";
     }
 }

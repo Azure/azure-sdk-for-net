@@ -6,6 +6,6 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.10, 3.0.0)" />
+		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.11, 3.0.0)" />
 	</ItemGroup>
 </Project>

@@ -25,7 +25,7 @@ namespace Compute.Tests
     public class VMTestBase
     {
         protected const string TestPrefix = "crptestar";
-        protected const string PLACEHOLDER = "[PLACEHOLDER]";
+        protected const string PLACEHOLDER = "[PLACEHOLDERr1]";
         protected const string ComputerName = "Test";
 
         protected ResourceManagementClient m_ResourcesClient;

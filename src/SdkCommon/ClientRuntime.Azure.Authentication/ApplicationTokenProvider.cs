@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.Azure.Authentication.Internal;
 using Microsoft.Rest.ClientRuntime.Azure.Authentication.Properties;
+using System.Collections.Generic;
 
 namespace Microsoft.Rest.Azure.Authentication
 {
@@ -16,6 +17,7 @@ namespace Microsoft.Rest.Azure.Authentication
     /// </summary>
     public class ApplicationTokenProvider : ITokenProvider
     {
+        #region fields
         private AuthenticationContext _authenticationContext;
         private string _tokenAudience;
         private IApplicationAuthenticationProvider _authentications;
@@ -24,7 +26,10 @@ namespace Microsoft.Rest.Azure.Authentication
         private string _accessToken;
         private string _accessTokenType;
         private static readonly TimeSpan ExpirationThreshold = TimeSpan.FromMinutes(5);
+        private Dictionary<string, string> _authData;
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Create an application token provider that can retrieve tokens for the given application from the given context, using the given audience 
         /// and credential.
@@ -117,6 +122,15 @@ namespace Microsoft.Rest.Azure.Authentication
             Initialize(context, tokenAudience, clientId, authenticationStore, authenticationResult, tokenExpiration);
         }
 
+        public ApplicationTokenProvider(Func<Dictionary<string, string>, Dictionary<string, string>> UpdateAuthData)
+        {
+            _authData = new Dictionary<string, string>();
+
+            
+        }
+
+        #endregion
+
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using client credentials. Uses the default token cache and the default 
         /// service settings (authority, token audience) for log in to azure resource manager during authentication.
@@ -179,6 +193,14 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, string password, TokenCache cache)
         {
             return await LoginSilentAsync(domain, clientId, certificate, password, ActiveDirectoryServiceSettings.Azure, cache);
+        }
+
+
+        #region ActiveDirSvcSettings
+
+        public async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId)
+        {
+            return null;
         }
 
         /// <summary>
@@ -258,6 +280,8 @@ namespace Microsoft.Rest.Azure.Authentication
                 settings, cache);
 #endif
         }
+
+        #endregion
 
         /// <summary>
         /// Creates ServiceClientCredentials for authenticating requests as an active directory application using a client credential. Uses the default token cache and the default 
@@ -446,11 +470,11 @@ namespace Microsoft.Rest.Azure.Authentication
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId,
             IApplicationAuthenticationProvider authenticationProvider, ActiveDirectoryServiceSettings settings, TokenCache cache)
         {
-            var audience = settings.TokenAudience.ToString();
+            var audience = settings.TokenAudience.OriginalString;
             var context = GetAuthenticationContext(domain, settings, cache);
             var authResult = await authenticationProvider.AuthenticateAsync(clientId, audience, context);
             return new TokenCredentials(
-                new ApplicationTokenProvider(context, audience, clientId,authenticationProvider, authResult),
+                new ApplicationTokenProvider(context, audience, clientId, authenticationProvider, authResult),
                 authResult.TenantId,
                 authResult.UserInfo == null ? null : authResult.UserInfo.DisplayableId);
         }
@@ -469,7 +493,7 @@ namespace Microsoft.Rest.Azure.Authentication
         internal static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId,
             IApplicationAuthenticationProvider authenticationProvider, ActiveDirectoryServiceSettings settings, TokenCache cache, DateTimeOffset expiration)
         {
-            var audience = settings.TokenAudience.ToString();
+            var audience = settings.TokenAudience.OriginalString;
             var context = GetAuthenticationContext(domain, settings, cache);
             var authResult = await authenticationProvider.AuthenticateAsync(clientId, audience, context);
             return new TokenCredentials(

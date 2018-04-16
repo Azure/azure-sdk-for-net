@@ -1,3 +1,9 @@
+# ---------------------------------------------------------------------------------- 
+    # Copyright (c) Microsoft Corporation. All rights reserved.
+    # Licensed under the MIT License. See License.txt in the project root for
+    # license information.
+# ----------------------------------------------------------------------------------
+
 <#
 
 .SYNOPSIS
@@ -24,25 +30,9 @@
 .PARAMETER SpecsRepoName
     The name of the repo that contains the config file (Can only be either of azure-rest-api-specs or azure-rest-api-specs-pr)
 
-.PARAMETER SdkFolder
+.PARAMETER SdkDirectory
     The path where to generate the code
-
-.EXAMPLE
-    A sample command that uses the function or script, optionally followed
-    by sample output and a description. Repeat this keyword for each example.
-
-.NOTES
-    Additional information about the function or script.
-
-.LINK
-    The name of a related topic. Repeat this keyword for each related topic.
-
-    This content appears in the Related Links section of the Help topic.
-
-    The Link keyword content can also include a Uniform Resource Identifier
-    (URI) to an online version of the same Help topic. The online version
-    opens when you use the Online parameter of Get-Help. The URI must begin
-    with "http" or "https".
+    
 #>
 
 Param(
@@ -96,11 +86,11 @@ function Start-Script {
     Write-InfoLog "Importing code generation module" -logToConsole
 
     Install-AutoRest $AutoRestVersion
-    
+
     $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     Write-InfoLog "Commencing code generation"  -logToConsole
     Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkDirectory $SdkDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName
-    
+
     $invokerMessage = ".\tools\generate.ps1 was invoked by"
     if($PowershellInvoker) {
         Write-InfoLog "$invokerMessage generate.ps1" -logToFile
@@ -119,8 +109,8 @@ catch {
     Write-ErrorLog $_.ToString() -logToFile
 }
 finally {
-    Get-OutputStream | Out-File -FilePath $logFile | Out-Null
-    Get-ErrorStream | Out-File -FilePath $logFile -Append | Out-Null
+    Get-OutputStream | Out-File -FilePath $logFile -Encoding utf8 | Out-Null
+    Get-ErrorStream | Out-File -FilePath $logFile -Append -Encoding utf8 | Out-Null
     Clear-OutputStreams
-    Get-Module -ListAvailable "$modulePath" | Remove-Module 
+    Get-Module -ListAvailable "$modulePath" | Remove-Module
 }

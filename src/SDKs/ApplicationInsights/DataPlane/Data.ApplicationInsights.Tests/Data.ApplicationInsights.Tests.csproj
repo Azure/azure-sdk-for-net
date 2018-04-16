@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <PackageId>Data.ApplicationInsights.Tests</PackageId>
@@ -15,7 +15,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
     <ProjectReference Include="..\ApplicationInsights\Microsoft.Azure.ApplicationInsights.csproj" />
-    <!-- Enable below line in local to work around the bug that cannot find test cases -->
-    <!--<PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.3.0" />-->
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 </Project>

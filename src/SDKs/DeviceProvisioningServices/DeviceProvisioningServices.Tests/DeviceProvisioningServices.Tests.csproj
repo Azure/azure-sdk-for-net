@@ -13,11 +13,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.EventHub" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Azure.Management.IotHub" Version="1.1.3" />
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" Version="0.2.0-preview" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\IotHub\Management.IotHub\Microsoft.Azure.Management.IotHub.csproj" />
     <ProjectReference Include="..\Management.DeviceProvisioningServices\Microsoft.Azure.Management.DeviceProvisioningServices.csproj" />
   </ItemGroup>
   

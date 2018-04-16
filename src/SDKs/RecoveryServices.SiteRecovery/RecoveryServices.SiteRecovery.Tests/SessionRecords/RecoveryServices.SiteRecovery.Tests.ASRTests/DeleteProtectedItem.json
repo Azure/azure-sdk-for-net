@@ -208,6 +208,71 @@
         ]
       },
       "StatusCode": 200
+    },
+    {
+      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationFabrics/SiteRecoveryTestSite1/replicationProtectionContainers/cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c/replicationProtectedItems/vm2/operationresults/23a2ad24-a3ac-4c87-b7f1-b97c467fc314?api-version=2018-01-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25GYWJyaWNzL1NpdGVSZWNvdmVyeVRlc3RTaXRlMS9yZXBsaWNhdGlvblByb3RlY3Rpb25Db250YWluZXJzL2Nsb3VkX2ZhMDZlMDNiLWUzMDYtNTJmNC1hMDFmLTg4Y2RlYmE2N2ExYy9yZXBsaWNhdGlvblByb3RlY3RlZEl0ZW1zL3ZtMi9vcGVyYXRpb25yZXN1bHRzLzIzYTJhZDI0LWEzYWMtNGM4Ny1iN2YxLWI5N2M0NjdmYzMxND9hcGktdmVyc2lvbj0yMDE4LTAxLTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25009.03",
+          "Microsoft.Azure.Management.RecoveryServices.SiteRecovery.SiteRecoveryManagementClient/1.4.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/23a2ad24-a3ac-4c87-b7f1-b97c467fc314\",\r\n  \"name\": \"23a2ad24-a3ac-4c87-b7f1-b97c467fc314\",\r\n  \"properties\": {\r\n    \"activityId\": \"81835893-dfff-495b-b308-5fcf6ae8eba8 ActivityId: a5e20e46-983e-4a78-a7a2-ae212816d489\",\r\n    \"scenarioName\": \"DisableDr\",\r\n    \"friendlyName\": \"Disable replication\",\r\n    \"state\": \"Succeeded\",\r\n    \"stateDescription\": \"Completed\",\r\n    \"tasks\": [\r\n      {\r\n        \"taskId\": \"DisableProtectionOnPrimaryTask\",\r\n        \"name\": \"DisableProtectionOnPrimary\",\r\n        \"startTime\": \"2017-05-13T19:56:30.2001972Z\",\r\n        \"endTime\": \"2017-05-13T19:56:36.0212089Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Disable replication on the source location\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"DisableProtectionOnSecondaryTask\",\r\n        \"name\": \"DisableProtectionOnSecondary\",\r\n        \"startTime\": \"2017-05-13T19:56:36.0212089Z\",\r\n        \"endTime\": \"2017-05-13T19:56:36.1618368Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Disable replication on the target location\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      },\r\n      {\r\n        \"taskId\": \"UpdateDraStateTask\",\r\n        \"name\": \"UpdateDraState\",\r\n        \"startTime\": \"2017-05-13T19:56:36.1618368Z\",\r\n        \"endTime\": \"2017-05-13T19:56:36.9587077Z\",\r\n        \"allowedActions\": [],\r\n        \"friendlyName\": \"Updating the provider states\",\r\n        \"state\": \"Succeeded\",\r\n        \"stateDescription\": \"Completed\",\r\n        \"taskType\": \"TaskDetails\",\r\n        \"customDetails\": {\r\n          \"instanceType\": \"TaskDetails\"\r\n        },\r\n        \"groupTaskCustomDetails\": null,\r\n        \"errors\": []\r\n      }\r\n    ],\r\n    \"errors\": [],\r\n    \"startTime\": \"2017-05-13T19:56:29.3021785Z\",\r\n    \"endTime\": \"2017-05-13T19:56:36Z\",\r\n    \"allowedActions\": [],\r\n    \"targetObjectId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n    \"targetObjectName\": \"vm2\",\r\n    \"targetInstanceType\": \"ProtectionEntity\",\r\n    \"customDetails\": {\r\n      \"instanceType\": \"AsrJobDetails\",\r\n      \"affectedObjectDetails\": {\r\n        \"PrimaryVmId\": \"cf29eb7a-58e1-45b4-b760-c530c1134df4\",\r\n        \"PrimaryVmName\": \"vm2\",\r\n        \"RecoveryVmId\": \"\",\r\n        \"RecoveryVmName\": \"vm2\",\r\n        \"ProtectionProfileId\": \"0cf7844a-0d07-5dcc-9184-43f90652cd9c\",\r\n        \"PrimaryCloudId\": \"cloud_fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryCloudName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryCloudId\": \"d38048d4-b460-4791-8ece-108395ee8478\",\r\n        \"RecoveryCloudName\": \"Microsoft Azure\",\r\n        \"PrimaryVmmId\": \"fa06e03b-e306-52f4-a01f-88cdeba67a1c\",\r\n        \"PrimaryVmmName\": \"SiteRecoveryTestSite1\",\r\n        \"RecoveryVmmId\": \"21a9403c-6ec1-44f2-b744-b4e50b792387\",\r\n        \"RecoveryVmmName\": \"Microsoft Azure\",\r\n        \"PrimaryFabricProviderId\": \"HyperVSite\",\r\n        \"RecoveryFabricProviderId\": \"Azure\"\r\n      }\r\n    }\r\n  },\r\n  \"status\": \"Succeeded\",\r\n  \"error\": null,\r\n  \"startTime\": \"2017-05-13T19:56:29.3021785Z\",\r\n  \"endTime\": \"2017-05-13T19:56:36Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 13 May 2017 19:56:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0",
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationJobs/23a2ad24-a3ac-4c87-b7f1-b97c467fc314"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-client-request-id": [
+          "0a02365a-58e9-47e4-927f-71af563cd795"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13984"
+        ],
+        "x-ms-correlation-request-id": [
+          "9cca69cd-dc36-4290-837c-e225d7f5dad6"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALINDIA:20170513T195659Z:9cca69cd-dc36-4290-837c-e225d7f5dad6"
+        ]
+      },
+      "StatusCode": 200
     }
   ],
   "Names": {},

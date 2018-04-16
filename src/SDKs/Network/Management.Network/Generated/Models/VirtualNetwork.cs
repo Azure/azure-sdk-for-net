@@ -54,13 +54,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.</param>
         /// <param name="enableDdosProtection">Indicates if DDoS protection is
-        /// enabled for all the protected resources in a Virtual
-        /// Network.</param>
-        /// <param name="enableVmProtection">Indicates if Vm protection is
-        /// enabled for all the subnets in a Virtual Network.</param>
+        /// enabled for all the protected resources in the virtual network. It
+        /// requires a DDoS protection plan associated with the
+        /// resource.</param>
+        /// <param name="enableVmProtection">Indicates if VM protection is
+        /// enabled for all the subnets in the virtual network.</param>
+        /// <param name="ddosProtectionPlan">The DDoS protection plan
+        /// associated with the virtual network.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), string etag = default(string))
+        public VirtualNetwork(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<Subnet> subnets = default(IList<Subnet>), IList<VirtualNetworkPeering> virtualNetworkPeerings = default(IList<VirtualNetworkPeering>), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDdosProtection = default(bool?), bool? enableVmProtection = default(bool?), SubResource ddosProtectionPlan = default(SubResource), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AddressSpace = addressSpace;
@@ -71,6 +74,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             EnableDdosProtection = enableDdosProtection;
             EnableVmProtection = enableVmProtection;
+            DdosProtectionPlan = ddosProtectionPlan;
             Etag = etag;
             CustomInit();
         }
@@ -122,17 +126,25 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets indicates if DDoS protection is enabled for all the
-        /// protected resources in a Virtual Network.
+        /// protected resources in the virtual network. It requires a DDoS
+        /// protection plan associated with the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableDdosProtection")]
         public bool? EnableDdosProtection { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates if Vm protection is enabled for all the
-        /// subnets in a Virtual Network.
+        /// Gets or sets indicates if VM protection is enabled for all the
+        /// subnets in the virtual network.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableVmProtection")]
         public bool? EnableVmProtection { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DDoS protection plan associated with the virtual
+        /// network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ddosProtectionPlan")]
+        public SubResource DdosProtectionPlan { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
