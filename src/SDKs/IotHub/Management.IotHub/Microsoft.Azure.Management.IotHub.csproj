@@ -12,7 +12,7 @@
 		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure IotHub SDK. Included with this release is basic Sku API update for IotHub.
+        Basic Sku API version update for IotHub.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
