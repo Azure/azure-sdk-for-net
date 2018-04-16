@@ -12,11 +12,15 @@
 		<PackageTags>Microsoft Azure IotHub;IotHub management;IotHub;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure IotHub SDK. Included with this release is support for certificate and operation related APIs.
+        This is a public preview release of the Azure IotHub SDK. Included with this release is basic Sku API update for IotHub.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
 	</PropertyGroup>
+	
+  <!-- Please do not move/edit code below this line -->	
+  <Import Condition="Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 </Project>
