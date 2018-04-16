@@ -272,6 +272,68 @@ namespace Sql.Tests
             }
         }
 
+        public static void ValidateManagedDatabase(dynamic expected, ManagedDatabase actual, string name)
+        {
+            Assert.Equal(name, actual.Name);
+            Assert.NotNull(actual.CreationDate);
+            Assert.NotNull(actual.Id);
+            Assert.NotNull(actual.Type);
+
+            // Old 2014-04-01 apis return en-us location friendly name, e.g. "Japan East",
+            // newer apis return locaion id e.g. "japaneast". This makes comparison
+            // logic annoying until we have a newer api-version for database.
+            //Assert.Equal(expected.Location, actual.Location);
+
+            if (!string.IsNullOrEmpty(expected.Collation))
+            {
+                Assert.Equal(expected.Collation, actual.Collation);
+            }
+            else
+            {
+                Assert.NotNull(actual.Collation);
+            }
+
+            if (expected.Location != null)
+            {
+                Assert.Equal(expected.Location, actual.Location);
+            }
+            else
+            {
+                Assert.NotNull(actual.Location);
+            }
+        }
+
+        public static void ValidateManagedDatabaseEx(ManagedDatabase expected, ManagedDatabase actual)
+        {
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.NotNull(actual.CreationDate);
+            Assert.NotNull(actual.Id);
+            Assert.NotNull(actual.Type);
+
+            // Old 2014-04-01 apis return en-us location friendly name, e.g. "Japan East",
+            // newer apis return locaion id e.g. "japaneast". This makes comparison
+            // logic annoying until we have a newer api-version for database.
+            //Assert.Equal(expected.Location, actual.Location);
+
+            if (!string.IsNullOrEmpty(expected.Collation))
+            {
+                Assert.Equal(expected.Collation, actual.Collation);
+            }
+            else
+            {
+                Assert.NotNull(actual.Collation);
+            }
+
+            if (expected.Location != null)
+            {
+                Assert.Equal(expected.Location, actual.Location);
+            }
+            else
+            {
+                Assert.NotNull(actual.Location);
+            }
+        }
+
         public static void ValidateElasticPool(dynamic expected, ElasticPool actual, string name)
         {
             Assert.Equal(name, actual.Name);
