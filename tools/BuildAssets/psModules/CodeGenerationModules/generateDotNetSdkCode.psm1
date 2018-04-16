@@ -107,8 +107,14 @@ param(
     [string] $SpecsRepoBranch,
     [Parameter(Mandatory = $true)]
     [string] $SpecsRepoName,
-    [Parameter(Mandatory = $true, HelpMessage ="Please provide an output directory for the generated code")]
-    [string] $SdkDirectory,
+    [Parameter(Mandatory = $false, ParameterSetName="rootdir", HelpMessage ="Please provide an output directory for the generated code")]
+    [string] $SdkRootDirectory,
+    [Parameter(Mandatory=$false, ParameterSetName="finaldir", HelpMessage ="Please provide an output directory for the generated code")]
+    [string] $SdkGenerationDirectory,
+    [Parameter(Mandatory = $false)]
+    [string] $Namespace,
+    [Parameter(Mandatory = $false)]
+    [string] $ConfigFileTag,
     [Parameter(Mandatory = $true, HelpMessage ="Please provide a version for the AutoRest release")]
     [string] $AutoRestVersion
     )
@@ -116,7 +122,26 @@ param(
     $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md" 
     Write-InfoLog "Generating CSharp code" -logToConsole
     $cmd = "cmd.exe"
-    $args = "/c autorest.cmd $configFile --csharp --csharp-sdks-folder=$SdkDirectory --version=$AutoRestVersion --reflect-api-versions"
+    $args = "/c autorest.cmd $configFile --csharp --version=$AutoRestVersion --reflect-api-versions"
+    
+    if(-not [string]::IsNullOrWhiteSpace($Namespace))
+    {
+        $args = $args + " --csharp.namespace=$Namespace"
+    }
+
+    if(-not [string]::IsNullOrWhiteSpace($ConfigFileTag))
+    {
+        $args = $args + " --tag=$ConfigFileTag"
+    }
+
+    if(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory))
+    {
+        $args = $args + " --csharp.output-folder=$SdkGenerationDirectory"
+    }
+    elseif(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory))
+    {
+        $args = $args + " --csharp-sdks-folder=$SdkRootDirectory"
+    }
     
     Write-InfoLog "Executing AutoRest command" -logToFile
     Write-InfoLog "$cmd $args" -logToFile
