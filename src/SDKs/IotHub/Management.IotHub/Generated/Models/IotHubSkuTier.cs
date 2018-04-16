@@ -24,7 +24,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
         [EnumMember(Value = "Free")]
         Free,
         [EnumMember(Value = "Standard")]
-        Standard
+        Standard,
+        [EnumMember(Value = "Basic")]
+        Basic
     }
     internal static class IotHubSkuTierEnumExtension
     {
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
                     return "Free";
                 case IotHubSkuTier.Standard:
                     return "Standard";
+                case IotHubSkuTier.Basic:
+                    return "Basic";
             }
             return null;
         }
@@ -53,6 +57,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
                     return IotHubSkuTier.Free;
                 case "Standard":
                     return IotHubSkuTier.Standard;
+                case "Basic":
+                    return IotHubSkuTier.Basic;
             }
             return null;
         }
