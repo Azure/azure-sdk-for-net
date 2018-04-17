@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.BotService
             /// The name of the Bot resource.
             /// </param>
             /// <param name='channelName'>
-            /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-            /// 'SmsChannel'
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
             /// </param>
-            public static BotChannel List(this IChannelOperations operations, string resourceGroupName, string resourceName, string channelName)
+            public static BotChannel List(this IChannelOperations operations, string resourceGroupName, string resourceName, ChannelName channelName)
             {
                 return operations.ListAsync(resourceGroupName, resourceName, channelName).GetAwaiter().GetResult();
             }
@@ -57,15 +57,15 @@ namespace Microsoft.Azure.Management.BotService
             /// The name of the Bot resource.
             /// </param>
             /// <param name='channelName'>
-            /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-            /// 'SmsChannel'
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BotChannel> ListAsync(this IChannelOperations operations, string resourceGroupName, string resourceName, string channelName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BotChannel> ListAsync(this IChannelOperations operations, string resourceGroupName, string resourceName, ChannelName channelName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, resourceName, channelName, null, cancellationToken).ConfigureAwait(false))
                 {

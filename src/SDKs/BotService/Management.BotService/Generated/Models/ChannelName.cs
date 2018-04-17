@@ -10,13 +10,99 @@
 
 namespace Microsoft.Azure.Management.BotService.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ChannelName.
     /// </summary>
-    public static class ChannelName
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ChannelName
     {
-        public const string FacebookChannel = "FacebookChannel";
-        public const string EmailChannel = "EmailChannel";
+        [EnumMember(Value = "FacebookChannel")]
+        FacebookChannel,
+        [EnumMember(Value = "EmailChannel")]
+        EmailChannel,
+        [EnumMember(Value = "KikChannel")]
+        KikChannel,
+        [EnumMember(Value = "TelegramChannel")]
+        TelegramChannel,
+        [EnumMember(Value = "SlackChannel")]
+        SlackChannel,
+        [EnumMember(Value = "MsTeamsChannel")]
+        MsTeamsChannel,
+        [EnumMember(Value = "SkypeChannel")]
+        SkypeChannel,
+        [EnumMember(Value = "WebChatChannel")]
+        WebChatChannel,
+        [EnumMember(Value = "DirectLineChannel")]
+        DirectLineChannel,
+        [EnumMember(Value = "SmsChannel")]
+        SmsChannel
+    }
+    internal static class ChannelNameEnumExtension
+    {
+        internal static string ToSerializedValue(this ChannelName? value)
+        {
+            return value == null ? null : ((ChannelName)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this ChannelName value)
+        {
+            switch( value )
+            {
+                case ChannelName.FacebookChannel:
+                    return "FacebookChannel";
+                case ChannelName.EmailChannel:
+                    return "EmailChannel";
+                case ChannelName.KikChannel:
+                    return "KikChannel";
+                case ChannelName.TelegramChannel:
+                    return "TelegramChannel";
+                case ChannelName.SlackChannel:
+                    return "SlackChannel";
+                case ChannelName.MsTeamsChannel:
+                    return "MsTeamsChannel";
+                case ChannelName.SkypeChannel:
+                    return "SkypeChannel";
+                case ChannelName.WebChatChannel:
+                    return "WebChatChannel";
+                case ChannelName.DirectLineChannel:
+                    return "DirectLineChannel";
+                case ChannelName.SmsChannel:
+                    return "SmsChannel";
+            }
+            return null;
+        }
+
+        internal static ChannelName? ParseChannelName(this string value)
+        {
+            switch( value )
+            {
+                case "FacebookChannel":
+                    return ChannelName.FacebookChannel;
+                case "EmailChannel":
+                    return ChannelName.EmailChannel;
+                case "KikChannel":
+                    return ChannelName.KikChannel;
+                case "TelegramChannel":
+                    return ChannelName.TelegramChannel;
+                case "SlackChannel":
+                    return ChannelName.SlackChannel;
+                case "MsTeamsChannel":
+                    return ChannelName.MsTeamsChannel;
+                case "SkypeChannel":
+                    return ChannelName.SkypeChannel;
+                case "WebChatChannel":
+                    return ChannelName.WebChatChannel;
+                case "DirectLineChannel":
+                    return ChannelName.DirectLineChannel;
+                case "SmsChannel":
+                    return ChannelName.SmsChannel;
+            }
+            return null;
+        }
     }
 }

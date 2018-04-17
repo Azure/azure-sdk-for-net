@@ -60,10 +60,10 @@ namespace Microsoft.Azure.Management.BotService
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-        /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-        /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-        /// 'SmsChannel'
+        /// The name of the Channel resource. Possible values include:
+        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+        /// 'DirectLineChannel', 'SmsChannel'
         /// </param>
         /// <param name='parameters'>
         /// The parameters to provide for the created bot.
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BotChannel>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, BotChannel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BotChannel>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, BotChannel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -113,10 +113,6 @@ namespace Microsoft.Azure.Management.BotService
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
                 }
-            }
-            if (channelName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "channelName");
             }
             if (parameters == null)
             {
@@ -153,7 +149,7 @@ namespace Microsoft.Azure.Management.BotService
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(channelName));
+            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(channelName, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -314,10 +310,10 @@ namespace Microsoft.Azure.Management.BotService
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-        /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-        /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-        /// 'SmsChannel'
+        /// The name of the Channel resource. Possible values include:
+        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+        /// 'DirectLineChannel', 'SmsChannel'
         /// </param>
         /// <param name='location'>
         /// Specifies the location of the resource.
@@ -359,7 +355,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BotChannel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BotChannel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -383,10 +379,6 @@ namespace Microsoft.Azure.Management.BotService
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9][a-zA-Z0-9_.-]*$");
                 }
-            }
-            if (channelName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "channelName");
             }
             if (Client.ApiVersion == null)
             {
@@ -429,7 +421,7 @@ namespace Microsoft.Azure.Management.BotService
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
-            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(channelName));
+            _url = _url.Replace("{channelName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(channelName, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

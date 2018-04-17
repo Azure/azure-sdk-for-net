@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.BotService
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Bot resource. Possible values include:
+        /// The name of the Channel resource. Possible values include:
         /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
         /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
         /// 'DirectLineChannel', 'SmsChannel'
@@ -53,6 +53,6 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BotChannel>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BotChannel>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

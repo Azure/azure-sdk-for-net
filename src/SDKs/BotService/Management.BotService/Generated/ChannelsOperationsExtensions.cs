@@ -36,15 +36,15 @@ namespace Microsoft.Azure.Management.BotService
             /// The name of the Bot resource.
             /// </param>
             /// <param name='channelName'>
-            /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-            /// 'SmsChannel'
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
             /// </param>
             /// <param name='parameters'>
             /// The parameters to provide for the created bot.
             /// </param>
-            public static BotChannel Create(this IChannelsOperations operations, string resourceGroupName, string resourceName, string channelName, BotChannel parameters)
+            public static BotChannel Create(this IChannelsOperations operations, string resourceGroupName, string resourceName, ChannelName channelName, BotChannel parameters)
             {
                 return operations.CreateAsync(resourceGroupName, resourceName, channelName, parameters).GetAwaiter().GetResult();
             }
@@ -62,10 +62,10 @@ namespace Microsoft.Azure.Management.BotService
             /// The name of the Bot resource.
             /// </param>
             /// <param name='channelName'>
-            /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-            /// 'SmsChannel'
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
             /// </param>
             /// <param name='parameters'>
             /// The parameters to provide for the created bot.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.BotService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BotChannel> CreateAsync(this IChannelsOperations operations, string resourceGroupName, string resourceName, string channelName, BotChannel parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BotChannel> CreateAsync(this IChannelsOperations operations, string resourceGroupName, string resourceName, ChannelName channelName, BotChannel parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, resourceName, channelName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -94,10 +94,10 @@ namespace Microsoft.Azure.Management.BotService
             /// The name of the Bot resource.
             /// </param>
             /// <param name='channelName'>
-            /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-            /// 'SmsChannel'
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
             /// </param>
             /// <param name='location'>
             /// Specifies the location of the resource.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.BotService
             /// <param name='properties'>
             /// The set of properties specific to bot channel resource
             /// </param>
-            public static BotChannel Update(this IChannelsOperations operations, string resourceGroupName, string resourceName, string channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel))
+            public static BotChannel Update(this IChannelsOperations operations, string resourceGroupName, string resourceName, ChannelName channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel))
             {
                 return operations.UpdateAsync(resourceGroupName, resourceName, channelName, location, tags, sku, kind, etag, properties).GetAwaiter().GetResult();
             }
@@ -136,10 +136,10 @@ namespace Microsoft.Azure.Management.BotService
             /// The name of the Bot resource.
             /// </param>
             /// <param name='channelName'>
-            /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
-            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
-            /// 'SmsChannel'
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
             /// </param>
             /// <param name='location'>
             /// Specifies the location of the resource.
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Management.BotService
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BotChannel> UpdateAsync(this IChannelsOperations operations, string resourceGroupName, string resourceName, string channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BotChannel> UpdateAsync(this IChannelsOperations operations, string resourceGroupName, string resourceName, ChannelName channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, resourceName, channelName, location, tags, sku, kind, etag, properties, null, cancellationToken).ConfigureAwait(false))
                 {

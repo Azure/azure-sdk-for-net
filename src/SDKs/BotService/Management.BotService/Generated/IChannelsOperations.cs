@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.BotService
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Bot resource. Possible values include:
+        /// The name of the Channel resource. Possible values include:
         /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
         /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
         /// 'DirectLineChannel', 'SmsChannel'
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BotChannel>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, BotChannel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BotChannel>> CreateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, BotChannel parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a Channel registration for a Bot Service
         /// </summary>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.BotService
         /// The name of the Bot resource.
         /// </param>
         /// <param name='channelName'>
-        /// The name of the Bot resource. Possible values include:
+        /// The name of the Channel resource. Possible values include:
         /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
         /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
         /// 'DirectLineChannel', 'SmsChannel'
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BotChannel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BotChannel>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string etag = default(string), Channel properties = default(Channel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Channel registration from a Bot Service
         /// </summary>
