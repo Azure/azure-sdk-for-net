@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+namespace Fabric.Tests
+{
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
 
-namespace Fabric.Tests {
-    
-    class FabricCommon {
+    class FabricCommon
+    {
 
         // TODO: Compare tags
         public static bool ResourceAreSame(Resource expected, Resource found) {
