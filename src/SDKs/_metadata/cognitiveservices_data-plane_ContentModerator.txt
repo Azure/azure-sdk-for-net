@@ -1,9 +1,9 @@
-2018-04-06 18:09:46 UTC
+2018-04-17 20:05:22 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: Azure
 Branch:      master
-Commit:      55711dc50d55d1a04cf8af2a61da7ab50c7e9f1c
+Commit:      b6cb0b6eefd6f0dbb099b8a4babc95d69550c576
 
 2) AutoRest information
 Requested version: latest
