@@ -4,13 +4,10 @@
     <PackageId>Gallery.Admin.Tests</PackageId>
     <Description>Gallery.Admin.Tests Class Library</Description>
     <AssemblyName>Gallery.Admin.Tests</AssemblyName>
-    <VersionPrefix>1.0.0</VersionPrefix>    
+    <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    <TargetFrameworks>netcoreapp1.1.2</TargetFrameworks>
-      <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
-
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,5 +23,5 @@
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  
+
 </Project>
