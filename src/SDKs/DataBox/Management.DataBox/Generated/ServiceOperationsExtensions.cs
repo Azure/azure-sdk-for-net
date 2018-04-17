@@ -74,40 +74,6 @@ namespace Microsoft.Azure.Management.DataBox
             }
 
             /// <summary>
-            /// This method returns the health of partner services.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location of the resource
-            /// </param>
-            public static ServiceHealthResponseList GetHealth(this IServiceOperations operations, string location)
-            {
-                return operations.GetHealthAsync(location).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// This method returns the health of partner services.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='location'>
-            /// The location of the resource
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ServiceHealthResponseList> GetHealthAsync(this IServiceOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetHealthWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// This method validates the customer shipping address and provide alternate
             /// addresses if any.
             /// </summary>
