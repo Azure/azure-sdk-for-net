@@ -48,7 +48,7 @@ namespace BotService.Tests
                 Bot bot1 = BotServiceManagementTestUtilities.CreateAndValidateBot(botServiceMgmtClient, rgname);
                 
                 // Enable email channel for the demo bot
-                var emailChannel = botServiceMgmtClient.Channels.Create(rgname, bot1.Name, "EmailChannel",
+                var emailChannel = botServiceMgmtClient.Channels.Create(rgname, bot1.Name, ChannelName.EmailChannel,
                     new BotChannel(location: "global", properties:
                         new EmailChannel()
                         {
