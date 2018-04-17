@@ -36,8 +36,10 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <param name="enablePreview">Whether this site is enabled for
         /// preview versions of Webchat</param>
         /// <param name="siteId">Site Id</param>
-        /// <param name="key">Primary key</param>
-        /// <param name="key2">Secondary key</param>
+        /// <param name="key">Primary key. Value only returned through POST to
+        /// the action Channel List API, otherwise empty.</param>
+        /// <param name="key2">Secondary key. Value only returned through POST
+        /// to the action Channel List API, otherwise empty.</param>
         public WebChatSite(string siteName, bool isEnabled, bool enablePreview, string siteId = default(string), string key = default(string), string key2 = default(string))
         {
             SiteId = siteId;
@@ -67,13 +69,15 @@ namespace Microsoft.Azure.Management.BotService.Models
         public string SiteName { get; set; }
 
         /// <summary>
-        /// Gets primary key
+        /// Gets primary key. Value only returned through POST to the action
+        /// Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public string Key { get; private set; }
 
         /// <summary>
-        /// Gets secondary key
+        /// Gets secondary key. Value only returned through POST to the action
+        /// Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "key2")]
         public string Key2 { get; private set; }

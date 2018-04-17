@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the SlackChannelProperties class.
         /// </summary>
         /// <param name="clientId">The Slack client id</param>
-        /// <param name="clientSecret">The Slack client secret</param>
-        /// <param name="verificationToken">The Slack verification
-        /// token</param>
+        /// <param name="clientSecret">The Slack client secret. Value only
+        /// returned through POST to the action Channel List API, otherwise
+        /// empty.</param>
+        /// <param name="verificationToken">The Slack verification token. Value
+        /// only returned through POST to the action Channel List API,
+        /// otherwise empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
         /// <param name="landingPageUrl">The Slack landing page Url</param>
@@ -70,13 +73,15 @@ namespace Microsoft.Azure.Management.BotService.Models
         public string ClientId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Slack client secret
+        /// Gets or sets the Slack client secret. Value only returned through
+        /// POST to the action Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "clientSecret")]
         public string ClientSecret { get; set; }
 
         /// <summary>
-        /// Gets or sets the Slack verification token
+        /// Gets or sets the Slack verification token. Value only returned
+        /// through POST to the action Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "verificationToken")]
         public string VerificationToken { get; set; }

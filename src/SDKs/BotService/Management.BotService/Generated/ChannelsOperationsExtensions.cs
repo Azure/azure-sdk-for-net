@@ -37,7 +37,9 @@ namespace Microsoft.Azure.Management.BotService
             /// </param>
             /// <param name='channelName'>
             /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel'
+            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
+            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
+            /// 'SmsChannel'
             /// </param>
             /// <param name='parameters'>
             /// The parameters to provide for the created bot.
@@ -61,7 +63,9 @@ namespace Microsoft.Azure.Management.BotService
             /// </param>
             /// <param name='channelName'>
             /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel'
+            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
+            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
+            /// 'SmsChannel'
             /// </param>
             /// <param name='parameters'>
             /// The parameters to provide for the created bot.
@@ -91,7 +95,9 @@ namespace Microsoft.Azure.Management.BotService
             /// </param>
             /// <param name='channelName'>
             /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel'
+            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
+            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
+            /// 'SmsChannel'
             /// </param>
             /// <param name='location'>
             /// Specifies the location of the resource.
@@ -131,7 +137,9 @@ namespace Microsoft.Azure.Management.BotService
             /// </param>
             /// <param name='channelName'>
             /// The name of the Bot resource. Possible values include: 'FacebookChannel',
-            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel'
+            /// 'EmailChannel', 'KikChannel', 'TelegramChannel', 'SlackChannel',
+            /// 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel', 'DirectLineChannel',
+            /// 'SmsChannel'
             /// </param>
             /// <param name='location'>
             /// Specifies the location of the resource.

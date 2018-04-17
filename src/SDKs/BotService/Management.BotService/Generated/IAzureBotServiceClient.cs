@@ -81,6 +81,11 @@ namespace Microsoft.Azure.Management.BotService
         IChannelsOperations Channels { get; }
 
         /// <summary>
+        /// Gets the IChannelOperations.
+        /// </summary>
+        IChannelOperations Channel { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the KikChannelProperties class.
         /// </summary>
         /// <param name="userName">The Kik user name</param>
-        /// <param name="apiKey">Kik API key</param>
+        /// <param name="apiKey">Kik API key. Value only returned through POST
+        /// to the action Channel List API, otherwise empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
         /// <param name="isValidated">Whether this channel is validated for the
@@ -57,7 +58,8 @@ namespace Microsoft.Azure.Management.BotService.Models
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets kik API key
+        /// Gets or sets kik API key. Value only returned through POST to the
+        /// action Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "apiKey")]
         public string ApiKey { get; set; }

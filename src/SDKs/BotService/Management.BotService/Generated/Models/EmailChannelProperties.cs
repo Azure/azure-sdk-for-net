@@ -31,7 +31,9 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the EmailChannelProperties class.
         /// </summary>
         /// <param name="emailAddress">The email address</param>
-        /// <param name="password">The password for the email address</param>
+        /// <param name="password">The password for the email address. Value
+        /// only returned through POST to the action Channel List API,
+        /// otherwise empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
         public EmailChannelProperties(string emailAddress, string password, bool isEnabled)
@@ -54,7 +56,9 @@ namespace Microsoft.Azure.Management.BotService.Models
         public string EmailAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the password for the email address
+        /// Gets or sets the password for the email address. Value only
+        /// returned through POST to the action Channel List API, otherwise
+        /// empty.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }

@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.BotService.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,21 +32,22 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <summary>
         /// Initializes a new instance of the FacebookChannelProperties class.
         /// </summary>
-        /// <param name="pageId">Page id</param>
         /// <param name="appId">Facebook application id</param>
-        /// <param name="appSecret">Facebook application secret</param>
+        /// <param name="appSecret">Facebook application secret. Value only
+        /// returned through POST to the action Channel List API, otherwise
+        /// empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
-        /// <param name="verifyToken">Verify token</param>
-        /// <param name="accessToken">Facebook application access token</param>
+        /// <param name="verifyToken">Verify token. Value only returned through
+        /// POST to the action Channel List API, otherwise empty.</param>
+        /// <param name="pages">The list of Facebook pages</param>
         /// <param name="callbackUrl">Callback Url</param>
-        public FacebookChannelProperties(string pageId, string appId, string appSecret, bool isEnabled, string verifyToken = default(string), string accessToken = default(string), string callbackUrl = default(string))
+        public FacebookChannelProperties(string appId, string appSecret, bool isEnabled, string verifyToken = default(string), IList<FacebookPage> pages = default(IList<FacebookPage>), string callbackUrl = default(string))
         {
             VerifyToken = verifyToken;
-            PageId = pageId;
+            Pages = pages;
             AppId = appId;
             AppSecret = appSecret;
-            AccessToken = accessToken;
             CallbackUrl = callbackUrl;
             IsEnabled = isEnabled;
             CustomInit();
@@ -56,16 +59,17 @@ namespace Microsoft.Azure.Management.BotService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets verify token
+        /// Gets verify token. Value only returned through POST to the action
+        /// Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "verifyToken")]
         public string VerifyToken { get; private set; }
 
         /// <summary>
-        /// Gets or sets page id
+        /// Gets or sets the list of Facebook pages
         /// </summary>
-        [JsonProperty(PropertyName = "pageId")]
-        public string PageId { get; set; }
+        [JsonProperty(PropertyName = "pages")]
+        public IList<FacebookPage> Pages { get; set; }
 
         /// <summary>
         /// Gets or sets facebook application id
@@ -74,16 +78,11 @@ namespace Microsoft.Azure.Management.BotService.Models
         public string AppId { get; set; }
 
         /// <summary>
-        /// Gets or sets facebook application secret
+        /// Gets or sets facebook application secret. Value only returned
+        /// through POST to the action Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "appSecret")]
         public string AppSecret { get; set; }
-
-        /// <summary>
-        /// Gets or sets facebook application access token
-        /// </summary>
-        [JsonProperty(PropertyName = "accessToken")]
-        public string AccessToken { get; set; }
 
         /// <summary>
         /// Gets callback Url
@@ -105,10 +104,6 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PageId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PageId");
-            }
             if (AppId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AppId");
@@ -116,6 +111,16 @@ namespace Microsoft.Azure.Management.BotService.Models
             if (AppSecret == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AppSecret");
+            }
+            if (Pages != null)
+            {
+                foreach (var element in Pages)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

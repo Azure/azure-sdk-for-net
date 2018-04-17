@@ -30,7 +30,9 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// <summary>
         /// Initializes a new instance of the TelegramChannelProperties class.
         /// </summary>
-        /// <param name="accessToken">The Telegram access token</param>
+        /// <param name="accessToken">The Telegram access token. Value only
+        /// returned through POST to the action Channel List API, otherwise
+        /// empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
         /// <param name="isValidated">Whether this channel is validated for the
@@ -49,7 +51,8 @@ namespace Microsoft.Azure.Management.BotService.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Telegram access token
+        /// Gets or sets the Telegram access token. Value only returned through
+        /// POST to the action Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "accessToken")]
         public string AccessToken { get; set; }

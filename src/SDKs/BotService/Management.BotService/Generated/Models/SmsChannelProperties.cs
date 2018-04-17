@@ -31,8 +31,12 @@ namespace Microsoft.Azure.Management.BotService.Models
         /// Initializes a new instance of the SmsChannelProperties class.
         /// </summary>
         /// <param name="phone">The Sms phone</param>
-        /// <param name="accountSID">The Sms account SID</param>
-        /// <param name="authToken">The Sms auth token</param>
+        /// <param name="accountSID">The Sms account SID. Value only returned
+        /// through POST to the action Channel List API, otherwise
+        /// empty.</param>
+        /// <param name="authToken">The Sms auth token. Value only returned
+        /// through POST to the action Channel List API, otherwise
+        /// empty.</param>
         /// <param name="isEnabled">Whether this channel is enabled for the
         /// bot</param>
         /// <param name="isValidated">Whether this channel is validated for the
@@ -59,13 +63,15 @@ namespace Microsoft.Azure.Management.BotService.Models
         public string Phone { get; set; }
 
         /// <summary>
-        /// Gets or sets the Sms account SID
+        /// Gets or sets the Sms account SID. Value only returned through POST
+        /// to the action Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "accountSID")]
         public string AccountSID { get; set; }
 
         /// <summary>
-        /// Gets or sets the Sms auth token
+        /// Gets or sets the Sms auth token. Value only returned through POST
+        /// to the action Channel List API, otherwise empty.
         /// </summary>
         [JsonProperty(PropertyName = "authToken")]
         public string AuthToken { get; set; }
