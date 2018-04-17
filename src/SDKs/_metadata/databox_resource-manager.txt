@@ -1,11 +1,5 @@
-2018-03-21 09:17:12 UTC
+﻿Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/AzureDataBox/azure-rest-api-specs/blob/master/specification/databox/resource-manager/readme.md --csharp --csharp-sdks-folder=G:\AzureDataBox\azure-sdk-for-net\tools\..\src\SDKs\ --version=2.0.4215 --reflect-api-versions
 
-1) azure-rest-api-specs repository information
-GitHub user: Azure
-Branch:      master
-Commit:      2b23b99acd60bfae8aff4a7fae30fff1fa8e6e5c
+AutoRest code generation for https://github.com/AzureDataBox/azure-rest-api-specs/blob/master/specification/databox/resource-manager/readme.md failed. Please try again
 
-2) AutoRest information
-Requested version: G:\AzureDataBox\azure-rest-api-specs\specification\databox\resource-manager\Microsoft.DataBox\preview\2018-01-01\databox.json
-Bootstrapper version:    C:\Users\kushalv\AppData\Roaming\npm `-- autorest@2.0.4245  
-Latest installed version:    
