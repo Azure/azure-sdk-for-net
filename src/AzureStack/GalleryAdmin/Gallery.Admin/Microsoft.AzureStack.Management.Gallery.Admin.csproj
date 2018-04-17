@@ -11,7 +11,7 @@
         <PackageTags>Microsoft Azure Stack;Gallery;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Gallery Admin SDK.  Included in this release is the ability to list, register, get, and delete gallery items.</PackageReleaseNotes>
+                This is a preview release of the AzureStack Gallery Admin SDK.  Included in this release is the ability to list, register, get, and delete gallery items.
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
