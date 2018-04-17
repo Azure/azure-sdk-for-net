@@ -38,8 +38,8 @@ namespace AzureBridge.Tests
                 Assert.NotNull(product);
             });
         }
-        /*
-        [Fact]
+
+        [Fact(Skip="Disabled")]
         public void TestRemoveAzsAzureBridgeDownloadedProduct()
         {
             RunTest((client) => {
@@ -48,6 +48,6 @@ namespace AzureBridge.Tests
                 var deletedProduct = client.DownloadedProducts.Get("azurestack-activation", "default", productName1);
                 Assert.Null(deletedProduct);
             });
-        } */
+        }
     }
 }
