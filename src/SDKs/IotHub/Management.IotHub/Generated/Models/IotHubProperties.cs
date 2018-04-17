@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// can use to secure a connection to the IoT hub.</param>
         /// <param name="ipFilterRules">The IP filter rules.</param>
         /// <param name="provisioningState">The provisioning state.</param>
+        /// <param name="state">Thehub state state.</param>
         /// <param name="hostName">The name of the host.</param>
         /// <param name="eventHubEndpoints">The Event Hub-compatible endpoint
         /// properties. The possible keys to this dictionary are events and
@@ -56,11 +57,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="features">The capabilities and features enabled for
         /// the IoT hub. Possible values include: 'None',
         /// 'DeviceManagement'</param>
-        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), OperationsMonitoringProperties operationsMonitoringProperties = default(OperationsMonitoringProperties), string features = default(string))
+        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), OperationsMonitoringProperties operationsMonitoringProperties = default(OperationsMonitoringProperties), string features = default(string))
         {
             AuthorizationPolicies = authorizationPolicies;
             IpFilterRules = ipFilterRules;
             ProvisioningState = provisioningState;
+            State = state;
             HostName = hostName;
             EventHubEndpoints = eventHubEndpoints;
             Routing = routing;
@@ -97,6 +99,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets thehub state state.
+        /// </summary>
+        [JsonProperty(PropertyName = "state")]
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets the name of the host.
