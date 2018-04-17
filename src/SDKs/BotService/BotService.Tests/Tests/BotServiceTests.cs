@@ -57,7 +57,7 @@ namespace BotService.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "This is a great test but involves other systems so doesn't work in playback mode, only for local testing")]
         public void BotCreateWebAppBot()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.BotService</PackageId>
     <Description>Microsoft Azure Management Bot Service Library</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>0.9.1-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.Management.BotService</AssemblyName>
     <PackageTags>Microsoft Azure Bot Service management;Bot;Bot Service;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
     <PackageReleaseNotes>
@@ -24,14 +24,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.13.9]" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2]" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Generated\BotServicesChannelOperations.cs" />
-    <Compile Remove="Generated\BotServicesChannelOperationsExtensions.cs" />
-    <Compile Remove="Generated\BotServicesChannelsOperations.cs" />
-    <Compile Remove="Generated\BotServicesChannelsOperationsExtensions.cs" />
-    <Compile Remove="Generated\IBotServicesChannelOperations.cs" />
-    <Compile Remove="Generated\IBotServicesChannelsOperations.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
