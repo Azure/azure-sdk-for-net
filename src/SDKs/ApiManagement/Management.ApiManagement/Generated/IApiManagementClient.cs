@@ -136,6 +136,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         IApiDiagnosticLoggerOperations ApiDiagnosticLogger { get; }
 
         /// <summary>
+        /// Gets the IApiIssueOperations.
+        /// </summary>
+        IApiIssueOperations ApiIssue { get; }
+
+        /// <summary>
+        /// Gets the IApiIssueCommentOperations.
+        /// </summary>
+        IApiIssueCommentOperations ApiIssueComment { get; }
+
+        /// <summary>
+        /// Gets the IApiIssueAttachmentOperations.
+        /// </summary>
+        IApiIssueAttachmentOperations ApiIssueAttachment { get; }
+
+        /// <summary>
         /// Gets the IAuthorizationServerOperations.
         /// </summary>
         IAuthorizationServerOperations AuthorizationServer { get; }

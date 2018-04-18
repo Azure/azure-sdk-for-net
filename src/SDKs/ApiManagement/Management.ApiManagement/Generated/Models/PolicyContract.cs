@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="type">Resource type for API Management
         /// resource.</param>
         /// <param name="contentFormat">Format of the policyContent. Possible
-        /// values include: 'xml', 'xml-link'</param>
+        /// values include: 'xml', 'xml-link', 'rawxml', 'rawxml-link'</param>
         public PolicyContract(string policyContent, string id = default(string), string name = default(string), string type = default(string), string contentFormat = default(string))
             : base(id, name, type)
         {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets format of the policyContent. Possible values include:
-        /// 'xml', 'xml-link'
+        /// 'xml', 'xml-link', 'rawxml', 'rawxml-link'
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentFormat")]
         public string ContentFormat { get; set; }
