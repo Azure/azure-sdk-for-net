@@ -86,8 +86,8 @@ namespace Sql.Tests
             // Location is being returned two different ways across different APIs.
             Assert.Equal(location.ToLower().Replace(" ", ""), actual.Location.ToLower().Replace(" ", ""));
         }
-		
-		public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location)
+
+        public static void ValidateManagedInstance(ManagedInstance actual, string name, string login, Dictionary<string, string> tags, string location)
         {
             Assert.NotNull(actual);
             Assert.Equal(name, actual.Name);
@@ -322,7 +322,7 @@ namespace Sql.Tests
             AssertCollection(expected.Tags, actual.Tags);
         }
 
-		public static void ValidateInstanceFailoverGroup(InstanceFailoverGroup expected, InstanceFailoverGroup actual, string name)
+        public static void ValidateInstanceFailoverGroup(InstanceFailoverGroup expected, InstanceFailoverGroup actual, string name)
         {
             Assert.NotNull(actual);
             Assert.NotNull(actual.Id);
