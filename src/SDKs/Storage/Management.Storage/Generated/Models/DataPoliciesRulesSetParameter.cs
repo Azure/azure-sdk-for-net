@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="rules">The Storage Account DataPolicies Rules, in JSON
         /// format. //TODO: Link of the sample rules.</param>
-        public DataPoliciesRulesSetParameter(string rules = default(string))
+        public DataPoliciesRulesSetParameter(object rules = default(object))
         {
             Rules = rules;
             CustomInit();
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// format. //TODO: Link of the sample rules.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rules")]
-        public string Rules { get; set; }
+        public object Rules { get; set; }
 
     }
 }

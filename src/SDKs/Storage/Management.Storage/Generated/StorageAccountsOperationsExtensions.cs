@@ -619,7 +619,7 @@ namespace Microsoft.Azure.Management.Storage
             /// The Storage Account DataPolicies Rules, in JSON format. //TODO: Link of the
             /// sample rules.
             /// </param>
-            public static StorageAccountDataPolicies CreateOrUpdateDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string rules = default(string))
+            public static StorageAccountDataPolicies CreateOrUpdateDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, object rules = default(object))
             {
                 return operations.CreateOrUpdateDataPoliciesAsync(resourceGroupName, accountName, rules).GetAwaiter().GetResult();
             }
@@ -646,7 +646,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageAccountDataPolicies> CreateOrUpdateDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, string rules = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccountDataPolicies> CreateOrUpdateDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, object rules = default(object), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateDataPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, rules, null, cancellationToken).ConfigureAwait(false))
                 {

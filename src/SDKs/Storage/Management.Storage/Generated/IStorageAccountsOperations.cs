@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageAccountDataPolicies>> CreateOrUpdateDataPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, string rules = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageAccountDataPolicies>> CreateOrUpdateDataPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, object rules = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the data policy rules associated with the specified storage
         /// account.

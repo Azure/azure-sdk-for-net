@@ -2700,7 +2700,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<StorageAccountDataPolicies>> CreateOrUpdateDataPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, string rules = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StorageAccountDataPolicies>> CreateOrUpdateDataPoliciesWithHttpMessagesAsync(string resourceGroupName, string accountName, object rules = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {

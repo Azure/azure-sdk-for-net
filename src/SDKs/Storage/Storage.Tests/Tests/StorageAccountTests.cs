@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Test.HttpRecorder;
 using System.Net.Http;
 using Microsoft.Azure.KeyVault.WebKey;
+using System.Text.RegularExpressions;
 
 namespace Storage.Tests
 {
@@ -1410,6 +1411,7 @@ namespace Storage.Tests
                 Assert.Null(account.Encryption);
             }
         }
+
         [Fact]
         public void StorageAccountOperationsTest()
         {
@@ -1637,26 +1639,79 @@ namespace Storage.Tests
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
-                //// Create resource group
-                //var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                //// Create storage account
-                //string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation
+                };
+                storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
-                string rgname = "weitry";
-                string accountName = "weistoragetry2";
+                string rules = @"{
+  ""policy"": {
+    ""rules"": [
+      {
+        ""filters"": {
+          ""blobTypes"": [
+            ""blockBlob""
+          ],
+          ""nameMatch"": [
+            ""container2/blob""
+          ]
+        },
+        ""blobLifeCycle"": {
+          ""baseBlob"": {
+            ""tierToCool"": {
+              ""daysAfterLastModified"": 10
+            },
+            ""tierToArchive"": {
+              ""daysAfterLastModified"": 90
+            },
+            ""delete"": {
+              ""daysAfterLastModified"": 365
+            }
+          },
+          ""snapshot"": {
+            ""tierToCool"": {
+              ""daysAfterSnapshotCreated"": 1
+            },
+            ""tierToArchive"": {
+              ""daysAfterSnapshotCreated"": 30
+            },
+            ""delete"": {
+              ""daysAfterSnapshotCreated"": 90
+            }
+          }
+        }
+      }
+    ]
+  }
+}";
 
-                //string rules = "{\"Policy\":{ \"Rule\":{ \"Filters\":{ \"BlobTypes\":{ \"BlobType\":\"BlockBlob\" }, \"NameMatch\":\"/container/blobname*\" }, \"BlobLifeCycle\":{ \"BaseBlob\":{ \"TierToCool\":{ \"DaysAfterLastModified\":\"10\", \"DaysAfterLastAccessTime\":\"5\" }, \"TierToArchive\":{ \"DaysAfterLastAccessTime\":\"90\" }, \"Delete\":{ \"DaysAfterLastModified\":\"365\" } }, \"Snapshot\":{ \"TierToCool\":{ \"DaysAfterSnapshotCreated\":\"1\" }, \"TierToArchive\":{ \"DaysAfterSnapshotCreated\":\"30\" }, \"Delete\":{\"DaysAfterSnapshotCreated\":\"90\"}}}}}}";
-                string rules = "{\"Policy\":{ }}";
-                StorageAccountDataPolicies policy = storageMgmtClient.DataPolicies.CreateOrUpdate(rgname, accountName, rules);
-                Assert.Equal(policy.Rules, rules);
+                Newtonsoft.Json.Linq.JObject rule1 = Newtonsoft.Json.Linq.JObject.Parse(rules);
+                StorageAccountDataPolicies policy = storageMgmtClient.StorageAccounts.CreateOrUpdateDataPolicies(rgname, accountName, rule1);
+                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n| ", ""), Regex.Replace(policy.Rules.ToString(), @"\r\n?|\n| ", ""));
 
-                policy = storageMgmtClient.DataPolicies.Get(rgname, accountName);
-                Assert.Equal(policy.Rules, rules);
+                policy = storageMgmtClient.StorageAccounts.GetDataPolicies(rgname, accountName);
+                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n| ", ""), Regex.Replace(policy.Rules.ToString(), @"\r\n?|\n| ", ""));
 
-                storageMgmtClient.DataPolicies.Delete(rgname, accountName);
-                policy = storageMgmtClient.DataPolicies.Get(rgname, accountName);
-                Assert.Null(policy.Rules);
+                storageMgmtClient.StorageAccounts.DeleteDataPolicies(rgname, accountName);
+                bool isDataPolicyExist = true;
+                try
+                {
+                    policy = storageMgmtClient.StorageAccounts.GetDataPolicies(rgname, accountName);
+                }
+                catch (Microsoft.Rest.Azure.CloudException cloudException)
+                {
+                    Assert.Equal(System.Net.HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+                    isDataPolicyExist = false;
+                }
+                Assert.False(isDataPolicyExist);
             }
         }
     }

@@ -41,10 +41,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="tags">Tags assigned to a resource; can be used for
         /// viewing and grouping a resource (across resource groups).</param>
         /// <param name="rules">The Storage Account DataPolicies Rules, in JSON
-        /// format.</param>
+        /// format. //TODO: Link of the sample rules.</param>
         /// <param name="lastModifiedTime">Returns the date and time the
         /// DataPolicies was last modified.</param>
-        public StorageAccountDataPolicies(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string rules = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?))
+        public StorageAccountDataPolicies(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object rules = default(object), System.DateTime? lastModifiedTime = default(System.DateTime?))
             : base(id, name, type, location, tags)
         {
             Rules = rules;
@@ -59,10 +59,10 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the Storage Account DataPolicies Rules, in JSON
-        /// format.
+        /// format. //TODO: Link of the sample rules.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rules")]
-        public string Rules { get; set; }
+        public object Rules { get; set; }
 
         /// <summary>
         /// Gets returns the date and time the DataPolicies was last modified.
