@@ -425,6 +425,7 @@ namespace Sql.Tests
             // Wait for all databases to be created.
             return Task.WhenAll(createDbTasks);
         }
+
         internal static Server CreateServer(SqlManagementClient sqlClient, ResourceGroup resourceGroup, string location, string testPrefix = TestPrefix)
         {
             string version12 = "12.0";
