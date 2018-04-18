@@ -92,8 +92,8 @@ namespace Sql.Tests
 
             return v12Server;
         }
-		
-		public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup)
+
+        public ManagedInstance CreateManagedInstance(ResourceGroup resourceGroup)
         {
             return CreateManagedInstance(resourceGroup, TestEnvironmentUtilities.DefaultLocationId);
         }
