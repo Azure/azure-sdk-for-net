@@ -8,7 +8,7 @@ using Xunit;
 [assembly: AssemblyTitle("Microsoft Rest Azure Client Runtime Tests")]
 [assembly: AssemblyDescription("Tests for the Azure Client Runtime.")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.4.2.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
