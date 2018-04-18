@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task CorrelationFilterTestCase(string topicName)
+        public async Task CorrelationFilterTestCase(string topicName)
         {
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
             var subscriptionClient = new SubscriptionClient(
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task SqlFilterTestCase(string topicName)
+        public async Task SqlFilterTestCase(string topicName)
         {
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
             var subscriptionClient = new SubscriptionClient(
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task SqlActionTestCase(string topicName)
+        public async Task SqlActionTestCase(string topicName)
         {
             var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
             var subscriptionClient = new SubscriptionClient(
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        async Task UpdatingPrefetchCountOnSubscriptionClientUpdatesTheReceiverPrefetchCount()
+        public async Task UpdatingPrefetchCountOnSubscriptionClientUpdatesTheReceiverPrefetchCount()
         {
             var subscriptionClient = new SubscriptionClient(
                 TestUtility.NamespaceConnectionString,

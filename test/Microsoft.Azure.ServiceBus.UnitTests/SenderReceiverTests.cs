@@ -316,5 +316,48 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await receiver.CloseAsync();
             }
         }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task CancelScheduledMessageShouldThrowMessageNotFoundException()
+        {
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
+
+            try
+            {
+                long nonExistingSequenceNumber = 1000;
+                await Assert.ThrowsAsync<MessageNotFoundException>(
+                    async () => await sender.CancelScheduledMessageAsync(nonExistingSequenceNumber));
+            }
+            finally
+            {
+                await sender.CloseAsync().ConfigureAwait(false);
+            }
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task ClientThrowsUnauthorizedExceptionWhenUserDoesntHaveAccess()
+        {
+            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+            csb.SasKeyName = "nonExistingKey";
+            csb.EntityPath = TestConstants.NonPartitionedQueueName;
+
+            var sender = new MessageSender(csb);
+
+            try
+            {
+                await Assert.ThrowsAsync<UnauthorizedException>(
+                    async () => await sender.SendAsync(new Message()));
+
+                long nonExistingSequenceNumber = 1000;
+                await Assert.ThrowsAsync<UnauthorizedException>(
+                    async () => await sender.CancelScheduledMessageAsync(nonExistingSequenceNumber));
+            }
+            finally
+            {
+                await sender.CloseAsync().ConfigureAwait(false);
+            }
+        }
     }
 }

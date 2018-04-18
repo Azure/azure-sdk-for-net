@@ -526,50 +526,58 @@ namespace Microsoft.Azure.ServiceBus.Core
             using (var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
             {
                 var request = AmqpRequestMessage.CreateRequest(
-                    ManagementConstants.Operations.ScheduleMessageOperation,
-                    this.OperationTimeout,
-                    null);
+                        ManagementConstants.Operations.ScheduleMessageOperation,
+                        this.OperationTimeout,
+                        null);
 
-                SendingAmqpLink sendLink;
-                if(this.SendLinkManager.TryGetOpenedObject(out sendLink))
+                SendingAmqpLink sendLink = null;
+
+                try
                 {
-                    request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
-                }
-
-                ArraySegment<byte>[] payload = amqpMessage.GetPayload();
-                var buffer = new BufferListStream(payload);
-                ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
-
-                var entry = new AmqpMap();
-                {
-                    entry[ManagementConstants.Properties.Message] = value;
-                    entry[ManagementConstants.Properties.MessageId] = message.MessageId;
-
-                    if (!string.IsNullOrWhiteSpace(message.SessionId))
+                    if (this.SendLinkManager.TryGetOpenedObject(out sendLink))
                     {
-                        entry[ManagementConstants.Properties.SessionId] = message.SessionId;
+                        request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(message.PartitionKey))
+                    ArraySegment<byte>[] payload = amqpMessage.GetPayload();
+                    var buffer = new BufferListStream(payload);
+                    ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+
+                    var entry = new AmqpMap();
                     {
-                        entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
+                        entry[ManagementConstants.Properties.Message] = value;
+                        entry[ManagementConstants.Properties.MessageId] = message.MessageId;
+
+                        if (!string.IsNullOrWhiteSpace(message.SessionId))
+                        {
+                            entry[ManagementConstants.Properties.SessionId] = message.SessionId;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(message.PartitionKey))
+                        {
+                            entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
+                        }
                     }
+
+                    request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
+
+                    IEnumerable<long> sequenceNumbers = null;
+                    var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);
+                    if (response.StatusCode == AmqpResponseStatusCode.OK)
+                    {
+                        sequenceNumbers = response.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
+                    }
+                    else
+                    {
+                        response.ToMessagingContractException();
+                    }
+
+                    return sequenceNumbers?.FirstOrDefault() ?? 0;
                 }
-
-                request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
-
-                IEnumerable<long> sequenceNumbers = null;
-                var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);
-                if (response.StatusCode == AmqpResponseStatusCode.OK)
+                catch (Exception exception)
                 {
-                    sequenceNumbers = response.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
+                    throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
                 }
-                else
-                {
-                    response.ToMessagingContractException();
-                }
-
-                return sequenceNumbers?.FirstOrDefault() ?? 0;
             }
         }
 
@@ -581,19 +589,27 @@ namespace Microsoft.Azure.ServiceBus.Core
                     this.OperationTimeout,
                     null);
 
-            SendingAmqpLink sendLink;
-            if (this.SendLinkManager.TryGetOpenedObject(out sendLink))
+            SendingAmqpLink sendLink = null;
+
+            try
             {
-                request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
+                if (this.SendLinkManager.TryGetOpenedObject(out sendLink))
+                {
+                    request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
+                }
+
+                request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
+
+                var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);
+
+                if (response.StatusCode != AmqpResponseStatusCode.OK)
+                {
+                    throw response.ToMessagingContractException();
+                }
             }
-
-            request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
-
-            var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);
-
-            if (response.StatusCode != AmqpResponseStatusCode.OK)
+            catch (Exception exception)
             {
-                throw response.ToMessagingContractException();
+                throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
             }
         }
 

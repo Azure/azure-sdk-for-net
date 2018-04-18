@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task SessionTest(string queueName)
+        public async Task SessionTest(string queueName)
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
             var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task GetAndSetSessionStateTest(string queueName)
+        public async Task GetAndSetSessionStateTest(string queueName)
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
             var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task SessionRenewLockTest(string queueName)
+        public async Task SessionRenewLockTest(string queueName)
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
             var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [DisplayTestMethodName]
-        async Task PeekSessionAsyncTest(string queueName)
+        public async Task PeekSessionAsyncTest(string queueName)
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
             var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
@@ -203,6 +203,26 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task AcceptSessionThrowsSessionCannotBeLockedException()
+        {
+            var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
+            var someSessionId = "someSessionId";
+            IMessageSession session = null;
+
+            try
+            {
+                session = await sessionClient.AcceptMessageSessionAsync(someSessionId);
+                await Assert.ThrowsAsync<SessionCannotBeLockedException>(async () =>
+                    session = await sessionClient.AcceptMessageSessionAsync(someSessionId));
+            }
+            finally
+            {
+                await sessionClient.CloseAsync().ConfigureAwait(false);
+                await session?.CloseAsync();
+            }
+        }
 
         async Task AcceptAndCompleteSessionsAsync(SessionClient sessionClient, string sessionId, string messageId)
         {

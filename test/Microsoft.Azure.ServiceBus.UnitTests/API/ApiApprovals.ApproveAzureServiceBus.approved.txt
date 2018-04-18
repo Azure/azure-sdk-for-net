@@ -175,6 +175,11 @@ namespace Microsoft.Azure.ServiceBus
         public MessageLockLostException(string message) { }
         public MessageLockLostException(string message, System.Exception innerException) { }
     }
+    public sealed class MessageNotFoundException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public MessageNotFoundException(string message) { }
+        public MessageNotFoundException(string message, System.Exception innerException) { }
+    }
     public sealed class MessageSizeExceededException : Microsoft.Azure.ServiceBus.ServiceBusException
     {
         public MessageSizeExceededException(string message) { }
@@ -321,6 +326,11 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusTimeoutException(string message) { }
         public ServiceBusTimeoutException(string message, System.Exception innerException) { }
     }
+    public sealed class SessionCannotBeLockedException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public SessionCannotBeLockedException(string message) { }
+        public SessionCannotBeLockedException(string message, System.Exception innerException) { }
+    }
     public sealed class SessionClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.ISessionClient
     {
         public SessionClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.ReceiveMode receiveMode = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null, int prefetchCount = 0) { }
@@ -427,6 +437,11 @@ namespace Microsoft.Azure.ServiceBus
     {
         public TrueFilter() { }
         public override string ToString() { }
+    }
+    public sealed class UnauthorizedException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public UnauthorizedException(string message) { }
+        public UnauthorizedException(string message, System.Exception innerException) { }
     }
 }
 namespace Microsoft.Azure.ServiceBus.Core
