@@ -20,5 +20,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public const string S1 = "S1";
         public const string S2 = "S2";
         public const string S3 = "S3";
+        public const string B1 = "B1";
+        public const string B2 = "B2";
+        public const string B3 = "B3";
     }
 }

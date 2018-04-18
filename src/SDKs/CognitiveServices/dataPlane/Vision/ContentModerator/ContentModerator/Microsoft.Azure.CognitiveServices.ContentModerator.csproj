@@ -5,7 +5,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.ContentModerator</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Content Moderator APIs.</Description>
-    <Version>0.10.0-preview</Version>
+    <Version>0.12.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.ContentModerator</AssemblyName>
     <PackageTags>ContentModerator;Content Moderator;</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Content Moderator SDK.</PackageReleaseNotes>

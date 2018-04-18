@@ -3,18 +3,22 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Xunit;
+namespace Fabric.Tests
+{
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Xunit;
 
-namespace Fabric.Tests {
-
-    public class StoragePoolTests : FabricTestBase {
+    public class StoragePoolTests : FabricTestBase
+    {
 
         private void AssertStoragePoolsAreSame(StoragePool expected, StoragePool found) {
-            if (expected == null) {
+            if (expected == null)
+            {
                 Assert.Null(found);
-            } else {
+            }
+            else
+            {
                 Assert.True(FabricCommon.ResourceAreSame(expected, found));
                 Assert.Equal(expected.SizeGB, found.SizeGB);
             }
@@ -30,9 +34,8 @@ namespace Fabric.Tests {
         [Fact]
         public void TestListStoragePools() {
             RunTest((client) => {
-                var subSystems = client.StorageSystems.List(Location);
-                Common.MapOverIPage(subSystems, client.StorageSystems.ListNext, (subSystem) => {
-                    var storagePools = client.StoragePools.List(Location, subSystem.Name);
+                OverStorageSystems(client, (fabricLocationName, storageSystemName) => {
+                    var storagePools = client.StoragePools.List(ResourceGroupName, fabricLocationName, storageSystemName);
                     Common.MapOverIPage(storagePools, client.StoragePools.ListNext, ValidateStoragePool);
                     Common.WriteIPagesToFile(storagePools, client.StoragePools.ListNext, "ListStoragePools.txt", ResourceName);
                 });
@@ -42,9 +45,10 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetStoragePool() {
             RunTest((client) => {
-                var subSystem = client.StorageSystems.List(Location).GetFirst();
-                var storagePool = client.StoragePools.List(Location, subSystem.Name).GetFirst();
-                var retrieved = client.StoragePools.Get(Location, subSystem.Name, storagePool.Name);
+                var fabricLocationName = GetLocation(client);
+                var storageSystemName = GetStorageSystem(client, fabricLocationName);
+                var storagePool = client.StoragePools.List(ResourceGroupName, fabricLocationName, storageSystemName).GetFirst();
+                var retrieved = client.StoragePools.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePool.Name);
                 AssertStoragePoolsAreSame(storagePool, retrieved);
             });
         }
@@ -52,16 +56,16 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetAllStoragePools() {
             RunTest((client) => {
-                var subSystems = client.StorageSystems.List(Location);
-                Common.MapOverIPage(subSystems, client.StorageSystems.ListNext, (subSystem) => {
-                    var StoragePools = client.StoragePools.List(Location, subSystem.Name);
-                    Common.MapOverIPage(StoragePools, client.StoragePools.ListNext, (StoragePool) => {
-                        var retrieved = client.StoragePools.Get(Location, subSystem.Name, StoragePool.Name);
-                        AssertStoragePoolsAreSame(StoragePool, retrieved);
+                OverStorageSystems(client, (fabricLocationName, storageSystemName) => {
+                    var StoragePools = client.StoragePools.List(ResourceGroupName, fabricLocationName, storageSystemName);
+                    Common.MapOverIPage(StoragePools, client.StoragePools.ListNext, (storagePool) => {
+                        var storagePoolName = ExtractName(storagePool.Name);
+                        var retrieved = client.StoragePools.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName);
+                        AssertStoragePoolsAreSame(storagePool, retrieved);
                     });
                 });
             });
         }
-        
+
     }
 }

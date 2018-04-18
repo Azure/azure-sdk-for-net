@@ -12,7 +12,7 @@ internal static partial class SdkInfo
             return new Tuple<string, string, string>[]
             {
                 new Tuple<string, string, string>("Sql", "BackupLongTermRetentionPolicies", "2017-03-01-preview"),
-                new Tuple<string, string, string>("Sql", "Capabilities", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "Capabilities", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "DataMaskingPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DatabaseAutomaticTuning", "2015-05-01-preview"),
@@ -21,11 +21,12 @@ internal static partial class SdkInfo
                 new Tuple<string, string, string>("Sql", "DatabaseThreatDetectionPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DatabaseUsages", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "Databases", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "Databases", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "Databases", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolDatabaseActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ElasticPoolOperations", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "ElasticPools", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "ElasticPools", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "EncryptionProtectors", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "FailoverGroups", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "FirewallRules", "2014-04-01"),

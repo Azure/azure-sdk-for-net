@@ -895,7 +895,7 @@ namespace ContentModeratorTests
 		/// <param name="contentType"></param>
 		/// <param name="textContent"></param>
 		/// <returns></returns>
-		public static Responses GetTextResponse(ContentModeratorClient client, ContentModeratorAPI api, string listid, string textContent, string contentType = "text/plain", string language = "eng",bool? isAutoCorrect = false, bool? isPii = false, bool? isClassify = false)
+		public static Responses GetTextResponse(ContentModeratorClient client, ContentModeratorAPI api, string listid, Stream textContent, string contentType = "text/plain", string language = default(string),bool? isAutoCorrect = false, bool? isPii = false, bool? isClassify = false)
 		{
             Responses r = new Responses();
             Utilities u = new Utilities();
@@ -909,7 +909,7 @@ namespace ContentModeratorTests
 				switch (api)
 				{
 					case ContentModeratorAPI.SCREEN_TEXT:
-						var tempST = client.TextModeration.ScreenTextWithHttpMessagesAsync(language,contentType, textContent,isAutoCorrect,isPii,listid,isClassify);
+						var tempST = client.TextModeration.ScreenTextWithHttpMessagesAsync(contentType,textContent,language,isAutoCorrect,isPii,listid,isClassify);
                         u.WaitUntilCompleted(tempST);
                         if (tempST.Exception != null)
                         {

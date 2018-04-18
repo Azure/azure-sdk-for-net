@@ -106,12 +106,14 @@ namespace Sql.Tests
                 Assert.StartsWith(db1.Name, droppedDatabase.Name);
 
                 // Restore the deleted database using restorable dropped database id
+                //   In new DB API (Version 2017), if use restorable dropped database id, need to specify the RestorableDroppedDatabaseId,
+                //       which include the source database id and deletion time
                 var db3Name = SqlManagementTestUtilities.GenerateName();
                 var db3Input = new Database
                 {
                     Location = server.Location,
                     CreateMode = CreateMode.Restore,
-                    SourceDatabaseId = droppedDatabase.Id,
+                    RestorableDroppedDatabaseId = droppedDatabase.Id,
                     RestorePointInTime = droppedDatabase.EarliestRestoreDate // optional param for Restore
                 };
                 var db3Response = sqlClient.Databases.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, db3Name, db3Input);
@@ -262,16 +264,16 @@ namespace Sql.Tests
                 LongTermRetentionBackup backup = sqlClient.LongTermRetentionBackups.Get(locationName, serverName, databaseName, backups.First().Name);
                 Assert.NotNull(backup);
 
-                // Restore the backup - TODO After Database 2017-03-01-Preview is done
+                // Restore the backup
                 //
-                /* Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
+                Database restoredDatabase = sqlClient.Databases.CreateOrUpdate(
                     resourceGroupName, serverName, databaseName: SqlManagementTestUtilities.GenerateName(),
                     parameters: new Database
                     {
                         Location = locationName,
                         CreateMode = CreateMode.RestoreLongTermRetentionBackup,
-                        RecoveryServicesRecoveryPointResourceId = ""
-                    });*/
+                        LongTermRetentionBackupResourceId = backup.Id
+                    });
 
                 // Delete the backup.
                 //
@@ -355,8 +357,7 @@ namespace Sql.Tests
                     new Database
                     {
                         Location = server.Location,
-                        Edition = DatabaseEdition.DataWarehouse,
-                        RequestedServiceObjectiveName = ServiceObjectiveName.DW100
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.DW100)
                     });
                 Assert.NotNull(db);
 

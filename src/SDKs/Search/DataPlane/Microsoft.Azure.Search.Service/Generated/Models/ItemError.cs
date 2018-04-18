@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="key">The key of the item for which indexing
         /// failed.</param>
         /// <param name="errorMessage">The message describing the error that
-        /// occurred while attempting to index the item.</param>
+        /// occurred while processing the item.</param>
         public ItemError(string key = default(string), string errorMessage = default(string))
         {
             Key = key;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets the message describing the error that occurred while
-        /// attempting to index the item.
+        /// processing the item.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public string ErrorMessage { get; private set; }
