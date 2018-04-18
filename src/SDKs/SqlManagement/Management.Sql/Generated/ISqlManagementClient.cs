@@ -207,6 +207,11 @@ namespace Microsoft.Azure.Management.Sql
         IFailoverGroupsOperations FailoverGroups { get; }
 
         /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        IManagedInstancesOperations ManagedInstances { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
@@ -252,6 +257,11 @@ namespace Microsoft.Azure.Management.Sql
         IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; }
 
         /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        IManagedDatabasesOperations ManagedDatabases { get; }
+
+        /// <summary>
         /// Gets the IServerAutomaticTuningOperations.
         /// </summary>
         IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
@@ -276,5 +286,9 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IElasticPoolOperations ElasticPoolOperations { get; }
 
+        /// <summary>
+        /// Gets the IInstanceFailoverGroupsOperations.
+        /// </summary>
+        IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
     }
 }
