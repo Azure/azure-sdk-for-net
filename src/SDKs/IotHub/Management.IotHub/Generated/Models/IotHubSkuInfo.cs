@@ -31,13 +31,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Initializes a new instance of the IotHubSkuInfo class.
         /// </summary>
         /// <param name="name">The name of the SKU. Possible values include:
-        /// 'F1', 'S1', 'S2', 'S3'</param>
+        /// 'F1', 'S1', 'S2', 'S3', 'B1', 'B2', 'B3'</param>
+        /// <param name="tier">The billing tier for the IoT hub. Possible
+        /// values include: 'Free', 'Standard', 'Basic'</param>
         /// <param name="capacity">The number of provisioned IoT Hub units.
         /// See:
         /// https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits.</param>
-        /// <param name="tier">The billing tier for the IoT hub. Possible
-        /// values include: 'Free', 'Standard'</param>
-        public IotHubSkuInfo(string name, long capacity, IotHubSkuTier? tier = default(IotHubSkuTier?))
+        public IotHubSkuInfo(string name, IotHubSkuTier? tier = default(IotHubSkuTier?), long? capacity = default(long?))
         {
             Name = name;
             Tier = tier;
@@ -52,14 +52,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
 
         /// <summary>
         /// Gets or sets the name of the SKU. Possible values include: 'F1',
-        /// 'S1', 'S2', 'S3'
+        /// 'S1', 'S2', 'S3', 'B1', 'B2', 'B3'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets the billing tier for the IoT hub. Possible values include:
-        /// 'Free', 'Standard'
+        /// 'Free', 'Standard', 'Basic'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public IotHubSkuTier? Tier { get; private set; }
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// https://docs.microsoft.com/azure/azure-subscription-service-limits#iot-hub-limits.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
-        public long Capacity { get; set; }
+        public long? Capacity { get; set; }
 
         /// <summary>
         /// Validate the object.

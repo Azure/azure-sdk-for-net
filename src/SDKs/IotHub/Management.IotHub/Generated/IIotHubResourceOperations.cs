@@ -90,6 +90,38 @@ namespace Microsoft.Azure.Management.IotHub
         /// </exception>
         Task<AzureOperationResponse<IotHubDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Update an existing IoT Hubs tags.
+        /// </summary>
+        /// <remarks>
+        /// Update an existing IoT Hub tags. to update other fields use the
+        /// CreateOrUpdate method
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Resource group identifier.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of iot hub to update.
+        /// </param>
+        /// <param name='iotHubTags'>
+        /// Updated tag information to set into the iot hub instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IotHubDescription>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, TagsResource iotHubTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Delete an IoT hub.
         /// </summary>
         /// <remarks>
@@ -252,7 +284,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<string>>> ListEventHubConsumerGroupsWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventHubConsumerGroupInfo>>> ListEventHubConsumerGroupsWithHttpMessagesAsync(string resourceGroupName, string resourceName, string eventHubEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a consumer group from the Event Hub-compatible device-to-cloud
         /// endpoint for an IoT hub.
@@ -655,6 +687,38 @@ namespace Microsoft.Azure.Management.IotHub
         /// </exception>
         Task<AzureOperationResponse<IotHubDescription>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IotHubDescription iotHubDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Update an existing IoT Hubs tags.
+        /// </summary>
+        /// <remarks>
+        /// Update an existing IoT Hub tags. to update other fields use the
+        /// CreateOrUpdate method
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// Resource group identifier.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of iot hub to update.
+        /// </param>
+        /// <param name='iotHubTags'>
+        /// Updated tag information to set into the iot hub instance.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IotHubDescription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, TagsResource iotHubTags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Delete an IoT hub.
         /// </summary>
         /// <remarks>
@@ -783,7 +847,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<string>>> ListEventHubConsumerGroupsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventHubConsumerGroupInfo>>> ListEventHubConsumerGroupsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a list of all the jobs in an IoT hub. For more information,
         /// see:

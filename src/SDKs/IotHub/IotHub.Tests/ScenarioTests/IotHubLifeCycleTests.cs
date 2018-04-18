@@ -2,21 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System.Collections.Generic;
-
 namespace IotHub.Tests.ScenarioTests
 {
     using System;
-    using System.Net;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using IotHub.Tests.Helpers;
+    using Microsoft.Azure.Management.IotHub;
+    using Microsoft.Azure.Management.IotHub.Models;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Management.IotHub;
-    using Microsoft.Azure.Management.IotHub.Models;
-    using IotHub.Tests.Helpers;
-    using IotHub.Tests.ScenarioTests;
     using Xunit;
-    using System.Linq;
 
     public class IotHubLifeCycleTests : IotHubTestBase
     {
@@ -57,6 +55,17 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.Equal(IotHubSku.S1, iotHub.Sku.Name);
                 Assert.Equal(IotHubTestUtilities.DefaultIotHubName, iotHub.Name);
 
+                // Add and Get Tags
+                IDictionary<string, string> tags = new Dictionary<string, string>();
+                tags.Add("key1", "value1");
+                tags.Add("key2", "value2");
+                var tag = new TagsResource(tags);
+                iotHub = this.iotHubClient.IotHubResource.Update(IotHubTestUtilities.DefaultResourceGroupName, IotHubTestUtilities.DefaultIotHubName, tag);
+
+                Assert.NotNull(iotHub);
+                Assert.True(iotHub.Tags.Count().Equals(2));
+                Assert.Equal("value2", iotHub.Tags["key2"]);
+
                 // Get quota metrics
                 var quotaMetrics = this.iotHubClient.IotHubResource.GetQuotaMetrics(
                     IotHubTestUtilities.DefaultResourceGroupName,
@@ -74,6 +83,16 @@ namespace IotHub.Tests.ScenarioTests
                 // Get all Iot Hubs in a resource group
                 var iotHubs = this.iotHubClient.IotHubResource.ListByResourceGroup(IotHubTestUtilities.DefaultResourceGroupName);
                 Assert.True(iotHubs.Count() > 0);
+
+                // Get all Iot Hubs in a subscription
+                var iotHubBySubscription = this.iotHubClient.IotHubResource.ListBySubscription();
+                Assert.True(iotHubBySubscription.Count() > 0);
+
+                // Get Registry Stats
+                var regStats = this.iotHubClient.IotHubResource.GetStats(IotHubTestUtilities.DefaultResourceGroupName, IotHubTestUtilities.DefaultIotHubName);
+                Assert.True(regStats.TotalDeviceCount.Value.Equals(0));
+                Assert.True(regStats.EnabledDeviceCount.Value.Equals(0));
+                Assert.True(regStats.DisabledDeviceCount.Value.Equals(0));
 
                 // Get Valid Skus
                 var skus = this.iotHubClient.IotHubResource.GetValidSkus(
@@ -102,7 +121,7 @@ namespace IotHub.Tests.ScenarioTests
                     IotHubTestUtilities.DefaultIotHubName,
                     IotHubTestUtilities.EventsEndpointName);
                 Assert.True(ehConsumerGroups.Count() > 0);
-                Assert.True(ehConsumerGroups.Any(e => e.Equals("$Default", StringComparison.OrdinalIgnoreCase)));
+                Assert.True(ehConsumerGroups.Any(e => e.Name.Equals("$Default", StringComparison.OrdinalIgnoreCase)));
 
                 // Add EH consumer group
                 var ehConsumerGroup = this.iotHubClient.IotHubResource.CreateEventHubConsumerGroup(
@@ -190,7 +209,7 @@ namespace IotHub.Tests.ScenarioTests
 
                 iotHub.Properties.Routing = this.GetIotHubRoutingProperties(resourceGroup);
                 retIotHub = this.UpdateIotHub(resourceGroup, iotHub, IotHubTestUtilities.DefaultUpdateIotHubName);
-                
+
                 Assert.NotNull(retIotHub);
                 Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
                 Assert.Equal(retIotHub.Properties.Routing.Routes.Count, 4);
@@ -210,10 +229,11 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.Equal(iotHub.Sku.Capacity, iotHubDesc.Sku.Capacity);
                 Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, iotHubDesc.Name);
 
-                //Update Again
+                // Update Again
                 // perform a dummy update
                 iotHubDesc.Properties.Routing.Endpoints.EventHubs[0].ResourceGroup = "1";
                 retIotHub = this.UpdateIotHub(resourceGroup, iotHubDesc, IotHubTestUtilities.DefaultUpdateIotHubName);
+
                 Assert.NotNull(retIotHub);
                 Assert.Equal(IotHubTestUtilities.DefaultUpdateIotHubName, retIotHub.Name);
                 Assert.Equal(retIotHub.Properties.Routing.Routes.Count, 4);
@@ -254,7 +274,7 @@ namespace IotHub.Tests.ScenarioTests
 
                 // Create Hub
                 var iotHub = this.CreateIotHub(resourceGroup, IotHubTestUtilities.DefaultLocation, IotHubTestUtilities.DefaultCertificateIotHubName, null);
-                
+
                 // Upload Certificate to the Hub
                 var newCertificateDescription = this.CreateCertificate(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName, IotHubTestUtilities.DefaultIotHubCertificateContent);
                 Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateName, newCertificateDescription.Name);
@@ -275,8 +295,16 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateType, certificate.Type);
                 Assert.False(certificate.Properties.IsVerified);
 
+                var certificateWithNonceDescription = this.GenerateVerificationCode(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName, certificate.Etag);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateName, certificateWithNonceDescription.Name);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateSubject, certificateWithNonceDescription.Properties.Subject);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateThumbprint, certificateWithNonceDescription.Properties.Thumbprint);
+                Assert.Equal(IotHubTestUtilities.DefaultIotHubCertificateType, certificateWithNonceDescription.Type);
+                Assert.False(certificateWithNonceDescription.Properties.IsVerified);
+                Assert.NotNull(certificateWithNonceDescription.Properties.VerificationCode);
+
                 // Delete certificate
-                this.DeleteCertificate(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName, certificate.Etag);
+                this.DeleteCertificate(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName, IotHubTestUtilities.DefaultIotHubCertificateName, certificateWithNonceDescription.Etag);
 
                 // Get all certificate after delete
                 var certificateListAfterDelete = this.GetCertificates(resourceGroup, IotHubTestUtilities.DefaultCertificateIotHubName);

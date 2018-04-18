@@ -3,18 +3,22 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Xunit;
+namespace Fabric.Tests
+{
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Xunit;
 
-namespace Fabric.Tests {
-    
-    public class FabricLocationTests : FabricTestBase {
+    public class FabricLocationTests : FabricTestBase
+    {
 
         private void AssertFabricLocationEqual(FabricLocation expected, FabricLocation found) {
-            if (expected == null) {
+            if (expected == null)
+            {
                 Assert.Null(found);
-            } else {
+            }
+            else
+            {
                 Assert.True(FabricCommon.ResourceAreSame(expected, found));
 
                 Assert.Equal(expected.Id, found.Id);
@@ -31,7 +35,7 @@ namespace Fabric.Tests {
         [Fact]
         public void TestListFabricLocations() {
             RunTest((client) => {
-                var locations = client.FabricLocations.List(Location);
+                var locations = client.FabricLocations.List(ResourceGroupName);
                 Common.MapOverIPage(locations, client.FabricLocations.ListNext, ValidateFabricLocation);
                 Common.WriteIPagesToFile(locations, client.FabricLocations.ListNext, "ListFabricLocations.txt", (location) => location.Name);
             });
@@ -40,9 +44,11 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetFabricLocation() {
             RunTest((client) => {
-                var location = client.FabricLocations.List(Location).GetFirst();
-                if (location != null) {
-                    var retrieved = client.FabricLocations.Get(Location, location.Name);
+                var location = client.FabricLocations.List(ResourceGroupName).GetFirst();
+                if (location != null)
+                {
+                    var fabricLocationName = ExtractName(location.Name);
+                    var retrieved = client.FabricLocations.Get(ResourceGroupName, fabricLocationName);
                     AssertFabricLocationEqual(location, retrieved);
                 }
             });
@@ -51,9 +57,10 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetAllFabricLocations() {
             RunTest((client) => {
-                var locations = client.FabricLocations.List(Location);
+                var locations = client.FabricLocations.List(ResourceGroupName);
                 Common.MapOverIPage(locations, client.FabricLocations.ListNext, (location) => {
-                    var retrieved = client.FabricLocations.Get(Location, location.Name);
+                    var fabricLocationName = ExtractName(location.Name);
+                    var retrieved = client.FabricLocations.Get(ResourceGroupName, fabricLocationName);
                     AssertFabricLocationEqual(location, retrieved);
                 });
             });
