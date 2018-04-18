@@ -34,20 +34,6 @@ namespace DataBox.Tests.Tests
         }
 
         [Fact]
-        public void TestServiceHealth()
-        {
-            try
-            {
-                var serviceHealth = this.Client.Service.GetHealth(TestConstants.DefaultResourceLocation);
-                Assert.True(serviceHealth != null, "Get call for Service health was not successful.");
-            }
-            catch (Exception e)
-            {
-                Assert.Null(e);
-            }
-        }
-
-        [Fact]
         public void TestValidateAddress()
         {
             var shippingAddress = GetDefaultShippingAddress();
