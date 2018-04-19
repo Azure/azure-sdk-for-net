@@ -29,22 +29,18 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SubscriptionsOperations operations.
+    /// MigrationConfigurationsOperations operations.
     /// </summary>
-    public partial interface ISubscriptionsOperations
+    public partial interface IMigrationConfigurationsOperations
     {
         /// <summary>
-        /// List all the subscriptions under a specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
+        /// Gets all migrationConfigurations
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
-        /// </param>
-        /// <param name='topicName'>
-        /// The topic name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -61,25 +57,18 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBSubscription>>> ListByTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<MigrationConfigProperties>>> ListWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a topic subscription.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639385.aspx" />
+        /// Initiate Migration from Standard to Premium
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
-        /// </param>
-        /// <param name='topicName'>
-        /// The topic name.
-        /// </param>
-        /// <param name='subscriptionName'>
-        /// The subscription name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a subscription resource.
+        /// Parameters required to Migration Config
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -96,22 +85,15 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SBSubscription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SBSubscription parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MigrationConfigProperties>> StartMigrationWithHttpMessagesAsync(string resourceGroupName, string namespaceName, MigrationConfigProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a subscription from the specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639381.aspx" />
+        /// Deletes a MigrationConfiguration
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
-        /// </param>
-        /// <param name='topicName'>
-        /// The topic name.
-        /// </param>
-        /// <param name='subscriptionName'>
-        /// The subscription name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -125,22 +107,15 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a subscription description for the specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639402.aspx" />
+        /// Retrieves Migration Config
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
-        /// </param>
-        /// <param name='topicName'>
-        /// The topic name.
-        /// </param>
-        /// <param name='subscriptionName'>
-        /// The subscription name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,10 +132,53 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SBSubscription>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MigrationConfigProperties>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all the subscriptions under a specified topic.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639400.aspx" />
+        /// This operation Completes Migration
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> CompleteMigrationWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// This operation reverts Migration
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RevertWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all migrationConfigurations
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -180,6 +198,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBSubscription>>> ListByTopicNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<MigrationConfigProperties>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
