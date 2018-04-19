@@ -1,6 +1,6 @@
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.CognitiveServices.SpellCheck;
-using Microsoft.Azure.CognitiveServices.SpellCheck.Models;
+using Microsoft.Azure.CognitiveServices.Language.SpellCheck;
+using Microsoft.Azure.CognitiveServices.Language.SpellCheck.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Linq;
 using Xunit;
