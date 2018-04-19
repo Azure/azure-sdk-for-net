@@ -2,11 +2,14 @@
 
 ## Current version
 
-## Version 0.6.1-preview
+## Version 0.7.0-preview
 
 ### Feature Additions
 
 * Added execution parameters and connection managers property on ExecuteSSISPackage Activity
+* Updated PostgreSql, MySql, DB2 llinked service to use full connection string instead of server, database, schema, username and password
+* Removed schema property from Teradata linked service
+* Added LinkedService, Dataset, CopySource for Responsys
 
 ## Version 0.6.0-preview
 
