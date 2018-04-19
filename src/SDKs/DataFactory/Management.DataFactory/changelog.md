@@ -2,6 +2,8 @@
 
 ## Current version
 
+## Version 0.6.1-preview
+
 ### Feature Additions
 
 * Added execution parameters and connection managers property on ExecuteSSISPackage Activity
