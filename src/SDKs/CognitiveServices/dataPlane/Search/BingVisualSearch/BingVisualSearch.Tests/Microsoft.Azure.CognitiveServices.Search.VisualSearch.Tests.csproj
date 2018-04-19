@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.CognitiveServices.Search.VisualSearch.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.VisualSearch.Tests</AssemblyName>
-    <VersionPrefix>1.1.0-preview</VersionPrefix>
+    <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
   
   <PropertyGroup>    
@@ -19,7 +19,7 @@
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-	<None Update="TestImages\*.jpg">
+    <None Update="TestImages\*.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TestImages\*.png">
