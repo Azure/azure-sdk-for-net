@@ -50,28 +50,28 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the provider of the operation.
+        /// Gets the name of the provider of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
-        public string Provider { get; set; }
+        public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource type of the operation.
+        /// Gets the name of the resource type of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; set; }
+        public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets or sets the friendly name of the operation.
+        /// Gets the friendly name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public string Operation { get; private set; }
 
         /// <summary>
-        /// Gets or sets the description of the operation.
+        /// Gets the description of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
     }
 }

@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Search
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Client that can be used to manage and query indexes and documents, as
@@ -93,6 +97,20 @@ namespace Microsoft.Azure.Search
         /// Gets the IIndexesOperations.
         /// </summary>
         IIndexesOperations Indexes { get; }
+
+        /// <summary>
+        /// Gets service level statistics for an Azure Search service.
+        /// </summary>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ServiceStatistics>> GetServiceStatisticsWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

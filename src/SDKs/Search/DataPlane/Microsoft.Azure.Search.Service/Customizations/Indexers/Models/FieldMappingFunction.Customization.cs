@@ -13,30 +13,72 @@ namespace Microsoft.Azure.Search.Models
         /// the input is UTF-8 encoded.
         /// </summary>
         /// <remarks>
+        /// <para>Sample use case: Only URL-safe characters can appear in an Azure Search document key (because customers
+        /// must be able to address the document using the Lookup API, for example). If your data contains URL-unsafe
+        /// characters and you want to use it to populate a key field in your search index, use this function. 
+        /// </para>
+        /// <para>
+        /// For details on the encoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/>.
+        /// Calling this method is the same as calling <c cref="Base64Encode(bool)"/> with <c>useHttpServerUtilityUrlTokenEncode</c> set to <c>true</c>.
+        /// </para>
+        /// </remarks>
+        /// <returns>A new field mapping function.</returns>
+        public static FieldMappingFunction Base64Encode() => new FieldMappingFunction("base64Encode");
+
+        /// <summary>
+        /// Creates a field mapping function that performs URL-safe Base64 encoding of the input string. Assumes that
+        /// the input is UTF-8 encoded.
+        /// </summary>
+        /// <param name="useHttpServerUtilityUrlTokenEncode">Determines how Base64 encoding is performed. See <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/> for details.</param>
+        /// <remarks>
         /// Sample use case: Only URL-safe characters can appear in an Azure Search document key (because customers
         /// must be able to address the document using the Lookup API, for example). If your data contains URL-unsafe
         /// characters and you want to use it to populate a key field in your search index, use this function. 
         /// </remarks>
         /// <returns>A new field mapping function.</returns>
-        public static FieldMappingFunction Base64Encode()
-        {
-            return new FieldMappingFunction("base64Encode");
-        }
+        public static FieldMappingFunction Base64Encode(bool useHttpServerUtilityUrlTokenEncode) => 
+            new FieldMappingFunction(
+                "base64Encode", 
+                new Dictionary<string, object>
+                {
+                    [nameof(useHttpServerUtilityUrlTokenEncode)] = useHttpServerUtilityUrlTokenEncode
+                });
 
         /// <summary>
         /// Creates a field mapping function that performs Base64 decoding of the input string. The input is assumed
         /// to a URL-safe Base64-encoded string. 
         /// </summary>
         /// <remarks>
+        /// <para>Sample use case: Blob custom metadata values must be ASCII-encoded. You can use Base64 encoding to
+        /// represent arbitrary Unicode strings in blob custom metadata. However, to make search meaningful, you can
+        /// use this function to turn the encoded data back into "regular" strings when populating your search index. 
+        /// </para>
+        /// <para>
+        /// For details on the decoding used, see <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/>.
+        /// Calling this method is the same as calling <c cref="Base64Decode(bool)"/> with <c>useHttpServerUtilityUrlTokenDecode</c> set to <c>true</c>.
+        /// </para>
+        /// </remarks>
+        /// <returns>A new field mapping function.</returns>
+        public static FieldMappingFunction Base64Decode() => new FieldMappingFunction("base64Decode");
+
+        /// <summary>
+        /// Creates a field mapping function that performs Base64 decoding of the input string. The input is assumed
+        /// to a URL-safe Base64-encoded string. 
+        /// </summary>
+        /// <param name="useHttpServerUtilityUrlTokenDecode">Determines how Base64 decoding is performed. See <see href="https://docs.microsoft.com/azure/search/search-indexer-field-mappings#details-of-base64-encoding-and-decoding"/> for details.</param>
+        /// <remarks>
         /// Sample use case: Blob custom metadata values must be ASCII-encoded. You can use Base64 encoding to
         /// represent arbitrary Unicode strings in blob custom metadata. However, to make search meaningful, you can
         /// use this function to turn the encoded data back into "regular" strings when populating your search index. 
         /// </remarks>
         /// <returns>A new field mapping function.</returns>
-        public static FieldMappingFunction Base64Decode()
-        {
-            return new FieldMappingFunction("base64Decode");
-        }
+        public static FieldMappingFunction Base64Decode(bool useHttpServerUtilityUrlTokenDecode) =>
+            new FieldMappingFunction(
+                "base64Decode",
+                new Dictionary<string, object>
+                {
+                    [nameof(useHttpServerUtilityUrlTokenDecode)] = useHttpServerUtilityUrlTokenDecode
+                });
 
         /// <summary>
         /// Creates a field mapping function that splits a string field using the specified delimiter, and picks the
@@ -57,17 +99,14 @@ namespace Microsoft.Azure.Search.Models
         /// </para>
         /// </remarks>
         /// <returns>A new field mapping function.</returns>
-        public static FieldMappingFunction ExtractTokenAtPosition(string delimiter, int position)
-        {
-            var parameters = 
-                new Dictionary<string, object>()
+        public static FieldMappingFunction ExtractTokenAtPosition(string delimiter, int position) =>
+            new FieldMappingFunction(
+                "extractTokenAtPosition", 
+                new Dictionary<string, object>
                 {
-                    { nameof(delimiter), delimiter },
-                    { nameof(position), position }
-                };
-
-            return new FieldMappingFunction("extractTokenAtPosition", parameters);
-        }
+                    [nameof(delimiter)] = delimiter,
+                    [nameof(position)] = position
+                });
 
         /// <summary>
         /// Creates a field mapping function that transforms a string formatted as a JSON array of strings into a string array that can be used to
@@ -84,9 +123,6 @@ namespace Microsoft.Azure.Search.Models
         /// </para>
         /// </remarks>
         /// <returns>A new field mapping function.</returns>
-        public static FieldMappingFunction JsonArrayToStringCollection()
-        {
-            return new FieldMappingFunction("jsonArrayToStringCollection");
-        }
+        public static FieldMappingFunction JsonArrayToStringCollection() => new FieldMappingFunction("jsonArrayToStringCollection");
     }
 }
