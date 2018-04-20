@@ -1407,7 +1407,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<LegalHold>> SetLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LegalHold>> SetLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1479,10 +1479,6 @@ namespace Microsoft.Azure.Management.Storage
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
-            }
-            if (tags == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "tags");
             }
             LegalHold legalHold = new LegalHold();
             if (tags != null)
@@ -1691,7 +1687,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<LegalHold>> ClearLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LegalHold>> ClearLegalHoldWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1763,10 +1759,6 @@ namespace Microsoft.Azure.Management.Storage
                 {
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
-            }
-            if (tags == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "tags");
             }
             LegalHold legalHold = new LegalHold();
             if (tags != null)

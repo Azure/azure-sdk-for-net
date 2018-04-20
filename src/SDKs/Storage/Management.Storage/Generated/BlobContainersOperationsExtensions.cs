@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Storage
             /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
             /// lower case at SRP.
             /// </param>
-            public static LegalHold SetLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags)
+            public static LegalHold SetLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>))
             {
                 return operations.SetLegalHoldAsync(resourceGroupName, accountName, containerName, tags).GetAwaiter().GetResult();
             }
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LegalHold> SetLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LegalHold> SetLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.SetLegalHoldWithHttpMessagesAsync(resourceGroupName, accountName, containerName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Management.Storage
             /// Each tag should be 3 to 23 alphanumeric characters and is normalized to
             /// lower case at SRP.
             /// </param>
-            public static LegalHold ClearLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags)
+            public static LegalHold ClearLegalHold(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>))
             {
                 return operations.ClearLegalHoldAsync(resourceGroupName, accountName, containerName, tags).GetAwaiter().GetResult();
             }
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LegalHold> ClearLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LegalHold> ClearLegalHoldAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, IList<string> tags = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ClearLegalHoldWithHttpMessagesAsync(resourceGroupName, accountName, containerName, tags, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -60,10 +60,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
         /// <param name="networkRuleSet">Network rule set</param>
+        /// <param name="enableAzureFilesAadIntegration">Enables Azure Files
+        /// AAD Integration if sets to true.</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Kind? kind = default(Kind?))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? enableAzureFilesAadIntegration = default(bool?), Kind? kind = default(Kind?))
         {
             Sku = sku;
             Tags = tags;
@@ -73,6 +75,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             AccessTier = accessTier;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             NetworkRuleSet = networkRuleSet;
+            EnableAzureFilesAadIntegration = enableAzureFilesAadIntegration;
             Kind = kind;
             CustomInit();
         }
@@ -142,6 +145,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAcls")]
         public NetworkRuleSet NetworkRuleSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables Azure Files AAD Integration if sets to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureFilesAadIntegration")]
+        public bool? EnableAzureFilesAadIntegration { get; set; }
 
         /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,14 +31,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the LegalHold class.
         /// </summary>
-        /// <param name="tags">Each tag should be 3 to 23 alphanumeric
-        /// characters and is normalized to lower case at SRP.</param>
         /// <param name="hasLegalHold">The hasLegalHold public property is set
         /// to true by SRP if there are at least one existing tag. The
         /// hasLegalHold public property is set to false by SRP if all existing
         /// legal hold tags are cleared out. There can be a maximum of 1000
         /// blob containers with hasLegalHold=true for a given account.</param>
-        public LegalHold(IList<string> tags, bool? hasLegalHold = default(bool?))
+        /// <param name="tags">Each tag should be 3 to 23 alphanumeric
+        /// characters and is normalized to lower case at SRP.</param>
+        public LegalHold(bool? hasLegalHold = default(bool?), IList<string> tags = default(IList<string>))
         {
             HasLegalHold = hasLegalHold;
             Tags = tags;
@@ -68,18 +67,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "tags")]
         public IList<string> Tags { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Tags == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Tags");
-            }
-        }
     }
 }

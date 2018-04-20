@@ -10,25 +10,26 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for a Azure Resource Manager resource
-    /// with an etag.
+    /// An Azure Resource Manager resource.
     /// </summary>
-    public partial class AzureEntityResource : AzureResource
+    public partial class AzureResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the AzureEntityResource class.
+        /// Initializes a new instance of the AzureResource class.
         /// </summary>
-        public AzureEntityResource()
+        public AzureResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureEntityResource class.
+        /// Initializes a new instance of the AzureResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -36,11 +37,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="etag">Resource Etag.</param>
-        public AzureEntityResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
-            : base(id, name, type)
+        public AzureResource(string id = default(string), string name = default(string), string type = default(string))
         {
-            Etag = etag;
+            Id = id;
+            Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -50,10 +51,25 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Etag.
+        /// Gets fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; private set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }
