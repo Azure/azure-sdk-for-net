@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Maps
     /// <summary>
     /// Resource Provider
     /// </summary>
-    public partial interface IAzureMapsManagementClient : System.IDisposable
+    public partial interface IMapsManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.

@@ -47,19 +47,19 @@ namespace Maps.Tests.Helpers
             }
         }
 
-        public static Microsoft.Azure.Management.Maps.Client GetMapsManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        public static Microsoft.Azure.Management.Maps.MapsManagementClient GetMapsManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            Client locationBasedServicesClient;
+            MapsManagementClient locationBasedServicesClient;
             if (IsTestTenant)
             {
-                locationBasedServicesClient = new Client(new TokenCredentials("xyz"), GetHandler());
+                locationBasedServicesClient = new MapsManagementClient(new TokenCredentials("xyz"), GetHandler());
                 locationBasedServicesClient.SubscriptionId = testSubscription;
                 locationBasedServicesClient.BaseUri = testUri;
             }
             else
             {
                 handler.IsPassThrough = true;
-                locationBasedServicesClient = context.GetServiceClient<Microsoft.Azure.Management.Maps.Client>(handlers: handler);
+                locationBasedServicesClient = context.GetServiceClient<Microsoft.Azure.Management.Maps.MapsManagementClient>(handlers: handler);
             }
             return locationBasedServicesClient;
         }
@@ -72,14 +72,14 @@ namespace Maps.Tests.Helpers
         public static MapsAccountCreateParameters GetDefaultMapsAccountParameters()
         {
             MapsAccountCreateParameters account = new MapsAccountCreateParameters
-                                                                   {
-                                                                       Location = DefaultLocation,
-                                                                       Tags = DefaultTags,
-                                                                       Sku = new Microsoft.Azure.Management.Maps.Models.Sku()
-                                                                             {
-                                                                                 Name = DefaultSkuName
-                                                                             }
-                                                                   };
+            {
+                Location = DefaultLocation,
+                Tags = DefaultTags,
+                Sku = new Microsoft.Azure.Management.Maps.Models.Sku()
+                {
+                    Name = DefaultSkuName
+                }
+            };
 
             return account;
         }
@@ -102,7 +102,7 @@ namespace Maps.Tests.Helpers
             return rgname;
         }
 
-        public static string CreateDefaultMapsAccount(Microsoft.Azure.Management.Maps.Client locationBasedServicesManagementClient, string rgname)
+        public static string CreateDefaultMapsAccount(Microsoft.Azure.Management.Maps.MapsManagementClient locationBasedServicesManagementClient, string rgname)
         {
             string accountName = TestUtilities.GenerateName("lbs");
             MapsAccountCreateParameters parameters = GetDefaultMapsAccountParameters();
@@ -143,7 +143,7 @@ namespace Maps.Tests.Helpers
             {
                 Assert.Equal(MapsManagementTestUtilities.DefaultLocation, account.Location);
                 Assert.Equal(MapsManagementTestUtilities.DefaultSkuName, account.Sku.Name);
-                
+
                 Assert.NotNull(account.Tags);
                 Assert.Equal(2, account.Tags.Count);
                 Assert.Equal("value1", account.Tags["key1"]);

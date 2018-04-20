@@ -17,23 +17,23 @@ namespace Microsoft.Azure.Management.Maps.Models
     /// <summary>
     /// Whether the operation refers to the primary or secondary key.
     /// </summary>
-    public partial class AzureMapsKeySpecification
+    public partial class MapsKeySpecification
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMapsKeySpecification class.
+        /// Initializes a new instance of the MapsKeySpecification class.
         /// </summary>
-        public AzureMapsKeySpecification()
+        public MapsKeySpecification()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMapsKeySpecification class.
+        /// Initializes a new instance of the MapsKeySpecification class.
         /// </summary>
         /// <param name="keyType">Whether the operation refers to the primary
         /// or secondary key. Possible values include: 'primary',
         /// 'secondary'</param>
-        public AzureMapsKeySpecification(string keyType)
+        public MapsKeySpecification(string keyType)
         {
             KeyType = keyType;
             CustomInit();

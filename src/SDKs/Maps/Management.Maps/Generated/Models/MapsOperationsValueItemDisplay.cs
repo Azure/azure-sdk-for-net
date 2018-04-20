@@ -16,29 +16,28 @@ namespace Microsoft.Azure.Management.Maps.Models
     /// <summary>
     /// The human-readable description of the operation.
     /// </summary>
-    public partial class AzureMapsOperationsValueItemDisplay
+    public partial class MapsOperationsValueItemDisplay
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// AzureMapsOperationsValueItemDisplay class.
+        /// Initializes a new instance of the MapsOperationsValueItemDisplay
+        /// class.
         /// </summary>
-        public AzureMapsOperationsValueItemDisplay()
+        public MapsOperationsValueItemDisplay()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// AzureMapsOperationsValueItemDisplay class.
+        /// Initializes a new instance of the MapsOperationsValueItemDisplay
+        /// class.
         /// </summary>
-        /// <param name="provider">Service provider: Microsoft Azure
-        /// Maps.</param>
+        /// <param name="provider">Service provider: Microsoft Maps.</param>
         /// <param name="resource">Resource on which the operation is
         /// performed.</param>
         /// <param name="operation">The action that users can perform, based on
         /// their permission level.</param>
         /// <param name="description">The description of the operation.</param>
-        public AzureMapsOperationsValueItemDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
+        public MapsOperationsValueItemDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;
@@ -53,7 +52,7 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets service provider: Microsoft Azure Maps.
+        /// Gets service provider: Microsoft Maps.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; private set; }

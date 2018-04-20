@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Maps.Models
     using System.Linq;
 
     /// <summary>
-    /// This object is returned when an error occurs in the Azure Maps API
+    /// This object is returned when an error occurs in the Maps API
     /// </summary>
     public partial class Error
     {

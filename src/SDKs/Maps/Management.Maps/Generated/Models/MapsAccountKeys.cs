@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.Maps.Models
     using System.Linq;
 
     /// <summary>
-    /// The set of keys which can be used to access the Azure Maps REST APIs.
-    /// Two keys are provided for key rotation without interruption.
+    /// The set of keys which can be used to access the Maps REST APIs. Two
+    /// keys are provided for key rotation without interruption.
     /// </summary>
-    public partial class AzureMapsAccountKeys
+    public partial class MapsAccountKeys
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccountKeys class.
+        /// Initializes a new instance of the MapsAccountKeys class.
         /// </summary>
-        public AzureMapsAccountKeys()
+        public MapsAccountKeys()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccountKeys class.
+        /// Initializes a new instance of the MapsAccountKeys class.
         /// </summary>
-        /// <param name="id">The full Azure resource identifier of the Azure
-        /// Maps Account.</param>
-        /// <param name="primaryKey">The primary key for accessing the Azure
-        /// Maps REST APIs.</param>
-        /// <param name="secondaryKey">The secondary key for accessing the
-        /// Azure Maps REST APIs.</param>
-        public AzureMapsAccountKeys(string id = default(string), string primaryKey = default(string), string secondaryKey = default(string))
+        /// <param name="id">The full Azure resource identifier of the Maps
+        /// Account.</param>
+        /// <param name="primaryKey">The primary key for accessing the Maps
+        /// REST APIs.</param>
+        /// <param name="secondaryKey">The secondary key for accessing the Maps
+        /// REST APIs.</param>
+        public MapsAccountKeys(string id = default(string), string primaryKey = default(string), string secondaryKey = default(string))
         {
             Id = id;
             PrimaryKey = primaryKey;
@@ -50,19 +50,19 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the full Azure resource identifier of the Azure Maps Account.
+        /// Gets the full Azure resource identifier of the Maps Account.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the primary key for accessing the Azure Maps REST APIs.
+        /// Gets the primary key for accessing the Maps REST APIs.
         /// </summary>
         [JsonProperty(PropertyName = "primaryKey")]
         public string PrimaryKey { get; private set; }
 
         /// <summary>
-        /// Gets the secondary key for accessing the Azure Maps REST APIs.
+        /// Gets the secondary key for accessing the Maps REST APIs.
         /// </summary>
         [JsonProperty(PropertyName = "secondaryKey")]
         public string SecondaryKey { get; private set; }

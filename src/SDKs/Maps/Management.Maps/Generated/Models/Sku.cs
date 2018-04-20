@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Maps.Models
     using System.Linq;
 
     /// <summary>
-    /// The SKU of the Azure Maps Account.
+    /// The SKU of the Maps Account.
     /// </summary>
     public partial class Sku
     {

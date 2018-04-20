@@ -16,26 +16,25 @@ namespace Microsoft.Azure.Management.Maps.Models
     using System.Linq;
 
     /// <summary>
-    /// An Azure resource which represents access to a suite of Azure Maps REST
-    /// APIs.
+    /// An Azure resource which represents access to a suite of Maps REST APIs.
     /// </summary>
-    public partial class AzureMapsAccount : Resource
+    public partial class MapsAccount : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccount class.
+        /// Initializes a new instance of the MapsAccount class.
         /// </summary>
-        public AzureMapsAccount()
+        public MapsAccount()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccount class.
+        /// Initializes a new instance of the MapsAccount class.
         /// </summary>
-        /// <param name="id">The fully qualified Azure Maps Account resource
+        /// <param name="id">The fully qualified Maps Account resource
         /// identifier.</param>
-        /// <param name="name">The name of the Azure Maps Account, which is
-        /// unique within a Resource Group.</param>
+        /// <param name="name">The name of the Maps Account, which is unique
+        /// within a Resource Group.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="location">The location of the resource.</param>
         /// <param name="tags">Gets a list of key value pairs that describe the
@@ -44,7 +43,7 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// provided for a resource. Each tag must have a key no greater than
         /// 128 characters and value no greater than 256 characters.</param>
         /// <param name="sku">The SKU of this account.</param>
-        public AzureMapsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
+        public MapsAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
             : base(id, name, type)
         {
             Location = location;

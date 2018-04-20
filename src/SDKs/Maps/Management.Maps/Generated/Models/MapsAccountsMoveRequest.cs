@@ -19,26 +19,24 @@ namespace Microsoft.Azure.Management.Maps.Models
     /// <summary>
     /// The description of what resources to move between resource groups.
     /// </summary>
-    public partial class AzureMapsAccountsMoveRequest
+    public partial class MapsAccountsMoveRequest
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccountsMoveRequest
-        /// class.
+        /// Initializes a new instance of the MapsAccountsMoveRequest class.
         /// </summary>
-        public AzureMapsAccountsMoveRequest()
+        public MapsAccountsMoveRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccountsMoveRequest
-        /// class.
+        /// Initializes a new instance of the MapsAccountsMoveRequest class.
         /// </summary>
         /// <param name="targetResourceGroup">The name of the destination
         /// resource group.</param>
         /// <param name="resourceIds">A list of resource names to move from the
         /// source resource group.</param>
-        public AzureMapsAccountsMoveRequest(string targetResourceGroup, IList<string> resourceIds)
+        public MapsAccountsMoveRequest(string targetResourceGroup, IList<string> resourceIds)
         {
             TargetResourceGroup = targetResourceGroup;
             ResourceIds = resourceIds;

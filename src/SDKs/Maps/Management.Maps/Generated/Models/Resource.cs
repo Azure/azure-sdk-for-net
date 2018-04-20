@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        /// <param name="id">The fully qualified Azure Maps Account resource
+        /// <param name="id">The fully qualified Maps Account resource
         /// identifier.</param>
-        /// <param name="name">The name of the Azure Maps Account, which is
-        /// unique within a Resource Group.</param>
+        /// <param name="name">The name of the Maps Account, which is unique
+        /// within a Resource Group.</param>
         /// <param name="type">Azure resource type.</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string))
         {
@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the fully qualified Azure Maps Account resource identifier.
+        /// Gets the fully qualified Maps Account resource identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Azure Maps Account, which is unique within a
+        /// Gets the name of the Maps Account, which is unique within a
         /// Resource Group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]

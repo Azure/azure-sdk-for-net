@@ -10,38 +10,41 @@
 
 namespace Microsoft.Azure.Management.Maps.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters used to update an existing Azure Maps Account.
+    /// Parameters used to create a new Maps Account.
     /// </summary>
-    public partial class AzureMapsAccountUpdateParameters
+    public partial class MapsAccountCreateParameters
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccountUpdateParameters
+        /// Initializes a new instance of the MapsAccountCreateParameters
         /// class.
         /// </summary>
-        public AzureMapsAccountUpdateParameters()
+        public MapsAccountCreateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMapsAccountUpdateParameters
+        /// Initializes a new instance of the MapsAccountCreateParameters
         /// class.
         /// </summary>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="sku">The SKU of this account.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used in viewing and
         /// grouping this resource (across resource groups). A maximum of 15
         /// tags can be provided for a resource. Each tag must have a key no
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
-        /// <param name="sku">The SKU of this account.</param>
-        public AzureMapsAccountUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
+        public MapsAccountCreateParameters(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Location = location;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -51,6 +54,12 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the location of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets a list of key value pairs that describe the resource.
@@ -71,11 +80,19 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
             if (Sku != null)
             {
                 Sku.Validate();

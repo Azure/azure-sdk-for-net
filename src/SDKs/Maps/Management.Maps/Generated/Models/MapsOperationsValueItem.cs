@@ -13,27 +13,25 @@ namespace Microsoft.Azure.Management.Maps.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class AzureMapsOperationsValueItem
+    public partial class MapsOperationsValueItem
     {
         /// <summary>
-        /// Initializes a new instance of the AzureMapsOperationsValueItem
-        /// class.
+        /// Initializes a new instance of the MapsOperationsValueItem class.
         /// </summary>
-        public AzureMapsOperationsValueItem()
+        public MapsOperationsValueItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMapsOperationsValueItem
-        /// class.
+        /// Initializes a new instance of the MapsOperationsValueItem class.
         /// </summary>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}.</param>
         /// <param name="display">The human-readable description of the
         /// operation.</param>
         /// <param name="origin">The origin of the operation.</param>
-        public AzureMapsOperationsValueItem(string name = default(string), AzureMapsOperationsValueItemDisplay display = default(AzureMapsOperationsValueItemDisplay), string origin = default(string))
+        public MapsOperationsValueItem(string name = default(string), MapsOperationsValueItemDisplay display = default(MapsOperationsValueItemDisplay), string origin = default(string))
         {
             Name = name;
             Display = display;
@@ -56,7 +54,7 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// Gets or sets the human-readable description of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
-        public AzureMapsOperationsValueItemDisplay Display { get; set; }
+        public MapsOperationsValueItemDisplay Display { get; set; }
 
         /// <summary>
         /// Gets the origin of the operation.

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Maps
     /// <summary>
     /// AccountsOperations operations.
     /// </summary>
-    internal partial class AccountsOperations : IServiceOperations<AzureMapsManagementClient>, IAccountsOperations
+    internal partial class AccountsOperations : IServiceOperations<MapsManagementClient>, IAccountsOperations
     {
         /// <summary>
         /// Initializes a new instance of the AccountsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal AccountsOperations(AzureMapsManagementClient client)
+        internal AccountsOperations(MapsManagementClient client)
         {
             if (client == null)
             {
@@ -46,22 +46,22 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Gets a reference to the AzureMapsManagementClient
+        /// Gets a reference to the MapsManagementClient
         /// </summary>
-        public AzureMapsManagementClient Client { get; private set; }
+        public MapsManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create or update an Azure Maps Account. A Maps Account holds the keys which
-        /// allow access to the Azure Maps REST APIs.
+        /// Create or update a Maps Account. A Maps Account holds the keys which allow
+        /// access to the Maps REST APIs.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
-        /// <param name='azureMapsAccountCreateParameters'>
-        /// The new or updated parameters for the Azure Maps Account.
+        /// <param name='mapsAccountCreateParameters'>
+        /// The new or updated parameters for the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureMapsAccount>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, AzureMapsAccountCreateParameters azureMapsAccountCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MapsAccount>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, MapsAccountCreateParameters mapsAccountCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -102,13 +102,13 @@ namespace Microsoft.Azure.Management.Maps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (azureMapsAccountCreateParameters == null)
+            if (mapsAccountCreateParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "azureMapsAccountCreateParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "mapsAccountCreateParameters");
             }
-            if (azureMapsAccountCreateParameters != null)
+            if (mapsAccountCreateParameters != null)
             {
-                azureMapsAccountCreateParameters.Validate();
+                mapsAccountCreateParameters.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Maps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("azureMapsAccountCreateParameters", azureMapsAccountCreateParameters);
+                tracingParameters.Add("mapsAccountCreateParameters", mapsAccountCreateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -172,9 +172,9 @@ namespace Microsoft.Azure.Management.Maps
 
             // Serialize Request
             string _requestContent = null;
-            if(azureMapsAccountCreateParameters != null)
+            if(mapsAccountCreateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(azureMapsAccountCreateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(mapsAccountCreateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AzureMapsAccount>();
+            var _result = new AzureOperationResponse<MapsAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureMapsAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MapsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureMapsAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MapsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -279,17 +279,17 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Updates an Azure Maps Account. Only a subset of the parameters may be
-        /// updated after creation, such as Sku and Tags.
+        /// Updates a Maps Account. Only a subset of the parameters may be updated
+        /// after creation, such as Sku and Tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
-        /// <param name='azureMapsAccountUpdateParameters'>
-        /// The updated parameters for the Azure Maps Account.
+        /// <param name='mapsAccountUpdateParameters'>
+        /// The updated parameters for the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureMapsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, AzureMapsAccountUpdateParameters azureMapsAccountUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MapsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, MapsAccountUpdateParameters mapsAccountUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -330,9 +330,9 @@ namespace Microsoft.Azure.Management.Maps
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (azureMapsAccountUpdateParameters == null)
+            if (mapsAccountUpdateParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "azureMapsAccountUpdateParameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "mapsAccountUpdateParameters");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Maps
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("azureMapsAccountUpdateParameters", azureMapsAccountUpdateParameters);
+                tracingParameters.Add("mapsAccountUpdateParameters", mapsAccountUpdateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
@@ -396,9 +396,9 @@ namespace Microsoft.Azure.Management.Maps
 
             // Serialize Request
             string _requestContent = null;
-            if(azureMapsAccountUpdateParameters != null)
+            if(mapsAccountUpdateParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(azureMapsAccountUpdateParameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(mapsAccountUpdateParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AzureMapsAccount>();
+            var _result = new AzureOperationResponse<MapsAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -465,7 +465,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureMapsAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MapsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -485,13 +485,13 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Delete an Azure Maps Account.
+        /// Delete a Maps Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -655,13 +655,13 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Get an Azure Maps Account.
+        /// Get a Maps Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureMapsAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MapsAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -813,7 +813,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AzureMapsAccount>();
+            var _result = new AzureOperationResponse<MapsAccount>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -826,7 +826,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureMapsAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MapsAccount>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -846,7 +846,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Get all Azure Maps Accounts in a Resource Group
+        /// Get all Maps Accounts in a Resource Group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
@@ -872,7 +872,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<AzureMapsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<MapsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -995,7 +995,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<AzureMapsAccount>>();
+            var _result = new AzureOperationResponse<IEnumerable<MapsAccount>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1008,7 +1008,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AzureMapsAccount>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<MapsAccount>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1028,7 +1028,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Get all Azure Maps Accounts in a Subscription
+        /// Get all Maps Accounts in a Subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1051,7 +1051,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<AzureMapsAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<MapsAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1168,7 +1168,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<AzureMapsAccount>>();
+            var _result = new AzureOperationResponse<IEnumerable<MapsAccount>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1181,7 +1181,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AzureMapsAccount>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<MapsAccount>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1201,14 +1201,13 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Moves Azure Maps Accounts from one ResourceGroup (or Subscription) to
-        /// another
+        /// Moves Maps Accounts from one ResourceGroup (or Subscription) to another
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains Azure Maps Account to move.
+        /// The name of the resource group that contains Maps Account to move.
         /// </param>
         /// <param name='moveRequest'>
-        /// The details of the Azure Maps Account move.
+        /// The details of the Maps Account move.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1228,7 +1227,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, AzureMapsAccountsMoveRequest moveRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, MapsAccountsMoveRequest moveRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1381,15 +1380,15 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Get the keys to use with the Azure Maps APIs. A key is used to authenticate
-        /// and authorize access to the Azure Maps REST APIs. Only one key is needed at
-        /// a time; two are given to provide seamless key regeneration.
+        /// Get the keys to use with the Maps APIs. A key is used to authenticate and
+        /// authorize access to the Maps REST APIs. Only one key is needed at a time;
+        /// two are given to provide seamless key regeneration.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1412,7 +1411,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureMapsAccountKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MapsAccountKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1541,7 +1540,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AzureMapsAccountKeys>();
+            var _result = new AzureOperationResponse<MapsAccountKeys>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1554,7 +1553,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureMapsAccountKeys>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MapsAccountKeys>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1574,14 +1573,14 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// Regenerate either the primary or secondary key for use with the Azure Maps
-        /// APIs. The old key will stop working immediately.
+        /// Regenerate either the primary or secondary key for use with the Maps APIs.
+        /// The old key will stop working immediately.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='keySpecification'>
         /// Which key to regenerate:  primary or secondary.
@@ -1607,7 +1606,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AzureMapsAccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, AzureMapsKeySpecification keySpecification, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<MapsAccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, MapsKeySpecification keySpecification, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1751,7 +1750,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AzureMapsAccountKeys>();
+            var _result = new AzureOperationResponse<MapsAccountKeys>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1764,7 +1763,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AzureMapsAccountKeys>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MapsAccountKeys>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1784,7 +1783,7 @@ namespace Microsoft.Azure.Management.Maps
         }
 
         /// <summary>
-        /// List operations available for the Azure Maps Resource Provider
+        /// List operations available for the Maps Resource Provider
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1807,7 +1806,7 @@ namespace Microsoft.Azure.Management.Maps
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<AzureMapsOperationsValueItem>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<MapsOperationsValueItem>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1919,7 +1918,7 @@ namespace Microsoft.Azure.Management.Maps
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<AzureMapsOperationsValueItem>>();
+            var _result = new AzureOperationResponse<IEnumerable<MapsOperationsValueItem>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1932,7 +1931,7 @@ namespace Microsoft.Azure.Management.Maps
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<AzureMapsOperationsValueItem>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<MapsOperationsValueItem>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

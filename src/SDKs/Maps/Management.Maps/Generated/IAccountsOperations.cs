@@ -24,17 +24,17 @@ namespace Microsoft.Azure.Management.Maps
     public partial interface IAccountsOperations
     {
         /// <summary>
-        /// Create or update an Azure Maps Account. A Maps Account holds the
-        /// keys which allow access to the Azure Maps REST APIs.
+        /// Create or update a Maps Account. A Maps Account holds the keys
+        /// which allow access to the Maps REST APIs.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
-        /// <param name='azureMapsAccountCreateParameters'>
-        /// The new or updated parameters for the Azure Maps Account.
+        /// <param name='mapsAccountCreateParameters'>
+        /// The new or updated parameters for the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,19 +51,19 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureMapsAccount>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, AzureMapsAccountCreateParameters azureMapsAccountCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MapsAccount>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, MapsAccountCreateParameters mapsAccountCreateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an Azure Maps Account. Only a subset of the parameters may
-        /// be updated after creation, such as Sku and Tags.
+        /// Updates a Maps Account. Only a subset of the parameters may be
+        /// updated after creation, such as Sku and Tags.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
-        /// <param name='azureMapsAccountUpdateParameters'>
-        /// The updated parameters for the Azure Maps Account.
+        /// <param name='mapsAccountUpdateParameters'>
+        /// The updated parameters for the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -80,15 +80,15 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureMapsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, AzureMapsAccountUpdateParameters azureMapsAccountUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MapsAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, MapsAccountUpdateParameters mapsAccountUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an Azure Maps Account.
+        /// Delete a Maps Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -104,13 +104,13 @@ namespace Microsoft.Azure.Management.Maps
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get an Azure Maps Account.
+        /// Get a Maps Account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureMapsAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MapsAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all Azure Maps Accounts in a Resource Group
+        /// Get all Maps Accounts in a Resource Group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
@@ -149,9 +149,9 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<AzureMapsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MapsAccount>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all Azure Maps Accounts in a Subscription
+        /// Get all Maps Accounts in a Subscription
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -168,17 +168,16 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<AzureMapsAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MapsAccount>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Moves Azure Maps Accounts from one ResourceGroup (or Subscription)
-        /// to another
+        /// Moves Maps Accounts from one ResourceGroup (or Subscription) to
+        /// another
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group that contains Azure Maps Account to
-        /// move.
+        /// The name of the resource group that contains Maps Account to move.
         /// </param>
         /// <param name='moveRequest'>
-        /// The details of the Azure Maps Account move.
+        /// The details of the Maps Account move.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -192,18 +191,18 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, AzureMapsAccountsMoveRequest moveRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> MoveWithHttpMessagesAsync(string resourceGroupName, MapsAccountsMoveRequest moveRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the keys to use with the Azure Maps APIs. A key is used to
-        /// authenticate and authorize access to the Azure Maps REST APIs. Only
-        /// one key is needed at a time; two are given to provide seamless key
+        /// Get the keys to use with the Maps APIs. A key is used to
+        /// authenticate and authorize access to the Maps REST APIs. Only one
+        /// key is needed at a time; two are given to provide seamless key
         /// regeneration.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -220,16 +219,16 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureMapsAccountKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MapsAccountKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Regenerate either the primary or secondary key for use with the
-        /// Azure Maps APIs. The old key will stop working immediately.
+        /// Maps APIs. The old key will stop working immediately.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure Resource Group.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Azure Maps Account.
+        /// The name of the Maps Account.
         /// </param>
         /// <param name='keySpecification'>
         /// Which key to regenerate:  primary or secondary.
@@ -249,9 +248,9 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AzureMapsAccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, AzureMapsKeySpecification keySpecification, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MapsAccountKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, MapsKeySpecification keySpecification, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List operations available for the Azure Maps Resource Provider
+        /// List operations available for the Maps Resource Provider
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -268,6 +267,6 @@ namespace Microsoft.Azure.Management.Maps
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<AzureMapsOperationsValueItem>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MapsOperationsValueItem>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
