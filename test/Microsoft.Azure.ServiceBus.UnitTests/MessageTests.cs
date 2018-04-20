@@ -12,7 +12,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     public class MessageTests
     {
         [Fact]
-        void TestClone()
+        [DisplayTestMethodName]
+        public void TestClone()
         {
             var messageBody = Encoding.UTF8.GetBytes("test");
             var messageId = Guid.NewGuid().ToString();
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             [Fact]
             [DisplayTestMethodName]
-            void Should_return_false_for_message_that_was_not_sent()
+            public void Should_return_false_for_message_that_was_not_sent()
             {
                 var message = new Message();
                 message.UserProperties["dummy"] = "dummy";
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             [DisplayTestMethodName]
             [InlineData(ReceiveMode.ReceiveAndDelete)]
             [InlineData(ReceiveMode.PeekLock)]
-            async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
+            public async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, receiveMode);
 
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             [Fact]
             [DisplayTestMethodName]
-            async Task Should_return_true_for_peeked_message()
+            public async Task Should_return_true_for_peeked_message()
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
 
@@ -163,6 +164,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async void LargeMessageShouldThrowMessageSizeExceededException()
         {
             var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);

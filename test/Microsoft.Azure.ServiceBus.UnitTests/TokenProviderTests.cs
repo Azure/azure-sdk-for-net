@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.Azure.ServiceBus.Core;
     using Microsoft.Azure.ServiceBus.Primitives;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Xunit;
@@ -17,7 +18,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         /// <returns></returns>
         [Fact]
         [DisplayTestMethodName]
-        async Task UseITokenProviderWithAad()
+        public async Task UseITokenProviderWithAad()
         {
             var tenantId = "";
             var aadAppId = "";
@@ -39,6 +40,28 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Send and receive messages.
             await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, 10);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async void SasTokenWithLargeExpiryTimeShouldBeAccepted()
+        {
+            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey, TimeSpan.FromDays(100));
+            var connection = new ServiceBusConnection(csb)
+            {
+                TokenProvider = tokenProvider
+            };
+            var receiver = new MessageReceiver(connection, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock, RetryPolicy.Default);
+
+            try
+            {
+                var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+            }
+            finally
+            {
+                await receiver.CloseAsync();
+            }
         }
     }
 }

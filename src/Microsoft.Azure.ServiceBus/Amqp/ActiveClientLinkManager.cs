@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using Azure.Amqp;
+    using Primitives;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     {
         static readonly TimeSpan SendTokenTimeout = TimeSpan.FromMinutes(1);
         static readonly TimeSpan TokenRefreshBuffer = TimeSpan.FromSeconds(10);
+        static readonly TimeSpan MaxTokenRefreshTime = TimeSpan.FromDays(30);
 
         readonly string clientId;
         readonly RetryPolicy retryPolicy;
@@ -123,6 +125,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             var interval = activeClientLinkObject.AuthorizationValidUntilUtc.Subtract(DateTime.UtcNow) - ActiveClientLinkManager.TokenRefreshBuffer;
+            interval = TimeoutHelper.Min(interval, ActiveClientLinkManager.MaxTokenRefreshTime);
+
             this.ChangeRenewTimer(activeClientLinkObject, interval);
         }
 
