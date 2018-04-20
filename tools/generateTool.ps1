@@ -53,6 +53,8 @@ Param(
     [switch] $PowershellInvoker,
     [Parameter(ParameterSetName="rootdir", Mandatory=$false)]
     [string] $SdkRootDirectory,
+    [Parameter(ParameterSetName="legacyrootdir", Mandatory=$false)]
+    [string] $SdkDirectory,
     [Parameter(ParameterSetName="finaldir", Mandatory=$false)]
     [string] $SdkGenerationDirectory,
     [Parameter(Mandatory = $false)]
@@ -88,6 +90,10 @@ if ($SpecsRepoName.EndsWith("-pr")) {
 if (-not ($modulePath | Test-Path)) {
     NotifyError "Could not find code generation module at: $modulePath. Please run `msbuild build.proj` to install the module."
     Exit -1
+}
+
+if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
+    $SdkRootDirectory = $SdkDirectory
 }
 
 Import-Module "$modulePath"
