@@ -22,15 +22,29 @@ namespace InfrastructureInsights.Tests
         protected T client;
 
         /// <summary>
+        /// Extracts the ending element of a name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        protected string ExtractName(string name) {
+            if(name.Contains("/"))
+            {
+                var idx = name.LastIndexOf('/');
+                name = name.Substring(idx + 1);
+            }
+            return name;
+        }
+
+        /// <summary>
         /// Validate the client.
         /// </summary>
         /// <param name="client">The instantiated client we want to validate.</param>
         protected abstract void ValidateClient(T client);
 
         /// <summary>
-        /// The default location for all admin actions.  Override in derived class as needed.
+        /// The default resource group name for all admin actions.  Override in derived class as needed.
         /// </summary>
-        protected string Location = "local";
+        protected string ResourceGroupName = "System.local";
 
         /// <summary>
         /// Run a test that accepts no arguments.  An exception can be 
