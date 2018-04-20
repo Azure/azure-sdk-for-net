@@ -1,10 +1,9 @@
 ﻿using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Azure.CognitiveServices.Search.VisualSearch;
-using Microsoft.Azure.CognitiveServices.Search.VisualSearch.TestModels;
+using Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
 using Xunit;
-using System;
 using System.IO;
 
 namespace SearchSDK.Tests
@@ -85,6 +84,33 @@ namespace SearchSDK.Tests
                 KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(imageInfo: ImageInfo);
 
                 var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: JsonConvert.SerializeObject(KnowledgeRequest)).Result;
+
+                Assert.NotNull(resp);
+                Assert.NotNull(resp.Tags);
+                Assert.True(resp.Tags.Count > 0);
+
+                var tag = resp.Tags[0];
+                Assert.NotNull(tag.Actions);
+                Assert.True(tag.Actions.Count > 0);
+
+                var action = tag.Actions[0];
+                Assert.NotNull(action.ActionType);
+            }
+        }
+
+        [Fact]
+        public void VisualSearchWithKnowledgeRequestObject()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "VisualSearchWithKnowledgeRequestObject");
+
+                IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+
+                ImageInfo ImageInfo = new ImageInfo(url: ImageUrl, cropArea: CropArea);
+                KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(imageInfo: ImageInfo);
+
+                var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: KnowledgeRequest).Result;
 
                 Assert.NotNull(resp);
                 Assert.NotNull(resp.Tags);
