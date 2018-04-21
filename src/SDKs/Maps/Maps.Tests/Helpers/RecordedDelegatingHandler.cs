@@ -1,29 +1,29 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-
-namespace ResourceGroups.Tests
+namespace Maps.Tests.Helpers
 {
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Threading.Tasks;
+
     public class RecordedDelegatingHandler : DelegatingHandler
     {
         private HttpResponseMessage _response;
 
         public RecordedDelegatingHandler()
         {
-            StatusCodeToReturn = HttpStatusCode.Created;
-            SubsequentStatusCodeToReturn = StatusCodeToReturn;
+            this.StatusCodeToReturn = HttpStatusCode.Created;
+            this.SubsequentStatusCodeToReturn = this.StatusCodeToReturn;
         }
 
         public RecordedDelegatingHandler(HttpResponseMessage response)
         {
-            StatusCodeToReturn = HttpStatusCode.Created;
-            SubsequentStatusCodeToReturn = StatusCodeToReturn;
-            _response = response;
+            this.StatusCodeToReturn = HttpStatusCode.Created;
+            this.SubsequentStatusCodeToReturn = this.StatusCodeToReturn;
+            this._response = response;
         }
 
         public HttpStatusCode StatusCodeToReturn { get; set; }
@@ -46,42 +46,45 @@ namespace ResourceGroups.Tests
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
-            counter++;
+            this.counter++;
+
             // Save request
             if (request.Content == null)
             {
-                Request = string.Empty;
+                this.Request = string.Empty;
             }
             else
             {
-                Request = await request.Content.ReadAsStringAsync();
+                this.Request = await request.Content.ReadAsStringAsync();
             }
-            RequestHeaders = request.Headers;
+            this.RequestHeaders = request.Headers;
             if (request.Content != null)
             {
-                ContentHeaders = request.Content.Headers;
+                this.ContentHeaders = request.Content.Headers;
             }
-            Method = request.Method;
-            Uri = request.RequestUri;
+            this.Method = request.Method;
+            this.Uri = request.RequestUri;
 
             // Prepare response
-            if (IsPassThrough)
+            if (this.IsPassThrough)
             {
                 return await base.SendAsync(request, cancellationToken);
             }
             else
             {
-                if (_response != null && counter == 1)
+                if (this._response != null && this.counter == 1)
                 {
-                    return _response;
+                    return this._response;
                 }
                 else
                 {
-                    var statusCode = StatusCodeToReturn;
-                    if (counter > 1)
-                        statusCode = SubsequentStatusCodeToReturn;
-                    HttpResponseMessage response = new HttpResponseMessage(statusCode);
-                    response.Content = new StringContent("");
+                    var statusCode = this.StatusCodeToReturn;
+                    if (this.counter > 1)
+                    {
+                        statusCode = this.SubsequentStatusCodeToReturn;
+                    }
+
+                    var response = new HttpResponseMessage(statusCode) { Content = new StringContent(string.Empty) };
                     return response;
                 }
             }

@@ -1,37 +1,36 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Maps;
-using Microsoft.Azure.Management.Maps.Models;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Rest;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using ResourceGroups.Tests;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using Xunit;
-
 namespace Maps.Tests.Helpers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+
+    using Microsoft.Azure.Management.Maps;
+    using Microsoft.Azure.Management.Maps.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
+    using Microsoft.Rest;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
+    using Xunit;
+
     public static class MapsManagementTestUtilities
     {
-        public static bool IsTestTenant = false;
-        private static HttpClientHandler Handler = null;
+        private static readonly HttpClientHandler Handler = null;
 
-        private const string testSubscription = null;
-        private static Uri testUri = null;
+        private static readonly string TestSubscription = null;
+        private static readonly Uri TestUri = null;
+
+        private static readonly bool IsTestTenant = false;
 
         // These are used to create default accounts
         public static string DefaultResourceGroupLocation = IsTestTenant ? null : "westus";
         public static string DefaultLocation = IsTestTenant ? null : "global";
         public const string DefaultSkuName = "S0";
-        public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
-            {
-                {"key1","value1"},
-                {"key2","value2"}
-            };
+        public static Dictionary<string, string> DefaultTags
+            = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" } };
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
@@ -47,31 +46,28 @@ namespace Maps.Tests.Helpers
             }
         }
 
-        public static Microsoft.Azure.Management.Maps.MapsManagementClient GetMapsManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        public static MapsManagementClient GetMapsManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            MapsManagementClient locationBasedServicesClient;
+            MapsManagementClient mapsClient;
             if (IsTestTenant)
             {
-                locationBasedServicesClient = new MapsManagementClient(new TokenCredentials("xyz"), GetHandler());
-                locationBasedServicesClient.SubscriptionId = testSubscription;
-                locationBasedServicesClient.BaseUri = testUri;
+                mapsClient = new MapsManagementClient(new TokenCredentials("xyz"), GetHandler())
+                {
+                    SubscriptionId = TestSubscription,
+                    BaseUri = TestUri
+                };
             }
             else
             {
                 handler.IsPassThrough = true;
-                locationBasedServicesClient = context.GetServiceClient<Microsoft.Azure.Management.Maps.MapsManagementClient>(handlers: handler);
+                mapsClient = context.GetServiceClient<MapsManagementClient>(handlers: handler);
             }
-            return locationBasedServicesClient;
-        }
-
-        private static HttpClientHandler GetHandler()
-        {
-            return Handler;
+            return mapsClient;
         }
 
         public static MapsAccountCreateParameters GetDefaultMapsAccountParameters()
         {
-            MapsAccountCreateParameters account = new MapsAccountCreateParameters
+            var account = new MapsAccountCreateParameters
             {
                 Location = DefaultLocation,
                 Tags = DefaultTags,
@@ -86,8 +82,8 @@ namespace Maps.Tests.Helpers
 
         public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
         {
-            const string testPrefix = "res";
-            var rgname = TestUtilities.GenerateName(testPrefix);
+            const string TestPrefix = "res";
+            var rgname = TestUtilities.GenerateName(TestPrefix);
 
             if (!IsTestTenant)
             {
@@ -102,32 +98,15 @@ namespace Maps.Tests.Helpers
             return rgname;
         }
 
-        public static string CreateDefaultMapsAccount(Microsoft.Azure.Management.Maps.MapsManagementClient locationBasedServicesManagementClient, string rgname)
+        public static string CreateDefaultMapsAccount(MapsManagementClient mapsManagementClient, string rgname)
         {
-            string accountName = TestUtilities.GenerateName("lbs");
-            MapsAccountCreateParameters parameters = GetDefaultMapsAccountParameters();
-            var newAccount = locationBasedServicesManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
+            var accountName = TestUtilities.GenerateName("maps");
+            var parameters = GetDefaultMapsAccountParameters();
+            var newAccount = mapsManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
             VerifyAccountProperties(newAccount, true);
 
             return accountName;
         }
-
-        //public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = Kind.Recommendations, string location = null)
-        //{
-        //    // Create account with only required params
-        //    var accountName = TestUtilities.GenerateName("csa");
-        //    var parameters = new CognitiveServicesAccountCreateParameters
-        //    {
-        //        Sku = new Microsoft.Azure.Management.CognitiveServices.Models.Sku { Name = skuName },
-        //        Kind = accountType,
-        //        Location = location ?? DefaultLocation,
-        //        Properties = new object(),
-        //    };
-        //    var account = cognitiveServicesMgmtClient.CognitiveServicesAccounts.Create(rgName, accountName, parameters);
-        //    VerifyAccountProperties(account, false, accountType, skuName, location ?? DefaultLocation);
-
-        //    return account;
-        //}
 
         public static void VerifyAccountProperties(MapsAccount account, bool useDefaults, string skuName = DefaultSkuName, string location = "global")
         {
@@ -156,5 +135,9 @@ namespace Maps.Tests.Helpers
             }
         }
 
+        private static HttpClientHandler GetHandler()
+        {
+            return Handler;
+        }
     }
 }

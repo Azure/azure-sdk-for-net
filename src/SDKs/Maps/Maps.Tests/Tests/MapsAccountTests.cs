@@ -6,7 +6,7 @@ using Microsoft.Azure.Management.Maps;
 using Microsoft.Azure.Management.Maps.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using ResourceGroups.Tests;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,8 @@ using Xunit;
 
 namespace MapsServices.Tests
 {
+    using System.ComponentModel.DataAnnotations;
+
     // aad tenant id:   72f988bf-86f1-41af-91ab-2d7cd011db47
     // aad application identity:  26ba1730-4c7c-4099-84b8-ec115a357455
     // application key:  bjrvl/yDY3lMNBn9Ft0R4ydCKlDU27MVOdG2qyWvmsw=
@@ -22,37 +24,33 @@ namespace MapsServices.Tests
 
     public class MapsServicesAccountTests
     {
-        private const string c_resourceNamespace = "Microsoft.Maps";
-        private const string c_resourceType = "accounts";
-
         [Fact]
         public void MapsAccountCreateTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var locationBasedServicesManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
+                var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // prepare account properties
-                string accountName = TestUtilities.GenerateName("lbs");
+                string accountName = TestUtilities.GenerateName("maps");
                 var parameters = MapsManagementTestUtilities.GetDefaultMapsAccountParameters();
 
                 // Create account
-                var newAccount = locationBasedServicesManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
+                var newAccount = mapsManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
                 MapsManagementTestUtilities.VerifyAccountProperties(newAccount, true);
 
                 // now get the account
-                var account = locationBasedServicesManagementClient.Accounts.Get(rgname, accountName);
+                var account = mapsManagementClient.Accounts.Get(rgname, accountName);
                 MapsManagementTestUtilities.VerifyAccountProperties(account, true);
 
                 // now delete the account
-                locationBasedServicesManagementClient.Accounts.Delete(rgname, accountName);
-
+                mapsManagementClient.Accounts.Delete(rgname, accountName);
             }
         }
 
@@ -61,20 +59,20 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var locationBasedServicesManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
+                var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // prepare account properties
-                string accountName = TestUtilities.GenerateName("lbs");
+                string accountName = TestUtilities.GenerateName("maps");
                 var parameters = MapsManagementTestUtilities.GetDefaultMapsAccountParameters();
 
                 // create the account
-                var newAccount = locationBasedServicesManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
+                var newAccount = mapsManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
                 MapsManagementTestUtilities.VerifyAccountProperties(newAccount, true);
 
                 // create new parameters which are almost the same, but have different tags
@@ -84,7 +82,7 @@ namespace MapsServices.Tests
                                          { "key3", "value3" },
                                          { "key4", "value4" }
                                      };
-                var updatedAccount = locationBasedServicesManagementClient.Accounts.CreateOrUpdate(rgname, accountName, newParameters);
+                var updatedAccount = mapsManagementClient.Accounts.CreateOrUpdate(rgname, accountName, newParameters);
                 MapsManagementTestUtilities.VerifyAccountProperties(updatedAccount, false);
                 Assert.NotNull(updatedAccount.Tags);
                 Assert.Equal(2, updatedAccount.Tags.Count);
@@ -99,29 +97,29 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var locationBasedServicesManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
+                var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Delete an account which does not exist
-                locationBasedServicesManagementClient.Accounts.Delete(rgname, "missingaccount");
+                mapsManagementClient.Accounts.Delete(rgname, "missingaccount");
 
                 // prepare account properties
-                string accountName = TestUtilities.GenerateName("lbs");
+                var accountName = TestUtilities.GenerateName("maps");
                 var parameters = MapsManagementTestUtilities.GetDefaultMapsAccountParameters();
 
                 // Create account
-                var newAccount = locationBasedServicesManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
+                var newAccount = mapsManagementClient.Accounts.CreateOrUpdate(rgname, accountName, parameters);
 
                 // Delete an account
-                locationBasedServicesManagementClient.Accounts.Delete(rgname, accountName);
+                mapsManagementClient.Accounts.Delete(rgname, accountName);
 
                 // Delete an account which was just deleted
-                locationBasedServicesManagementClient.Accounts.Delete(rgname, accountName);
+                mapsManagementClient.Accounts.Delete(rgname, accountName);
             }
         }
 
@@ -130,22 +128,22 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var locationBasedServicesManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
+                var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
 
                 // Create resource group
                 var rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
-                var accounts = locationBasedServicesManagementClient.Accounts.ListByResourceGroup(rgname);
+                var accounts = mapsManagementClient.Accounts.ListByResourceGroup(rgname);
                 Assert.Empty(accounts);
 
                 // Create accounts
-                string accountName1 = MapsManagementTestUtilities.CreateDefaultMapsAccount(locationBasedServicesManagementClient, rgname);
-                string accountName2 = MapsManagementTestUtilities.CreateDefaultMapsAccount(locationBasedServicesManagementClient, rgname);
+                var accountName1 = MapsManagementTestUtilities.CreateDefaultMapsAccount(mapsManagementClient, rgname);
+                var accountName2 = MapsManagementTestUtilities.CreateDefaultMapsAccount(mapsManagementClient, rgname);
 
-                accounts = locationBasedServicesManagementClient.Accounts.ListByResourceGroup(rgname);
+                accounts = mapsManagementClient.Accounts.ListByResourceGroup(rgname);
                 Assert.Equal(2, accounts.Count());
 
                 MapsManagementTestUtilities.VerifyAccountProperties(accounts.First(), true);
@@ -158,20 +156,20 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var locationBasedServicesManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
+                var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
 
                 // Create resource group and account
                 var rgname1 = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
-                string accountName1 = MapsManagementTestUtilities.CreateDefaultMapsAccount(locationBasedServicesManagementClient, rgname1);
+                var accountName1 = MapsManagementTestUtilities.CreateDefaultMapsAccount(mapsManagementClient, rgname1);
 
                 // Create different resource group and account
                 var rgname2 = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
-                string accountName2 = MapsManagementTestUtilities.CreateDefaultMapsAccount(locationBasedServicesManagementClient, rgname2);
+                var accountName2 = MapsManagementTestUtilities.CreateDefaultMapsAccount(mapsManagementClient, rgname2);
 
-                var accounts = locationBasedServicesManagementClient.Accounts.ListBySubscription();
+                var accounts = mapsManagementClient.Accounts.ListBySubscription();
 
                 Assert.True(accounts.Count() >= 2);
 
@@ -190,23 +188,24 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var locationBasedServicesManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
+                var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
 
                 // Create resource group
-                string rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Create account
-                string accountName = MapsManagementTestUtilities.CreateDefaultMapsAccount(locationBasedServicesManagementClient, rgname);
+                var accountName = MapsManagementTestUtilities.CreateDefaultMapsAccount(mapsManagementClient, rgname);
 
                 // List keys
-                var keys = locationBasedServicesManagementClient.Accounts.ListKeys(rgname, accountName);
+                var keys = mapsManagementClient.Accounts.ListKeys(rgname, accountName);
                 Assert.NotNull(keys);
 
                 // Validate Key1
                 Assert.NotNull(keys.PrimaryKey);
+
                 // Validate Key2
                 Assert.NotNull(keys.SecondaryKey);
             }
@@ -217,27 +216,25 @@ namespace MapsServices.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var resourcesClient = MapsManagementTestUtilities.GetResourceManagementClient(context, handler);
-                var locationBasedServicesManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
+                var mapsManagementClient = MapsManagementTestUtilities.GetMapsManagementClient(context, handler);
 
                 // Create resource group
-                string rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
+                var rgname = MapsManagementTestUtilities.CreateResourceGroup(resourcesClient);
 
                 // Create account
-                string accountName = MapsManagementTestUtilities.CreateDefaultMapsAccount(locationBasedServicesManagementClient, rgname);
+                var accountName = MapsManagementTestUtilities.CreateDefaultMapsAccount(mapsManagementClient, rgname);
 
                 // List keys
-                var keys = locationBasedServicesManagementClient.Accounts.ListKeys(rgname, accountName);
+                var keys = mapsManagementClient.Accounts.ListKeys(rgname, accountName);
                 Assert.NotNull(keys);
                 var key2 = keys.SecondaryKey;
                 Assert.NotNull(key2);
 
                 // Regenerate keys and verify that keys change
-                var regenKeys = locationBasedServicesManagementClient.Accounts.RegenerateKeys(rgname,
-                                                                                              accountName,
-                                                                                              new MapsKeySpecification("secondary"));
+                var regenKeys = mapsManagementClient.Accounts.RegenerateKeys(rgname, accountName, new MapsKeySpecification("secondary"));
                 var key2Regen = regenKeys.SecondaryKey;
                 Assert.NotNull(key2Regen);
 
