@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="accessToken">The access token.</param>
         /// <param name="endpoints">The input endpoints for the Live
         /// Event.</param>
-        public LiveEventInput(LiveEventInputProtocol? streamingProtocol = default(LiveEventInputProtocol?), string keyFrameIntervalDuration = default(string), string accessToken = default(string), IList<LiveEventEndpoint> endpoints = default(IList<LiveEventEndpoint>))
+        public LiveEventInput(LiveEventInputProtocol streamingProtocol, string keyFrameIntervalDuration = default(string), string accessToken = default(string), IList<LiveEventEndpoint> endpoints = default(IList<LiveEventEndpoint>))
         {
             StreamingProtocol = streamingProtocol;
             KeyFrameIntervalDuration = keyFrameIntervalDuration;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// values include: 'FragmentedMP4', 'RTMP'
         /// </summary>
         [JsonProperty(PropertyName = "streamingProtocol")]
-        public LiveEventInputProtocol? StreamingProtocol { get; set; }
+        public LiveEventInputProtocol StreamingProtocol { get; set; }
 
         /// <summary>
         /// Gets or sets ISO 8601 timespan duration of the key frame interval
@@ -78,5 +78,14 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "endpoints")]
         public IList<LiveEventEndpoint> Endpoints { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

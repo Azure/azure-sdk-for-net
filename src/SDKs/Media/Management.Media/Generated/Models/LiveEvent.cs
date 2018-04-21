@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveEvent class.
         /// </summary>
+        /// <param name="input">The Live Event input.</param>
         /// <param name="id">Fully qualified resource ID for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
@@ -41,7 +42,6 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">The Azure Region of the resource.</param>
         /// <param name="description">The Live Event description.</param>
-        /// <param name="input">The Live Event input.</param>
         /// <param name="preview">The Live Event preview.</param>
         /// <param name="encoding">The Live Event encoding.</param>
         /// <param name="provisioningState">The provisioning state of the Live
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// created.</param>
         /// <param name="lastModified">The exact time the Live Event was last
         /// modified.</param>
-        public LiveEvent(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), LiveEventInput input = default(LiveEventInput), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? vanityUrl = default(bool?), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+        public LiveEvent(LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? vanityUrl = default(bool?), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
             : base(id, name, type, tags, location)
         {
             Description = description;
@@ -146,5 +146,22 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "properties.lastModified")]
         public System.DateTime? LastModified { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Input == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Input");
+            }
+            if (Input != null)
+            {
+                Input.Validate();
+            }
+        }
     }
 }

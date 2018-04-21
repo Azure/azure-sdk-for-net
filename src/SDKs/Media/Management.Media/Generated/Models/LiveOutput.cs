@@ -32,16 +32,16 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the LiveOutput class.
         /// </summary>
+        /// <param name="assetName">The asset name.</param>
+        /// <param name="archiveWindowLength">ISO 8601 timespan duration of the
+        /// archive window length. This is duration that customer want to
+        /// retain the recorded content.</param>
         /// <param name="id">Fully qualified resource ID for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="description">The description of the Live
         /// Output.</param>
-        /// <param name="assetName">The asset name.</param>
-        /// <param name="archiveWindowLength">ISO 8601 timespan duration of the
-        /// archive window length. This is duration that customer want to
-        /// retain the recorded content.</param>
         /// <param name="manifestName">The manifest file name.</param>
         /// <param name="hls">The HLS configuration.</param>
         /// <param name="outputSnapTime">The output snapshot time.</param>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Output.</param>
         /// <param name="resourceState">The resource state of the Live Output.
         /// Possible values include: 'Creating', 'Running', 'Deleting'</param>
-        public LiveOutput(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string assetName = default(string), System.TimeSpan? archiveWindowLength = default(System.TimeSpan?), string manifestName = default(string), Hls hls = default(Hls), long? outputSnapTime = default(long?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), string provisioningState = default(string), LiveOutputResourceState? resourceState = default(LiveOutputResourceState?))
+        public LiveOutput(string assetName, System.TimeSpan archiveWindowLength, string id = default(string), string name = default(string), string type = default(string), string description = default(string), string manifestName = default(string), Hls hls = default(Hls), long? outputSnapTime = default(long?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), string provisioningState = default(string), LiveOutputResourceState? resourceState = default(LiveOutputResourceState?))
             : base(id, name, type)
         {
             Description = description;
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// content.
         /// </summary>
         [JsonProperty(PropertyName = "properties.archiveWindowLength")]
-        public System.TimeSpan? ArchiveWindowLength { get; set; }
+        public System.TimeSpan ArchiveWindowLength { get; set; }
 
         /// <summary>
         /// Gets or sets the manifest file name.
@@ -137,5 +137,18 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "properties.resourceState")]
         public LiveOutputResourceState? ResourceState { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (AssetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AssetName");
+            }
+        }
     }
 }

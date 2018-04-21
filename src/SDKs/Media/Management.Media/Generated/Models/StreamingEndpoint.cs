@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// created.</param>
         /// <param name="lastModified">The exact time the StreamingEndpoint was
         /// last modified.</param>
-        public StreamingEndpoint(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), int? scaleUnits = default(int?), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+        public StreamingEndpoint(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), int scaleUnits = default(int), string availabilitySetName = default(string), StreamingEndpointAccessControl accessControl = default(StreamingEndpointAccessControl), long? maxCacheAge = default(long?), IList<string> customHostNames = default(IList<string>), string hostName = default(string), bool? cdnEnabled = default(bool?), string cdnProvider = default(string), string cdnProfile = default(string), string provisioningState = default(string), StreamingEndpointResourceState? resourceState = default(StreamingEndpointResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), System.DateTime? freeTrialEndTime = default(System.DateTime?), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
             : base(id, name, type, tags, location)
         {
             Description = description;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets the number of scale units.
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleUnits")]
-        public int? ScaleUnits { get; set; }
+        public int ScaleUnits { get; set; }
 
         /// <summary>
         /// Gets or sets availabilitySet name
