@@ -54,7 +54,7 @@ Param(
     [Parameter(ParameterSetName="rootdir", Mandatory=$false)]
     [string] $SdkRootDirectory,
     [Parameter(ParameterSetName="legacyrootdir", Mandatory=$false)]
-    [string] $SdkDirectory = "$PSScriptRoot",
+    [string] $SdkDirectory,
     [Parameter(ParameterSetName="finaldir", Mandatory=$false)]
     [string] $SdkGenerationDirectory,
     [Parameter(Mandatory = $false)]
@@ -83,6 +83,10 @@ function NotifyError {
     Start-Process "$errorFilePath\errorLog.txt"
 }
 
+if([string]::IsNullOrWhiteSpace($SdkDirectory)) {
+    $SdkDirectory = "$currPath\..\src\SDKs\"
+}
+
 if ($SpecsRepoName.EndsWith("-pr")) {
     NotifyError "AutoRest cannot generate sdk from a spec in private repos."
 }
@@ -92,7 +96,7 @@ if (-not ($modulePath | Test-Path)) {
     Exit -1
 }
 
-if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
+if([string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
     $SdkRootDirectory = $SdkDirectory
 }
 
@@ -111,6 +115,8 @@ function Start-Script {
     $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     Write-InfoLog "Commencing code generation"  -logToConsole
     
+    Write-Host "sdkrootdir here is $SdkRootDirectory"
+
     if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
         Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkRootDirectory $SdkRootDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName -Namespace $Namespace -ConfigFileTag $ConfigFileTag
     }
