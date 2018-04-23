@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Subscriptions.Tests</PackageId>
+    <Description>Subscriptions.Tests Class Library</Description>
+    <AssemblyName>Subscriptions.Tests</AssemblyName>
+    <VersionPrefix>1.0.0</VersionPrefix>    
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="src\AcquiredPlanTests.cs" />
+    <Compile Remove="src\DelegatedProviderTests.cs" />
+    <Compile Remove="src\DirectoryTenantTests.cs" />
+    <Compile Remove="src\LocationTests.cs" />
+    <Compile Remove="src\OfferDelegationTests.cs" />
+    <Compile Remove="src\PlanTests.cs" />
+    <Compile Remove="src\QuotaTests.cs" />
+    <Compile Remove="src\ResellerOfferTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Subscriptions\Microsoft.AzureStack.Management.Subscriptions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+</Project>
