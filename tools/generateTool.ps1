@@ -54,7 +54,7 @@ Param(
     [Parameter(ParameterSetName="rootdir", Mandatory=$false)]
     [string] $SdkRootDirectory,
     [Parameter(ParameterSetName="legacyrootdir", Mandatory=$false)]
-    [string] $SdkDirectory,
+    [string] $SdkDirectory = "$PSScriptRoot",
     [Parameter(ParameterSetName="finaldir", Mandatory=$false)]
     [string] $SdkGenerationDirectory,
     [Parameter(Mandatory = $false)]
