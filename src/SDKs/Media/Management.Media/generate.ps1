@@ -1,1 +1,1 @@
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File "..\..\..\..\tools\generateTool.ps1" -ResourceProvider "mediaservices/resource-manager" -PowershellInvoker -AutoRestVersion "latest" -SpecsRepoBranch "MediaServices-2018-03-30-preview"
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File "..\..\..\..\tools\generateTool.ps1" -ResourceProvider "mediaservices/resource-manager" -PowershellInvoker -AutoRestVersion "latest"
