@@ -7,18 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.13.0-preview</Version>
+		<Version>1.13.1-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for List and Cancel operation on Azure database and elastic pool REST API
-- Added more convenient method to rename databases, `Databases.Rename(resourceGroupName, serverName, databaseName, newName)`.
-- Added .NET SDK APIs for new Long Term Retention V2 commands, including getting backups, deleting backups, setting the V2 policies, and getting the V2 policies
-Breaking Changes:
-- Removed support for managing Vaults used for Long Term Retention V1
-- Changed BackupLongTermRetentionPolicy class, removing the Long Term Retention V1 properties and adding the Long Term Retention V2 properties
-- Removed BackupLongTermRetentionPolicyState
+- Added support for Managed Instances, Managed Instance databases, and Managed Instance failover groups.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
