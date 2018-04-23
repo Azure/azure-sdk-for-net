@@ -83,6 +83,10 @@ function NotifyError {
     Start-Process "$errorFilePath\errorLog.txt"
 }
 
+if([string]::IsNullOrWhiteSpace($SdkDirectory)) {
+    $SdkDirectory = "$currPath\..\src\SDKs\"
+}
+
 if ($SpecsRepoName.EndsWith("-pr")) {
     NotifyError "AutoRest cannot generate sdk from a spec in private repos."
 }
@@ -92,7 +96,7 @@ if (-not ($modulePath | Test-Path)) {
     Exit -1
 }
 
-if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
+if([string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
     $SdkRootDirectory = $SdkDirectory
 }
 
