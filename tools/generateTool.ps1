@@ -115,8 +115,6 @@ function Start-Script {
     $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     Write-InfoLog "Commencing code generation"  -logToConsole
     
-    Write-Host "sdkrootdir here is $SdkRootDirectory"
-
     if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
         Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkRootDirectory $SdkRootDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName -Namespace $Namespace -ConfigFileTag $ConfigFileTag
     }
