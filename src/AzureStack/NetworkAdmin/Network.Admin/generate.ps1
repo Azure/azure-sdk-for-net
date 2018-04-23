@@ -6,4 +6,4 @@ powershell.exe -ExecutionPolicy Bypass `
     -ResourceProvider "azsadmin/resource-manager/network" `
     -PowershellInvoker `
     -AutoRestVersion "latest" `
-    -SdkDirectory $PSScriptRoot
+    -SdkRootDirectory $PSScriptRoot

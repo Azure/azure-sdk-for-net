@@ -42,19 +42,26 @@ namespace InfrastructureInsights.Tests
         [Fact]
         public void TestListServiceHealths() {
             RunTest((client) => {
-                var list = client.ServiceHealths.List(Location);
-                list.ForEach(ValidateServiceHealth);
-                Common.WriteIEnumerableToFile(list, "ListAllServiceHealths.txt", ResourceName);
+                var regionHealths = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regionHealths, client.RegionHealths.ListNext, (regionHealth) => {
+                    var regionName = ExtractName(regionHealth.Name);
+                    var list = client.ServiceHealths.List(ResourceGroupName, regionName);
+                    list.ForEach(ValidateServiceHealth);
+                    Common.WriteIEnumerableToFile(list, "ListAllServiceHealths.txt", ResourceName);
+                });
             });
         }
 
         [Fact]
         public void TestGetServiceHealth() {
             RunTest((client) => {
-                var service = client.ServiceHealths.List(Location).GetFirst();
+                var region = client.RegionHealths.List(ResourceGroupName).GetFirst();
+                var regionName = ExtractName(region.Name);
+                var service = client.ServiceHealths.List(ResourceGroupName, regionName).GetFirst();
                 if (service != null)
                 {
-                    var retrieved = client.ServiceHealths.Get(Location, service.Name);
+                    var serviceName = ExtractName(service.Name);
+                    var retrieved = client.ServiceHealths.Get(ResourceGroupName, regionName, serviceName);
                     AssertServiceHealthsEqual(service, retrieved);
                 }
             });
@@ -63,10 +70,17 @@ namespace InfrastructureInsights.Tests
         [Fact]
         public void TestGetAllServiceHealths() {
             RunTest((client) => {
-                var list = client.ServiceHealths.List(Location);
-                list.ForEach((service) => {
-                    var retrieved = client.ServiceHealths.Get(Location, service.Name);
-                    AssertServiceHealthsEqual(service, retrieved);
+                var regionHealths = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regionHealths, client.RegionHealths.ListNext, (regionHealth) => {
+                    var regionName = ExtractName(regionHealth.Name);
+
+                    var serviceHealths = client.ServiceHealths.List(ResourceGroupName, regionName);
+                    Common.MapOverIPage(serviceHealths, client.ServiceHealths.ListNext, (service) => {
+                        var serviceName = ExtractName(service.Name);
+
+                        var retrieved = client.ServiceHealths.Get(ResourceGroupName, regionName, serviceName);
+                        AssertServiceHealthsEqual(service, retrieved);
+                    });
                 });
             });
         }

@@ -10,29 +10,26 @@
 
 namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Contains information related to the health of a region.
+    /// The resource model definition for a ARM tracked top level resource
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class RegionHealth : TrackedResource
+    public partial class TrackedResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the RegionHealth class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        public RegionHealth()
+        public TrackedResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegionHealth class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource</param>
@@ -41,14 +38,11 @@ namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">The Azure Region where the resource
         /// lives</param>
-        /// <param name="alertSummary">Summary of alerts.</param>
-        /// <param name="usageMetrics">List of usage metrics for the
-        /// region.</param>
-        public RegionHealth(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AlertSummary alertSummary = default(AlertSummary), IList<UsageMetrics> usageMetrics = default(IList<UsageMetrics>))
-            : base(id, name, type, tags, location)
+        public TrackedResource(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string))
+            : base(id, name, type)
         {
-            AlertSummary = alertSummary;
-            UsageMetrics = usageMetrics;
+            Tags = tags;
+            Location = location;
             CustomInit();
         }
 
@@ -58,16 +52,16 @@ namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets summary of alerts.
+        /// Gets or sets resource tags.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.alertSummary")]
-        public AlertSummary AlertSummary { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets list of usage metrics for the region.
+        /// Gets or sets the Azure Region where the resource lives
         /// </summary>
-        [JsonProperty(PropertyName = "properties.usageMetrics")]
-        public IList<UsageMetrics> UsageMetrics { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
     }
 }

@@ -11,32 +11,33 @@
 namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Metrics of resource usage.
+    /// Describes the supported REST operation.
     /// </summary>
-    public partial class UsageMetrics
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the UsageMetrics class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public UsageMetrics()
+        public Operation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UsageMetrics class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">Name of the usage metric.</param>
-        /// <param name="metricsValue">List of usage metrics.</param>
-        public UsageMetrics(string name = default(string), IList<Metrics> metricsValue = default(IList<Metrics>))
+        /// <param name="name">The name of the operation performed on the
+        /// object. The name should match the action name that appears in RBAC
+        /// or the event service.</param>
+        /// <param name="display">Contains the localized display information
+        /// for this particular operation or action.</param>
+        public Operation(string name = default(string), Display display = default(Display))
         {
             Name = name;
-            MetricsValue = metricsValue;
+            Display = display;
             CustomInit();
         }
 
@@ -46,16 +47,19 @@ namespace Microsoft.AzureStack.Management.InfrastructureInsights.Admin.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the usage metric.
+        /// Gets or sets the name of the operation performed on the object. The
+        /// name should match the action name that appears in RBAC or the event
+        /// service.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets list of usage metrics.
+        /// Gets or sets contains the localized display information for this
+        /// particular operation or action.
         /// </summary>
-        [JsonProperty(PropertyName = "metricsValue")]
-        public IList<Metrics> MetricsValue { get; set; }
+        [JsonProperty(PropertyName = "display")]
+        public Display Display { get; set; }
 
     }
 }

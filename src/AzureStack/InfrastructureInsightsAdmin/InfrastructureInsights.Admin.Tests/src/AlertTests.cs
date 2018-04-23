@@ -99,17 +99,26 @@ namespace InfrastructureInsights.Tests
         [Fact]
         public void TestListAlerts() {
             RunTest((client) => {
-                var alerts = client.Alerts.List(Location);
-                Common.MapOverIPage(alerts, client.Alerts.ListNext, ValidateAlert);
-                Common.WriteIPagesToFile(alerts, client.Alerts.ListNext, "ListAllAlerts.txt", (alert) => alert.FaultId);
+                var regions = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regions, client.RegionHealths.ListNext, (regionHealth) => {
+                    var regionName = ExtractName(regionHealth.Name);
+                    var alerts = client.Alerts.List(ResourceGroupName, regionName);
+                    Common.MapOverIPage(alerts, client.Alerts.ListNext, ValidateAlert);
+                    Common.WriteIPagesToFile(alerts, client.Alerts.ListNext, "ListAllAlerts.txt", (alert) => alert.FaultId);
+                });
             });
         }
 
         [Fact]
         public void TestGetAlert() {
             RunTest((client) => {
-                var alert = client.Alerts.List(Location).GetFirst();
-                var retrieved = client.Alerts.Get(Location, alert.Name);
+                var region = client.RegionHealths.List(ResourceGroupName).GetFirst();
+                var regionName = ExtractName(region.Name);
+
+                var alert = client.Alerts.List(ResourceGroupName, regionName).GetFirst();
+                var alertName = ExtractName(alert.Name);
+
+                var retrieved = client.Alerts.Get(ResourceGroupName, regionName, alertName);
                 AssertAlertsAreSame(alert, retrieved);
             });
         }
@@ -117,31 +126,48 @@ namespace InfrastructureInsights.Tests
         [Fact]
         public void TestGetAllAlerts() {
             RunTest((client) => {
-                var alerts = client.Alerts.List(Location);
-                Common.MapOverIPage(alerts, client.Alerts.ListNext, (alert) => {
-                    var retrieved = client.Alerts.Get(Location, alert.Name);
-                    AssertAlertsAreSame(alert, retrieved);
+                var regions = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regions, client.RegionHealths.ListNext, (regionHealth) => {
+                    var regionName = ExtractName(regionHealth.Name);
+
+                    var alerts = client.Alerts.List(ResourceGroupName, regionName);
+                    Common.MapOverIPage(alerts, client.Alerts.ListNext, (alert) => {
+                        var alertName = ExtractName(alert.Name);
+
+                        var retrieved = client.Alerts.Get(ResourceGroupName, regionName, alertName);
+                        AssertAlertsAreSame(alert, retrieved);
+
+                    });
                 });
             });
         }
 
 
 
-        [Fact]
+        [Fact(Skip ="Causes RP to crash.")]
         public void TestCloseAlert() {
             RunTest((client) => {
                 bool done = false;
-                var alerts = client.Alerts.List(Location);
-                Common.MapOverIPage(alerts, client.Alerts.ListNext, (alert) => {
-                    if (done) return;
-                    if (alert.State != "Closed")
+                var regions = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regions, client.RegionHealths.ListNext, (regionHealth) => {
+                    if (!done)
                     {
-                        alert.State = "Closed";
-                        client.Alerts.Close(Location, alert.Name, "AlertCloseTests", alert);
-                        var retrieved = client.Alerts.Get(Location, alert.Name);
-                        Assert.Equal("Closed", retrieved.State);
+                        var regionName = ExtractName(regionHealth.Name);
+                        var alerts = client.Alerts.List(ResourceGroupName, regionName);
+                        Common.MapOverIPage(alerts, client.Alerts.ListNext, (alert) => {
+                            if (!done && alert.State != "Closed")
+                            {
+                                var alertName = ExtractName(alert.Name);
 
-                        done = true;
+                                alert.State = "Closed";
+                                client.Alerts.Close(ResourceGroupName, regionName, alertName, "AlertCloseTests", alert);
+                                var retrieved = client.Alerts.Get(ResourceGroupName, regionName, alertName);
+                                Assert.Equal("Closed", retrieved.State);
+
+                                done = true;
+                            }
+
+                        });
                     }
                 });
             });
