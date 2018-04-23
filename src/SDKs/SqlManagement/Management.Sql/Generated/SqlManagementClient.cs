@@ -132,6 +132,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IGeoBackupPoliciesOperations GeoBackupPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IRecommendedElasticPoolsOperations.
+        /// </summary>
+        public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationLinksOperations.
         /// </summary>
         public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
@@ -160,11 +165,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolDatabaseActivitiesOperations.
         /// </summary>
         public virtual IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; private set; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        public virtual IRecommendedElasticPoolsOperations RecommendedElasticPools { get; private set; }
 
         /// <summary>
         /// Gets the IServiceTierAdvisorsOperations.
@@ -509,13 +509,13 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPools = new ElasticPoolsOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);
+            RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ReplicationLinks = new ReplicationLinksOperations(this);
             ServerAzureADAdministrators = new ServerAzureADAdministratorsOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
             ElasticPoolDatabaseActivities = new ElasticPoolDatabaseActivitiesOperations(this);
-            RecommendedElasticPools = new RecommendedElasticPoolsOperations(this);
             ServiceTierAdvisors = new ServiceTierAdvisorsOperations(this);
             TransparentDataEncryptions = new TransparentDataEncryptionsOperations(this);
             TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);

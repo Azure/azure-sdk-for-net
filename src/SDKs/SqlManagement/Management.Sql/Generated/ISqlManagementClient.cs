@@ -127,6 +127,11 @@ namespace Microsoft.Azure.Management.Sql
         IGeoBackupPoliciesOperations GeoBackupPolicies { get; }
 
         /// <summary>
+        /// Gets the IRecommendedElasticPoolsOperations.
+        /// </summary>
+        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
+
+        /// <summary>
         /// Gets the IReplicationLinksOperations.
         /// </summary>
         IReplicationLinksOperations ReplicationLinks { get; }
@@ -155,11 +160,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolDatabaseActivitiesOperations.
         /// </summary>
         IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
         /// <summary>
         /// Gets the IServiceTierAdvisorsOperations.
@@ -290,5 +290,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
+
     }
 }
