@@ -20,14 +20,13 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
     public partial interface IImages
     {
         /// <summary>
-        /// The Image Visual Search API lets you send an image to Bing and get
-        /// back a list of relevant tags. Each tag contains potential actions a
-        /// user might be interested in. This section provides technical
-        /// details about the request format and headers that you use to
-        /// request actions and the JSON response objects that contain them.
-        /// For examples that show how to make requests, see [Searching the Web
-        /// for
-        /// Images](https://docs.microsoft.com/azure/cognitive-services/bing-image-search/search-the-web).
+        /// The Visual Search API lets you discover insights about an image
+        /// such as visually similar images, shopping sources, and related
+        /// searches. The API can also perform text recognition, identify
+        /// entities (people, places, things), return other topical content for
+        /// the user to explore, and more. For more information, see [Visual
+        /// Search
+        /// Overview](https://docs.microsoft.com/azure/cognitive-services/bing-visual-search/overview).
         /// </summary>
         /// <param name='acceptLanguage'>
         /// A comma-delimited list of one or more languages to use for user
@@ -35,10 +34,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// For additional information, including expected format, see
         /// [RFC2616](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
         /// This header and the
-        /// [setLang](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-images-api-v7-reference#setlang)
+        /// [setLang](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-visual-search-api-v7-reference#setlang)
         /// query parameter are mutually exclusive; do not specify both. If you
         /// set this header, you must also specify the
-        /// [cc](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-images-api-v7-reference#cc)
+        /// [cc](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-visual-search-api-v7-reference#cc)
         /// query parameter. To determine the market to return results for,
         /// Bing uses the first supported language it finds from the list and
         /// combines it with the cc parameter value. If the list does not
@@ -48,21 +47,19 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// used, see the BingAPIs-Market header. Use this header and the cc
         /// query parameter only if you specify multiple languages. Otherwise,
         /// use the
-        /// [mkt](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-images-api-v7-reference#mkt)
+        /// [mkt](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-visual-search-api-v7-reference#mkt)
         /// and
-        /// [setLang](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-images-api-v7-reference#setlang)
+        /// [setLang](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-visual-search-api-v7-reference#setlang)
         /// query parameters. A user interface string is a string that's used
         /// as a label in a user interface. There are few user interface
         /// strings in the JSON response objects. Any links to Bing.com
         /// properties in the response objects apply the specified language.
         /// </param>
         /// <param name='contentType'>
-        /// Optional request header. If you set the
-        /// [modules](https://docs.microsoft.com/en-us/rest/api/cognitiveservices/bing-images-api-v7-reference#modulesrequested)
-        /// query parameter to RecognizedEntities, you may specify the binary
-        /// of an image in the body of a POST request. If you specify the image
-        /// in the body of a POST request, you must specify this header and set
-        /// its value to multipart/form-data. The maximum image size is 1 MB.
+        /// Must be set to multipart/form-data and include a boundary parameter
+        /// (for example, multipart/form-data; boundary=&lt;boundary
+        /// string&gt;). For more details, see [Content form types](
+        /// https://docs.microsoft.com/en-us/azure/cognitive-services/bing-visual-search/overview#content-form-types).
         /// </param>
         /// <param name='userAgent'>
         /// The user agent originating the request. Bing uses the user agent to
@@ -119,9 +116,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// user uses your app on that device, get the client ID that you
         /// persisted. Bing responses may or may not include this header. If
         /// the response includes this header, capture the client ID and use it
-        /// for all subsequent Bing requests for the user on that device. If
-        /// you include the X-MSEdge-ClientID, you must not include cookies in
-        /// the request.
+        /// for all subsequent Bing requests for the user on that device.
+        /// ATTENTION: You must ensure that this Client ID is not linkable to
+        /// any authenticatable user account information. If you include the
+        /// X-MSEdge-ClientID, you must not include cookies in the request.
         /// </param>
         /// <param name='clientIp'>
         /// The IPv4 or IPv6 address of the client device. The IP address is
@@ -177,10 +175,11 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// request must include only one of them.
         /// </param>
         /// <param name='image'>
-        /// The uploaded image file. The size of the image is limited to 1 MB
-        /// and the file name must be "image". The image and imageInsightsToken
-        /// fields are mutually exclusive – the body of the request must
-        /// include only one of them.
+        /// Required if you upload an image instead of passing an image
+        /// insights token. The Content-Disposition's filename parameter must
+        /// be set to "image" and the contents of the form data must be the
+        /// image binary. The image and imageInsightsToken fields are mutually
+        /// exclusive – the body of the request must include only one of them.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

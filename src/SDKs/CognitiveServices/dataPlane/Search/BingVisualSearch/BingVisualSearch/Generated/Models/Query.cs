@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// contains the highlighting characters only if the query enabled hit
         /// highlighting</param>
         /// <param name="webSearchUrl">The URL that takes the user to the Bing
-        /// search results page for the query.Only related search results
+        /// search results page for the query. Only related search results
         /// include this field.</param>
         /// <param name="searchLink">The URL that you use to get the results of
         /// the related search. Before using the URL, you must append query
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
 
         /// <summary>
         /// Gets the URL that takes the user to the Bing search results page
-        /// for the query.Only related search results include this field.
+        /// for the query. Only related search results include this field.
         /// </summary>
         [JsonProperty(PropertyName = "webSearchUrl")]
         public string WebSearchUrl { get; private set; }

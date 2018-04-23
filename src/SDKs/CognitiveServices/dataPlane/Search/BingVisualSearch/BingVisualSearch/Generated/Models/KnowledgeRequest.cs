@@ -31,9 +31,12 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// the image. The image and imageInsightsToken fields are mutually
         /// exclusive – the body of the request must include only one of
         /// them.</param>
-        public KnowledgeRequest(ImageInfo imageInfo = default(ImageInfo))
+        /// <param name="filters">A key-value object consisting of filters that
+        /// may be specified to limit the results returned by the API.</param>
+        public KnowledgeRequest(ImageInfo imageInfo = default(ImageInfo), Filters filters = default(Filters))
         {
             ImageInfo = imageInfo;
+            Filters = filters;
             CustomInit();
         }
 
@@ -49,6 +52,13 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// </summary>
         [JsonProperty(PropertyName = "imageInfo")]
         public ImageInfo ImageInfo { get; private set; }
+
+        /// <summary>
+        /// Gets a key-value object consisting of filters that may be specified
+        /// to limit the results returned by the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "filters")]
+        public Filters Filters { get; private set; }
 
         /// <summary>
         /// Validate the object.

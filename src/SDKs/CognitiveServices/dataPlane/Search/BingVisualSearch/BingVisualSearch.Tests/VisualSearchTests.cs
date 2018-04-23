@@ -54,7 +54,8 @@ namespace SearchSDK.Tests
                 IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 ImageInfo ImageInfo = new ImageInfo(imageInsightsToken: ImageInsightsToken, cropArea: CropArea);
-                KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(imageInfo: ImageInfo);
+                Filters filters = new Filters(site: "www.bing.com");
+                KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(imageInfo: ImageInfo, filters: filters);
 
                 var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: JsonConvert.SerializeObject(KnowledgeRequest)).Result;
 

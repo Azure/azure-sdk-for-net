@@ -28,8 +28,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the Recipe class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         /// <param name="name">The name of the thing represented by this
         /// object.</param>
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// represented by this object.</param>
         /// <param name="image">An image of the item.</param>
         /// <param name="description">A short description of the item.</param>
-        /// <param name="alternateName">An alias for the item</param>
+        /// <param name="alternateName">An alias for the item.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
         /// <param name="thumbnailUrl">The URL to a thumbnail of the

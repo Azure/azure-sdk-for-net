@@ -25,8 +25,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the Action class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         /// <param name="name">The name of the thing represented by this
         /// object.</param>
@@ -34,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// represented by this object.</param>
         /// <param name="image">An image of the item.</param>
         /// <param name="description">A short description of the item.</param>
-        /// <param name="alternateName">An alias for the item</param>
+        /// <param name="alternateName">An alias for the item.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
         /// <param name="thumbnailUrl">The URL to a thumbnail of the
@@ -43,14 +45,15 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="datePublished">The date on which the CreativeWork was
         /// published.</param>
         /// <param name="text">Text content of this creative work</param>
-        /// <param name="result">The result produced in the action</param>
+        /// <param name="result">The result produced in the action.</param>
         /// <param name="displayName">A display name for the action</param>
-        /// <param name="isTopAction">A boolean representing whether this
+        /// <param name="isTopAction">A Boolean representing whether this
         /// result is the top action</param>
-        /// <param name="serviceUrl">Url inside Thing_x gets you a url to
-        /// fulfill action directly,however ServiceUrl Gives you more data to
-        /// determine how to take action.e.g. ServiceUrl might return json and
-        /// an image url in it.</param>
+        /// <param name="serviceUrl">The URL inside a Thing provides you with
+        /// the link to fulfill the action directly, while the serviceUrl
+        /// provides additional data in order to determine how to take the
+        /// appropriate action. For example, the serviceUrl might return JSON
+        /// along with an image URL.</param>
         public Action(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string thumbnailUrl = default(string), IList<Thing> provider = default(IList<Thing>), string datePublished = default(string), string text = default(string), IList<Thing> result = default(IList<Thing>), string displayName = default(string), bool? isTopAction = default(bool?), string serviceUrl = default(string))
             : base(id, readLink, webSearchUrl, name, url, image, description, alternateName, bingId, thumbnailUrl, provider, datePublished, text)
         {
@@ -67,7 +70,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the result produced in the action
+        /// Gets the result produced in the action.
         /// </summary>
         [JsonProperty(PropertyName = "result")]
         public IList<Thing> Result { get; private set; }
@@ -79,16 +82,16 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets a boolean representing whether this result is the top action
+        /// Gets a Boolean representing whether this result is the top action
         /// </summary>
         [JsonProperty(PropertyName = "isTopAction")]
         public bool? IsTopAction { get; private set; }
 
         /// <summary>
-        /// Gets url inside Thing_x gets you a url to fulfill action
-        /// directly,however ServiceUrl Gives you more data to determine how to
-        /// take action.e.g. ServiceUrl might return json and an image url in
-        /// it.
+        /// Gets the URL inside a Thing provides you with the link to fulfill
+        /// the action directly, while the serviceUrl provides additional data
+        /// in order to determine how to take the appropriate action. For
+        /// example, the serviceUrl might return JSON along with an image URL.
         /// </summary>
         [JsonProperty(PropertyName = "serviceUrl")]
         public string ServiceUrl { get; private set; }

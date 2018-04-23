@@ -12,7 +12,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
 
     /// <summary>
     /// Defines a region of an image. The region is a convex quadrilateral
-    /// defined by coordinates of its top left, top right, bottom left and
+    /// defined by coordinates of its top left, top right, bottom left, and
     /// bottom right points. The coordinates are fractional values of the
     /// original image's width and height in the range 0.0 through 1.0.
     /// </summary>
@@ -35,8 +35,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// coordinate</param>
         /// <param name="bottomLeft">The bottom left corner coordinate</param>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         /// <param name="name">The name of the thing represented by this
         /// object.</param>
@@ -44,7 +46,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// represented by this object.</param>
         /// <param name="image">An image of the item.</param>
         /// <param name="description">A short description of the item.</param>
-        /// <param name="alternateName">An alias for the item</param>
+        /// <param name="alternateName">An alias for the item.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
         public NormalizedQuadrilateral(Point2D topLeft, Point2D topRight, Point2D bottomRight, Point2D bottomLeft, string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string))

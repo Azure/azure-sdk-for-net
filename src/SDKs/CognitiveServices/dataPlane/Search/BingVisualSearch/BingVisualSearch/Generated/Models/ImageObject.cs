@@ -28,8 +28,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the ImageObject class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         /// <param name="name">The name of the thing represented by this
         /// object.</param>
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// represented by this object.</param>
         /// <param name="image">An image of the item.</param>
         /// <param name="description">A short description of the item.</param>
-        /// <param name="alternateName">An alias for the item</param>
+        /// <param name="alternateName">An alias for the item.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
         /// <param name="thumbnailUrl">The URL to a thumbnail of the
@@ -47,12 +49,12 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// published.</param>
         /// <param name="text">Text content of this creative work</param>
         /// <param name="contentUrl">Original URL to retrieve the source (file)
-        /// for the media object (e.g the source URL for the image).</param>
+        /// for the media object (e.g., the source URL for the image).</param>
         /// <param name="hostPageUrl">URL of the page that hosts the media
         /// object.</param>
-        /// <param name="contentSize">Size of the media object content (use
-        /// format "value unit" e.g "1024 B").</param>
-        /// <param name="encodingFormat">Encoding format (e.g mp3, mp4, jpeg,
+        /// <param name="contentSize">Size of the media object content. Use
+        /// format "value unit" (e.g., "1024 B").</param>
+        /// <param name="encodingFormat">Encoding format (e.g., mp3, mp4, jpeg,
         /// etc).</param>
         /// <param name="hostPageDisplayUrl">Display URL of the page that hosts
         /// the media object.</param>
@@ -62,9 +64,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// pixels.</param>
         /// <param name="thumbnail">The URL to a thumbnail of the image</param>
         /// <param name="imageInsightsToken">The token that you use in a
-        /// subsequent call to the Image Search API to get additional
+        /// subsequent call to the Visual Search API to get additional
         /// information about the image. For information about using this
-        /// token, see the insightsToken query parameter.</param>
+        /// token, see the imageInsightsToken request parameter.</param>
         /// <param name="insightsMetadata">A count of the number of websites
         /// where you can shop or perform other actions related to the image.
         /// For example, if the image is of an apple pie, this object includes
@@ -78,8 +80,9 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// represents the color that dominates the image. Use the color as the
         /// temporary background in your client until the image is
         /// loaded.</param>
-        /// <param name="visualWords">Visual representation of the image. Used
-        /// for getting more sizes</param>
+        /// <param name="visualWords">A string consisting of small patches of
+        /// the image containing information related to image features. Used
+        /// for getting more sizes.</param>
         public ImageObject(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string thumbnailUrl = default(string), IList<Thing> provider = default(IList<Thing>), string datePublished = default(string), string text = default(string), string contentUrl = default(string), string hostPageUrl = default(string), string contentSize = default(string), string encodingFormat = default(string), string hostPageDisplayUrl = default(string), int? width = default(int?), int? height = default(int?), ImageObject thumbnail = default(ImageObject), string imageInsightsToken = default(string), ImagesImageMetadata insightsMetadata = default(ImagesImageMetadata), string imageId = default(string), string accentColor = default(string), string visualWords = default(string))
             : base(id, readLink, webSearchUrl, name, url, image, description, alternateName, bingId, thumbnailUrl, provider, datePublished, text, contentUrl, hostPageUrl, contentSize, encodingFormat, hostPageDisplayUrl, width, height)
         {
@@ -104,10 +107,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public ImageObject Thumbnail { get; private set; }
 
         /// <summary>
-        /// Gets the token that you use in a subsequent call to the Image
+        /// Gets the token that you use in a subsequent call to the Visual
         /// Search API to get additional information about the image. For
-        /// information about using this token, see the insightsToken query
-        /// parameter.
+        /// information about using this token, see the imageInsightsToken
+        /// request parameter.
         /// </summary>
         [JsonProperty(PropertyName = "imageInsightsToken")]
         public string ImageInsightsToken { get; private set; }
@@ -139,8 +142,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public string AccentColor { get; private set; }
 
         /// <summary>
-        /// Gets visual representation of the image. Used for getting more
-        /// sizes
+        /// Gets a string consisting of small patches of the image containing
+        /// information related to image features. Used for getting more sizes.
         /// </summary>
         [JsonProperty(PropertyName = "visualWords")]
         public string VisualWords { get; private set; }

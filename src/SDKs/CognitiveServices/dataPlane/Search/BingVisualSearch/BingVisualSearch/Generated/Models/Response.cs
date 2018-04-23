@@ -27,8 +27,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the Response class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         public Response(string id = default(string), string readLink = default(string), string webSearchUrl = default(string))
             : base(id)
@@ -44,13 +46,15 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the URL that returns this resource.
+        /// Gets the URL that returns this resource. To use the URL, append
+        /// query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.
         /// </summary>
         [JsonProperty(PropertyName = "readLink")]
         public string ReadLink { get; private set; }
 
         /// <summary>
-        /// Gets the URL To Bing's search result for this item.
+        /// Gets the URL to Bing's search result for this item.
         /// </summary>
         [JsonProperty(PropertyName = "webSearchUrl")]
         public string WebSearchUrl { get; private set; }

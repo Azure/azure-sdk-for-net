@@ -31,8 +31,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="errors">A list of errors that describe the reasons why
         /// the request failed.</param>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         public ErrorResponse(IList<Error> errors, string id = default(string), string readLink = default(string), string webSearchUrl = default(string))
             : base(id, readLink, webSearchUrl)

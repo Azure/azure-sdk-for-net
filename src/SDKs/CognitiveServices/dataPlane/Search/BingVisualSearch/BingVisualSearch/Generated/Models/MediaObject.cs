@@ -28,8 +28,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the MediaObject class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         /// <param name="name">The name of the thing represented by this
         /// object.</param>
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// represented by this object.</param>
         /// <param name="image">An image of the item.</param>
         /// <param name="description">A short description of the item.</param>
-        /// <param name="alternateName">An alias for the item</param>
+        /// <param name="alternateName">An alias for the item.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
         /// <param name="thumbnailUrl">The URL to a thumbnail of the
@@ -47,12 +49,12 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// published.</param>
         /// <param name="text">Text content of this creative work</param>
         /// <param name="contentUrl">Original URL to retrieve the source (file)
-        /// for the media object (e.g the source URL for the image).</param>
+        /// for the media object (e.g., the source URL for the image).</param>
         /// <param name="hostPageUrl">URL of the page that hosts the media
         /// object.</param>
-        /// <param name="contentSize">Size of the media object content (use
-        /// format "value unit" e.g "1024 B").</param>
-        /// <param name="encodingFormat">Encoding format (e.g mp3, mp4, jpeg,
+        /// <param name="contentSize">Size of the media object content. Use
+        /// format "value unit" (e.g., "1024 B").</param>
+        /// <param name="encodingFormat">Encoding format (e.g., mp3, mp4, jpeg,
         /// etc).</param>
         /// <param name="hostPageDisplayUrl">Display URL of the page that hosts
         /// the media object.</param>
@@ -80,7 +82,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
 
         /// <summary>
         /// Gets original URL to retrieve the source (file) for the media
-        /// object (e.g the source URL for the image).
+        /// object (e.g., the source URL for the image).
         /// </summary>
         [JsonProperty(PropertyName = "contentUrl")]
         public string ContentUrl { get; private set; }
@@ -92,14 +94,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public string HostPageUrl { get; private set; }
 
         /// <summary>
-        /// Gets size of the media object content (use format "value unit" e.g
-        /// "1024 B").
+        /// Gets size of the media object content. Use format "value unit"
+        /// (e.g., "1024 B").
         /// </summary>
         [JsonProperty(PropertyName = "contentSize")]
         public string ContentSize { get; private set; }
 
         /// <summary>
-        /// Gets encoding format (e.g mp3, mp4, jpeg, etc).
+        /// Gets encoding format (e.g., mp3, mp4, jpeg, etc).
         /// </summary>
         [JsonProperty(PropertyName = "encodingFormat")]
         public string EncodingFormat { get; private set; }

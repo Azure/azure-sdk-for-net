@@ -25,10 +25,12 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the ImageKnowledge class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
-        /// <param name="tags">Includes a list of image knowledge tags</param>
+        /// <param name="tags">A list of visual search tags</param>
         /// <param name="image">Image object containing metadata about the
         /// requested image.</param>
         public ImageKnowledge(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), IList<ImageTag> tags = default(IList<ImageTag>), ImageObject image = default(ImageObject))
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets includes a list of image knowledge tags
+        /// Gets a list of visual search tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<ImageTag> Tags { get; private set; }

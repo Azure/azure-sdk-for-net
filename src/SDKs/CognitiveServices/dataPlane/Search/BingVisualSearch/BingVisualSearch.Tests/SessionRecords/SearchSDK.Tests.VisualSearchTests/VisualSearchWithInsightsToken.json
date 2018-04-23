@@ -4,7 +4,7 @@
       "RequestUri": "/api/v7/images/visualsearch",
       "EncodedRequestUri": "L2JpbmcvdjcuMC9pbWFnZXMvdmlzdWFsc2VhcmNo",
       "RequestMethod": "POST",
-      "RequestBody": "--0d111f6b-08b5-4248-b44f-9bebe551a3f4\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Disposition: form-data; name=knowledgeRequest\r\n\r\n{\"imageInfo\":{\"imageInsightsToken\":\"bcid_2B63103C3B473829DCC4F03074E157E6*ccid_sGbXtPJL*mid_3B429ACA76F93D5417A3F0D646E96520CE704B3F*simid_608000193735756642\",\"url\":null,\"cropArea\":{\"top\":0.1,\"bottom\":0.5,\"left\":0.1,\"right\":0.9}}}\r\n--0d111f6b-08b5-4248-b44f-9bebe551a3f4--\r\n",
+      "RequestBody": "--9177b2d7-1160-4b56-8b79-b51c07e68788\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Disposition: form-data; name=knowledgeRequest\r\n\r\n{\"imageInfo\":{\"imageInsightsToken\":\"bcid_2B63103C3B473829DCC4F03074E157E6*ccid_sGbXtPJL*mid_3B429ACA76F93D5417A3F0D646E96520CE704B3F*simid_608000193735756642\",\"url\":null,\"cropArea\":{\"top\":0.10000000149011612,\"bottom\":0.5,\"left\":0.10000000149011612,\"right\":0.89999997615814209}},\"filters\":{\"site\":\"www.bing.com\"}}\r\n--9177b2d7-1160-4b56-8b79-b51c07e68788--\r\n",
       "RequestHeaders": {
         "Content-Type": [
           "multipart/form-data; boundary=\"0d111f6b-08b5-4248-b44f-9bebe551a3f4\""

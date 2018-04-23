@@ -25,8 +25,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the ImageTag class.
         /// </summary>
         /// <param name="id">A String identifier.</param>
-        /// <param name="readLink">The URL that returns this resource.</param>
-        /// <param name="webSearchUrl">The URL To Bing's search result for this
+        /// <param name="readLink">The URL that returns this resource. To use
+        /// the URL, append query parameters as appropriate and include the
+        /// Ocp-Apim-Subscription-Key header.</param>
+        /// <param name="webSearchUrl">The URL to Bing's search result for this
         /// item.</param>
         /// <param name="name">The name of the thing represented by this
         /// object.</param>
@@ -34,13 +36,13 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// represented by this object.</param>
         /// <param name="image">An image of the item.</param>
         /// <param name="description">A short description of the item.</param>
-        /// <param name="alternateName">An alias for the item</param>
+        /// <param name="alternateName">An alias for the item.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
-        /// <param name="displayName">Display name for this tag, for default
-        /// tag, there is no display name</param>
-        /// <param name="boundingBox">The bounding box for this tag, for
-        /// default tag, there is no bounding box</param>
+        /// <param name="displayName">Display name for this tag. For the
+        /// default tag, the display name is empty.</param>
+        /// <param name="boundingBox">The bounding box for this tag. For the
+        /// default tag, there is no bounding box.</param>
         /// <param name="actions">Actions within this tag. The order of the
         /// items denotes the default ranking order of these actions.</param>
         public ImageTag(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string displayName = default(string), ImageTagRegion boundingBox = default(ImageTagRegion), IList<ImageAction> actions = default(IList<ImageAction>))
@@ -58,15 +60,15 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets display name for this tag, for default tag, there is no
-        /// display name
+        /// Gets display name for this tag. For the default tag, the display
+        /// name is empty.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the bounding box for this tag, for default tag, there is no
-        /// bounding box
+        /// Gets the bounding box for this tag. For the default tag, there is
+        /// no bounding box.
         /// </summary>
         [JsonProperty(PropertyName = "boundingBox")]
         public ImageTagRegion BoundingBox { get; private set; }
