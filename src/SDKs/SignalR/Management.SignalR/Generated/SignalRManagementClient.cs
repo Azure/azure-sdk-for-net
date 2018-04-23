@@ -76,9 +76,14 @@ namespace Microsoft.Azure.Management.SignalR
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the ISignalrOperations.
+        /// Gets the IOperations.
         /// </summary>
-        public virtual ISignalrOperations Signalr { get; private set; }
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the ISignalROperations.
+        /// </summary>
+        public virtual ISignalROperations SignalR { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SignalRManagementClient class.
@@ -281,7 +286,8 @@ namespace Microsoft.Azure.Management.SignalR
         /// </summary>
         private void Initialize()
         {
-            Signalr = new SignalrOperations(this);
+            Operations = new Operations(this);
+            SignalR = new SignalROperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-03-01-preview";
             AcceptLanguage = "en-US";

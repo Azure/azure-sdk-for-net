@@ -44,14 +44,15 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// US.</param>
         /// <param name="tags">Tags of the service which is a list of key value
         /// pairs that describe the resource.</param>
-        /// <param name="signalrsku">SKU of the service.</param>
+        /// <param name="sku">SKU of the service.</param>
         /// <param name="hostNamePrefix">Prefix for the hostName of the SignalR
         /// service. Retained for future use.
         /// The hostname will be of format:
         /// &amp;lt;hostNamePrefix&amp;gt;.service.signalr.net.</param>
         /// <param name="provisioningState">Provisioning state of the resource.
-        /// Possible values include: 'Succeeded', 'Failed', 'Canceled',
-        /// 'Creating', 'Updating', 'Deleting', 'Moving'</param>
+        /// Possible values include: 'Unknown', 'Succeeded', 'Failed',
+        /// 'Canceled', 'Running', 'Creating', 'Updating', 'Deleting',
+        /// 'Moving'</param>
         /// <param name="externalIP">The publicly accessible IP of the SignalR
         /// service.</param>
         /// <param name="hostName">FQDN of the SignalR service instance.
@@ -62,10 +63,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="serverPort">The publicly accessibly port of the
         /// SignalR service which is designed for customer server side
         /// usage.</param>
-        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku signalrsku = default(ResourceSku), string hostNamePrefix = default(string), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?))
+        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?))
             : base(id, name, type, location, tags)
         {
-            Signalrsku = signalrsku;
+            Sku = sku;
             HostNamePrefix = hostNamePrefix;
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// Gets or sets SKU of the service.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public ResourceSku Signalrsku { get; set; }
+        public ResourceSku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets prefix for the hostName of the SignalR service.
@@ -97,8 +98,8 @@ namespace Microsoft.Azure.Management.SignalR.Models
 
         /// <summary>
         /// Gets provisioning state of the resource. Possible values include:
-        /// 'Succeeded', 'Failed', 'Canceled', 'Creating', 'Updating',
-        /// 'Deleting', 'Moving'
+        /// 'Unknown', 'Succeeded', 'Failed', 'Canceled', 'Running',
+        /// 'Creating', 'Updating', 'Deleting', 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -138,9 +139,9 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Signalrsku != null)
+            if (Sku != null)
             {
-                Signalrsku.Validate();
+                Sku.Validate();
             }
         }
     }

@@ -11,7 +11,8 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("SignalRService", "Signalr", "2018-03-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "Operations", "2018-03-01-preview"),
+                new Tuple<string, string, string>("SignalRService", "SignalR", "2018-03-01-preview"),
             }.AsEnumerable();
         }
     }

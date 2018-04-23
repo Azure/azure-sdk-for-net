@@ -71,9 +71,14 @@ namespace Microsoft.Azure.Management.SignalR
 
 
         /// <summary>
-        /// Gets the ISignalrOperations.
+        /// Gets the IOperations.
         /// </summary>
-        ISignalrOperations Signalr { get; }
+        IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the ISignalROperations.
+        /// </summary>
+        ISignalROperations SignalR { get; }
 
     }
 }

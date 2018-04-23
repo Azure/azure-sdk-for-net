@@ -19,30 +19,10 @@ namespace Microsoft.Azure.Management.SignalR
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SignalrOperations operations.
+    /// SignalROperations operations.
     /// </summary>
-    public partial interface ISignalrOperations
+    public partial interface ISignalROperations
     {
-        /// <summary>
-        /// Lists all of the available REST API operations of the
-        /// Microsoft.SignalRService provider.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Checks that the SignalR name is valid and is not already in use.
         /// </summary>
@@ -392,29 +372,6 @@ namespace Microsoft.Azure.Management.SignalR
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SignalRResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, SignalRUpdateParameters parameters = default(SignalRUpdateParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all of the available REST API operations of the
-        /// Microsoft.SignalRService provider.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Operation>>> ListOperationsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// </summary>

@@ -16,9 +16,11 @@ namespace Microsoft.Azure.Management.SignalR.Models
     /// </summary>
     public static class ProvisioningState
     {
+        public const string Unknown = "Unknown";
         public const string Succeeded = "Succeeded";
         public const string Failed = "Failed";
         public const string Canceled = "Canceled";
+        public const string Running = "Running";
         public const string Creating = "Creating";
         public const string Updating = "Updating";
         public const string Deleting = "Deleting";
