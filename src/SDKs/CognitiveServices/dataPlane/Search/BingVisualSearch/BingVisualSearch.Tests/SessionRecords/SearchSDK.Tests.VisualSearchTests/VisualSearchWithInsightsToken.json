@@ -1,0 +1,80 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/api/v7/images/visualsearch",
+      "EncodedRequestUri": "L2JpbmcvdjcuMC9pbWFnZXMvdmlzdWFsc2VhcmNo",
+      "RequestMethod": "POST",
+      "RequestBody": "--9177b2d7-1160-4b56-8b79-b51c07e68788\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Disposition: form-data; name=knowledgeRequest\r\n\r\n{\"imageInfo\":{\"imageInsightsToken\":\"bcid_2B63103C3B473829DCC4F03074E157E6*ccid_sGbXtPJL*mid_3B429ACA76F93D5417A3F0D646E96520CE704B3F*simid_608000193735756642\",\"url\":null,\"cropArea\":{\"top\":0.10000000149011612,\"bottom\":0.5,\"left\":0.10000000149011612,\"right\":0.89999997615814209}},\"filters\":{\"site\":\"www.bing.com\"}}\r\n--9177b2d7-1160-4b56-8b79-b51c07e68788--\r\n",
+      "RequestHeaders": {
+        "Content-Type": [
+          "multipart/form-data; boundary=\"0d111f6b-08b5-4248-b44f-9bebe551a3f4\""
+        ],
+        "Content-Length": [
+          "412"
+        ],
+        "X-BingApis-SDK": [
+          "true"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "fake"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Search.VisualSearch.VisualSearchAPI/1.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"_type\": \"ImageKnowledge\",\r\n  \"instrumentation\": {\r\n    \"_type\": \"ResponseInstrumentation\",\r\n    \"pingUrlBase\": \"https://www.bingapis.com/api/ping?IG=02B46963086841E48264A0B8C8AA9344&CID=1B08F7D1AEF364990AB9FC02AF64655B&ID=\",\r\n    \"pageLoadPingUrl\": \"https://www.bingapis.com/api/ping/pageload?IG=02B46963086841E48264A0B8C8AA9344&CID=1B08F7D1AEF364990AB9FC02AF64655B&Type=Event.CPT&DATA=0\"\r\n  },\r\n  \"tags\": [\r\n    {\r\n      \"displayName\": \"\",\r\n      \"actions\": [\r\n        {\r\n          \"image\": {\r\n            \"webSearchUrl\": \"https://www.bing.com/images/search?view=detailv2&FORM=OIIRPO&id=3B429ACA76F93D5417A3F0D646E96520CE704B3F&simid=608000194062059563\",\r\n            \"webSearchUrlPingSuffix\": \"DevEx,5034.1\",\r\n            \"name\": \"Arts and Facts: Episode 20: Edgar Degas\",\r\n            \"thumbnailUrl\": \"https://tse1.mm.bing.net/th?id=OIP.sGbXtPJLgOt8i_88mVkJDgHaFj&pid=Api\",\r\n            \"datePublished\": \"2012-02-22T12:00:00Z\",\r\n            \"contentUrl\": \"http://4.bp.blogspot.com/-FIb7AI4wJQQ/T0V9ccRW2UI/AAAAAAAAATo/nu7_-XkL77M/s1600/002.jpg\",\r\n            \"contentUrlPingSuffix\": \"DevEx,5036.1\",\r\n            \"hostPageUrl\": \"http://artsandfacts.blogspot.com/2012/02/episode-20-edgar-degas.html\",\r\n            \"hostPageUrlPingSuffix\": \"DevEx,5035.1\",\r\n            \"contentSize\": \"108428 B\",\r\n            \"encodingFormat\": \"jpeg\",\r\n            \"hostPageDisplayUrl\": \"artsandfacts.blogspot.com/2012/02/episode-20-edgar-degas.html\",\r\n            \"width\": 1024,\r\n            \"height\": 768,\r\n            \"thumbnail\": {\r\n              \"width\": 474,\r\n              \"height\": 355\r\n            },\r\n            \"imageInsightsToken\": \"ccid_sGbXtPJL*mid_3B429ACA76F93D5417A3F0D646E96520CE704B3F*simid_608000194062059563*thid_OIP.sGbXtPJLgOt8i\\\\_88mVkJDgHaFj\",\r\n            \"insightsMetadata\": {\r\n              \"recipeSourcesCount\": 0,\r\n              \"pagesIncludingCount\": 45,\r\n              \"availableSizesCount\": 11\r\n            },\r\n            \"imageId\": \"3B429ACA76F93D5417A3F0D646E96520CE704B3F\",\r\n            \"accentColor\": \"996732\"\r\n          },\r\n          \"actionType\": \"MoreSizes\"\r\n        },\r\n        {\r\n          \"image\": {\r\n            \"webSearchUrl\": \"https://www.bing.com/images/search?view=detailv2&FORM=OIIRPO&id=3B429ACA76F93D5417A3F0D646E96520CE704B3F&simid=608000194062059563\",\r\n            \"webSearchUrlPingSuffix\": \"DevEx,5041.1\",\r\n            \"name\": \"Arts and Facts: Episode 20: Edgar Degas\",\r\n            \"thumbnailUrl\": \"https://tse1.mm.bing.net/th?id=OIP.sGbXtPJLgOt8i_88mVkJDgHaFj&pid=Api\",\r\n            \"datePublished\": \"2012-02-22T12:00:00Z\",\r\n            \"contentUrl\": \"http://4.bp.blogspot.com/-FIb7AI4wJQQ/T0V9ccRW2UI/AAAAAAAAATo/nu7_-XkL77M/s1600/002.jpg\",\r\n            \"contentUrlPingSuffix\": \"DevEx,5043.1\",\r\n            \"hostPageUrl\": \"http://artsandfacts.blogspot.com/2012/02/episode-20-edgar-degas.html\",\r\n            \"hostPageUrlPingSuffix\": \"DevEx,5042.1\",\r\n            \"contentSize\": \"108428 B\",\r\n            \"encodingFormat\": \"jpeg\",\r\n            \"hostPageDisplayUrl\": \"artsandfacts.blogspot.com/2012/02/episode-20-edgar-degas.html\",\r\n            \"width\": 1024,\r\n            \"height\": 768,\r\n            \"thumbnail\": {\r\n              \"width\": 474,\r\n              \"height\": 355\r\n            },\r\n            \"imageInsightsToken\": \"ccid_sGbXtPJL*mid_3B429ACA76F93D5417A3F0D646E96520CE704B3F*simid_608000194062059563*thid_OIP.sGbXtPJLgOt8i\\\\_88mVkJDgHaFj\",\r\n            \"insightsMetadata\": {\r\n              \"recipeSourcesCount\": 0,\r\n              \"pagesIncludingCount\": 45,\r\n              \"availableSizesCount\": 11\r\n            },\r\n            \"imageId\": \"3B429ACA76F93D5417A3F0D646E96520CE704B3F\",\r\n            \"accentColor\": \"996732\"\r\n          },\r\n          \"actionType\": \"ImageById\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"image\": {\r\n    \"imageInsightsToken\": \"bcid_2B63103C3B473829DCC4F03074E157E6*ccid_sGbXtPJL*mid_3B429ACA76F93D5417A3F0D646E96520CE704B3F*thid_R.2B63103C3B473829DCC4F03074E157E6\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3115"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Mon, 16 Apr 2018 21:13:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "P3P": [
+          "CP=\"NON UNI COM NAV STA LOC CURa DEVa PSAa PSDa OUR IND\""
+        ],
+        "Set-Cookie": [
+          "SRCHD=AF=NOFORM; domain=.bingapis.com; expires=Thu, 16-Apr-2020 21:13:55 GMT; path=/",
+          "SRCHUID=V=2&GUID=5FE6066E7B55435E88DFC6AAC6C0F096&dmnchg=1; domain=.bingapis.com; expires=Thu, 16-Apr-2020 21:13:55 GMT; path=/",
+          "SRCHUSR=DOB=20180416; domain=.bingapis.com; expires=Thu, 16-Apr-2020 21:13:55 GMT; path=/",
+          "_SS=SID=1D11262E4F8A61DB22F22DFD4E1D60EB; domain=.bingapis.com; path=/",
+          "_EDGE_S=F=1&SID=1D11262E4F8A61DB22F22DFD4E1D60EB; path=/; httponly; domain=bingapis.com",
+          "_EDGE_V=1; path=/; httponly; expires=Sat, 11-May-2019 21:13:56 GMT; domain=bingapis.com",
+          "MUID=1B08F7D1AEF364990AB9FC02AF64655B; path=/; expires=Sat, 11-May-2019 21:13:56 GMT; domain=bingapis.com",
+          "MUIDB=1B08F7D1AEF364990AB9FC02AF64655B; path=/; httponly; expires=Sat, 11-May-2019 21:13:56 GMT"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "BingAPIs-TraceId": [
+          "B1764EB1CE1747DCB62B96A5B2394495"
+        ],
+        "X-MSEdge-ClientID": [
+          "1B08F7D1AEF364990AB9FC02AF64655B"
+        ],
+        "X-MSAPI-UserState": [
+          "8af0"
+        ],
+        "X-MSEdge-Ref": [
+          "Ref A: B1764EB1CE1747DCB62B96A5B2394495 Ref B: CO1EDGE0219 Ref C: 2018-04-16T21:13:56Z"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
