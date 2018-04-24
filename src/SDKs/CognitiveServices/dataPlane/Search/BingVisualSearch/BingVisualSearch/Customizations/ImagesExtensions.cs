@@ -171,7 +171,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageKnowledge> VisualSearchMethodAsync(this IImages operations, string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), KnowledgeRequest knowledgeRequest = default(KnowledgeRequest), Stream image = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageKnowledge> VisualSearchMethodAsync(this IImages operations, string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), VisualSearchRequest knowledgeRequest = default(VisualSearchRequest), Stream image = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.VisualSearchMethodWithHttpMessagesAsync(acceptLanguage, contentType, userAgent, clientId, clientIp, location, knowledgeRequest, image, null, cancellationToken).ConfigureAwait(false))
                 {

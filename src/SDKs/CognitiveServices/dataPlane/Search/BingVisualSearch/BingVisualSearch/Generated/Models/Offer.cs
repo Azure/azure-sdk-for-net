@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="alternateName">An alias for the item.</param>
         /// <param name="bingId">An ID that uniquely identifies this
         /// item.</param>
-        /// <param name="seller">Seller for this offer</param>
+        /// <param name="seller">Seller for this offer.</param>
         /// <param name="price">The item's price.</param>
         /// <param name="priceCurrency">The monetary currency. For example,
         /// USD. Possible values include: 'USD', 'CAD', 'GBP', 'EUR', 'COP',
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets seller for this offer
+        /// Gets seller for this offer.
         /// </summary>
         [JsonProperty(PropertyName = "seller")]
         public Organization Seller { get; private set; }

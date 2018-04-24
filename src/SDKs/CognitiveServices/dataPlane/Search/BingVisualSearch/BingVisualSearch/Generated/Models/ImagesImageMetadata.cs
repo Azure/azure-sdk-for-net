@@ -26,8 +26,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <summary>
         /// Initializes a new instance of the ImagesImageMetadata class.
         /// </summary>
-        /// <param name="shoppingSourcesCount">The number of websites that
-        /// offer goods of the products seen in the image.</param>
+        /// <param name="shoppingSourcesCount">The number of websites that sell
+        /// the products seen in the image.</param>
         /// <param name="recipeSourcesCount">The number of websites that offer
         /// recipes of the food seen in the image.</param>
         /// <param name="aggregateOffer">A summary of the online offers of
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the number of websites that offer goods of the products seen
-        /// in the image.
+        /// Gets the number of websites that sell the products seen in the
+        /// image.
         /// </summary>
         [JsonProperty(PropertyName = "shoppingSourcesCount")]
         public int? ShoppingSourcesCount { get; private set; }

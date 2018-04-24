@@ -20,12 +20,11 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
     public partial interface IImages
     {
         /// <summary>
-        /// The Visual Search API lets you discover insights about an image
-        /// such as visually similar images, shopping sources, and related
-        /// searches. The API can also perform text recognition, identify
-        /// entities (people, places, things), return other topical content for
-        /// the user to explore, and more. For more information, see [Visual
-        /// Search
+        /// Visual Search API lets you discover insights about an image such as
+        /// visually similar images, shopping sources, and related searches.
+        /// The API can also perform text recognition, identify entities
+        /// (people, places, things), return other topical content for the user
+        /// to explore, and more. For more information, see [Visual Search
         /// Overview](https://docs.microsoft.com/azure/cognitive-services/bing-visual-search/overview).
         /// </summary>
         /// <param name='acceptLanguage'>
@@ -79,7 +78,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// (Windows NT 6.3; WOW64; Trident / 7.0; Touch; rv:11.0) like Gecko.
         /// iPad: Mozilla / 5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit /
         /// 537.51.1 (KHTML, like Gecko) Version / 7.0 Mobile / 11A465 Safari /
-        /// 9537.53
+        /// 9537.53.
         /// </param>
         /// <param name='clientId'>
         /// Bing uses this header to provide users with consistent behavior
@@ -170,16 +169,24 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// should include this header.
         /// </param>
         /// <param name='knowledgeRequest'>
-        /// A JSON object containing information about the image. The image and
-        /// imageInsightsToken fields are mutually exclusive – the body of the
-        /// request must include only one of them.
+        /// The form data is a JSON object that identifies the image using an
+        /// insights token or URL to the image. The object may also include an
+        /// optional crop area that identifies an area of interest in the
+        /// image. The insights token and URL are mutually exclusive – do not
+        /// specify both. You may specify knowledgeRequest form data and image
+        /// form data in the same request only if knowledgeRequest form data
+        /// specifies the cropArea field only (it must not include an insights
+        /// token or URL).
         /// </param>
         /// <param name='image'>
-        /// Required if you upload an image instead of passing an image
-        /// insights token. The Content-Disposition's filename parameter must
-        /// be set to "image" and the contents of the form data must be the
-        /// image binary. The image and imageInsightsToken fields are mutually
-        /// exclusive – the body of the request must include only one of them.
+        /// The form data is an image binary. The Content-Disposition header's
+        /// filename parameter must be set to "image". You must specify an
+        /// image binary if you do not use knowledgeRequest form data to
+        /// specify the image; you may not use both forms to specify an image.
+        /// You may specify knowledgeRequest form data and image form data in
+        /// the same request only if knowledgeRequest form data specifies the
+        /// cropArea field only  (it must not include an insights token or
+        /// URL).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

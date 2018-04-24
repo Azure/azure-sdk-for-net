@@ -26,8 +26,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <summary>
         /// Initializes a new instance of the Filters class.
         /// </summary>
-        /// <param name="site">The URL of the site to return similar images and similar products from. (e.g., "www.bing.com", "bing.com")
-        /// from.</param>
+        /// <param name="site">The URL of the site to return similar images and
+        /// similar products from. (e.g., "www.bing.com", "bing.com").</param>
         public Filters(string site = default(string))
         {
             Site = site;
@@ -40,7 +40,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the URL of the site to return similar images and similar products from. (e.g., "www.bing.com", "bing.com")
+        /// Gets the URL of the site to return similar images and similar
+        /// products from. (e.g., "www.bing.com", "bing.com").
         /// </summary>
         [JsonProperty(PropertyName = "site")]
         public string Site { get; private set; }

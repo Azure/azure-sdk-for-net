@@ -22,8 +22,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <summary>
         /// Initializes a new instance of the Point2D class.
         /// </summary>
-        /// <param name="x">The x-coordinate of the point</param>
-        /// <param name="y">The y-coordinate of the point</param>
+        /// <param name="x">The x-coordinate of the point.</param>
+        /// <param name="y">The y-coordinate of the point.</param>
         /// <param name="id">A String identifier.</param>
         /// <param name="readLink">The URL that returns this resource. To use
         /// the URL, append query parameters as appropriate and include the
@@ -53,13 +53,13 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the x-coordinate of the point
+        /// Gets or sets the x-coordinate of the point.
         /// </summary>
         [JsonProperty(PropertyName = "x")]
         public double X { get; set; }
 
         /// <summary>
-        /// Gets or sets the y-coordinate of the point
+        /// Gets or sets the y-coordinate of the point.
         /// </summary>
         [JsonProperty(PropertyName = "y")]
         public double Y { get; set; }

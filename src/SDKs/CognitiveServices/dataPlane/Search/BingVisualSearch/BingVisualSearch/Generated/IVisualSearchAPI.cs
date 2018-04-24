@@ -11,7 +11,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
     using Newtonsoft.Json;
 
     /// <summary>
-    /// The Visual Search API lets you discover insights about an image such as
+    /// Visual Search API lets you discover insights about an image such as
     /// visually similar images, shopping sources, and related searches. The
     /// API can also perform text recognition, identify entities (people,
     /// places, things), return other topical content for the user to explore,

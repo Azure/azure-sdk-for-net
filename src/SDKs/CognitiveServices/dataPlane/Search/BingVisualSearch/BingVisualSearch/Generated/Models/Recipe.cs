@@ -47,7 +47,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="provider">The source of the creative work.</param>
         /// <param name="datePublished">The date on which the CreativeWork was
         /// published.</param>
-        /// <param name="text">Text content of this creative work</param>
+        /// <param name="text">Text content of this creative work.</param>
         /// <param name="cookTime">The amount of time the food takes to cook.
         /// For example, PT25M. For information about the time format, see
         /// http://en.wikipedia.org/wiki/ISO_8601#Durations.</param>

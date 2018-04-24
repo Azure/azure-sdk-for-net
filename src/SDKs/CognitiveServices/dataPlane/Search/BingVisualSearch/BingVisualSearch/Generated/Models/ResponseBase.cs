@@ -9,7 +9,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using System.Linq;
 
     /// <summary>
-    /// Response base
+    /// Response base.
     /// </summary>
     public partial class ResponseBase
     {

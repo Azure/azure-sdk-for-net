@@ -28,14 +28,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// </summary>
         /// <param name="text">The query string. Use this string as the query
         /// term in a new search request.</param>
-        /// <param name="displayText">The display version of the query term.
-        /// This version of the query term may contain special characters that
-        /// highlight the search term found in the query string. The string
-        /// contains the highlighting characters only if the query enabled hit
-        /// highlighting</param>
+        /// <param name="displayText">The display version of the query
+        /// term.</param>
         /// <param name="webSearchUrl">The URL that takes the user to the Bing
-        /// search results page for the query. Only related search results
-        /// include this field.</param>
+        /// search results page for the query.</param>
         /// <param name="searchLink">The URL that you use to get the results of
         /// the related search. Before using the URL, you must append query
         /// parameters as appropriate and include the Ocp-Apim-Subscription-Key
@@ -66,17 +62,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets the display version of the query term. This version of the
-        /// query term may contain special characters that highlight the search
-        /// term found in the query string. The string contains the
-        /// highlighting characters only if the query enabled hit highlighting
+        /// Gets the display version of the query term.
         /// </summary>
         [JsonProperty(PropertyName = "displayText")]
         public string DisplayText { get; private set; }
 
         /// <summary>
         /// Gets the URL that takes the user to the Bing search results page
-        /// for the query. Only related search results include this field.
+        /// for the query.
         /// </summary>
         [JsonProperty(PropertyName = "webSearchUrl")]
         public string WebSearchUrl { get; private set; }

@@ -28,22 +28,20 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// </summary>
         /// <param name="top">The top coordinate of the region to be cropped.
         /// The coordinate is a fractional value of the original image's height
-        /// and is measured from the top, left corner of the image. Specify the
+        /// and is measured from the top edge of the image. Specify the
         /// coordinate as a value from 0.0 through 1.0.</param>
         /// <param name="bottom">The bottom coordinate of the region to be
         /// cropped. The coordinate is a fractional value of the original
-        /// image's height and is measured from the top, left corner of the
-        /// image. Specify the coordinate as a value from 0.0 through
-        /// 1.0.</param>
+        /// image's height and is measured from the top edge of the image.
+        /// Specify the coordinate as a value from 0.0 through 1.0.</param>
         /// <param name="left">The left coordinate of the region to be cropped.
-        /// The coordinate is a fractional value of the original image's height
-        /// and is measured from the top, left corner of the image. Specify the
+        /// The coordinate is a fractional value of the original image's width
+        /// and is measured from the left edge of the image. Specify the
         /// coordinate as a value from 0.0 through 1.0.</param>
         /// <param name="right">The right coordinate of the region to be
         /// cropped. The coordinate is a fractional value of the original
-        /// image's height and is measured from the top, left corner of the
-        /// image. Specify the coordinate as a value from 0.0 through
-        /// 1.0.</param>
+        /// image's width and is measured from the left edge of the image.
+        /// Specify the coordinate as a value from 0.0 through 1.0.</param>
         public CropArea(double top, double bottom, double left, double right)
         {
             Top = top;
@@ -61,8 +59,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <summary>
         /// Gets or sets the top coordinate of the region to be cropped. The
         /// coordinate is a fractional value of the original image's height and
-        /// is measured from the top, left corner of the image. Specify the
-        /// coordinate as a value from 0.0 through 1.0.
+        /// is measured from the top edge of the image. Specify the coordinate
+        /// as a value from 0.0 through 1.0.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public double Top { get; set; }
@@ -70,26 +68,26 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <summary>
         /// Gets or sets the bottom coordinate of the region to be cropped. The
         /// coordinate is a fractional value of the original image's height and
-        /// is measured from the top, left corner of the image. Specify the
-        /// coordinate as a value from 0.0 through 1.0.
+        /// is measured from the top edge of the image. Specify the coordinate
+        /// as a value from 0.0 through 1.0.
         /// </summary>
         [JsonProperty(PropertyName = "bottom")]
         public double Bottom { get; set; }
 
         /// <summary>
         /// Gets or sets the left coordinate of the region to be cropped. The
-        /// coordinate is a fractional value of the original image's height and
-        /// is measured from the top, left corner of the image. Specify the
-        /// coordinate as a value from 0.0 through 1.0.
+        /// coordinate is a fractional value of the original image's width and
+        /// is measured from the left edge of the image. Specify the coordinate
+        /// as a value from 0.0 through 1.0.
         /// </summary>
         [JsonProperty(PropertyName = "left")]
         public double Left { get; set; }
 
         /// <summary>
         /// Gets or sets the right coordinate of the region to be cropped. The
-        /// coordinate is a fractional value of the original image's height and
-        /// is measured from the top, left corner of the image. Specify the
-        /// coordinate as a value from 0.0 through 1.0.
+        /// coordinate is a fractional value of the original image's width and
+        /// is measured from the left edge of the image. Specify the coordinate
+        /// as a value from 0.0 through 1.0.
         /// </summary>
         [JsonProperty(PropertyName = "right")]
         public double Right { get; set; }
