@@ -1,10 +1,10 @@
 ﻿Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Data/readme.md --csharp --csharp-sdks-folder=E:\github\azure-sdk-for-net\tools\..\src\SDKs\ --version=latest --reflect-api-versions
-2018-04-09 20:46:41 UTC
+2018-04-13 17:26:02 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      f6b39d9c8f634b48af01d44ab66ba2585b40c49c
+Commit:      f8e8f17d186921ac4fdd139c4058b579ec828b1a
 
 2) AutoRest information
 Requested version: latest

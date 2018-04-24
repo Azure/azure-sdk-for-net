@@ -10,7 +10,7 @@ namespace InfrastructureInsights.Tests {
     class InfrastructureInsightsCommon {
 
         // TODO: Compare tags
-        public static bool ResourceAreSame(Resource expected, Resource found) {
+        public static bool ResourceAreSame(TrackedResource expected, TrackedResource found) {
             if (expected == null) return found == null;
             return expected.Id == found.Id &&
                 expected.Location == found.Location &&
@@ -18,7 +18,7 @@ namespace InfrastructureInsights.Tests {
                 expected.Type == found.Type;
         }
 
-        public static bool ValidateResource(Resource resource) {
+        public static bool ValidateResource(TrackedResource resource) {
             return resource != null &&
                 resource.Id != null &&
                 resource.Location != null &&

@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.SpellCheck
+namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
 {
     using Microsoft.Rest;
     using Models;
@@ -50,6 +50,15 @@ namespace Microsoft.Azure.CognitiveServices.SpellCheck
         /// algorithm. The spell-checker is based on a massive corpus of web
         /// searches and documents.
         /// </summary>
+        /// <param name='text'>
+        /// The text string to check for spelling and grammar errors. The
+        /// combined length of the text string, preContextText string, and
+        /// postContextText string may not exceed 10,000 characters. You may
+        /// specify this parameter in the query string of a GET request or in
+        /// the body of a POST request. Because of the query string length
+        /// limit, you'll typically use a POST request unless you're checking
+        /// only short strings.
+        /// </param>
         /// <param name='acceptLanguage'>
         /// A comma-delimited list of one or more languages to use for user
         /// interface strings. The list is in decreasing order of preference.
@@ -252,7 +261,7 @@ namespace Microsoft.Azure.CognitiveServices.SpellCheck
         /// mistakes. 2) Spell—Finds most spelling mistakes but does not find
         /// some of the grammar errors that Proof catches (for example,
         /// capitalization and repeated words). Possible values include:
-        /// 'Proof', 'Spell'
+        /// 'proof', 'spell'
         /// </param>
         /// <param name='preContextText'>
         /// A string that gives context to the text string. For example, the
@@ -276,22 +285,13 @@ namespace Microsoft.Azure.CognitiveServices.SpellCheck
         /// characters. You may specify this parameter in the query string of a
         /// GET request or in the body of a POST request.
         /// </param>
-        /// <param name='text'>
-        /// The text string to check for spelling and grammar errors. The
-        /// combined length of the text string, preContextText string, and
-        /// postContextText string may not exceed 10,000 characters. You may
-        /// specify this parameter in the query string of a GET request or in
-        /// the body of a POST request. Because of the query string length
-        /// limit, you'll typically use a POST request unless you're checking
-        /// only short strings.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<SpellCheckModel>> SpellCheckerWithHttpMessagesAsync(string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string actionType = default(string), string appName = default(string), string countryCode = default(string), string clientMachineName = default(string), string docId = default(string), string market = default(string), string sessionId = default(string), string setLang = default(string), string userId = default(string), string mode = default(string), string preContextText = default(string), string postContextText = default(string), string text = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<SpellCheckModel>> SpellCheckerWithHttpMessagesAsync(string text, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string actionType = default(string), string appName = default(string), string countryCode = default(string), string clientMachineName = default(string), string docId = default(string), string market = default(string), string sessionId = default(string), string setLang = default(string), string userId = default(string), string mode = default(string), string preContextText = default(string), string postContextText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

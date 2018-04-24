@@ -7,4 +7,4 @@ powershell.exe `
     -ResourceProvider "azsadmin/resource-manager/update" `
     -PowershellInvoker  `
     -AutoRestVersion "latest" `
-    -SdkDirectory $PSScriptRoot
+    -SdkRootDirectory $PSScriptRoot

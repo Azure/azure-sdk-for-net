@@ -30,29 +30,42 @@
 .PARAMETER SpecsRepoName
     The name of the repo that contains the config file (Can only be either of azure-rest-api-specs or azure-rest-api-specs-pr)
 
-.PARAMETER SdkDirectory
+.PARAMETER SdkRootDirectory
+    The root path in csharp-sdks-folder in config file where to generate the code
+
+.PARAMETER SdkGenerationDirectory
     The path where to generate the code
     
 #>
-
+[CmdletBinding(DefaultParameterSetName="rootdir")]
 Param(
     [Parameter(Mandatory = $true)]
-    [string] $ResourceProvider = "compute/resource-manager",
+    [string] $ResourceProvider,
+    [Parameter(Mandatory = $false)]
     [string] $SpecsRepoFork = "Azure",
+    [Parameter(Mandatory = $false)]
     [string] $SpecsRepoName = "azure-rest-api-specs",
+    [Parameter(Mandatory = $false)]
     [string] $SpecsRepoBranch = "master",
-    [string] $SdkDirectory,
+    [Parameter(Mandatory = $false)]
     [string] $AutoRestVersion = "latest",
-    [switch] $PowershellInvoker
+    [Parameter(Mandatory = $false)]
+    [switch] $PowershellInvoker,
+    [Parameter(ParameterSetName="rootdir", Mandatory=$false)]
+    [string] $SdkRootDirectory,
+    [Parameter(ParameterSetName="legacyrootdir", Mandatory=$false)]
+    [string] $SdkDirectory,
+    [Parameter(ParameterSetName="finaldir", Mandatory=$false)]
+    [string] $SdkGenerationDirectory,
+    [Parameter(Mandatory = $false)]
+    [string] $Namespace,
+    [Parameter(Mandatory = $false)]
+    [string] $ConfigFileTag
 )
 
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
 $currPath = split-path $SCRIPT:MyInvocation.MyCommand.Path -parent
-if([string]::IsNullOrEmpty($SdkDirectory))
-{
-    $SdkDirectory = "$currPath\..\src\SDKs\"
-}
 $modulePath = "$currPath\SdkBuildTools\psModules\CodeGenerationModules\generateDotNetSdkCode.psm1"
 $logFile = "$currPath\..\src\SDKs\_metadata\$($ResourceProvider.Replace("/","_")).txt"
 
@@ -70,9 +83,21 @@ function NotifyError {
     Start-Process "$errorFilePath\errorLog.txt"
 }
 
+if([string]::IsNullOrWhiteSpace($SdkDirectory)) {
+    $SdkDirectory = "$currPath\..\src\SDKs\"
+}
+
+if ($SpecsRepoName.EndsWith("-pr")) {
+    NotifyError "AutoRest cannot generate sdk from a spec in private repos."
+}
+
 if (-not ($modulePath | Test-Path)) {
     NotifyError "Could not find code generation module at: $modulePath. Please run `msbuild build.proj` to install the module."
     Exit -1
+}
+
+if([string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
+    $SdkRootDirectory = $SdkDirectory
 }
 
 Import-Module "$modulePath"
@@ -89,8 +114,17 @@ function Start-Script {
 
     $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     Write-InfoLog "Commencing code generation"  -logToConsole
-    Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkDirectory $SdkDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName
-
+    
+    if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
+        Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkRootDirectory $SdkRootDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+    }
+    elseif(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)) {
+        Start-CodeGeneration -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationDirectory $SdkGenerationDirectory -AutoRestVersion $AutoRestVersion -SpecsRepoName $SpecsRepoName -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+    }
+    else {
+        Write-ErrorLog "Could not find an output directory to generate code, aborting."
+    }
+    
     $invokerMessage = ".\tools\generate.ps1 was invoked by"
     if($PowershellInvoker) {
         Write-InfoLog "$invokerMessage generate.ps1" -logToFile
@@ -98,7 +132,6 @@ function Start-Script {
     else {
         Write-InfoLog "$invokerMessage generate.cmd" -logToFile
     }
-
 }
 
 try {
