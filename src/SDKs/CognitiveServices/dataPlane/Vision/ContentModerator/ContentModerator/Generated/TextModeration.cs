@@ -53,15 +53,15 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// Detects profanity in more than 100 languages and match against custom and
         /// shared blacklists.
         /// </remarks>
-        /// <param name='language'>
-        /// Language of the terms.
-        /// </param>
         /// <param name='textContentType'>
         /// The content type. Possible values include: 'text/plain', 'text/html',
         /// 'text/xml', 'text/markdown'
         /// </param>
         /// <param name='textContent'>
         /// Content to screen.
+        /// </param>
+        /// <param name='language'>
+        /// Language of the text.
         /// </param>
         /// <param name='autocorrect'>
         /// Autocorrect text.
@@ -96,15 +96,11 @@ namespace Microsoft.CognitiveServices.ContentModerator
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Screen>> ScreenTextWithHttpMessagesAsync(string language, string textContentType, Stream textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Screen>> ScreenTextWithHttpMessagesAsync(string textContentType, Stream textContent, string language = default(string), bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BaseUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.BaseUrl");
-            }
-            if (language == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "language");
             }
             if (textContentType == null)
             {
