@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.Network
             CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<string> _response =
-                await this.BeginGetVpnProfilePacakgeUrlWithHttpMessagesAsync(resourceGroupName,
+                await this.BeginGetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName,
                     virtualNetworkGatewayName,
                     customHeaders,
                     cancellationToken).ConfigureAwait(false);

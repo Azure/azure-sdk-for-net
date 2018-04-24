@@ -3,7 +3,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.8.1,2.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.1,2.0.0)" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.10, 4.0.0)" /> 
     <PackageReference Include="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     
     <!-- This is needed for discovering tests in test explorer -->

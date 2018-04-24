@@ -1,0 +1,80 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3Rz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"Id\": \"28ad1d5b-b144-41b7-9cef-f07eec0fea84\",\r\n    \"Name\": \"A proj\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"2005efef-c149-4257-b124-6b6755d3de87\",\r\n    \"Created\": \"2018-02-12T22:37:20.41\",\r\n    \"LastModified\": \"2018-02-12T22:38:53.6039917\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-28ad1d5bb14441b79ceff07eec0fea84/t-d2cfbffd036947de861a41cb9643c7f4?sv=2016-05-31&sr=b&sig=nhiWpCCXMSG1dcp6k3lOZ8lESIz1VPosQzOqp0Vpj0o%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"ed185687-247b-4e4b-8380-30fdc4c5a41f\",\r\n    \"Name\": \"blank project\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"d3e293e8-a8a0-4d62-b5dc-518816e1e65a\",\r\n    \"Created\": \"2018-02-08T08:32:49.4333333\",\r\n    \"LastModified\": \"2018-02-08T08:32:49.432754\",\r\n    \"ThumbnailUri\": null\r\n  },\r\n  {\r\n    \"Id\": \"87b30d0d-156a-427e-98d2-715837567845\",\r\n    \"Name\": \"Made With Python (5)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"eb5fec8a-3a24-4645-a1cf-3b9a03d2c1f3\",\r\n    \"Created\": \"2017-12-21T20:00:06.8966667\",\r\n    \"LastModified\": \"2017-12-21T20:00:17.8711986\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-87b30d0d156a427e98d2715837567845/t-51b97285716d481e856df989b608d97f?sv=2016-05-31&sr=b&sig=JDeM0ZJe8lHdCziYNohokIneTOkxis98Xitt99AI3O4%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"787795ae-6b7b-48c1-8ef8-2bfe67ba794d\",\r\n    \"Name\": \"multipart test\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"9ecb04d5-21a0-4a0b-9b47-4fe0e12946af\",\r\n    \"Created\": \"2018-01-10T18:13:16.5366667\",\r\n    \"LastModified\": \"2018-01-11T21:48:12.5127244\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-787795ae6b7b48c18ef82bfe67ba794d/t-938ae459b3404218a6288252ab931345?sv=2016-05-31&sr=b&sig=wmpPQbZdBqE9HVKCvrAa0H0SMqZy787lon01KLnfJQs%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"d65c0d45-1318-4ac3-9265-7a7b5c3efcdc\",\r\n    \"Name\": \"My Project\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"235f0927-f386-4cab-9f53-fe1435d5eeb7\",\r\n    \"Created\": \"2018-01-31T20:16:08.5733333\",\r\n    \"LastModified\": \"2018-01-31T20:16:21.4712713\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-d65c0d4513184ac392657a7b5c3efcdc/t-0c35d0b98a324adeafde738562ec2362?sv=2016-05-31&sr=b&sig=8QxPHGp3X5tvh63hRpMb%2FJDBv5GkFi4MhZZweaItUk4%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"8f0fd72e-789c-4561-8cd4-f5150e3ba958\",\r\n    \"Name\": \"My Project (1)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"071e09ce-3cbd-4e2c-b509-dc74dd2d89b2\",\r\n    \"Created\": \"2017-12-22T18:06:45.2066667\",\r\n    \"LastModified\": \"2017-12-22T18:06:52.9301084\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-8f0fd72e789c45618cd4f5150e3ba958/t-d629a77488ef4a2bad58c0faa14ff755?sv=2016-05-31&sr=b&sig=8QKVvB25xvvjLoasGr%2FVXgMku6ZCmId5RXgqECB7MAY%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"e21e1591-6b6f-43ec-8bb8-ec2b1476055e\",\r\n    \"Name\": \"My Project (2)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"5663b693-d3cd-4f9b-b1d4-d9741112e91f\",\r\n    \"Created\": \"2017-12-22T17:57:55.6766667\",\r\n    \"LastModified\": \"2017-12-22T17:58:03.5159037\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-e21e15916b6f43ec8bb8ec2b1476055e/t-608aed00598a420c9356f504d20a70d6?sv=2016-05-31&sr=b&sig=JDERw26A%2FzBU8mjMEp%2FbKCsx7Tm6%2BYcGHiBGS9982Fo%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"e222c033-5f5d-4a23-bde9-8343f19c0a01\",\r\n    \"Name\": \"My Project (3)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"e925ea5b-4db0-4c1e-8d62-e35c74fffeed\",\r\n    \"Created\": \"2018-02-08T08:22:06.2533333\",\r\n    \"LastModified\": \"2018-02-08T08:22:42.0986476\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-e222c0335f5d4a23bde98343f19c0a01/t-c2aa440731924cff9963538fa622a090?sv=2016-05-31&sr=b&sig=ES3uIZ7UqbUeeqlAxaVk1obZ%2BWRNzpQItHm5F%2B3Txl0%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"d9da8fa0-5e08-47cf-8055-77fca56f6bd1\",\r\n    \"Name\": \"My Project (4)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"04a2a2d2-a603-4b63-8da9-25968172be28\",\r\n    \"Created\": \"2017-12-22T18:16:49.6133333\",\r\n    \"LastModified\": \"2017-12-22T18:16:49.6321287\",\r\n    \"ThumbnailUri\": null\r\n  },\r\n  {\r\n    \"Id\": \"eda72676-a718-45af-b3a8-0a54137549b8\",\r\n    \"Name\": \"My Project (6)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"21237b4d-cade-4bb6-9a4c-e980b0a03ad3\",\r\n    \"Created\": \"2017-12-22T18:18:16.13\",\r\n    \"LastModified\": \"2017-12-22T18:18:16.1613653\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-eda72676a71845afb3a80a54137549b8/t-328e36f3499541b6a2ef3d6fb94739e2?sv=2016-05-31&sr=b&sig=CeH9CSw80UBev6%2FcSLCizG33F9KydQnde0fRXVi7F2M%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"a23b0459-18d5-4a9d-bba1-e608817a9149\",\r\n    \"Name\": \"My Project (8)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"7e930f1b-ec42-45e5-a99a-7695cdca00af\",\r\n    \"Created\": \"2017-12-22T18:14:35.68\",\r\n    \"LastModified\": \"2017-12-22T18:14:35.7140396\",\r\n    \"ThumbnailUri\": null\r\n  },\r\n  {\r\n    \"Id\": \"70d6c048-cac0-436e-88f8-25349b377e50\",\r\n    \"Name\": \"My Project (9)\",\r\n    \"Description\": \"\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"4045fc99-2519-47b5-921a-d25f80816c44\",\r\n    \"Created\": \"2017-12-22T18:18:59.05\",\r\n    \"LastModified\": \"2018-01-09T06:08:20.5247656\",\r\n    \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-70d6c048cac0436e88f825349b377e50/t-5e1e780736674eca864c9cdb5d9c36a8?sv=2016-05-31&sr=b&sig=TQMGTaTKp6rrL1dNVDq%2BxLyCsykGvh4g8G89j6qe2Wg%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n  },\r\n  {\r\n    \"Id\": \"bc2c32d7-aac0-4119-944f-af7b6e5848a1\",\r\n    \"Name\": \"not_trained\",\r\n    \"Description\": null,\r\n    \"Settings\": {\r\n      \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"c46cd128-49ee-436c-9900-9cb3a1623a24\",\r\n    \"Created\": \"2018-02-08T08:24:46.6266667\",\r\n    \"LastModified\": \"2018-02-08T08:24:46.6430697\",\r\n    \"ThumbnailUri\": null\r\n  },\r\n  {\r\n    \"Id\": \"174d2522-2c41-4cb6-b71a-bd6366ee8784\",\r\n    \"Name\": \"Test Project\",\r\n    \"Description\": \"This is a test project\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"7af62a4e-4416-4f9f-97a6-38a9dba9a9ec\",\r\n    \"Created\": \"2018-02-22T06:30:36.7866667\",\r\n    \"LastModified\": \"2018-02-22T06:30:36.8009977\",\r\n    \"ThumbnailUri\": null\r\n  },\r\n  {\r\n    \"Id\": \"bcb6c216-0686-44d8-868f-75d31226839a\",\r\n    \"Name\": \"Test Project (1)\",\r\n    \"Description\": \"This is a test project\",\r\n    \"Settings\": {\r\n      \"DomainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n      \"Classification\": \"MultiLabel\",\r\n      \"UseNegativeSet\": true\r\n    },\r\n    \"CurrentIterationId\": \"717f5f54-2bde-4360-8e89-ec478e6e3e42\",\r\n    \"Created\": \"2018-02-22T06:30:38.0033333\",\r\n    \"LastModified\": \"2018-02-22T06:30:38.0197693\",\r\n    \"ThumbnailUri\": null\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "7492"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 06:32:09 GMT"
+        ],
+        "apim-request-id": [
+          "fd28f664-d991-4d6e-885d-fd112d177aba"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects/28ad1d5b-b144-41b7-9cef-f07eec0fea84",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzLzI4YWQxZDViLWIxNDQtNDFiNy05Y2VmLWYwN2VlYzBmZWE4NA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"28ad1d5b-b144-41b7-9cef-f07eec0fea84\",\r\n  \"Name\": \"A proj\",\r\n  \"Description\": \"\",\r\n  \"Settings\": {\r\n    \"DomainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"Classification\": \"MultiLabel\",\r\n    \"UseNegativeSet\": true\r\n  },\r\n  \"CurrentIterationId\": \"2005efef-c149-4257-b124-6b6755d3de87\",\r\n  \"Created\": \"2018-02-12T22:37:20.41\",\r\n  \"LastModified\": \"2018-02-12T22:38:53.6039917\",\r\n  \"ThumbnailUri\": \"https://irisscuprodstore.blob.core.windows.net/i-28ad1d5bb14441b79ceff07eec0fea84/t-d2cfbffd036947de861a41cb9643c7f4?sv=2016-05-31&sr=b&sig=nhiWpCCXMSG1dcp6k3lOZ8lESIz1VPosQzOqp0Vpj0o%3D&se=2018-02-23T00%3A00%3A00Z&sp=r\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "570"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 06:32:09 GMT"
+        ],
+        "apim-request-id": [
+          "679a66f5-5635-455d-a760-5a973e9f993f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

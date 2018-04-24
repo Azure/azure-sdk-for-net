@@ -1,5 +1,45 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
+### Changes in 2.4.0-preview
+
+**Breaking changes**
+
+- The `Account` operations object has been changed from `Account` to `Accounts`
+    - E.g., `Account.Get(...)` to `Accounts.Get(...)`
+- When creating or updating resources (`accounts`, `firewall rules`, etc.), explicit parameter objects are now required:
+    - Account creation:
+        - `DataLakeStoreAccount` to `CreateDataLakeStoreAccountParameters`
+            - List of `FirewallRule` to `CreateFirewallRuleWithAccountParameters`
+            - List of `TrustedIdProvider` to `CreateTrustedIdProviderWithAccountParameters`
+    - Account update:
+        - `DataLakeStoreUpdateParameters` to `UpdateDataLakeStoreParameters`
+            - List of `FirewallRule` to `UpdateFirewallRuleWithAccountParameters`
+            - List of `TrustedIdProvider` to `UpdateTrustedIdProviderWithAccountParameters`
+    - Firewall rule creation and update:
+        - `FirewallRule` to `CreateOrUpdateFirewallRuleParameters`
+        - `FirewallRule` to `UpdateFirewallRuleParameters`
+    - Trusted identity provider creation and update:
+        - `TrustedIdProvider` to `CreateOrUpdateTrustedIdProviderParameters`
+        - `TrustedIdProvider` to `UpdateTrustedIdProviderParameters`
+- Bugfix: Removed the `childrenNum` field from `FileStatusProperties` because it was not supported
+- Bugfix: Changed the data type of the `permission` field of `AclStatus` from `int` to `string`
+
+### Changes in 2.3.3-preview
+
+**Breaking changes**
+
+- Changed the `ODataQuery` parameter type from `DataLakeStoreAccount` to `DataLakeStoreAccountBasic` for these APIs:
+    - Account_List
+    - Account_ListByResourceGroup
+
+**Notes**
+
+- Added two more states to `DataLakeStoreAccountStatus` enum: `Undeleting` and `Canceled`
+- Added new Account APIs:
+    - Account_CheckNameAvailability
+    - Location_GetCapability
+    - Operation_List
+
 ### Changes in 2.3.0-preview
 
 **Breaking change**
@@ -19,6 +59,13 @@
         - endpoint
 - When retrieving account information, an account id field called "accountId" is now included.
     - accountId's description: The unique identifier associated with this Data Lake Analytics account.
+
+### Changes in 2.2.1
+
+**Notes**
+
+- This is a hotfix release; therefore, the changes addressed here do not carry over to the versions above.
+- Add two more states to `DataLakeStoreAccountStatus` enum: `Undeleting` and `Canceled` (this is addressed in version 2.3.3-preview)
 
 ### Changes in 2.2.0
 - Marking the 2.*.*-preview changes as stable for the second official release of the Data Lake Store SDK.

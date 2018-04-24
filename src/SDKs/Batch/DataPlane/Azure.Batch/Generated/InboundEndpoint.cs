@@ -22,23 +22,16 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class InboundEndpoint : IPropertyMetadata
     {
-        private readonly int backendPort;
-        private readonly int frontendPort;
-        private readonly string name;
-        private readonly Common.InboundEndpointProtocol protocol;
-        private readonly string publicFqdn;
-        private readonly string publicIPAddress;
-
         #region Constructors
 
         internal InboundEndpoint(Models.InboundEndpoint protocolObject)
         {
-            this.backendPort = protocolObject.BackendPort;
-            this.frontendPort = protocolObject.FrontendPort;
-            this.name = protocolObject.Name;
-            this.protocol = UtilitiesInternal.MapEnum<Models.InboundEndpointProtocol, Common.InboundEndpointProtocol>(protocolObject.Protocol);
-            this.publicFqdn = protocolObject.PublicFQDN;
-            this.publicIPAddress = protocolObject.PublicIPAddress;
+            this.BackendPort = protocolObject.BackendPort;
+            this.FrontendPort = protocolObject.FrontendPort;
+            this.Name = protocolObject.Name;
+            this.Protocol = UtilitiesInternal.MapEnum<Models.InboundEndpointProtocol, Common.InboundEndpointProtocol>(protocolObject.Protocol);
+            this.PublicFqdn = protocolObject.PublicFQDN;
+            this.PublicIPAddress = protocolObject.PublicIPAddress;
         }
 
         #endregion Constructors
@@ -48,50 +41,32 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the backend port number of the endpoint.
         /// </summary>
-        public int BackendPort
-        {
-            get { return this.backendPort; }
-        }
+        public int BackendPort { get; }
 
         /// <summary>
         /// Gets the public port number of the endpoint.
         /// </summary>
-        public int FrontendPort
-        {
-            get { return this.frontendPort; }
-        }
+        public int FrontendPort { get; }
 
         /// <summary>
         /// Gets the name of the endpoint.
         /// </summary>
-        public string Name
-        {
-            get { return this.name; }
-        }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the protocol of the endpoint.
         /// </summary>
-        public Common.InboundEndpointProtocol Protocol
-        {
-            get { return this.protocol; }
-        }
+        public Common.InboundEndpointProtocol Protocol { get; }
 
         /// <summary>
         /// Gets the public fully qualified domain name for the compute node.
         /// </summary>
-        public string PublicFqdn
-        {
-            get { return this.publicFqdn; }
-        }
+        public string PublicFqdn { get; }
 
         /// <summary>
         /// Gets the public IP address of the compute node.
         /// </summary>
-        public string PublicIPAddress
-        {
-            get { return this.publicIPAddress; }
-        }
+        public string PublicIPAddress { get; }
 
         #endregion // InboundEndpoint
 

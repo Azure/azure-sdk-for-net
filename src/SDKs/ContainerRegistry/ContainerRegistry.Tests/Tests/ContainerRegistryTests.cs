@@ -1,18 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Linq;
-using System.Net;
-using System.Collections.Generic;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Xunit;
+using Sku = Microsoft.Azure.Management.ContainerRegistry.Models.Sku;
 
 namespace ContainerRegistry.Tests
 {
@@ -26,16 +28,13 @@ namespace ContainerRegistry.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
-                // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName);
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
 
                 // Check valid name
-                string registryName = TestUtilities.GenerateName("acrregistry");
+                var registryName = TestUtilities.GenerateName("acrregistry");
                 var checkNameRequest = registryClient.Registries.CheckNameAvailability(registryName);
                 Assert.True(checkNameRequest.NameAvailable);
                 Assert.Null(checkNameRequest.Reason);
@@ -46,10 +45,10 @@ namespace ContainerRegistry.Tests
                 checkNameRequest = registryClient.Registries.CheckNameAvailability(registryName);
                 Assert.False(checkNameRequest.NameAvailable);
                 Assert.Equal("Invalid", checkNameRequest.Reason);
-                Assert.Equal("The specified registry name is disallowed", checkNameRequest.Message);
+                Assert.Equal("The specified resource name is disallowed", checkNameRequest.Message);
 
                 // Check name of container registry that already exists
-                registryName = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup, storageName, storageKey);
+                registryName = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location).Name;
                 checkNameRequest = registryClient.Registries.CheckNameAvailability(registryName);
                 Assert.False(checkNameRequest.NameAvailable);
                 Assert.Equal("AlreadyExists", checkNameRequest.Reason);
@@ -58,7 +57,7 @@ namespace ContainerRegistry.Tests
         }
 
         [Fact]
-        public void ContainerRegistryCreateTest()
+        public void ClassicContainerRegistryTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -69,356 +68,297 @@ namespace ContainerRegistry.Tests
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
                 // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName);
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var storageAccount = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
 
                 // Create container registry
-                string registryName = TestUtilities.GenerateName("acrregistry");
-                RegistryCreateParameters parameters = ContainerRegistryTestUtilities.GetDefaultRegistryCreateParameters(resourceGroup, storageName, storageKey);
-                Registry registry = registryClient.Registries.Create(resourceGroup.Name, registryName, parameters);
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registry, storageName, true);
+                var registry = ContainerRegistryTestUtilities.CreateClassicContainerRegistry(registryClient, resourceGroup, storageAccount);
 
-                // Create container registry with optional parameters
-                registryName = TestUtilities.GenerateName("acrregistry");
-                parameters = new RegistryCreateParameters
-                {
-                    Location = resourceGroup.Location,
-                    Sku = new Microsoft.Azure.Management.ContainerRegistry.Models.Sku
-                    {
-                        Name = "Basic"
-                    },
-                    StorageAccount = new StorageAccountParameters
-                    {
-                        Name = storageName,
-                        AccessKey = storageKey
-                    },
-                    Tags = ContainerRegistryTestUtilities.DefaultTags,
-                    AdminUserEnabled = true
-                };
-                registry = registryClient.Registries.Create(resourceGroup.Name, registryName, parameters);
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registry, storageName, false);
-                Assert.True(registry.AdminUserEnabled);
+                ContainerRegistryCoreScenario(registryClient, resourceGroup, registry, false);
             }
         }
 
         [Fact]
-        public void ContainerRegistryListBySubscriptionTest()
+        public void ManagedContainerRegistryTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
-                // Create resource group, storage account, and container registry
-                ResourceGroup resourceGroup1 = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName1 = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup1);
-                string storageKey1 = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup1, storageName1);
-                string registryName1 = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup1, storageName1, storageKey1);
-
-                // Create different resource group, storage account, and container registry
-                ResourceGroup resourceGroup2 = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName2 = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup2);
-                string storageKey2 = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup2, storageName2);
-                string registryName2 = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup2, storageName2, storageKey2);
-
-                var registries = registryClient.Registries.List();
-
-                Registry registry1 = registries.First(
-                    r => StringComparer.OrdinalIgnoreCase.Equals(r.Name, registryName1));
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registry1, storageName1, true);
-
-                Registry registry2 = registries.First(
-                    r => StringComparer.OrdinalIgnoreCase.Equals(r.Name, registryName2));
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registry2, storageName2, true);
-            }
-        }
-
-        [Fact]
-        public void ContainerRegistryListByResourceGroupTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
-                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
-
-                // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName);
-
-                // Create container registries
-                string registryName1 = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup, storageName, storageKey);
-                string registryName2 = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup, storageName, storageKey);
-
-                var registries = registryClient.Registries.ListByResourceGroup(resourceGroup.Name);
-                Assert.Equal(2, registries.Count());
-
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registries.First(), storageName, true);
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registries.ToArray()[1], storageName, true);
-            }
-        }
-
-        [Fact]
-        public void ContainerRegistryGetTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
-                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
-
-                // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName);
-
-                // Get default registry properties
-                RegistryCreateParameters parameters = ContainerRegistryTestUtilities.GetDefaultRegistryCreateParameters(resourceGroup, storageName, storageKey);
-
-                // Create container registry with admin enabled
-                string registryName = TestUtilities.GenerateName("acrregistry");
-                parameters.AdminUserEnabled = true;
-                registryClient.Registries.Create(resourceGroup.Name, registryName, parameters);
-                Registry registry = registryClient.Registries.Get(resourceGroup.Name, registryName);
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registry, storageName, false);
-                Assert.True(registry.AdminUserEnabled);
-
-                // Create container registry with admin disabled
-                registryName = TestUtilities.GenerateName("acrregistry");
-                parameters.AdminUserEnabled = false;
-                registryClient.Registries.Create(resourceGroup.Name, registryName, parameters);
-                registry = registryClient.Registries.Get(resourceGroup.Name, registryName);
-                ContainerRegistryTestUtilities.VerifyRegistryProperties(registry, storageName, true);
-            }
-        }
-
-        [Fact]
-        public void ContainerRegistryUpdateTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
-                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
-
-                // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName1 = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey1 = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName1);
-
-                // Create a different storage account
-                string storageName2 = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey2 = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName2);
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
 
                 // Create container registry
-                string registryName = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup, storageName1, storageKey1);
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
 
-                // Enable admin
-                RegistryUpdateParameters registryUpdateParameters = new RegistryUpdateParameters
-                {
-                    AdminUserEnabled = true
-                };
-                registryClient.Registries.Update(resourceGroup.Name, registryName, registryUpdateParameters);
-
-                // Validate
-                Registry registry = registryClient.Registries.Get(resourceGroup.Name, registryName);
-                Assert.True(registry.AdminUserEnabled);
-
-                // Update tags
-                registryUpdateParameters = new RegistryUpdateParameters
-                {
-                    Tags = new Dictionary<string, string>
-                    {
-                        {"key2","value2"},
-                        {"key3","value3"},
-                        {"key4","value4"}
-                    }
-                };
-                registryClient.Registries.Update(resourceGroup.Name, registryName, registryUpdateParameters);
-
-                // Validate
-                registry = registryClient.Registries.Get(resourceGroup.Name, registryName);
-                Assert.Equal(registry.Tags.Count, registryUpdateParameters.Tags.Count);
-                Assert.Equal(registry.Tags["key2"], "value2");
-                Assert.Equal(registry.Tags["key3"], "value3");
-                Assert.Equal(registry.Tags["key4"], "value4");
-
-                // Update storage account
-                registryUpdateParameters = new RegistryUpdateParameters
-                {
-                    StorageAccount = new StorageAccountParameters
-                    {
-                        Name = storageName2,
-                        AccessKey = storageKey2
-                    }
-                };
-                registryClient.Registries.Update(resourceGroup.Name, registryName, registryUpdateParameters);
-
-                // Validate
-                registry = registryClient.Registries.Get(resourceGroup.Name, registryName);
-                Assert.Equal(registry.StorageAccount.Name, storageName2);
+                ContainerRegistryCoreScenario(registryClient, resourceGroup, registry, true);
             }
         }
 
-        [Fact]
-        public void ContainerRegistryListCredentialsTest()
+        private void ContainerRegistryCoreScenario(ContainerRegistryManagementClient registryClient, ResourceGroup resourceGroup, Registry registry, bool isManaged)
         {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            // Validate the created registry
+            ContainerRegistryTestUtilities.ValidateResourceDefaultTags(registry);
+            Assert.NotNull(registry.Sku);
+            if (isManaged)
             {
-                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
-                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+                Assert.Equal(SkuName.Premium, registry.Sku.Name);
+                Assert.Equal(SkuName.Premium, registry.Sku.Tier);
+            }
+            else
+            {
+                Assert.Equal(SkuName.Classic, registry.Sku.Name);
+                Assert.Equal(SkuTier.Classic, registry.Sku.Tier);
+            }
+            Assert.NotNull(registry.LoginServer);
+            Assert.NotNull(registry.CreationDate);
+            Assert.Equal(ProvisioningState.Succeeded, registry.ProvisioningState);
+            Assert.False(registry.AdminUserEnabled);
+            if (isManaged)
+            {
+                Assert.Null(registry.StorageAccount);
+            }
+            else
+            {
+                Assert.NotNull(registry.StorageAccount);
+            }
 
-                // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName);
+            // List container registries by resource group
+            var registriesByResourceGroup = registryClient.Registries.ListByResourceGroup(resourceGroup.Name);
+            registry = registriesByResourceGroup.First(
+                r => StringComparer.OrdinalIgnoreCase.Equals(r.Name, registry.Name));
+            Assert.Equal(1, registriesByResourceGroup.Count());
+            ContainerRegistryTestUtilities.ValidateResourceDefaultTags(registry);
 
-                // Create container registry with admin disabled
-                string registryName = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup, storageName, storageKey);
+            // Get the container registry
+            registry = registryClient.Registries.Get(resourceGroup.Name, registry.Name);
+            ContainerRegistryTestUtilities.ValidateResourceDefaultTags(registry);
 
-                // Get credentials should fail when admin is disabled
-                try
+            // Try to list credentials, should fail when admin user is disabled
+            try
+            {
+                registryClient.Registries.ListCredentials(resourceGroup.Name, registry.Name);
+                Assert.True(false);
+            }
+            catch (CloudException ex)
+            {
+                Assert.NotNull(ex);
+                Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
+            }
+
+            // Update the container registry
+            registry = registryClient.Registries.Update(resourceGroup.Name, registry.Name, new RegistryUpdateParameters
+            {
+                Tags = ContainerRegistryTestUtilities.DefaultNewTags,
+                AdminUserEnabled = true,
+                Sku = new Sku
                 {
-                    registryClient.Registries.ListCredentials(resourceGroup.Name, registryName);
-                    Assert.True(false);
+                    Name = isManaged ? SkuName.Basic : SkuName.Classic
                 }
-                catch (CloudException ex)
-                {
-                    Assert.NotNull(ex);
-                    Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
-                }
+            });
 
-                // Enable admin
-                RegistryUpdateParameters registryUpdateParameters = new RegistryUpdateParameters
-                {
-                    AdminUserEnabled = true
-                };
-                registryClient.Registries.Update(resourceGroup.Name, registryName, registryUpdateParameters);
-
-                RegistryListCredentialsResult credentials = registryClient.Registries.ListCredentials(resourceGroup.Name, registryName);
-                Assert.NotNull(credentials);
-
-                // Validate username and password
-                string username = credentials.Username;
-                Assert.True(credentials.Passwords.Count > 1);
-                string password1 = credentials.Passwords[0].Value;
-                string password2 = credentials.Passwords[1].Value;
-                Assert.NotNull(username);
-                Assert.NotNull(password1);
-                Assert.NotNull(password2);
+            // Validate the updated registry
+            ContainerRegistryTestUtilities.ValidateResourceDefaultNewTags(registry);
+            Assert.NotNull(registry.Sku);
+            if (isManaged)
+            {
+                Assert.Equal(SkuName.Basic, registry.Sku.Name);
+                Assert.Equal(SkuName.Basic, registry.Sku.Tier);
             }
+            else
+            {
+                Assert.Equal(SkuName.Classic, registry.Sku.Name);
+                Assert.Equal(SkuTier.Classic, registry.Sku.Tier);
+            }
+            Assert.NotNull(registry.LoginServer);
+            Assert.NotNull(registry.CreationDate);
+            Assert.Equal(ProvisioningState.Succeeded, registry.ProvisioningState);
+            Assert.True(registry.AdminUserEnabled);
+            if (isManaged)
+            {
+                Assert.Null(registry.StorageAccount);
+            }
+            else
+            {
+                Assert.NotNull(registry.StorageAccount);
+            }
+
+            // List credentials
+            var credentials = registryClient.Registries.ListCredentials(resourceGroup.Name, registry.Name);
+
+            // Validate username and password
+            Assert.NotNull(credentials);
+            Assert.NotNull(credentials.Username);
+            Assert.Equal(2, credentials.Passwords.Count);
+            var password1 = credentials.Passwords[0].Value;
+            var password2 = credentials.Passwords[1].Value;
+            Assert.NotNull(password1);
+            Assert.NotNull(password2);
+
+            // Regenerate credential
+            credentials = registryClient.Registries.RegenerateCredential(resourceGroup.Name, registry.Name, PasswordName.Password);
+
+            // Validate if generated password is different
+            var newPassword1 = credentials.Passwords[0].Value;
+            var newPassword2 = credentials.Passwords[1].Value;
+            Assert.NotEqual(password1, newPassword1);
+            Assert.Equal(password2, newPassword2);
+
+            credentials = registryClient.Registries.RegenerateCredential(resourceGroup.Name, registry.Name, PasswordName.Password2);
+
+            // Validate if generated password is different
+            Assert.Equal(newPassword1, credentials.Passwords[0].Value);
+            Assert.NotEqual(newPassword2, credentials.Passwords[1].Value);
+
+            // Delete the container registry
+            registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+
+            // Delete the container registry again
+            registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
         }
 
         [Fact]
-        public void ContainerRegistryRegenerateCredentialTest()
+        public void ContainerRegistryWebhookTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
                 var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
 
-                // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName);
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
 
-                string registryName = TestUtilities.GenerateName("acrregistry");
-                RegistryCreateParameters parameters = ContainerRegistryTestUtilities.GetDefaultRegistryCreateParameters(resourceGroup, storageName, storageKey);
-                parameters.AdminUserEnabled = true;
-                Registry registry = registryClient.Registries.Create(resourceGroup.Name, registryName, parameters);
+                // Create container registry and webhook
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, resourceGroup.Location);
+                var webhook = ContainerRegistryTestUtilities.CreatedContainerRegistryWebhook(registryClient, resourceGroup.Name, registry.Name, resourceGroup.Location);
 
-                RegistryListCredentialsResult credentials = registryClient.Registries.ListCredentials(resourceGroup.Name, registryName);
-                Assert.NotNull(credentials);
+                // Validate the created webhook
+                ContainerRegistryTestUtilities.ValidateResourceDefaultTags(webhook);
+                Assert.Equal(WebhookStatus.Enabled, webhook.Status);
+                Assert.True(string.IsNullOrEmpty(webhook.Scope));
+                Assert.Equal(1, webhook.Actions.Count);
+                Assert.True(webhook.Actions.Contains(WebhookAction.Push));
+                Assert.Equal(ProvisioningState.Succeeded, webhook.ProvisioningState);
 
-                // Validate username and password
-                string username_1 = credentials.Username;
-                Assert.True(credentials.Passwords.Count > 1);
-                string password1_1 = credentials.Passwords[0].Value;
-                string password2_1 = credentials.Passwords[1].Value;
-                Assert.NotNull(username_1);
-                Assert.NotNull(password1_1);
-                Assert.NotNull(password2_1);
+                // List webhooks by container registry
+                var webhooks = registryClient.Webhooks.List(resourceGroup.Name, registry.Name);
+                webhook = webhooks.First(
+                    w => StringComparer.OrdinalIgnoreCase.Equals(w.Name, webhook.Name));
+                Assert.Equal(1, webhooks.Count());
+                ContainerRegistryTestUtilities.ValidateResourceDefaultTags(webhook);
 
-                credentials = registryClient.Registries.RegenerateCredential(resourceGroup.Name, registryName, PasswordName.Password);
-                Assert.NotNull(credentials);
+                // Get the webhook
+                webhook = registryClient.Webhooks.Get(resourceGroup.Name, registry.Name, webhook.Name);
+                ContainerRegistryTestUtilities.ValidateResourceDefaultTags(webhook);
 
-                // Validate username and password
-                string username_2 = credentials.Username;
-                Assert.True(credentials.Passwords.Count > 1);
-                string password1_2 = credentials.Passwords[0].Value;
-                string password2_2 = credentials.Passwords[1].Value;
-                Assert.NotNull(username_2);
-                Assert.NotNull(password1_2);
-                Assert.NotNull(password2_2);
+                // Update the webhook
+                webhook = registryClient.Webhooks.Update(resourceGroup.Name, registry.Name, webhook.Name, new WebhookUpdateParameters
+                {
+                    Tags = ContainerRegistryTestUtilities.DefaultNewTags,
+                    Status = WebhookStatus.Disabled,
+                    Scope = ContainerRegistryTestUtilities.DefaultWebhookScope,
+                    Actions = new List<string>
+                    {
+                         WebhookAction.Push, WebhookAction.Delete
+                    },
+                    CustomHeaders = new Dictionary<string, string>
+                    {
+                        {"key","value" }
+                    }
+                });
 
-                // Validate if generated password is different
-                Assert.Equal(username_1, username_2);
-                Assert.NotEqual(password1_1, password1_2);
-                Assert.Equal(password2_1, password2_2);
+                // Validate the updated webhook
+                ContainerRegistryTestUtilities.ValidateResourceDefaultNewTags(webhook);
+                Assert.Equal(WebhookStatus.Disabled, webhook.Status);
+                Assert.Equal(ContainerRegistryTestUtilities.DefaultWebhookScope, webhook.Scope);
+                Assert.Equal(2, webhook.Actions.Count);
+                Assert.True(webhook.Actions.Contains(WebhookAction.Push));
+                Assert.True(webhook.Actions.Contains(WebhookAction.Delete));
+                Assert.Equal(ProvisioningState.Succeeded, webhook.ProvisioningState);
 
-                credentials = registryClient.Registries.RegenerateCredential(resourceGroup.Name, registryName, PasswordName.Password2);
-                Assert.NotNull(credentials);
+                // Get the webhook call back config
+                var webhookConfig = registryClient.Webhooks.GetCallbackConfig(resourceGroup.Name, registry.Name, webhook.Name);
+                Assert.NotNull(webhookConfig);
+                Assert.Equal(ContainerRegistryTestUtilities.DefaultWebhookServiceUri, webhookConfig.ServiceUri);
+                Assert.Equal(1, webhookConfig.CustomHeaders.Count);
+                Assert.Equal("value", webhookConfig.CustomHeaders["key"]);
 
-                // Validate username and password
-                string username_3 = credentials.Username;
-                Assert.True(credentials.Passwords.Count > 1);
-                string password1_3 = credentials.Passwords[0].Value;
-                string password2_3 = credentials.Passwords[1].Value;
-                Assert.NotNull(username_2);
-                Assert.NotNull(password1_2);
-                Assert.NotNull(password2_2);
+                // Ping the webhook
+                var eventInfo = registryClient.Webhooks.Ping(resourceGroup.Name, registry.Name, webhook.Name);
+                Assert.NotNull(eventInfo);
+                Assert.NotNull(eventInfo.Id);
 
-                // Validate if generated password is different
-                Assert.Equal(username_2, username_3);
-                Assert.Equal(password1_2, password1_3);
-                Assert.NotEqual(password2_2, password2_3);
-            }
-        }
+                var events = registryClient.Webhooks.ListEvents(resourceGroup.Name, registry.Name, webhook.Name);
+                Assert.NotNull(events);
 
-        [Fact]
-        public void ContainerRegistryDeleteTest()
-        {
-            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                // Delete the webhook
+                registryClient.Webhooks.Delete(resourceGroup.Name, registry.Name, webhook.Name);
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
-                var storageClient = ContainerRegistryTestUtilities.GetStorageManagementClient(context, handler);
-                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
-
-                // Create resource group and storage account
-                ResourceGroup resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
-                string storageName = ContainerRegistryTestUtilities.CreateStorageAccount(storageClient, resourceGroup);
-                string storageKey = ContainerRegistryTestUtilities.GetStorageAccessKey(storageClient, resourceGroup, storageName);
-
-                // Delete a container registry which does not exist
-                registryClient.Registries.Delete(resourceGroup.Name, "doesnotexist");
-
-                // Create a container registry
-                string registryName = ContainerRegistryTestUtilities.CreateContainerRegistry(registryClient, resourceGroup, storageName, storageKey);
+                // Delete the webhook again
+                registryClient.Webhooks.Delete(resourceGroup.Name, registry.Name, webhook.Name);
 
                 // Delete the container registry
-                registryClient.Registries.Delete(resourceGroup.Name, registryName);
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
 
-                // Delete the container registry again
-                registryClient.Registries.Delete(resourceGroup.Name, registryName);
+        [Fact]
+        public void ContainerRegistryReplicationTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var nonDefaultLocation = ContainerRegistryTestUtilities.GetNonDefaultRegistryLocation(resourceClient, resourceGroup.Location);
+
+                // Create container registry and replication
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, nonDefaultLocation);
+                var replication = ContainerRegistryTestUtilities.CreatedContainerRegistryReplication(registryClient, resourceGroup.Name, registry.Name, resourceGroup.Location);
+
+                // Validate the created replication
+                ContainerRegistryTestUtilities.ValidateResourceDefaultTags(replication);
+                Assert.Equal(ProvisioningState.Succeeded, replication.ProvisioningState);
+                Assert.NotNull(replication.Status);
+                Assert.NotNull(replication.Status.DisplayStatus);
+
+                // List replications by container registry
+                var replications = registryClient.Replications.List(resourceGroup.Name, registry.Name);
+                replication = replications.First(
+                    r => StringComparer.OrdinalIgnoreCase.Equals(r.Name, replication.Name));
+                Assert.Equal(2, replications.Count()); // 2 because a replication in home region is auto created
+                ContainerRegistryTestUtilities.ValidateResourceDefaultTags(replication);
+
+                // Get the replication
+                replication = registryClient.Replications.Get(resourceGroup.Name, registry.Name, replication.Name);
+                ContainerRegistryTestUtilities.ValidateResourceDefaultTags(replication);
+
+                // Update the replication
+                replication = registryClient.Replications.Update(resourceGroup.Name, registry.Name, replication.Name, ContainerRegistryTestUtilities.DefaultNewTags);
+
+                // Validate the updated replication
+                ContainerRegistryTestUtilities.ValidateResourceDefaultNewTags(replication);
+                Assert.Equal(ProvisioningState.Succeeded, replication.ProvisioningState);
+                Assert.NotNull(replication.Status);
+                Assert.NotNull(replication.Status.DisplayStatus);
+
+                // Delete the replication
+                registryClient.Replications.Delete(resourceGroup.Name, registry.Name, replication.Name);
+
+                // Delete the replication again
+                registryClient.Replications.Delete(resourceGroup.Name, registry.Name, replication.Name);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
             }
         }
     }

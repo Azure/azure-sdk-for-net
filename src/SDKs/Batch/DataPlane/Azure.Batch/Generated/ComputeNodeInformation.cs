@@ -22,23 +22,16 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ComputeNodeInformation : IPropertyMetadata
     {
-        private readonly string affinityId;
-        private readonly string computeNodeId;
-        private readonly string computeNodeUrl;
-        private readonly string poolId;
-        private readonly string taskRootDirectory;
-        private readonly string taskRootDirectoryUrl;
-
         #region Constructors
 
         internal ComputeNodeInformation(Models.ComputeNodeInformation protocolObject)
         {
-            this.affinityId = protocolObject.AffinityId;
-            this.computeNodeId = protocolObject.NodeId;
-            this.computeNodeUrl = protocolObject.NodeUrl;
-            this.poolId = protocolObject.PoolId;
-            this.taskRootDirectory = protocolObject.TaskRootDirectory;
-            this.taskRootDirectoryUrl = protocolObject.TaskRootDirectoryUrl;
+            this.AffinityId = protocolObject.AffinityId;
+            this.ComputeNodeId = protocolObject.NodeId;
+            this.ComputeNodeUrl = protocolObject.NodeUrl;
+            this.PoolId = protocolObject.PoolId;
+            this.TaskRootDirectory = protocolObject.TaskRootDirectory;
+            this.TaskRootDirectoryUrl = protocolObject.TaskRootDirectoryUrl;
         }
 
         #endregion Constructors
@@ -48,51 +41,33 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets an opaque string that contains information about the location of the compute node.
         /// </summary>
-        public string AffinityId
-        {
-            get { return this.affinityId; }
-        }
+        public string AffinityId { get; }
 
         /// <summary>
         /// Gets the compute node id.
         /// </summary>
-        public string ComputeNodeId
-        {
-            get { return this.computeNodeId; }
-        }
+        public string ComputeNodeId { get; }
 
         /// <summary>
         /// Gets the URL of the compute node.
         /// </summary>
-        public string ComputeNodeUrl
-        {
-            get { return this.computeNodeUrl; }
-        }
+        public string ComputeNodeUrl { get; }
 
         /// <summary>
         /// Gets the pool id.
         /// </summary>
-        public string PoolId
-        {
-            get { return this.poolId; }
-        }
+        public string PoolId { get; }
 
         /// <summary>
         /// Gets the root directory of the current task on the compute node. You can use this path to retrieve files created 
         /// by the task such as log files.
         /// </summary>
-        public string TaskRootDirectory
-        {
-            get { return this.taskRootDirectory; }
-        }
+        public string TaskRootDirectory { get; }
 
         /// <summary>
         /// Gets the URL to the root directory of the current task on the compute node.
         /// </summary>
-        public string TaskRootDirectoryUrl
-        {
-            get { return this.taskRootDirectoryUrl; }
-        }
+        public string TaskRootDirectoryUrl { get; }
 
         #endregion // ComputeNodeInformation
 

@@ -1,14 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.Dns</PackageId>
-    <Description>Provides management capabilities for Azure Dns.</Description>
-    <VersionPrefix>1.9.0-preview</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.Management.Dns</AssemblyName>    
-    <PackageTags>Microsoft Azure Dns;Dns;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Dns</PackageId>
+		<Description>Provides management capabilities for Azure Dns.</Description>
+		<Version>2.2.0-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.Dns</AssemblyName>    
+		<PackageTags>Microsoft Azure Dns;Dns;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+        1) Support for Private DNS zones in 2018-03-01-preview API version.
+        2) Support for non-printable characters in TXT records in 2017-10-01 API version. Non-printable characters in TXT records can be specified using '\DDD' RFC 1035 format where DDD is the decimal number of the character (e.g. \000 for null character). Note that '\' also escapes non-decimal digits as meaning to interpret the next character literally as in RFC 1035, so to use a backslash itself in the TXT record resolution you must escape it (e.g. '\\').
+        3) Support for updating of DNS zones using patch semantics
+      ]]>
+		</PackageReleaseNotes>    
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

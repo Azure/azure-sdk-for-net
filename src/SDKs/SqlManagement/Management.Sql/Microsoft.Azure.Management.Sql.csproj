@@ -1,88 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.Sql</PackageId>
-    <Description>Azure SQL Management SDK library</Description>
-    <AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-    <VersionPrefix>1.7.0-preview</VersionPrefix>
-    <PackageTags>Microsoft Azure SQL Management;SQL;SQL Management</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-    <PackageReleaseNotes><![CDATA[Disclaimer:
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
 
-We were using a slightly unorthodox convention for some operation ids. Some resource operations were “nested” inside others, e.g. blob auditing policies was nested inside databases as in client.Databases.GetBlobAuditingPolicies(..) instead of the flattened ARM standard client.DatabaseBlobAuditingPolicies.Get(…).
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
+		<Description>Azure SQL Management SDK library</Description>
+		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
+		<Version>1.15.0-preview</Version>
+		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+New features:
+- Database and ElasticPool now use Sku property for scale and tier-related properties. We have made this change in order to allow future support of autoscale, and to allow for new vCore-based editions.
+    * Database.Sku has replaced Database.RequestedServiceObjectiveName and Database.Edition. Database scale can be set by setting Sku.Name to the requested service objective name (e.g. S0, P1, or GP_Gen4_1), or by setting Sku.Name to the sku name (e.g. Standard, Premium, or GP_Gen1) and set Sku.Capacity to the scale measured in DTU or vCores.
+    * Database.CurrentSku has replaced Database.ServiceLevelObjetive.
+    * Database.CurrentServiceObjectiveId and Database.RequestedServiceObjectiveId have been removed.
+    * ElasticPool.Sku has replaced ElasticPool.Dtu. Elastic pool scale can be set by setting Sku.Name to the requested sku name (e.g. StandardPool, PremiumPool) and setting Sku.Capacity to the scale measured in DTU or vCores.
+    * ElasticPool.PerDatabaseSettings has replaced ElasticPool.DatabaseDtuMin and ElasticPool.DatabaseDtuMax.
+ - Database.MaxSizeBytes is now a long instead of string.
+ - LocationCapabilities tree has been changed in order to support capabilities of new vCore-based database and elastic pool editions.
+      ]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
 
-This convention has lead to some inconsistencies, makes some APIs difficult to find, and is at odds with future APIs. For example if we wanted to implement listing db audit policies by server, continuing the current convention would be client.Databases.ListBlobAuditingPoliciesByServer(..) which makes much less sense than the ARM standard which would be client.DatabaseBlobAuditingPolicies.ListByServer(…)`.
-
-In order to resolve this and provide a good path moving forward, we have renamed the inconsistent operations to follow the ARM standard. This is an unfortunate breaking change, but it’s best to do now while the SDK is still in preview and since most of these operations were only recently added.
-
-Breaking changes:
-- SqlManagementClient.Database.GetBackupLongTermRetentionPolicy -> SqlManagementClient.BackupLongTermRetentionPolicies.Get
-- SqlManagementClient.Database.CreateOrUpdateBackupLongTermRetentionPolicy -> SqlManagementClient.BackupLongTermRetentionPolicies.CreateOrUpdate
-
-- SqlManagementClient.Servers.CreateBackupLongTermRetentionVault -> SqlManagementClient.BackupLongTermRetentionVaults.CreateOrUpdate
-- SqlManagementClient.Servers.GetBackupLongTermRetentionVault -> SqlManagementClient.BackupLongTermRetentionVaults.Get
-
-- SqlManagementClient.Database.ListRestorePoints -> SqlManagementClient.RestorePoints.ListByDatabase
-
-- SqlManagementClient.Servers.CreateOrUpdateConnectionPolicy -> SqlManagementClient.ServerConnectionPolicies.CreateOrUpdate
-- SqlManagementClient.Servers.GetConnectionPolicy -> SqlManagementClient.ServerConnectionPolicies.Get
-
-- SqlManagementClient.Databases.CreateOrUpdateDataMaskingPolicy -> SqlManagementClient.DataMaskingPolicies.CreateOrUpdate
-- SqlManagementClient.Databases.GetDataMaskingPolicy -> SqlManagementClient.DataMaskingPolicies.Get
-
-- SqlManagementClient.Databases.CreateOrUpdateDataMaskingRule -> SqlManagementClient.DataMaskingRules.CreateOrUpdate
-- SqlManagementClient.Databases.GetDataMaskingRule -> SqlManagementClient.DataMaskingRules.Get
-- SqlManagementClient.Databases.ListDataMaskingRules -> SqlManagementClient.DataMaskingRules.ListByDatabase
-
-- SqlManagementClient.Databases.GetThreatDetectionPolicy -> SqlManagementClient.DatabaseThreatDetectionPolicies.Get
-- SqlManagementClient.Databases.CreateOrUpdateThreatDetectionPolicy -> SqlManagementClient.DatabaseThreatDetectionPolicies.CreateOrUpdate
-
-- SqlManagementClient.Databases.CreateOrUpdateGeoBackupPolicy -> SqlManagementClient.GeoBackupPolicies.CreateOrUpdate
-- SqlManagementClient.Databases.GetGeoBackupPolicy -> SqlManagementClient.GeoBackupPolicies.Get
-- SqlManagementClient.Databases.ListGeoBackupPolicies -> SqlManagementClient.GeoBackupPolicies.ListByDatabase
-
-- SqlManagementClient.Databases.DeleteReplicationLink -> SqlManagementClient.ReplicationLinks.Delete
-- SqlManagementClient.Databases.GetReplicationLink -> SqlManagementClient.ReplicationLinks.Get
-- SqlManagementClient.Databases.FailoverReplicationLink -> SqlManagementClient.ReplicationLinks.Failover
-- SqlManagementClient.Databases.FailoverReplicationLinkAllowDataLoss -> SqlManagementClient.ReplicationLinks.FailoverAllowDataLoss
-- SqlManagementClient.Databases.ListReplicationLinks -> SqlManagementClient.ReplicationLinks.ListByDatabase
-
-- SqlManagementClient.ServerAzureADAdministrators.List -> SqlManagementClient.ServerAzureADAdministrators.ListByServer
-- SqlManagementClient.Servers.GetServiceObjective -> SqlManagementClient.ServiceObjectives.Get
-- SqlManagementClient.Servers.ListServiceObjectives -> SqlManagementClient.ServiceObjectives.ListByServer
-
-- SqlManagementClient.ElasticPools.ListActivity -> SqlManagementClient.ElasticPoolActivities.ListByElasticPool
-- SqlManagementClient.ElasticPools.ListDatabaseActivity -> SqlManagementClient.ElasticPoolDatabaseActivities.ListByElasticPool
-- SqlManagementClient.ElasticPools.GetDatabase -> SqlManagementClient.Databases.GetByElasticPool
-- SqlManagementClient.ElasticPools.ListDatabases -> SqlManagementClient.Databases.ListByElasticPool
-
-- SqlManagementClient.RecommendedElasticPools.GetDatabases -> SqlManagementClient.Databases.GetByRecommendedElasticPool
-- SqlManagementClient.RecommendedElasticPools.ListDatabases -> SqlManagementClient.Databases.ListByRecommendedElasticPool
-
-- SqlManagementClient.Databases.GetServiceTierAdvisor -> SqlManagementClient.ServiceTierAdvisors.Get
-- SqlManagementClient.Databases.ListServiceTierAdvisors -> SqlManagementClient.ServiceTierAdvisors.ListByDatabase
-
-- SqlManagementClient.Databases.CreateOrUpdateTransparentDataEncryptionConfiguration -> SqlManagementClient.TransparentDataEncryptions.CreateOrUpdate
-- SqlManagementClient.Databases.GetTransparentDataEncryptionConfiguration -> SqlManagementClient.TransparentDataEncryptions.Get
-- SqlManagementClient.Databases.ListTransparentDataEncryptionActivity -> SqlManagementClient.TransparentDataEncryptionActivities.ListByConfiguration
-
-- SqlManagementClient.Servers.ListUsages -> SqlManagementClient.ServerUsages.ListByServer
-- SqlManagementClient.Databases.ListUsages -> SqlManagementClient.DatabaseUsages.ListByDatabase
-
-- SqlManagementClient.Databases.GetBlobAuditingPolicy -> SqlManagementClient.DatabaseBlobAuditingPolicies.Get
-- SqlManagementClient.Databases.CreateOrUpdateBlobAuditingPolicy -> SqlManagementClient.DatabaseBlobAuditingPolicies.CreateOrUpdate
-
-- SqlManagementClient.Servers.ListEncryptionProtectors, -> SqlManagementClient.EncryptionProtectors.ListByServer
-- SqlManagementClient.Servers.GetEncryptionProtector -> SqlManagementClient.EncryptionProtectors.Get
-- SqlManagementClient.Servers.CreateOrUpdateEncryptionProtector -> SqlManagementClient.EncryptionProtectors.CreateOrUpdate
-
-Features:
-- Added server connection policy support
-- Added .Update() for Server, Database, and ElasticPool
-- Added support for Data Sync
-- Added support for getting and canceling in-progress database update operations
-- client.Operations.List() now returnes a full list of operations and not a limited subset]]></PackageReleaseNotes>
-  </PropertyGroup>
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

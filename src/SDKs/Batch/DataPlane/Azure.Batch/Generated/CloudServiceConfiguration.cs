@@ -30,24 +30,24 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CurrentOSVersionProperty = this.CreatePropertyAccessor<string>("CurrentOSVersion", BindingAccess.None);
-                this.OSFamilyProperty = this.CreatePropertyAccessor<string>("OSFamily", BindingAccess.Read | BindingAccess.Write);
-                this.TargetOSVersionProperty = this.CreatePropertyAccessor<string>("TargetOSVersion", BindingAccess.Read | BindingAccess.Write);
+                this.CurrentOSVersionProperty = this.CreatePropertyAccessor<string>(nameof(CurrentOSVersion), BindingAccess.None);
+                this.OSFamilyProperty = this.CreatePropertyAccessor<string>(nameof(OSFamily), BindingAccess.Read | BindingAccess.Write);
+                this.TargetOSVersionProperty = this.CreatePropertyAccessor<string>(nameof(TargetOSVersion), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.CloudServiceConfiguration protocolObject) : base(BindingState.Bound)
             {
                 this.CurrentOSVersionProperty = this.CreatePropertyAccessor(
                     protocolObject.CurrentOSVersion,
-                    "CurrentOSVersion",
+                    nameof(CurrentOSVersion),
                     BindingAccess.Read);
                 this.OSFamilyProperty = this.CreatePropertyAccessor(
                     protocolObject.OsFamily,
-                    "OSFamily",
+                    nameof(OSFamily),
                     BindingAccess.Read | BindingAccess.Write);
                 this.TargetOSVersionProperty = this.CreatePropertyAccessor(
                     protocolObject.TargetOSVersion,
-                    "TargetOSVersion",
+                    nameof(TargetOSVersion),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

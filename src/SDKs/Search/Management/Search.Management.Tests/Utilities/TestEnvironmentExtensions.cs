@@ -13,6 +13,34 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     public static class TestEnvironmentExtensions
     {
         /// <summary>
+        /// Gets the fully-qualified domain name suffix of an Azure Search service for the given test environment and service name.
+        /// </summary>
+        /// <param name="environment">The test environment.</param>
+        /// <param name="searchServiceName">The name of the search service.</param>
+        /// <returns>The fully-qualified domain name of the search service in the given environment.</returns>
+        public static string GetSearchDnsSuffix(this TestEnvironment environment, string searchServiceName)
+        {
+            EnvironmentNames envName = LookupEnvironmentFromBaseUri(environment.BaseUri.AbsoluteUri);
+
+            switch (envName)
+            {
+                case EnvironmentNames.Dogfood:
+                    return "search-dogfood.windows-int.net";
+
+                case EnvironmentNames.Next:
+                    return "search-next.windows-int.net";
+
+                case EnvironmentNames.Current:
+                    return "search-current.windows-int.net";
+
+                case EnvironmentNames.Prod:
+                default:
+                    // Assume PROD if all else fails.
+                    return "search.windows.net";
+            }
+        }
+
+        /// <summary>
         /// Gets the base URI of an Azure Search service for the given test environment and service name.
         /// </summary>
         /// <param name="environment">The test environment.</param>
@@ -20,32 +48,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <returns>The correct base URI of the search service in the given environment.</returns>
         public static Uri GetBaseSearchUri(this TestEnvironment environment, string searchServiceName)
         {
-            EnvironmentNames envName = LookupEnvironmentFromBaseUri(environment.BaseUri.AbsoluteUri);
-
-            string domain;
-            switch (envName)
-            {
-                case EnvironmentNames.Dogfood:
-                    domain = "search-dogfood.windows-int.net";
-                    break;
-
-                case EnvironmentNames.Next:
-                    domain = "search-next.windows-int.net";
-                    break;
-
-                case EnvironmentNames.Current:
-                    domain = "search-current.windows-int.net";
-                    break;
-
-                case EnvironmentNames.Prod:
-                default:
-                    // Assume PROD if all else fails.
-                    domain = "search.windows.net";
-                    break;
-            }
-
-            string UriFormat = "https://{0}.{1}/";
-            return new Uri(String.Format(UriFormat, searchServiceName, domain));
+            const string UriFormat = "https://{0}.{1}/";
+            string dnsSuffix = environment.GetSearchDnsSuffix(searchServiceName);
+            return new Uri(String.Format(UriFormat, searchServiceName, dnsSuffix));
         }
 
         private static EnvironmentNames LookupEnvironmentFromBaseUri(string resourceManagementUri)

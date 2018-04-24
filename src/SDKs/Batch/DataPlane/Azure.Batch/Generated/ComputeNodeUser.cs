@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.ExpiryTimeProperty = this.CreatePropertyAccessor<DateTime>("ExpiryTime", BindingAccess.Read | BindingAccess.Write);
-                this.IsAdminProperty = this.CreatePropertyAccessor<bool?>("IsAdmin", BindingAccess.Read | BindingAccess.Write);
-                this.NameProperty = this.CreatePropertyAccessor<string>("Name", BindingAccess.Read | BindingAccess.Write);
-                this.PasswordProperty = this.CreatePropertyAccessor<string>("Password", BindingAccess.Read | BindingAccess.Write);
-                this.SshPublicKeyProperty = this.CreatePropertyAccessor<string>("SshPublicKey", BindingAccess.Read | BindingAccess.Write);
+                this.ExpiryTimeProperty = this.CreatePropertyAccessor<DateTime>(nameof(ExpiryTime), BindingAccess.Read | BindingAccess.Write);
+                this.IsAdminProperty = this.CreatePropertyAccessor<bool?>(nameof(IsAdmin), BindingAccess.Read | BindingAccess.Write);
+                this.NameProperty = this.CreatePropertyAccessor<string>(nameof(Name), BindingAccess.Read | BindingAccess.Write);
+                this.PasswordProperty = this.CreatePropertyAccessor<string>(nameof(Password), BindingAccess.Read | BindingAccess.Write);
+                this.SshPublicKeyProperty = this.CreatePropertyAccessor<string>(nameof(SshPublicKey), BindingAccess.Read | BindingAccess.Write);
             }
 
         }

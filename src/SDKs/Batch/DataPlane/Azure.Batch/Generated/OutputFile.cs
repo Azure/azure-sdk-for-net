@@ -23,10 +23,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class OutputFile : ITransportObjectProvider<Models.OutputFile>, IPropertyMetadata
     {
-        private readonly OutputFileDestination destination;
-        private readonly string filePattern;
-        private readonly OutputFileUploadOptions uploadOptions;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="OutputFile"/> class.
@@ -39,16 +35,16 @@ namespace Microsoft.Azure.Batch
             OutputFileDestination destination,
             OutputFileUploadOptions uploadOptions)
         {
-            this.filePattern = filePattern;
-            this.destination = destination;
-            this.uploadOptions = uploadOptions;
+            this.FilePattern = filePattern;
+            this.Destination = destination;
+            this.UploadOptions = uploadOptions;
         }
 
         internal OutputFile(Models.OutputFile protocolObject)
         {
-            this.destination = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Destination, o => new OutputFileDestination(o).Freeze());
-            this.filePattern = protocolObject.FilePattern;
-            this.uploadOptions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UploadOptions, o => new OutputFileUploadOptions(o).Freeze());
+            this.Destination = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Destination, o => new OutputFileDestination(o).Freeze());
+            this.FilePattern = protocolObject.FilePattern;
+            this.UploadOptions = UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UploadOptions, o => new OutputFileUploadOptions(o).Freeze());
         }
 
         #endregion Constructors
@@ -58,10 +54,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the destination for the output file(s).
         /// </summary>
-        public OutputFileDestination Destination
-        {
-            get { return this.destination; }
-        }
+        public OutputFileDestination Destination { get; }
 
         /// <summary>
         /// Gets a pattern indicating which file(s) to upload.
@@ -72,18 +65,12 @@ namespace Microsoft.Azure.Batch
         /// ending in .txt in the task working directory or any subdirectory. Note that \ and / are treated interchangeably 
         /// and mapped to the correct directory separator on the compute node operating system.
         /// </remarks>
-        public string FilePattern
-        {
-            get { return this.filePattern; }
-        }
+        public string FilePattern { get; }
 
         /// <summary>
         /// Gets additional options for the upload operation, including under what conditions to perform the upload.
         /// </summary>
-        public OutputFileUploadOptions UploadOptions
-        {
-            get { return this.uploadOptions; }
-        }
+        public OutputFileUploadOptions UploadOptions { get; }
 
         #endregion // OutputFile
 

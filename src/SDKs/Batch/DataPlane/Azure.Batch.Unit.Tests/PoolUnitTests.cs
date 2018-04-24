@@ -105,12 +105,7 @@ namespace Azure.Batch.Unit.Tests
                                                             }
                                                     },
                                 CreationTime = dateTimeMinusAnHour,
-                                CloudServiceConfiguration = new Models.CloudServiceConfiguration()
-                                    {
-                                        OsFamily = "4",
-                                        CurrentOSVersion = "*",
-                                        TargetOSVersion = "*",
-                                    },
+                                CloudServiceConfiguration = new Models.CloudServiceConfiguration(osFamily: "4", targetOSVersion: "*", currentOSVersion: "*"),
                                 CurrentDedicatedNodes = 3,
                                 ETag = "eTag=0x8D250D98B5D78AA",
                                 EnableAutoScale = false,

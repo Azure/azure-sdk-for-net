@@ -27,28 +27,28 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<IList<ResourceFile>> CommonResourceFilesProperty;
             public readonly PropertyAccessor<string> CoordinationCommandLineProperty;
-            public readonly PropertyAccessor<int> NumberOfInstancesProperty;
+            public readonly PropertyAccessor<int?> NumberOfInstancesProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CommonResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("CommonResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.CoordinationCommandLineProperty = this.CreatePropertyAccessor<string>("CoordinationCommandLine", BindingAccess.Read | BindingAccess.Write);
-                this.NumberOfInstancesProperty = this.CreatePropertyAccessor<int>("NumberOfInstances", BindingAccess.Read | BindingAccess.Write);
+                this.CommonResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(CommonResourceFiles), BindingAccess.Read | BindingAccess.Write);
+                this.CoordinationCommandLineProperty = this.CreatePropertyAccessor<string>(nameof(CoordinationCommandLine), BindingAccess.Read | BindingAccess.Write);
+                this.NumberOfInstancesProperty = this.CreatePropertyAccessor<int?>(nameof(NumberOfInstances), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.MultiInstanceSettings protocolObject) : base(BindingState.Bound)
             {
                 this.CommonResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollectionAndFreeze(protocolObject.CommonResourceFiles),
-                    "CommonResourceFiles",
+                    nameof(CommonResourceFiles),
                     BindingAccess.Read);
                 this.CoordinationCommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CoordinationCommandLine,
-                    "CoordinationCommandLine",
+                    nameof(CoordinationCommandLine),
                     BindingAccess.Read);
                 this.NumberOfInstancesProperty = this.CreatePropertyAccessor(
                     protocolObject.NumberOfInstances,
-                    "NumberOfInstances",
+                    nameof(NumberOfInstances),
                     BindingAccess.Read);
             }
         }
@@ -60,11 +60,14 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiInstanceSettings"/> class.
         /// </summary>
+        /// <param name='coordinationCommandLine'>The command to run on the compute node instances for coordinating among the subtasks.</param>
         /// <param name='numberOfInstances'>The number of compute nodes required by the multi-instance task.</param>
         public MultiInstanceSettings(
-            int numberOfInstances)
+            string coordinationCommandLine,
+            int? numberOfInstances = default(int?))
         {
             this.propertyContainer = new PropertyContainer();
+            this.CoordinationCommandLine = coordinationCommandLine;
             this.NumberOfInstances = numberOfInstances;
         }
 
@@ -105,7 +108,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets the number of compute nodes required by the multi-instance task.
         /// </summary>
-        public int NumberOfInstances
+        public int? NumberOfInstances
         {
             get { return this.propertyContainer.NumberOfInstancesProperty.Value; }
             set { this.propertyContainer.NumberOfInstancesProperty.Value = value; }

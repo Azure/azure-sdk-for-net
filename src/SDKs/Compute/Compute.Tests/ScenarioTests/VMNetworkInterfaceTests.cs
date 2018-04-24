@@ -17,7 +17,8 @@ namespace Compute.Tests
 {
     public class VMNetworkInterfaceTests : VMTestBase
     {
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -80,7 +81,8 @@ namespace Compute.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestEffectiveRouteAndAcls()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -173,7 +175,8 @@ namespace Compute.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestMultiNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -251,7 +254,8 @@ namespace Compute.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestMultiIpConfigForMultiNICVM()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -324,8 +328,8 @@ namespace Compute.Tests
                     // multi CA Assertions
                     Assert.Equal(2, getNicResponse1.IpConfigurations.Count);
                     Assert.Equal(2, getNicResponse2.IpConfigurations.Count);
-                    Assert.Equal(1, getNicResponse1.IpConfigurations.Where(x => x.Primary == true).Count());
-                    Assert.Equal(1, getNicResponse2.IpConfigurations.Where(x => x.Primary == true).Count());
+                    Assert.Single(getNicResponse1.IpConfigurations.Where(x => x.Primary == true));
+                    Assert.Single(getNicResponse2.IpConfigurations.Where(x => x.Primary == true));
                 }
                 finally
                 {

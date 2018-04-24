@@ -22,15 +22,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ErrorMessage : IPropertyMetadata
     {
-        private readonly string language;
-        private readonly string value;
-
         #region Constructors
 
         internal ErrorMessage(Models.ErrorMessage protocolObject)
         {
-            this.language = protocolObject.Lang;
-            this.value = protocolObject.Value;
+            this.Language = protocolObject.Lang;
+            this.Value = protocolObject.Value;
         }
 
         #endregion Constructors
@@ -40,18 +37,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the language code of the error message.
         /// </summary>
-        public string Language
-        {
-            get { return this.language; }
-        }
+        public string Language { get; }
 
         /// <summary>
         /// Gets the text of the message.
         /// </summary>
-        public string Value
-        {
-            get { return this.value; }
-        }
+        public string Value { get; }
 
         #endregion // ErrorMessage
 

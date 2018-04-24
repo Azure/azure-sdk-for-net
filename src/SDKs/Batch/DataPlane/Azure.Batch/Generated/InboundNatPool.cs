@@ -22,13 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class InboundNatPool : ITransportObjectProvider<Models.InboundNATPool>, IPropertyMetadata
     {
-        private readonly int backendPort;
-        private readonly int frontendPortRangeEnd;
-        private readonly int frontendPortRangeStart;
-        private readonly string name;
-        private readonly IReadOnlyList<NetworkSecurityGroupRule> networkSecurityGroupRules;
-        private readonly Common.InboundEndpointProtocol protocol;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="InboundNatPool"/> class.
@@ -49,22 +42,22 @@ namespace Microsoft.Azure.Batch
             int frontendPortRangeEnd,
             IReadOnlyList<NetworkSecurityGroupRule> networkSecurityGroupRules = default(IReadOnlyList<NetworkSecurityGroupRule>))
         {
-            this.name = name;
-            this.protocol = protocol;
-            this.backendPort = backendPort;
-            this.frontendPortRangeStart = frontendPortRangeStart;
-            this.frontendPortRangeEnd = frontendPortRangeEnd;
-            this.networkSecurityGroupRules = networkSecurityGroupRules;
+            this.Name = name;
+            this.Protocol = protocol;
+            this.BackendPort = backendPort;
+            this.FrontendPortRangeStart = frontendPortRangeStart;
+            this.FrontendPortRangeEnd = frontendPortRangeEnd;
+            this.NetworkSecurityGroupRules = networkSecurityGroupRules;
         }
 
         internal InboundNatPool(Models.InboundNATPool protocolObject)
         {
-            this.backendPort = protocolObject.BackendPort;
-            this.frontendPortRangeEnd = protocolObject.FrontendPortRangeEnd;
-            this.frontendPortRangeStart = protocolObject.FrontendPortRangeStart;
-            this.name = protocolObject.Name;
-            this.networkSecurityGroupRules = NetworkSecurityGroupRule.ConvertFromProtocolCollectionReadOnly(protocolObject.NetworkSecurityGroupRules);
-            this.protocol = UtilitiesInternal.MapEnum<Models.InboundEndpointProtocol, Common.InboundEndpointProtocol>(protocolObject.Protocol);
+            this.BackendPort = protocolObject.BackendPort;
+            this.FrontendPortRangeEnd = protocolObject.FrontendPortRangeEnd;
+            this.FrontendPortRangeStart = protocolObject.FrontendPortRangeStart;
+            this.Name = protocolObject.Name;
+            this.NetworkSecurityGroupRules = NetworkSecurityGroupRule.ConvertFromProtocolCollectionReadOnly(protocolObject.NetworkSecurityGroupRules);
+            this.Protocol = UtilitiesInternal.MapEnum<Models.InboundEndpointProtocol, Common.InboundEndpointProtocol>(protocolObject.Protocol);
         }
 
         #endregion Constructors
@@ -78,10 +71,7 @@ namespace Microsoft.Azure.Batch
         /// This must be unique within a Batch pool. Acceptable values are between 1 and 65535 except for 22, 3389, 29876 
         /// and 29877 as these are reserved.
         /// </remarks>
-        public int BackendPort
-        {
-            get { return this.backendPort; }
-        }
+        public int BackendPort { get; }
 
         /// <summary>
         /// Gets the last port number in the range of external ports that will be used to provide inbound access to the backendPort 
@@ -91,10 +81,7 @@ namespace Microsoft.Azure.Batch
         /// Acceptable values range between 1 and 65534 except ports from 50000 to 55000 which are reserved by the Batch 
         /// service. All ranges within a pool must be distinct and cannot overlap.
         /// </remarks>
-        public int FrontendPortRangeEnd
-        {
-            get { return this.frontendPortRangeEnd; }
-        }
+        public int FrontendPortRangeEnd { get; }
 
         /// <summary>
         /// Gets the first port number in the range of external ports that will be used to provide inbound access to the 
@@ -104,10 +91,7 @@ namespace Microsoft.Azure.Batch
         /// Acceptable values range between 1 and 65534 except ports from 50000 to 55000 which are reserved. All ranges within 
         /// a pool must be distinct and cannot overlap.
         /// </remarks>
-        public int FrontendPortRangeStart
-        {
-            get { return this.frontendPortRangeStart; }
-        }
+        public int FrontendPortRangeStart { get; }
 
         /// <summary>
         /// Gets the name of the endpoint.
@@ -117,10 +101,7 @@ namespace Microsoft.Azure.Batch
         /// Names must start with a letter or number, must end with a letter, number, or underscore, and cannot exceed 77 
         /// characters.
         /// </remarks>
-        public string Name
-        {
-            get { return this.name; }
-        }
+        public string Name { get; }
 
         /// <summary>
         /// Gets a list of network security group rules that will be applied to the endpoint.
@@ -129,18 +110,12 @@ namespace Microsoft.Azure.Batch
         /// The maximum number of rules that can be specified across all the endpoints on a pool is 25. If no network security 
         /// group rules are specified, a default rule will be created to allow inbound access to the specified backendPort.
         /// </remarks>
-        public IReadOnlyList<NetworkSecurityGroupRule> NetworkSecurityGroupRules
-        {
-            get { return this.networkSecurityGroupRules; }
-        }
+        public IReadOnlyList<NetworkSecurityGroupRule> NetworkSecurityGroupRules { get; }
 
         /// <summary>
         /// Gets the protocol of the endpoint.
         /// </summary>
-        public Common.InboundEndpointProtocol Protocol
-        {
-            get { return this.protocol; }
-        }
+        public Common.InboundEndpointProtocol Protocol { get; }
 
         #endregion // InboundNatPool
 

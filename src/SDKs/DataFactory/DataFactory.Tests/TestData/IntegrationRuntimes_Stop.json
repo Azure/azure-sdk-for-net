@@ -9,23 +9,19 @@
   "responses": {
     "202": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:54:19 GMT",
-        "Location": "https://management.azure.com/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationRuntimes/exampleManagedIntegrationRuntime/stop/operationresults/90ec0e839a5d464a86a11ba4059db10f?api-version=2017-09-01-preview",
+        "Date": "Tue, 28 Nov 2017 07:39:21 GMT",
+        "Location": "https://adfrpnightly.svc.datafactory-test.azure.com/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationRuntimes/exampleManagedIntegrationRuntime/stop/operationresults/50799841b7f94497ae43291b791db7e0?api-version=2017-09-01-preview",
         "Retry-After": "15",
-        "x-ms-request-id": "c7ffb397-5751-4567-b67f-173012fecc98",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1193",
-        "x-ms-correlation-request-id": "4a3b69f8-483c-46e5-bea4-1889195a9fec"
+        "x-ms-request-id": "b36c64a2-3306-4374-b93f-ec91dbb3bf26",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": null
     },
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:49 GMT",
-        "x-ms-request-id": "e82e0bf3-f715-4b54-aabb-c91c6db56c0e",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14917",
-        "x-ms-correlation-request-id": "0180e466-d011-4f5f-87b2-42a7a511b783"
+        "Date": "Tue, 28 Nov 2017 07:40:23 GMT",
+        "x-ms-request-id": "bcff281c-ae61-4e2d-8a0c-044e34c1d04a",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": null
     }

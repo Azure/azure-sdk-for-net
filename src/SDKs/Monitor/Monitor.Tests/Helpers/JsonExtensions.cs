@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Xml;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Management.Monitor.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;

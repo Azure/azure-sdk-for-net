@@ -19,7 +19,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet to an Application gateway
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithApplciationGateway()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -77,7 +78,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with DnsSettings
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithDnsSettings()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -119,8 +121,13 @@ namespace Compute.Tests
                     Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings);
                     Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers);
                     Assert.Equal(2, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers.Count);
+#if NET46
                     Assert.True(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers.Any(ip => string.Equals("10.0.0.5", ip)));
                     Assert.True(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers.Any(ip => string.Equals("10.0.0.6", ip)));
+#else
+                    Assert.Contains(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers, ip => string.Equals("10.0.0.5", ip));
+                    Assert.Contains(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers, ip => string.Equals("10.0.0.6", ip));
+#endif
                     passed = true;
                 }
                 finally
@@ -136,6 +143,7 @@ namespace Compute.Tests
         /// Associates a VMScaleSet with PublicIp
         /// </summary>
         [Fact]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithPublicIP()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -185,10 +193,10 @@ namespace Compute.Tests
 
                     var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                     Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration);
-                    Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.DnsSettings);
-                    Assert.Equal(dnsname, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.DnsSettings.DomainNameLabel);
                     Assert.Equal("pip1", vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.Name);
                     Assert.Equal(10, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.IdleTimeoutInMinutes);
+                    Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.DnsSettings);
+                    Assert.Equal(dnsname, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.DnsSettings.DomainNameLabel);
                     passed = true;
                 }
                 finally
@@ -204,7 +212,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with Nsg
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithnNsg()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -268,7 +277,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with ipv6
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithnIpv6()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -329,7 +339,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with multiple IPConfigurations on a single NIC
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMSSWithMultiCA()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -389,7 +400,8 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with a NIC that has accelerated networking enabled.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
+        [Trait("Failure", "Password policy")]
         public void TestVMSSAccelNtwkng()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

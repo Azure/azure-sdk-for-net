@@ -8,7 +8,7 @@ by task and job id and the type of output.
     </Description>
     <AssemblyTitle>Microsoft Azure Batch File Conventions</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Batch.Conventions.Files</AssemblyName>
-    <VersionPrefix>3.0.0</VersionPrefix>
+    <VersionPrefix>3.1.0</VersionPrefix>
     <PackageTags>Microsoft, Azure, Batch, windowsazureofficial</PackageTags>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <PackageReleaseNotes>
@@ -35,7 +35,7 @@ Updated dependent libraries.
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Batch" Version="[7.0.0,8.0.0)" />
+    <PackageReference Include="Azure.Batch" Version="[8.0.0,9.0.0)" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
   </ItemGroup>
 

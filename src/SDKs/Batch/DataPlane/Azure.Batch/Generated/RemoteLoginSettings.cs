@@ -22,15 +22,12 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class RemoteLoginSettings : IPropertyMetadata
     {
-        private readonly string ipAddress;
-        private readonly int port;
-
         #region Constructors
 
         internal RemoteLoginSettings(Models.ComputeNodeGetRemoteLoginSettingsResult protocolObject)
         {
-            this.ipAddress = protocolObject.RemoteLoginIPAddress;
-            this.port = protocolObject.RemoteLoginPort;
+            this.IPAddress = protocolObject.RemoteLoginIPAddress;
+            this.Port = protocolObject.RemoteLoginPort;
         }
 
         #endregion Constructors
@@ -40,18 +37,12 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the IP address used for remote login to the compute node.
         /// </summary>
-        public string IPAddress
-        {
-            get { return this.ipAddress; }
-        }
+        public string IPAddress { get; }
 
         /// <summary>
         /// Gets the port used for remote login to the compute node.
         /// </summary>
-        public int Port
-        {
-            get { return this.port; }
-        }
+        public int Port { get; }
 
         #endregion // RemoteLoginSettings
 

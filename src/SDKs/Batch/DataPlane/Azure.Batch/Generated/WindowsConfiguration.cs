@@ -22,8 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class WindowsConfiguration : ITransportObjectProvider<Models.WindowsConfiguration>, IPropertyMetadata
     {
-        private readonly bool? enableAutomaticUpdates;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsConfiguration"/> class.
@@ -32,12 +30,12 @@ namespace Microsoft.Azure.Batch
         public WindowsConfiguration(
             bool? enableAutomaticUpdates = default(bool?))
         {
-            this.enableAutomaticUpdates = enableAutomaticUpdates;
+            this.EnableAutomaticUpdates = enableAutomaticUpdates;
         }
 
         internal WindowsConfiguration(Models.WindowsConfiguration protocolObject)
         {
-            this.enableAutomaticUpdates = protocolObject.EnableAutomaticUpdates;
+            this.EnableAutomaticUpdates = protocolObject.EnableAutomaticUpdates;
         }
 
         #endregion Constructors
@@ -47,10 +45,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets whether automatic updates are enabled on the virtual machine. If unspecified, the default value is true.
         /// </summary>
-        public bool? EnableAutomaticUpdates
-        {
-            get { return this.enableAutomaticUpdates; }
-        }
+        public bool? EnableAutomaticUpdates { get; }
 
         #endregion // WindowsConfiguration
 
