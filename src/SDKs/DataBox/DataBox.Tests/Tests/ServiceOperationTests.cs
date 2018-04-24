@@ -18,7 +18,12 @@ namespace DataBox.Tests.Tests
         {
             try
             {
-                var skus = this.Client.Service.ListAvailableSkus(TestConstants.DefaultResourceLocation, "US", "westus");
+                var availableSkus = new AvailableSkuRequest
+                {
+                    Country = "US",
+                    Location = "westus"
+                };
+                var skus = this.Client.Service.ListAvailableSkus(TestConstants.DefaultResourceLocation, availableSkus);
                 Assert.True(skus != null, "List call for available skus was not successful.");
 
                 foreach (var sku in skus)
@@ -38,7 +43,12 @@ namespace DataBox.Tests.Tests
         {
             var shippingAddress = GetDefaultShippingAddress();
 
-            var addressValidation = this.Client.Service.ValidateAddressMethod(TestConstants.DefaultResourceLocation, shippingAddress);
+            var validateAddress = new ValidateAddress
+            {
+                ShippingAddress = shippingAddress,
+                DeviceType = DeviceType.Pod
+            };
+            var addressValidation = this.Client.Service.ValidateAddressMethod(TestConstants.DefaultResourceLocation, validateAddress);
 
             Assert.NotNull(addressValidation);
             Assert.NotNull(addressValidation.AlternateAddresses);

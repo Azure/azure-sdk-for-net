@@ -887,16 +887,12 @@ namespace Microsoft.Azure.Management.DataBox
         /// must be between 3 and 24 characters in length and use any alphanumeric and
         /// underscore only
         /// </param>
-        /// <param name='details'>
-        /// Details of a job to be updated.
+        /// <param name='jobResourceUpdateParameter'>
+        /// Job update parameters from request body.
         /// </param>
         /// <param name='ifMatch'>
         /// Defines the If-Match condition. The patch will be performed only if the
         /// ETag of the job on the server matches this value.
-        /// </param>
-        /// <param name='tags'>
-        /// The list of key value pairs that describe the resource. These tags can be
-        /// used in viewing and grouping this resource (across resource groups).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -904,10 +900,10 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<JobResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<JobResource> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, jobName, details, ifMatch, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<JobResource> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, jobName, jobResourceUpdateParameter, ifMatch, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1149,7 +1145,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// must be between 3 and 24 characters in length and use any alphanumeric and
         /// underscore only
         /// </param>
-        /// <param name='reason'>
+        /// <param name='cancellationReason'>
         /// Reason for cancellation.
         /// </param>
         /// <param name='customHeaders'>
@@ -1170,7 +1166,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string jobName, string reason, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string jobName, CancellationReason cancellationReason, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1203,14 +1199,13 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (reason == null)
+            if (cancellationReason == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "reason");
+                throw new ValidationException(ValidationRules.CannotBeNull, "cancellationReason");
             }
-            CancellationReason cancellationReason = new CancellationReason();
-            if (reason != null)
+            if (cancellationReason != null)
             {
-                cancellationReason.Reason = reason;
+                cancellationReason.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1999,14 +1994,8 @@ namespace Microsoft.Azure.Management.DataBox
         /// must be between 3 and 24 characters in length and use any alphanumeric and
         /// underscore only
         /// </param>
-        /// <param name='issueType'>
-        /// Issue Type. Possible values include: 'DeviceMismatch',
-        /// 'ValidationStringMismatch', 'CredentialNotWorking', 'DeviceFailure'
-        /// </param>
-        /// <param name='deviceIssueType'>
-        /// Device Issue Type. Only used for Device failure issue. Possible values
-        /// include: 'DeviceTampering', 'DeviceNotBootingUp',
-        /// 'DeviceHealthCheckShowFailures', 'NICsAreNotWorking', 'Misc'
+        /// <param name='reportIssueDetails'>
+        /// Details of reported issue.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2026,7 +2015,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ReportIssueWithHttpMessagesAsync(string resourceGroupName, string jobName, IssueType? issueType = default(IssueType?), DeviceIssueType? deviceIssueType = default(DeviceIssueType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ReportIssueWithHttpMessagesAsync(string resourceGroupName, string jobName, ReportIssueDetails reportIssueDetails, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2059,11 +2048,9 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            ReportIssueDetails reportIssueDetails = new ReportIssueDetails();
-            if (issueType != null || deviceIssueType != null)
+            if (reportIssueDetails == null)
             {
-                reportIssueDetails.IssueType = issueType;
-                reportIssueDetails.DeviceIssueType = deviceIssueType;
+                throw new ValidationException(ValidationRules.CannotBeNull, "reportIssueDetails");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2446,16 +2433,12 @@ namespace Microsoft.Azure.Management.DataBox
         /// must be between 3 and 24 characters in length and use any alphanumeric and
         /// underscore only
         /// </param>
-        /// <param name='details'>
-        /// Details of a job to be updated.
+        /// <param name='jobResourceUpdateParameter'>
+        /// Job update parameters from request body.
         /// </param>
         /// <param name='ifMatch'>
         /// Defines the If-Match condition. The patch will be performed only if the
         /// ETag of the job on the server matches this value.
-        /// </param>
-        /// <param name='tags'>
-        /// The list of key value pairs that describe the resource. These tags can be
-        /// used in viewing and grouping this resource (across resource groups).
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2478,7 +2461,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<JobResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JobResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -2511,19 +2494,9 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (details == null)
+            if (jobResourceUpdateParameter == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "details");
-            }
-            if (details != null)
-            {
-                details.Validate();
-            }
-            JobResourceUpdateParameter jobResourceUpdateParameter = new JobResourceUpdateParameter();
-            if (details != null || tags != null)
-            {
-                jobResourceUpdateParameter.Details = details;
-                jobResourceUpdateParameter.Tags = tags;
+                throw new ValidationException(ValidationRules.CannotBeNull, "jobResourceUpdateParameter");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

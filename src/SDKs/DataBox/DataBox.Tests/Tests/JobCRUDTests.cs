@@ -65,7 +65,11 @@ namespace DataBox.Tests.Tests
                 ShippingAddress = getJob.Details.ShippingAddress
             };
 
-            var updateJob = this.Client.Jobs.Update(resourceGroupName, jobName, Details);
+            var updateParams = new JobResourceUpdateParameter
+            {
+                Details = Details
+            };
+            var updateJob = this.Client.Jobs.Update(resourceGroupName, jobName, updateParams);
             ValidateJobWithoutDetails(jobName, destinationAccountList, sku, updateJob);
             Assert.Equal(StageName.DeviceOrdered, updateJob.Status);
 
@@ -80,7 +84,11 @@ namespace DataBox.Tests.Tests
             jobList = this.Client.Jobs.ListByResourceGroup(resourceGroupName);
             Assert.NotNull(jobList);
 
-            this.Client.Jobs.Cancel(resourceGroupName, jobName, "CancelTest");
+            var cancelReason = new CancellationReason
+            {
+                Reason = "CancelTest"
+            };
+            this.Client.Jobs.Cancel(resourceGroupName, jobName, cancelReason);
             getJob = this.Client.Jobs.Get(resourceGroupName, jobName, TestConstants.Details);
             ValidateJobWithoutDetails(jobName, destinationAccountList, sku, getJob, false);
             ValidateJobDetails(contactDetails, shippingAddress, getJob);

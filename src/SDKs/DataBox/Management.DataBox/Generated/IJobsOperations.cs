@@ -170,17 +170,12 @@ namespace Microsoft.Azure.Management.DataBox
         /// job names must be between 3 and 24 characters in length and use any
         /// alphanumeric and underscore only
         /// </param>
-        /// <param name='details'>
-        /// Details of a job to be updated.
+        /// <param name='jobResourceUpdateParameter'>
+        /// Job update parameters from request body.
         /// </param>
         /// <param name='ifMatch'>
         /// Defines the If-Match condition. The patch will be performed only if
         /// the ETag of the job on the server matches this value.
-        /// </param>
-        /// <param name='tags'>
-        /// The list of key value pairs that describe the resource. These tags
-        /// can be used in viewing and grouping this resource (across resource
-        /// groups).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -197,7 +192,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JobResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Book shipment pick up.
         /// </summary>
@@ -239,7 +234,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// job names must be between 3 and 24 characters in length and use any
         /// alphanumeric and underscore only
         /// </param>
-        /// <param name='reason'>
+        /// <param name='cancellationReason'>
         /// Reason for cancellation.
         /// </param>
         /// <param name='customHeaders'>
@@ -254,7 +249,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string jobName, string reason, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> CancelWithHttpMessagesAsync(string resourceGroupName, string jobName, CancellationReason cancellationReason, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Provides list of copy logs uri.
         /// </summary>
@@ -347,14 +342,8 @@ namespace Microsoft.Azure.Management.DataBox
         /// job names must be between 3 and 24 characters in length and use any
         /// alphanumeric and underscore only
         /// </param>
-        /// <param name='issueType'>
-        /// Issue Type. Possible values include: 'DeviceMismatch',
-        /// 'ValidationStringMismatch', 'CredentialNotWorking', 'DeviceFailure'
-        /// </param>
-        /// <param name='deviceIssueType'>
-        /// Device Issue Type. Only used for Device failure issue. Possible
-        /// values include: 'DeviceTampering', 'DeviceNotBootingUp',
-        /// 'DeviceHealthCheckShowFailures', 'NICsAreNotWorking', 'Misc'
+        /// <param name='reportIssueDetails'>
+        /// Details of reported issue.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -368,7 +357,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ReportIssueWithHttpMessagesAsync(string resourceGroupName, string jobName, IssueType? issueType = default(IssueType?), DeviceIssueType? deviceIssueType = default(DeviceIssueType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ReportIssueWithHttpMessagesAsync(string resourceGroupName, string jobName, ReportIssueDetails reportIssueDetails, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new job with the specified parameters. Existing job
         /// cannot be updated with this API and should instead be updated with
@@ -412,17 +401,12 @@ namespace Microsoft.Azure.Management.DataBox
         /// job names must be between 3 and 24 characters in length and use any
         /// alphanumeric and underscore only
         /// </param>
-        /// <param name='details'>
-        /// Details of a job to be updated.
+        /// <param name='jobResourceUpdateParameter'>
+        /// Job update parameters from request body.
         /// </param>
         /// <param name='ifMatch'>
         /// Defines the If-Match condition. The patch will be performed only if
         /// the ETag of the job on the server matches this value.
-        /// </param>
-        /// <param name='tags'>
-        /// The list of key value pairs that describe the resource. These tags
-        /// can be used in viewing and grouping this resource (across resource
-        /// groups).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -439,7 +423,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JobResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the jobs available under the subscription.
         /// </summary>

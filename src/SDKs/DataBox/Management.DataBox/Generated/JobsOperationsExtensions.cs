@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataBox
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -262,20 +260,16 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='details'>
-            /// Details of a job to be updated.
+            /// <param name='jobResourceUpdateParameter'>
+            /// Job update parameters from request body.
             /// </param>
             /// <param name='ifMatch'>
             /// Defines the If-Match condition. The patch will be performed only if the
             /// ETag of the job on the server matches this value.
             /// </param>
-            /// <param name='tags'>
-            /// The list of key value pairs that describe the resource. These tags can be
-            /// used in viewing and grouping this resource (across resource groups).
-            /// </param>
-            public static JobResource Update(this IJobsOperations operations, string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static JobResource Update(this IJobsOperations operations, string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string))
             {
-                return operations.UpdateAsync(resourceGroupName, jobName, details, ifMatch, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, jobName, jobResourceUpdateParameter, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -292,23 +286,19 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='details'>
-            /// Details of a job to be updated.
+            /// <param name='jobResourceUpdateParameter'>
+            /// Job update parameters from request body.
             /// </param>
             /// <param name='ifMatch'>
             /// Defines the If-Match condition. The patch will be performed only if the
             /// ETag of the job on the server matches this value.
             /// </param>
-            /// <param name='tags'>
-            /// The list of key value pairs that describe the resource. These tags can be
-            /// used in viewing and grouping this resource (across resource groups).
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobResource> UpdateAsync(this IJobsOperations operations, string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobResource> UpdateAsync(this IJobsOperations operations, string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, jobName, details, ifMatch, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, jobName, jobResourceUpdateParameter, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -378,12 +368,12 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='reason'>
+            /// <param name='cancellationReason'>
             /// Reason for cancellation.
             /// </param>
-            public static void Cancel(this IJobsOperations operations, string resourceGroupName, string jobName, string reason)
+            public static void Cancel(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationReason cancellationReason)
             {
-                operations.CancelAsync(resourceGroupName, jobName, reason).GetAwaiter().GetResult();
+                operations.CancelAsync(resourceGroupName, jobName, cancellationReason).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -400,15 +390,15 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='reason'>
+            /// <param name='cancellationReason'>
             /// Reason for cancellation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync(this IJobsOperations operations, string resourceGroupName, string jobName, string reason, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CancelAsync(this IJobsOperations operations, string resourceGroupName, string jobName, CancellationReason cancellationReason, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, jobName, reason, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.CancelWithHttpMessagesAsync(resourceGroupName, jobName, cancellationReason, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -557,18 +547,12 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='issueType'>
-            /// Issue Type. Possible values include: 'DeviceMismatch',
-            /// 'ValidationStringMismatch', 'CredentialNotWorking', 'DeviceFailure'
+            /// <param name='reportIssueDetails'>
+            /// Details of reported issue.
             /// </param>
-            /// <param name='deviceIssueType'>
-            /// Device Issue Type. Only used for Device failure issue. Possible values
-            /// include: 'DeviceTampering', 'DeviceNotBootingUp',
-            /// 'DeviceHealthCheckShowFailures', 'NICsAreNotWorking', 'Misc'
-            /// </param>
-            public static void ReportIssue(this IJobsOperations operations, string resourceGroupName, string jobName, IssueType? issueType = default(IssueType?), DeviceIssueType? deviceIssueType = default(DeviceIssueType?))
+            public static void ReportIssue(this IJobsOperations operations, string resourceGroupName, string jobName, ReportIssueDetails reportIssueDetails)
             {
-                operations.ReportIssueAsync(resourceGroupName, jobName, issueType, deviceIssueType).GetAwaiter().GetResult();
+                operations.ReportIssueAsync(resourceGroupName, jobName, reportIssueDetails).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -585,21 +569,15 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='issueType'>
-            /// Issue Type. Possible values include: 'DeviceMismatch',
-            /// 'ValidationStringMismatch', 'CredentialNotWorking', 'DeviceFailure'
-            /// </param>
-            /// <param name='deviceIssueType'>
-            /// Device Issue Type. Only used for Device failure issue. Possible values
-            /// include: 'DeviceTampering', 'DeviceNotBootingUp',
-            /// 'DeviceHealthCheckShowFailures', 'NICsAreNotWorking', 'Misc'
+            /// <param name='reportIssueDetails'>
+            /// Details of reported issue.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ReportIssueAsync(this IJobsOperations operations, string resourceGroupName, string jobName, IssueType? issueType = default(IssueType?), DeviceIssueType? deviceIssueType = default(DeviceIssueType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ReportIssueAsync(this IJobsOperations operations, string resourceGroupName, string jobName, ReportIssueDetails reportIssueDetails, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ReportIssueWithHttpMessagesAsync(resourceGroupName, jobName, issueType, deviceIssueType, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ReportIssueWithHttpMessagesAsync(resourceGroupName, jobName, reportIssueDetails, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -670,20 +648,16 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='details'>
-            /// Details of a job to be updated.
+            /// <param name='jobResourceUpdateParameter'>
+            /// Job update parameters from request body.
             /// </param>
             /// <param name='ifMatch'>
             /// Defines the If-Match condition. The patch will be performed only if the
             /// ETag of the job on the server matches this value.
             /// </param>
-            /// <param name='tags'>
-            /// The list of key value pairs that describe the resource. These tags can be
-            /// used in viewing and grouping this resource (across resource groups).
-            /// </param>
-            public static JobResource BeginUpdate(this IJobsOperations operations, string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static JobResource BeginUpdate(this IJobsOperations operations, string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, jobName, details, ifMatch, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, jobName, jobResourceUpdateParameter, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -700,23 +674,19 @@ namespace Microsoft.Azure.Management.DataBox
             /// must be between 3 and 24 characters in length and use any alphanumeric and
             /// underscore only
             /// </param>
-            /// <param name='details'>
-            /// Details of a job to be updated.
+            /// <param name='jobResourceUpdateParameter'>
+            /// Job update parameters from request body.
             /// </param>
             /// <param name='ifMatch'>
             /// Defines the If-Match condition. The patch will be performed only if the
             /// ETag of the job on the server matches this value.
             /// </param>
-            /// <param name='tags'>
-            /// The list of key value pairs that describe the resource. These tags can be
-            /// used in viewing and grouping this resource (across resource groups).
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobResource> BeginUpdateAsync(this IJobsOperations operations, string resourceGroupName, string jobName, UpdateJobDetails details, string ifMatch = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobResource> BeginUpdateAsync(this IJobsOperations operations, string resourceGroupName, string jobName, JobResourceUpdateParameter jobResourceUpdateParameter, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, jobName, details, ifMatch, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, jobName, jobResourceUpdateParameter, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

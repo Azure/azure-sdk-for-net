@@ -31,17 +31,12 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='country'>
-            /// ISO country code. Country for hardware shipment. For codes check:
-            /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
+            /// <param name='availableSkuRequest'>
+            /// Filters for showing the available skus.
             /// </param>
-            /// <param name='location1'>
-            /// Location for data transfer. For locations check:
-            /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01
-            /// </param>
-            public static IPage<SkuInformation> ListAvailableSkus(this IServiceOperations operations, string location, string country, string location1)
+            public static IPage<SkuInformation> ListAvailableSkus(this IServiceOperations operations, string location, AvailableSkuRequest availableSkuRequest)
             {
-                return operations.ListAvailableSkusAsync(location, country, location1).GetAwaiter().GetResult();
+                return operations.ListAvailableSkusAsync(location, availableSkuRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,20 +49,15 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='country'>
-            /// ISO country code. Country for hardware shipment. For codes check:
-            /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
-            /// </param>
-            /// <param name='location1'>
-            /// Location for data transfer. For locations check:
-            /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01
+            /// <param name='availableSkuRequest'>
+            /// Filters for showing the available skus.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SkuInformation>> ListAvailableSkusAsync(this IServiceOperations operations, string location, string country, string location1, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SkuInformation>> ListAvailableSkusAsync(this IServiceOperations operations, string location, AvailableSkuRequest availableSkuRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAvailableSkusWithHttpMessagesAsync(location, country, location1, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAvailableSkusWithHttpMessagesAsync(location, availableSkuRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -83,16 +73,12 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='shippingAddress'>
+            /// <param name='validateAddress'>
             /// Shipping address of the customer.
             /// </param>
-            /// <param name='deviceType'>
-            /// Device type to be used for the job. Possible values include: 'Pod', 'Disk',
-            /// 'Cabinet'
-            /// </param>
-            public static AddressValidationOutput ValidateAddressMethod(this IServiceOperations operations, string location, ShippingAddress shippingAddress = default(ShippingAddress), DeviceType? deviceType = default(DeviceType?))
+            public static AddressValidationOutput ValidateAddressMethod(this IServiceOperations operations, string location, ValidateAddress validateAddress)
             {
-                return operations.ValidateAddressMethodAsync(location, shippingAddress, deviceType).GetAwaiter().GetResult();
+                return operations.ValidateAddressMethodAsync(location, validateAddress).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -105,19 +91,15 @@ namespace Microsoft.Azure.Management.DataBox
             /// <param name='location'>
             /// The location of the resource
             /// </param>
-            /// <param name='shippingAddress'>
+            /// <param name='validateAddress'>
             /// Shipping address of the customer.
-            /// </param>
-            /// <param name='deviceType'>
-            /// Device type to be used for the job. Possible values include: 'Pod', 'Disk',
-            /// 'Cabinet'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AddressValidationOutput> ValidateAddressMethodAsync(this IServiceOperations operations, string location, ShippingAddress shippingAddress = default(ShippingAddress), DeviceType? deviceType = default(DeviceType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AddressValidationOutput> ValidateAddressMethodAsync(this IServiceOperations operations, string location, ValidateAddress validateAddress, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ValidateAddressMethodWithHttpMessagesAsync(location, shippingAddress, deviceType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateAddressMethodWithHttpMessagesAsync(location, validateAddress, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

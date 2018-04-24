@@ -60,8 +60,13 @@ namespace DataBox.Tests.Tests
         {
             try
             {
+                var issue = new ReportIssueDetails
+                {
+                    IssueType = IssueType.DeviceFailure,
+                    DeviceIssueType = DeviceIssueType.DeviceNotBootingUp
+                };
                 this.Client.Jobs.ReportIssue(TestConstants.DefaultResourceGroupName, TestConstants.DefaultJobName,
-                    IssueType.DeviceFailure, DeviceIssueType.DeviceNotBootingUp);
+                    issue);
             }
             catch (Exception e)
             {

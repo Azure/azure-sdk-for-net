@@ -57,13 +57,8 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='country'>
-        /// ISO country code. Country for hardware shipment. For codes check:
-        /// https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements
-        /// </param>
-        /// <param name='location1'>
-        /// Location for data transfer. For locations check:
-        /// https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01
+        /// <param name='availableSkuRequest'>
+        /// Filters for showing the available skus.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -86,7 +81,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SkuInformation>>> ListAvailableSkusWithHttpMessagesAsync(string location, string country, string location1, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SkuInformation>>> ListAvailableSkusWithHttpMessagesAsync(string location, AvailableSkuRequest availableSkuRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -100,19 +95,13 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (country == null)
+            if (availableSkuRequest == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "country");
+                throw new ValidationException(ValidationRules.CannotBeNull, "availableSkuRequest");
             }
-            if (location1 == null)
+            if (availableSkuRequest != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "location1");
-            }
-            AvailableSkuRequest availableSkuRequest = new AvailableSkuRequest();
-            if (country != null || location1 != null)
-            {
-                availableSkuRequest.Country = country;
-                availableSkuRequest.Location = location1;
+                availableSkuRequest.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -274,12 +263,8 @@ namespace Microsoft.Azure.Management.DataBox
         /// <param name='location'>
         /// The location of the resource
         /// </param>
-        /// <param name='shippingAddress'>
+        /// <param name='validateAddress'>
         /// Shipping address of the customer.
-        /// </param>
-        /// <param name='deviceType'>
-        /// Device type to be used for the job. Possible values include: 'Pod', 'Disk',
-        /// 'Cabinet'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -302,7 +287,7 @@ namespace Microsoft.Azure.Management.DataBox
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AddressValidationOutput>> ValidateAddressMethodWithHttpMessagesAsync(string location, ShippingAddress shippingAddress = default(ShippingAddress), DeviceType? deviceType = default(DeviceType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AddressValidationOutput>> ValidateAddressMethodWithHttpMessagesAsync(string location, ValidateAddress validateAddress, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -316,15 +301,13 @@ namespace Microsoft.Azure.Management.DataBox
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (shippingAddress != null)
+            if (validateAddress == null)
             {
-                shippingAddress.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "validateAddress");
             }
-            ValidateAddress validateAddress = new ValidateAddress();
-            if (shippingAddress != null || deviceType != null)
+            if (validateAddress != null)
             {
-                validateAddress.ShippingAddress = shippingAddress;
-                validateAddress.DeviceType = deviceType;
+                validateAddress.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
