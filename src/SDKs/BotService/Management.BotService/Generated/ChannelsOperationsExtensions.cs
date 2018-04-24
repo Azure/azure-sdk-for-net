@@ -261,6 +261,58 @@ namespace Microsoft.Azure.Management.BotService
             }
 
             /// <summary>
+            /// Lists a Channel registration for a Bot Service including secrets
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Bot resource.
+            /// </param>
+            /// <param name='channelName'>
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
+            /// </param>
+            public static BotChannel ListWithKeys(this IChannelsOperations operations, string resourceGroupName, string resourceName, ChannelName channelName)
+            {
+                return operations.ListWithKeysAsync(resourceGroupName, resourceName, channelName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists a Channel registration for a Bot Service including secrets
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Bot resource.
+            /// </param>
+            /// <param name='channelName'>
+            /// The name of the Channel resource. Possible values include:
+            /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+            /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+            /// 'DirectLineChannel', 'SmsChannel'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BotChannel> ListWithKeysAsync(this IChannelsOperations operations, string resourceGroupName, string resourceName, ChannelName channelName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithKeysWithHttpMessagesAsync(resourceGroupName, resourceName, channelName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns all the Channel registrations of a particular BotService resource
             /// </summary>
             /// <param name='operations'>

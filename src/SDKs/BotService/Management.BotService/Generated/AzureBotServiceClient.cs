@@ -86,11 +86,6 @@ namespace Microsoft.Azure.Management.BotService
         public virtual IChannelsOperations Channels { get; private set; }
 
         /// <summary>
-        /// Gets the IChannelOperations.
-        /// </summary>
-        public virtual IChannelOperations Channel { get; private set; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -298,7 +293,6 @@ namespace Microsoft.Azure.Management.BotService
         {
             Bots = new BotsOperations(this);
             Channels = new ChannelsOperations(this);
-            Channel = new ChannelOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-12-01";

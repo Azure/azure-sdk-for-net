@@ -162,6 +162,37 @@ namespace Microsoft.Azure.Management.BotService
         /// </exception>
         Task<AzureOperationResponse<BotChannel>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string channelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists a Channel registration for a Bot Service including secrets
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Bot resource.
+        /// </param>
+        /// <param name='channelName'>
+        /// The name of the Channel resource. Possible values include:
+        /// 'FacebookChannel', 'EmailChannel', 'KikChannel', 'TelegramChannel',
+        /// 'SlackChannel', 'MsTeamsChannel', 'SkypeChannel', 'WebChatChannel',
+        /// 'DirectLineChannel', 'SmsChannel'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BotChannel>> ListWithKeysWithHttpMessagesAsync(string resourceGroupName, string resourceName, ChannelName channelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Returns all the Channel registrations of a particular BotService
         /// resource
         /// </summary>
