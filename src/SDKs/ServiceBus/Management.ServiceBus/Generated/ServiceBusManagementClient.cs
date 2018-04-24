@@ -69,11 +69,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// The configuration name. Should always be "$default".
-        /// </summary>
-        public string ConfigName { get; private set; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -106,9 +101,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         public virtual IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; private set; }
 
         /// <summary>
-        /// Gets the IMigrationConfigurationsOperations.
+        /// Gets the IMigrationConfigsOperations.
         /// </summary>
-        public virtual IMigrationConfigurationsOperations MigrationConfigurations { get; private set; }
+        public virtual IMigrationConfigsOperations MigrationConfigs { get; private set; }
 
         /// <summary>
         /// Gets the IQueuesOperations.
@@ -349,7 +344,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
             DisasterRecoveryConfigs = new DisasterRecoveryConfigsOperations(this);
-            MigrationConfigurations = new MigrationConfigurationsOperations(this);
+            MigrationConfigs = new MigrationConfigsOperations(this);
             Queues = new QueuesOperations(this);
             Topics = new TopicsOperations(this);
             Subscriptions = new SubscriptionsOperations(this);
@@ -359,7 +354,6 @@ namespace Microsoft.Azure.Management.ServiceBus
             EventHubs = new EventHubsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-04-01";
-            ConfigName = "$default";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

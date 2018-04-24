@@ -23,8 +23,8 @@ namespace ServiceBus.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "South Central US";
-                var location2 = "North Central US";
+                var location = "West US";
+                var location2 = "West US2";
 
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))

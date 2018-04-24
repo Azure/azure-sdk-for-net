@@ -63,11 +63,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         string ApiVersion { get; }
 
         /// <summary>
-        /// The configuration name. Should always be "$default".
-        /// </summary>
-        string ConfigName { get; }
-
-        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -101,9 +96,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
 
         /// <summary>
-        /// Gets the IMigrationConfigurationsOperations.
+        /// Gets the IMigrationConfigsOperations.
         /// </summary>
-        IMigrationConfigurationsOperations MigrationConfigurations { get; }
+        IMigrationConfigsOperations MigrationConfigs { get; }
 
         /// <summary>
         /// Gets the IQueuesOperations.

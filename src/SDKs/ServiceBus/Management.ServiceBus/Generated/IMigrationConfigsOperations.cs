@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.ServiceBus
     using System.Threading.Tasks;
 
     /// <summary>
-    /// MigrationConfigurationsOperations operations.
+    /// MigrationConfigsOperations operations.
     /// </summary>
-    public partial interface IMigrationConfigurationsOperations
+    public partial interface IMigrationConfigsOperations
     {
         /// <summary>
         /// Gets all migrationConfigurations
@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse<IPage<MigrationConfigProperties>>> ListWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Initiate Migration from Standard to Premium
+        /// Creates Migration configuration and starts migration of enties from
+        /// Standard to Premium namespace
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name
         /// </param>
         /// <param name='parameters'>
-        /// Parameters required to Migration Config
+        /// Parameters required to create Migration Configuration
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -85,7 +86,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<MigrationConfigProperties>> StartMigrationWithHttpMessagesAsync(string resourceGroupName, string namespaceName, MigrationConfigProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MigrationConfigProperties>> CreateAndStartMigrationWithHttpMessagesAsync(string resourceGroupName, string namespaceName, MigrationConfigProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a MigrationConfiguration
         /// </summary>
@@ -134,7 +135,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse<MigrationConfigProperties>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// This operation Completes Migration
+        /// This operation Completes Migration of entities by pointing the
+        /// connection strings to Premium namespace and any enties created
+        /// after the operation will be under Premium Namespace.
+        /// CompleteMigration operation will fail when entity migration is
+        /// in-progress.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -177,6 +182,35 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> RevertWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates Migration configuration and starts migration of enties from
+        /// Standard to Premium namespace
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters required to create Migration Configuration
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<MigrationConfigProperties>> BeginCreateAndStartMigrationWithHttpMessagesAsync(string resourceGroupName, string namespaceName, MigrationConfigProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all migrationConfigurations
         /// </summary>

@@ -108,23 +108,23 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // create the Migartion Config
 
-                var createMigrationConfigutationresponse = this.ServiceBusManagementClient.MigrationConfigurations.StartMigration(resourceGroup, namespaceNameStandrad, new MigrationConfigProperties { PostMigrationName = postmigrationName, TargetNamespace = getPremiumNamespace.Id });
+                var createMigrationConfigutationresponse = this.ServiceBusManagementClient.MigrationConfigs.CreateAndStartMigration(resourceGroup, namespaceNameStandrad, new MigrationConfigProperties { PostMigrationName = postmigrationName, TargetNamespace = getPremiumNamespace.Id });
 
-                var getMigrationConfiguration = this.ServiceBusManagementClient.MigrationConfigurations.Get(resourceGroup, namespaceNameStandrad);
+                var getMigrationConfiguration = this.ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad);
 
                 // Wait and check for Provisioning state is succeeded
-                while (this.ServiceBusManagementClient.MigrationConfigurations.Get(resourceGroup, namespaceNameStandrad).ProvisioningState.Equals("Accepted"))
+                while (this.ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad).ProvisioningState.Equals("Accepted"))
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 }
 
-                // List migrationconfigurations 
+                // List migrationconfigurations
 
-                var ListMigrationconfigurations = this.ServiceBusManagementClient.MigrationConfigurations.List(resourceGroup, namespaceNameStandrad);
+                var ListMigrationconfigurations = this.ServiceBusManagementClient.MigrationConfigs.List(resourceGroup, namespaceNameStandrad);
 
 
                 // Complete migration
-                this.ServiceBusManagementClient.MigrationConfigurations.CompleteMigration(resourceGroup, namespaceNameStandrad);
+                //this.ServiceBusManagementClient.MigrationConfigurations.CompleteMigration(resourceGroup, namespaceNameStandrad);
 
                 // check for entity migration
                 var QueuesPremiumnamespaceResponse = this.ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceNamePremium);
@@ -151,9 +151,9 @@ namespace ServiceBus.Tests.ScenarioTests
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 }
 
-                this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNamePremium);
+                //this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNamePremium);
 
-                this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNameStandrad);                
+                //this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNameStandrad);                
                 
             }
         }

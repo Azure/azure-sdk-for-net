@@ -60,6 +60,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// irrespective of the resource groups.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
         /// </summary>
+        /// <param name='skip'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N
+        /// usageDetails.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -75,7 +85,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBNamespace>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SBNamespace>>> ListWithHttpMessagesAsync(int? skip = default(int?), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the available namespaces within a resource group.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
@@ -83,6 +93,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
         /// </param>
+        /// <param name='skip'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N
+        /// usageDetails.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -98,7 +118,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBNamespace>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SBNamespace>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, int? skip = default(int?), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a service namespace. Once created, this
         /// namespace's resource manifest is immutable. This operation is
@@ -219,6 +239,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='namespaceName'>
         /// The namespace name
         /// </param>
+        /// <param name='skip'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N
+        /// usageDetails.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -234,7 +264,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBAuthorizationRule>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SBAuthorizationRule>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates an authorization rule for a namespace.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />

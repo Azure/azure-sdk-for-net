@@ -46,6 +46,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='topicName'>
         /// The topic name.
         /// </param>
+        /// <param name='skip'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N
+        /// usageDetails.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -61,7 +71,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<SBSubscription>>> ListByTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SBSubscription>>> ListByTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, int? skip = default(int?), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a topic subscription.
         /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639385.aspx" />

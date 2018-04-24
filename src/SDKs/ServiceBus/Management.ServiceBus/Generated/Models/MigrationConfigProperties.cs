@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the MigrationConfigProperties class.
         /// </summary>
-        /// <param name="targetNamespace">Existing premium Namespace name which
-        /// has no entities, will be used for migration</param>
-        /// <param name="postMigrationName">Name to access connection strings
-        /// of the Primary Namespace after migration</param>
+        /// <param name="targetNamespace">Existing premium Namespace ARM Id
+        /// name which has no entities, will be used for migration</param>
+        /// <param name="postMigrationName">Name to access Standard Namespace
+        /// after migration</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -72,15 +72,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets existing premium Namespace name which has no entities,
-        /// will be used for migration
+        /// Gets or sets existing premium Namespace ARM Id name which has no
+        /// entities, will be used for migration
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetNamespace")]
         public string TargetNamespace { get; set; }
 
         /// <summary>
-        /// Gets or sets name to access connection strings of the Primary
-        /// Namespace after migration
+        /// Gets or sets name to access Standard Namespace after migration
         /// </summary>
         [JsonProperty(PropertyName = "properties.postMigrationName")]
         public string PostMigrationName { get; set; }
