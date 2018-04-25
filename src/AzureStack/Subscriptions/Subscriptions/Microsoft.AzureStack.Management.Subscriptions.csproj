@@ -3,13 +3,13 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <PackageId>Microsoft.AzureStack.Management.Subscriptions</PackageId>
-    <Description>Provides developers with libraries for the subscriptions under AzureStack to manage subscriptions</Description>
+    <Description>Provides developers with libraries to manage subscriptions under AzureStack</Description>
     <VersionPrefix>0.1.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.AzureStack.Management.Subscriptions</AssemblyName>
     <PackageTags>Microsoft Azure Stack;Subscription;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a preview release of the AzureStack Subscription Admin SDK.
+        This is a preview release of the AzureStack User Subscription SDK.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
