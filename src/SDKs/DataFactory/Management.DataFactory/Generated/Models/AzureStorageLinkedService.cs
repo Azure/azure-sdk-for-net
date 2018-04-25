@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="connectionString">The connection string. It is
         /// mutually exclusive with sasUri property.</param>
         /// <param name="sasUri">SAS URI of the Azure Storage resource. It is
@@ -47,8 +50,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), SecureString connectionString = default(SecureString), SecureString sasUri = default(SecureString), object encryptedCredential = default(object))
-            : base(additionalProperties, connectVia, description)
+        public AzureStorageLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase connectionString = default(SecretBase), SecretBase sasUri = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
             SasUri = sasUri;
@@ -66,14 +69,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// sasUri property.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
-        public SecureString ConnectionString { get; set; }
+        public SecretBase ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets SAS URI of the Azure Storage resource. It is mutually
         /// exclusive with connectionString property.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.sasUri")]
-        public SecureString SasUri { get; set; }
+        public SecretBase SasUri { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -92,14 +95,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (ConnectionString != null)
-            {
-                ConnectionString.Validate();
-            }
-            if (SasUri != null)
-            {
-                SasUri.Validate();
-            }
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code below this line -->
+
   <PropertyGroup>
     <PackageId>Microsoft.AzureStack.Management.InfrastructureInsights.Admin</PackageId>
     <Description>Provides developers with libraries for the health admin under AzureStack to manage health alerts.</Description>

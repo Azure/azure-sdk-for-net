@@ -12,6 +12,8 @@ namespace Compute.Tests
     public class VMDiskSizeTests : VMTestBase
     {
         [Fact]
+        [Trait("Failure", "Password policy")]
+        [Trait("Failure", "New Unable Match Http")]
         public void TestVMDiskSizeScenario()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -33,7 +35,7 @@ namespace Compute.Tests
                 {
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
-                    var vm1 = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
+                    var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
                     {
                         vm.StorageProfile.OsDisk.DiskSizeGB = 150;
                     });

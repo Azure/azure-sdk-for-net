@@ -18,10 +18,10 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an elastic pool update.
+    /// An elastic pool update.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ElasticPoolUpdate : Resource
+    public partial class ElasticPoolUpdate
     {
         /// <summary>
         /// Initializes a new instance of the ElasticPoolUpdate class.
@@ -34,39 +34,25 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Initializes a new instance of the ElasticPoolUpdate class.
         /// </summary>
-        /// <param name="id">Resource ID.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="maxSizeBytes">The storage limit for the database
+        /// elastic pool in bytes.</param>
+        /// <param name="perDatabaseSettings">The per database settings for the
+        /// elastic pool.</param>
+        /// <param name="zoneRedundant">Whether or not this elastic pool is
+        /// zone redundant, which means the replicas of this elastic pool will
+        /// be spread across multiple availability zones.</param>
+        /// <param name="licenseType">The license type to apply for this
+        /// elastic pool. Possible values include: 'LicenseIncluded',
+        /// 'BasePrice'</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="creationDate">The creation date of the elastic pool
-        /// (ISO8601 format).</param>
-        /// <param name="state">The state of the elastic pool. Possible values
-        /// include: 'Creating', 'Ready', 'Disabled'</param>
-        /// <param name="edition">The edition of the elastic pool. Possible
-        /// values include: 'Basic', 'Standard', 'Premium'</param>
-        /// <param name="dtu">The total shared DTU for the database elastic
-        /// pool.</param>
-        /// <param name="databaseDtuMax">The maximum DTU any one database can
-        /// consume.</param>
-        /// <param name="databaseDtuMin">The minimum DTU all databases are
-        /// guaranteed.</param>
-        /// <param name="storageMB">Gets storage limit for the database elastic
-        /// pool in MB.</param>
-        /// <param name="zoneRedundant">Whether or not this database elastic
-        /// pool is zone redundant, which means the replicas of this database
-        /// will be spread across multiple availability zones.</param>
-        public ElasticPoolUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? creationDate = default(System.DateTime?), string state = default(string), string edition = default(string), int? dtu = default(int?), int? databaseDtuMax = default(int?), int? databaseDtuMin = default(int?), int? storageMB = default(int?), bool? zoneRedundant = default(bool?))
-            : base(id, name, type)
+        public ElasticPoolUpdate(Sku sku = default(Sku), long? maxSizeBytes = default(long?), ElasticPoolPerDatabaseSettings perDatabaseSettings = default(ElasticPoolPerDatabaseSettings), bool? zoneRedundant = default(bool?), string licenseType = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
-            Tags = tags;
-            CreationDate = creationDate;
-            State = state;
-            Edition = edition;
-            Dtu = dtu;
-            DatabaseDtuMax = databaseDtuMax;
-            DatabaseDtuMin = databaseDtuMin;
-            StorageMB = storageMB;
+            Sku = sku;
+            MaxSizeBytes = maxSizeBytes;
+            PerDatabaseSettings = perDatabaseSettings;
             ZoneRedundant = zoneRedundant;
+            LicenseType = licenseType;
+            Tags = tags;
             CustomInit();
         }
 
@@ -76,62 +62,56 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage limit for the database elastic pool in
+        /// bytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxSizeBytes")]
+        public long? MaxSizeBytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the per database settings for the elastic pool.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.perDatabaseSettings")]
+        public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not this elastic pool is zone redundant,
+        /// which means the replicas of this elastic pool will be spread across
+        /// multiple availability zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneRedundant")]
+        public bool? ZoneRedundant { get; set; }
+
+        /// <summary>
+        /// Gets or sets the license type to apply for this elastic pool.
+        /// Possible values include: 'LicenseIncluded', 'BasePrice'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.licenseType")]
+        public string LicenseType { get; set; }
+
+        /// <summary>
         /// Gets or sets resource tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets the creation date of the elastic pool (ISO8601 format).
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.creationDate")]
-        public System.DateTime? CreationDate { get; private set; }
-
-        /// <summary>
-        /// Gets the state of the elastic pool. Possible values include:
-        /// 'Creating', 'Ready', 'Disabled'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.state")]
-        public string State { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the edition of the elastic pool. Possible values
-        /// include: 'Basic', 'Standard', 'Premium'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.edition")]
-        public string Edition { get; set; }
-
-        /// <summary>
-        /// Gets or sets the total shared DTU for the database elastic pool.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.dtu")]
-        public int? Dtu { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum DTU any one database can consume.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.databaseDtuMax")]
-        public int? DatabaseDtuMax { get; set; }
-
-        /// <summary>
-        /// Gets or sets the minimum DTU all databases are guaranteed.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.databaseDtuMin")]
-        public int? DatabaseDtuMin { get; set; }
-
-        /// <summary>
-        /// Gets storage limit for the database elastic pool in MB.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.storageMB")]
-        public int? StorageMB { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether or not this database elastic pool is zone
-        /// redundant, which means the replicas of this database will be spread
-        /// across multiple availability zones.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+        }
     }
 }

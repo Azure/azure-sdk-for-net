@@ -3,18 +3,22 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Xunit;
+namespace Fabric.Tests
+{
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Xunit;
 
-namespace Fabric.Tests {
-
-    public class VolumeTests : FabricTestBase {
+    public class VolumeTests : FabricTestBase
+    {
 
         private void AssertVolumesAreSame(Volume expected, Volume found) {
-            if (expected == null) {
+            if (expected == null)
+            {
                 Assert.Null(found);
-            } else {
+            }
+            else
+            {
                 Assert.True(FabricCommon.ResourceAreSame(expected, found));
 
                 Assert.Equal(expected.FileSystem, found.FileSystem);
@@ -38,14 +42,10 @@ namespace Fabric.Tests {
         [Fact]
         public void TestListVolumes() {
             RunTest((client) => {
-                var subSystems = client.StorageSystems.List(Location);
-                Common.MapOverIPage(subSystems, client.StorageSystems.ListNext, (subSystem) => {
-                    var storagePools = client.StoragePools.List(Location, subSystem.Name);
-                    Common.MapOverIPage(storagePools, client.StoragePools.ListNext, (storagePool) => {
-                        var volumes = client.Volumes.List(Location, subSystem.Name, storagePool.Name);
-                        Common.MapOverIPage(volumes, client.Volumes.ListNext, ValidateVolume);
-                        Common.WriteIPagesToFile(volumes, client.Volumes.ListNext, "ListVolumes.txt", ResourceName);
-                    });
+                OverStoragePools(client, (fabricLocationName, storageSystemName, storagePoolName) => {
+                    var volumes = client.Volumes.List(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName);
+                    Common.MapOverIPage(volumes, client.Volumes.ListNext, ValidateVolume);
+                    Common.WriteIPagesToFile(volumes, client.Volumes.ListNext, "ListVolumes.txt", ResourceName);
                 });
             });
         }
@@ -53,10 +53,12 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetVolume() {
             RunTest((client) => {
-                var subSystem = client.StorageSystems.List(Location).GetFirst();
-                var storagePool = client.StoragePools.List(Location, subSystem.Name).GetFirst();
-                var volume = client.Volumes.List(Location, subSystem.Name, storagePool.Name).GetFirst();
-                var retrieved = client.Volumes.Get(Location, subSystem.Name, storagePool.Name, volume.Name);
+                var fabricLocationName = GetLocation(client);
+                var storageSystemName = GetStorageSystem(client, fabricLocationName);
+                var storagePoolName = GetStoragePool(client, fabricLocationName, storageSystemName);
+                var volume = client.Volumes.List(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName).GetFirst();
+                var volumeName = ExtractName(volume.Name);
+                var retrieved = client.Volumes.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName, volumeName);
                 AssertVolumesAreSame(volume, retrieved);
             });
         }
@@ -64,15 +66,12 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetAllVolumes() {
             RunTest((client) => {
-                var subSystems = client.StorageSystems.List(Location);
-                Common.MapOverIPage(subSystems, client.StorageSystems.ListNext, (subSystem) => {
-                    var storagePools = client.StoragePools.List(Location, subSystem.Name);
-                    Common.MapOverIPage(storagePools, client.StoragePools.ListNext, (storagePool) => {
-                        var volumes = client.Volumes.List(Location, subSystem.Name, storagePool.Name);
-                        Common.MapOverIPage(volumes, client.Volumes.ListNext, (volume) => {
-                            var retrieved = client.Volumes.Get(Location, subSystem.Name, storagePool.Name, volume.Name);
-                            AssertVolumesAreSame(volume, retrieved);
-                        });
+                OverStoragePools(client, (fabricLocationName, storageSystemName, storagePoolName) => {
+                    var volumes = client.Volumes.List(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName);
+                    Common.MapOverIPage(volumes, client.Volumes.ListNext, (volume) => {
+                        var volumeName = ExtractName(volume.Name);
+                        var retrieved = client.Volumes.Get(ResourceGroupName, fabricLocationName, storageSystemName, storagePoolName, volumeName);
+                        AssertVolumesAreSame(volume, retrieved);
                     });
                 });
             });

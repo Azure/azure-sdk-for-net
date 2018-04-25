@@ -43,9 +43,10 @@ namespace Compute.Tests
             }
         }
 
-        public static void ValidateVirtualMachineSizeListResponse(IEnumerable<VirtualMachineSize> vmSizeListResponse, bool hasAZ = false)
+        public static void ValidateVirtualMachineSizeListResponse(IEnumerable<VirtualMachineSize> vmSizeListResponse, bool hasAZ = false,
+            bool? writeAcceleratorEnabled = null)
         {
-            var expectedVMSizePropertiesList = GetExpectedVirtualMachineSize(hasAZ);
+            var expectedVMSizePropertiesList = GetExpectedVirtualMachineSize(hasAZ, writeAcceleratorEnabled);
 
             IEnumerable<VirtualMachineSize> vmSizesPropertyList = vmSizeListResponse;
             Assert.NotNull(vmSizesPropertyList);
@@ -63,14 +64,35 @@ namespace Compute.Tests
             CompareVMSizes(expectedVMSizeProperties, vmSizeProperties);
         }
 
-        private static List<VirtualMachineSize> GetExpectedVirtualMachineSize(bool hasAZ)
+        private static List<VirtualMachineSize> GetExpectedVirtualMachineSize(bool hasAZ, bool? writeAcceleratorEnabled = null)
         {
             var expectedVMSizePropertiesList = new List<VirtualMachineSize>();
-            if (hasAZ)
+            if (writeAcceleratorEnabled.HasValue && writeAcceleratorEnabled.Value)
             {
                 expectedVMSizePropertiesList.Add(new VirtualMachineSize()
                 {
-                    Name = "Standard_D1_v2",
+                    Name = VirtualMachineSizeTypes.StandardM64s,
+                    MemoryInMB = 1024000,
+                    NumberOfCores = 64,
+                    OsDiskSizeInMB = 1047552,
+                    ResourceDiskSizeInMB = 2048000,
+                    MaxDataDiskCount = 64
+                });
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                {
+                    Name = VirtualMachineSizeTypes.StandardM6416ms,
+                    MemoryInMB = 1792000,
+                    NumberOfCores = 64,
+                    OsDiskSizeInMB = 1047552,
+                    ResourceDiskSizeInMB = 2048000,
+                    MaxDataDiskCount = 64
+                });
+            }
+            else if (hasAZ)
+            {
+                expectedVMSizePropertiesList.Add(new VirtualMachineSize()
+                {
+                    Name = VirtualMachineSizeTypes.StandardD1V2,
                     MemoryInMB = 3584,
                     NumberOfCores = 1,
                     OsDiskSizeInMB = 1047552,
@@ -80,7 +102,7 @@ namespace Compute.Tests
 
                 expectedVMSizePropertiesList.Add(new VirtualMachineSize()
                 {
-                    Name = "Standard_D2_v2",
+                    Name = VirtualMachineSizeTypes.StandardD2V2,
                     MemoryInMB = 7168,
                     NumberOfCores = 2,
                     OsDiskSizeInMB = 102400,
@@ -92,7 +114,7 @@ namespace Compute.Tests
             {
                 expectedVMSizePropertiesList.Add(new VirtualMachineSize()
                     {
-                        Name = "Standard_A0",
+                        Name = VirtualMachineSizeTypes.StandardA0,
                         MemoryInMB = 768,
                         NumberOfCores = 1,
                         OsDiskSizeInMB = 130048,
@@ -101,7 +123,7 @@ namespace Compute.Tests
                     });
                 expectedVMSizePropertiesList.Add(new VirtualMachineSize()
                     {
-                        Name = "Standard_A1",
+                        Name = VirtualMachineSizeTypes.StandardA1,
                         MemoryInMB = 1792,
                         NumberOfCores = 1,
                         OsDiskSizeInMB = 130048,

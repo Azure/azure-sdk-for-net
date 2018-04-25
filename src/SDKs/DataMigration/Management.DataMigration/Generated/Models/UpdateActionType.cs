@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for UpdateActionType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum UpdateActionType
+    public static class UpdateActionType
     {
-        [EnumMember(Value = "DeletedOnTarget")]
-        DeletedOnTarget,
-        [EnumMember(Value = "ChangedOnTarget")]
-        ChangedOnTarget,
-        [EnumMember(Value = "AddedOnTarget")]
-        AddedOnTarget
-    }
-    internal static class UpdateActionTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this UpdateActionType? value)
-        {
-            return value == null ? null : ((UpdateActionType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this UpdateActionType value)
-        {
-            switch( value )
-            {
-                case UpdateActionType.DeletedOnTarget:
-                    return "DeletedOnTarget";
-                case UpdateActionType.ChangedOnTarget:
-                    return "ChangedOnTarget";
-                case UpdateActionType.AddedOnTarget:
-                    return "AddedOnTarget";
-            }
-            return null;
-        }
-
-        internal static UpdateActionType? ParseUpdateActionType(this string value)
-        {
-            switch( value )
-            {
-                case "DeletedOnTarget":
-                    return UpdateActionType.DeletedOnTarget;
-                case "ChangedOnTarget":
-                    return UpdateActionType.ChangedOnTarget;
-                case "AddedOnTarget":
-                    return UpdateActionType.AddedOnTarget;
-            }
-            return null;
-        }
+        public const string DeletedOnTarget = "DeletedOnTarget";
+        public const string ChangedOnTarget = "ChangedOnTarget";
+        public const string AddedOnTarget = "AddedOnTarget";
     }
 }

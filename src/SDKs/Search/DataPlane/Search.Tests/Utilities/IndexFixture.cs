@@ -47,7 +47,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     {
                         new Suggester(
                             name: "sg", 
-                            searchMode: SuggesterSearchMode.AnalyzingInfixMatching, 
                             sourceFields: new[] { "description", "hotelName" })
                     },
                     ScoringProfiles = new[]
@@ -91,18 +90,17 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         {
             TestEnvironment currentEnvironment = TestEnvironmentFactory.GetTestEnvironment();
 
-            Uri baseUri = 
-                new Uri(
-                    currentEnvironment.GetBaseSearchUri(SearchServiceName), 
-                    String.Format("indexes('{0}')/", indexName));
+            SearchIndexClient client =
+                MockContext.GetServiceClientWithCredentials<SearchIndexClient>(
+                    currentEnvironment,
+                    new SearchCredentials(apiKey),
+                    internalBaseUri: true,
+                    handlers: handlers);
 
-            currentEnvironment.BaseUri = baseUri;
-            var credentials = new SearchCredentials(apiKey);
-            return MockContext.GetServiceClientWithCredentials<SearchIndexClient>(
-                currentEnvironment, 
-                credentials,
-                false,
-                handlers);
+            client.SearchServiceName = SearchServiceName;
+            client.SearchDnsSuffix = currentEnvironment.GetSearchDnsSuffix(SearchServiceName);
+            client.IndexName = indexName;
+            return client;
         }
     }
 }

@@ -54,21 +54,21 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Gets or sets an OData $filter clause.. Used to filter results that
         /// are returned in the GET respnose.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets an OData $select clause. Used to select the properties
         /// to be returned in the GET respnose.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public string Select { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
         /// A maximum of 1000 files can be returned.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonIgnore]
         public int? MaxResults { get; set; }
 
     }

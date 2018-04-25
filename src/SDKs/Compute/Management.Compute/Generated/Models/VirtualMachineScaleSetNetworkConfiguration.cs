@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// group.</param>
         /// <param name="dnsSettings">The dns settings to be applied on the
         /// network interfaces.</param>
-        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings))
+        /// <param name="enableIPForwarding">Whether IP forwarding enabled on
+        /// this NIC.</param>
+        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), bool? enableIPForwarding = default(bool?))
             : base(id)
         {
             Name = name;
@@ -58,6 +60,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
             IpConfigurations = ipConfigurations;
+            EnableIPForwarding = enableIPForwarding;
             CustomInit();
         }
 
@@ -105,6 +108,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether IP forwarding enabled on this NIC.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableIPForwarding")]
+        public bool? EnableIPForwarding { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -53,7 +53,12 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="errorSeverity">The operation error severity.</param>
         /// <param name="isUserError">Whether or not the error is a user
         /// error.</param>
-        public DatabaseOperation(string id = default(string), string name = default(string), string type = default(string), string databaseName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?))
+        /// <param name="estimatedCompletionTime">The estimated completion time
+        /// of the operation.</param>
+        /// <param name="description">The operation description.</param>
+        /// <param name="isCancellable">Whether the operation can be
+        /// cancelled.</param>
+        public DatabaseOperation(string id = default(string), string name = default(string), string type = default(string), string databaseName = default(string), string operation = default(string), string operationFriendlyName = default(string), int? percentComplete = default(int?), string serverName = default(string), System.DateTime? startTime = default(System.DateTime?), string state = default(string), int? errorCode = default(int?), string errorDescription = default(string), int? errorSeverity = default(int?), bool? isUserError = default(bool?), System.DateTime? estimatedCompletionTime = default(System.DateTime?), string description = default(string), bool? isCancellable = default(bool?))
             : base(id, name, type)
         {
             DatabaseName = databaseName;
@@ -67,6 +72,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             ErrorDescription = errorDescription;
             ErrorSeverity = errorSeverity;
             IsUserError = isUserError;
+            EstimatedCompletionTime = estimatedCompletionTime;
+            Description = description;
+            IsCancellable = isCancellable;
             CustomInit();
         }
 
@@ -142,6 +150,24 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isUserError")]
         public bool? IsUserError { get; private set; }
+
+        /// <summary>
+        /// Gets the estimated completion time of the operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.estimatedCompletionTime")]
+        public System.DateTime? EstimatedCompletionTime { get; private set; }
+
+        /// <summary>
+        /// Gets the operation description.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.description")]
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// Gets whether the operation can be cancelled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isCancellable")]
+        public bool? IsCancellable { get; private set; }
 
     }
 }

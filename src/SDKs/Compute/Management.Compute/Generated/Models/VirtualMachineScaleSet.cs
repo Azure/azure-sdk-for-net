@@ -59,10 +59,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="singlePlacementGroup">When true this limits the scale
         /// set to a single placement group, of max size 100 virtual
         /// machines.</param>
+        /// <param name="zoneBalance">Whether to force stictly even Virtual
+        /// Machine distribution cross x-zones in case there is zone
+        /// outage.</param>
+        /// <param name="platformFaultDomainCount">Fault Domain count for each
+        /// placement group.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -73,6 +78,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             Overprovision = overprovision;
             UniqueId = uniqueId;
             SinglePlacementGroup = singlePlacementGroup;
+            ZoneBalance = zoneBalance;
+            PlatformFaultDomainCount = platformFaultDomainCount;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -139,6 +146,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.singlePlacementGroup")]
         public bool? SinglePlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to force stictly even Virtual Machine
+        /// distribution cross x-zones in case there is zone outage.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.zoneBalance")]
+        public bool? ZoneBalance { get; set; }
+
+        /// <summary>
+        /// Gets or sets fault Domain count for each placement group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.platformFaultDomainCount")]
+        public int? PlatformFaultDomainCount { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if

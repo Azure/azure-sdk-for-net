@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the ParameterSpecification class.
         /// </summary>
         /// <param name="type">Parameter type. Possible values include:
-        /// 'Object', 'String', 'Int', 'Float', 'Bool', 'Array'</param>
+        /// 'Object', 'String', 'Int', 'Float', 'Bool', 'Array',
+        /// 'SecureString'</param>
         /// <param name="defaultValue">Default value of parameter.</param>
         public ParameterSpecification(string type, object defaultValue = default(object))
         {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets parameter type. Possible values include: 'Object',
-        /// 'String', 'Int', 'Float', 'Bool', 'Array'
+        /// 'String', 'Int', 'Float', 'Bool', 'Array', 'SecureString'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

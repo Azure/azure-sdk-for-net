@@ -56,6 +56,40 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
+            /// Gets the number of nodes in each state, grouped by pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountListPoolNodeCountsOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static IPage<PoolNodeCounts> ListPoolNodeCounts(this IAccountOperations operations, AccountListPoolNodeCountsOptions accountListPoolNodeCountsOptions = default(AccountListPoolNodeCountsOptions))
+            {
+                return operations.ListPoolNodeCountsAsync(accountListPoolNodeCountsOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of nodes in each state, grouped by pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountListPoolNodeCountsOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PoolNodeCounts>> ListPoolNodeCountsAsync(this IAccountOperations operations, AccountListPoolNodeCountsOptions accountListPoolNodeCountsOptions = default(AccountListPoolNodeCountsOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPoolNodeCountsWithHttpMessagesAsync(accountListPoolNodeCountsOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all node agent SKUs supported by the Azure Batch service.
             /// </summary>
             /// <param name='operations'>
@@ -90,6 +124,46 @@ namespace Microsoft.Azure.Batch.Protocol
             public static async Task<IPage<NodeAgentSku>> ListNodeAgentSkusNextAsync(this IAccountOperations operations, string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNodeAgentSkusNextWithHttpMessagesAsync(nextPageLink, accountListNodeAgentSkusNextOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the number of nodes in each state, grouped by pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='accountListPoolNodeCountsNextOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static IPage<PoolNodeCounts> ListPoolNodeCountsNext(this IAccountOperations operations, string nextPageLink, AccountListPoolNodeCountsNextOptions accountListPoolNodeCountsNextOptions = default(AccountListPoolNodeCountsNextOptions))
+            {
+                return operations.ListPoolNodeCountsNextAsync(nextPageLink, accountListPoolNodeCountsNextOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the number of nodes in each state, grouped by pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='accountListPoolNodeCountsNextOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PoolNodeCounts>> ListPoolNodeCountsNextAsync(this IAccountOperations operations, string nextPageLink, AccountListPoolNodeCountsNextOptions accountListPoolNodeCountsNextOptions = default(AccountListPoolNodeCountsNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPoolNodeCountsNextWithHttpMessagesAsync(nextPageLink, accountListPoolNodeCountsNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -8,7 +8,7 @@
 		<Description>Provides Microsoft Azure Operational Insights management operations</Description>
 		<AssemblyName>Microsoft.Azure.Management.OperationalInsights</AssemblyName>
 		<Version>0.18.0-preview</Version>
-		<PackageTags>Microsoft Azure OperationalInsights;OperationalInsights</PackageTags>  
+		<PackageTags>Microsoft Azure OperationalInsights;OperationalInsights;</PackageTags>  
 		<PackageReleaseNotes/>		
 	</PropertyGroup>
 	<PropertyGroup>
@@ -16,6 +16,6 @@
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>

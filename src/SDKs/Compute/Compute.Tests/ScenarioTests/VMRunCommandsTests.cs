@@ -21,7 +21,7 @@ namespace Compute.Tests
                 var computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 string location = ComputeManagementTestUtilities.DefaultLocation.Replace(" ", "");
-                string documentId = "PowerShellScript";
+                string documentId = "RunPowerShellScript";
 
                 // Verify the List of commands
                 IEnumerable<RunCommandDocumentBase> runCommandListResponse = computeClient.VirtualMachineRunCommands.List(location);

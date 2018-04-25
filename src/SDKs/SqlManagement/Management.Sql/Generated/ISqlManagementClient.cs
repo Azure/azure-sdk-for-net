@@ -67,21 +67,6 @@ namespace Microsoft.Azure.Management.Sql
 
 
         /// <summary>
-        /// Gets the IBackupLongTermRetentionPoliciesOperations.
-        /// </summary>
-        IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; }
-
-        /// <summary>
-        /// Gets the IBackupLongTermRetentionVaultsOperations.
-        /// </summary>
-        IBackupLongTermRetentionVaultsOperations BackupLongTermRetentionVaults { get; }
-
-        /// <summary>
-        /// Gets the IRestorePointsOperations.
-        /// </summary>
-        IRestorePointsOperations RestorePoints { get; }
-
-        /// <summary>
         /// Gets the IRecoverableDatabasesOperations.
         /// </summary>
         IRecoverableDatabasesOperations RecoverableDatabases { get; }
@@ -92,9 +77,9 @@ namespace Microsoft.Azure.Management.Sql
         IRestorableDroppedDatabasesOperations RestorableDroppedDatabases { get; }
 
         /// <summary>
-        /// Gets the ICapabilitiesOperations.
+        /// Gets the IServersOperations.
         /// </summary>
-        ICapabilitiesOperations Capabilities { get; }
+        IServersOperations Servers { get; }
 
         /// <summary>
         /// Gets the IServerConnectionPoliciesOperations.
@@ -137,6 +122,11 @@ namespace Microsoft.Azure.Management.Sql
         IElasticPoolsOperations ElasticPools { get; }
 
         /// <summary>
+        /// Gets the IRecommendedElasticPoolsOperations.
+        /// </summary>
+        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
+
+        /// <summary>
         /// Gets the IReplicationLinksOperations.
         /// </summary>
         IReplicationLinksOperations ReplicationLinks { get; }
@@ -157,11 +147,6 @@ namespace Microsoft.Azure.Management.Sql
         IServiceObjectivesOperations ServiceObjectives { get; }
 
         /// <summary>
-        /// Gets the IServersOperations.
-        /// </summary>
-        IServersOperations Servers { get; }
-
-        /// <summary>
         /// Gets the IElasticPoolActivitiesOperations.
         /// </summary>
         IElasticPoolActivitiesOperations ElasticPoolActivities { get; }
@@ -170,11 +155,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IElasticPoolDatabaseActivitiesOperations.
         /// </summary>
         IElasticPoolDatabaseActivitiesOperations ElasticPoolDatabaseActivities { get; }
-
-        /// <summary>
-        /// Gets the IRecommendedElasticPoolsOperations.
-        /// </summary>
-        IRecommendedElasticPoolsOperations RecommendedElasticPools { get; }
 
         /// <summary>
         /// Gets the IServiceTierAdvisorsOperations.
@@ -207,6 +187,11 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
 
         /// <summary>
+        /// Gets the IDatabaseAutomaticTuningOperations.
+        /// </summary>
+        IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; }
+
+        /// <summary>
         /// Gets the IEncryptionProtectorsOperations.
         /// </summary>
         IEncryptionProtectorsOperations EncryptionProtectors { get; }
@@ -215,6 +200,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IFailoverGroupsOperations.
         /// </summary>
         IFailoverGroupsOperations FailoverGroups { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstancesOperations.
+        /// </summary>
+        IManagedInstancesOperations ManagedInstances { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -252,14 +242,54 @@ namespace Microsoft.Azure.Management.Sql
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
         /// <summary>
-        /// Gets the IDatabaseOperations.
+        /// Gets the ILongTermRetentionBackupsOperations.
         /// </summary>
-        IDatabaseOperations DatabaseOperations { get; }
+        ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
+
+        /// <summary>
+        /// Gets the IBackupLongTermRetentionPoliciesOperations.
+        /// </summary>
+        IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; }
+
+        /// <summary>
+        /// Gets the IManagedDatabasesOperations.
+        /// </summary>
+        IManagedDatabasesOperations ManagedDatabases { get; }
+
+        /// <summary>
+        /// Gets the IServerAutomaticTuningOperations.
+        /// </summary>
+        IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
 
         /// <summary>
         /// Gets the IServerDnsAliasesOperations.
         /// </summary>
         IServerDnsAliasesOperations ServerDnsAliases { get; }
+
+        /// <summary>
+        /// Gets the IRestorePointsOperations.
+        /// </summary>
+        IRestorePointsOperations RestorePoints { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseOperations.
+        /// </summary>
+        IDatabaseOperations DatabaseOperations { get; }
+
+        /// <summary>
+        /// Gets the IElasticPoolOperations.
+        /// </summary>
+        IElasticPoolOperations ElasticPoolOperations { get; }
+
+        /// <summary>
+        /// Gets the ICapabilitiesOperations.
+        /// </summary>
+        ICapabilitiesOperations Capabilities { get; }
+
+        /// <summary>
+        /// Gets the IInstanceFailoverGroupsOperations.
+        /// </summary>
+        IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
 
     }
 }

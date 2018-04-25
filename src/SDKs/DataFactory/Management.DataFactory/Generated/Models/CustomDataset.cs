@@ -42,8 +42,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
-        public CustomDataset(LinkedServiceReference linkedServiceName, object typeProperties, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters)
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
+        public CustomDataset(LinkedServiceReference linkedServiceName, object typeProperties, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
         {
             TypeProperties = typeProperties;
             CustomInit();

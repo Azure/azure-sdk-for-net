@@ -15,9 +15,9 @@
 
 namespace Management.HDInsight.Tests
 {
+    using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
     using Microsoft.Azure.Management.Resources;
-    using Microsoft.HDInsight;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Linq;

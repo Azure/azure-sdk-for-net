@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />
-    <ProjectReference Include="..\Management.Search\Management.Search.csproj" />
+    <ProjectReference Include="..\Management.Search\Microsoft.Azure.Management.Search.csproj" />
     <ProjectReference Include="..\..\DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
   </ItemGroup>
   <ItemGroup>

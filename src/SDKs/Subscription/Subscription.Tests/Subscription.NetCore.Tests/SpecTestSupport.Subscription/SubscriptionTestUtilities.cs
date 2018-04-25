@@ -17,10 +17,10 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A subscription client, created from the current context (environment variables)</returns>
-        public static SubscriptionDefinitionsClient GetSubscriptionDefinitionClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
+        public static SubscriptionClient GetSubscriptionClientWithHandler(this TestBase testBase, MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<SubscriptionDefinitionsClient>(handlers: handler);
+            var client = context.GetServiceClient<SubscriptionClient>(handlers: handler);
             return client;
         }
     }

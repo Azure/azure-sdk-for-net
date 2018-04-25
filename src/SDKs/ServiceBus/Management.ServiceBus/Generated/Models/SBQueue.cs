@@ -74,6 +74,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// of a messaging entity. Possible values include: 'Active',
         /// 'Disabled', 'Restoring', 'SendDisabled', 'ReceiveDisabled',
         /// 'Creating', 'Deleting', 'Renaming', 'Unknown'</param>
+        /// <param name="enableBatchedOperations">Value that indicates whether
+        /// server-side batched operations are enabled.</param>
         /// <param name="autoDeleteOnIdle">ISO 8061 timeSpan idle interval
         /// after which the queue is automatically deleted. The minimum
         /// duration is 5 minutes.</param>
@@ -82,7 +84,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="enableExpress">A value that indicates whether Express
         /// Entities are enabled. An express queue holds a message in memory
         /// temporarily before writing it to persistent storage.</param>
-        public SBQueue(string id = default(string), string name = default(string), string type = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), long? sizeInBytes = default(long?), long? messageCount = default(long?), System.TimeSpan? lockDuration = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?))
+        /// <param name="forwardTo">Queue/Topic name to forward the
+        /// messages</param>
+        /// <param name="forwardDeadLetteredMessagesTo">Queue/Topic name to
+        /// forward the Dead Letter message</param>
+        public SBQueue(string id = default(string), string name = default(string), string type = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), long? sizeInBytes = default(long?), long? messageCount = default(long?), System.TimeSpan? lockDuration = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string))
             : base(id, name, type)
         {
             CountDetails = countDetails;
@@ -100,9 +106,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow;
             MaxDeliveryCount = maxDeliveryCount;
             Status = status;
+            EnableBatchedOperations = enableBatchedOperations;
             AutoDeleteOnIdle = autoDeleteOnIdle;
             EnablePartitioning = enablePartitioning;
             EnableExpress = enableExpress;
+            ForwardTo = forwardTo;
+            ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
             CustomInit();
         }
 
@@ -219,6 +228,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
+        /// Gets or sets value that indicates whether server-side batched
+        /// operations are enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableBatchedOperations")]
+        public bool? EnableBatchedOperations { get; set; }
+
+        /// <summary>
         /// Gets or sets ISO 8061 timeSpan idle interval after which the queue
         /// is automatically deleted. The minimum duration is 5 minutes.
         /// </summary>
@@ -239,6 +255,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableExpress")]
         public bool? EnableExpress { get; set; }
+
+        /// <summary>
+        /// Gets or sets queue/Topic name to forward the messages
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.forwardTo")]
+        public string ForwardTo { get; set; }
+
+        /// <summary>
+        /// Gets or sets queue/Topic name to forward the Dead Letter message
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.forwardDeadLetteredMessagesTo")]
+        public string ForwardDeadLetteredMessagesTo { get; set; }
 
     }
 }

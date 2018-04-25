@@ -126,6 +126,16 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
 
         /// <summary>
+        /// Gets the ILogAnalyticsOperations.
+        /// </summary>
+        ILogAnalyticsOperations LogAnalytics { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineRunCommandsOperations.
+        /// </summary>
+        IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
+
+        /// <summary>
         /// Gets the IResourceSkusOperations.
         /// </summary>
         IResourceSkusOperations ResourceSkus { get; }
@@ -139,11 +149,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISnapshotsOperations.
         /// </summary>
         ISnapshotsOperations Snapshots { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachineRunCommandsOperations.
-        /// </summary>
-        IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
 
         /// <summary>
         /// Gets the IContainerServicesOperations.

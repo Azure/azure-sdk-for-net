@@ -1,0 +1,120 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects/e222c033-5f5d-4a23-bde9-8343f19c0a01/tags?name=Test%20Tag%201&description=This%20is%20a%20test%20tag",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2UyMjJjMDMzLTVmNWQtNGEyMy1iZGU5LTgzNDNmMTljMGEwMS90YWdzP25hbWU9VGVzdCUyMFRhZyUyMDEmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjB0YWc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"7603a6d8-359e-4e08-a760-9b55faa8a4ce\",\r\n  \"Name\": \"Test Tag 1\",\r\n  \"Description\": \"This is a test tag\",\r\n  \"ImageCount\": 0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "115"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 06:36:58 GMT"
+        ],
+        "apim-request-id": [
+          "8f3a2e70-28a2-428f-8b59-7b4191e67606"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects/e222c033-5f5d-4a23-bde9-8343f19c0a01/tags/7603a6d8-359e-4e08-a760-9b55faa8a4ce",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2UyMjJjMDMzLTVmNWQtNGEyMy1iZGU5LTgzNDNmMTljMGEwMS90YWdzLzc2MDNhNmQ4LTM1OWUtNGUwOC1hNzYwLTliNTVmYWE4YTRjZQ==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"Name\": \"New Tag Name\",\r\n  \"Description\": \"Updated Description\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "71"
+        ],
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"Id\": \"7603a6d8-359e-4e08-a760-9b55faa8a4ce\",\r\n  \"Name\": \"New Tag Name\",\r\n  \"Description\": \"Updated Description\",\r\n  \"ImageCount\": 0\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "118"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 06:36:58 GMT"
+        ],
+        "apim-request-id": [
+          "fcc970d3-f072-4a45-bd45-bf4fa6b48594"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/customvision/v1.2/Training/projects/e222c033-5f5d-4a23-bde9-8343f19c0a01/tags/7603a6d8-359e-4e08-a760-9b55faa8a4ce",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL3Byb2plY3RzL2UyMjJjMDMzLTVmNWQtNGEyMy1iZGU5LTgzNDNmMTljMGEwMS90YWdzLzc2MDNhNmQ4LTM1OWUtNGUwOC1hNzYwLTliNTVmYWE4YTRjZQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Date": [
+          "Thu, 22 Feb 2018 06:36:58 GMT"
+        ],
+        "apim-request-id": [
+          "dff15b47-4bc6-4b83-9f14-df39093f7480"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -24,7 +24,7 @@ if not "%req_help%" == "" (
     echo             ^<service, e.g. 'network/resource-manager'^>
     echo             ^<AutoRest version, defaults to 'latest'^>
     echo             ^<GitHub user of specs repo, defaults to 'Azure'^>
-    echo             ^<Branch or commit ID of specs repo, defaults to 'current'^>
+    echo             ^<Branch or commit ID of specs repo, defaults to 'master'^>
     echo             ^<actual name of specs repo, defaults to 'azure-rest-api-specs'^>
     echo.
     echo Example: generate.cmd monitor/data-plane 1.2.2 olydis new-cool-feature azure-rest-api-specs-pr
@@ -46,7 +46,7 @@ if not "%req_help%" == "" (
 set rp="%1"
 if not "%2" == "" (set version="%2")         else (set version="latest")
 if not "%3" == "" (set specsRepoUser="%3")   else (set specsRepoUser="Azure")
-if not "%4" == "" (set specsRepoBranch="%4") else (set specsRepoBranch="current")
+if not "%4" == "" (set specsRepoBranch="%4") else (set specsRepoBranch="master")
 if not "%5" == "" (set specsRepoName="%5")   else (set specsRepoName="azure-rest-api-specs")
 if not "%6" == "" (set sdksFolder="%6")      else (set sdksFolder=%~dp0..\src\SDKS)
 set configFile="https://github.com/%specsRepoUser%/%specsRepoName%/blob/%specsRepoBranch%/specification/%rp%/readme.md"
@@ -56,7 +56,7 @@ if "%7" == "" (call npm i -g autorest)
 
 :: code generation
 @echo on
-call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=%version%
+call autorest %configFile% --csharp --csharp-sdks-folder=%sdksFolder% --version=%version% --reflect-api-versions
 @echo off
 
 :: metadata

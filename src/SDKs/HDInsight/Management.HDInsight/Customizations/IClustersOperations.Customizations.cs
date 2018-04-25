@@ -6,9 +6,8 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.HDInsight
+namespace Microsoft.Azure.Management.HDInsight
 {
-    using Microsoft.Azure.Management.HDInsight.Models;
     using Microsoft.Rest.Azure;
     using Models;
     using System;
