@@ -105,8 +105,8 @@ namespace Media.Tests.ScenarioTests
             Assert.Equal(expectedAlternateId, asset.AlternateId);
             Assert.Equal(expectedStorageEncryptionFormat, asset.StorageEncryptionFormat);
             Assert.NotEqual(Guid.Empty, asset.AssetId);
-            //Assert.False(string.IsNullOrEmpty(asset.Container)); // TODO: Discuss with Jon Payne
-            //Assert.False(string.IsNullOrEmpty(asset.StorageAccountId));
+            //Assert.False(string.IsNullOrEmpty(asset.Container)); // TODO: This is currently not implemented.  Verify it once it is
+            //Assert.False(string.IsNullOrEmpty(asset.StorageAccountName)); // TODO: This is currently not implemented.  Verify it once it is
         }
     }
 }
