@@ -44,16 +44,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="provider">The source of the creative work.</param>
         /// <param name="datePublished">The date on which the CreativeWork was
         /// published.</param>
-        /// <param name="text">Text content of this creative work</param>
+        /// <param name="text">Text content of this creative work.</param>
         /// <param name="result">The result produced in the action.</param>
-        /// <param name="displayName">A display name for the action</param>
+        /// <param name="displayName">A display name for the action.</param>
         /// <param name="isTopAction">A Boolean representing whether this
-        /// result is the top action</param>
-        /// <param name="serviceUrl">The URL inside a Thing provides you with
-        /// the link to fulfill the action directly, while the serviceUrl
-        /// provides additional data in order to determine how to take the
-        /// appropriate action. For example, the serviceUrl might return JSON
-        /// along with an image URL.</param>
+        /// result is the top action.</param>
+        /// <param name="serviceUrl">Use this URL to get additional data to
+        /// determine how to take the appropriate action. For example, the
+        /// serviceUrl might return JSON along with an image URL.</param>
         /// <param name="actionType">A string representing the type of
         /// action.</param>
         /// <param name="data">A list of images.</param>

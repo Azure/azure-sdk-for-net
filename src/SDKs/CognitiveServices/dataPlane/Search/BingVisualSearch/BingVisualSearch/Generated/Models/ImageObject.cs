@@ -12,7 +12,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines an image
+    /// Defines an image.
     /// </summary>
     public partial class ImageObject : MediaObject
     {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="provider">The source of the creative work.</param>
         /// <param name="datePublished">The date on which the CreativeWork was
         /// published.</param>
-        /// <param name="text">Text content of this creative work</param>
+        /// <param name="text">Text content of this creative work.</param>
         /// <param name="contentUrl">Original URL to retrieve the source (file)
         /// for the media object (e.g., the source URL for the image).</param>
         /// <param name="hostPageUrl">URL of the page that hosts the media
@@ -62,27 +62,27 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// pixels.</param>
         /// <param name="height">The height of the media object, in
         /// pixels.</param>
-        /// <param name="thumbnail">The URL to a thumbnail of the image</param>
+        /// <param name="thumbnail">The URL to a thumbnail of the
+        /// image.</param>
         /// <param name="imageInsightsToken">The token that you use in a
-        /// subsequent call to the Visual Search API to get additional
-        /// information about the image. For information about using this
-        /// token, see the imageInsightsToken request parameter.</param>
+        /// subsequent call to Visual Search API to get additional information
+        /// about the image. For information about using this token, see the
+        /// imageInsightsToken field inside the knowledgeRequest request
+        /// parameter.</param>
         /// <param name="insightsMetadata">A count of the number of websites
         /// where you can shop or perform other actions related to the image.
         /// For example, if the image is of an apple pie, this object includes
         /// a count of the number of websites where you can buy an apple pie.
         /// To indicate the number of offers in your UX, include badging such
         /// as a shopping cart icon that contains the count. When the user
-        /// clicks on the icon, use imageInisghtsToken to get the list of
-        /// websites.</param>
-        /// <param name="imageId">Unique Id for the image</param>
+        /// clicks on the icon, use imageInisghtsToken in a subsequent Visual
+        /// Search API call to get the list of shopping websites.</param>
+        /// <param name="imageId">Unique Id for the image.</param>
         /// <param name="accentColor">A three-byte hexadecimal number that
         /// represents the color that dominates the image. Use the color as the
         /// temporary background in your client until the image is
         /// loaded.</param>
-        /// <param name="visualWords">A string consisting of small patches of
-        /// the image containing information related to image features. Used
-        /// for getting more sizes.</param>
+        /// <param name="visualWords">For interal use only.</param>
         public ImageObject(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string thumbnailUrl = default(string), IList<Thing> provider = default(IList<Thing>), string datePublished = default(string), string text = default(string), string contentUrl = default(string), string hostPageUrl = default(string), string contentSize = default(string), string encodingFormat = default(string), string hostPageDisplayUrl = default(string), int? width = default(int?), int? height = default(int?), ImageObject thumbnail = default(ImageObject), string imageInsightsToken = default(string), ImagesImageMetadata insightsMetadata = default(ImagesImageMetadata), string imageId = default(string), string accentColor = default(string), string visualWords = default(string))
             : base(id, readLink, webSearchUrl, name, url, image, description, alternateName, bingId, thumbnailUrl, provider, datePublished, text, contentUrl, hostPageUrl, contentSize, encodingFormat, hostPageDisplayUrl, width, height)
         {
@@ -101,16 +101,16 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the URL to a thumbnail of the image
+        /// Gets the URL to a thumbnail of the image.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnail")]
         public ImageObject Thumbnail { get; private set; }
 
         /// <summary>
-        /// Gets the token that you use in a subsequent call to the Visual
-        /// Search API to get additional information about the image. For
-        /// information about using this token, see the imageInsightsToken
-        /// request parameter.
+        /// Gets the token that you use in a subsequent call to Visual Search
+        /// API to get additional information about the image. For information
+        /// about using this token, see the imageInsightsToken field inside the
+        /// knowledgeRequest request parameter.
         /// </summary>
         [JsonProperty(PropertyName = "imageInsightsToken")]
         public string ImageInsightsToken { get; private set; }
@@ -122,13 +122,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// number of websites where you can buy an apple pie. To indicate the
         /// number of offers in your UX, include badging such as a shopping
         /// cart icon that contains the count. When the user clicks on the
-        /// icon, use imageInisghtsToken to get the list of websites.
+        /// icon, use imageInisghtsToken in a subsequent Visual Search API call
+        /// to get the list of shopping websites.
         /// </summary>
         [JsonProperty(PropertyName = "insightsMetadata")]
         public ImagesImageMetadata InsightsMetadata { get; private set; }
 
         /// <summary>
-        /// Gets unique Id for the image
+        /// Gets unique Id for the image.
         /// </summary>
         [JsonProperty(PropertyName = "imageId")]
         public string ImageId { get; private set; }
@@ -142,8 +143,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public string AccentColor { get; private set; }
 
         /// <summary>
-        /// Gets a string consisting of small patches of the image containing
-        /// information related to image features. Used for getting more sizes.
+        /// Gets for interal use only.
         /// </summary>
         [JsonProperty(PropertyName = "visualWords")]
         public string VisualWords { get; private set; }

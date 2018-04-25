@@ -47,7 +47,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="provider">The source of the creative work.</param>
         /// <param name="datePublished">The date on which the CreativeWork was
         /// published.</param>
-        /// <param name="text">Text content of this creative work</param>
+        /// <param name="text">Text content of this creative work.</param>
         /// <param name="contentUrl">Original URL to retrieve the source (file)
         /// for the media object (e.g., the source URL for the image).</param>
         /// <param name="hostPageUrl">URL of the page that hosts the media

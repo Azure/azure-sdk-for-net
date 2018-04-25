@@ -48,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="provider">The source of the creative work.</param>
         /// <param name="datePublished">The date on which the CreativeWork was
         /// published.</param>
-        /// <param name="text">Text content of this creative work</param>
+        /// <param name="text">Text content of this creative work.</param>
         public CreativeWork(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string thumbnailUrl = default(string), IList<Thing> provider = default(IList<Thing>), string datePublished = default(string), string text = default(string))
             : base(id, readLink, webSearchUrl, name, url, image, description, alternateName, bingId)
         {
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public string DatePublished { get; private set; }
 
         /// <summary>
-        /// Gets text content of this creative work
+        /// Gets text content of this creative work.
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; private set; }

@@ -30,10 +30,10 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// Initializes a new instance of the NormalizedQuadrilateral class.
         /// </summary>
         /// <param name="topLeft">The top left corner coordinate.</param>
-        /// <param name="topRight">The top right corner coordinate</param>
+        /// <param name="topRight">The top right corner coordinate.</param>
         /// <param name="bottomRight">The bottom right corner
-        /// coordinate</param>
-        /// <param name="bottomLeft">The bottom left corner coordinate</param>
+        /// coordinate.</param>
+        /// <param name="bottomLeft">The bottom left corner coordinate.</param>
         /// <param name="id">A String identifier.</param>
         /// <param name="readLink">The URL that returns this resource. To use
         /// the URL, append query parameters as appropriate and include the
@@ -71,19 +71,19 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         public Point2D TopLeft { get; set; }
 
         /// <summary>
-        /// Gets or sets the top right corner coordinate
+        /// Gets or sets the top right corner coordinate.
         /// </summary>
         [JsonProperty(PropertyName = "topRight")]
         public Point2D TopRight { get; set; }
 
         /// <summary>
-        /// Gets or sets the bottom right corner coordinate
+        /// Gets or sets the bottom right corner coordinate.
         /// </summary>
         [JsonProperty(PropertyName = "bottomRight")]
         public Point2D BottomRight { get; set; }
 
         /// <summary>
-        /// Gets or sets the bottom left corner coordinate
+        /// Gets or sets the bottom left corner coordinate.
         /// </summary>
         [JsonProperty(PropertyName = "bottomLeft")]
         public Point2D BottomLeft { get; set; }

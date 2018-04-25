@@ -10,8 +10,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines a response. All schemas that could be returned at the root of a
-    /// response should inherit from this
+    /// Defines a response. All schemas that return at the root of the response
+    /// must inherit from this object.
     /// </summary>
     public partial class Response : Identifiable
     {

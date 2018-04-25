@@ -44,16 +44,14 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="provider">The source of the creative work.</param>
         /// <param name="datePublished">The date on which the CreativeWork was
         /// published.</param>
-        /// <param name="text">Text content of this creative work</param>
+        /// <param name="text">Text content of this creative work.</param>
         /// <param name="result">The result produced in the action.</param>
-        /// <param name="displayName">A display name for the action</param>
+        /// <param name="displayName">A display name for the action.</param>
         /// <param name="isTopAction">A Boolean representing whether this
-        /// result is the top action</param>
-        /// <param name="serviceUrl">The URL inside a Thing provides you with
-        /// the link to fulfill the action directly, while the serviceUrl
-        /// provides additional data in order to determine how to take the
-        /// appropriate action. For example, the serviceUrl might return JSON
-        /// along with an image URL.</param>
+        /// result is the top action.</param>
+        /// <param name="serviceUrl">Use this URL to get additional data to
+        /// determine how to take the appropriate action. For example, the
+        /// serviceUrl might return JSON along with an image URL.</param>
         /// <param name="actionType">A string representing the type of
         /// action.</param>
         public ImageAction(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string thumbnailUrl = default(string), IList<Thing> provider = default(IList<Thing>), string datePublished = default(string), string text = default(string), IList<Thing> result = default(IList<Thing>), string displayName = default(string), bool? isTopAction = default(bool?), string serviceUrl = default(string), string actionType = default(string))

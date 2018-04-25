@@ -44,7 +44,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
         /// <param name="boundingBox">The bounding box for this tag. For the
         /// default tag, there is no bounding box.</param>
         /// <param name="actions">Actions within this tag. The order of the
-        /// items denotes the default ranking order of these actions.</param>
+        /// items denotes the default ranking order of these actions, with the
+        /// first action being the most likely user intent.</param>
         public ImageTag(string id = default(string), string readLink = default(string), string webSearchUrl = default(string), string name = default(string), string url = default(string), ImageObject image = default(ImageObject), string description = default(string), string alternateName = default(string), string bingId = default(string), string displayName = default(string), ImageTagRegion boundingBox = default(ImageTagRegion), IList<ImageAction> actions = default(IList<ImageAction>))
             : base(id, readLink, webSearchUrl, name, url, image, description, alternateName, bingId)
         {
@@ -75,7 +76,8 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
 
         /// <summary>
         /// Gets actions within this tag. The order of the items denotes the
-        /// default ranking order of these actions.
+        /// default ranking order of these actions, with the first action being
+        /// the most likely user intent.
         /// </summary>
         [JsonProperty(PropertyName = "actions")]
         public IList<ImageAction> Actions { get; private set; }

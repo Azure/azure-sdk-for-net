@@ -26,9 +26,9 @@ namespace SearchSDK.Tests
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "image.jpg"), FileMode.Open))
                 {
-                    KnowledgeRequest KnowledgeRequest = new KnowledgeRequest();
+                    VisualSearchRequest VisualSearchRequest = new VisualSearchRequest();
 
-                    var resp = client.Images.VisualSearchMethodAsync(image: stream, knowledgeRequest: JsonConvert.SerializeObject(KnowledgeRequest)).Result;
+                    var resp = client.Images.VisualSearchMethodAsync(image: stream, knowledgeRequest: JsonConvert.SerializeObject(VisualSearchRequest)).Result;
 
                     Assert.NotNull(resp);
                     Assert.NotNull(resp.Tags);
@@ -54,10 +54,11 @@ namespace SearchSDK.Tests
                 IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 ImageInfo ImageInfo = new ImageInfo(imageInsightsToken: ImageInsightsToken, cropArea: CropArea);
-                Filters filters = new Filters(site: "www.bing.com");
-                KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(imageInfo: ImageInfo, filters: filters);
+                Filters Filters = new Filters(site: "www.bing.com");
+                KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(filters: Filters);
+                VisualSearchRequest VisualSearchRequest = new VisualSearchRequest(imageInfo: ImageInfo, knowledgeRequest: KnowledgeRequest);
 
-                var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: JsonConvert.SerializeObject(KnowledgeRequest)).Result;
+                var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: JsonConvert.SerializeObject(VisualSearchRequest)).Result;
 
                 Assert.NotNull(resp);
                 Assert.NotNull(resp.Tags);
@@ -82,9 +83,9 @@ namespace SearchSDK.Tests
                 IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 ImageInfo ImageInfo = new ImageInfo(url: ImageUrl, cropArea: CropArea);
-                KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(imageInfo: ImageInfo);
+                VisualSearchRequest VisualSearchRequest = new VisualSearchRequest(imageInfo: ImageInfo);
 
-                var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: JsonConvert.SerializeObject(KnowledgeRequest)).Result;
+                var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: JsonConvert.SerializeObject(VisualSearchRequest)).Result;
 
                 Assert.NotNull(resp);
                 Assert.NotNull(resp.Tags);
@@ -109,9 +110,9 @@ namespace SearchSDK.Tests
                 IVisualSearchAPI client = new VisualSearchAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 ImageInfo ImageInfo = new ImageInfo(url: ImageUrl, cropArea: CropArea);
-                KnowledgeRequest KnowledgeRequest = new KnowledgeRequest(imageInfo: ImageInfo);
+                VisualSearchRequest VisualSearchRequest = new VisualSearchRequest(imageInfo: ImageInfo);
 
-                var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: KnowledgeRequest).Result;
+                var resp = client.Images.VisualSearchMethodAsync(knowledgeRequest: VisualSearchRequest).Result;
 
                 Assert.NotNull(resp);
                 Assert.NotNull(resp.Tags);

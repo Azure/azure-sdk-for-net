@@ -10,25 +10,25 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch.Models
     using System.Linq;
 
     /// <summary>
-    /// A JSON object containing information about the request, such as filters
-    /// for the resulting actions.
+    /// A JSON object containing information about the request, such as
+    /// filters, or a description.
     /// </summary>
-    public partial class KnowledgeRequest
+    public partial class KnowledgeRequestObject
     {
         /// <summary>
-        /// Initializes a new instance of the KnowledgeRequest class.
+        /// Initializes a new instance of the KnowledgeRequestObject class.
         /// </summary>
-        public KnowledgeRequest()
+        public KnowledgeRequestObject()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the KnowledgeRequest class.
+        /// Initializes a new instance of the KnowledgeRequestObject class.
         /// </summary>
         /// <param name="filters">A key-value object consisting of filters that
         /// may be specified to limit the results returned by the API.</param>
-        public KnowledgeRequest(Filters filters = default(Filters))
+        public KnowledgeRequestObject(Filters filters = default(Filters))
         {
             Filters = filters;
             CustomInit();

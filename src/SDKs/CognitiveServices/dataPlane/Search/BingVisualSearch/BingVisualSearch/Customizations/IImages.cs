@@ -197,6 +197,6 @@ namespace Microsoft.Azure.CognitiveServices.Search.VisualSearch
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), KnowledgeRequest knowledgeRequest = default(KnowledgeRequest), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageKnowledge>> VisualSearchMethodWithHttpMessagesAsync(string acceptLanguage = default(string), string contentType = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), VisualSearchRequest knowledgeRequest = default(VisualSearchRequest), Stream image = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
