@@ -24,6 +24,17 @@ namespace Subscriptions.Tests
             Assert.NotNull(subscription.OfferId);
         }
 
+        private void AssertSame(Subscription expected, Subscription given)
+        {
+            // Subscription
+            Assert.Same(expected.Id, given.Id);
+            Assert.Same(expected.DisplayName, given.DisplayName);
+            Assert.Same(expected.SubscriptionId, given.SubscriptionId);
+            Assert.Same(expected.TenantId, given.TenantId);
+            Assert.Same(expected.State, given.State);
+            Assert.Same(expected.OfferId, given.OfferId);
+        }
+
         [Fact]
         public void TestListSubscriptions()
         {
@@ -50,32 +61,34 @@ namespace Subscriptions.Tests
         }
 
 
-        //[Fact]
-        //public void TestCreateUpdateAndThenDeleteSubscription()
-        //{
-        //    RunTest((client) =>
-        //    {
-        //        var subscriptionId = Guid.NewGuid().ToString();
-        //        var offer = client.Offers.List().GetFirst();
+        [Fact(Skip ="true")]
+        //The test would fail with the following as we try to create the subscription as ServicePrincipal Identity which is not allowed
+        //The request identity does not contain valid name claim type and is not allowed to create new subscription.
+        //The call has been validated with user identity manually
+        public void TestCreateUpdateAndThenDeleteSubscription()
+        {
+            RunTest((client) =>
+            {
+                var subscriptionId = Guid.NewGuid().ToString();
+                var offer = client.Offers.List().GetFirst();
 
-        //        var result = client.Subscriptions.CreateOrUpdate(
-        //            subscriptionId,
-        //            new Subscription(
-        //                name: "TestSubscription",
-        //                displayName: "Test Subscription",
-        //                offerId: offer.Id,
-        //                subscriptionId: subscriptionId,
-        //                state: SubscriptionState.Enabled));
+                var result = client.Subscriptions.CreateOrUpdate(
+                    subscriptionId,
+                    new Subscription(
+                        displayName: "Test Subscription",
+                        offerId: offer.Id,
+                        subscriptionId: subscriptionId,
+                        state: SubscriptionState.Enabled));
 
-        //        var createdSubscription = client.Subscriptions.Get(subscriptionId);
+                var createdSubscription = client.Subscriptions.Get(subscriptionId);
 
-        //        AssertSame(result, createdSubscription);
+                AssertSame(result, createdSubscription);
 
-        //        client.Subscriptions.Delete(subscriptionId);
+                client.Subscriptions.Delete(subscriptionId);
 
-        //        var deletedSubscription = client.Subscriptions.Get(subscriptionId);
-        //        Assert.Null(deletedSubscription);
-        //    });
-        //}
+                var deletedSubscription = client.Subscriptions.Get(subscriptionId);
+                Assert.Null(deletedSubscription);
+            });
+        }
     }
 }
