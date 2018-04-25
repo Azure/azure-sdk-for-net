@@ -23,6 +23,9 @@ namespace Subscriptions.Tests
             Assert.NotNull(offer.Type);
 
             // Offer
+            Assert.NotNull(offer.DisplayName);
+            Assert.NotNull(offer.State);
+            Assert.NotNull(offer.BasePlanIds);
         }
 
         private void AssertSame(Offer expected, Offer given) {
@@ -33,6 +36,9 @@ namespace Subscriptions.Tests
             Assert.Equal(expected.Type, given.Type);
 
             // Offer
+            Assert.Equal(expected.DisplayName, given.DisplayName);
+            Assert.Equal(expected.State, given.State);
+            Assert.Equal(expected.BasePlanIds, given.BasePlanIds);
         }
 
         [Fact]
@@ -57,7 +63,6 @@ namespace Subscriptions.Tests
                     var offers = client.Offers.List(rg);
                     offers.ForEach(client.Offers.ListNext, ValidateOffer);
                 });
-
             });
         }
 

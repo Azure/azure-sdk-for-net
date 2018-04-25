@@ -13,12 +13,17 @@ namespace Subscriptions.Tests
     public class SubscriptionTests : SubscriptionsTestBase
     {
 
-        private void ValidateSubscription(Subscription ua) {
+        private void ValidateSubscription(Subscription subscription) {
             // Resource
-            Assert.NotNull(ua);
-            Assert.NotNull(ua.Id);
+            Assert.NotNull(subscription);
+            Assert.NotNull(subscription.Id);
 
             // Subscription
+            Assert.NotNull(subscription.Owner);
+            Assert.NotNull(subscription.OfferId);
+            Assert.NotNull(subscription.State);
+            Assert.NotNull(subscription.TenantId);
+            Assert.NotNull(subscription.RoutingResourceManagerType);
         }
         
         private void AssertSame(Subscription expected, Subscription given) {
@@ -26,6 +31,12 @@ namespace Subscriptions.Tests
             Assert.Equal(expected.Id, given.Id);
 
             // Subscription
+            Assert.Equal(expected.Owner, given.Owner);
+            Assert.Equal(expected.OfferId, given.OfferId);
+            Assert.Equal(expected.State, given.State);
+            Assert.Equal(expected.TenantId, given.TenantId);
+            Assert.Equal(expected.RoutingResourceManagerType, given.RoutingResourceManagerType);
+
         }
 
         [Fact]
@@ -56,12 +67,12 @@ namespace Subscriptions.Tests
             });
         }
 
-      //  [Fact]
+        [Fact]
         public void CreateUpdateDeleteSubscription()
         {
             RunTest((client) =>
             {
-                var subscriptionId = Guid.NewGuid().ToString();
+                var subscriptionId = "4FDD5149-B7E6-46E1-AC30-4D7E3AF4B69B";
                 var delProviderSubId = Environment.GetEnvironmentVariable("SubscriptionId");
                 var tenantId = Environment.GetEnvironmentVariable("AADTenant");
                 var offer = client.Offers.ListAll().GetFirst();

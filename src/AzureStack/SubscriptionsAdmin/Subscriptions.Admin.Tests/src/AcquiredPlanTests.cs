@@ -43,7 +43,7 @@ namespace Subscriptions.Tests
             Assert.Equal(expected.ProvisioningState, given.ProvisioningState);
         }
 
-        ////[Fact]
+        [Fact]
         public void TestListAcquiredPlans() {
             RunTest((client) => {
                 var subscriptions = client.Subscriptions.List();
@@ -53,21 +53,7 @@ namespace Subscriptions.Tests
             });
         }
 
-        ////[Fact]
-        public void TestGetAllAcquiredPlans() {
-            RunTest((client) => {
-                var subscriptions = client.Subscriptions.List();
-                subscriptions.ForEach((subscription) => {
-                    var acquiredPlans = client.AcquiredPlans.List(subscription.DelegatedProviderSubscriptionId);
-                    //Common.MapOverIPage(acquiredPlans, client.AcquiredPlans.ListNext, (aPlan) => {
-                    //    var result = client.AcquiredPlans.Get(subscription.DelegatedProviderSubscriptionId, aPlan.Name);
-                    //    AssertSame(aPlan, result);
-                    //}
-                    //);
-                });
-            });
-        }
-
+        [Fact]
         public void TestGetAcquiredPlan() {
             RunTest((client) => {
                 var subscription = client.Subscriptions.List().FirstOrDefault();
@@ -77,6 +63,7 @@ namespace Subscriptions.Tests
             });
         }
 
+        [Fact]
         public void TestCreateThenDeleteAcquiredPlan() {
             RunTest((client) => {
                 var subscription = client.Subscriptions.List().FirstOrDefault();
@@ -84,16 +71,16 @@ namespace Subscriptions.Tests
 
                 var newPlan = new PlanAcquisition()
                 {
-                    AcquisitionId = Guid.NewGuid().ToString(),
+                    AcquisitionId = "4FDD5149-B7E6-46E1-AC30-4D7E3AF4B69B",
                     PlanId = plan.Id
                 };
 
                 var result = client.AcquiredPlans.Create(subscription.DelegatedProviderSubscriptionId, newPlan.AcquisitionId, newPlan);
                 client.AcquiredPlans.Delete(subscription.DelegatedProviderSubscriptionId, newPlan.AcquisitionId);
 
-                result = client.AcquiredPlans.Get(subscription.DelegatedProviderSubscriptionId, newPlan.AcquisitionId);
-                Assert.Null(result);
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => client.AcquiredPlans.Get(subscription.DelegatedProviderSubscriptionId, newPlan.AcquisitionId));
 
+                
             });
         }
     }
