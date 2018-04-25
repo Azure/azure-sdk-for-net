@@ -18,7 +18,13 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure Batch JobManager task. 
+    /// Represents an Azure Batch JobManager task. Batch will retry tasks when a recovery operation is triggered on a compute 
+    /// node. Examples of recovery operations include (but are not limited to) when an unhealthy compute node is rebooted 
+    /// or a compute node disappeared due to host failure. Retries due to recovery operations are independent of and are 
+    /// not counted against the <see cref="TaskConstraints.MaxTaskRetryCount" />. Even if the <see cref="TaskConstraints.MaxTaskRetryCount" 
+    /// /> is 0, an internal retry due to a recovery operation may occur. Because of this, all tasks should be idempotent. 
+    /// This means tasks need to tolerate being interrupted and restarted without causing any corruption or duplicate data. 
+    /// The best practice for long running tasks is to use some form of checkpointing.
     /// </summary>
     public partial class JobManagerTask : ITransportObjectProvider<Models.JobManagerTask>, IPropertyMetadata
     {
@@ -147,7 +153,7 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets or sets whether the Job Manager task may run on a low-priority compute node. If omitted, the default is 
-        /// false.
+        /// true.
         /// </summary>
         public bool? AllowLowPriorityNode
         {
@@ -190,7 +196,9 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment 
         /// variable expansion. If you want to take advantage of such features, you should invoke the shell in the command 
-        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line 
+        /// refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch 
+        /// provided environment variables (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         public string CommandLine
         {

@@ -139,6 +139,17 @@
     {
       "Key": {
         "Type": "int",
+        "Name": "LeavingPool",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.LeavingPool\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
         "Name": "Total",
         "SummaryComment": "The total number of nodes.",
         "RemarksComment": null,
