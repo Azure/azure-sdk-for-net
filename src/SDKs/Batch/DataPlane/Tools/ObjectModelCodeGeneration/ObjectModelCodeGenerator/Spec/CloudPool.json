@@ -2,7 +2,7 @@
       "Name": "CloudPool",
       "ProtocolName": "Models.CloudPool",
       "TransportProtocolName": "Models.PoolAddParameter",
-      "Comment": "A pool in the Azure Batch service.",
+      "SummaryComment": "A pool in the Azure Batch service.",
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,
       "Properties": [

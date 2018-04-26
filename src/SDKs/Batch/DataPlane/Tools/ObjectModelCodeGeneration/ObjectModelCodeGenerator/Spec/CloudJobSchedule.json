@@ -2,7 +2,7 @@
       "Name": "CloudJobSchedule",
       "ProtocolName": "Models.CloudJobSchedule",
       "TransportProtocolName": "Models.JobScheduleAddParameter",
-      "Comment": "A job schedule that allows recurring jobs by specifying when to run jobs and a specification used to create each job.",
+      "SummaryComment": "A job schedule that allows recurring jobs by specifying when to run jobs and a specification used to create each job.",
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,
       "Properties": [

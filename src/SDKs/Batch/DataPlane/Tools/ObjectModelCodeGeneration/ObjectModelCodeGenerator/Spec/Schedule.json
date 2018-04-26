@@ -1,7 +1,7 @@
     {
       "Name": "Schedule",
       "ProtocolName": "Models.Schedule",
-      "Comment": "A schedule.",
+      "SummaryComment": "A schedule.",
       "Properties": [
         {
           "Key": {

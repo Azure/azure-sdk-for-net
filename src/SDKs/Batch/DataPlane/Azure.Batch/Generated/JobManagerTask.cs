@@ -18,14 +18,17 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure Batch JobManager task. Batch will retry tasks when a recovery operation is triggered on a compute 
-    /// node. Examples of recovery operations include (but are not limited to) when an unhealthy compute node is rebooted 
-    /// or a compute node disappeared due to host failure. Retries due to recovery operations are independent of and are 
-    /// not counted against the <see cref="TaskConstraints.MaxTaskRetryCount" />. Even if the <see cref="TaskConstraints.MaxTaskRetryCount" 
-    /// /> is 0, an internal retry due to a recovery operation may occur. Because of this, all tasks should be idempotent. 
-    /// This means tasks need to tolerate being interrupted and restarted without causing any corruption or duplicate data. 
-    /// The best practice for long running tasks is to use some form of checkpointing.
+    /// Represents an Azure Batch JobManager task.
     /// </summary>
+    /// <remarks>
+    /// Batch will retry tasks when a recovery operation is triggered on a compute node. Examples of recovery operations 
+    /// include (but are not limited to) when an unhealthy compute node is rebooted or a compute node disappeared due to 
+    /// host failure. Retries due to recovery operations are independent of and are not counted against the <see cref="TaskConstraints.MaxTaskRetryCount" 
+    /// />. Even if the <see cref="TaskConstraints.MaxTaskRetryCount" /> is 0, an internal retry due to a recovery operation 
+    /// may occur. Because of this, all tasks should be idempotent. This means tasks need to tolerate being interrupted and 
+    /// restarted without causing any corruption or duplicate data. The best practice for long running tasks is to use some 
+    /// form of checkpointing.
+    /// </remarks>
     public partial class JobManagerTask : ITransportObjectProvider<Models.JobManagerTask>, IPropertyMetadata
     {
         private class PropertyContainer : PropertyCollection

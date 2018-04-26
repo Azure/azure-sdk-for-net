@@ -1,7 +1,7 @@
     {
       "Name": "JobReleaseTask",
       "ProtocolName": "Models.JobReleaseTask",
-      "Comment": "A Job Release task to run on job completion on any compute node where the job has run.",
+      "SummaryComment": "A Job Release task to run on job completion on any compute node where the job has run.",
       "Properties": [
         {
           "Key": {

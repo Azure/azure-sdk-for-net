@@ -1,7 +1,7 @@
 {
   "Name": "OSDisk",
   "ProtocolName": "Models.OSDisk",
-  "Comment": "Settings for the operating system disk of the virtual machine.",
+  "SummaryComment": "Settings for the operating system disk of the virtual machine.",
   "IsConstructorPublic": true,
   "Properties": [
     {

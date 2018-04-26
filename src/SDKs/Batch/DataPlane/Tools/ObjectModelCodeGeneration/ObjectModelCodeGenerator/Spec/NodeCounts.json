@@ -1,7 +1,7 @@
 {
   "Name": "NodeCounts",
   "ProtocolName": "Models.NodeCounts",
-  "Comment": "The number of nodes in each node state.",
+  "SummaryComment": "The number of nodes in each node state.",
   "IsConstructorPublic": false,
   "Properties": [
     {

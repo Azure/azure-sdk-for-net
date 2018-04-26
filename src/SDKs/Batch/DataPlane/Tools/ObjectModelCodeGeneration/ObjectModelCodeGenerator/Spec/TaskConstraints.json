@@ -1,7 +1,7 @@
     {
       "Name": "TaskConstraints",
       "ProtocolName": "Models.TaskConstraints",
-      "Comment": "Defines the constraints on a particular Azure Batch task.",
+      "SummaryComment": "Defines the constraints on a particular Azure Batch task.",
       "Properties": [
         {
           "Key": {

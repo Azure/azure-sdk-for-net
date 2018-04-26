@@ -2,7 +2,7 @@
       "Name": "CloudJob",
       "ProtocolName": "Models.CloudJob",
       "TransportProtocolName": "Models.JobAddParameter",
-      "Comment": "An Azure Batch job.",
+      "SummaryComment": "An Azure Batch job.",
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,
       "Properties": [
