@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePredictionResultModel> PredictImageUrlAsync(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageUrlAsync(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePredictionResultModel> PredictImageAsync(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageAsync(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageWithHttpMessagesAsync(projectId, imageData, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePredictionResultModel> PredictImageUrlWithNoStoreAsync(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageUrlWithNoStoreAsync(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageUrlWithNoStoreWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePredictionResultModel> PredictImageWithNoStoreAsync(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> PredictImageWithNoStoreAsync(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PredictImageWithNoStoreWithHttpMessagesAsync(projectId, imageData, iterationId, application, null, cancellationToken).ConfigureAwait(false))
                 {

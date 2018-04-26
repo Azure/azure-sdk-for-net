@@ -34,21 +34,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="description">Gets or sets the description of the
         /// project</param>
         /// <param name="settings">Gets or sets the project settings</param>
-        /// <param name="currentIterationId">Gets the current iteration
-        /// id</param>
         /// <param name="created">Gets the date this project was
         /// created</param>
         /// <param name="lastModified">Gets the date this project was last
         /// modifed</param>
         /// <param name="thumbnailUri">Gets the thumbnail url representing the
-        /// image</param>
-        public Project(System.Guid id = default(System.Guid), string name = default(string), string description = default(string), ProjectSettings settings = default(ProjectSettings), System.Guid? currentIterationId = default(System.Guid?), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string thumbnailUri = default(string))
+        /// project</param>
+        public Project(System.Guid id = default(System.Guid), string name = default(string), string description = default(string), ProjectSettings settings = default(ProjectSettings), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string thumbnailUri = default(string))
         {
             Id = id;
             Name = name;
             Description = description;
             Settings = settings;
-            CurrentIterationId = currentIterationId;
             Created = created;
             LastModified = lastModified;
             ThumbnailUri = thumbnailUri;
@@ -63,49 +60,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Gets the project id
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the project
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the project
         /// </summary>
-        [JsonProperty(PropertyName = "Description")]
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the project settings
         /// </summary>
-        [JsonProperty(PropertyName = "Settings")]
+        [JsonProperty(PropertyName = "settings")]
         public ProjectSettings Settings { get; set; }
-
-        /// <summary>
-        /// Gets the current iteration id
-        /// </summary>
-        [JsonProperty(PropertyName = "CurrentIterationId")]
-        public System.Guid? CurrentIterationId { get; private set; }
 
         /// <summary>
         /// Gets the date this project was created
         /// </summary>
-        [JsonProperty(PropertyName = "Created")]
+        [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
         /// Gets the date this project was last modifed
         /// </summary>
-        [JsonProperty(PropertyName = "LastModified")]
+        [JsonProperty(PropertyName = "lastModified")]
         public System.DateTime LastModified { get; private set; }
 
         /// <summary>
-        /// Gets the thumbnail url representing the image
+        /// Gets the thumbnail url representing the project
         /// </summary>
-        [JsonProperty(PropertyName = "ThumbnailUri")]
+        [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
     }

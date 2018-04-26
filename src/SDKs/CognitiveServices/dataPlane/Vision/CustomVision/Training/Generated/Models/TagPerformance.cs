@@ -35,7 +35,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="recall">Gets the recall</param>
         /// <param name="recallStdDeviation">Gets the standard deviation for
         /// the recall</param>
-        public TagPerformance(System.Guid id = default(System.Guid), string name = default(string), double precision = default(double), double precisionStdDeviation = default(double), double recall = default(double), double recallStdDeviation = default(double))
+        /// <param name="averagePrecision">Gets the average precision when
+        /// applicable</param>
+        public TagPerformance(System.Guid id = default(System.Guid), string name = default(string), double precision = default(double), double precisionStdDeviation = default(double), double recall = default(double), double recallStdDeviation = default(double), double? averagePrecision = default(double?))
         {
             Id = id;
             Name = name;
@@ -43,6 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             PrecisionStdDeviation = precisionStdDeviation;
             Recall = recall;
             RecallStdDeviation = recallStdDeviation;
+            AveragePrecision = averagePrecision;
             CustomInit();
         }
 
@@ -53,37 +56,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets the precision
         /// </summary>
-        [JsonProperty(PropertyName = "Precision")]
+        [JsonProperty(PropertyName = "precision")]
         public double Precision { get; private set; }
 
         /// <summary>
         /// Gets the standard deviation for the precision
         /// </summary>
-        [JsonProperty(PropertyName = "PrecisionStdDeviation")]
+        [JsonProperty(PropertyName = "precisionStdDeviation")]
         public double PrecisionStdDeviation { get; private set; }
 
         /// <summary>
         /// Gets the recall
         /// </summary>
-        [JsonProperty(PropertyName = "Recall")]
+        [JsonProperty(PropertyName = "recall")]
         public double Recall { get; private set; }
 
         /// <summary>
         /// Gets the standard deviation for the recall
         /// </summary>
-        [JsonProperty(PropertyName = "RecallStdDeviation")]
+        [JsonProperty(PropertyName = "recallStdDeviation")]
         public double RecallStdDeviation { get; private set; }
+
+        /// <summary>
+        /// Gets the average precision when applicable
+        /// </summary>
+        [JsonProperty(PropertyName = "averagePrecision")]
+        public double? AveragePrecision { get; private set; }
 
     }
 }

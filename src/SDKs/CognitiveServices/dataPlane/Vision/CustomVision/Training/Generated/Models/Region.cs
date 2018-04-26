@@ -11,29 +11,28 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ImageFileCreateEntry
+    public partial class Region
     {
         /// <summary>
-        /// Initializes a new instance of the ImageFileCreateEntry class.
+        /// Initializes a new instance of the Region class.
         /// </summary>
-        public ImageFileCreateEntry()
+        public Region()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageFileCreateEntry class.
+        /// Initializes a new instance of the Region class.
         /// </summary>
-        public ImageFileCreateEntry(string name = default(string), byte[] contents = default(byte[]), IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
+        public Region(System.Guid tagId = default(System.Guid), double left = default(double), double top = default(double), double width = default(double), double height = default(double))
         {
-            Name = name;
-            Contents = contents;
-            TagIds = tagIds;
-            Regions = regions;
+            TagId = tagId;
+            Left = left;
+            Top = top;
+            Width = width;
+            Height = height;
             CustomInit();
         }
 
@@ -44,23 +43,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "tagId")]
+        public System.Guid TagId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "contents")]
-        public byte[] Contents { get; set; }
+        [JsonProperty(PropertyName = "left")]
+        public double Left { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "tagIds")]
-        public IList<System.Guid> TagIds { get; set; }
+        [JsonProperty(PropertyName = "top")]
+        public double Top { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "regions")]
-        public IList<Region> Regions { get; set; }
+        [JsonProperty(PropertyName = "width")]
+        public double Width { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "height")]
+        public double Height { get; set; }
 
     }
 }

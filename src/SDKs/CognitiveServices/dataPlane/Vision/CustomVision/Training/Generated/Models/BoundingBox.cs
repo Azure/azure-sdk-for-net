@@ -11,27 +11,27 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ImageIdCreateBatch
+    public partial class BoundingBox
     {
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the BoundingBox class.
         /// </summary>
-        public ImageIdCreateBatch()
+        public BoundingBox()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the BoundingBox class.
         /// </summary>
-        public ImageIdCreateBatch(IList<ImageIdCreateEntry> images = default(IList<ImageIdCreateEntry>), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public BoundingBox(double left = default(double), double top = default(double), double width = default(double), double height = default(double))
         {
-            Images = images;
-            TagIds = tagIds;
+            Left = left;
+            Top = top;
+            Width = width;
+            Height = height;
             CustomInit();
         }
 
@@ -42,13 +42,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "images")]
-        public IList<ImageIdCreateEntry> Images { get; set; }
+        [JsonProperty(PropertyName = "left")]
+        public double Left { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "tagIds")]
-        public IList<System.Guid> TagIds { get; set; }
+        [JsonProperty(PropertyName = "top")]
+        public double Top { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "width")]
+        public double Width { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "height")]
+        public double Height { get; set; }
 
     }
 }

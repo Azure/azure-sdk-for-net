@@ -11,10 +11,10 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImage", "1.1"),
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageUrl", "1.1"),
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageUrlWithNoStore", "1.1"),
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageWithNoStore", "1.1"),
+                new Tuple<string, string, string>("PredictionEndpoint", "PredictImage", "2.0"),
+                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageUrl", "2.0"),
+                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageUrlWithNoStore", "2.0"),
+                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageWithNoStore", "2.0"),
             }.AsEnumerable();
         }
     }

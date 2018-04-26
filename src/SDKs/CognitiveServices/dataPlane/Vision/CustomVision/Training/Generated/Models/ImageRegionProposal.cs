@@ -15,23 +15,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ImageIdCreateBatch
+    public partial class ImageRegionProposal
     {
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the ImageRegionProposal class.
         /// </summary>
-        public ImageIdCreateBatch()
+        public ImageRegionProposal()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the ImageRegionProposal class.
         /// </summary>
-        public ImageIdCreateBatch(IList<ImageIdCreateEntry> images = default(IList<ImageIdCreateEntry>), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public ImageRegionProposal(System.Guid projectId = default(System.Guid), System.Guid imageId = default(System.Guid), IList<RegionProposal> proposals = default(IList<RegionProposal>))
         {
-            Images = images;
-            TagIds = tagIds;
+            ProjectId = projectId;
+            ImageId = imageId;
+            Proposals = proposals;
             CustomInit();
         }
 
@@ -42,13 +43,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "images")]
-        public IList<ImageIdCreateEntry> Images { get; set; }
+        [JsonProperty(PropertyName = "projectId")]
+        public System.Guid ProjectId { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "tagIds")]
-        public IList<System.Guid> TagIds { get; set; }
+        [JsonProperty(PropertyName = "imageId")]
+        public System.Guid ImageId { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "proposals")]
+        public IList<RegionProposal> Proposals { get; private set; }
 
     }
 }

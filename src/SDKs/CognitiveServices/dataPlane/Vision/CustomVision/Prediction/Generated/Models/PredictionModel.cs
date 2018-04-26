@@ -8,29 +8,30 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
+namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ImageTag
+    public partial class PredictionModel
     {
         /// <summary>
-        /// Initializes a new instance of the ImageTag class.
+        /// Initializes a new instance of the PredictionModel class.
         /// </summary>
-        public ImageTag()
+        public PredictionModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageTag class.
+        /// Initializes a new instance of the PredictionModel class.
         /// </summary>
-        public ImageTag(System.Guid tagId = default(System.Guid), string tagName = default(string), System.DateTime created = default(System.DateTime))
+        public PredictionModel(double probability = default(double), System.Guid tagId = default(System.Guid), string tagName = default(string), BoundingBox boundingBox = default(BoundingBox))
         {
+            Probability = probability;
             TagId = tagId;
             TagName = tagName;
-            Created = created;
+            BoundingBox = boundingBox;
             CustomInit();
         }
 
@@ -38,6 +39,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "probability")]
+        public double Probability { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -51,8 +57,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "created")]
-        public System.DateTime Created { get; private set; }
+        [JsonProperty(PropertyName = "boundingBox")]
+        public BoundingBox BoundingBox { get; private set; }
 
     }
 }

@@ -16,23 +16,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// Image model to be sent as JSON
+    /// Image performance model
     /// </summary>
-    public partial class Image
+    public partial class ImagePerformance
     {
         /// <summary>
-        /// Initializes a new instance of the Image class.
+        /// Initializes a new instance of the ImagePerformance class.
         /// </summary>
-        public Image()
+        public ImagePerformance()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Image class.
+        /// Initializes a new instance of the ImagePerformance class.
         /// </summary>
-        public Image(System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string imageUri = default(string), string thumbnailUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>))
+        public ImagePerformance(IList<Prediction> predictions = default(IList<Prediction>), System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string imageUri = default(string), string thumbnailUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>))
         {
+            Predictions = predictions;
             Id = id;
             Created = created;
             Width = width;
@@ -48,6 +49,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "predictions")]
+        public IList<Prediction> Predictions { get; private set; }
 
         /// <summary>
         /// </summary>

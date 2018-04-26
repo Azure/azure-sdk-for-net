@@ -11,27 +11,25 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ImageIdCreateBatch
+    public partial class RegionProposal
     {
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the RegionProposal class.
         /// </summary>
-        public ImageIdCreateBatch()
+        public RegionProposal()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the RegionProposal class.
         /// </summary>
-        public ImageIdCreateBatch(IList<ImageIdCreateEntry> images = default(IList<ImageIdCreateEntry>), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public RegionProposal(double confidence = default(double), BoundingBox boundingBox = default(BoundingBox))
         {
-            Images = images;
-            TagIds = tagIds;
+            Confidence = confidence;
+            BoundingBox = boundingBox;
             CustomInit();
         }
 
@@ -42,13 +40,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "images")]
-        public IList<ImageIdCreateEntry> Images { get; set; }
+        [JsonProperty(PropertyName = "confidence")]
+        public double Confidence { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "tagIds")]
-        public IList<System.Guid> TagIds { get; set; }
+        [JsonProperty(PropertyName = "boundingBox")]
+        public BoundingBox BoundingBox { get; private set; }
 
     }
 }

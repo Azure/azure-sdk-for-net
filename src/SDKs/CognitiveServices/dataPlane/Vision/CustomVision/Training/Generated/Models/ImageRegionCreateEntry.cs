@@ -13,23 +13,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ImageTagCreateEntry
+    public partial class ImageRegionCreateEntry
     {
         /// <summary>
-        /// Initializes a new instance of the ImageTagCreateEntry class.
+        /// Initializes a new instance of the ImageRegionCreateEntry class.
         /// </summary>
-        public ImageTagCreateEntry()
+        public ImageRegionCreateEntry()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageTagCreateEntry class.
+        /// Initializes a new instance of the ImageRegionCreateEntry class.
         /// </summary>
-        public ImageTagCreateEntry(System.Guid imageId = default(System.Guid), System.Guid tagId = default(System.Guid))
+        public ImageRegionCreateEntry(System.Guid imageId = default(System.Guid), System.Guid tagId = default(System.Guid), double left = default(double), double top = default(double), double width = default(double), double height = default(double))
         {
             ImageId = imageId;
             TagId = tagId;
+            Left = left;
+            Top = top;
+            Width = width;
+            Height = height;
             CustomInit();
         }
 
@@ -47,6 +51,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "tagId")]
         public System.Guid TagId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "left")]
+        public double Left { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "top")]
+        public double Top { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "width")]
+        public double Width { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "height")]
+        public double Height { get; set; }
 
     }
 }

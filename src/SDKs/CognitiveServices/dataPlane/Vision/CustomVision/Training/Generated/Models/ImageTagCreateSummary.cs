@@ -43,17 +43,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Created")]
+        [JsonProperty(PropertyName = "created")]
         public IList<ImageTagCreateEntry> Created { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Duplicated")]
+        [JsonProperty(PropertyName = "duplicated")]
         public IList<ImageTagCreateEntry> Duplicated { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Exceeded")]
+        [JsonProperty(PropertyName = "exceeded")]
         public IList<ImageTagCreateEntry> Exceeded { get; set; }
 
     }

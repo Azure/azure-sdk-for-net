@@ -15,24 +15,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ImageUrlCreateEntry
+    public partial class ImageRegionCreateSummary
     {
         /// <summary>
-        /// Initializes a new instance of the ImageUrlCreateEntry class.
+        /// Initializes a new instance of the ImageRegionCreateSummary class.
         /// </summary>
-        public ImageUrlCreateEntry()
+        public ImageRegionCreateSummary()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageUrlCreateEntry class.
+        /// Initializes a new instance of the ImageRegionCreateSummary class.
         /// </summary>
-        public ImageUrlCreateEntry(string url = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
+        public ImageRegionCreateSummary(IList<ImageRegionCreateResult> created = default(IList<ImageRegionCreateResult>), IList<ImageRegionCreateEntry> duplicated = default(IList<ImageRegionCreateEntry>), IList<ImageRegionCreateEntry> exceeded = default(IList<ImageRegionCreateEntry>))
         {
-            Url = url;
-            TagIds = tagIds;
-            Regions = regions;
+            Created = created;
+            Duplicated = duplicated;
+            Exceeded = exceeded;
             CustomInit();
         }
 
@@ -43,18 +43,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
-        public string Url { get; set; }
+        [JsonProperty(PropertyName = "created")]
+        public IList<ImageRegionCreateResult> Created { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "tagIds")]
-        public IList<System.Guid> TagIds { get; set; }
+        [JsonProperty(PropertyName = "duplicated")]
+        public IList<ImageRegionCreateEntry> Duplicated { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "regions")]
-        public IList<Region> Regions { get; set; }
+        [JsonProperty(PropertyName = "exceeded")]
+        public IList<ImageRegionCreateEntry> Exceeded { get; set; }
 
     }
 }

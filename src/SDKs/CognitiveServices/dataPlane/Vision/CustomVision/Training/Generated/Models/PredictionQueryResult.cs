@@ -15,23 +15,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ImageIdCreateBatch
+    public partial class PredictionQueryResult
     {
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the PredictionQueryResult class.
         /// </summary>
-        public ImageIdCreateBatch()
+        public PredictionQueryResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the PredictionQueryResult class.
         /// </summary>
-        public ImageIdCreateBatch(IList<ImageIdCreateEntry> images = default(IList<ImageIdCreateEntry>), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public PredictionQueryResult(PredictionQueryToken token = default(PredictionQueryToken), IList<StoredImagePrediction> results = default(IList<StoredImagePrediction>))
         {
-            Images = images;
-            TagIds = tagIds;
+            Token = token;
+            Results = results;
             CustomInit();
         }
 
@@ -42,13 +42,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "images")]
-        public IList<ImageIdCreateEntry> Images { get; set; }
+        [JsonProperty(PropertyName = "token")]
+        public PredictionQueryToken Token { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "tagIds")]
-        public IList<System.Guid> TagIds { get; set; }
+        [JsonProperty(PropertyName = "results")]
+        public IList<StoredImagePrediction> Results { get; private set; }
 
     }
 }

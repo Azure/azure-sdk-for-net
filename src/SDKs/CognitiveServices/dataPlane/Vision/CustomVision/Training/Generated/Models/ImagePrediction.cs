@@ -11,30 +11,30 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class Domain
+    public partial class ImagePrediction
     {
         /// <summary>
-        /// Initializes a new instance of the Domain class.
+        /// Initializes a new instance of the ImagePrediction class.
         /// </summary>
-        public Domain()
+        public ImagePrediction()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Domain class.
+        /// Initializes a new instance of the ImagePrediction class.
         /// </summary>
-        /// <param name="type">Possible values include: 'Classification',
-        /// 'ObjectDetection'</param>
-        public Domain(System.Guid id = default(System.Guid), string name = default(string), string type = default(string), bool exportable = default(bool), bool enabled = default(bool))
+        public ImagePrediction(System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>))
         {
             Id = id;
-            Name = name;
-            Type = type;
-            Exportable = exportable;
-            Enabled = enabled;
+            Project = project;
+            Iteration = iteration;
+            Created = created;
+            Predictions = predictions;
             CustomInit();
         }
 
@@ -50,24 +50,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets possible values include: 'Classification', 'ObjectDetection'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "project")]
+        public System.Guid Project { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "exportable")]
-        public bool Exportable { get; private set; }
+        [JsonProperty(PropertyName = "iteration")]
+        public System.Guid Iteration { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "enabled")]
-        public bool Enabled { get; private set; }
+        [JsonProperty(PropertyName = "created")]
+        public System.DateTime Created { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "predictions")]
+        public IList<Prediction> Predictions { get; private set; }
 
     }
 }

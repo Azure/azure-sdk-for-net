@@ -15,23 +15,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ImageIdCreateBatch
+    public partial class ImageRegionCreateBatch
     {
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the ImageRegionCreateBatch class.
         /// </summary>
-        public ImageIdCreateBatch()
+        public ImageRegionCreateBatch()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageIdCreateBatch class.
+        /// Initializes a new instance of the ImageRegionCreateBatch class.
         /// </summary>
-        public ImageIdCreateBatch(IList<ImageIdCreateEntry> images = default(IList<ImageIdCreateEntry>), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public ImageRegionCreateBatch(IList<ImageRegionCreateEntry> regions = default(IList<ImageRegionCreateEntry>))
         {
-            Images = images;
-            TagIds = tagIds;
+            Regions = regions;
             CustomInit();
         }
 
@@ -42,13 +41,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "images")]
-        public IList<ImageIdCreateEntry> Images { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "tagIds")]
-        public IList<System.Guid> TagIds { get; set; }
+        [JsonProperty(PropertyName = "regions")]
+        public IList<ImageRegionCreateEntry> Regions { get; set; }
 
     }
 }
