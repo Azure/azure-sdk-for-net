@@ -1630,7 +1630,7 @@ namespace Storage.Tests
         }
 
         [Fact]
-        public void StorageAccountSetGetDeleteDataPolicy()
+        public void StorageAccountSetGetDeleteManagementPolicy()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
@@ -1653,65 +1653,70 @@ namespace Storage.Tests
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 string rules = @"{
-  ""policy"": {
-    ""rules"": [
-      {
+  ""version"": 0.5,
+  ""rules"": [ 
+    {
+      ""name"": ""ruleFoo"", 
+      ""type"": ""lifecycle"", 
+      ""definition"": {
         ""filters"": {
-          ""blobTypes"": [
-            ""blockBlob""
-          ],
-          ""nameMatch"": [
-            ""container2/blob""
-          ]
+          ""blobTypes"": [ ""blockBlob"" ],
+          ""nameMatch"": [ ""foo"" ]
         },
-        ""blobLifeCycle"": {
+        ""actions"": {
           ""baseBlob"": {
-            ""tierToCool"": {
-              ""daysAfterLastModified"": 10
-            },
-            ""tierToArchive"": {
-              ""daysAfterLastModified"": 90
-            },
-            ""delete"": {
-              ""daysAfterLastModified"": 365
-            }
+            ""tierToCool"": { ""daysAfterLastModifiedGreaterThan"": 30 },
+            ""tierToArchive"": { ""daysAfterLastModifiedGreaterThan"": 90 },
+            ""delete"": { ""daysAfterLastModifiedGreaterThan"": 2555 }
           },
           ""snapshot"": {
-            ""tierToCool"": {
-              ""daysAfterSnapshotCreated"": 1
-            },
-            ""tierToArchive"": {
-              ""daysAfterSnapshotCreated"": 30
-            },
-            ""delete"": {
-              ""daysAfterSnapshotCreated"": 90
-            }
+            ""delete"": { ""daysAfterCreationGreaterThan"": 90 }
           }
         }
       }
-    ]
-  }
+    },
+    {
+      ""name"": ""expirationRule"", 
+      ""type"": ""Lifecycle"", 
+      ""definition"": 
+        {
+          ""filters"": {
+            ""blobTypes"": [ ""blockBlob"" ]
+          },
+          ""actions"": {
+            ""baseBlob"": {
+              ""delete"": { ""daysAfterLastModifiedGreaterThan"": 365 }
+            }
+          }
+        }      
+    }
+  ]
 }";
-
+                //Set Management Policies
                 Newtonsoft.Json.Linq.JObject rule1 = Newtonsoft.Json.Linq.JObject.Parse(rules);
-                StorageAccountDataPolicies policy = storageMgmtClient.StorageAccounts.CreateOrUpdateDataPolicies(rgname, accountName, rule1);
-                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n| ", ""), Regex.Replace(policy.Rules.ToString(), @"\r\n?|\n| ", ""));
+                StorageAccountManagementPolicies policy = storageMgmtClient.StorageAccounts.CreateOrUpdateManagementPolicies(rgname, accountName, rule1);
+                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n|\t| ", ""), Regex.Replace(policy.Policy.ToString(), @"\r\n?|\n|\t| ", ""));
 
-                policy = storageMgmtClient.StorageAccounts.GetDataPolicies(rgname, accountName);
-                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n| ", ""), Regex.Replace(policy.Rules.ToString(), @"\r\n?|\n| ", ""));
+                //Get Management Policies
+                policy = storageMgmtClient.StorageAccounts.GetManagementPolicies(rgname, accountName);
+                Assert.Equal(Regex.Replace(rules, @"\r\n?|\n|\t| ", ""), Regex.Replace(policy.Policy.ToString(), @"\r\n?|\n|\t| ", ""));
 
-                storageMgmtClient.StorageAccounts.DeleteDataPolicies(rgname, accountName);
-                bool isDataPolicyExist = true;
+                //Delete Management Policies, and check policy not exist 
+                storageMgmtClient.StorageAccounts.DeleteManagementPolicies(rgname, accountName);
+                bool dataPolicyExist = true;
                 try
                 {
-                    policy = storageMgmtClient.StorageAccounts.GetDataPolicies(rgname, accountName);
+                    policy = storageMgmtClient.StorageAccounts.GetManagementPolicies(rgname, accountName);
                 }
                 catch (Microsoft.Rest.Azure.CloudException cloudException)
                 {
                     Assert.Equal(System.Net.HttpStatusCode.NotFound, cloudException.Response.StatusCode);
-                    isDataPolicyExist = false;
+                    dataPolicyExist = false;
                 }
-                Assert.False(isDataPolicyExist);
+                Assert.False(dataPolicyExist);
+
+                //Delete not exist Management Policies will not fail
+                storageMgmtClient.StorageAccounts.DeleteManagementPolicies(rgname, accountName);
             }
         }
     }

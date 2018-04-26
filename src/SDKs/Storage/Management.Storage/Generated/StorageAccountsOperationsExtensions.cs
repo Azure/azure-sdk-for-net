@@ -569,9 +569,9 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static StorageAccountDataPolicies GetDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            public static StorageAccountManagementPolicies GetManagementPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                return operations.GetDataPoliciesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.GetManagementPoliciesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -592,9 +592,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageAccountDataPolicies> GetDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccountManagementPolicies> GetManagementPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetDataPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetManagementPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -615,13 +615,13 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            /// <param name='rules'>
-            /// The Storage Account DataPolicies Rules, in JSON format. //TODO: Link of the
-            /// sample rules.
+            /// <param name='policy'>
+            /// The Storage Account ManagementPolicies Rules, in JSON format. //TODO: Link
+            /// of the sample rules.
             /// </param>
-            public static StorageAccountDataPolicies CreateOrUpdateDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, object rules = default(object))
+            public static StorageAccountManagementPolicies CreateOrUpdateManagementPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, object policy = default(object))
             {
-                return operations.CreateOrUpdateDataPoliciesAsync(resourceGroupName, accountName, rules).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateManagementPoliciesAsync(resourceGroupName, accountName, policy).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -639,16 +639,16 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            /// <param name='rules'>
-            /// The Storage Account DataPolicies Rules, in JSON format. //TODO: Link of the
-            /// sample rules.
+            /// <param name='policy'>
+            /// The Storage Account ManagementPolicies Rules, in JSON format. //TODO: Link
+            /// of the sample rules.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageAccountDataPolicies> CreateOrUpdateDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, object rules = default(object), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccountManagementPolicies> CreateOrUpdateManagementPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, object policy = default(object), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateDataPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, rules, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateManagementPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, policy, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -670,9 +670,9 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static void DeleteDataPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
+            public static void DeleteManagementPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName)
             {
-                operations.DeleteDataPoliciesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                operations.DeleteManagementPoliciesAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -694,9 +694,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteDataPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteManagementPoliciesAsync(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteDataPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteManagementPoliciesWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

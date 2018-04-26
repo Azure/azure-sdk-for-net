@@ -18,21 +18,23 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// The Get Storage Account DataPolicies operation response.
+    /// The Get Storage Account ManagementPolicies operation response.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class StorageAccountDataPolicies : Resource
+    public partial class StorageAccountManagementPolicies : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the StorageAccountDataPolicies class.
+        /// Initializes a new instance of the StorageAccountManagementPolicies
+        /// class.
         /// </summary>
-        public StorageAccountDataPolicies()
+        public StorageAccountManagementPolicies()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageAccountDataPolicies class.
+        /// Initializes a new instance of the StorageAccountManagementPolicies
+        /// class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
@@ -40,14 +42,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="location">Resource location</param>
         /// <param name="tags">Tags assigned to a resource; can be used for
         /// viewing and grouping a resource (across resource groups).</param>
-        /// <param name="rules">The Storage Account DataPolicies Rules, in JSON
-        /// format. //TODO: Link of the sample rules.</param>
+        /// <param name="policy">The Storage Account ManagementPolicies Rules,
+        /// in JSON format. //TODO: Link of the sample rules.</param>
         /// <param name="lastModifiedTime">Returns the date and time the
-        /// DataPolicies was last modified.</param>
-        public StorageAccountDataPolicies(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object rules = default(object), System.DateTime? lastModifiedTime = default(System.DateTime?))
+        /// ManagementPolicies was last modified.</param>
+        public StorageAccountManagementPolicies(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object policy = default(object), System.DateTime? lastModifiedTime = default(System.DateTime?))
             : base(id, name, type, location, tags)
         {
-            Rules = rules;
+            Policy = policy;
             LastModifiedTime = lastModifiedTime;
             CustomInit();
         }
@@ -58,14 +60,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Storage Account DataPolicies Rules, in JSON
+        /// Gets or sets the Storage Account ManagementPolicies Rules, in JSON
         /// format. //TODO: Link of the sample rules.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.rules")]
-        public object Rules { get; set; }
+        [JsonProperty(PropertyName = "properties.policy")]
+        public object Policy { get; set; }
 
         /// <summary>
-        /// Gets returns the date and time the DataPolicies was last modified.
+        /// Gets returns the date and time the ManagementPolicies was last
+        /// modified.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
         public System.DateTime? LastModifiedTime { get; private set; }

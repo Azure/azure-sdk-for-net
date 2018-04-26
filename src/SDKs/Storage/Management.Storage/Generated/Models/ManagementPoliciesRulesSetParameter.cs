@@ -16,30 +16,30 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// The Storage Account DataPolicies Rules, in JSON format. //TODO: Link of
-    /// the sample rules.
+    /// The Storage Account ManagementPolicies Rules, in JSON format. //TODO:
+    /// Link of the sample rules.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataPoliciesRulesSetParameter
+    public partial class ManagementPoliciesRulesSetParameter
     {
         /// <summary>
-        /// Initializes a new instance of the DataPoliciesRulesSetParameter
-        /// class.
+        /// Initializes a new instance of the
+        /// ManagementPoliciesRulesSetParameter class.
         /// </summary>
-        public DataPoliciesRulesSetParameter()
+        public ManagementPoliciesRulesSetParameter()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataPoliciesRulesSetParameter
-        /// class.
+        /// Initializes a new instance of the
+        /// ManagementPoliciesRulesSetParameter class.
         /// </summary>
-        /// <param name="rules">The Storage Account DataPolicies Rules, in JSON
-        /// format. //TODO: Link of the sample rules.</param>
-        public DataPoliciesRulesSetParameter(object rules = default(object))
+        /// <param name="policy">The Storage Account ManagementPolicies Rules,
+        /// in JSON format. //TODO: Link of the sample rules.</param>
+        public ManagementPoliciesRulesSetParameter(object policy = default(object))
         {
-            Rules = rules;
+            Policy = policy;
             CustomInit();
         }
 
@@ -49,11 +49,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Storage Account DataPolicies Rules, in JSON
+        /// Gets or sets the Storage Account ManagementPolicies Rules, in JSON
         /// format. //TODO: Link of the sample rules.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.rules")]
-        public object Rules { get; set; }
+        [JsonProperty(PropertyName = "properties.policy")]
+        public object Policy { get; set; }
 
     }
 }

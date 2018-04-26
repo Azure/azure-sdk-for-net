@@ -11,6 +11,7 @@
 		<Version>7.2.1.2-preview</Version>
 		<Version>7.2.1.3-preview</Version>
 		<Version>7.2.1.4-preview</Version>
+		<Version>7.2.1.5-preview</Version>
 		<PackageTags>Microsoft Azure Storage management;Storage;Storage management;</PackageTags>
 		<PackageReleaseNotes>See https://aka.ms/asdotnetsdkchangelog for release notes.</PackageReleaseNotes>
 	</PropertyGroup>
