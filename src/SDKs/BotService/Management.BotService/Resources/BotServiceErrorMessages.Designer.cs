@@ -10,10 +10,11 @@
 
 using System.Reflection;
 
-namespace Microsoft.Azure.Management.BotService.Resources {
+namespace Microsoft.Azure.Management.BotService.Resources
+{
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -24,76 +25,92 @@ namespace Microsoft.Azure.Management.BotService.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class BotServiceErrorMessages {
-        
+    internal class BotServiceErrorMessages
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal BotServiceErrorMessages() {
+        internal BotServiceErrorMessages()
+        {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        internal static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.Azure.Management.BotService.Resources.BotServiceErrorMessages", typeof(BotServiceErrorMessages).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
-            get {
+        internal static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The Create operation failed. See inner exception for details..
         /// </summary>
-        internal static string CreateOperationFailed {
-            get {
+        internal static string CreateOperationFailed
+        {
+            get
+            {
                 return ResourceManager.GetString("CreateOperationFailed", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to For Device code authentication, a handler for device code needs to be provided to create an Msa app id. Alternatively, provide your own Msa app id to avoid creating a new one..
         /// </summary>
-        internal static string DeviceCodeAuthNotProvided {
-            get {
+        internal static string DeviceCodeAuthNotProvided
+        {
+            get
+            {
                 return ResourceManager.GetString("DeviceCodeAuthNotProvided", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Bots of Kind Bot and Function should be created through CreateWebAppBot(Async) and CreateFunctionBot(Async) respectively..
         /// </summary>
-        internal static string KindShouldUseSpecificMethod {
-            get {
+        internal static string KindShouldUseSpecificMethod
+        {
+            get
+            {
                 return ResourceManager.GetString("KindShouldUseSpecificMethod", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TenantId is null or empty. TenantId is required for AzureBotServiceClient..
         /// </summary>
-        internal static string TenantIdNotProvided {
-            get {
+        internal static string TenantIdNotProvided
+        {
+            get
+            {
                 return ResourceManager.GetString("TenantIdNotProvided", resourceCulture);
             }
         }
