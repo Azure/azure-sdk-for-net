@@ -14,27 +14,25 @@ namespace Microsoft.AzureStack.Management.Network.Admin.Models
     using System.Linq;
 
     /// <summary>
-    /// Base Resource Tenant Object
+    /// These resources are utilized by a single tenant.
     /// </summary>
-    public partial class ResourceTenant
+    public partial class TenantResource
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceTenant class.
+        /// Initializes a new instance of the TenantResource class.
         /// </summary>
-        public ResourceTenant()
+        public TenantResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceTenant class.
+        /// Initializes a new instance of the TenantResource class.
         /// </summary>
-        /// <param name="provisioningState">The provisioning state.</param>
         /// <param name="subscriptionId">The subscription ID.</param>
         /// <param name="tenantResourceUri">The tenant resource URI.</param>
-        public ResourceTenant(string provisioningState = default(string), string subscriptionId = default(string), string tenantResourceUri = default(string))
+        public TenantResource(string subscriptionId = default(string), string tenantResourceUri = default(string))
         {
-            ProvisioningState = provisioningState;
             SubscriptionId = subscriptionId;
             TenantResourceUri = tenantResourceUri;
             CustomInit();
@@ -44,12 +42,6 @@ namespace Microsoft.AzureStack.Management.Network.Admin.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the provisioning state.
-        /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the subscription ID.
