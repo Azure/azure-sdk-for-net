@@ -40,8 +40,6 @@ namespace Microsoft.AzureStack.Management.Network.Admin.Models
         /// <param name="location">Region location of resource.</param>
         /// <param name="tags">List of key value pairs.</param>
         /// <param name="provisioningState">The provisioning state.</param>
-        /// <param name="subscriptionId">The subscription ID.</param>
-        /// <param name="tenantResourceUri">The tenant resource URI.</param>
         /// <param name="maxPublicIpsPerSubscription">Maximum number of public
         /// IP addresses a tenant subscription can provision.</param>
         /// <param name="maxVnetsPerSubscription">Maximum number of virtual
@@ -62,12 +60,10 @@ namespace Microsoft.AzureStack.Management.Network.Admin.Models
         /// <param name="migrationPhase">State of migration such as None,
         /// Prepare, Commit, and Abort. Possible values include: 'None',
         /// 'Prepare', 'Commit', 'Abort'</param>
-        public Quota(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string subscriptionId = default(string), string tenantResourceUri = default(string), long? maxPublicIpsPerSubscription = default(long?), long? maxVnetsPerSubscription = default(long?), long? maxVirtualNetworkGatewaysPerSubscription = default(long?), long? maxVirtualNetworkGatewayConnectionsPerSubscription = default(long?), long? maxLoadBalancersPerSubscription = default(long?), long? maxNicsPerSubscription = default(long?), long? maxSecurityGroupsPerSubscription = default(long?), string migrationPhase = default(string))
+        public Quota(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), long? maxPublicIpsPerSubscription = default(long?), long? maxVnetsPerSubscription = default(long?), long? maxVirtualNetworkGatewaysPerSubscription = default(long?), long? maxVirtualNetworkGatewayConnectionsPerSubscription = default(long?), long? maxLoadBalancersPerSubscription = default(long?), long? maxNicsPerSubscription = default(long?), long? maxSecurityGroupsPerSubscription = default(long?), string migrationPhase = default(string))
             : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
-            SubscriptionId = subscriptionId;
-            TenantResourceUri = tenantResourceUri;
             MaxPublicIpsPerSubscription = maxPublicIpsPerSubscription;
             MaxVnetsPerSubscription = maxVnetsPerSubscription;
             MaxVirtualNetworkGatewaysPerSubscription = maxVirtualNetworkGatewaysPerSubscription;
@@ -89,18 +85,6 @@ namespace Microsoft.AzureStack.Management.Network.Admin.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets the subscription ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.subscriptionId")]
-        public string SubscriptionId { get; private set; }
-
-        /// <summary>
-        /// Gets the tenant resource URI.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tenantResourceUri")]
-        public string TenantResourceUri { get; private set; }
 
         /// <summary>
         /// Gets or sets maximum number of public IP addresses a tenant
