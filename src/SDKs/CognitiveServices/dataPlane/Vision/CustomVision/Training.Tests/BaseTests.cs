@@ -1,6 +1,4 @@
-﻿//#define RECORD_MODE
-
-namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
+﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 {
     using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
     using Microsoft.Azure.Test.HttpRecorder;
@@ -41,26 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
         public BaseTests(ProjectIdFixture fixture)
         {
             this.fixture = fixture;
-
-//#if !RECORD_MODE            
-//            // If not recording, then we return back the project id that was created during recording.
-//            projectToGuidMapping.Add("ImageCounts", Guid.Parse("f02ec110-66ab-4223-9788-2d098bdb8b0e"));
-//            projectToGuidMapping.Add("GetTaggedImages", Guid.Parse("524cb397-bb3c-4fe7-8838-117d57e60b66"));
-//            projectToGuidMapping.Add("GetIterations", Guid.Parse("e6135697-799c-46f5-802e-133582110d88"));            
-//            projectToGuidMapping.Add("GetIterationPerformance", Guid.Parse("0a594a30-9730-4c3f-bb89-4f6eca13b0b4"));
-//            projectToGuidMapping.Add("QueryPredictionResults", Guid.Parse("9a7b2f5b-a567-480d-ae96-13f441952244"));
-//            projectToGuidMapping.Add("GetUntaggedImages", Guid.Parse("8297acd5-bc19-44b1-9e5f-e482e7235eaa"));
-//            projectToGuidMapping.Add("ImageTagManipulation", Guid.Parse("a5f453ea-29bc-4774-8e3d-9c9db8894367"));            
-//            projectToGuidMapping.Add("ExportTests", Guid.Parse("abb63938-aaf9-4e07-a7a2-319038cf438c"));
-//            projectToGuidMapping.Add("GetImagesByIds", Guid.Parse("53cda0e2-8ec5-466f-943a-f3af756c4aea"));            
-//            projectToGuidMapping.Add("DeletePrediction", Guid.Parse("1c5f10c7-1a78-4378-959c-d61a4bc1f60c"));
-//            projectToGuidMapping.Add("CreateImagesFromPredictions", Guid.Parse("aee5f818-129a-4ebf-8d56-027b3d9a8f9e"));
-//            projectToGuidMapping.Add("TrainProject", Guid.Parse("332cafdd-df74-4c42-aadc-9f9c7a09d8e3"));
-//            projectToGuidMapping.Add("QuickTests", Guid.Parse("6cf0bfc2-0a2a-43a4-8283-75c88ebfe2c0"));            
-//#endif
         }
-
-       
 
         protected ITrainingApi GetTrainingApiClient()
         {
