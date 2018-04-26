@@ -17,25 +17,26 @@ namespace Microsoft.Azure.Management.Dns.Models
     using System.Linq;
 
     /// <summary>
-    /// A TXT record.
+    /// Represents a single Azure resource and its referencing DNS records.
     /// </summary>
-    public partial class TxtRecord
+    public partial class DnsResourceReference
     {
         /// <summary>
-        /// Initializes a new instance of the TxtRecord class.
+        /// Initializes a new instance of the DnsResourceReference class.
         /// </summary>
-        public TxtRecord()
+        public DnsResourceReference()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TxtRecord class.
+        /// Initializes a new instance of the DnsResourceReference class.
         /// </summary>
-        /// <param name="value">The text value of this TXT record.</param>
-        public TxtRecord(IList<string> value = default(IList<string>))
+        /// <param name="dnsResources">A list of dns Records </param>
+        public DnsResourceReference(IList<SubResource> dnsResources = default(IList<SubResource>), SubResource targetResource = default(SubResource))
         {
-            Value = value;
+            DnsResources = dnsResources;
+            TargetResource = targetResource;
             CustomInit();
         }
 
@@ -45,10 +46,15 @@ namespace Microsoft.Azure.Management.Dns.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the text value of this TXT record.
+        /// Gets or sets a list of dns Records
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<string> Value { get; set; }
+        [JsonProperty(PropertyName = "dnsResources")]
+        public IList<SubResource> DnsResources { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "targetResource")]
+        public SubResource TargetResource { get; set; }
 
     }
 }

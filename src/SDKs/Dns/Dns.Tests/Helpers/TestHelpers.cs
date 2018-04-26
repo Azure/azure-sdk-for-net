@@ -99,6 +99,11 @@ namespace Microsoft.Azure.Management.Dns.Testing
             return true;
         }
 
+        public static bool AreEqual(string first, string second)
+        {
+            return string.Equals(first, second,StringComparison.OrdinalIgnoreCase);
+        }
+
         public static bool AreEqual(CnameRecord first, CnameRecord second)
         {
             if (first == null && second == null)

@@ -11,31 +11,35 @@ namespace Microsoft.Azure.Management.Dns.Models
     using Microsoft.Azure;
     using Microsoft.Azure.Management;
     using Microsoft.Azure.Management.Dns;
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// A TXT record.
-    /// </summary>
-    public partial class TxtRecord
+    [Rest.Serialization.JsonTransformation]
+    public partial class DnsResourceReferenceRequest
     {
         /// <summary>
-        /// Initializes a new instance of the TxtRecord class.
+        /// Initializes a new instance of the DnsResourceReferenceRequest
+        /// class.
         /// </summary>
-        public TxtRecord()
+        public DnsResourceReferenceRequest()
         {
           CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TxtRecord class.
+        /// Initializes a new instance of the DnsResourceReferenceRequest
+        /// class.
         /// </summary>
-        /// <param name="value">The text value of this TXT record.</param>
-        public TxtRecord(IList<string> value = default(IList<string>))
+        /// <param name="targetResources">A list of references to azure
+        /// resources for which referencing dns records need to be
+        /// queried.</param>
+        public DnsResourceReferenceRequest(IList<SubResource> targetResources = default(IList<SubResource>))
         {
-            Value = value;
+            TargetResources = targetResources;
             CustomInit();
         }
 
@@ -45,10 +49,11 @@ namespace Microsoft.Azure.Management.Dns.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the text value of this TXT record.
+        /// Gets or sets a list of references to azure resources for which
+        /// referencing dns records need to be queried.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<string> Value { get; set; }
+        [JsonProperty(PropertyName = "properties.targetResources")]
+        public IList<SubResource> TargetResources { get; set; }
 
     }
 }

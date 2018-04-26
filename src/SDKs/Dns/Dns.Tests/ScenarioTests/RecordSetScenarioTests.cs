@@ -317,6 +317,24 @@ namespace Microsoft.Azure.Management.Dns.Testing
         }
 
         [Fact]
+        public void CreateGetAliasTM()
+        {
+            Action<RecordSet> setTestRecords = createParams =>
+            {
+                createParams.TargetResource = new SubResource("/subscriptions/726f8cd6-6459-4db4-8e6d-2cd2716904e2/resourceGroups/test/providers/Microsoft.Network/trafficManagerProfiles/testpp2");
+                //createParams.ARecords = new List<ARecord>
+                //{
+                //    new ARecord {Ipv4Address = "120.63.230.220"},
+                //    new ARecord {Ipv4Address = "4.3.2.1"},
+                //};
+
+                return;
+            };
+
+            this.RecordSetCreateGetAlias(RecordType.A, setTestRecords, isPrivateZoneEnabled: false);
+        }
+
+        [Fact]
         public void CreateGetAaaa()
         {
             Action<RecordSet> setTestRecords = createParams =>
@@ -931,6 +949,81 @@ namespace Microsoft.Azure.Management.Dns.Testing
                             getresponse,
                             ignoreEtag: false),
                         "Response body of Get does not match expectations");
+
+                    // BUG 2364951: should work without specifying ETag
+                    testContext.DnsClient.RecordSets.Delete(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        recordType,
+                        ifMatch: null);
+
+                    testContext.DnsClient.Zones.Delete(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        ifMatch: null);
+                }
+            }
+        }
+
+        private void RecordSetCreateGetAlias(
+            RecordType recordType,
+            Action<RecordSet> setRecordsAction,
+            bool isPrivateZoneEnabled,
+            [System.Runtime.CompilerServices.CallerMemberName] string methodName
+                = "testframework_failed")
+        {
+            using (
+                MockContext context = MockContext.Start(
+                    this.GetType().FullName,
+                    methodName))
+            {
+                var testContexts = isPrivateZoneEnabled
+                    ? SetupSingleRecordSetTestContexts(context)
+                    : new[] { SetupSingleRecordSetTestForPublicZone(context) };
+
+                foreach (var testContext in testContexts)
+                {
+                    var createParameters = testContext.TestRecordSkeleton;
+                    setRecordsAction(createParameters);
+
+                    var createResponse = testContext.DnsClient.RecordSets
+                        .CreateOrUpdate(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            testContext.RecordSetName,
+                            recordType,
+                            ifMatch: null,
+                            ifNoneMatch: null,
+                            parameters: createParameters);
+
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            createParameters,
+                            createResponse,
+                            ignoreEtag: true),
+                        "Response body of Create does not match expectations");
+                    Assert.False(string.IsNullOrWhiteSpace(createResponse.Etag));
+
+                    var getresponse = testContext.DnsClient.RecordSets.Get(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        recordType);
+
+                    Assert.True(
+                        TestHelpers.AreEqual(
+                            createResponse,
+                            getresponse,
+                            ignoreEtag: false),
+                        "Response body of Get does not match expectations");
+
+                    var reference = testContext.DnsClient.DnsResourceReference.GetByTargetResources(new[] { createParameters.TargetResource });
+                    foreach (var a in reference.DnsResourceReferences)
+                    {
+                        Console.WriteLine(a.TargetResource.Id);
+                    }
+
 
                     // BUG 2364951: should work without specifying ETag
                     testContext.DnsClient.RecordSets.Delete(

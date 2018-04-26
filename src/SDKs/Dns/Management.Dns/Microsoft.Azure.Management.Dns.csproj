@@ -24,5 +24,11 @@
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<ItemGroup>
+	  <Compile Remove="Properties\AssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
 	<!-- Please do not move/edit code above this line -->
 </Project>
