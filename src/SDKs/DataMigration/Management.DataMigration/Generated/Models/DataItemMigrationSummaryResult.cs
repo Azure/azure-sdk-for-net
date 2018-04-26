@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// querying all errors of the item</param>
         /// <param name="resultPrefix">Wildcard string prefix to use for
         /// querying all sub-tem results of the item</param>
-        public DataItemMigrationSummaryResult(string name = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), MigrationState? state = default(MigrationState?), string statusMessage = default(string), long? itemsCount = default(long?), long? itemsCompletedCount = default(long?), string errorPrefix = default(string), string resultPrefix = default(string))
+        public DataItemMigrationSummaryResult(string name = default(string), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string state = default(string), string statusMessage = default(string), long? itemsCount = default(long?), long? itemsCompletedCount = default(long?), string errorPrefix = default(string), string resultPrefix = default(string))
         {
             Name = name;
             StartedOn = startedOn;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public MigrationState? State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets status message

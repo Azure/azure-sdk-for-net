@@ -9,7 +9,7 @@
 		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
 		<Version>2.3.0-preview</Version>
-		<PackageTags>Microsoft Azure key vault management;Key Vault</PackageTags>
+		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -17,6 +17,6 @@
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>

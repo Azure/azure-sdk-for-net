@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'GCMAES128', 'GCMAES192', 'GCMAES256'</param>
         /// <param name="ikeEncryption">The IKE encryption algorithm (IKE phase
         /// 2). Possible values include: 'DES', 'DES3', 'AES128', 'AES192',
-        /// 'AES256'</param>
+        /// 'AES256', 'GCMAES256', 'GCMAES128'</param>
         /// <param name="ikeIntegrity">The IKE integrity algorithm (IKE phase
-        /// 2). Possible values include: 'MD5', 'SHA1', 'SHA256',
-        /// 'SHA384'</param>
+        /// 2). Possible values include: 'MD5', 'SHA1', 'SHA256', 'SHA384',
+        /// 'GCMAES256', 'GCMAES128'</param>
         /// <param name="dhGroup">The DH Groups used in IKE Phase 1 for initial
         /// SA. Possible values include: 'None', 'DHGroup1', 'DHGroup2',
         /// 'DHGroup14', 'DHGroup2048', 'ECP256', 'ECP384', 'DHGroup24'</param>
-        /// <param name="pfsGroup">The DH Groups used in IKE Phase 2 for new
+        /// <param name="pfsGroup">The Pfs Groups used in IKE Phase 2 for new
         /// child SA. Possible values include: 'None', 'PFS1', 'PFS2',
-        /// 'PFS2048', 'ECP256', 'ECP384', 'PFS24'</param>
+        /// 'PFS2048', 'ECP256', 'ECP384', 'PFS24', 'PFS14', 'PFSMM'</param>
         public IpsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, string ipsecEncryption, string ipsecIntegrity, string ikeEncryption, string ikeIntegrity, string dhGroup, string pfsGroup)
         {
             SaLifeTimeSeconds = saLifeTimeSeconds;
@@ -104,14 +104,16 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the IKE encryption algorithm (IKE phase 2). Possible
-        /// values include: 'DES', 'DES3', 'AES128', 'AES192', 'AES256'
+        /// values include: 'DES', 'DES3', 'AES128', 'AES192', 'AES256',
+        /// 'GCMAES256', 'GCMAES128'
         /// </summary>
         [JsonProperty(PropertyName = "ikeEncryption")]
         public string IkeEncryption { get; set; }
 
         /// <summary>
         /// Gets or sets the IKE integrity algorithm (IKE phase 2). Possible
-        /// values include: 'MD5', 'SHA1', 'SHA256', 'SHA384'
+        /// values include: 'MD5', 'SHA1', 'SHA256', 'SHA384', 'GCMAES256',
+        /// 'GCMAES128'
         /// </summary>
         [JsonProperty(PropertyName = "ikeIntegrity")]
         public string IkeIntegrity { get; set; }
@@ -125,9 +127,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string DhGroup { get; set; }
 
         /// <summary>
-        /// Gets or sets the DH Groups used in IKE Phase 2 for new child SA.
+        /// Gets or sets the Pfs Groups used in IKE Phase 2 for new child SA.
         /// Possible values include: 'None', 'PFS1', 'PFS2', 'PFS2048',
-        /// 'ECP256', 'ECP384', 'PFS24'
+        /// 'ECP256', 'ECP384', 'PFS24', 'PFS14', 'PFSMM'
         /// </summary>
         [JsonProperty(PropertyName = "pfsGroup")]
         public string PfsGroup { get; set; }

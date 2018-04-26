@@ -35,31 +35,22 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the PostgreSqlLinkedService class.
         /// </summary>
-        /// <param name="server">Server name for connection. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="database">Database name for connection. Type: string
-        /// (or Expression with resultType string).</param>
+        /// <param name="connectionString">The connection string.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
-        /// <param name="schema">Schema name for connection. Type: string (or
-        /// Expression with resultType string).</param>
-        /// <param name="username">Username for authentication. Type: string
-        /// (or Expression with resultType string).</param>
-        /// <param name="password">Password for authentication.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public PostgreSqlLinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object schema = default(object), object username = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
-            : base(additionalProperties, connectVia, description)
+        public PostgreSqlLinkedService(SecretBase connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
-            Server = server;
-            Database = database;
-            Schema = schema;
-            Username = username;
-            Password = password;
+            ConnectionString = connectionString;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -70,38 +61,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets server name for connection. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets the connection string.
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.server")]
-        public object Server { get; set; }
-
-        /// <summary>
-        /// Gets or sets database name for connection. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.database")]
-        public object Database { get; set; }
-
-        /// <summary>
-        /// Gets or sets schema name for connection. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.schema")]
-        public object Schema { get; set; }
-
-        /// <summary>
-        /// Gets or sets username for authentication. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.username")]
-        public object Username { get; set; }
-
-        /// <summary>
-        /// Gets or sets password for authentication.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.connectionString")]
+        public SecretBase ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -120,17 +83,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (Server == null)
+            if (ConnectionString == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Server");
-            }
-            if (Database == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Database");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
             }
         }
     }

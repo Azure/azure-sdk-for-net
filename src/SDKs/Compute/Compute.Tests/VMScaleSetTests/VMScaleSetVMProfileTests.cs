@@ -17,6 +17,7 @@ namespace Compute.Tests.VMScaleSetTests
         /// Checks if licenseType can be set through API
         /// </summary>
         [Fact]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithLicenseType()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -76,6 +77,7 @@ namespace Compute.Tests.VMScaleSetTests
         /// Checks if diagnostics profile can be set through API
         /// </summary>
         [Fact]
+        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetDiagnosticsProfile()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

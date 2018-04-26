@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Consumption
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2017-11-30.
+        /// version is 2018-01-31.
         /// </summary>
         string ApiVersion { get; }
 
@@ -76,9 +76,34 @@ namespace Microsoft.Azure.Management.Consumption
         IUsageDetailsOperations UsageDetails { get; }
 
         /// <summary>
+        /// Gets the IMarketplacesOperations.
+        /// </summary>
+        IMarketplacesOperations Marketplaces { get; }
+
+        /// <summary>
+        /// Gets the IReservationsSummariesOperations.
+        /// </summary>
+        IReservationsSummariesOperations ReservationsSummaries { get; }
+
+        /// <summary>
+        /// Gets the IReservationsDetailsOperations.
+        /// </summary>
+        IReservationsDetailsOperations ReservationsDetails { get; }
+
+        /// <summary>
+        /// Gets the IBudgetsOperations.
+        /// </summary>
+        IBudgetsOperations Budgets { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPriceSheetOperations.
+        /// </summary>
+        IPriceSheetOperations PriceSheet { get; }
 
     }
 }

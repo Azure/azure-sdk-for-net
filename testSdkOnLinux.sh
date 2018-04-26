@@ -169,7 +169,7 @@ skip_Rps() {
 }
 
 getBuildTools() {
-    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/SdkBuildTools/"
+    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/NetSdkBuild"
     printf "Updating Build tools .....\n"
     
     if [ ! -d ./tools/SdkBuildTools ]; then
@@ -192,6 +192,7 @@ getBuildTools() {
     curl -s $copyFromRootDir/tools/BuildAssets/targets/common.NugetPackage.props > ./tools/SdkBuildTools/targets/common.NugetPackage.props
     curl -s $copyFromRootDir/tools/BuildAssets/targets/common.targets > ./tools/SdkBuildTools/targets/common.targets
     curl -s $copyFromRootDir/tools/BuildAssets/targets/signing.targets > ./tools/SdkBuildTools/targets/signing.targets
+	curl -s $copyFromRootDir/tools/BuildAssets/targets/ideCmd.targets > ./tools/SdkBuildTools/targets/ideCmd.targets
     curl -s $copyFromRootDir/tools/BuildAssets/tasks/common.tasks > ./tools/SdkBuildTools/tasks/common.tasks
     #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.dll > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.dll
     #curl $copyFromRootDir/tools/BuildAssets/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.dev.json > ./tools/SdkBuildTools/tasks/net46/Microsoft.Azure.Build.BootstrapTasks.runtimeconfig.dev.json

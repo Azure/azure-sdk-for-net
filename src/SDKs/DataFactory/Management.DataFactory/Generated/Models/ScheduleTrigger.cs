@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the ScheduleTrigger class.
         /// </summary>
+        /// <param name="recurrence">Recurrence schedule configuration.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Trigger description.</param>
@@ -41,8 +42,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
         /// <param name="pipelines">Pipelines that need to be started.</param>
-        /// <param name="recurrence">Recurrence schedule configuration.</param>
-        public ScheduleTrigger(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), ScheduleTriggerRecurrence recurrence = default(ScheduleTriggerRecurrence))
+        public ScheduleTrigger(ScheduleTriggerRecurrence recurrence, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>))
             : base(additionalProperties, description, runtimeState, pipelines)
         {
             Recurrence = recurrence;
@@ -60,5 +60,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "typeProperties.recurrence")]
         public ScheduleTriggerRecurrence Recurrence { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Recurrence == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Recurrence");
+            }
+        }
     }
 }

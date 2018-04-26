@@ -6,9 +6,9 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataLake.Store</PackageId>
 		<Description>Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.</Description>
-		<Version>2.3.0-preview</Version>
+		<Version>2.4.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataLake.Store</AssemblyName>
-		<PackageTags>Microsoft Azure Data Lake Store management;DataLakeStore;Data Lake Store management</PackageTags>
+		<PackageTags>Data Lake Store management;DataLakeStore;</PackageTags>
 		<PackageReleaseNotes>See https://aka.ms/adlsdotnetsdkchangelog for release notes.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -19,6 +19,6 @@
 	</ItemGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>

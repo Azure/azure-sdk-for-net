@@ -33,10 +33,14 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         /// <param name="actions">Allowed actions.</param>
         /// <param name="notActions">Denied actions.</param>
-        public Permission(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>))
+        /// <param name="dataActions">Allowed Data actions.</param>
+        /// <param name="notDataActions">Denied Data actions.</param>
+        public Permission(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>), IList<string> dataActions = default(IList<string>), IList<string> notDataActions = default(IList<string>))
         {
             Actions = actions;
             NotActions = notActions;
+            DataActions = dataActions;
+            NotDataActions = notDataActions;
             CustomInit();
         }
 
@@ -56,6 +60,18 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// </summary>
         [JsonProperty(PropertyName = "notActions")]
         public IList<string> NotActions { get; set; }
+
+        /// <summary>
+        /// Gets or sets allowed Data actions.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataActions")]
+        public IList<string> DataActions { get; set; }
+
+        /// <summary>
+        /// Gets or sets denied Data actions.
+        /// </summary>
+        [JsonProperty(PropertyName = "notDataActions")]
+        public IList<string> NotDataActions { get; set; }
 
     }
 }

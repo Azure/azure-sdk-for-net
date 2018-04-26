@@ -34,9 +34,8 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = SqlTestConstants.DefaultElasticPoolEdition,
+                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
-                    Dtu = 100,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
                 };
@@ -56,7 +55,7 @@ namespace Sql.Tests
                 dbInput = new Database()
                 {
                     Location = server.Location,
-                    ElasticPoolName = epName
+                    ElasticPoolId = returnedEp.Id
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
@@ -89,9 +88,8 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = SqlTestConstants.DefaultElasticPoolEdition,
+                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
-                    Dtu = 100,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
                 };
@@ -126,34 +124,32 @@ namespace Sql.Tests
                 var epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = SqlTestConstants.DefaultElasticPoolEdition,
+                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
-                    Dtu = 100,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
                 };
-                var returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
-                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName);
+                var returnedEp1 = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp1, epName);
                 
                 string epName2 = SqlManagementTestUtilities.GenerateName();
                 epInput = new ElasticPool()
                 {
                     Location = server.Location,
-                    Edition = SqlTestConstants.DefaultElasticPoolEdition,
+                    Sku = SqlTestConstants.DefaultElasticPoolSku(),
                     Tags = tags,
-                    Dtu = 100,
                     DatabaseDtuMax = 5,
                     DatabaseDtuMin = 0
                 };
-                returnedEp = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName2, epInput);
-                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp, epName2);
+                var returnedEp2 = sqlClient.ElasticPools.CreateOrUpdate(resourceGroup.Name, server.Name, epName2, epInput);
+                SqlManagementTestUtilities.ValidateElasticPool(epInput, returnedEp2, epName2);
 
                 // Create a database in first elastic pool
                 string dbName = SqlManagementTestUtilities.GenerateName();
                 var dbInput = new Database()
                 {
                     Location = server.Location,
-                    ElasticPoolName = epName
+                    ElasticPoolId = returnedEp1.Id
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 
@@ -166,7 +162,7 @@ namespace Sql.Tests
                 dbInput = new Database()
                 {
                     Location = server.Location,
-                    ElasticPoolName = epName2
+                    ElasticPoolId = returnedEp2.Id
                 };
                 sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, dbInput);
 

@@ -42,15 +42,14 @@ namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
             string resourceGroupName = string.Format("{0}-{1}-{2}", prefix, resourcePrefix, guidString);
             string storageName = string.Format("{0}{1}{2}", prefix, storagePrefix, guidString);
             string vmName = string.Format("{0}-{1}-{2}", prefix, vmPrefix, guidString);
-            
             VirtualMachine vm1;
-            ResourceGroup resGroup = null;            
+            ResourceGroup resGroup = null;
             //string executingAssemblyPath = typeof(Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests.VMTests).GetTypeInfo().Assembly.Location;
             //HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            try
+            using (base.MockContext = MockContext.Start(this.GetType().FullName))
             {
-                using (base.MockContext = MockContext.Start(this.GetType().FullName))
+                try
                 {
                     //Type.GetType("System.Int32").GetTypeInfo().Assembly.Location
                     string newVmId = "5C6F1669-C183-4BFC-9BBB-138E0892E917";
@@ -81,15 +80,15 @@ namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
                     // Verify the vmPutResponse does not contain updated VmId
                     Assert.NotEqual(newVmId, getVm.VmId);
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.ToString());
-                throw;
-            }
-            finally
-            {
-                ResourceClient.ResourceGroups.Delete(resGroup.Name);
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                    throw;
+                }
+                finally
+                {
+                    ResourceClient.ResourceGroups.Delete(resGroup.Name);
+                }
             }
         }
     }

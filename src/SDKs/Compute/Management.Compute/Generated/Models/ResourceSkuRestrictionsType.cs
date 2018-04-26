@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     public enum ResourceSkuRestrictionsType
     {
         [EnumMember(Value = "Location")]
-        Location
+        Location,
+        [EnumMember(Value = "Zone")]
+        Zone
     }
     internal static class ResourceSkuRestrictionsTypeEnumExtension
     {
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 case ResourceSkuRestrictionsType.Location:
                     return "Location";
+                case ResourceSkuRestrictionsType.Zone:
+                    return "Zone";
             }
             return null;
         }
@@ -47,6 +51,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 case "Location":
                     return ResourceSkuRestrictionsType.Location;
+                case "Zone":
+                    return ResourceSkuRestrictionsType.Zone;
             }
             return null;
         }

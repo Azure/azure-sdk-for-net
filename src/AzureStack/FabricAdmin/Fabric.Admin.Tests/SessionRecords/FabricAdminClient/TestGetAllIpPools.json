@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b0056ab9-a9c8-420a-8395-1c399483288e"
+          "1a33cce3-59a7-4aa1-bbb0-eb1004f09cef"
         ],
         "accept-language": [
           "en-US"
@@ -17,10 +17,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/4b3a9935-e559-48ce-abc7-8c69d8c85090\",\r\n      \"name\": \"4b3a9935-e559-48ce-abc7-8c69d8c85090\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.224\",\r\n        \"endIpAddress\": \"192.168.200.254\",\r\n        \"numberOfIpAddresses\": 31,\r\n        \"numberOfAllocatedIpAddresses\": 1,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/5c38338a-dbee-414c-a79e-0eab108097b1\",\r\n      \"name\": \"5c38338a-dbee-414c-a79e-0eab108097b1\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.65\",\r\n        \"endIpAddress\": \"192.168.200.111\",\r\n        \"numberOfIpAddresses\": 47,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/7c307b9d-0627-4db6-8ba3-3a4632b06343\",\r\n      \"name\": \"7c307b9d-0627-4db6-8ba3-3a4632b06343\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.102.1\",\r\n        \"endIpAddress\": \"192.168.102.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 31,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/811b6dfa-4feb-42e9-8f65-52bf73bcf8ba\",\r\n      \"name\": \"811b6dfa-4feb-42e9-8f65-52bf73bcf8ba\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.105.1\",\r\n        \"endIpAddress\": \"192.168.105.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 8,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/d001c731-761b-443c-baa3-d9358e74ac9a\",\r\n      \"name\": \"d001c731-761b-443c-baa3-d9358e74ac9a\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.112\",\r\n        \"endIpAddress\": \"192.168.200.127\",\r\n        \"numberOfIpAddresses\": 16,\r\n        \"numberOfAllocatedIpAddresses\": 1,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/f13afb5b-f671-47e1-aafa-0ea9c3938195\",\r\n      \"name\": \"f13afb5b-f671-47e1-aafa-0ea9c3938195\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.1\",\r\n        \"endIpAddress\": \"192.168.200.62\",\r\n        \"numberOfIpAddresses\": 62,\r\n        \"numberOfAllocatedIpAddresses\": 1,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/MatthewTestIPPool\",\r\n      \"name\": \"MatthewTestIPPool\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"98.10.1.101\",\r\n        \"endIpAddress\": \"98.10.1.102\",\r\n        \"numberOfIpAddresses\": 2,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/myippoolwhichcanneverbedeleted\",\r\n      \"name\": \"myippoolwhichcanneverbedeleted\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"111.9.9.1\",\r\n        \"endIpAddress\": \"111.9.9.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/MyTestIpPool\",\r\n      \"name\": \"MyTestIpPool\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"100.10.20.30\",\r\n        \"endIpAddress\": \"100.10.20.130\",\r\n        \"numberOfIpAddresses\": 101,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/newtest\",\r\n      \"name\": \"newtest\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"97.10.1.101\",\r\n        \"endIpAddress\": \"97.10.1.102\",\r\n        \"numberOfIpAddresses\": 2,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/PSTest1\",\r\n      \"name\": \"PSTest1\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"222.1.1.1\",\r\n        \"endIpAddress\": \"222.1.1.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/PSTest2\",\r\n      \"name\": \"PSTest2\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"231.1.1.1\",\r\n        \"endIpAddress\": \"231.1.1.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool\",\r\n      \"name\": \"TestIpPool\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"45.9.9.1\",\r\n        \"endIpAddress\": \"45.9.9.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1992\",\r\n      \"name\": \"TestIpPool1992\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"199.2.9.1\",\r\n        \"endIpAddress\": \"199.2.9.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool66\",\r\n      \"name\": \"TestIpPool66\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"67.66.9.1\",\r\n        \"endIpAddress\": \"67.66.9.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local\",\r\n      \"name\": \"local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "6967"
+          "263"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,7 +32,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,19 +41,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvsbctNJWujCZCb1pIbEm6ZzAMU2slgdqJiooxWyyvi5u7tNkUgDAxjzrxCVY8mp7MuVteWXkmkRsD92I68BnrV0xcTdHYDs+lRTcOUL2k9n4Ra90r77VgeaxzBx0PxFRmHmZzoKOlYsZKNKgV5Tza"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvkjAbuT7p4InTmCz2EPYN/+ay0IhGCmdnSkLjePK+B46j2JcXzuv5eyZP4fKG0hJlcCDpYfZtIv0/7vKo4/CgMbafZdLT43gMA3p8nTAB5mbjfKN9eBi9lOI/Ga/xp7BuvDfCM23g28K/ldIqv33I"
         ],
         "x-ms-correlation-request-id": [
-          "6150d5d5-c9fb-45e4-8524-9e9aeb061aa4"
+          "e30245ed-ed97-4d37-b753-8ca6c8438a7e"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14831"
+          "13937"
         ],
         "x-ms-request-id": [
-          "6150d5d5-c9fb-45e4-8524-9e9aeb061aa4"
+          "e30245ed-ed97-4d37-b753-8ca6c8438a7e"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:6150d5d5-c9fb-45e4-8524-9e9aeb061aa4"
+          "LOCAL:20180210T212617Z:e30245ed-ed97-4d37-b753-8ca6c8438a7e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -65,13 +65,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/4b3a9935-e559-48ce-abc7-8c69d8c85090?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy80YjNhOTkzNS1lNTU5LTQ4Y2UtYWJjNy04YzY5ZDhjODUwOTA/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f572c771-28b3-4252-be62-3596cb15633a"
+          "62eee4b2-254f-4089-99b8-8fa2c91fc7ab"
         ],
         "accept-language": [
           "en-US"
@@ -81,10 +81,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/4b3a9935-e559-48ce-abc7-8c69d8c85090\",\r\n  \"name\": \"4b3a9935-e559-48ce-abc7-8c69d8c85090\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.224\",\r\n    \"endIpAddress\": \"192.168.200.254\",\r\n    \"numberOfIpAddresses\": 31,\r\n    \"numberOfAllocatedIpAddresses\": 1,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/13ff1d24-17e5-4a95-a4b2-f3ec7ceaafb1\",\r\n      \"name\": \"13ff1d24-17e5-4a95-a4b2-f3ec7ceaafb1\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.1\",\r\n        \"endIpAddress\": \"192.168.200.62\",\r\n        \"numberOfIpAddresses\": 62,\r\n        \"numberOfAllocatedIpAddresses\": 3,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/7d78b1d4-059d-4956-bd08-a174ef5db6ae\",\r\n      \"name\": \"7d78b1d4-059d-4956-bd08-a174ef5db6ae\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.105.1\",\r\n        \"endIpAddress\": \"192.168.105.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 8,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/acd04be9-69fe-4713-99d3-99046f971f73\",\r\n      \"name\": \"acd04be9-69fe-4713-99d3-99046f971f73\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.65\",\r\n        \"endIpAddress\": \"192.168.200.111\",\r\n        \"numberOfIpAddresses\": 47,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/cace184f-12a4-43a7-ab22-9796cda85c56\",\r\n      \"name\": \"cace184f-12a4-43a7-ab22-9796cda85c56\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.112\",\r\n        \"endIpAddress\": \"192.168.200.127\",\r\n        \"numberOfIpAddresses\": 16,\r\n        \"numberOfAllocatedIpAddresses\": 1,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/cf9ccfbf-d902-44ef-914c-3e59c2cc5215\",\r\n      \"name\": \"cf9ccfbf-d902-44ef-914c-3e59c2cc5215\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.200.224\",\r\n        \"endIpAddress\": \"192.168.200.254\",\r\n        \"numberOfIpAddresses\": 31,\r\n        \"numberOfAllocatedIpAddresses\": 1,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/e7eb5792-8240-4210-8f25-73cf2d0be74a\",\r\n      \"name\": \"e7eb5792-8240-4210-8f25-73cf2d0be74a\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.168.102.1\",\r\n        \"endIpAddress\": \"192.168.102.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 33,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool199198\",\r\n      \"name\": \"TestIpPool199198\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.198.9.1\",\r\n        \"endIpAddress\": \"192.198.9.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1992\",\r\n      \"name\": \"TestIpPool1992\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.2.9.1\",\r\n        \"endIpAddress\": \"192.2.9.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1993\",\r\n      \"name\": \"TestIpPool1993\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"startIpAddress\": \"192.3.9.1\",\r\n        \"endIpAddress\": \"192.3.9.255\",\r\n        \"numberOfIpAddresses\": 255,\r\n        \"numberOfAllocatedIpAddresses\": 0,\r\n        \"numberOfIpAddressesInTransition\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "496"
+          "4328"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -96,7 +96,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,19 +105,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvn8hUVjZto7lTy9bmq53pCLaIiNETFR3FoPBaDTka0nXeVgNFZxEMvgrZXWGL4B+Qc5p0VDKTCXiVjW+rtNK87HOweKlULkpPX/CGtGpjw/ubsrqrnPcuF5jzyoxn1tT9oZfIMZEFhhAn1/mzizP0"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvI1ezt1quFMiKWDJV3Sp1TR+jzBExJ55h6ZBnhGVEMe++9J7VGFKjeBuksgYLq6T0j7j2f8I/hwGl58fv5UGR72liZhNReYmSNgcIz9/uKcbbD1Oxkg6GDpCnwv9MTk0d3SxOtOt1fvFQg/2xdbJ+"
         ],
         "x-ms-correlation-request-id": [
-          "1a9abae7-ec9e-49d3-b67b-b697395313d0"
+          "e44a6935-88ad-4ac1-b5df-258ce0b48d13"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14830"
+          "13936"
         ],
         "x-ms-request-id": [
-          "1a9abae7-ec9e-49d3-b67b-b697395313d0"
+          "e44a6935-88ad-4ac1-b5df-258ce0b48d13"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:1a9abae7-ec9e-49d3-b67b-b697395313d0"
+          "LOCAL:20180210T212617Z:e44a6935-88ad-4ac1-b5df-258ce0b48d13"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -129,13 +129,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/5c38338a-dbee-414c-a79e-0eab108097b1?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy81YzM4MzM4YS1kYmVlLTQxNGMtYTc5ZS0wZWFiMTA4MDk3YjE/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/13ff1d24-17e5-4a95-a4b2-f3ec7ceaafb1?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy8xM2ZmMWQyNC0xN2U1LTRhOTUtYTRiMi1mM2VjN2NlYWFmYjE/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "25b42b09-e238-40d5-9536-a4fefbfedc14"
+          "62a05336-1bb5-43f4-8b4f-41b76a99357c"
         ],
         "accept-language": [
           "en-US"
@@ -145,263 +145,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/5c38338a-dbee-414c-a79e-0eab108097b1\",\r\n  \"name\": \"5c38338a-dbee-414c-a79e-0eab108097b1\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.65\",\r\n    \"endIpAddress\": \"192.168.200.111\",\r\n    \"numberOfIpAddresses\": 47,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "495"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvd/2yiU8lKapOjOio++FkiBkVEoE/4gtszpXzxiuNAVXnOfk8juono0QH4YxS0boLjIVY2+2vsDrd0hL5dEuftYNNbTn0HUHj0Dp2sspMdUcV/wU5+GUidunAnAu2k6WXkQoAIoLoQp0kvxWM5C51"
-        ],
-        "x-ms-correlation-request-id": [
-          "32471ce6-7de2-4808-a22c-2dc3b07be669"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14829"
-        ],
-        "x-ms-request-id": [
-          "32471ce6-7de2-4808-a22c-2dc3b07be669"
-        ],
-        "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:32471ce6-7de2-4808-a22c-2dc3b07be669"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/7c307b9d-0627-4db6-8ba3-3a4632b06343?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy83YzMwN2I5ZC0wNjI3LTRkYjYtOGJhMy0zYTQ2MzJiMDYzNDM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "3bf3e06e-b5a4-494e-8611-8719681d3d2f"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/7c307b9d-0627-4db6-8ba3-3a4632b06343\",\r\n  \"name\": \"7c307b9d-0627-4db6-8ba3-3a4632b06343\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.102.1\",\r\n    \"endIpAddress\": \"192.168.102.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 31,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "496"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvNBZsy+A9Fqts79XiwBdxo5nfmdDZ001zHlWJNpWR4A8W+whYCVM1m5Rj73UGmQefGP3nnQjP3Zq5Ydddq3amvnhHCh5kvcP+z7QdZegmzKL4pTkjsPVqMnVG+imytJZfKd0pZ230VRL6RPNRB/xs"
-        ],
-        "x-ms-correlation-request-id": [
-          "1ee66f38-b9c7-4c74-b2bc-7a4873df0881"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14828"
-        ],
-        "x-ms-request-id": [
-          "1ee66f38-b9c7-4c74-b2bc-7a4873df0881"
-        ],
-        "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:1ee66f38-b9c7-4c74-b2bc-7a4873df0881"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/811b6dfa-4feb-42e9-8f65-52bf73bcf8ba?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy84MTFiNmRmYS00ZmViLTQyZTktOGY2NS01MmJmNzNiY2Y4YmE/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "03f495ed-00b2-42a1-acb3-57321e420762"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/811b6dfa-4feb-42e9-8f65-52bf73bcf8ba\",\r\n  \"name\": \"811b6dfa-4feb-42e9-8f65-52bf73bcf8ba\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.105.1\",\r\n    \"endIpAddress\": \"192.168.105.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 8,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "495"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv5LoJZqSTQTggJHkQfoo9xdS96oBHmJQ1ZXCXKkdQTsylDtqG+Q+c90i315NfKmxu4pCaQHvDxbv37s9oa0EOAzzrRCpK+YNe3QlGkvHFWplayqwcf0pDMcYKTjWDfRBXLfV6SFvhz3Tk/DgYZm69"
-        ],
-        "x-ms-correlation-request-id": [
-          "dd822314-eb42-4e1e-9419-3088aec5de16"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14827"
-        ],
-        "x-ms-request-id": [
-          "dd822314-eb42-4e1e-9419-3088aec5de16"
-        ],
-        "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:dd822314-eb42-4e1e-9419-3088aec5de16"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/d001c731-761b-443c-baa3-d9358e74ac9a?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9kMDAxYzczMS03NjFiLTQ0M2MtYmFhMy1kOTM1OGU3NGFjOWE/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "12a2f3a3-6fee-4d36-b9a7-90b706bd12f9"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/d001c731-761b-443c-baa3-d9358e74ac9a\",\r\n  \"name\": \"d001c731-761b-443c-baa3-d9358e74ac9a\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.112\",\r\n    \"endIpAddress\": \"192.168.200.127\",\r\n    \"numberOfIpAddresses\": 16,\r\n    \"numberOfAllocatedIpAddresses\": 1,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "496"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvRGSm61kTgg/ekKWLlRXR3QfGPE1jVTYNupL00E3xWWKgj0vz7Zks7oBXagzm1L6zKsWE5vnuyhjhBEqEs1lVomCDVv36yqHtDAyBOljBoX+lq0JFmCS6bXNFaOyHmrdcz7MN1xg2s17LHKsdwxuf"
-        ],
-        "x-ms-correlation-request-id": [
-          "92113976-bfef-4c2a-9198-48b5e00935c2"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14826"
-        ],
-        "x-ms-request-id": [
-          "92113976-bfef-4c2a-9198-48b5e00935c2"
-        ],
-        "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:92113976-bfef-4c2a-9198-48b5e00935c2"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/f13afb5b-f671-47e1-aafa-0ea9c3938195?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9mMTNhZmI1Yi1mNjcxLTQ3ZTEtYWFmYS0wZWE5YzM5MzgxOTU/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "feb6ed73-ddbc-4650-b84d-76c6a5bacaeb"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/f13afb5b-f671-47e1-aafa-0ea9c3938195\",\r\n  \"name\": \"f13afb5b-f671-47e1-aafa-0ea9c3938195\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.1\",\r\n    \"endIpAddress\": \"192.168.200.62\",\r\n    \"numberOfIpAddresses\": 62,\r\n    \"numberOfAllocatedIpAddresses\": 1,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/13ff1d24-17e5-4a95-a4b2-f3ec7ceaafb1\",\r\n  \"name\": \"13ff1d24-17e5-4a95-a4b2-f3ec7ceaafb1\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.1\",\r\n    \"endIpAddress\": \"192.168.200.62\",\r\n    \"numberOfIpAddresses\": 62,\r\n    \"numberOfAllocatedIpAddresses\": 3,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "493"
@@ -416,7 +160,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -425,19 +169,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvd9MTQD9Q/LjdxAf9FLeMZk323j6FEN5vXRNKGGaomNrZ4+Z4rvUUINIZqf0W0jUXGjJ4m7qJW2k52aLQ/BeTcWuifZCHZVCa5vb6y0GNeejqGsMWhDyE5qE03bm0Kv2CoedkPz/JvG97mxLbUDMq"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvPypw0QdSI3Uc+8ut4Vzyt7q4QyAnBaiDLYFpkASlxedyPsY13MDmtw5dgLaaAgua8CctYznx6SLaHcKkyi8u60Ypc1VUfLJn3rUUPOF9Hou2kUXc1YGoILm8MbrK68HibsGWDSS7ERj65oAuAjBg"
         ],
         "x-ms-correlation-request-id": [
-          "12e57a81-25b9-42c4-b897-3037789ab746"
+          "9846d015-a5c7-4f9e-90a3-822f75338fc7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14825"
+          "13935"
         ],
         "x-ms-request-id": [
-          "12e57a81-25b9-42c4-b897-3037789ab746"
+          "9846d015-a5c7-4f9e-90a3-822f75338fc7"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:12e57a81-25b9-42c4-b897-3037789ab746"
+          "LOCAL:20180210T212617Z:9846d015-a5c7-4f9e-90a3-822f75338fc7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -449,13 +193,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/MatthewTestIPPool?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9NYXR0aGV3VGVzdElQUG9vbD9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/7d78b1d4-059d-4956-bd08-a174ef5db6ae?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy83ZDc4YjFkNC0wNTlkLTQ5NTYtYmQwOC1hMTc0ZWY1ZGI2YWU/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e55d86e3-60e0-4d7b-884b-2ddb2c08a13f"
+          "4a91211d-78e5-4823-9eea-1e41ba2906db"
         ],
         "accept-language": [
           "en-US"
@@ -465,10 +209,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/MatthewTestIPPool\",\r\n  \"name\": \"MatthewTestIPPool\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"98.10.1.101\",\r\n    \"endIpAddress\": \"98.10.1.102\",\r\n    \"numberOfIpAddresses\": 2,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/7d78b1d4-059d-4956-bd08-a174ef5db6ae\",\r\n  \"name\": \"7d78b1d4-059d-4956-bd08-a174ef5db6ae\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.105.1\",\r\n    \"endIpAddress\": \"192.168.105.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 8,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "449"
+          "495"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -480,7 +224,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -489,19 +233,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvVQewG5/u/NXCpqQ3N79wh6z5DOgLLYnuNn3n/Do2IFPcs0eUykgQBXE+lEyFbS8wtseeu0sQEjYRDzh8lTv7HOifFEaCvqVld4r2YKLkncIYk9UVFDXn0njiWe2aSonkM8WsHk+qvEOmyp8kwuX4"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv8SWEEXB8e944pL+NRzxyrZcuFNvi7OBr1B1ekkjMJH2gjyVeaWw3kqWthuPsWSRSKKcrjxTtbYFUj3FaQbyWw4byXF8EFFOg6xIf4sTkZqH0k/H4Cob0fsjAkKng2Q+n2GVcmx/DP/fNbvmbwNer"
         ],
         "x-ms-correlation-request-id": [
-          "88be42db-7ee1-43fa-b10d-8cba17c41dfe"
+          "0d121a98-c20f-4cb9-83b0-a4a6111a3a9b"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14824"
+          "13934"
         ],
         "x-ms-request-id": [
-          "88be42db-7ee1-43fa-b10d-8cba17c41dfe"
+          "0d121a98-c20f-4cb9-83b0-a4a6111a3a9b"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:88be42db-7ee1-43fa-b10d-8cba17c41dfe"
+          "LOCAL:20180210T212617Z:0d121a98-c20f-4cb9-83b0-a4a6111a3a9b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -513,13 +257,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/myippoolwhichcanneverbedeleted?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9teWlwcG9vbHdoaWNoY2FubmV2ZXJiZWRlbGV0ZWQ/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/acd04be9-69fe-4713-99d3-99046f971f73?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9hY2QwNGJlOS02OWZlLTQ3MTMtOTlkMy05OTA0NmY5NzFmNzM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "af9febcf-0c8e-435d-8ed2-86bc7df89bf6"
+          "ade877ca-2efe-4a2d-9db7-4b5d8b35a66a"
         ],
         "accept-language": [
           "en-US"
@@ -529,10 +273,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/myippoolwhichcanneverbedeleted\",\r\n  \"name\": \"myippoolwhichcanneverbedeleted\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"111.9.9.1\",\r\n    \"endIpAddress\": \"111.9.9.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/acd04be9-69fe-4713-99d3-99046f971f73\",\r\n  \"name\": \"acd04be9-69fe-4713-99d3-99046f971f73\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.65\",\r\n    \"endIpAddress\": \"192.168.200.111\",\r\n    \"numberOfIpAddresses\": 47,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "475"
+          "495"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -544,7 +288,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -553,19 +297,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvQnGRzx4oSTrZwhshkdZmGQvTnK+zTwcBlRmMKiulVxG7qxQ7/SwWTxsSwaPk3+UCrpkO+ZHdGB2x09LZQEVps4KjtrQmvmRhnjqrUTgEN5HemeWGeQdTdt0Imfvz9ndxuYjRWPsxG9aPaogih4pE"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvG+qk0FUlRBHqwNKyw5JnsR8GeWn5z7FG9WeTlpvqNIH6eEAapFb6WzBmHSCIJy68DRBfB7OrWexWrC0ndKKaID+f2JgIIAQtBTwlP4+4t35vGPMwBmpRXNt3bHGMEm3/AKU8haHV0NfPvra+l4e3"
         ],
         "x-ms-correlation-request-id": [
-          "052a49a4-108d-4cb0-b427-ca29df322bfb"
+          "e22f3a9e-ba12-4294-86ed-9aa348c2ec38"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14823"
+          "13933"
         ],
         "x-ms-request-id": [
-          "052a49a4-108d-4cb0-b427-ca29df322bfb"
+          "e22f3a9e-ba12-4294-86ed-9aa348c2ec38"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:052a49a4-108d-4cb0-b427-ca29df322bfb"
+          "LOCAL:20180210T212617Z:e22f3a9e-ba12-4294-86ed-9aa348c2ec38"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -577,13 +321,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/MyTestIpPool?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9NeVRlc3RJcFBvb2w/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/cace184f-12a4-43a7-ab22-9796cda85c56?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9jYWNlMTg0Zi0xMmE0LTQzYTctYWIyMi05Nzk2Y2RhODVjNTY/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "15a5226e-fe86-4a0a-8a71-2d8f07e97456"
+          "a81ebc88-9389-47a9-a8f3-d81bedbf9cf0"
         ],
         "accept-language": [
           "en-US"
@@ -593,10 +337,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/MyTestIpPool\",\r\n  \"name\": \"MyTestIpPool\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"100.10.20.30\",\r\n    \"endIpAddress\": \"100.10.20.130\",\r\n    \"numberOfIpAddresses\": 101,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/cace184f-12a4-43a7-ab22-9796cda85c56\",\r\n  \"name\": \"cace184f-12a4-43a7-ab22-9796cda85c56\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.112\",\r\n    \"endIpAddress\": \"192.168.200.127\",\r\n    \"numberOfIpAddresses\": 16,\r\n    \"numberOfAllocatedIpAddresses\": 1,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "444"
+          "496"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -608,7 +352,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -617,19 +361,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvuSlOg5VZ2IEeLvqMAUBCuvmh2Ny/EBqVAbCWtkU90qSfe51zVnfNdfKCVov9aEYSuvSnWqjzTePylWiT+CifCEFBb6WEcmO8oizZMn41SJqVEuKLDxca6qFvepx2gn9jwpyLpKV+2j3IuYwWk+84"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv0OaDHEv/eBqZGVziTSE4B8lalrXDOUZHnRxEEQIINfRTR3SQsqSWvyA3Ge7+qrCmK5CLipl6fiAKKhN6zDo3gpKU6aNgGFR9mF878nhqzFOx5ts+WHEoaRHJPlc+fv+yZcy/v1zCXAjavXUOBVnx"
         ],
         "x-ms-correlation-request-id": [
-          "5a5f7898-eacd-49cb-b674-b5e5561a1212"
+          "ada425b2-cc8e-448a-a34a-c16d354cfc45"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14822"
+          "13932"
         ],
         "x-ms-request-id": [
-          "5a5f7898-eacd-49cb-b674-b5e5561a1212"
+          "ada425b2-cc8e-448a-a34a-c16d354cfc45"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:5a5f7898-eacd-49cb-b674-b5e5561a1212"
+          "LOCAL:20180210T212617Z:ada425b2-cc8e-448a-a34a-c16d354cfc45"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -641,13 +385,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/newtest?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9uZXd0ZXN0P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/cf9ccfbf-d902-44ef-914c-3e59c2cc5215?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9jZjljY2ZiZi1kOTAyLTQ0ZWYtOTE0Yy0zZTU5YzJjYzUyMTU/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e67bb811-bb62-4bae-bf91-fd2edb6d80d7"
+          "ef53a213-01ba-45fd-a762-e0184c6dabc3"
         ],
         "accept-language": [
           "en-US"
@@ -657,10 +401,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/newtest\",\r\n  \"name\": \"newtest\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"97.10.1.101\",\r\n    \"endIpAddress\": \"97.10.1.102\",\r\n    \"numberOfIpAddresses\": 2,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/cf9ccfbf-d902-44ef-914c-3e59c2cc5215\",\r\n  \"name\": \"cf9ccfbf-d902-44ef-914c-3e59c2cc5215\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.200.224\",\r\n    \"endIpAddress\": \"192.168.200.254\",\r\n    \"numberOfIpAddresses\": 31,\r\n    \"numberOfAllocatedIpAddresses\": 1,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "429"
+          "496"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -672,7 +416,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -681,19 +425,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvH0IN+zpNwbeFZRj6UYYJfI2SrvVNc83yRzzREpsmtjg8ZYrN3Jga6ZDF0Q5GAqJFSylgD700Z6jQtAdHy44qdfJgZUW0yfJT81rJdLE4WW/+QgR5wvX5RIuJYUiLGCzXUNglfE622JNOKgDjccTv"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvxiNFKAvo3vnxYoorA8MeWbDni391R+elmw8xeDCwMUPg8bjgpurjqUwK/T7l8z1nPg2r85VwjM4+kXgBekyq+CMXByTwXTTUvSG09GUUott/L/MyPN94LUUmjB/oRm75tJW+w7xZKcISp3MmPy1/"
         ],
         "x-ms-correlation-request-id": [
-          "74bf8b4e-1c73-4815-9095-aaf18b05a2ee"
+          "4a08dbb4-94c9-49d9-a2e3-5a2fd4434405"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14821"
+          "13931"
         ],
         "x-ms-request-id": [
-          "74bf8b4e-1c73-4815-9095-aaf18b05a2ee"
+          "4a08dbb4-94c9-49d9-a2e3-5a2fd4434405"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:74bf8b4e-1c73-4815-9095-aaf18b05a2ee"
+          "LOCAL:20180210T212617Z:4a08dbb4-94c9-49d9-a2e3-5a2fd4434405"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -705,13 +449,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/PSTest1?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9QU1Rlc3QxP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/e7eb5792-8240-4210-8f25-73cf2d0be74a?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9lN2ViNTc5Mi04MjQwLTQyMTAtOGYyNS03M2NmMmQwYmU3NGE/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "70ab5618-c324-4dab-ab85-ac60a4dec9cd"
+          "b91dc677-3fac-44ce-bbec-fb7fc5a1bc8f"
         ],
         "accept-language": [
           "en-US"
@@ -721,10 +465,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/PSTest1\",\r\n  \"name\": \"PSTest1\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"222.1.1.1\",\r\n    \"endIpAddress\": \"222.1.1.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/e7eb5792-8240-4210-8f25-73cf2d0be74a\",\r\n  \"name\": \"e7eb5792-8240-4210-8f25-73cf2d0be74a\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.168.102.1\",\r\n    \"endIpAddress\": \"192.168.102.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 33,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "429"
+          "496"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -736,7 +480,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -745,19 +489,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvWJt82Zst6GyzLLSlYMJoILTxTCeq9mVpG+PN1IbMVtQjA4maO2sQPhkbYMfkizGhE2jKuxp5XbDpoGRLYKUzx0MXndsJ4OdEvCuKdKoAytctji5ZT2z7dyWtzCsR8sLzMcGxQptRaVYZ9I0pv+pG"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv/mIEwJZidyOhGWlKI0cIZPlVbAnW8w3Rd59EmCWk9m463eSOGpQ7TzgjjcR4VEJiIHvhKE8deaoLHJB5DBgebuAVgKUELhHFN0Qj1Cvwc8NgXwUeQInGjhuCJheIGxPsuv0aPdRFVHXTjbRBKA/Y"
         ],
         "x-ms-correlation-request-id": [
-          "98991f9a-835e-4661-93c0-58a27210debc"
+          "344d1474-114b-42ba-b95d-da578fea272f"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14820"
+          "13930"
         ],
         "x-ms-request-id": [
-          "98991f9a-835e-4661-93c0-58a27210debc"
+          "344d1474-114b-42ba-b95d-da578fea272f"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:98991f9a-835e-4661-93c0-58a27210debc"
+          "LOCAL:20180210T212617Z:344d1474-114b-42ba-b95d-da578fea272f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -769,13 +513,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/PSTest2?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9QU1Rlc3QyP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool199198?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9UZXN0SXBQb29sMTk5MTk4P2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f1137677-85d3-4a8e-ba0b-b32148138046"
+          "a6ac308d-3527-4c3c-95e0-a5260101d6bd"
         ],
         "accept-language": [
           "en-US"
@@ -785,10 +529,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/PSTest2\",\r\n  \"name\": \"PSTest2\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"231.1.1.1\",\r\n    \"endIpAddress\": \"231.1.1.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool199198\",\r\n  \"name\": \"TestIpPool199198\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.198.9.1\",\r\n    \"endIpAddress\": \"192.198.9.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "429"
+          "451"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -800,7 +544,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -809,19 +553,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvJX9ey9dsLRKUbV4RZNGm8pZISSIWwwSnzC9xrI0HnrWsebCZ2uRTXVEGMsk9iQeh7OBLf1SUf0YB8C147ecQ15/DXNuyrzT+HztOhzYxJphdbMqhSYN/9kGvq12iWnDEapLzYxO8iaHYFJvn4hBw"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvOQz7Orf1ZQEvWUFxs1XCGeLtU/A0Vah6HpCEes2p30zuixUtTRtUd8ts9PbJgq/kLFzlPL3BpRmvAZtqOF57KLRl+N+QKURrKrAC+m55k/LUClf5UxarvmHSo+/P0ujQuPmvy7K4QmB1Zi5bvyhX"
         ],
         "x-ms-correlation-request-id": [
-          "e1068619-8a5e-42c8-acbb-e78d3bbc08a9"
+          "ebce1380-23fc-4156-a374-f70856476b17"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14819"
+          "13929"
         ],
         "x-ms-request-id": [
-          "e1068619-8a5e-42c8-acbb-e78d3bbc08a9"
+          "ebce1380-23fc-4156-a374-f70856476b17"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:e1068619-8a5e-42c8-acbb-e78d3bbc08a9"
+          "LOCAL:20180210T212617Z:ebce1380-23fc-4156-a374-f70856476b17"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -833,13 +577,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9UZXN0SXBQb29sP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1992?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9UZXN0SXBQb29sMTk5Mj9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2bbb560c-5a2d-478d-a3fb-c6adc9c33c8e"
+          "389b779d-1cb7-42b1-bcb0-a01ea67a250d"
         ],
         "accept-language": [
           "en-US"
@@ -849,71 +593,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool\",\r\n  \"name\": \"TestIpPool\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"45.9.9.1\",\r\n    \"endIpAddress\": \"45.9.9.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "433"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvWiwxsGfiNiN8etn3zCKSKxxYvbCCRLDAExF3VAc3xKfyTayFp2ShdWaNmBtNbUYsqM9iAu/iUoCIT1dfkAfPPfEL0H5lTLYUl3GubqNFD0/ZdX2KIlMzSxf8rQqVbCey+jwdrABg3HhqmfbMdFKv"
-        ],
-        "x-ms-correlation-request-id": [
-          "1372a41d-0073-4534-b9ed-c1fc1e41e1e1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14818"
-        ],
-        "x-ms-request-id": [
-          "1372a41d-0073-4534-b9ed-c1fc1e41e1e1"
-        ],
-        "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:1372a41d-0073-4534-b9ed-c1fc1e41e1e1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1992?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9UZXN0SXBQb29sMTk5Mj9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "515897e8-6acf-4142-8141-d52facff0b07"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1992\",\r\n  \"name\": \"TestIpPool1992\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"199.2.9.1\",\r\n    \"endIpAddress\": \"199.2.9.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1992\",\r\n  \"name\": \"TestIpPool1992\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.2.9.1\",\r\n    \"endIpAddress\": \"192.2.9.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "443"
@@ -928,7 +608,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -937,19 +617,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvMlDjLgrGYKDRnMAo+vywlCQrlE3vs5a+TTc3mXfX4MCbJr38wLInL/xxpE+QN8J0tGbTze1mrYNQwCFJMKJPIaYLc0F3KCLHVt0AQ6Fog+k7yQirpGRSBJefYPySNitV1KF5UJwjBBfS7J8YwOYF"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvpN9c5t3txrwErJAOeGAPSIw37VVnVm9xg5yuqyCTzd6T+8+y+wihJmILtyXpNuy/TYCmeRGFEzv5zZrrLQkasloYjdlN3DLLpT7woNeNqm/qIJtf4vlGPrZxRw0xL8S59BCeQMBMXDstuicl4Nsu"
         ],
         "x-ms-correlation-request-id": [
-          "afb491a4-4178-4dd8-b99a-2b55940b5ef8"
+          "1129163c-df6d-4a68-9b94-d92a648db792"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14817"
+          "13928"
         ],
         "x-ms-request-id": [
-          "afb491a4-4178-4dd8-b99a-2b55940b5ef8"
+          "1129163c-df6d-4a68-9b94-d92a648db792"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:afb491a4-4178-4dd8-b99a-2b55940b5ef8"
+          "LOCAL:20180210T212618Z:1129163c-df6d-4a68-9b94-d92a648db792"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -961,13 +641,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool66?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9UZXN0SXBQb29sNjY/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1993?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvaXBQb29scy9UZXN0SXBQb29sMTk5Mz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7162c971-2cf0-453d-a848-5d57c365d631"
+          "ef02bfc1-7eb0-4b40-bbf1-2c1d4c234e16"
         ],
         "accept-language": [
           "en-US"
@@ -977,10 +657,10 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool66\",\r\n  \"name\": \"TestIpPool66\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"67.66.9.1\",\r\n    \"endIpAddress\": \"67.66.9.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/ipPools/TestIpPool1993\",\r\n  \"name\": \"TestIpPool1993\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/ipPools\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"startIpAddress\": \"192.3.9.1\",\r\n    \"endIpAddress\": \"192.3.9.255\",\r\n    \"numberOfIpAddresses\": 255,\r\n    \"numberOfAllocatedIpAddresses\": 0,\r\n    \"numberOfIpAddressesInTransition\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "439"
+          "443"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -992,7 +672,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:46:10 GMT"
+          "Sat, 10 Feb 2018 21:26:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1001,19 +681,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv6ixhKiTc3LLyKMtSjIGJs3Hu4q6G63mutimuH5h/RVbkcUyaqgjf3/GZUtmb2CElVKjRmoYbhHPD+tXDgALVr5tbvWVeQoJ5rFmqw+DElB6GVFrNwK0vhkPpSeJyOae6Bzz9WMnfhpNdUXabhPr0"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvd2L84XDu+M99+YQuceYUTJBY+O8q5SP+pH8DIi4GjnLvq1/Ppe20+DygXy/uY5Xet/lcn0nNp/Mlzh2REWxTrrfx+7xZ0ZMLUW8wf24FxdJzbYI6JRNuyqcHtw32th3eSK8Mw1NPzbU/EHHu1Kwd"
         ],
         "x-ms-correlation-request-id": [
-          "8179a1b5-7ac8-40a7-a53e-3d2d3017e9f8"
+          "27cf3715-e819-4c60-9b4f-f749b82dfb6b"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14816"
+          "13927"
         ],
         "x-ms-request-id": [
-          "8179a1b5-7ac8-40a7-a53e-3d2d3017e9f8"
+          "27cf3715-e819-4c60-9b4f-f749b82dfb6b"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T214610Z:8179a1b5-7ac8-40a7-a53e-3d2d3017e9f8"
+          "LOCAL:20180210T212618Z:27cf3715-e819-4c60-9b4f-f749b82dfb6b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1027,6 +707,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "8709b769-33f0-4eb9-844a-627558ab4985"
+    "SubscriptionId": "8158498d-27b1-4ccf-9aa1-de0f925731e6"
   }
 }

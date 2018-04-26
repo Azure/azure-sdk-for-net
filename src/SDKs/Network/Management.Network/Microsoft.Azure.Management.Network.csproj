@@ -7,15 +7,22 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>16.0.0-preview</Version>
-		<PackageTags>Microsoft Azure Network management;Network;Network management</PackageTags>    
-		<PackageReleaseNotes/>
+		<Version>18.0.1-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<PackageReleaseNotes>
+		<![CDATA[
+			- DDoS Protection Plans
+			- Express Route Circuit Connection
+			- Express Route Provider APIs
+			- GetTopologyOperation supports query parameter
+			- Custom IPsec/IKE policy for Virtual Network Gateway point-to-site clients
+		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>

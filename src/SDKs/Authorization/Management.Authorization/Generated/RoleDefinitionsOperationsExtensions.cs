@@ -149,48 +149,6 @@ namespace Microsoft.Azure.Management.Authorization
             }
 
             /// <summary>
-            /// Gets a role definition by ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='roleDefinitionId'>
-            /// The fully qualified role definition ID. Use the format,
-            /// /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-            /// for subscription level role definitions, or
-            /// /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for
-            /// tenant level role definitions.
-            /// </param>
-            public static RoleDefinition GetById(this IRoleDefinitionsOperations operations, string roleDefinitionId)
-            {
-                return operations.GetByIdAsync(roleDefinitionId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a role definition by ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='roleDefinitionId'>
-            /// The fully qualified role definition ID. Use the format,
-            /// /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
-            /// for subscription level role definitions, or
-            /// /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for
-            /// tenant level role definitions.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RoleDefinition> GetByIdAsync(this IRoleDefinitionsOperations operations, string roleDefinitionId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleDefinitionId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get all role definitions that are applicable at scope and above.
             /// </summary>
             /// <param name='operations'>
@@ -225,6 +183,48 @@ namespace Microsoft.Azure.Management.Authorization
             public static async Task<IPage<RoleDefinition>> ListAsync(this IRoleDefinitionsOperations operations, string scope, ODataQuery<RoleDefinitionFilter> odataQuery = default(ODataQuery<RoleDefinitionFilter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a role definition by ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='roleId'>
+            /// The fully qualified role definition ID. Use the format,
+            /// /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+            /// for subscription level role definitions, or
+            /// /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for
+            /// tenant level role definitions.
+            /// </param>
+            public static RoleDefinition GetById(this IRoleDefinitionsOperations operations, string roleId)
+            {
+                return operations.GetByIdAsync(roleId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a role definition by ID.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='roleId'>
+            /// The fully qualified role definition ID. Use the format,
+            /// /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}
+            /// for subscription level role definitions, or
+            /// /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for
+            /// tenant level role definitions.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RoleDefinition> GetByIdAsync(this IRoleDefinitionsOperations operations, string roleId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetByIdWithHttpMessagesAsync(roleId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

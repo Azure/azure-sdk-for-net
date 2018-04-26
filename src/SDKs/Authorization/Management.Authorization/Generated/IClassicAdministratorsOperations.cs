@@ -27,9 +27,6 @@ namespace Microsoft.Azure.Management.Authorization
         /// Gets service administrator, account administrator, and
         /// co-administrators for the subscription.
         /// </summary>
-        /// <param name='apiVersion'>
-        /// The API version to use for this operation.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -45,7 +42,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ClassicAdministrator>>> ListWithHttpMessagesAsync(string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ClassicAdministrator>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets service administrator, account administrator, and
         /// co-administrators for the subscription.

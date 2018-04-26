@@ -51,10 +51,15 @@ namespace Microsoft.Azure.Management.Sql
         public SqlManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the capabilities available for the specified location.
+        /// Gets the subscription capabilities available for the specified location.
         /// </summary>
-        /// <param name='locationId'>
-        /// The location id whose capabilities are retrieved.
+        /// <param name='locationName'>
+        /// The location name whose capabilities are retrieved.
+        /// </param>
+        /// <param name='include'>
+        /// If specified, restricts the response to only include the selected item.
+        /// Possible values include: 'supportedEditions',
+        /// 'supportedElasticPoolEditions', 'supportedManagedInstanceVersions'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -77,17 +82,17 @@ namespace Microsoft.Azure.Management.Sql
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<LocationCapabilities>> ListByLocationWithHttpMessagesAsync(string locationName, string include = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (locationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "locationName");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (locationId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "locationId");
-            }
-            string apiVersion = "2014-04-01";
+            string apiVersion = "2017-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -95,17 +100,22 @@ namespace Microsoft.Azure.Management.Sql
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("locationName", locationName);
+                tracingParameters.Add("include", include);
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("locationId", locationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByLocation", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationId}/capabilities").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/capabilities").ToString();
+            _url = _url.Replace("{locationName}", System.Uri.EscapeDataString(locationName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{locationId}", System.Uri.EscapeDataString(locationId));
             List<string> _queryParameters = new List<string>();
+            if (include != null)
+            {
+                _queryParameters.Add(string.Format("include={0}", System.Uri.EscapeDataString(include)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));

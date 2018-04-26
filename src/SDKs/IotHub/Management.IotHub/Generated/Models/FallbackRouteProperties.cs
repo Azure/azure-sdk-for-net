@@ -38,12 +38,16 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// endpoint is allowed.</param>
         /// <param name="isEnabled">Used to specify whether the fallback route
         /// is enabled.</param>
+        /// <param name="name">The name of the route. The name can only include
+        /// alphanumeric characters, periods, underscores, hyphens, has a
+        /// maximum length of 64 characters, and must be unique.</param>
         /// <param name="condition">The condition which is evaluated in order
         /// to apply the fallback route. If the condition is not provided it
         /// will evaluate to true by default. For grammar, See:
         /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language</param>
-        public FallbackRouteProperties(IList<string> endpointNames, bool isEnabled, string condition = default(string))
+        public FallbackRouteProperties(IList<string> endpointNames, bool isEnabled, string name = default(string), string condition = default(string))
         {
+            Name = name;
             Condition = condition;
             EndpointNames = endpointNames;
             IsEnabled = isEnabled;
@@ -61,6 +65,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name of the route. The name can only include
+        /// alphanumeric characters, periods, underscores, hyphens, has a
+        /// maximum length of 64 characters, and must be unique.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the condition which is evaluated in order to apply the

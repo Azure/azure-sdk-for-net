@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="password">The password for Basic
         /// authentication.</param>
-        public WebBasicAuthentication(object url, object username, SecureString password)
+        public WebBasicAuthentication(object url, object username, SecretBase password)
             : base(url)
         {
             Username = username;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the password for Basic authentication.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -81,10 +81,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Password == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Password");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

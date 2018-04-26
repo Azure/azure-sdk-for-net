@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,9 +33,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the LinkedServiceReference class.
         /// </summary>
         /// <param name="referenceName">Reference LinkedService name.</param>
-        public LinkedServiceReference(string referenceName)
+        /// <param name="parameters">Arguments for LinkedService.</param>
+        public LinkedServiceReference(string referenceName, IDictionary<string, object> parameters = default(IDictionary<string, object>))
         {
             ReferenceName = referenceName;
+            Parameters = parameters;
             CustomInit();
         }
         /// <summary>
@@ -54,6 +58,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "referenceName")]
         public string ReferenceName { get; set; }
+
+        /// <summary>
+        /// Gets or sets arguments for LinkedService.
+        /// </summary>
+        [JsonProperty(PropertyName = "parameters")]
+        public IDictionary<string, object> Parameters { get; set; }
 
         /// <summary>
         /// Linked service reference type.

@@ -84,6 +84,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.Property.Get(testBase.rgName, testBase.serviceName, propertyId));
 
+                    // get the property etag
+                    var propertyTag = await testBase.client.Property.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        secretPropertyId);
+                    Assert.NotNull(propertyTag);
+                    Assert.NotNull(propertyTag.ETag);
+
                     // patch the secret property
                     var updateProperty = new PropertyUpdateParameters()
                     {
@@ -94,16 +102,16 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         secretPropertyId,
                         updateProperty,
-                        "*");
+                        propertyTag.ETag);
 
                     // check it is patched
-                    var secretResponse = await testBase.client.Property.GetWithHttpMessagesAsync(
+                    var secretResponse = await testBase.client.Property.GetAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         secretPropertyId);
 
                     ValidateProperty(
-                        secretResponse.Body, 
+                        secretResponse, 
                         testBase, 
                         secretPropertyId,
                         secretPropertyDisplayName,

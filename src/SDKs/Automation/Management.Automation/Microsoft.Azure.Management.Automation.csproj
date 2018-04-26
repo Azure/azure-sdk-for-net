@@ -2,22 +2,23 @@
   <!-- Please do not move/edit code below this line -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <!-- Please do not move/edit code below this line -->
-  
+
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <Description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</Description>
-    <Version>3.0.0-preview</Version> <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
+    <Version>3.0.1-preview</Version>
+    <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
-    <PackageTags>Microsoft "Microsoft Azure" Automation Runbook Azure REST client AzureOfficial</PackageTags>
-    <PackageReleaseNotes>Major version release: SDK rebuilt using the Swagger specs - Changes in the namespaces and interfaces. Still in preview mode and contains breaking changes.</PackageReleaseNotes>
+    <PackageTags>Automation;Runbook;</PackageTags>
+    <PackageReleaseNotes>Newer resources added. Major version release: SDK rebuilt using the Swagger specs - Changes in the namespaces and interfaces. Still in preview mode and contains breaking changes.</PackageReleaseNotes>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->
-  <Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
   <!-- Please do not move/edit code above this line -->
 </Project>

@@ -10,93 +10,20 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DatabaseState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DatabaseState
+    public static class DatabaseState
     {
-        [EnumMember(Value = "Online")]
-        Online,
-        [EnumMember(Value = "Restoring")]
-        Restoring,
-        [EnumMember(Value = "Recovering")]
-        Recovering,
-        [EnumMember(Value = "RecoveryPending")]
-        RecoveryPending,
-        [EnumMember(Value = "Suspect")]
-        Suspect,
-        [EnumMember(Value = "Emergency")]
-        Emergency,
-        [EnumMember(Value = "Offline")]
-        Offline,
-        [EnumMember(Value = "Copying")]
-        Copying,
-        [EnumMember(Value = "OfflineSecondary")]
-        OfflineSecondary
-    }
-    internal static class DatabaseStateEnumExtension
-    {
-        internal static string ToSerializedValue(this DatabaseState? value)
-        {
-            return value == null ? null : ((DatabaseState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DatabaseState value)
-        {
-            switch( value )
-            {
-                case DatabaseState.Online:
-                    return "Online";
-                case DatabaseState.Restoring:
-                    return "Restoring";
-                case DatabaseState.Recovering:
-                    return "Recovering";
-                case DatabaseState.RecoveryPending:
-                    return "RecoveryPending";
-                case DatabaseState.Suspect:
-                    return "Suspect";
-                case DatabaseState.Emergency:
-                    return "Emergency";
-                case DatabaseState.Offline:
-                    return "Offline";
-                case DatabaseState.Copying:
-                    return "Copying";
-                case DatabaseState.OfflineSecondary:
-                    return "OfflineSecondary";
-            }
-            return null;
-        }
-
-        internal static DatabaseState? ParseDatabaseState(this string value)
-        {
-            switch( value )
-            {
-                case "Online":
-                    return DatabaseState.Online;
-                case "Restoring":
-                    return DatabaseState.Restoring;
-                case "Recovering":
-                    return DatabaseState.Recovering;
-                case "RecoveryPending":
-                    return DatabaseState.RecoveryPending;
-                case "Suspect":
-                    return DatabaseState.Suspect;
-                case "Emergency":
-                    return DatabaseState.Emergency;
-                case "Offline":
-                    return DatabaseState.Offline;
-                case "Copying":
-                    return DatabaseState.Copying;
-                case "OfflineSecondary":
-                    return DatabaseState.OfflineSecondary;
-            }
-            return null;
-        }
+        public const string Online = "Online";
+        public const string Restoring = "Restoring";
+        public const string Recovering = "Recovering";
+        public const string RecoveryPending = "RecoveryPending";
+        public const string Suspect = "Suspect";
+        public const string Emergency = "Emergency";
+        public const string Offline = "Offline";
+        public const string Copying = "Copying";
+        public const string OfflineSecondary = "OfflineSecondary";
     }
 }

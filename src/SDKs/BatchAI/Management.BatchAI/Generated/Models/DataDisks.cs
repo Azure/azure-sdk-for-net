@@ -63,14 +63,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public int DiskSizeInGB { get; set; }
 
         /// <summary>
-        /// Gets none, ReadOnly, ReadWrite. Default value is None. This
+        /// Gets or sets none, ReadOnly, ReadWrite. Default value is None. This
         /// property is not patchable.
         /// </summary>
         /// <remarks>
         /// Possible values include: 'none', 'readonly', 'readwrite'
         /// </remarks>
         [JsonProperty(PropertyName = "cachingType")]
-        public CachingType? CachingType { get; private set; }
+        public CachingType? CachingType { get; set; }
 
         /// <summary>
         /// Gets or sets number of data disks to be attached to the VM. RAID

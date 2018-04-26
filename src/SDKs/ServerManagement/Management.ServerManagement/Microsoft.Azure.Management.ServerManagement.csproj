@@ -8,7 +8,7 @@
 		<Description>Allows programatic access to create SMT Gateways, Nodes, Sessions and remotely access PowerShell on a SMT Node.</Description>
 		<Version>1.1.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.ServerManagement</AssemblyName>
-		<PackageTags>Microsoft Azure Server Management;Server Management</PackageTags>
+		<PackageTags>Microsoft Azure Server Management;Server Management;</PackageTags>
 		<PackageReleaseNotes/>
 	</PropertyGroup>
 
@@ -21,6 +21,6 @@
 	</ItemGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>

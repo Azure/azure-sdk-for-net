@@ -46,6 +46,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="servicePrincipalId">The ID of the application used to
         /// authenticate against the Azure Data Lake Analytics account. Type:
         /// string (or Expression with resultType string).</param>
@@ -64,8 +67,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDataLakeAnalyticsLinkedService(object accountName, object tenant, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object subscriptionId = default(object), object resourceGroupName = default(object), object dataLakeAnalyticsUri = default(object), object encryptedCredential = default(object))
-            : base(additionalProperties, connectVia, description)
+        public AzureDataLakeAnalyticsLinkedService(object accountName, object tenant, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object subscriptionId = default(object), object resourceGroupName = default(object), object dataLakeAnalyticsUri = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             AccountName = accountName;
             ServicePrincipalId = servicePrincipalId;
@@ -103,7 +106,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// against the Azure Data Lake Analytics account.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
-        public SecureString ServicePrincipalKey { get; set; }
+        public SecretBase ServicePrincipalKey { get; set; }
 
         /// <summary>
         /// Gets or sets the name or ID of the tenant to which the service
@@ -160,10 +163,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Tenant == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Tenant");
-            }
-            if (ServicePrincipalKey != null)
-            {
-                ServicePrincipalKey.Validate();
             }
         }
     }

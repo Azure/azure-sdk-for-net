@@ -6,17 +6,21 @@
 	<PropertyGroup>
 		<Description>Provides management capabilities for Azure Analysis Services accounts.</Description>
 		<AssemblyTitle>Microsoft Azure Analysis Services Management Library</AssemblyTitle>
-		<Version>2.0.2</Version>
+		<Version>2.0.3</Version>
 		<AssemblyName>Microsoft.Azure.Management.Analysis</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Analysis</PackageId>
-		<PackageTags/>
-		<PackageReleaseNotes/>
+		<PackageTags>AnalysisService;</PackageTags>
+		<PackageReleaseNotes>
+        <![CDATA[
+		    This is a public release of the Azure AnalysisServices SDK. Included with this release is adding query scale out and firewall support which are released in 2017-08-01 API.
+        ]]>
+        </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
 	</PropertyGroup>
 	
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>

@@ -5,4 +5,4 @@
 
 @echo off
 call %~dp0..\..\..\..\tools\generate.cmd monitor/resource-manager %*
-call %~dp0..\..\..\..\tools\generate.cmd monitor/data-plane %*
+

@@ -33,10 +33,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Initializes a new instance of the IotHubDescription class.
         /// </summary>
         /// <param name="location">The resource location.</param>
-        /// <param name="subscriptionid">The subscription identifier.</param>
-        /// <param name="resourcegroup">The name of the resource group that
-        /// contains the IoT hub. A resource group name uniquely identifies the
-        /// resource group within the subscription.</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
@@ -44,11 +40,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="etag">The Etag field is *not* required. If it is
         /// provided in the response body, it must also be provided as a header
         /// per the normal ETag convention.</param>
-        public IotHubDescription(string location, string subscriptionid, string resourcegroup, IotHubSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotHubProperties properties = default(IotHubProperties))
+        public IotHubDescription(string location, IotHubSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), IotHubProperties properties = default(IotHubProperties))
             : base(location, id, name, type, tags)
         {
-            Subscriptionid = subscriptionid;
-            Resourcegroup = resourcegroup;
             Etag = etag;
             Properties = properties;
             Sku = sku;
@@ -59,20 +53,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the subscription identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "subscriptionid")]
-        public string Subscriptionid { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the resource group that contains the IoT
-        /// hub. A resource group name uniquely identifies the resource group
-        /// within the subscription.
-        /// </summary>
-        [JsonProperty(PropertyName = "resourcegroup")]
-        public string Resourcegroup { get; set; }
 
         /// <summary>
         /// Gets or sets the Etag field is *not* required. If it is provided in
@@ -101,14 +81,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public override void Validate()
         {
             base.Validate();
-            if (Subscriptionid == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Subscriptionid");
-            }
-            if (Resourcegroup == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Resourcegroup");
-            }
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");

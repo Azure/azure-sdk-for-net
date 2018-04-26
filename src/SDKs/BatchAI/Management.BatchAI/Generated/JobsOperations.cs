@@ -1006,8 +1006,9 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// List all files inside the given output directory (Only if the output
-        /// directory is on Azure File Share or Azure Storage container).
+        /// List all directories and files inside the given directory of the output
+        /// directory (Only if the output directory is on Azure File Share or Azure
+        /// Storage container).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1094,6 +1095,11 @@ namespace Microsoft.Azure.Management.BatchAI
             {
                 outputdirectoryid = jobsListOutputFilesOptions.Outputdirectoryid;
             }
+            string directory = default(string);
+            if (jobsListOutputFilesOptions != null)
+            {
+                directory = jobsListOutputFilesOptions.Directory;
+            }
             int? linkexpiryinminutes = default(int?);
             if (jobsListOutputFilesOptions != null)
             {
@@ -1114,6 +1120,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("jobName", jobName);
                 tracingParameters.Add("outputdirectoryid", outputdirectoryid);
+                tracingParameters.Add("directory", directory);
                 tracingParameters.Add("linkexpiryinminutes", linkexpiryinminutes);
                 tracingParameters.Add("maxResults", maxResults);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1133,6 +1140,10 @@ namespace Microsoft.Azure.Management.BatchAI
             if (outputdirectoryid != null)
             {
                 _queryParameters.Add(string.Format("outputdirectoryid={0}", System.Uri.EscapeDataString(outputdirectoryid)));
+            }
+            if (directory != null)
+            {
+                _queryParameters.Add(string.Format("directory={0}", System.Uri.EscapeDataString(directory)));
             }
             if (linkexpiryinminutes != null)
             {
@@ -2425,8 +2436,9 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// List all files inside the given output directory (Only if the output
-        /// directory is on Azure File Share or Azure Storage container).
+        /// List all directories and files inside the given directory of the output
+        /// directory (Only if the output directory is on Azure File Share or Azure
+        /// Storage container).
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

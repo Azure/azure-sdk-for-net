@@ -35,12 +35,24 @@ namespace Microsoft.Azure.OperationalInsights
             firstHandler.InnerHandler = customHandler;
         }
 
+        /// <summary>
+        /// Additional workspaces referenced in cross-resource queries.
+        /// </summary>
         public IList<string> AdditionalWorkspaces { get; set; } = new List<string>();
 
+        /// <summary>
+        /// Query preferences.
+        /// </summary>
         public ApiPreferences Preferences { get; set; } = new ApiPreferences();
 
+        /// <summary>
+        /// Unique name for the calling application. This is only used for telemetry and debugging.
+        /// </summary>
         public string NameHeader { get; set; }
 
+        /// <summary>
+        /// A unique ID per request. This will be generated per request if not specified.
+        /// </summary>
         public string RequestId { get; set; }
     }
 }

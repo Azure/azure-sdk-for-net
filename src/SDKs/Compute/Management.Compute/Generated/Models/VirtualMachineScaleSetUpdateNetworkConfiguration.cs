@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// network interfaces.</param>
         /// <param name="ipConfigurations">The virtual machine scale set IP
         /// Configuration.</param>
-        public VirtualMachineScaleSetUpdateNetworkConfiguration(string id = default(string), string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>))
+        /// <param name="enableIPForwarding">Whether IP forwarding enabled on
+        /// this NIC.</param>
+        public VirtualMachineScaleSetUpdateNetworkConfiguration(string id = default(string), string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?))
             : base(id)
         {
             Name = name;
@@ -58,6 +60,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
             IpConfigurations = ipConfigurations;
+            EnableIPForwarding = enableIPForwarding;
             CustomInit();
         }
 
@@ -103,6 +106,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether IP forwarding enabled on this NIC.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableIPForwarding")]
+        public bool? EnableIPForwarding { get; set; }
 
     }
 }

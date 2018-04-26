@@ -60,9 +60,9 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
            
-            Assert.Equal(result.ProvisioningState, "Succeeded");
-            Assert.Equal(result.State, "Succeeded");
-            Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.State);
+            Assert.Equal(2, result.Tags.Count);
         }
 
         [Fact]
@@ -99,9 +99,9 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Succeeded");
-            Assert.Equal(result.State, "Succeeded");
-            Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.State);
+            Assert.Equal(2, result.Tags.Count);
             Assert.Equal(result.BackupBlobContainerUri, AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri);
         }
 
@@ -153,9 +153,9 @@ namespace AnalysisServices.Tests.InMemoryTests
             // Validate result
             Assert.Equal(result.Location, AnalysisServicesTestUtilities.DefaultLocation);
             Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Succeeded");
-            Assert.Equal(result.State, "Succeeded");
-            Assert.Equal(result.Tags.Count, 2);
+            Assert.Equal("Succeeded", result.ProvisioningState);
+            Assert.Equal("Succeeded", result.State);
+            Assert.Equal(2, result.Tags.Count);
             Assert.Equal(result.BackupBlobContainerUri, AnalysisServicesTestUtilities.DefaultBackupBlobContainerUri);
         }
 

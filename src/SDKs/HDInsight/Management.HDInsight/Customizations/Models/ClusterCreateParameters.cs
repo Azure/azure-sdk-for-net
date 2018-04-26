@@ -8,7 +8,7 @@
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
-    using Microsoft.HDInsight.Models;
+    using Microsoft.Azure.Management.HDInsight.Models;
     using System;
     using System.Collections.Generic;
 

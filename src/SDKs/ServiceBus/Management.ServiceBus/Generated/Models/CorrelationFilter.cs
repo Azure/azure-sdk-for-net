@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the CorrelationFilter class.
         /// </summary>
+        /// <param name="properties">dictionary object for custom
+        /// filters</param>
         /// <param name="correlationId">Identifier of the correlation.</param>
         /// <param name="messageId">Identifier of the message.</param>
         /// <param name="to">Address to send to.</param>
@@ -40,8 +44,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="contentType">Content type of the message.</param>
         /// <param name="requiresPreprocessing">Value that indicates whether
         /// the rule action requires preprocessing.</param>
-        public CorrelationFilter(string correlationId = default(string), string messageId = default(string), string to = default(string), string replyTo = default(string), string label = default(string), string sessionId = default(string), string replyToSessionId = default(string), string contentType = default(string), bool? requiresPreprocessing = default(bool?))
+        public CorrelationFilter(IDictionary<string, string> properties = default(IDictionary<string, string>), string correlationId = default(string), string messageId = default(string), string to = default(string), string replyTo = default(string), string label = default(string), string sessionId = default(string), string replyToSessionId = default(string), string contentType = default(string), bool? requiresPreprocessing = default(bool?))
         {
+            Properties = properties;
             CorrelationId = correlationId;
             MessageId = messageId;
             To = to;
@@ -58,6 +63,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets dictionary object for custom filters
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public IDictionary<string, string> Properties { get; set; }
 
         /// <summary>
         /// Gets or sets identifier of the correlation.

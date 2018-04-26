@@ -18,7 +18,7 @@ namespace StreamAnalytics.Tests
 {
     public class FunctionTests : TestBase
     {
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public async Task FunctionOperationsTest_Scalar_AzureMLWebService()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

@@ -37,11 +37,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
-        public LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
+        public LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
         {
             AdditionalProperties = additionalProperties;
             ConnectVia = connectVia;
             Description = description;
+            Parameters = parameters;
+            Annotations = annotations;
             CustomInit();
         }
 
@@ -70,6 +75,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets parameters for linked service.
+        /// </summary>
+        [JsonProperty(PropertyName = "parameters")]
+        public IDictionary<string, ParameterSpecification> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of tags that can be used for describing the
+        /// Dataset.
+        /// </summary>
+        [JsonProperty(PropertyName = "annotations")]
+        public IList<object> Annotations { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -80,6 +98,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ConnectVia != null)
             {
                 ConnectVia.Validate();
+            }
+            if (Parameters != null)
+            {
+                foreach (var valueElement in Parameters.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
+                }
             }
         }
     }

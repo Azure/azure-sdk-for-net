@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Server.</param>
         /// <param name="vmSize">The size of the virtual machine of the file
         /// server.</param>
-        /// <param name="sshConfiguration">SSH settings for the file
+        /// <param name="sshConfiguration">SSH configuration for the file
         /// server.</param>
         /// <param name="dataDisks">Settings for the data disk which would be
         /// created for the file server.</param>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets SSH settings for the file server.
+        /// Gets or sets SSH configuration for the file server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sshConfiguration")]
         public SshConfiguration SshConfiguration { get; set; }

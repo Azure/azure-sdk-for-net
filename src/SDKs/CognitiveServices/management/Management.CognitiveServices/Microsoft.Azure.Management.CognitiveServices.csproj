@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.CognitiveServices</PackageId>
 		<Description>Microsoft Azure Management Cognitive Services Library</Description>
-		<Version>2.0.0</Version>
+		<Version>4.0.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.CognitiveServices</AssemblyName>
-		<PackageTags>Microsoft Azure Cognitive Services management;Cognitive Services;Cognitive Services management</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageTags>Cognitive Services management;Cognitive Services;</PackageTags>
+		<PackageReleaseNotes>1. Add GetUsages operation in AccountsOperations; 2. Decommissioned several API Kind;</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
@@ -19,6 +19,6 @@
 	</ItemGroup>
 
 	<!-- Please do not move/edit code below this line -->
-	<Import Condition="Exists('[MSBuild]::GetPathOfFileAbove(AzSdk.RP.props)')" Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
 	<!-- Please do not move/edit code above this line -->
 </Project>
