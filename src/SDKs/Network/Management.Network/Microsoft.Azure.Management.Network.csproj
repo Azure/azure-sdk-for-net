@@ -11,7 +11,7 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Made id read-only by bringing properties from shared resource
+			- Made id read-only by bringing properties from shared resource in DDos Protection plan functionality
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
