@@ -53,5 +53,41 @@ namespace Microsoft.Azure.Management.Storage
                 }
             }
 
+            /// <summary>
+            /// Gets the current usage count and the limit for the resources of the
+            /// location under the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the Azure Storage resource.
+            /// </param>
+            public static IEnumerable<Usage> ListByLocation(this IUsageOperations operations, string location)
+            {
+                return operations.ListByLocationAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the current usage count and the limit for the resources of the
+            /// location under the subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The location of the Azure Storage resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<Usage>> ListByLocationAsync(this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByLocationWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

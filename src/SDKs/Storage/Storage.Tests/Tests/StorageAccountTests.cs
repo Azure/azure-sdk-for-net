@@ -831,6 +831,29 @@ namespace Storage.Tests
             }
         }
 
+        [Fact]
+        public void StorageAccountLocationUsageTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Query usage
+                string Location = StorageManagementTestUtilities.DefaultLocation;
+                var usages = storageMgmtClient.Usage.ListByLocation(Location);
+                Assert.Equal(1, usages.Count());
+                Assert.Equal(UsageUnit.Count, usages.First().Unit);
+                Assert.NotNull(usages.First().CurrentValue);
+                Assert.Equal(250, usages.First().Limit);
+                Assert.NotNull(usages.First().Name);
+                Assert.Equal("StorageAccounts", usages.First().Name.Value);
+                Assert.Equal("Storage Accounts", usages.First().Name.LocalizedValue);
+            }
+        }
+
         // [Fact]
         public void StorageAccountGetOperationsTest()
         {
