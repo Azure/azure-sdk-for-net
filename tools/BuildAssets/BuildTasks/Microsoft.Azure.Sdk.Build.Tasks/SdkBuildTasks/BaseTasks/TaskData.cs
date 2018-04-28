@@ -12,9 +12,25 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
 
     public static class TaskData
     {
-        //private List<SdkProjectMetaData> _categorizedProjects;
+        private static List<SdkProjectMetaData> _categorizedProjects;
 
-        public static List<SdkProjectMetaData> CategorizedProjects { get; set; }
+        public static List<SdkProjectMetaData> CategorizedProjects
+        {
+            get
+            {
+                if(_categorizedProjects == null)
+                {
+                    _categorizedProjects = new List<SdkProjectMetaData>();
+                }
+
+                return _categorizedProjects;
+            }
+
+            set
+            {
+                _categorizedProjects = value;
+            }
+        }
 
 
         static TaskData()

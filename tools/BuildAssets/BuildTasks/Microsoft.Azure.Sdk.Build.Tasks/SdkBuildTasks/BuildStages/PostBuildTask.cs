@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         private string GetApiTagsPropsPath(SdkProjectMetaData sdkProject)
         {
             string apiTagsPropsPath = string.Empty;
-            string apiTagsFileName = BuildStageConstant.PROPS_FILE_NAME;
+            string apiTagsFileName = BuildStageConstant.PROPS_APITAG_FILE_NAME;
 
             string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
             int depthSearchIndex = 0;

@@ -3,8 +3,10 @@
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.Models
 {
+    using Microsoft.Build.Construction;
     using Microsoft.Build.Evaluation;
     using Microsoft.Build.Framework;
+    using Microsoft.WindowsAzure.Build.Tasks.Utilities;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -36,6 +38,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
         public bool IsFxNetCore { get; set; }
 
         public bool IsNonSdkProject { get; set; }
+
+        public List<string> ProjectImports { get; set; }
 
         public SdkProjectMetaData(ITaskItem project, Project msbuildProject, TargetFrameworkMoniker fxMoniker, string fxMonikerString, string fullProjectPath, string targetOutputPath, bool isTargetFxSupported, SdkProjctType projectType = SdkProjctType.Sdk)
         {
@@ -104,8 +108,34 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     IsProjectDataPlane = IsDataPlaneProject(MsBuildProject);
                     IsFxFullDesktopVersion = IsExpectedFxCategory(FxMoniker, TargetFxCategory.FullDesktop);
                     IsFxNetCore = IsExpectedFxCategory(FxMoniker, TargetFxCategory.NetCore);
+                    ProjectImports = GetProjectImports(MsBuildProject);
                 }
             }
+        }
+        
+        private List<string> GetProjectImports(Project msbuildProj)
+        {
+            string rpProps = Constants.BuildStageConstant.PROPS_APITAG_FILE_NAME;
+            string multiApiProps = Constants.BuildStageConstant.PROPS_MULTIAPITAG_FILE_NAME;
+            //$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))
+            List<string> importList = new List<string>();
+            ProjectRootElement rootElm = msbuildProj.Xml;
+            ICollection<ProjectImportElement> importElms = rootElm.Imports;
+
+            foreach (ProjectImportElement imp in importElms)
+            {
+                if (imp.Project.Contains(rpProps))
+                {
+                    importList.Add(rpProps);
+                }
+
+                if (imp.Project.Contains(multiApiProps))
+                {
+                    importList.Add(multiApiProps);
+                }
+            }
+
+            return importList;
         }
 
         private TargetFrameworkMoniker GetTargetFramework(Project msBuildProj, TargetFrameworkMoniker priorityFxVersion)

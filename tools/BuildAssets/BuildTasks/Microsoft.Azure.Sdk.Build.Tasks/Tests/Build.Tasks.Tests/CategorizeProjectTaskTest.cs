@@ -11,6 +11,9 @@ using System.IO;
 using System.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Evaluation;
+using Microsoft.Azure.Sdk.Build.Tasks.Models;
+using Microsoft.Build.Construction;
+using System.Text.RegularExpressions;
 
 namespace Build.Tasks.Tests
 {

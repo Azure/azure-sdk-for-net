@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             if (CreatePropsFile == true)
             {
                 List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
-                
+
                 SdkProjectMetaData metaProject = null;
 
                 if (filteredProjects.Count <= 0)
@@ -63,29 +63,32 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                     metaProject = filteredProjects.First<SdkProjectMetaData>();
                 }
 
-                if (metaProject.IsProjectDataPlane == false)
+                if (metaProject.IsNonSdkProject == false)
                 {
                     if (metaProject.ProjectType != SdkProjctType.Test)
                     {
                         TaskLogger.LogDebugInfo("Filtered project(s) is '{0}'", metaProject.FullProjectPath);
-                        if (GetApiTagsPropsPath(metaProject, out string propFilePath, out string slnDirPath))
+
+                        foreach (string importFileName in metaProject.ProjectImports)
                         {
-                            if (string.IsNullOrEmpty(propFilePath))
+                            if (GetApiTagsPropsPath(metaProject, importFileName, out string propFilePath, out string slnDirPath))
                             {
-                                propFilePath = Path.Combine(slnDirPath, BuildStageConstant.PROPS_FILE_NAME);
-                                MsBuildProjectFile msBuildFile = new MsBuildProjectFile(propFilePath);
-                                ApiTagPropsFile = msBuildFile.CreateXmlDocWithProps();
+                                if (string.IsNullOrEmpty(propFilePath))
+                                {
+                                    propFilePath = Path.Combine(slnDirPath, importFileName);
+                                    MsBuildProjectFile msBuildFile = new MsBuildProjectFile(propFilePath);
+                                    ApiTagPropsFile = msBuildFile.CreateXmlDocWithProps();
+                                }
+                                else
+                                {
+                                    ApiTagPropsFile = propFilePath;
+                                }
+                                //ToDo: Schema verification
                             }
-                            else
-                            {
-                                ApiTagPropsFile = propFilePath;
-                            }
-                            //ToDo: Schema verification
                         }
                     }
                 }
             }
-
 
             return true;
         }
@@ -99,31 +102,77 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             return isValid;
         }
 
-        private bool GetApiTagsPropsPath(SdkProjectMetaData sdkProject, out string propsFilePath, out string slnFilePath)
+
+        private string GetSlnFilePath(SdkProjectMetaData sdkProject)
+        {
+            string iteratingDirPath = Path.GetDirectoryName(sdkProject.FullProjectPath);
+            string slnFilePath = string.Empty;
+            int depthSearchIndex = 0;
+
+            while (depthSearchIndex <= 7)
+            {
+                var slnFiles = Directory.EnumerateFiles(iteratingDirPath, "*.sln", SearchOption.TopDirectoryOnly);
+
+                if (slnFiles.Any())
+                {
+                    slnFilePath = slnFiles.First<string>();
+                }
+                else
+                {
+                    iteratingDirPath = Path.GetDirectoryName(iteratingDirPath);
+                    depthSearchIndex++;
+                }
+            }
+
+            return slnFilePath;
+        }
+
+
+        private string GetApiTagsPropsPath(SdkProjectMetaData sdkProject, string apiTagsFileName)
+        {
+            string slnFilePath = GetSlnFilePath(sdkProject);
+            string propsFilePath = string.Empty;
+
+            if(File.Exists(slnFilePath))
+            {
+                propsFilePath = Path.Combine(Path.GetDirectoryName(slnFilePath), apiTagsFileName);
+
+                if(!File.Exists(propsFilePath))
+                {
+                    propsFilePath = string.Empty;
+                }
+            }
+
+            return propsFilePath;
+        }
+
+        private bool GetApiTagsPropsPath(SdkProjectMetaData sdkProject, string apiTagsFileName, out string propsFilePath, out string slnFileDirPath)
         {
             string apiTagsPropsPath = string.Empty;
-            string sFile = string.Empty;
-            string apiTagsFileName = BuildStageConstant.PROPS_FILE_NAME;
+            string slnDir = string.Empty;
+            //string apiTagsFileName = BuildStageConstant.PROPS_FILE_NAME;
 
             string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
             int depthSearchIndex = 0;
 
-            while (depthSearchIndex <= 3)
+            while (depthSearchIndex <= 7)
             {
                 string propsFile = Path.Combine(projDir, apiTagsFileName);
                 var slnFiles = Directory.EnumerateFiles(projDir, "*.sln", SearchOption.TopDirectoryOnly);
                 propsFilePath = string.Empty;
-                slnFilePath = string.Empty;
+                slnFileDirPath = string.Empty;
 
                 if (File.Exists(propsFile))
                 {
                     apiTagsPropsPath = propsFile;
-                    depthSearchIndex = 4;
+                    //depthSearchIndex = 4;
+                    break;
                 }
                 else if(slnFiles.Any())
                 {
-                    sFile = projDir;
-                    depthSearchIndex = 4;
+                    slnDir = projDir;
+                    //depthSearchIndex = 4;
+                    break;
                 }
                 else
                 {
@@ -133,7 +182,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             }
 
             propsFilePath = apiTagsPropsPath;
-            slnFilePath = sFile;
+            slnFileDirPath = slnDir;
 
             return true;
             //return ( !(!string.IsNullOrEmpty(propsFilePath)) || (!string.IsNullOrEmpty(slnFilePath)) );

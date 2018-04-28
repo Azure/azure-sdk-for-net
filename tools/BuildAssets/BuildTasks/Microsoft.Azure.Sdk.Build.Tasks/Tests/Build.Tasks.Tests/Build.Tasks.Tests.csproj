@@ -38,7 +38,7 @@
   </ItemGroup>
   
   <ItemGroup Condition=" '$(AfterBuild)' == 'true' ">
-    <Compile Include="SdkInfoSamples\*.cs" />
+    <Compile Include="TestData\SdkInfoSamples\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -28,10 +28,8 @@ namespace Build.Tasks.Tests
         [Fact]
         public void TagMultipleApiVersions()
         {
-            //GetApiMap("SdkInfo_Compute");
+            GetApiMap("SdkInfo_Compute");
             VerifyNupkg();
-
-            
         }
 
 
@@ -46,10 +44,10 @@ namespace Build.Tasks.Tests
 
             IEnumerable<Tuple<string, string, string>> apiMap = (IEnumerable<Tuple<string,string,string>>) someType.GetProperty(sdkInfoTypeName).GetValue(null, null);
 
-            foreach (Tuple<string, string, string> apiSet in apiMap)
-            {
+            //foreach (Tuple<string, string, string> apiSet in apiMap)
+            //{
 
-            }
+            //}
 
             Assert.NotNull(apiMap);
             
