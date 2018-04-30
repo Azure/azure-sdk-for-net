@@ -1,7 +1,7 @@
     {
       "Name": "JobScheduleExecutionInformation",
       "ProtocolName": "Models.JobScheduleExecutionInformation",
-      "Comment": "The execution information for a job schedule.",
+      "SummaryComment": "The execution information for a job schedule.",
       "IsConstructorPublic": false,
       "Properties": [
         {

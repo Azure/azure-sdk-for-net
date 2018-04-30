@@ -1,7 +1,7 @@
     {
       "Name": "JobScheduleStatistics",
       "ProtocolName": "Models.JobScheduleStatistics",
-      "Comment": "Resource usage statistics for a <see cref=\"CloudJobSchedule\"/>.",
+      "SummaryComment": "Resource usage statistics for a <see cref=\"CloudJobSchedule\"/>.",
       "IsConstructorPublic": false,
       "Properties": [
         {

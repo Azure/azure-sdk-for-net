@@ -1,7 +1,7 @@
 {
     "Name": "InboundEndpoint",
     "ProtocolName": "Models.InboundEndpoint",
-    "Comment": "An inbound endpoint on a compute node.",
+    "SummaryComment": "An inbound endpoint on a compute node.",
     "IsUsedInCollections": true,
     "IsConstructorPublic": false,
     "Properties": [

@@ -1,7 +1,7 @@
     {
       "Name": "JobExecutionInformation",
       "ProtocolName": "Models.JobExecutionInformation",
-      "Comment": "Information about the execution of an Azure Batch job.",
+      "SummaryComment": "Information about the execution of an Azure Batch job.",
       "IsConstructorPublic": false,
       "Properties": [
         {

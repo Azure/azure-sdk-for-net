@@ -1,7 +1,7 @@
     {
       "Name": "ApplicationPackageReference",
       "ProtocolName": "Models.ApplicationPackageReference",
-      "Comment": "A reference to an application package to be deployed to compute nodes.",
+      "SummaryComment": "A reference to an application package to be deployed to compute nodes.",
       "IsUsedInCollections": true,
       "Properties": [
         {

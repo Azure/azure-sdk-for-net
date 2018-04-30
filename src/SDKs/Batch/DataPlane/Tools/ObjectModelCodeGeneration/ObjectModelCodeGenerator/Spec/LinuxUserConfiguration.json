@@ -1,7 +1,7 @@
 {
   "Name": "LinuxUserConfiguration",
   "ProtocolName": "Models.LinuxUserConfiguration",
-  "Comment": "Properties used to create a user account on a Linux node.",
+  "SummaryComment": "Properties used to create a user account on a Linux node.",
   "IsConstructorPublic": true,
   "Properties": [
     {

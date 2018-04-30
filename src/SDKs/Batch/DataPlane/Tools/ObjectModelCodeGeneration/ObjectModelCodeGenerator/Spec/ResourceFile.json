@@ -1,7 +1,7 @@
     {
       "Name": "ResourceFile",
       "ProtocolName": "Models.ResourceFile",
-      "Comment": "A file to be downloaded to a compute node from Azure Blob Storage, such as task executables and task input data files.",
+      "SummaryComment": "A file to be downloaded to a compute node from Azure Blob Storage, such as task executables and task input data files.",
       "IsUsedInCollections": true,
       "Properties": [
         {
