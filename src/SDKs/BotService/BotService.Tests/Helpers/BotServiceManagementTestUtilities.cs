@@ -180,8 +180,6 @@ namespace BotService.Tests.Helpers
                 Assert.Equal(expected.Properties.DisplayName, actual.Properties.DisplayName);
                 Assert.Equal(expected.Properties.Endpoint, actual.Properties.Endpoint);
             }
-
-            
         }
     }
 }

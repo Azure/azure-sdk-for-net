@@ -11,7 +11,7 @@
     <PackageTags>Microsoft Azure Bot Service management;Bot;Bot Service;REST HTTP client;windowsazureofficial;netcore451511</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      This is a public release of the Azure Bot Service SDK. Included with this release is bot management and channel registration.
+      This is a public preview release of the Azure Bot Service SDK. Included with this release is bot management and channel registration.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
@@ -52,7 +52,7 @@
   </ItemGroup>
 
   <!-- Please do not move/edit code below this line -->
-	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-	<!-- Please do not move/edit code above this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 
 </Project>
