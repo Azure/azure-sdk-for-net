@@ -51,6 +51,7 @@ internal static partial class SdkInfo
                 new Tuple<string, string, string>("Sql", "Servers", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServiceObjectives", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServiceTierAdvisors", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "ShortTermRetentionPolicies", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "SubscriptionUsages", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncAgents", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncGroups", "2015-05-01-preview"),
