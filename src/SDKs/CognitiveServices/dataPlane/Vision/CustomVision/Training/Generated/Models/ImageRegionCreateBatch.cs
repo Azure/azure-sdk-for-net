@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Batch of image region information to create.
+    /// </summary>
     public partial class ImageRegionCreateBatch
     {
         /// <summary>

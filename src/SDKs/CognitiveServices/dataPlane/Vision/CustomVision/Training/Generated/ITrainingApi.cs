@@ -174,6 +174,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <summary>
         /// Gets the number of untagged images
         /// </summary>
+        /// <remarks>
+        /// This API returns the images which have no tags for a given project
+        /// and optionally an iteration. If no iteration is specified the
+        /// current workspace is used.
+        /// </remarks>
         /// <param name='projectId'>
         /// The project id
         /// </param>
@@ -191,6 +196,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <summary>
         /// Get images by id for a given project iteration
         /// </summary>
+        /// <remarks>
+        /// This API will return a set of Images for the specified tags and
+        /// optionally iteration. If no iteration is specified the
+        /// current workspace is used.
+        /// </remarks>
         /// <param name='projectId'>
         /// The project id
         /// </param>
@@ -253,6 +263,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <summary>
         /// Add the provided batch of images to the set of training images
         /// </summary>
+        /// <remarks>
+        /// This API accepts a batch of files, and optionally tags, to create
+        /// images. There is a limit of 64 images and 20 tags.
+        /// </remarks>
         /// <param name='projectId'>
         /// The project id
         /// </param>
@@ -271,6 +285,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <summary>
         /// Add the provided images urls to the set of training images
         /// </summary>
+        /// <remarks>
+        /// This API accepts a batch of urls, and optionally tags, to create
+        /// images. There is a limit of 64 images and 20 tags.
+        /// </remarks>
         /// <param name='projectId'>
         /// The project id
         /// </param>
@@ -288,6 +306,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <summary>
         /// Add the specified predicted images to the set of training images
         /// </summary>
+        /// <remarks>
+        /// This API creates a batch of images from predicted images specified.
+        /// There is a limit of 64 images and 20 tags.
+        /// </remarks>
         /// <param name='projectId'>
         /// The project id
         /// </param>
@@ -342,6 +364,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <summary>
         /// Create a set of image regions
         /// </summary>
+        /// <remarks>
+        /// This API accepts a batch of image regions, and optionally tags, to
+        /// update existing images with region information.
+        /// There is a limit of 64 entries in the batch.
+        /// </remarks>
         /// <param name='projectId'>
         /// The project id
         /// </param>
@@ -378,6 +405,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// Get region proposals for an image. Returns empty array if no
         /// proposals are found.
         /// </summary>
+        /// <remarks>
+        /// This API will get region proposals for an image along with
+        /// confidences for the region. It returns an empty array if no
+        /// proposals are found.
+        /// </remarks>
         /// <param name='projectId'>
         /// The project id
         /// </param>

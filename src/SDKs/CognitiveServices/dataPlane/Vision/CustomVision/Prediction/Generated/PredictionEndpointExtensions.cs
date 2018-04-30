@@ -10,7 +10,10 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
 {
+    using Microsoft.Rest;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
@@ -20,6 +23,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
     /// </summary>
     public static partial class PredictionEndpointExtensions
     {
+            /// <summary>
+            /// Predict an image url and saves the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            public static ImagePrediction PredictImageUrl(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            {
+                return operations.PredictImageUrlAsync(projectId, imageUrl, iterationId, application).GetAwaiter().GetResult();
+            }
+
             /// <summary>
             /// Predict an image url and saves the result
             /// </summary>
@@ -52,6 +80,57 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             }
 
             /// <summary>
+            /// Predict an image url and saves the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.PredictImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Predict an image and saves the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            public static ImagePrediction PredictImage(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            {
+                return operations.PredictImageAsync(projectId, imageData, iterationId, application).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Predict an image and saves the result
             /// </summary>
             /// <param name='operations'>
@@ -78,6 +157,57 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Predict an image and saves the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> PredictImageWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.PredictImageWithHttpMessagesAsync(projectId, imageData, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Predict an image url without saving the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            public static ImagePrediction PredictImageUrlWithNoStore(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            {
+                return operations.PredictImageUrlWithNoStoreAsync(projectId, imageUrl, iterationId, application).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -112,6 +242,57 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             }
 
             /// <summary>
+            /// Predict an image url without saving the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithNoStoreWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.PredictImageUrlWithNoStoreWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Predict an image without saving the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            public static ImagePrediction PredictImageWithNoStore(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            {
+                return operations.PredictImageWithNoStoreAsync(projectId, imageData, iterationId, application).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
             /// Predict an image without saving the result
             /// </summary>
             /// <param name='operations'>
@@ -138,6 +319,32 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Predict an image without saving the result
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id
+            /// </param>
+            /// <param name='imageData'>
+            /// </param>
+            /// <param name='iterationId'>
+            /// Optional. Specifies the id of a particular iteration to evaluate against.
+            /// The default iteration for the project will be used when not specified
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> PredictImageWithNoStoreWithHttpMessages(this IPredictionEndpoint operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.PredictImageWithNoStoreWithHttpMessagesAsync(projectId, imageData, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }
