@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.EventGrid</PackageId>
 		<Description>Provides developers with a library to publish events to Azure Event Grid. </Description>
-		<Version>1.1.0-preview</Version>
+		<Version>1.2.0</Version>
 		<AssemblyName>Microsoft.Azure.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
-		<PackageReleaseNotes>Added definitions for the event types being published to EventGrid.</PackageReleaseNotes>
+		<PackageReleaseNotes>Updated version to stable version. Also added support for consuming Azure Container Registry events and Azure IoT Hub events published to Event Grid.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
