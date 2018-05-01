@@ -84,15 +84,9 @@ namespace Microsoft.Azure.EventGrid.Tests.TestHelper
 
         public static string GetLocationFromProvider(this ResourceManagementClient resourceManagementClient)
         {
-            var providers = resourceManagementClient.Providers.Get("Microsoft.EventGrid");
-
-            var location = providers.ResourceTypes.Where(
-                (resType) =>
-                {
-                    return string.Equals(resType.ResourceType, "topics", StringComparison.OrdinalIgnoreCase);
-                }
-                ).First().Locations.FirstOrDefault();
-            return location;
+            // West Central US is one of our early deployment regions
+            // so we typically record tests targeting this region.
+            return "westcentralus";
         }
     }
 }
