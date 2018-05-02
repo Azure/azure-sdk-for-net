@@ -12,10 +12,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for SkuTier.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum SkuName
+    public enum SkuTier
     {
         [EnumMember(Value = "Basic")]
         Basic,
@@ -24,37 +24,37 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         [EnumMember(Value = "Premium")]
         Premium
     }
-    internal static class SkuNameEnumExtension
+    internal static class SkuTierEnumExtension
     {
-        internal static string ToSerializedValue(this SkuName? value)
+        internal static string ToSerializedValue(this SkuTier? value)
         {
-            return value == null ? null : ((SkuName)value).ToSerializedValue();
+            return value == null ? null : ((SkuTier)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this SkuName value)
+        internal static string ToSerializedValue(this SkuTier value)
         {
             switch( value )
             {
-                case SkuName.Basic:
+                case SkuTier.Basic:
                     return "Basic";
-                case SkuName.Standard:
+                case SkuTier.Standard:
                     return "Standard";
-                case SkuName.Premium:
+                case SkuTier.Premium:
                     return "Premium";
             }
             return null;
         }
 
-        internal static SkuName? ParseSkuName(this string value)
+        internal static SkuTier? ParseSkuTier(this string value)
         {
             switch( value )
             {
                 case "Basic":
-                    return SkuName.Basic;
+                    return SkuTier.Basic;
                 case "Standard":
-                    return SkuName.Standard;
+                    return SkuTier.Standard;
                 case "Premium":
-                    return SkuName.Premium;
+                    return SkuTier.Premium;
             }
             return null;
         }
