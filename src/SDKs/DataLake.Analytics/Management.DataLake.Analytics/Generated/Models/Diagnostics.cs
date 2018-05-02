@@ -29,24 +29,24 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the Diagnostics class.
         /// </summary>
-        /// <param name="columnNumber">the column where the error
-        /// occured.</param>
-        /// <param name="end">the ending index of the error.</param>
-        /// <param name="lineNumber">the line number the error occured
-        /// on.</param>
-        /// <param name="message">the error message.</param>
-        /// <param name="severity">the severity of the error. Possible values
+        /// <param name="message">The error message.</param>
+        /// <param name="severity">The severity of the error. Possible values
         /// include: 'Warning', 'Error', 'Info', 'SevereWarning', 'Deprecated',
         /// 'UserWarning'</param>
-        /// <param name="start">the starting index of the error.</param>
-        public Diagnostics(int? columnNumber = default(int?), int? end = default(int?), int? lineNumber = default(int?), string message = default(string), SeverityTypes? severity = default(SeverityTypes?), int? start = default(int?))
+        /// <param name="lineNumber">The line number the error occured
+        /// on.</param>
+        /// <param name="columnNumber">The column where the error
+        /// occured.</param>
+        /// <param name="start">The starting index of the error.</param>
+        /// <param name="end">The ending index of the error.</param>
+        public Diagnostics(string message = default(string), SeverityTypes? severity = default(SeverityTypes?), int? lineNumber = default(int?), int? columnNumber = default(int?), int? start = default(int?), int? end = default(int?))
         {
-            ColumnNumber = columnNumber;
-            End = end;
-            LineNumber = lineNumber;
             Message = message;
             Severity = severity;
+            LineNumber = lineNumber;
+            ColumnNumber = columnNumber;
             Start = start;
+            End = end;
             CustomInit();
         }
 
@@ -54,24 +54,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the column where the error occured.
-        /// </summary>
-        [JsonProperty(PropertyName = "columnNumber")]
-        public int? ColumnNumber { get; private set; }
-
-        /// <summary>
-        /// Gets the ending index of the error.
-        /// </summary>
-        [JsonProperty(PropertyName = "end")]
-        public int? End { get; private set; }
-
-        /// <summary>
-        /// Gets the line number the error occured on.
-        /// </summary>
-        [JsonProperty(PropertyName = "lineNumber")]
-        public int? LineNumber { get; private set; }
 
         /// <summary>
         /// Gets the error message.
@@ -87,10 +69,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public SeverityTypes? Severity { get; private set; }
 
         /// <summary>
+        /// Gets the line number the error occured on.
+        /// </summary>
+        [JsonProperty(PropertyName = "lineNumber")]
+        public int? LineNumber { get; private set; }
+
+        /// <summary>
+        /// Gets the column where the error occured.
+        /// </summary>
+        [JsonProperty(PropertyName = "columnNumber")]
+        public int? ColumnNumber { get; private set; }
+
+        /// <summary>
         /// Gets the starting index of the error.
         /// </summary>
         [JsonProperty(PropertyName = "start")]
         public int? Start { get; private set; }
+
+        /// <summary>
+        /// Gets the ending index of the error.
+        /// </summary>
+        [JsonProperty(PropertyName = "end")]
+        public int? End { get; private set; }
 
     }
 }

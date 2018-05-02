@@ -47,15 +47,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// The DNS suffix used as the base for all Azure Data Lake Analytics Job
         /// service requests.
         /// </summary>
         public string AdlaJobDnsSuffix { get; set; }
+
+        /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             Pipeline = new PipelineOperations(this);
             Recurrence = new RecurrenceOperations(this);
             BaseUri = "https://{accountName}.{adlaJobDnsSuffix}";
-            ApiVersion = "2017-09-01-preview";
             AdlaJobDnsSuffix = "azuredatalakeanalytics.net";
+            ApiVersion = "2017-09-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

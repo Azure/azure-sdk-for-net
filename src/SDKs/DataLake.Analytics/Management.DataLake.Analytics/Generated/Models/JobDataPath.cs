@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobDataPath class.
         /// </summary>
-        /// <param name="jobId">the id of the job this data is for.</param>
-        /// <param name="command">the command that this job data relates
+        /// <param name="jobId">The ID of the job this data is for.</param>
+        /// <param name="command">The command that this job data relates
         /// to.</param>
-        /// <param name="paths">the list of paths to all of the job
+        /// <param name="paths">The list of paths to all of the job
         /// data.</param>
         public JobDataPath(System.Guid? jobId = default(System.Guid?), string command = default(string), IList<string> paths = default(IList<string>))
         {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the id of the job this data is for.
+        /// Gets the ID of the job this data is for.
         /// </summary>
         [JsonProperty(PropertyName = "jobId")]
         public System.Guid? JobId { get; private set; }
