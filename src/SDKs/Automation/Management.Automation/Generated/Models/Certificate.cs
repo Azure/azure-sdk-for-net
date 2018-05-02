@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the certificate.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Certificate
+    public partial class Certificate : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Certificate class.
@@ -32,8 +32,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the Certificate class.
         /// </summary>
-        /// <param name="id">Gets the id of the resource.</param>
-        /// <param name="name">Gets the name of the certificate.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="thumbprint">Gets the thumbprint of the
         /// certificate.</param>
         /// <param name="expiryTime">Gets the expiry time of the
@@ -43,10 +45,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="creationTime">Gets the creation time.</param>
         /// <param name="lastModifiedTime">Gets the last modified time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public Certificate(string id = default(string), string name = default(string), string thumbprint = default(string), System.DateTime? expiryTime = default(System.DateTime?), bool? isExportable = default(bool?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string))
+        public Certificate(string id = default(string), string name = default(string), string type = default(string), string thumbprint = default(string), System.DateTimeOffset expiryTime = default(System.DateTimeOffset), bool isExportable = default(bool), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
             Thumbprint = thumbprint;
             ExpiryTime = expiryTime;
             IsExportable = isExportable;
@@ -62,18 +63,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the id of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the certificate.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
         /// Gets the thumbprint of the certificate.
         /// </summary>
         [JsonProperty(PropertyName = "properties.thumbprint")]
@@ -83,25 +72,25 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets the expiry time of the certificate.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expiryTime")]
-        public System.DateTime? ExpiryTime { get; private set; }
+        public System.DateTimeOffset ExpiryTime { get; private set; }
 
         /// <summary>
         /// Gets the is exportable flag of the certificate.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isExportable")]
-        public bool? IsExportable { get; private set; }
+        public bool IsExportable { get; private set; }
 
         /// <summary>
         /// Gets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the description.

@@ -11,13 +11,17 @@
 namespace Microsoft.Azure.Management.Automation.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// The parameters supplied to the create or update node configuration
     /// operation.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DscNodeConfigurationCreateOrUpdateParameters
     {
         /// <summary>
@@ -34,17 +38,30 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// DscNodeConfigurationCreateOrUpdateParameters class.
         /// </summary>
         /// <param name="source">Gets or sets the source.</param>
-        /// <param name="name">Gets or sets the type of the parameter.</param>
+        /// <param name="name">Name of the node configuration.</param>
         /// <param name="configuration">Gets or sets the configuration of the
+        /// node.</param>
+        /// <param name="source1">Gets or sets the source.</param>
+        /// <param name="name1">Gets or sets the type of the parameter.</param>
+        /// <param name="configuration1">Gets or sets the configuration of the
         /// node.</param>
         /// <param name="newNodeConfigurationBuildVersionRequired">If a new
         /// build version of NodeConfiguration is required.</param>
-        public DscNodeConfigurationCreateOrUpdateParameters(ContentSource source, string name, DscConfigurationAssociationProperty configuration, bool? newNodeConfigurationBuildVersionRequired = default(bool?))
+        /// <param name="incrementNodeConfigurationBuild">If a new build
+        /// version of NodeConfiguration is required.</param>
+        /// <param name="tags">Gets or sets the tags attached to the
+        /// resource.</param>
+        public DscNodeConfigurationCreateOrUpdateParameters(ContentSource source, string name, DscConfigurationAssociationProperty configuration, ContentSource source1, string name1, DscConfigurationAssociationProperty configuration1, bool? newNodeConfigurationBuildVersionRequired = default(bool?), bool? incrementNodeConfigurationBuild = default(bool?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Source = source;
             Name = name;
             Configuration = configuration;
             NewNodeConfigurationBuildVersionRequired = newNodeConfigurationBuildVersionRequired;
+            Source1 = source1;
+            Name1 = name1;
+            Configuration1 = configuration1;
+            IncrementNodeConfigurationBuild = incrementNodeConfigurationBuild;
+            Tags = tags;
             CustomInit();
         }
 
@@ -60,7 +77,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public ContentSource Source { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the parameter.
+        /// Gets or sets name of the node configuration.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -77,6 +94,37 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "newNodeConfigurationBuildVersionRequired")]
         public bool? NewNodeConfigurationBuildVersionRequired { get; set; }
+
+        /// <summary>
+        /// Gets or sets the source.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.source")]
+        public ContentSource Source1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the parameter.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.name")]
+        public string Name1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the configuration of the node.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.configuration")]
+        public DscConfigurationAssociationProperty Configuration1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets if a new build version of NodeConfiguration is
+        /// required.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.incrementNodeConfigurationBuild")]
+        public bool? IncrementNodeConfigurationBuild { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags attached to the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -98,9 +146,25 @@ namespace Microsoft.Azure.Management.Automation.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Configuration");
             }
+            if (Source1 == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Source1");
+            }
+            if (Name1 == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name1");
+            }
+            if (Configuration1 == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Configuration1");
+            }
             if (Source != null)
             {
                 Source.Validate();
+            }
+            if (Source1 != null)
+            {
+                Source1.Validate();
             }
         }
     }

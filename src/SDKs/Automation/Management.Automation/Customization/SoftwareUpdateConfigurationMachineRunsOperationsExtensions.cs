@@ -34,9 +34,12 @@
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection
         /// </param>
-        public static SoftwareUpdateConfigurationMachineRunListResult ListByStatus(this ISoftwareUpdateConfigurationMachineRunsOperations operations, string status, string skip = default(string), string top = default(string))
+        public static SoftwareUpdateConfigurationMachineRunListResult ListByStatus(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName, string status,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string))
         {
-            return operations.ListByStatusAsync(status, skip, top).GetAwaiter().GetResult();
+            return operations.ListByStatusAsync(resourceGroupName, automationAccountName, status, clientRequestId, skip, top).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -58,10 +61,14 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByStatusAsync(this ISoftwareUpdateConfigurationMachineRunsOperations operations, string status, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByStatusAsync(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName, string status,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, StatusProperty, status);
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -85,9 +92,12 @@
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection
         /// </param>
-        public static SoftwareUpdateConfigurationMachineRunListResult ListByCorrelationId(this ISoftwareUpdateConfigurationMachineRunsOperations operations, Guid correlationId, string skip = default(string), string top = default(string))
+        public static SoftwareUpdateConfigurationMachineRunListResult ListByCorrelationId(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName, Guid correlationId,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string))
         {
-            return operations.ListByCorrelationIdAsync(correlationId, skip, top).GetAwaiter().GetResult();
+            return operations.ListByCorrelationIdAsync(resourceGroupName, automationAccountName, correlationId, clientRequestId, skip, top).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -109,10 +119,14 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByCorrelationIdAsync(this ISoftwareUpdateConfigurationMachineRunsOperations operations, Guid correlationId, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByCorrelationIdAsync(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName, Guid correlationId,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatEqual, CorrelationIdProperty, correlationId);
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -136,9 +150,12 @@
         /// <param name='top'>
         /// Maximum number of entries returned in the results collection
         /// </param>
-        public static SoftwareUpdateConfigurationMachineRunListResult ListByTargetComputer(this ISoftwareUpdateConfigurationMachineRunsOperations operations, string osType, string skip = default(string), string top = default(string))
+        public static SoftwareUpdateConfigurationMachineRunListResult ListByTargetComputer(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName, string targetComputer,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string))
         {
-            return operations.ListByTargetComputerAsync(osType, skip, top).GetAwaiter().GetResult();
+            return operations.ListByTargetComputerAsync(resourceGroupName, automationAccountName, targetComputer, clientRequestId, skip, top).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -160,10 +177,14 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByTargetComputerAsync(this ISoftwareUpdateConfigurationMachineRunsOperations operations, string targetComputer, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListByTargetComputerAsync(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName, string targetComputer,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(FilterFormatStringEqual, TargetComputerProperty, targetComputer);
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the configuration type.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DscConfiguration : Resource
+    public partial class DscConfiguration : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the DscConfiguration class.
@@ -34,11 +34,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the DscConfiguration class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">The Azure Region where the resource
+        /// lives</param>
         /// <param name="provisioningState">Gets or sets the provisioning state
         /// of the configuration. Possible values include: 'Succeeded'</param>
         /// <param name="jobCount">Gets or sets the job count of the
@@ -52,10 +54,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="creationTime">Gets or sets the creation time.</param>
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
+        /// <param name="nodeConfigurationCount">Gets the number of compiled
+        /// node configurations.</param>
         /// <param name="description">Gets or sets the description.</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
-        public DscConfiguration(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DscConfigurationProvisioningState? provisioningState = default(DscConfigurationProvisioningState?), int? jobCount = default(int?), IDictionary<string, DscConfigurationParameter> parameters = default(IDictionary<string, DscConfigurationParameter>), ContentSource source = default(ContentSource), string state = default(string), bool? logVerbose = default(bool?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public DscConfiguration(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), DscConfigurationProvisioningState? provisioningState = default(DscConfigurationProvisioningState?), int? jobCount = default(int?), IDictionary<string, DscConfigurationParameter> parameters = default(IDictionary<string, DscConfigurationParameter>), ContentSource source = default(ContentSource), string state = default(string), bool? logVerbose = default(bool?), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), int nodeConfigurationCount = default(int), string description = default(string), string etag = default(string))
+            : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
             JobCount = jobCount;
@@ -65,6 +69,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             LogVerbose = logVerbose;
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
+            NodeConfigurationCount = nodeConfigurationCount;
             Description = description;
             Etag = etag;
             CustomInit();
@@ -117,13 +122,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
+
+        /// <summary>
+        /// Gets the number of compiled node configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nodeConfigurationCount")]
+        public int NodeConfigurationCount { get; set; }
 
         /// <summary>
         /// Gets or sets the description.
@@ -143,9 +154,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Source != null)
             {
                 Source.Validate();

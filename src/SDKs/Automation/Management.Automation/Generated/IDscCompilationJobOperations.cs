@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -27,10 +28,13 @@ namespace Microsoft.Azure.Management.Automation
         /// Creates the Dsc compilation job of the configuration.
         /// <see href="http://aka.ms/azureautomationsdk/dscconfigurationcompilejoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='compilationJobId'>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='compilationJobName'>
         /// The the DSC configuration Id.
         /// </param>
         /// <param name='parameters'>
@@ -51,17 +55,20 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DscCompilationJob>> CreateWithHttpMessagesAsync(string automationAccountName, System.Guid compilationJobId, DscCompilationJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DscCompilationJob>> CreateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string compilationJobName, DscCompilationJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the Dsc configuration compilation job identified by job
         /// id.
         /// <see href="http://aka.ms/azureautomationsdk/dsccompilationjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='compilationJobId'>
-        /// The Dsc configuration compilation job id.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='compilationJobName'>
+        /// The the DSC configuration Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,16 +85,19 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DscCompilationJob>> GetWithHttpMessagesAsync(string automationAccountName, System.Guid compilationJobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DscCompilationJob>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string compilationJobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of dsc compilation jobs.
         /// <see href="http://aka.ms/azureautomationsdk/compilationjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -104,13 +114,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DscCompilationJob>>> ListByAutomationAccountWithHttpMessagesAsync(string automationAccountName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DscCompilationJob>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, ODataQuery<DscCompilationJob> odataQuery = default(ODataQuery<DscCompilationJob>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the job stream identified by job stream id.
         /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='jobId'>
         /// The job id.
@@ -133,7 +146,39 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JobStream>> GetStreamWithHttpMessagesAsync(string automationAccountName, System.Guid jobId, string jobStreamId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobStream>> GetStreamWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, System.Guid jobId, string jobStreamId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates the Dsc compilation job of the configuration.
+        /// <see href="http://aka.ms/azureautomationsdk/dscconfigurationcompilejoboperations" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='compilationJobName'>
+        /// The the DSC configuration Id.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters supplied to the create compilation job operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DscCompilationJob>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string compilationJobName, DscCompilationJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of dsc compilation jobs.
         /// <see href="http://aka.ms/azureautomationsdk/compilationjoboperations" />

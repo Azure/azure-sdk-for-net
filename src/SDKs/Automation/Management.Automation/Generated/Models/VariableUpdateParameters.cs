@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="value">Gets or sets the value of the variable.</param>
         /// <param name="description">Gets or sets the description of the
         /// variable.</param>
-        public VariableUpdateParameters(string name, string value = default(string), string description = default(string))
+        public VariableUpdateParameters(string name = default(string), string value = default(string), string description = default(string))
         {
             Name = name;
             Value = value;
@@ -67,18 +67,5 @@ namespace Microsoft.Azure.Management.Automation.Models
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

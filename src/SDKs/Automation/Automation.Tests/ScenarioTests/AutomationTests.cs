@@ -46,10 +46,8 @@ namespace Automation.Tests.ScenarioTests
 
                     var runbookContentV2 = RunbookDefinition.TestFasterWorkflowV2.PsScript;
                     testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
-
-                    var updatedContent = testFixture.GetRunbookContent(runbookName);
-                    var reader = new StreamReader(updatedContent);
-                    Assert.Equal(runbookContentV2, reader.ReadToEnd());
+                    string updatedContent = testFixture.GetRunbookContent(runbookName);
+                    Assert.Equal(runbookContentV2, updatedContent);
 
                     testFixture.DeleteRunbook(runbookName);
 
