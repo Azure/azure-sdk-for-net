@@ -11,7 +11,7 @@ namespace Build.Tasks.Tests
 {
     public static partial class SdkInfo
     {
-        public static IEnumerable<Tuple<string, string, string>> SdkInfo_Compute
+        public static IEnumerable<Tuple<string, string, string>> ApiInfo_Compute
         {
             get
             {

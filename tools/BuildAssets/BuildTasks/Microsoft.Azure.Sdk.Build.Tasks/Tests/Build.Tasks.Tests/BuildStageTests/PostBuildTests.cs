@@ -19,7 +19,7 @@ using nonCore = Microsoft.Build.Utilities;
 
 namespace Build.Tasks.Tests
 {
-    
+
     public class PostBuildTests : IClassFixture<PostBuildFixture>
     {
         PostBuildFixture _postBuildFixture;
@@ -31,7 +31,7 @@ namespace Build.Tasks.Tests
             catProjTest = new CategorizeProjectTaskTest();
         }
 
-        [Fact(Skip ="Enable after merge from psSdkJson6")]
+        [Fact(/*Skip = "Enable after merge from psSdkJson6"*/)]
         public void BuildOneProject()
         {
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
@@ -68,18 +68,18 @@ namespace Build.Tasks.Tests
                     proj = new Project(apiTagPropsFile);
                 }
 
-                string apiTagProperty = proj.GetPropertyValue("AzureApiTags");
+                string apiTagProperty = proj.GetPropertyValue("AzureApiTag");
                 Assert.Equal<string>(apiTag, apiTagProperty);
             }
         }
 
 
-        [Fact(Skip = "Enable after merge from psSdkJson6")]
+        [Fact]
         public void BuildAzureStackScope()
         {
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
-            sdkCat.BuildScope = @"SDKs\AnalysisServices";
+            sdkCat.BuildScope = @"AzureStack\AzureBridgeAdmin";
             sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
@@ -111,7 +111,49 @@ namespace Build.Tasks.Tests
                     proj = new Project(apiTagPropsFile);
                 }
 
-                string apiTagProperty = proj.GetPropertyValue("AzureApiTags");
+                string apiTagProperty = proj.GetPropertyValue("AzureApiTag");
+                Assert.Equal<string>(apiTag, apiTagProperty);
+            }
+        }
+
+        [Fact]
+        public void BuildMultiApiProject()
+        {
+            SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
+            sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
+            sdkCat.BuildScope = @"SDKs\Authorization\MultiApi";
+            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+
+            if (sdkCat.Execute())
+            {
+                Assert.True(sdkCat.net452SdkProjectsToBuild.Count() > 0);
+            }
+
+            PostBuildTask postBldTsk = new PostBuildTask()
+            {
+                //InvokePostBuildTask = true,
+                SdkProjects = sdkCat.net452SdkProjectsToBuild
+            };
+
+            if (postBldTsk.Execute())
+            {
+                string apiTag = postBldTsk.ApiTag;
+                string apiTagPropsFile = postBldTsk.ApiTagPropsFile;
+
+                Assert.NotEmpty(apiTag);
+                Assert.True(File.Exists(apiTagPropsFile));
+
+                Project proj;
+                if (ProjectCollection.GlobalProjectCollection.GetLoadedProjects(apiTagPropsFile).Count != 0)
+                {
+                    proj = ProjectCollection.GlobalProjectCollection.GetLoadedProjects(apiTagPropsFile).FirstOrDefault<Project>();
+                }
+                else
+                {
+                    proj = new Project(apiTagPropsFile);
+                }
+
+                string apiTagProperty = proj.GetPropertyValue("AzureApiTag");
                 Assert.Equal<string>(apiTag, apiTagProperty);
             }
         }
@@ -122,7 +164,7 @@ namespace Build.Tasks.Tests
             // if apitags is null or empty we should not consider that as an error
             Assert.True(new PostBuildTask().VerifyPropsFile(null, null));
         }
-        
+
         [Fact]
         public void GetApiMapSplitPartialClass()
         {
@@ -134,7 +176,7 @@ namespace Build.Tasks.Tests
                 FQTypeName = "TestSdkInfo.SplitInfo.ResourceSDKInfo"
             };
 
-            if(postBld.Execute())
+            if (postBld.Execute())
             {
                 string apiTag = postBld.ApiTag;
                 Assert.NotEmpty(apiTag);
@@ -186,7 +228,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = CategorizeProjects(scope, 1);
 
             //string asmPath = Assembly.GetExecutingAssembly().CodeBase;
-            
+
 
             PostBuildTask postBld = new PostBuildTask()
             {
@@ -201,7 +243,25 @@ namespace Build.Tasks.Tests
             }
         }
 
+        [Fact]
+        public void GetApiMapforMultiApiProject()
+        {
+            string exeAsmDirPath = GetExeAsmDirPath();
+            string testAsm = Path.Combine(exeAsmDirPath, "SdkInfoSample.dll");
+            
+            PostBuildTask postBld = new PostBuildTask()
+            {
+                AssemblyFullPath = testAsm
+            };
 
+            if (postBld.Execute())
+            {
+                string apiTag = postBld.ApiTag;
+                Assert.NotEmpty(apiTag);
+            }
+        }
+
+        
         private SDKCategorizeProjects CategorizeProjects(string scope, int expectedProjectCount)
         {
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
@@ -215,6 +275,14 @@ namespace Build.Tasks.Tests
             }
 
             return sdkCat;
+        }
+
+        private string GetExeAsmDirPath()
+        {
+            string codeBasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            Uri codeBaseUri = new Uri(codeBasePath);
+
+            return codeBaseUri.LocalPath;
         }
 
     }

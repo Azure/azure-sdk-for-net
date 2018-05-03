@@ -43,14 +43,8 @@ namespace Build.Tasks.Tests
             Type someType = typeList.First<Type>();
 
             IEnumerable<Tuple<string, string, string>> apiMap = (IEnumerable<Tuple<string,string,string>>) someType.GetProperty(sdkInfoTypeName).GetValue(null, null);
-
-            //foreach (Tuple<string, string, string> apiSet in apiMap)
-            //{
-
-            //}
-
-            Assert.NotNull(apiMap);
             
+            Assert.NotNull(apiMap);
         }
 
 

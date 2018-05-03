@@ -75,12 +75,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             if (ValidateArgs())
             {
                 SdkProjectMetaData proj = GetProject(SdkProjects);
-
-                //List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
-                //TaskLogger.LogInfo("Filtered project(s) count '{0}'", filteredProjects?.Count.ToString());
-
-                //foreach (SdkProjectMetaData proj in filteredProjects)
-                //{
                 if (proj.IsProjectDataPlane == false)
                 {
                     if (proj.ProjectType != SdkProjctType.Test)
@@ -158,30 +152,36 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 TaskLogger.LogDebugInfo("Trying to load assembly: '{0}'", sdkAsmPath);
                 Assembly sdkAsm = Assembly.LoadFrom(sdkAsmPath);
                 Type sdkInfoType = null;
+                IEnumerable<Type> sdkInfoTypes = null;
+
                 if(string.IsNullOrEmpty(FQTypeName))
                 {
-                    sdkInfoType = sdkAsm.GetType(BuildStageConstant.TYPENAMETOSEACH, true, true);
+                    sdkInfoTypes = sdkAsm.GetTypes().Where<Type>((t) => t.Name.Contains(BuildStageConstant.APIMAPTYPENAMETOSEARCH));
                 }
                 else
                 {
-                    sdkInfoType = sdkAsm.GetType(FQTypeName, true, true);
+                    sdkInfoTypes = sdkAsm.GetTypes().Where<Type>((t) => t.Name.Equals(FQTypeName, StringComparison.OrdinalIgnoreCase));
                 }
 
-                var props = sdkInfoType.GetProperties(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-                var sdkInfoProp = props.Where<PropertyInfo>((p) => p.Name.StartsWith(BuildStageConstant.PROPERTYNAMEPREFIX, StringComparison.OrdinalIgnoreCase));
-
-                if (sdkInfoProp.Any())
+                foreach(Type sdkInfo in sdkInfoTypes)
                 {
-                    foreach (PropertyInfo pInfo in sdkInfoProp)
-                    {
-                        IEnumerable<Tuple<string, string, string>> apiMap = (IEnumerable<Tuple<string, string, string>>)pInfo.GetValue(null, null);
+                    var props = sdkInfo.GetProperties(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                    var sdkInfoProp = props.Where<PropertyInfo>((p) => p.Name.StartsWith(BuildStageConstant.PROPERTYNAMEPREFIX, StringComparison.OrdinalIgnoreCase));
 
-                        if (apiMap.Any())
+                    if (sdkInfoProp.Any())
+                    {
+                        foreach (PropertyInfo pInfo in sdkInfoProp)
                         {
-                            combinedApiMap.AddRange(apiMap);
+                            IEnumerable<Tuple<string, string, string>> apiMap = (IEnumerable<Tuple<string, string, string>>)pInfo.GetValue(null, null);
+
+                            if (apiMap.Any())
+                            {
+                                combinedApiMap.AddRange(apiMap);
+                            }
                         }
                     }
                 }
+
                 sdkAsm = null;
             }
             catch(Exception ex)
@@ -256,7 +256,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                     propsProject = new Project(propsFile);
                 }
 
-
                 string existingApiTags = propsProject.GetPropertyValue(azApiPropertyName);
                 if (!existingApiTags.Trim().Equals(apiTag.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
@@ -270,24 +269,27 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         private string GetApiTagsPropsPath(SdkProjectMetaData sdkProject)
         {
             string apiTagsPropsPath = string.Empty;
-            string apiTagsFileName = BuildStageConstant.PROPS_APITAG_FILE_NAME;
+            List<string> importsList = sdkProject.ProjectImports;
 
-            string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
-            int depthSearchIndex = 0;
-
-            while (depthSearchIndex <= 3)
+            foreach(string apiTagsFileName in importsList)
             {
-                string propsFile = Path.Combine(projDir, apiTagsFileName);
+                string projDir = Path.GetDirectoryName(sdkProject.FullProjectPath);
+                int depthSearchIndex = 0;
 
-                if (File.Exists(propsFile))
+                while (depthSearchIndex <= 6)
                 {
-                    apiTagsPropsPath = propsFile;
-                    depthSearchIndex = 4;
-                }
-                else
-                {
-                    projDir = Path.GetDirectoryName(projDir);
-                    depthSearchIndex++;
+                    string propsFile = Path.Combine(projDir, apiTagsFileName);
+
+                    if (File.Exists(propsFile))
+                    {
+                        apiTagsPropsPath = propsFile;
+                        break;
+                    }
+                    else
+                    {
+                        projDir = Path.GetDirectoryName(projDir);
+                        depthSearchIndex++;
+                    }
                 }
             }
 

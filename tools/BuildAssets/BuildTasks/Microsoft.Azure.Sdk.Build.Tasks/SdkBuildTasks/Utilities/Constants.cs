@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             public const string API_TAG_PROPERTYNAME = "AzureApiTag";
             public const string PROPS_APITAG_FILE_NAME = "AzSdk.RP.props";
             public const string PROPS_MULTIAPITAG_FILE_NAME = "AzSdk.MultiApi.RP.props";
-            public const string TYPENAMETOSEACH = "SdkInfo";
+            public const string APIMAPTYPENAMETOSEARCH = "SdkInfo";
             public const string PROPERTYNAMEPREFIX = "ApiInfo_";
         }
 
