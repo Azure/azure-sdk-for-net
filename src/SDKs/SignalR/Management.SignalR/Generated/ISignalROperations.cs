@@ -26,6 +26,9 @@ namespace Microsoft.Azure.Management.SignalR
         /// <summary>
         /// Checks that the SignalR name is valid and is not already in use.
         /// </summary>
+        /// <param name='location'>
+        /// the region
+        /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the operation.
         /// </param>
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Management.SignalR
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(NameAvailabilityParameters parameters = default(NameAvailabilityParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(string location, NameAvailabilityParameters parameters = default(NameAvailabilityParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// </summary>

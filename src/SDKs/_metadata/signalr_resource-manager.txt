@@ -1,10 +1,10 @@
 ﻿Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/signalr/resource-manager/readme.md --csharp --csharp-sdks-folder=C:\azure-sdk-for-net\tools\..\src\SDKs\ --version=latest --reflect-api-versions
-2018-04-23 21:48:00 UTC
+2018-05-03 17:51:57 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      4fc4a59bcfab6b59a9d46c22a2454bef3230c45a
+Commit:      0a68675c56fceef8b5069a3026286539356feadb
 
 2) AutoRest information
 Requested version: latest

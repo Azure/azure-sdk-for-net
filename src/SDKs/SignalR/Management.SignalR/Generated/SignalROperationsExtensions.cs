@@ -27,12 +27,15 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// the region
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static NameAvailability CheckNameAvailability(this ISignalROperations operations, NameAvailabilityParameters parameters = default(NameAvailabilityParameters))
+            public static NameAvailability CheckNameAvailability(this ISignalROperations operations, string location, NameAvailabilityParameters parameters = default(NameAvailabilityParameters))
             {
-                return operations.CheckNameAvailabilityAsync(parameters).GetAwaiter().GetResult();
+                return operations.CheckNameAvailabilityAsync(location, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,15 +44,18 @@ namespace Microsoft.Azure.Management.SignalR
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='location'>
+            /// the region
+            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NameAvailability> CheckNameAvailabilityAsync(this ISignalROperations operations, NameAvailabilityParameters parameters = default(NameAvailabilityParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NameAvailability> CheckNameAvailabilityAsync(this ISignalROperations operations, string location, NameAvailabilityParameters parameters = default(NameAvailabilityParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(location, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
