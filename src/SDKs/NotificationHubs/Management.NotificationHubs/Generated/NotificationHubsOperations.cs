@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNotificationHubAvailabilityWithHttpMessagesAsync(string resourceGroupName, string namespaceName, CheckNameAvailabilityRequestParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResponse>> CheckNotificationHubAvailabilityWithHttpMessagesAsync(string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
