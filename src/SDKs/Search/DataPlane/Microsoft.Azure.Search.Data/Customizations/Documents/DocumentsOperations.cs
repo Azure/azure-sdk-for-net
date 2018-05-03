@@ -65,6 +65,56 @@ namespace Microsoft.Azure.Search
             };
         }
 
+        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(
+            AutocompleteMode autocompleteMode,
+            string search,
+            string suggesterName,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            AutocompleteParametersPayload autocompleteParametersPayload = null,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            AzureOperationResponse<AutocompleteResult> response =
+                await this.Client.DocumentsProxy.AutocompleteGetWithHttpMessagesAsync(
+                    autocompleteMode,
+                    search,
+                    suggesterName,
+                    searchRequestOptions,
+                    autocompleteParametersPayload,
+                    customHeaders,
+                    cancellationToken);
+
+            return new AzureOperationResponse<AutocompleteResult>()
+            {
+                Body = response.Body,
+                Request = response.Request,
+                RequestId = response.RequestId,
+                Response = response.Response
+            };
+        }
+
+        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompletePostWithHttpMessagesAsync(
+            AutocompleteRequest autocompleteRequest,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            AzureOperationResponse<AutocompleteResult> response =
+                await this.Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(
+                    autocompleteRequest,
+                    searchRequestOptions,
+                    customHeaders,
+                    cancellationToken);
+
+            return new AzureOperationResponse<AutocompleteResult>()
+            {
+                Body = response.Body,
+                Request = response.Request,
+                RequestId = response.RequestId,
+                Response = response.Response
+            };
+        }
+
         public Task<AzureOperationResponse<DocumentSearchResult>> ContinueSearchWithHttpMessagesAsync(
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
