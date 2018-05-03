@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.EventHub?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/providers/Microsoft.EventHub?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWI/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fb957121-7d04-49e9-9867-c7b28c1468a3"
+          "6f049956-ee6c-49ec-abaa-b4fb90b494de"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/providers/Microsoft.EventHub\",\r\n  \"namespace\": \"Microsoft.EventHub\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"80369ed6-5f11-4dd9-bef3-692475845e77\",\r\n    \"roleDefinitionId\": \"eb8e1991-5de0-42a6-a64b-29b059341b7b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"namespaces\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"West US 2\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Brazil South\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Central India\",\r\n        \"South India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK West\",\r\n        \"UK South\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"East US 2\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/authorizationrules\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/eventhubs\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/eventhubs/authorizationrules\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/eventhubs/consumergroups\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNamespaceAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"sku\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/disasterrecoveryconfigs\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/providers/Microsoft.EventHub\",\r\n  \"namespace\": \"Microsoft.EventHub\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"80369ed6-5f11-4dd9-bef3-692475845e77\",\r\n    \"roleDefinitionId\": \"eb8e1991-5de0-42a6-a64b-29b059341b7b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"namespaces\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"West US 2\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Brazil South\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Central India\",\r\n        \"South India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK West\",\r\n        \"UK South\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"West US 2\",\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East Asia\",\r\n        \"Southeast Asia\",\r\n        \"Brazil South\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Europe\",\r\n        \"West Europe\",\r\n        \"Central India\",\r\n        \"South India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK West\",\r\n        \"UK South\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/authorizationrules\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/eventhubs\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/eventhubs/authorizationrules\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/eventhubs/consumergroups\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNamespaceAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"sku\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\",\r\n        \"2015-08-01\",\r\n        \"2014-09-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"namespaces/disasterrecoveryconfigs\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2017-04-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:54:11 GMT"
+          "Wed, 02 May 2018 21:36:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,13 +41,13 @@
           "14998"
         ],
         "x-ms-request-id": [
-          "e35a615f-ba89-4d50-97aa-5eb32b7891cc"
+          "dcba5766-a584-4a62-8b75-0733c5253a5b"
         ],
         "x-ms-correlation-request-id": [
-          "e35a615f-ba89-4d50-97aa-5eb32b7891cc"
+          "dcba5766-a584-4a62-8b75-0733c5253a5b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005411Z:e35a615f-ba89-4d50-97aa-5eb32b7891cc"
+          "WESTUS2:20180502T213653Z:dcba5766-a584-4a62-8b75-0733c5253a5b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -59,23 +59,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourcegroups?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5db5993b-9f35-4389-8bed-d1dd81da29f8"
+          "e49e5992-bee5-4eb6-a054-e8f2127fc275"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-EventHub-SouthCentralUS\",\r\n      \"name\": \"Default-EventHub-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-MachineLearning-SouthCentralUS\",\r\n      \"name\": \"Default-MachineLearning-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Networking\",\r\n      \"name\": \"Default-Networking\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast\",\r\n      \"name\": \"Default-NotificationHubs-AustraliaEast\",\r\n      \"location\": \"australiaeast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-CentralUS\",\r\n      \"name\": \"Default-NotificationHubs-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-ServiceBus-WestUS\",\r\n      \"name\": \"Default-ServiceBus-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-SQL-WestUS\",\r\n      \"name\": \"Default-SQL-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-CentralUS\",\r\n      \"name\": \"Default-Storage-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-EastAsia\",\r\n      \"name\": \"Default-Storage-EastAsia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-SouthCentralUS\",\r\n      \"name\": \"Default-Storage-SouthCentralUS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-Web-WestUS\",\r\n      \"name\": \"Default-Web-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Mobile-Default-Web-WestUS\",\r\n      \"name\": \"Mobile-Default-Web-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/myFluentResourceGroup\",\r\n      \"name\": \"myFluentResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps1426\",\r\n      \"name\": \"ps1426\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps1594\",\r\n      \"name\": \"ps1594\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps1600\",\r\n      \"name\": \"ps1600\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps1868\",\r\n      \"name\": \"ps1868\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps2451\",\r\n      \"name\": \"ps2451\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps3560\",\r\n      \"name\": \"ps3560\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps4238\",\r\n      \"name\": \"ps4238\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps4646\",\r\n      \"name\": \"ps4646\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps4744\",\r\n      \"name\": \"ps4744\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps53\",\r\n      \"name\": \"ps53\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps5626\",\r\n      \"name\": \"ps5626\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps6195\",\r\n      \"name\": \"ps6195\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps63\",\r\n      \"name\": \"ps63\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps639\",\r\n      \"name\": \"ps639\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps6596\",\r\n      \"name\": \"ps6596\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps7581\",\r\n      \"name\": \"ps7581\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps7707\",\r\n      \"name\": \"ps7707\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps7999\",\r\n      \"name\": \"ps7999\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps8091\",\r\n      \"name\": \"ps8091\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps8132\",\r\n      \"name\": \"ps8132\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps8239\",\r\n      \"name\": \"ps8239\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps840\",\r\n      \"name\": \"ps840\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps8400\",\r\n      \"name\": \"ps8400\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps8592\",\r\n      \"name\": \"ps8592\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps880\",\r\n      \"name\": \"ps880\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps8865\",\r\n      \"name\": \"ps8865\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps8973\",\r\n      \"name\": \"ps8973\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9079\",\r\n      \"name\": \"ps9079\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9084\",\r\n      \"name\": \"ps9084\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9120\",\r\n      \"name\": \"ps9120\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9196\",\r\n      \"name\": \"ps9196\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9296\",\r\n      \"name\": \"ps9296\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9724\",\r\n      \"name\": \"ps9724\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9887\",\r\n      \"name\": \"ps9887\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/ps9969\",\r\n      \"name\": \"ps9969\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RGName-5382\",\r\n      \"name\": \"RGName-5382\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RGName-7750\",\r\n      \"name\": \"RGName-7750\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RGSBGeoDR\",\r\n      \"name\": \"RGSBGeoDR\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG1200\",\r\n      \"name\": \"RSG1200\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG1872\",\r\n      \"name\": \"RSG1872\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG2109\",\r\n      \"name\": \"RSG2109\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG2455\",\r\n      \"name\": \"RSG2455\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG3705\",\r\n      \"name\": \"RSG3705\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG3885\",\r\n      \"name\": \"RSG3885\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG5445\",\r\n      \"name\": \"RSG5445\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG5715\",\r\n      \"name\": \"RSG5715\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG6261\",\r\n      \"name\": \"RSG6261\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG6311\",\r\n      \"name\": \"RSG6311\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG6743\",\r\n      \"name\": \"RSG6743\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG8987\",\r\n      \"name\": \"RSG8987\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG9101\",\r\n      \"name\": \"RSG9101\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG9642\",\r\n      \"name\": \"RSG9642\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/RSG9930\",\r\n      \"name\": \"RSG9930\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/sampleresourcegroupcli\",\r\n      \"name\": \"sampleresourcegroupcli\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/TestingGeoDRPS\",\r\n      \"name\": \"TestingGeoDRPS\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -87,7 +87,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:54:11 GMT"
+          "Wed, 02 May 2018 21:36:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -99,13 +99,13 @@
           "14997"
         ],
         "x-ms-request-id": [
-          "5f6ec5d6-9323-4a12-b6d9-9d363fe58ad6"
+          "87ef3c96-9876-4fc7-8fc9-448be5ab649f"
         ],
         "x-ms-correlation-request-id": [
-          "5f6ec5d6-9323-4a12-b6d9-9d363fe58ad6"
+          "87ef3c96-9876-4fc7-8fc9-448be5ab649f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005412Z:5f6ec5d6-9323-4a12-b6d9-9d363fe58ad6"
+          "WESTUS2:20180502T213653Z:87ef3c96-9876-4fc7-8fc9-448be5ab649f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,72 +117,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourcegroups/Default-EventHub-810?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"Australia East\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "36"
-        ],
-        "x-ms-client-request-id": [
-          "5ae0b6b7-2fd8-49c4-ae4a-da36468e035d"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810\",\r\n  \"name\": \"Default-EventHub-810\",\r\n  \"location\": \"australiaeast\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "200"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 23 Mar 2018 00:54:14 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-request-id": [
-          "7d848402-e659-47c9-af41-849ee8a3bb49"
-        ],
-        "x-ms-correlation-request-id": [
-          "7d848402-e659-47c9-af41-849ee8a3bb49"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005414Z:7d848402-e659-47c9-af41-849ee8a3bb49"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDE/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDI/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -193,17 +129,17 @@
           "167"
         ],
         "x-ms-client-request-id": [
-          "ed7bc3fa-6c62-4ed6-a186-ee4033a01e5b"
+          "e13bec93-cc5f-4fb9-b27f-8787eb5c5378"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341\",\r\n  \"name\": \"sdk-Namespace-4341\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"isAutoInflateEnabled\": false,\r\n    \"maximumThroughputUnits\": 0,\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-namespace-4341\",\r\n    \"createdAt\": \"2018-03-23T00:54:19.713Z\",\r\n    \"updatedAt\": \"2018-03-23T00:54:19.713Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-4341.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642\",\r\n  \"name\": \"sdk-Namespace-1642\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"isAutoInflateEnabled\": false,\r\n    \"maximumThroughputUnits\": 0,\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"e2f361f0-3b27-4503-a9cc-21cfba380093:sdk-namespace-1642\",\r\n    \"createdAt\": \"2018-05-02T21:37:00.04Z\",\r\n    \"updatedAt\": \"2018-05-02T21:37:00.04Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-1642.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -215,7 +151,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:54:19 GMT"
+          "Wed, 02 May 2018 21:37:01 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -231,7 +167,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "6c899d3a-ecb8-41e6-95f5-b794e606bebc_M5CH3_M5CH3"
+          "7110aaeb-70be-49ae-9c1b-a313d299061e_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -240,10 +176,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "fd75eb35-b979-4f5d-a002-e2919d016f8d"
+          "3e6b6094-004c-48b7-a650-6eb261040ca1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005419Z:fd75eb35-b979-4f5d-a002-e2919d016f8d"
+          "WESTUS2:20180502T213701Z:3e6b6094-004c-48b7-a650-6eb261040ca1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -255,17 +191,17 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDE/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDI/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341\",\r\n  \"name\": \"sdk-Namespace-4341\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"isAutoInflateEnabled\": false,\r\n    \"maximumThroughputUnits\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"c9cbd920-c00c-427c-852b-8aaf38badaeb:sdk-namespace-4341\",\r\n    \"createdAt\": \"2018-03-23T00:54:19.713Z\",\r\n    \"updatedAt\": \"2018-03-23T00:54:43.223Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-4341.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642\",\r\n  \"name\": \"sdk-Namespace-1642\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"isAutoInflateEnabled\": false,\r\n    \"maximumThroughputUnits\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"e2f361f0-3b27-4503-a9cc-21cfba380093:sdk-namespace-1642\",\r\n    \"createdAt\": \"2018-05-02T21:37:00.04Z\",\r\n    \"updatedAt\": \"2018-05-02T21:37:26.14Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-Namespace-1642.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -277,7 +213,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:54:49 GMT"
+          "Wed, 02 May 2018 21:37:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -293,19 +229,19 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "b8c96db8-adad-434d-9c30-f966b2c11d94_M5CH3_M5CH3"
+          "3cdd0877-48e6-483b-b18e-c1eb98468498_M6CH3_M6CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "d71de2c5-37e6-40fe-9b61-525ca75c520a"
+          "08cebe35-5164-466b-8df3-3b4ee6de8dff"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005450Z:d71de2c5-37e6-40fe-9b61-525ca75c520a"
+          "WESTUS2:20180502T213732Z:08cebe35-5164-466b-8df3-3b4ee6de8dff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -317,8 +253,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0P2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0P2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"messageRetentionInDays\": 5\r\n  }\r\n}",
       "RequestHeaders": {
@@ -329,17 +265,17 @@
           "61"
         ],
         "x-ms-client-request-id": [
-          "5aa52b78-3fce-4807-9a65-b62aff769a44"
+          "4aee9adb-92bc-48ae-9c29-0cd330fcfe3c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"name\": \"sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"messageRetentionInDays\": 5,\r\n    \"partitionCount\": 4,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2018-03-23T00:54:58.437Z\",\r\n    \"updatedAt\": \"2018-03-23T00:55:06.31Z\",\r\n    \"partitionIds\": [\r\n      \"0\",\r\n      \"1\",\r\n      \"2\",\r\n      \"3\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"name\": \"sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"messageRetentionInDays\": 5,\r\n    \"partitionCount\": 4,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2018-05-02T21:37:38.943Z\",\r\n    \"updatedAt\": \"2018-05-02T21:37:43.177Z\",\r\n    \"partitionIds\": [\r\n      \"0\",\r\n      \"1\",\r\n      \"2\",\r\n      \"3\"\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -351,7 +287,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:06 GMT"
+          "Wed, 02 May 2018 21:37:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -367,7 +303,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "da76e3d2-02ed-46bd-9a40-b7338f368ef0_M5CH3_M5CH3"
+          "95e1d293-e646-4bbc-990f-b24f1297b119_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -376,10 +312,10 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "3a96c06b-36f5-4d56-b38c-0a9d272eaeab"
+          "7e2523e4-f5a9-4b37-ad2f-8fc4206e2c2d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005506Z:3a96c06b-36f5-4d56-b38c-0a9d272eaeab"
+          "WESTUS2:20180502T213743Z:7e2523e4-f5a9-4b37-ad2f-8fc4206e2c2d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -391,23 +327,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0P2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0P2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "be9b520a-2973-42a6-befa-bcf7265a1000"
+          "1680cfa2-6369-4441-8c2b-2e69bae9abc0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"name\": \"sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"messageRetentionInDays\": 5,\r\n    \"partitionCount\": 4,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2018-03-23T00:54:58.437\",\r\n    \"updatedAt\": \"2018-03-23T00:55:06.31\",\r\n    \"partitionIds\": [\r\n      \"0\",\r\n      \"1\",\r\n      \"2\",\r\n      \"3\"\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"name\": \"sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"messageRetentionInDays\": 5,\r\n    \"partitionCount\": 4,\r\n    \"status\": \"Active\",\r\n    \"createdAt\": \"2018-05-02T21:37:38.943\",\r\n    \"updatedAt\": \"2018-05-02T21:37:43.177\",\r\n    \"partitionIds\": [\r\n      \"0\",\r\n      \"1\",\r\n      \"2\",\r\n      \"3\"\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -419,7 +355,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:07 GMT"
+          "Wed, 02 May 2018 21:37:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -435,19 +371,19 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "9b7cb643-23e9-412f-a7e1-9dbd5cafd974_M5CH3_M5CH3"
+          "f6c7e028-5cae-41f3-9536-99a9c0768b0e_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "5b03bc14-0dd4-422f-80c4-dae5ca4e55b0"
+          "ce527afe-fab5-4914-9759-df2d7c2cead0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005507Z:5b03bc14-0dd4-422f-80c4-dae5ca4e55b0"
+          "WESTUS2:20180502T213744Z:ce527afe-fab5-4914-9759-df2d7c2cead0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -459,8 +395,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"userMetadata\": \"Newly Created\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -471,17 +407,17 @@
           "65"
         ],
         "x-ms-client-request-id": [
-          "653b7c39-2cf1-4269-9de1-8b35e541ef85"
+          "7b138263-365b-4525-b6ad-878881e7100a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-03-23T00:55:09.90608Z\",\r\n    \"updatedAt\": \"2018-03-23T00:55:09.90608Z\",\r\n    \"userMetadata\": \"Newly Created\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-05-02T21:37:46.7571352Z\",\r\n    \"updatedAt\": \"2018-05-02T21:37:46.7571352Z\",\r\n    \"userMetadata\": \"Newly Created\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -493,7 +429,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:10 GMT"
+          "Wed, 02 May 2018 21:37:46 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -509,7 +445,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "9fd86491-7ebf-47bd-8d2a-f1430ad3d32c_M5CH3_M5CH3"
+          "5b53af33-1649-4633-b231-7ff00c723f1c_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -518,10 +454,10 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "3f8ea956-c30c-4deb-92e2-2cd3eb05d7b8"
+          "1b2668fa-ef94-4643-a2b2-57f9a63ce9cd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005510Z:3f8ea956-c30c-4deb-92e2-2cd3eb05d7b8"
+          "WESTUS2:20180502T213747Z:1b2668fa-ef94-4643-a2b2-57f9a63ce9cd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -533,8 +469,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"userMetadata\": \"Updated the user meta data\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -545,17 +481,17 @@
           "78"
         ],
         "x-ms-client-request-id": [
-          "4d731798-be1b-4c2e-9c4b-6ab54e8b138f"
+          "2a5a4c7a-df6b-495e-a383-7e4d19eed0c5"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-03-23T00:55:13.1716972Z\",\r\n    \"updatedAt\": \"2018-03-23T00:55:13.1716972Z\",\r\n    \"userMetadata\": \"Updated the user meta data\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-05-02T21:37:49.4293006Z\",\r\n    \"updatedAt\": \"2018-05-02T21:37:49.4293006Z\",\r\n    \"userMetadata\": \"Updated the user meta data\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -567,7 +503,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:13 GMT"
+          "Wed, 02 May 2018 21:37:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -583,7 +519,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "e90ca889-d569-41d3-9758-c69ae53f9b5c_M5CH3_M5CH3"
+          "249fcfba-ee0e-4c9d-83aa-d99f984551bd_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -592,10 +528,10 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "dcc25351-8d8f-4cf3-9435-29ccc571464b"
+          "e6bf9f2b-e795-4ae6-94f9-a973a47d838a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005514Z:dcc25351-8d8f-4cf3-9435-29ccc571464b"
+          "WESTUS2:20180502T213750Z:e6bf9f2b-e795-4ae6-94f9-a973a47d838a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -607,23 +543,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1678da56-aa2f-4ee0-8bf0-a93f375d65f3"
+          "edeb5b23-5b8b-477d-9cbe-34b184e7b61a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-03-23T00:55:09.9037197\",\r\n    \"updatedAt\": \"2018-03-23T00:55:09.9037197\",\r\n    \"userMetadata\": \"Newly Created\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-05-02T21:37:46.774093\",\r\n    \"updatedAt\": \"2018-05-02T21:37:46.774093\",\r\n    \"userMetadata\": \"Newly Created\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -635,7 +571,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:10 GMT"
+          "Wed, 02 May 2018 21:37:47 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -651,19 +587,19 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "fbad1a80-2a19-4c45-b740-73157fbdd785_M5CH3_M5CH3"
+          "9e7bb0d2-6e43-4546-8768-9f4f58064759_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "41af7a4f-b1ef-4371-97a6-96493f826aaf"
+          "a81153b2-2446-4d0c-b2a8-0c1aee33764c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005511Z:41af7a4f-b1ef-4371-97a6-96493f826aaf"
+          "WESTUS2:20180502T213747Z:a81153b2-2446-4d0c-b2a8-0c1aee33764c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -675,23 +611,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b3b472b-c3cf-4378-b709-3087ab99c2ab"
+          "e053deec-7e0c-4a57-929a-f1b0d521b012"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-03-23T00:55:09.8999103\",\r\n    \"updatedAt\": \"2018-03-23T00:55:09.8999103\",\r\n    \"userMetadata\": \"Updated the user meta data\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n  \"location\": \"Australia East\",\r\n  \"properties\": {\r\n    \"createdAt\": \"2018-05-02T21:37:46.7699258\",\r\n    \"updatedAt\": \"2018-05-02T21:37:46.7699258\",\r\n    \"userMetadata\": \"Updated the user meta data\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -703,7 +639,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:14 GMT"
+          "Wed, 02 May 2018 21:37:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -719,19 +655,19 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "51fda305-47ac-4ff2-90d9-2aeb06ed5dd9_M5CH3_M5CH3"
+          "47e2d4d2-7c74-47e3-a4c3-935fc6e4111e_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "8d626c70-a8bb-43b3-a10c-8f3f0e461e4c"
+          "c8988a52-6878-4c40-b564-aef4e024be2e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005515Z:8d626c70-a8bb-43b3-a10c-8f3f0e461e4c"
+          "WESTUS2:20180502T213751Z:c8988a52-6878-4c40-b564-aef4e024be2e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -743,23 +679,23 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "404544e4-00e9-45b8-9a5a-af470e6f2447"
+          "3d440867-5e28-48c6-9db2-4699bae55495"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/$Default\",\r\n      \"name\": \"$Default\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n      \"location\": \"Australia East\",\r\n      \"properties\": {\r\n        \"createdAt\": \"2018-03-23T00:55:05.6187083\",\r\n        \"updatedAt\": \"2018-03-23T00:55:05.6187083\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n      \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n      \"location\": \"Australia East\",\r\n      \"properties\": {\r\n        \"createdAt\": \"2018-03-23T00:55:09.8999103\",\r\n        \"updatedAt\": \"2018-03-23T00:55:09.8999103\",\r\n        \"userMetadata\": \"Newly Created\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/$Default\",\r\n      \"name\": \"$Default\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n      \"location\": \"Australia East\",\r\n      \"properties\": {\r\n        \"createdAt\": \"2018-05-02T21:37:42.6919172\",\r\n        \"updatedAt\": \"2018-05-02T21:37:42.6919172\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert\",\r\n      \"name\": \"thisisthenamewithmorethan53charschecktoverifqwert\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces/EventHubs/ConsumerGroups\",\r\n      \"location\": \"Australia East\",\r\n      \"properties\": {\r\n        \"createdAt\": \"2018-05-02T21:37:46.7699258\",\r\n        \"updatedAt\": \"2018-05-02T21:37:46.7699258\",\r\n        \"userMetadata\": \"Newly Created\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -771,7 +707,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:11 GMT"
+          "Wed, 02 May 2018 21:37:47 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -790,19 +726,19 @@
           ""
         ],
         "x-ms-request-id": [
-          "3496e068-814e-4316-8399-9b96be838be1_M5CH3_M5CH3"
+          "1113568c-e3a1-4d24-a4c0-0e8ce1f89cd3_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14995"
         ],
         "x-ms-correlation-request-id": [
-          "1b1d101b-a3af-441e-a2cb-6ef97adf93b2"
+          "d7055aa5-356d-40ef-a1bc-6a2bef32aace"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005512Z:1b1d101b-a3af-441e-a2cb-6ef97adf93b2"
+          "WESTUS2:20180502T213748Z:d7055aa5-356d-40ef-a1bc-6a2bef32aace"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -814,19 +750,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit/consumergroups/thisisthenamewithmorethan53charschecktoverifqwert?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0L2NvbnN1bWVyZ3JvdXBzL3RoaXNpc3RoZW5hbWV3aXRobW9yZXRoYW41M2NoYXJzY2hlY2t0b3ZlcmlmcXdlcnQ/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e3d6738b-c13e-48f0-af0e-717918bf691c"
+          "f4c2e446-ecf8-4e12-9b54-6f5183470cec"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
@@ -842,7 +778,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:15 GMT"
+          "Wed, 02 May 2018 21:37:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -852,7 +788,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "1a9826c7-e753-4fc0-b671-542fc112019a_M5CH3_M5CH3"
+          "12266818-0f60-46ec-b074-dd81f2674d87_M4CH3_M4CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -861,10 +797,10 @@
           "1195"
         ],
         "x-ms-correlation-request-id": [
-          "b1d42cb6-62e0-47c8-be8b-50785ff52975"
+          "7f161d75-d1b7-4711-88b5-0de51aad584f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005516Z:b1d42cb6-62e0-47c8-be8b-50785ff52975"
+          "WESTUS2:20180502T213753Z:7f161d75-d1b7-4711-88b5-0de51aad584f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -876,19 +812,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0P2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/eventhubs/sdk-EventHub-thisisthenamewithmorethan53charschecktoverifytheremovlaof50charsnamelengthlimit?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvZXZlbnRodWJzL3Nkay1FdmVudEh1Yi10aGlzaXN0aGVuYW1ld2l0aG1vcmV0aGFuNTNjaGFyc2NoZWNrdG92ZXJpZnl0aGVyZW1vdmxhb2Y1MGNoYXJzbmFtZWxlbmd0aGxpbWl0P2FwaS12ZXJzaW9uPTIwMTctMDQtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e084172c-820d-48fc-bfeb-75705f44a03d"
+          "af79055b-fa8f-43a2-b799-78b7cbf9aa72"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
@@ -904,7 +840,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:17 GMT"
+          "Wed, 02 May 2018 21:37:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -914,7 +850,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "27a8613b-df5e-43ec-a0ec-c8084322d6da_M5CH3_M5CH3"
+          "e30b1546-2a33-4672-813b-b141fe0d5ab7_M2CH3_M2CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -923,10 +859,10 @@
           "1194"
         ],
         "x-ms-correlation-request-id": [
-          "47b7a8bb-143b-46b4-940a-4fa68d4f7e97"
+          "5c8f196a-0ed8-4810-8e46-af25a542f748"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005517Z:47b7a8bb-143b-46b4-940a-4fa68d4f7e97"
+          "WESTUS2:20180502T213755Z:5c8f196a-0ed8-4810-8e46-af25a542f748"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -938,19 +874,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDE/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDI/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "89ddbbf6-1933-4402-930c-ea588861a8fb"
+          "1f9688a0-45fe-4b23-9987-9cf7e412150d"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
@@ -966,20 +902,20 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:19 GMT"
+          "Wed, 02 May 2018 21:37:56 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/operationresults/sdk-Namespace-4341?api-version=2017-04-01"
+          "https://management.azure.com/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/operationresults/sdk-Namespace-1642?api-version=2017-04-01"
         ],
         "Server": [
           "Service-Bus-Resource-Provider/CH3",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "1cf0d4a2-04b8-4b2c-a6c8-e32cc20004ae_M5CH3_M5CH3"
+          "739801f4-4cce-4fa0-8587-ea33a0dd15f6_M2CH3_M2CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -988,10 +924,10 @@
           "1193"
         ],
         "x-ms-correlation-request-id": [
-          "7ce2fc42-fd3d-4fb1-8c02-03a71cbea8cb"
+          "3a239da8-e136-46f0-93f4-a887bcfbf346"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005519Z:7ce2fc42-fd3d-4fb1-8c02-03a71cbea8cb"
+          "WESTUS2:20180502T213757Z:3a239da8-e136-46f0-93f4-a887bcfbf346"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1003,13 +939,13 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/operationresults/sdk-Namespace-4341?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvb3BlcmF0aW9ucmVzdWx0cy9zZGstTmFtZXNwYWNlLTQzNDE/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/operationresults/sdk-Namespace-1642?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvb3BlcmF0aW9ucmVzdWx0cy9zZGstTmFtZXNwYWNlLTE2NDI/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
@@ -1025,7 +961,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:49 GMT"
+          "Wed, 02 May 2018 21:38:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1035,19 +971,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "cd208854-d021-4745-8af8-ad75ea137688_M5CH3_M5CH3"
+          "141b7fd2-f6d7-456b-9fd7-955b8fcfe025_M2CH3_M2CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "06c0ac03-6875-4365-b1ef-46a2268e96ec"
+          "5ea8487c-669e-4123-8d3c-a11ec16304fc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005550Z:06c0ac03-6875-4365-b1ef-46a2268e96ec"
+          "WESTUS2:20180502T213827Z:5ea8487c-669e-4123-8d3c-a11ec16304fc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1059,13 +995,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/Default-EventHub-810/providers/Microsoft.EventHub/namespaces/sdk-Namespace-4341/operationresults/sdk-Namespace-4341?api-version=2017-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYzljYmQ5MjAtYzAwYy00MjdjLTg1MmItOGFhZjM4YmFkYWViL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtRXZlbnRIdWItODEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTQzNDEvb3BlcmF0aW9ucmVzdWx0cy9zZGstTmFtZXNwYWNlLTQzNDE/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
+      "RequestUri": "/subscriptions/e2f361f0-3b27-4503-a9cc-21cfba380093/resourceGroups/Default-NotificationHubs-AustraliaEast/providers/Microsoft.EventHub/namespaces/sdk-Namespace-1642/operationresults/sdk-Namespace-1642?api-version=2017-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTJmMzYxZjAtM2IyNy00NTAzLWE5Y2MtMjFjZmJhMzgwMDkzL3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtTm90aWZpY2F0aW9uSHVicy1BdXN0cmFsaWFFYXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTmFtZXNwYWNlLTE2NDIvb3BlcmF0aW9ucmVzdWx0cy9zZGstTmFtZXNwYWNlLTE2NDI/YXBpLXZlcnNpb249MjAxNy0wNC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.EventHub.EventHubManagementClient/2.0.3.0"
         ]
       },
@@ -1081,7 +1017,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 23 Mar 2018 00:55:49 GMT"
+          "Wed, 02 May 2018 21:38:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1091,19 +1027,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "cbf7782e-fcd5-41ae-9f11-2c1e1e75b38b_M5CH3_M5CH3"
+          "4a21c787-a1ee-43c9-84b3-6caceeb717fc_M2CH3_M2CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "85f5b06d-637f-491e-845d-6bd9cee33372"
+          "6ba9fb06-29c1-42b1-bcbf-24151992d85b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180323T005550Z:85f5b06d-637f-491e-845d-6bd9cee33372"
+          "WESTUS2:20180502T213827Z:6ba9fb06-29c1-42b1-bcbf-24151992d85b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1117,11 +1053,10 @@
   ],
   "Names": {
     "ConsumerGroupsCreateGetUpdateDelete_Length": [
-      "Default-EventHub-810",
-      "sdk-Namespace-4341"
+      "sdk-Namespace-1642"
     ]
   },
   "Variables": {
-    "SubscriptionId": "c9cbd920-c00c-427c-852b-8aaf38badaeb"
+    "SubscriptionId": "e2f361f0-3b27-4503-a9cc-21cfba380093"
   }
 }
