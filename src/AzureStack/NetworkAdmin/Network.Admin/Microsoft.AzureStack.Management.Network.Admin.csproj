@@ -12,7 +12,10 @@
         <PackageTags>Microsoft Azure Stack;Network;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Network Admin SDK. Included with this release is support for gathering information about your AzureStack infrastructure and performing administrative operations.
+                Preview release of the Network administrator SDK which allows  
+                1) Management of network quotas  
+                2) View allocated network resources such as public IP addresses, virtual networks, load balancers. 
+                3) Provides a cmdlet which provides an administrator overview 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

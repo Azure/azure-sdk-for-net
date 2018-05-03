@@ -12,7 +12,7 @@
         <PackageTags>Microsoft Azure Stack;Compute;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Compute Admin SDK.
+                Preview release of the AzureStack Compute administrator SDK which provides functionality to manage compute quotas, platform images, and virtual machine extensions. 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
