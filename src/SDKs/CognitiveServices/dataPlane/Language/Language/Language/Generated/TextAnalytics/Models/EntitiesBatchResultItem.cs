@@ -15,23 +15,25 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SentimentBatchResult
+    public partial class EntitiesBatchResultItem
     {
         /// <summary>
-        /// Initializes a new instance of the SentimentBatchResult class.
+        /// Initializes a new instance of the EntitiesBatchResultItem class.
         /// </summary>
-        public SentimentBatchResult()
+        public EntitiesBatchResultItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SentimentBatchResult class.
+        /// Initializes a new instance of the EntitiesBatchResultItem class.
         /// </summary>
-        public SentimentBatchResult(IList<SentimentBatchResultItem> documents = default(IList<SentimentBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>))
+        /// <param name="id">Unique document identifier.</param>
+        /// <param name="entities">Recognized entities in the document.</param>
+        public EntitiesBatchResultItem(string id = default(string), IList<EntityRecord> entities = default(IList<EntityRecord>))
         {
-            Documents = documents;
-            Errors = errors;
+            Id = id;
+            Entities = entities;
             CustomInit();
         }
 
@@ -41,14 +43,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets unique document identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "documents")]
-        public IList<SentimentBatchResultItem> Documents { get; private set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
+        /// Gets recognized entities in the document.
         /// </summary>
-        [JsonProperty(PropertyName = "errors")]
-        public IList<ErrorRecord> Errors { get; private set; }
+        [JsonProperty(PropertyName = "entities")]
+        public IList<EntityRecord> Entities { get; private set; }
 
     }
 }

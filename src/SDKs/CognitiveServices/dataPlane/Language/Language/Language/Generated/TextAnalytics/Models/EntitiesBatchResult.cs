@@ -15,20 +15,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SentimentBatchResult
+    public partial class EntitiesBatchResult
     {
         /// <summary>
-        /// Initializes a new instance of the SentimentBatchResult class.
+        /// Initializes a new instance of the EntitiesBatchResult class.
         /// </summary>
-        public SentimentBatchResult()
+        public EntitiesBatchResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SentimentBatchResult class.
+        /// Initializes a new instance of the EntitiesBatchResult class.
         /// </summary>
-        public SentimentBatchResult(IList<SentimentBatchResultItem> documents = default(IList<SentimentBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>))
+        public EntitiesBatchResult(IList<EntitiesBatchResultItem> documents = default(IList<EntitiesBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>))
         {
             Documents = documents;
             Errors = errors;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "documents")]
-        public IList<SentimentBatchResultItem> Documents { get; private set; }
+        public IList<EntitiesBatchResultItem> Documents { get; private set; }
 
         /// <summary>
         /// </summary>

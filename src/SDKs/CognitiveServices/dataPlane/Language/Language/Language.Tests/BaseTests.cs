@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.CognitiveServices.Language.TextAnalytics;
+using Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models;
 using System.Net.Http;
 
 namespace Language.Tests
@@ -6,23 +7,14 @@ namespace Language.Tests
     public abstract class BaseTests
     {
         public static bool IsTestTenant = false;
-        private static string SubscriptionKey = "";
-        private static string Region = null;
-
-        static BaseTests()
-        {
-            // Retrieve the configuration information.
-
-            Region = "WestUS";
-        }
+        private static string SubscriptionKey = "000";
 
         protected ITextAnalyticsAPI GetClient(DelegatingHandler handler)
         {
-            ITextAnalyticsAPI client;
-            client = new TextAnalyticsAPI(handlers: handler);
-            client.SubscriptionKey = SubscriptionKey;
-
-            return client;
+            return new TextAnalyticsAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handlers: handler)
+            {
+                AzureRegion = AzureRegions.Westus
+            };
         }
     }
 }
