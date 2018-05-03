@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// Parameters to check availability of the given namespace name
             /// </param>
-            public static CheckNameAvailabilityResult CheckNamespaceAvailability(this INamespacesOperations operations, CheckNameAvailability parameters)
+            public static CheckAvailabilityResource CheckNamespaceAvailability(this INamespacesOperations operations, CheckAvailabilityParameters parameters)
             {
                 return operations.CheckNamespaceAvailabilityAsync(parameters).GetAwaiter().GetResult();
             }
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNamespaceAvailabilityAsync(this INamespacesOperations operations, CheckNameAvailability parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckAvailabilityResource> CheckNamespaceAvailabilityAsync(this INamespacesOperations operations, CheckAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNamespaceAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<NHNamespace> List(this INamespacesOperations operations)
+            public static IPage<NamespaceResource> List(this INamespacesOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHNamespace>> ListAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='resourceGroupName'>
             /// Name of the Resource group within the Azure subscription.
             /// </param>
-            public static IPage<NHNamespace> ListByResourceGroup(this INamespacesOperations operations, string resourceGroupName)
+            public static IPage<NamespaceResource> ListByResourceGroup(this INamespacesOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHNamespace>> ListByResourceGroupAsync(this INamespacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListByResourceGroupAsync(this INamespacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// Parameters supplied to create a namespace resource.
             /// </param>
-            public static NHNamespace CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NHNamespace parameters)
+            public static NamespaceResource CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NHNamespace> CreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NHNamespace parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> CreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            public static NHNamespace Get(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            public static NamespaceResource Get(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
                 return operations.GetAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
@@ -244,57 +244,9 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NHNamespace> GetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> GetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates a service namespace. Once created, this namespace's resource
-            /// manifest is immutable. This operation is idempotent.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update a namespace resource.
-            /// </param>
-            public static NHNamespace Update(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NHNamespaceUpdateParameters parameters)
-            {
-                return operations.UpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a service namespace. Once created, this namespace's resource
-            /// manifest is immutable. This operation is idempotent.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update a namespace resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<NHNamespace> UpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NHNamespaceUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -313,7 +265,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            public static IPage<NHAuthorizationRule> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
                 return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
@@ -334,7 +286,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHAuthorizationRule>> ListAuthorizationRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -361,7 +313,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// The shared access authorization rule.
             /// </param>
-            public static NHAuthorizationRule CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, NHAuthorizationRule parameters)
+            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
             {
                 return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
@@ -388,7 +340,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NHAuthorizationRule> CreateOrUpdateAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, NHAuthorizationRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -457,7 +409,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='authorizationRuleName'>
             /// The authorizationrule name.
             /// </param>
-            public static NHAuthorizationRule GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
+            public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
                 return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -481,7 +433,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NHAuthorizationRule> GetAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> GetAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -505,7 +457,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='authorizationRuleName'>
             /// The authorizationrule name.
             /// </param>
-            public static AccessKeys ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
+            public static ResourceListKeys ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
                 return operations.ListKeysAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -529,7 +481,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessKeys> ListKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceListKeys> ListKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -608,7 +560,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// Parameters supplied to create a namespace resource.
             /// </param>
-            public static NHNamespace BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NHNamespace parameters)
+            public static NamespaceResource BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
@@ -633,7 +585,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NHNamespace> BeginCreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NHNamespace parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> BeginCreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -693,7 +645,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NHNamespace> ListNext(this INamespacesOperations operations, string nextPageLink)
+            public static IPage<NamespaceResource> ListNext(this INamespacesOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -712,7 +664,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHNamespace>> ListNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -730,7 +682,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NHNamespace> ListByResourceGroupNext(this INamespacesOperations operations, string nextPageLink)
+            public static IPage<NamespaceResource> ListByResourceGroupNext(this INamespacesOperations operations, string nextPageLink)
             {
                 return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -748,7 +700,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHNamespace>> ListByResourceGroupNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListByResourceGroupNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -766,7 +718,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NHAuthorizationRule> ListAuthorizationRulesNext(this INamespacesOperations operations, string nextPageLink)
+            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRulesNext(this INamespacesOperations operations, string nextPageLink)
             {
                 return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -784,7 +736,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHAuthorizationRule>> ListAuthorizationRulesNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

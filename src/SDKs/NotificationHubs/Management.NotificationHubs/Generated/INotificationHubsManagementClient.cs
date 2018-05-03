@@ -37,14 +37,14 @@ namespace Microsoft.Azure.Management.NotificationHubs
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Subscription credentials that uniquely identify a Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every
-        /// service call.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API version.
+        /// Client Api Version.
         /// </summary>
         string ApiVersion { get; }
 
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.Management.NotificationHubs
         INamespacesOperations Namespaces { get; }
 
         /// <summary>
-        /// Gets the INotificationhubsOperations.
+        /// Gets the INotificationHubsOperations.
         /// </summary>
-        INotificationhubsOperations Notificationhubs { get; }
+        INotificationHubsOperations NotificationHubs { get; }
 
     }
 }

@@ -13,36 +13,56 @@ namespace Microsoft.Azure.Management.NotificationHubs
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for NotificationhubsOperations.
+    /// Extension methods for NotificationHubsOperations.
     /// </summary>
-    public static partial class NotificationhubsOperationsExtensions
+    public static partial class NotificationHubsOperationsExtensions
     {
             /// <summary>
-            /// Gets the notificationhubs within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
+            /// Checks the availability of the given notificationHub in a namespace.
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj870968.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
+            /// <param name='parameters'>
+            /// The notificationHub name.
             /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
-            /// </param>
-            public static IPage<NH> ListByNamespace(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
+            public static CheckAvailabilityResource CheckAvailability(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters)
             {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
+                return operations.CheckAvailabilityAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks the availability of the given notificationHub in a namespace.
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj870968.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The notificationHub name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CheckAvailabilityResource> CheckAvailabilityAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckAvailabilityWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -58,22 +78,30 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            /// <param name='skip'>
-            /// Skip is only used if a previous operation returned a partial result. If a
-            /// previous response contains a nextLink element, the value of the nextLink
-            /// element will include a skip parameter that specifies a starting point to
-            /// use for subsequent calls.
+            public static IPage<NotificationHubResource> ListByNamespace(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName)
+            {
+                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the notificationhubs within a namespace.
+            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
             /// </param>
-            /// <param name='top'>
-            /// May be used to limit the number of results to the most recent N
-            /// usageDetails.
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NH>> ListByNamespaceAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NotificationHubResource>> ListByNamespaceAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -99,7 +127,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// Parameters supplied to create or update a notificationhub resource.
             /// </param>
-            public static NH CreateOrUpdate(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, NH parameters)
+            public static NotificationHubResource CreateOrUpdate(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, NotificationHubCreateOrUpdateParameters parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, notificationhubName, parameters).GetAwaiter().GetResult();
             }
@@ -127,7 +155,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NH> CreateOrUpdateAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, NH parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NotificationHubResource> CreateOrUpdateAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -151,7 +179,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='notificationhubName'>
             /// The notificationhub name.
             /// </param>
-            public static void Delete(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
+            public static void Delete(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
             {
                 operations.DeleteAsync(resourceGroupName, namespaceName, notificationhubName).GetAwaiter().GetResult();
             }
@@ -175,7 +203,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -196,7 +224,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='notificationhubName'>
             /// The notificationhub name.
             /// </param>
-            public static NH Get(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
+            public static NotificationHubResource Get(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
             {
                 return operations.GetAsync(resourceGroupName, namespaceName, notificationhubName).GetAwaiter().GetResult();
             }
@@ -220,7 +248,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NH> GetAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NotificationHubResource> GetAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -244,7 +272,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='notificationhubName'>
             /// The notificationhub name.
             /// </param>
-            public static IPage<NHAuthorizationRule> ListAuthorizationRules(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
+            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
             {
                 return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, notificationhubName).GetAwaiter().GetResult();
             }
@@ -268,7 +296,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHAuthorizationRule>> ListAuthorizationRulesAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -297,7 +325,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// The shared access authorization rule.
             /// </param>
-            public static NHAuthorizationRule CreateOrUpdateAuthorizationRule(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, NHAuthorizationRule parameters)
+            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
             {
                 return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
@@ -326,7 +354,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NHAuthorizationRule> CreateOrUpdateAuthorizationRuleAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, NHAuthorizationRule parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -353,7 +381,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='authorizationRuleName'>
             /// The authorizationrule name.
             /// </param>
-            public static void DeleteAuthorizationRule(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
+            public static void DeleteAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
             {
                 operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -380,7 +408,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAuthorizationRuleAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -404,7 +432,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='authorizationRuleName'>
             /// The authorizationrule name.
             /// </param>
-            public static NHAuthorizationRule GetAuthorizationRule(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
+            public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
             {
                 return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -431,7 +459,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NHAuthorizationRule> GetAuthorizationRuleAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> GetAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -458,7 +486,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='authorizationRuleName'>
             /// The authorizationrule name.
             /// </param>
-            public static AccessKeys ListKeys(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
+            public static AccessKeys ListKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
             {
                 return operations.ListKeysAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -485,7 +513,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessKeys> ListKeysAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessKeys> ListKeysAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -516,7 +544,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.
             /// </param>
-            public static AccessKeys RegenerateKeys(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
+            public static AccessKeys RegenerateKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
             {
                 return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
@@ -547,7 +575,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessKeys> RegenerateKeysAsync(this INotificationhubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AccessKeys> RegenerateKeysAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -565,7 +593,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NH> ListByNamespaceNext(this INotificationhubsOperations operations, string nextPageLink)
+            public static IPage<NotificationHubResource> ListByNamespaceNext(this INotificationHubsOperations operations, string nextPageLink)
             {
                 return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -583,7 +611,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NH>> ListByNamespaceNextAsync(this INotificationhubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NotificationHubResource>> ListByNamespaceNextAsync(this INotificationHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -601,7 +629,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NHAuthorizationRule> ListAuthorizationRulesNext(this INotificationhubsOperations operations, string nextPageLink)
+            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRulesNext(this INotificationHubsOperations operations, string nextPageLink)
             {
                 return operations.ListAuthorizationRulesNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -619,7 +647,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NHAuthorizationRule>> ListAuthorizationRulesNextAsync(this INotificationhubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesNextAsync(this INotificationHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAuthorizationRulesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

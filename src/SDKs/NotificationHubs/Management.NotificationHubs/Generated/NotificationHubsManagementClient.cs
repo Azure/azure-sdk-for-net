@@ -43,14 +43,14 @@ namespace Microsoft.Azure.Management.NotificationHubs
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Subscription credentials that uniquely identify a Microsoft Azure
+        /// Gets subscription credentials which uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client API version.
+        /// Client Api Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.NotificationHubs
         public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
-        /// Gets the INotificationhubsOperations.
+        /// Gets the INotificationHubsOperations.
         /// </summary>
-        public virtual INotificationhubsOperations Notificationhubs { get; private set; }
+        public virtual INotificationHubsOperations NotificationHubs { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the NotificationHubsManagementClient class.
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         {
             Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
-            Notificationhubs = new NotificationhubsOperations(this);
+            NotificationHubs = new NotificationHubsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-04-01";
             AcceptLanguage = "en-US";
@@ -308,7 +308,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -322,7 +321,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     }
             };
             CustomInitialize();
-            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }
