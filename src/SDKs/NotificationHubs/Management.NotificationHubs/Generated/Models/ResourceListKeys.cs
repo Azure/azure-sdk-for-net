@@ -25,16 +25,23 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Initializes a new instance of the ResourceListKeys class.
         /// </summary>
-        /// <param name="primaryConnectionString">Gets or sets the
-        /// primaryConnectionString of the created Namespace
+        /// <param name="primaryConnectionString">PrimaryConnectionString of
+        /// the AuthorizationRule.</param>
+        /// <param name="secondaryConnectionString">SecondaryConnectionString
+        /// of the created AuthorizationRule</param>
+        /// <param name="primaryKey">PrimaryKey of the created
         /// AuthorizationRule.</param>
-        /// <param name="secondaryConnectionString">Gets or sets the
-        /// secondaryConnectionString of the created Namespace
+        /// <param name="secondaryKey">SecondaryKey of the created
         /// AuthorizationRule</param>
-        public ResourceListKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string))
+        /// <param name="keyName">KeyName of the created
+        /// AuthorizationRule</param>
+        public ResourceListKeys(string primaryConnectionString = default(string), string secondaryConnectionString = default(string), string primaryKey = default(string), string secondaryKey = default(string), string keyName = default(string))
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
+            KeyName = keyName;
             CustomInit();
         }
 
@@ -44,18 +51,35 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the primaryConnectionString of the created Namespace
-        /// AuthorizationRule.
+        /// Gets or sets primaryConnectionString of the AuthorizationRule.
         /// </summary>
         [JsonProperty(PropertyName = "primaryConnectionString")]
         public string PrimaryConnectionString { get; set; }
 
         /// <summary>
-        /// Gets or sets the secondaryConnectionString of the created Namespace
+        /// Gets or sets secondaryConnectionString of the created
         /// AuthorizationRule
         /// </summary>
         [JsonProperty(PropertyName = "secondaryConnectionString")]
         public string SecondaryConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets primaryKey of the created AuthorizationRule.
+        /// </summary>
+        [JsonProperty(PropertyName = "primaryKey")]
+        public string PrimaryKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets secondaryKey of the created AuthorizationRule
+        /// </summary>
+        [JsonProperty(PropertyName = "secondaryKey")]
+        public string SecondaryKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets keyName of the created AuthorizationRule
+        /// </summary>
+        [JsonProperty(PropertyName = "keyName")]
+        public string KeyName { get; set; }
 
     }
 }

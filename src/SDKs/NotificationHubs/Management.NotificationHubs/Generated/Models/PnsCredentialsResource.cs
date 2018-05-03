@@ -6,32 +6,36 @@
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// NotificationHub properties.
+    /// Description of a NotificationHub PNS Credentials.
     /// </summary>
-    public partial class NotificationHubProperties
+    [Rest.Serialization.JsonTransformation]
+    public partial class PnsCredentialsResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the NotificationHubProperties class.
+        /// Initializes a new instance of the PnsCredentialsResource class.
         /// </summary>
-        public NotificationHubProperties()
+        public PnsCredentialsResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NotificationHubProperties class.
+        /// Initializes a new instance of the PnsCredentialsResource class.
         /// </summary>
-        /// <param name="name">The NotificationHub name.</param>
-        /// <param name="registrationTtl">The RegistrationTtl of the created
-        /// NotificationHub</param>
-        /// <param name="authorizationRules">The AuthorizationRules of the
-        /// created NotificationHub</param>
+        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
+        /// <param name="sku">The sku of the created namespace</param>
         /// <param name="apnsCredential">The ApnsCredential of the created
         /// NotificationHub</param>
         /// <param name="wnsCredential">The WnsCredential of the created
@@ -44,11 +48,9 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// NotificationHub</param>
         /// <param name="baiduCredential">The BaiduCredential of the created
         /// NotificationHub</param>
-        public NotificationHubProperties(string name = default(string), string registrationTtl = default(string), IList<SharedAccessAuthorizationRuleProperties> authorizationRules = default(IList<SharedAccessAuthorizationRuleProperties>), ApnsCredential apnsCredential = default(ApnsCredential), WnsCredential wnsCredential = default(WnsCredential), GcmCredential gcmCredential = default(GcmCredential), MpnsCredential mpnsCredential = default(MpnsCredential), AdmCredential admCredential = default(AdmCredential), BaiduCredential baiduCredential = default(BaiduCredential))
+        public PnsCredentialsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), ApnsCredential apnsCredential = default(ApnsCredential), WnsCredential wnsCredential = default(WnsCredential), GcmCredential gcmCredential = default(GcmCredential), MpnsCredential mpnsCredential = default(MpnsCredential), AdmCredential admCredential = default(AdmCredential), BaiduCredential baiduCredential = default(BaiduCredential))
+            : base(location, id, name, type, tags, sku)
         {
-            Name = name;
-            RegistrationTtl = registrationTtl;
-            AuthorizationRules = authorizationRules;
             ApnsCredential = apnsCredential;
             WnsCredential = wnsCredential;
             GcmCredential = gcmCredential;
@@ -64,58 +66,50 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the NotificationHub name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the RegistrationTtl of the created NotificationHub
-        /// </summary>
-        [JsonProperty(PropertyName = "registrationTtl")]
-        public string RegistrationTtl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the AuthorizationRules of the created NotificationHub
-        /// </summary>
-        [JsonProperty(PropertyName = "authorizationRules")]
-        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; set; }
-
-        /// <summary>
         /// Gets or sets the ApnsCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "apnsCredential")]
+        [JsonProperty(PropertyName = "properties.apnsCredential")]
         public ApnsCredential ApnsCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the WnsCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "wnsCredential")]
+        [JsonProperty(PropertyName = "properties.wnsCredential")]
         public WnsCredential WnsCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the GcmCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "gcmCredential")]
+        [JsonProperty(PropertyName = "properties.gcmCredential")]
         public GcmCredential GcmCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the MpnsCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "mpnsCredential")]
+        [JsonProperty(PropertyName = "properties.mpnsCredential")]
         public MpnsCredential MpnsCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the AdmCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "admCredential")]
+        [JsonProperty(PropertyName = "properties.admCredential")]
         public AdmCredential AdmCredential { get; set; }
 
         /// <summary>
         /// Gets or sets the BaiduCredential of the created NotificationHub
         /// </summary>
-        [JsonProperty(PropertyName = "baiduCredential")]
+        [JsonProperty(PropertyName = "properties.baiduCredential")]
         public BaiduCredential BaiduCredential { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

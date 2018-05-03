@@ -6,12 +6,15 @@
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Description of a NotificationHub GcmCredential.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class GcmCredential
     {
         /// <summary>
@@ -25,11 +28,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Initializes a new instance of the GcmCredential class.
         /// </summary>
-        /// <param name="properties">Gets or sets properties of NotificationHub
-        /// GcmCredential.</param>
-        public GcmCredential(GcmCredentialProperties properties = default(GcmCredentialProperties))
+        /// <param name="gcmEndpoint">The GCM endpoint.</param>
+        /// <param name="googleApiKey">The Google API key.</param>
+        public GcmCredential(string gcmEndpoint = default(string), string googleApiKey = default(string))
         {
-            Properties = properties;
+            GcmEndpoint = gcmEndpoint;
+            GoogleApiKey = googleApiKey;
             CustomInit();
         }
 
@@ -39,10 +43,16 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of NotificationHub GcmCredential.
+        /// Gets or sets the GCM endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public GcmCredentialProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.gcmEndpoint")]
+        public string GcmEndpoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Google API key.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.googleApiKey")]
+        public string GoogleApiKey { get; set; }
 
     }
 }

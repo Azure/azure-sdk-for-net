@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Azure Notification Hubs client
+    /// Azure NotificationHub client
     /// </summary>
     public partial interface INotificationHubsManagementClient : System.IDisposable
     {
@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Gets the INamespacesOperations.
         /// </summary>
         INamespacesOperations Namespaces { get; }
+
+        /// <summary>
+        /// Gets the IHubsOperations.
+        /// </summary>
+        IHubsOperations Hubs { get; }
 
         /// <summary>
         /// Gets the INotificationHubsOperations.

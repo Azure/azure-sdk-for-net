@@ -20,9 +20,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
     public partial interface INotificationHubsOperations
     {
         /// <summary>
-        /// Checks the availability of the given notificationHub in a
-        /// namespace.
-        /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj870968.aspx" />
+        /// Creates/Update a NotificationHub in a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -30,67 +28,12 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='namespaceName'>
         /// The namespace name.
         /// </param>
-        /// <param name='parameters'>
-        /// The notificationHub name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CheckAvailabilityResource>> CheckAvailabilityWithHttpMessagesAsync(string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the notificationhubs within a namespace.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The namespace name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<NotificationHubResource>>> ListByNamespaceWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a Notification Hubs notificationhub. This
-        /// operation is idempotent.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The namespace name
-        /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create or update a notificationhub resource.
+        /// Parameters supplied to the create/update a NotificationHub
+        /// Resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -98,7 +41,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -107,20 +50,18 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NotificationHubResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, NotificationHubCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NotificationHubResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a notificationhub from the specified namespace in a
-        /// resource group.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
+        /// Deletes a notification hub associated with a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
+        /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The namespace name.
         /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -128,25 +69,24 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a description for the specified notificationhub.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
+        /// Lists the notification hubs associated with a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
+        /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The namespace name.
         /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -154,7 +94,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -163,50 +103,21 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<NotificationHubResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NotificationHubResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all authorization rules for a notificationhub.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
+        /// Creates/Updates an authorization rule for a NotificationHub
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
+        /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The namespace name.
         /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<SharedAccessAuthorizationRuleResource>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates an authorization rule for a notificationhub.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The namespace name
-        /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// Authorization Rule Name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -217,7 +128,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -226,22 +137,21 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a notificationhub authorization rule.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705609.aspx" />
+        /// Deletes a notificationHub authorization rule
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
+        /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The namespace name.
         /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// Authorization Rule Name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -249,28 +159,27 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an authorization rule for a notificationhub by rule name.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705611.aspx" />
+        /// Gets an authorization rule for a NotificationHub by name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
+        /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
         /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -278,39 +187,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Primary and secondary connection strings to the notificationhub.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705608.aspx" />
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
-        /// </param>
-        /// <param name='namespaceName'>
-        /// The namespace name
-        /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
-        /// </param>
-        /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -319,26 +196,113 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AccessKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerates the primary or secondary connection strings to the
-        /// notificationhub.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705606.aspx" />
+        /// Lists the notification hubs associated with a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the Resource group within the Azure subscription.
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<NotificationHubResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the authorization rules for a NotificationHub.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
         /// </param>
         /// <param name='namespaceName'>
         /// The namespace name
         /// </param>
-        /// <param name='notificationhubName'>
-        /// The notificationhub name.
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SharedAccessAuthorizationRuleResource>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the Primary and Secondary ConnectionStrings to the
+        /// NotificationHub
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The authorizationrule name.
+        /// The connection string of the NotificationHub for the specified
+        /// authorizationRule.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ResourceListKeys>> ListKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Regenerates the Primary/Secondary Keys to the NotificationHub
+        /// Authorization Rule
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// The connection string of the NotificationHub for the specified
+        /// authorizationRule.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to regenerate the authorization rule.
+        /// Parameters supplied to regenerate the NotificationHub Authorization
+        /// Rule Key.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -346,7 +310,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -355,10 +319,37 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AccessKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceListKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, PolicykeyResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the notificationhubs within a namespace.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
+        /// Lists the PNS Credentials associated with a notification hub .
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PnsCredentialsResource>> GetPnsCredentialsWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string notificationHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the notification hubs associated with a namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -369,7 +360,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -378,10 +369,9 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<NotificationHubResource>>> ListByNamespaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NotificationHubResource>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all authorization rules for a notificationhub.
-        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
+        /// Gets the authorization rules for a NotificationHub.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -392,7 +382,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

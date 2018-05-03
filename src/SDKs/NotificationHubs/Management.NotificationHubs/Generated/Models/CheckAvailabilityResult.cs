@@ -6,42 +6,40 @@
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules.
+    /// Description of a CheckAvailibility resource.
     /// </summary>
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateParameters : Resource
+    public partial class CheckAvailabilityResult : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleCreateOrUpdateParameters class.
+        /// Initializes a new instance of the CheckAvailabilityResult class.
         /// </summary>
-        public SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+        public CheckAvailabilityResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// SharedAccessAuthorizationRuleCreateOrUpdateParameters class.
+        /// Initializes a new instance of the CheckAvailabilityResult class.
         /// </summary>
         /// <param name="location">Resource location</param>
-        /// <param name="properties">Properties of the Namespace
-        /// AuthorizationRules.</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">The sku of the created namespace</param>
-        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(string location, SharedAccessAuthorizationRuleProperties properties, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
+        /// <param name="isAvailiable">True if the name is available and can be
+        /// used to create new Namespace/NotificationHub. Otherwise
+        /// false.</param>
+        public CheckAvailabilityResult(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
             : base(location, id, name, type, tags, sku)
         {
-            Properties = properties;
+            IsAvailiable = isAvailiable;
             CustomInit();
         }
 
@@ -51,24 +49,21 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of the Namespace AuthorizationRules.
+        /// Gets or sets true if the name is available and can be used to
+        /// create new Namespace/NotificationHub. Otherwise false.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public SharedAccessAuthorizationRuleProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "isAvailiable")]
+        public bool? IsAvailiable { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
-            if (Properties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
-            }
         }
     }
 }

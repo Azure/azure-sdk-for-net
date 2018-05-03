@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
     using System.Net.Http;
 
     /// <summary>
-    /// Azure Notification Hubs client
+    /// Azure NotificationHub client
     /// </summary>
     public partial class NotificationHubsManagementClient : ServiceClient<NotificationHubsManagementClient>, INotificationHubsManagementClient, IAzureClient
     {
@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// Gets the INamespacesOperations.
         /// </summary>
         public virtual INamespacesOperations Namespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IHubsOperations.
+        /// </summary>
+        public virtual IHubsOperations Hubs { get; private set; }
 
         /// <summary>
         /// Gets the INotificationHubsOperations.
@@ -289,6 +294,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         {
             Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
+            Hubs = new HubsOperations(this);
             NotificationHubs = new NotificationHubsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-04-01";
@@ -308,6 +314,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -321,6 +328,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

@@ -6,12 +6,15 @@
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Description of a NotificationHub MpnsCredential.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class MpnsCredential
     {
         /// <summary>
@@ -25,11 +28,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Initializes a new instance of the MpnsCredential class.
         /// </summary>
-        /// <param name="properties">Gets or sets properties of NotificationHub
-        /// MpnsCredential.</param>
-        public MpnsCredential(MpnsCredentialProperties properties = default(MpnsCredentialProperties))
+        /// <param name="mpnsCertificate">The MPNS certificate.</param>
+        /// <param name="certificateKey">The certificate key for this
+        /// credential.</param>
+        /// <param name="thumbprint">The Mpns certificate Thumbprint</param>
+        public MpnsCredential(string mpnsCertificate = default(string), string certificateKey = default(string), string thumbprint = default(string))
         {
-            Properties = properties;
+            MpnsCertificate = mpnsCertificate;
+            CertificateKey = certificateKey;
+            Thumbprint = thumbprint;
             CustomInit();
         }
 
@@ -39,10 +46,22 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of NotificationHub MpnsCredential.
+        /// Gets or sets the MPNS certificate.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public MpnsCredentialProperties Properties { get; set; }
+        [JsonProperty(PropertyName = "properties.mpnsCertificate")]
+        public string MpnsCertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the certificate key for this credential.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.certificateKey")]
+        public string CertificateKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Mpns certificate Thumbprint
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.thumbprint")]
+        public string Thumbprint { get; set; }
 
     }
 }

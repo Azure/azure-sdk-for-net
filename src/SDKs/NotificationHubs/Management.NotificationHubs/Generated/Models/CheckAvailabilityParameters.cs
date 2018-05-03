@@ -31,17 +31,23 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Initializes a new instance of the CheckAvailabilityParameters
         /// class.
         /// </summary>
-        /// <param name="name">Gets or sets name</param>
-        /// <param name="location">Gets or sets location.</param>
-        /// <param name="tags">Gets or sets tags.</param>
-        /// <param name="isAvailiable">Gets or sets true if the name is
-        /// available and can be used to create new Namespace/NotificationHub.
-        /// Otherwise false.</param>
-        public CheckAvailabilityParameters(string name, string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? isAvailiable = default(bool?))
+        /// <param name="name">Resource name</param>
+        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
+        /// <param name="sku">The sku of the created namespace</param>
+        /// <param name="isAvailiable">True if the name is available and can be
+        /// used to create new Namespace/NotificationHub. Otherwise
+        /// false.</param>
+        public CheckAvailabilityParameters(string name, string location, string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
         {
+            Id = id;
             Name = name;
+            Type = type;
             Location = location;
             Tags = tags;
+            Sku = sku;
             IsAvailiable = isAvailiable;
             CustomInit();
         }
@@ -52,22 +58,40 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name
+        /// Gets resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource name
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets location.
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource location
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets tags.
+        /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sku of the created namespace
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets true if the name is available and can be used to
@@ -87,6 +111,14 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (Sku != null)
+            {
+                Sku.Validate();
             }
         }
     }

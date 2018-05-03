@@ -6,6 +6,8 @@
 
 namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -14,7 +16,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// Description of a Namespace AuthorizationRules.
     /// </summary>
-    public partial class SharedAccessAuthorizationRuleResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class SharedAccessAuthorizationRuleResource : Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -29,26 +32,17 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Initializes a new instance of the
         /// SharedAccessAuthorizationRuleResource class.
         /// </summary>
-        /// <param name="id">Gets or sets the id of the created Namespace
-        /// AuthorizationRules.</param>
-        /// <param name="location">Gets or sets datacenter location of the
-        /// Namespace AuthorizationRules.</param>
-        /// <param name="name">Gets or sets name of the Namespace
-        /// AuthorizationRules.</param>
-        /// <param name="type">Gets or sets resource type of the Namespace
-        /// AuthorizationRules.</param>
-        /// <param name="tags">Gets or sets tags of the Namespace
-        /// AuthorizationRules.</param>
-        /// <param name="properties">Gets or sets properties of the
-        /// Namespace.</param>
-        public SharedAccessAuthorizationRuleResource(string id = default(string), string location = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SharedAccessAuthorizationRuleProperties properties = default(SharedAccessAuthorizationRuleProperties))
+        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="tags">Resource tags</param>
+        /// <param name="sku">The sku of the created namespace</param>
+        /// <param name="rights">The rights associated with the rule.</param>
+        public SharedAccessAuthorizationRuleResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), IList<AccessRights?> rights = default(IList<AccessRights?>))
+            : base(location, id, name, type, tags, sku)
         {
-            Id = id;
-            Location = location;
-            Name = name;
-            Type = type;
-            Tags = tags;
-            Properties = properties;
+            Rights = rights;
             CustomInit();
         }
 
@@ -58,41 +52,20 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id of the created Namespace AuthorizationRules.
+        /// Gets or sets the rights associated with the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "properties.rights")]
+        public IList<AccessRights?> Rights { get; set; }
 
         /// <summary>
-        /// Gets or sets datacenter location of the Namespace
-        /// AuthorizationRules.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of the Namespace AuthorizationRules.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource type of the Namespace AuthorizationRules.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets tags of the Namespace AuthorizationRules.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets properties of the Namespace.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public SharedAccessAuthorizationRuleProperties Properties { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

@@ -18,8 +18,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
     public static partial class NotificationHubsOperationsExtensions
     {
             /// <summary>
-            /// Checks the availability of the given notificationHub in a namespace.
-            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj870968.aspx" />
+            /// Creates/Update a NotificationHub in a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,17 +29,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
-            /// <param name='parameters'>
-            /// The notificationHub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
-            public static CheckAvailabilityResource CheckAvailability(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters)
+            /// <param name='parameters'>
+            /// Parameters supplied to the create/update a NotificationHub Resource.
+            /// </param>
+            public static NotificationHubResource CreateOrUpdate(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters)
             {
-                return operations.CheckAvailabilityAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, notificationHubName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Checks the availability of the given notificationHub in a namespace.
-            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj870968.aspx" />
+            /// Creates/Update a NotificationHub in a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,302 +52,155 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
-            /// <param name='parameters'>
-            /// The notificationHub name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckAvailabilityResource> CheckAvailabilityAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckAvailabilityWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the notificationhubs within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static IPage<NotificationHubResource> ListByNamespace(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the notificationhubs within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<NotificationHubResource>> ListByNamespaceAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates a Notification Hubs notificationhub. This operation is
-            /// idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create or update a notificationhub resource.
-            /// </param>
-            public static NotificationHubResource CreateOrUpdate(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, NotificationHubCreateOrUpdateParameters parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, notificationhubName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a Notification Hubs notificationhub. This operation is
-            /// idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639395.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update a notificationhub resource.
+            /// Parameters supplied to the create/update a NotificationHub Resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NotificationHubResource> CreateOrUpdateAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NotificationHubResource> CreateOrUpdateAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, NotificationHubCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a notificationhub from the specified namespace in a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
+            /// Deletes a notification hub associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
-            public static void Delete(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
+            public static void Delete(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
             {
-                operations.DeleteAsync(resourceGroupName, namespaceName, notificationhubName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a notificationhub from the specified namespace in a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639411.aspx" />
+            /// Deletes a notification hub associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Returns a description for the specified notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
+            /// Lists the notification hubs associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
-            public static NotificationHubResource Get(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
+            public static NotificationHubResource Get(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
             {
-                return operations.GetAsync(resourceGroupName, namespaceName, notificationhubName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a description for the specified notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639380.aspx" />
+            /// Lists the notification hubs associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NotificationHubResource> GetAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NotificationHubResource> GetAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all authorization rules for a notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
+            /// Creates/Updates an authorization rule for a NotificationHub
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, notificationhubName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all authorization rules for a notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates an authorization rule for a notificationhub.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization Rule Name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
             /// </param>
-            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
+            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
             {
-                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates an authorization rule for a notificationhub.
+            /// Creates/Updates an authorization rule for a NotificationHub
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization Rule Name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -354,238 +208,367 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a notificationhub authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705609.aspx" />
+            /// Deletes a notificationHub authorization rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization Rule Name.
             /// </param>
-            public static void DeleteAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
+            public static void DeleteAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
             {
-                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName).GetAwaiter().GetResult();
+                operations.DeleteAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a notificationhub authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705609.aspx" />
+            /// Deletes a notificationHub authorization rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization Rule Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Gets an authorization rule for a notificationhub by rule name.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705611.aspx" />
+            /// Gets an authorization rule for a NotificationHub by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// authorization rule name.
             /// </param>
-            public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
+            public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
             {
-                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName).GetAwaiter().GetResult();
+                return operations.GetAuthorizationRuleAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets an authorization rule for a notificationhub by rule name.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705611.aspx" />
+            /// Gets an authorization rule for a NotificationHub by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRuleResource> GetAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> GetAuthorizationRuleAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Primary and secondary connection strings to the notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705608.aspx" />
+            /// Lists the notification hubs associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
-            /// </param>
-            public static AccessKeys ListKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName)
+            public static IPage<NotificationHubResource> List(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName)
             {
-                return operations.ListKeysAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Primary and secondary connection strings to the notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705608.aspx" />
+            /// Lists the notification hubs associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
-            /// </param>
-            /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The namespace name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessKeys> ListKeysAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NotificationHubResource>> ListAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Regenerates the primary or secondary connection strings to the
-            /// notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705606.aspx" />
+            /// Gets the authorization rules for a NotificationHub.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
+            {
+                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the authorization rules for a NotificationHub.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Primary and Secondary ConnectionStrings to the NotificationHub
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The connection string of the NotificationHub for the specified
+            /// authorizationRule.
+            /// </param>
+            public static ResourceListKeys ListKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName)
+            {
+                return operations.ListKeysAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the Primary and Secondary ConnectionStrings to the NotificationHub
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The connection string of the NotificationHub for the specified
+            /// authorizationRule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ResourceListKeys> ListKeysAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Regenerates the Primary/Secondary Keys to the NotificationHub Authorization
+            /// Rule
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// The connection string of the NotificationHub for the specified
+            /// authorizationRule.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate the authorization rule.
+            /// Parameters supplied to regenerate the NotificationHub Authorization Rule
+            /// Key.
             /// </param>
-            public static AccessKeys RegenerateKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
+            public static ResourceListKeys RegenerateKeys(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, PolicykeyResource parameters)
             {
-                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
+                return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Regenerates the primary or secondary connection strings to the
-            /// notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705606.aspx" />
+            /// Regenerates the Primary/Secondary Keys to the NotificationHub Authorization
+            /// Rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
-            /// <param name='notificationhubName'>
-            /// The notificationhub name.
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The connection string of the NotificationHub for the specified
+            /// authorizationRule.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate the authorization rule.
+            /// Parameters supplied to regenerate the NotificationHub Authorization Rule
+            /// Key.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessKeys> RegenerateKeysAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationhubName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceListKeys> RegenerateKeysAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, string authorizationRuleName, PolicykeyResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationhubName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the notificationhubs within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
+            /// Lists the PNS Credentials associated with a notification hub .
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            public static PnsCredentialsResource GetPnsCredentials(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName)
+            {
+                return operations.GetPnsCredentialsAsync(resourceGroupName, namespaceName, notificationHubName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the PNS Credentials associated with a notification hub .
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='notificationHubName'>
+            /// The notification hub name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PnsCredentialsResource> GetPnsCredentialsAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, string notificationHubName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPnsCredentialsWithHttpMessagesAsync(resourceGroupName, namespaceName, notificationHubName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the notification hubs associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -593,14 +576,13 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NotificationHubResource> ListByNamespaceNext(this INotificationHubsOperations operations, string nextPageLink)
+            public static IPage<NotificationHubResource> ListNext(this INotificationHubsOperations operations, string nextPageLink)
             {
-                return operations.ListByNamespaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the notificationhubs within a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639415.aspx" />
+            /// Lists the notification hubs associated with a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -611,17 +593,16 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NotificationHubResource>> ListByNamespaceNextAsync(this INotificationHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NotificationHubResource>> ListNextAsync(this INotificationHubsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNamespaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all authorization rules for a notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
+            /// Gets the authorization rules for a NotificationHub.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -635,8 +616,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets all authorization rules for a notificationhub.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt705607.aspx" />
+            /// Gets the authorization rules for a NotificationHub.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -18,123 +18,59 @@ namespace Microsoft.Azure.Management.NotificationHubs
     public static partial class NamespacesOperationsExtensions
     {
             /// <summary>
-            /// Check the give namespace name availability.
+            /// Checks the availability of the given service namespace across all Azure
+            /// subscriptions. This is useful because the domain name is created based on
+            /// the service namespace name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters to check availability of the given namespace name
+            /// The namespace name.
             /// </param>
-            public static CheckAvailabilityResource CheckNamespaceAvailability(this INamespacesOperations operations, CheckAvailabilityParameters parameters)
+            public static CheckAvailabilityResult CheckAvailability(this INamespacesOperations operations, CheckAvailabilityParameters parameters)
             {
-                return operations.CheckNamespaceAvailabilityAsync(parameters).GetAwaiter().GetResult();
+                return operations.CheckAvailabilityAsync(parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Check the give namespace name availability.
+            /// Checks the availability of the given service namespace across all Azure
+            /// subscriptions. This is useful because the domain name is created based on
+            /// the service namespace name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters to check availability of the given namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckAvailabilityResource> CheckNamespaceAvailabilityAsync(this INamespacesOperations operations, CheckAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckAvailabilityResult> CheckAvailabilityAsync(this INamespacesOperations operations, CheckAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckNamespaceAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckAvailabilityWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets all the available namespaces within the subscription, irrespective of
-            /// the resource groups.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<NamespaceResource> List(this INamespacesOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the available namespaces within the subscription, irrespective of
-            /// the resource groups.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<NamespaceResource>> ListAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the available namespaces within a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            public static IPage<NamespaceResource> ListByResourceGroup(this INamespacesOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the available namespaces within a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<NamespaceResource>> ListByResourceGroupAsync(this INamespacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates a service namespace. Once created, this namespace's
+            /// Creates/Updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a namespace resource.
+            /// Parameters supplied to create a Namespace Resource.
             /// </param>
             public static NamespaceResource CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
             {
@@ -142,21 +78,21 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Creates or updates a service namespace. Once created, this namespace's
+            /// Creates/Updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a namespace resource.
+            /// Parameters supplied to create a Namespace Resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -170,18 +106,64 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
+            /// Patches the existing namespace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to patch a Namespace Resource.
+            /// </param>
+            public static NamespaceResource Patch(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespacePatchParameters parameters)
+            {
+                return operations.PatchAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Patches the existing namespace
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to patch a Namespace Resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NamespaceResource> PatchAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespacePatchParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an existing namespace. This operation also removes all associated
+            /// notificationHubs under the namespace.
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
             /// </param>
             public static void Delete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -190,17 +172,17 @@ namespace Microsoft.Azure.Management.NotificationHubs
 
             /// <summary>
             /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
+            /// notificationHubs under the namespace.
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -211,17 +193,16 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets a description for the specified namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639379.aspx" />
+            /// Returns the description for the specified namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             public static NamespaceResource Get(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -229,17 +210,16 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets a description for the specified namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639379.aspx" />
+            /// Returns the description for the specified namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -253,62 +233,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets the authorization rules for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
+            /// Creates an authorization rule for a namespace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
-            {
-                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the authorization rules for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates or updates an authorization rule for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Aauthorization Rule Name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -319,20 +256,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Creates or updates an authorization rule for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />
+            /// Creates an authorization rule for a namespace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Aauthorization Rule Name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -349,20 +285,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Deletes a namespace authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639417.aspx" />
+            /// Deletes a namespace authorization rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization Rule Name.
             /// </param>
             public static void DeleteAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -370,20 +305,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Deletes a namespace authorization rule.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639417.aspx" />
+            /// Deletes a namespace authorization rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization Rule Name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -394,20 +328,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets an authorization rule for a namespace by rule name.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639392.aspx" />
+            /// Gets an authorization rule for a namespace by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization rule name.
             /// </param>
             public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -415,20 +348,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets an authorization rule for a namespace by rule name.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639392.aspx" />
+            /// Gets an authorization rule for a namespace by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -442,20 +374,125 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets the primary and secondary connection strings for the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639398.aspx" />
+            /// Lists the available namespaces within a resourceGroup.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group. If resourceGroupName value is null the
+            /// method lists all the namespaces within subscription
+            /// </param>
+            public static IPage<NamespaceResource> List(this INamespacesOperations operations, string resourceGroupName)
+            {
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the available namespaces within a resourceGroup.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. If resourceGroupName value is null the
+            /// method lists all the namespaces within subscription
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NamespaceResource>> ListAsync(this INamespacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all the available namespaces within the subscription irrespective of
+            /// the resourceGroups.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<NamespaceResource> ListAll(this INamespacesOperations operations)
+            {
+                return operations.ListAllAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all the available namespaces within the subscription irrespective of
+            /// the resourceGroups.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NamespaceResource>> ListAllAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the authorization rules for a namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
+            public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
+            {
+                return operations.ListAuthorizationRulesAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the authorization rules for a namespace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SharedAccessAuthorizationRuleResource>> ListAuthorizationRulesAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAuthorizationRulesWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the Primary and Secondary ConnectionStrings to the namespace
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The connection string of the namespace for the specified authorizationRule.
             /// </param>
             public static ResourceListKeys ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -463,20 +500,19 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets the primary and secondary connection strings for the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639398.aspx" />
+            /// Gets the Primary and Secondary ConnectionStrings to the namespace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The connection string of the namespace for the specified authorizationRule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -490,52 +526,50 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Regenerates the primary or secondary connection strings for the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt718977.aspx" />
+            /// Regenerates the Primary/Secondary Keys to the Namespace Authorization Rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The connection string of the namespace for the specified authorizationRule.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate the authorization rule.
+            /// Parameters supplied to regenerate the Namespace Authorization Rule Key.
             /// </param>
-            public static AccessKeys RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters)
+            public static ResourceListKeys RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, PolicykeyResource parameters)
             {
                 return operations.RegenerateKeysAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Regenerates the primary or secondary connection strings for the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt718977.aspx" />
+            /// Regenerates the Primary/Secondary Keys to the Namespace Authorization Rule
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The connection string of the namespace for the specified authorizationRule.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate the authorization rule.
+            /// Parameters supplied to regenerate the Namespace Authorization Rule Key.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AccessKeys> RegenerateKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateAccessKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceListKeys> RegenerateKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, PolicykeyResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -544,68 +578,18 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Creates or updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a namespace resource.
-            /// </param>
-            public static NamespaceResource BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
-            {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639408.aspx" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a namespace resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<NamespaceResource> BeginCreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
+            /// notificationHubs under the namespace.
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             public static void BeginDelete(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -614,17 +598,17 @@ namespace Microsoft.Azure.Management.NotificationHubs
 
             /// <summary>
             /// Deletes an existing namespace. This operation also removes all associated
-            /// resources under the namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639389.aspx" />
+            /// notificationHubs under the namespace.
+            /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the Resource group within the Azure subscription.
+            /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -635,9 +619,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets all the available namespaces within the subscription, irrespective of
-            /// the resource groups.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
+            /// Lists the available namespaces within a resourceGroup.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -651,9 +633,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets all the available namespaces within the subscription, irrespective of
-            /// the resource groups.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
+            /// Lists the available namespaces within a resourceGroup.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -673,8 +653,8 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
-            /// Gets the available namespaces within a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
+            /// Lists all the available namespaces within the subscription irrespective of
+            /// the resourceGroups.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -682,14 +662,14 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NamespaceResource> ListByResourceGroupNext(this INamespacesOperations operations, string nextPageLink)
+            public static IPage<NamespaceResource> ListAllNext(this INamespacesOperations operations, string nextPageLink)
             {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the available namespaces within a resource group.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639412.aspx" />
+            /// Lists all the available namespaces within the subscription irrespective of
+            /// the resourceGroups.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -700,9 +680,9 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamespaceResource>> ListByResourceGroupNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListAllNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -710,7 +690,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
 
             /// <summary>
             /// Gets the authorization rules for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -725,7 +704,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
 
             /// <summary>
             /// Gets the authorization rules for a namespace.
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639376.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
