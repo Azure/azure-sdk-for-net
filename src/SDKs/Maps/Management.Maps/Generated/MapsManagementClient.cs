@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Maps
         {
             Accounts = new AccountsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-01-01-preview";
+            ApiVersion = "2018-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
