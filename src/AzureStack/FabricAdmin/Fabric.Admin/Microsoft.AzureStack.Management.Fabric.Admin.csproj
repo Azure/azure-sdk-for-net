@@ -12,7 +12,14 @@
         <PackageTags>Microsoft Azure Stack;Fabric;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Fabric Admin SDK. Included with this release is support for gathering information about your AzureStack infrastructure and performing administrative operations.
+                Preview release of the AzureStack Fabric administrator SDK which allows administrators to view and manage infrastructure components.   
+                1) Stop, Start and Shutdown of scale unit nodes. 
+                2) Drain and Resume of scale unit nodes for FRU related activities. 
+                3) Repair of scale unit nodes 
+                4) Restart of Infrastructure role 
+                5) Stop, Start and Shutdown of Infrastructure role instances 
+                6) Create new IpPools 
+                    Note: Once created an IpPool cannot be removed without a redeployment
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
