@@ -77,11 +77,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
         INamespacesOperations Namespaces { get; }
 
         /// <summary>
-        /// Gets the IHubsOperations.
-        /// </summary>
-        IHubsOperations Hubs { get; }
-
-        /// <summary>
         /// Gets the INotificationHubsOperations.
         /// </summary>
         INotificationHubsOperations NotificationHubs { get; }

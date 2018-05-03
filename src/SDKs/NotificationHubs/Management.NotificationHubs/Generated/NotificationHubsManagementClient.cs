@@ -82,11 +82,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
         public virtual INamespacesOperations Namespaces { get; private set; }
 
         /// <summary>
-        /// Gets the IHubsOperations.
-        /// </summary>
-        public virtual IHubsOperations Hubs { get; private set; }
-
-        /// <summary>
         /// Gets the INotificationHubsOperations.
         /// </summary>
         public virtual INotificationHubsOperations NotificationHubs { get; private set; }
@@ -294,7 +289,6 @@ namespace Microsoft.Azure.Management.NotificationHubs
         {
             Operations = new Operations(this);
             Namespaces = new NamespacesOperations(this);
-            Hubs = new HubsOperations(this);
             NotificationHubs = new NotificationHubsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-04-01";
