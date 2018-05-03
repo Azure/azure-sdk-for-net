@@ -13,6 +13,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <Version>1.0.1-preview</Version>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
