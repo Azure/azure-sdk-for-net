@@ -22,7 +22,6 @@
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageQueueTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionQueueTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\RetryTests.cs" />
-    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\TransactionTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\SubscriptionClientTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\ExtractActivityTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\QueueClientDiagnosticsTests.cs" />
