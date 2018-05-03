@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Search.Tests
 {
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
-    using System;
     using Xunit;
 
     public sealed class ServiceStatsTests : SearchTestBase<SearchServiceFixture>

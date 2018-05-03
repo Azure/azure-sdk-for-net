@@ -3,7 +3,6 @@
 // license information.
 
 using System.Reflection;
-using System.Resources;
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion("5.0.0.0")]
