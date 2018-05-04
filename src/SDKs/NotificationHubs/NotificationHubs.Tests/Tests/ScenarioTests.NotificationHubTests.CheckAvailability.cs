@@ -23,7 +23,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var validNamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
                 var responseNS = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(responseNS);
-                Assert.True(responseNS.IsAvailiable);                
+                Assert.True(responseNS.IsAvailable);                
 
                 // create NH Namespace  
                 var location = NotificationHubsManagementHelper.DefaultLocation;
@@ -42,10 +42,10 @@ namespace NotificationHubs.Tests.ScenarioTests
                 TestUtilities.Wait(TimeSpan.FromSeconds(30));
 
                 var validNotificationHubName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NotificationHubPrefix) + "-valid" + TestUtilities.GenerateName();
-                var responseNH = NotificationHubsManagementClient.NotificationHubs.CheckAvailability(resourceGroup, validNamespaceName, 
+                var responseNH = NotificationHubsManagementClient.NotificationHubs.CheckNotificationHubAvailability(resourceGroup, validNamespaceName, 
                     new CheckAvailabilityParameters(validNotificationHubName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(responseNH);
-                Assert.True(responseNH.IsAvailiable);
+                Assert.True(responseNH.IsAvailable);
 
                 // create Notificationhub  
                 var createNHResponse = NotificationHubsManagementClient.NotificationHubs.CreateOrUpdate(resourceGroup, validNamespaceName, 
@@ -54,10 +54,10 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 Assert.NotNull(createNHResponse);
 
-                responseNH = NotificationHubsManagementClient.NotificationHubs.CheckAvailability(resourceGroup, validNamespaceName, 
+                responseNH = NotificationHubsManagementClient.NotificationHubs.CheckNotificationHubAvailability(resourceGroup, validNamespaceName, 
                     new CheckAvailabilityParameters(validNotificationHubName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(responseNH);
-                Assert.False(responseNH.IsAvailiable);
+                Assert.False(responseNH.IsAvailable);
 
                 try
                 {
