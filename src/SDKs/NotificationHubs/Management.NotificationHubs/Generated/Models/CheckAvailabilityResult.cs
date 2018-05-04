@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">The sku of the created namespace</param>
-        /// <param name="isAvailiable">True if the name is available and can be
+        /// <param name="isAvailable">True if the name is available and can be
         /// used to create new Namespace/NotificationHub. Otherwise
         /// false.</param>
-        public CheckAvailabilityResult(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
+        public CheckAvailabilityResult(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailable = default(bool?))
             : base(location, id, name, type, tags, sku)
         {
-            IsAvailiable = isAvailiable;
+            IsAvailable = IsAvailable;
             CustomInit();
         }
 
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Gets or sets true if the name is available and can be used to
         /// create new Namespace/NotificationHub. Otherwise false.
         /// </summary>
-        [JsonProperty(PropertyName = "isAvailiable")]
-        public bool? IsAvailiable { get; set; }
+        [JsonProperty(PropertyName = "isAvailable")]
+        public bool? IsAvailable { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -25,12 +25,12 @@ namespace NotificationHubs.Tests.ScenarioTests
                 //var validNamespaceName = "amol-" + Guid.NewGuid().ToString();
                 var response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(response);
-                Assert.True(response.IsAvailiable);
+                Assert.True(response.IsAvailable);
 
                 const string invalidNamespaceName = "hydraNhNamespace-invalid@!!#%$#";
                 response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(invalidNamespaceName,NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(response);
-                Assert.False(response.IsAvailiable);
+                Assert.False(response.IsAvailable);
 
                 // create NH Namespace  
                 var location = NotificationHubsManagementHelper.DefaultLocation;
@@ -51,7 +51,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(response);
-                Assert.False(response.IsAvailiable);
+                Assert.False(response.IsAvailable);
                                
                 try
                 {
