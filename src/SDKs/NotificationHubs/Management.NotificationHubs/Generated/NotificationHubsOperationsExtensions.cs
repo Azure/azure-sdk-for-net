@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='parameters'>
             /// The notificationHub name.
             /// </param>
-            public static CheckNameAvailabilityResponse CheckNotificationHubAvailability(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters)
+            public static CheckAvailabilityResult CheckNotificationHubAvailability(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters)
             {
                 return operations.CheckNotificationHubAvailabilityAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResponse> CheckNotificationHubAvailabilityAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckAvailabilityResult> CheckNotificationHubAvailabilityAsync(this INotificationHubsOperations operations, string resourceGroupName, string namespaceName, CheckAvailabilityParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNotificationHubAvailabilityWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
