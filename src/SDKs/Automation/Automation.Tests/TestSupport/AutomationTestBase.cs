@@ -564,6 +564,81 @@ namespace Automation.Tests.TestSupport
 
         #endregion
 
+        #region SourceControl Methods
+
+        public SourceControl CreateSourceControl(string sourceControlName, string repoUrl, string branch, string folderPath, bool autoSync,
+                                                 bool publishRunbook, string sourceControlType, string securityToken, string description)
+        {
+            var sourceControl = AutomationClient.SourceControl.CreateOrUpdate(ResourceGroup, AutomationAccount, sourceControlName,
+                    new SourceControlCreateOrUpdateParameters
+                    {
+                        RepoUrl = repoUrl,
+                        Branch = branch,
+                        FolderPath = folderPath,
+                        AutoSync = autoSync,
+                        PublishRunbook = publishRunbook,
+                        SourceType = sourceControlType,
+                        SecurityToken = securityToken,
+                        Description = description
+                    });
+            return sourceControl;
+        }
+
+        public SourceControl UpdateSourceControl(string sourceControlName, string branch, bool autoSync)
+        {
+            var sourceControl = AutomationClient.SourceControl.Update(ResourceGroup, AutomationAccount, sourceControlName,
+                    new SourceControlUpdateParameters
+                    {
+                        Branch = branch,
+                        AutoSync = autoSync
+                    });
+            return sourceControl;
+        }
+
+        public SourceControl GetSourceControl(string sourceControlName)
+        {
+            var sourceControl = AutomationClient.SourceControl.Get(ResourceGroup, AutomationAccount, sourceControlName);
+            return sourceControl;
+        }
+
+        public IPage<SourceControl> GetSourceControls()
+        {
+            var sourceControls = AutomationClient.SourceControl.ListByAutomationAccount(ResourceGroup, AutomationAccount);
+            return sourceControls;
+        }
+
+        public void DeleteSourceControl(string sourceControlName)
+        {
+            AutomationClient.SourceControl.Delete(ResourceGroup, AutomationAccount, sourceControlName);
+        }
+
+        #endregion
+
+        #region SourceControlSyncJob Methods
+
+        public SourceControlSyncJob CreateSourceControlSyncJob(string sourceControlName, Guid sourceControlSyncJobId)
+        {
+            var sourceControlSyncJob = AutomationClient.SourceControlSyncJob.Create(ResourceGroup, AutomationAccount, sourceControlName, sourceControlSyncJobId,
+                    new SourceControlSyncJobCreateParameters());
+
+            return sourceControlSyncJob;
+        }
+
+        public SourceControlSyncJobById GetSourceControlSyncJob(string sourceControlName, Guid sourceControlSyncJobId)
+        {
+            var sourceControlSyncJob = AutomationClient.SourceControlSyncJob.Get(ResourceGroup, AutomationAccount,
+                                                                                 sourceControlName, sourceControlSyncJobId);
+            return sourceControlSyncJob;
+        }
+
+        public IPage<SourceControlSyncJob> GetSourceControlSyncJobs(string sourceControlName)
+        {
+            var sourceControlSyncJobs = AutomationClient.SourceControlSyncJob.ListByAutomationAccount(ResourceGroup, AutomationAccount, sourceControlName);
+            return sourceControlSyncJobs;
+        }
+
+        #endregion
+
         #region Common Methods
 
         public void Dispose()
