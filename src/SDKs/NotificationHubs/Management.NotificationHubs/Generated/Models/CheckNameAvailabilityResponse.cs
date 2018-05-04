@@ -24,15 +24,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Initializes a new instance of the CheckNameAvailabilityResponse
         /// class.
         /// </summary>
-        /// <param name="nameAvailable">Checks if the namespace name is
+        /// <param name="isAvailable">Checks if the resource name is
         /// available</param>
-        /// <param name="reason">States the reason due to which the namespace
+        /// <param name="reason">States the reason due to which the resource
         /// name is not available</param>
         /// <param name="message">The messsage returned when checking for
-        /// namespace name availability</param>
-        public CheckNameAvailabilityResponse(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
+        /// resource name availability</param>
+        public CheckNameAvailabilityResponse(bool? isAvailable = default(bool?), string reason = default(string), string message = default(string))
         {
-            NameAvailable = nameAvailable;
+            IsAvailable = isAvailable;
             Reason = reason;
             Message = message;
             CustomInit();
@@ -44,23 +44,23 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets checks if the namespace name is available
+        /// Gets or sets checks if the resource name is available
         /// </summary>
-        [JsonProperty(PropertyName = "NameAvailable")]
-        public bool? NameAvailable { get; set; }
+        [JsonProperty(PropertyName = "isAvailable")]
+        public bool? IsAvailable { get; set; }
 
         /// <summary>
-        /// Gets or sets states the reason due to which the namespace name is
+        /// Gets or sets states the reason due to which the resource name is
         /// not available
         /// </summary>
-        [JsonProperty(PropertyName = "Reason")]
+        [JsonProperty(PropertyName = "reason")]
         public string Reason { get; set; }
 
         /// <summary>
-        /// Gets or sets the messsage returned when checking for namespace name
+        /// Gets or sets the messsage returned when checking for resource name
         /// availability
         /// </summary>
-        [JsonProperty(PropertyName = "Message")]
+        [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
     }
