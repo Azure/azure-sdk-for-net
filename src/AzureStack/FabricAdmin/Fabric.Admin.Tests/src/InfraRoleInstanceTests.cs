@@ -3,13 +3,12 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Microsoft.Rest.Azure;
-using Xunit;
-
 namespace Fabric.Tests
 {
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Microsoft.Rest.Azure;
+    using Xunit;
 
     /// <summary>
     /// Summary description for FabricTest
@@ -52,17 +51,23 @@ namespace Fabric.Tests
         [Fact]
         public void TestListInfraRoleInstances() {
             RunTest((client) => {
-                var instances = client.InfraRoleInstances.List(Location);
-                Common.MapOverIPage(instances, client.InfraRoleInstances.ListNext, ValiateInfraRoleInstance);
-                Common.WriteIPagesToFile(instances, client.InfraRoleInstances.ListNext, "ListInfraRoleInstances.txt", (instance) => instance.Name);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var instances = client.InfraRoleInstances.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(instances, client.InfraRoleInstances.ListNext, ValiateInfraRoleInstance);
+                    Common.WriteIPagesToFile(instances, client.InfraRoleInstances.ListNext, "ListInfraRoleInstances.txt", (instance) => instance.Name);
+                });
             });
         }
 
         [Fact]
         public void TestGetInfraRoleInstance() {
             RunTest((client) => {
-                var instance = client.InfraRoleInstances.List(Location).GetFirst();
-                var retrieved = client.InfraRoleInstances.Get(Location, instance.Name);
+                var fabricLocationName = GetLocation(client);
+
+                var instance = client.InfraRoleInstances.List(ResourceGroupName, fabricLocationName).GetFirst();
+                var instanceName = ExtractName(instance.Name);
+
+                var retrieved = client.InfraRoleInstances.Get(ResourceGroupName, fabricLocationName, instanceName);
                 ValiateInfraRoleInstance(retrieved);
                 AssertInfraRoleInstancesEqual(instance, retrieved);
             });
@@ -71,36 +76,45 @@ namespace Fabric.Tests
         [Fact]
         public void TestGetAllInfraRoleInstances() {
             RunTest((client) => {
-                var instances = client.InfraRoleInstances.List(Location);
-                Common.MapOverIPage(instances, client.InfraRoleInstances.ListNext, (instance) => {
-                    var retrieved = client.InfraRoleInstances.Get(Location, instance.Name);
-                    ValiateInfraRoleInstance(retrieved);
-                    AssertInfraRoleInstancesEqual(instance, retrieved);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var instances = client.InfraRoleInstances.List(ResourceGroupName, fabricLocationName);
+
+                    Common.MapOverIPage(instances, client.InfraRoleInstances.ListNext, (instance) => {
+                        var instanceName = ExtractName(instance.Name);
+                        var retrieved = client.InfraRoleInstances.Get(ResourceGroupName, fabricLocationName, instanceName);
+                        ValiateInfraRoleInstance(retrieved);
+                        AssertInfraRoleInstancesEqual(instance, retrieved);
+                    });
                 });
             });
         }
 
         // This should do nothing
-        [Fact]
+        [Fact(Skip="Test Framework change, need to record.")]
         public void TestInfraRoleInstancePowerOn() {
             RunTest((client) => {
-                var instance = client.InfraRoleInstances.List(Location).GetFirst();
-                client.InfraRoleInstances.PowerOn(Location, instance.Name);
+                var fabricLocationName = GetLocation(client);
+                var instance = client.InfraRoleInstances.List(ResourceGroupName, fabricLocationName).GetFirst();
+                var instanceName = ExtractName(instance.Name);
+                client.InfraRoleInstances.PowerOn(ResourceGroupName, fabricLocationName, instanceName);
             });
         }
 
         // This should do nothing
-        [Fact]
+        [Fact(Skip="Test Framework change, need to record.")]
         public void TestInfraRoleInstancePowerOnAll() {
             RunTest((client) => {
-                var instances = client.InfraRoleInstances.List(Location);
-                Common.MapOverIPage(instances, client.InfraRoleInstances.ListNext, (instance) => {
-                    client.InfraRoleInstances.PowerOn(Location, instance.Name);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var instances = client.InfraRoleInstances.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(instances, client.InfraRoleInstances.ListNext, (instance) => {
+                        var instanceName = ExtractName(instance.Name);
+                        client.InfraRoleInstances.PowerOn(ResourceGroupName, fabricLocationName, instanceName);
+                    });
                 });
             });
         }
 
-        // This needs to be setup before the run. 
+        // This needs to be setup before the run.
         private string TenantVMName = "502828aa-de3a-4ba9-a66c-5ae6d49589d7";
 
         // Make sure we cannot touch tenant VMs
@@ -108,7 +122,9 @@ namespace Fabric.Tests
         [Fact]
         public void TestGetInfraRoleInstanceOnTenantVM() {
             RunTest((client) => {
-                Assert.Throws<CloudException>(() => client.InfraRoleInstances.Get(Location, TenantVMName));
+                var fabricLocationName = GetLocation(client);
+                var result = client.InfraRoleInstances.Get(ResourceGroupName, fabricLocationName, TenantVMName);
+                Assert.Null(result);
             });
         }
 
@@ -116,9 +132,8 @@ namespace Fabric.Tests
         public void TestInfraRoleInstanceShutdownOnTenantVM() {
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
-                    var provisioningState = client.InfraRoleInstances.Shutdown(Location, TenantVMName);
-                    Assert.NotEqual("", provisioningState.ProvisioningState);
-                    Assert.Equal("Failed", provisioningState.ProvisioningState);
+                    var fabricLocationName = GetLocation(client);
+                    client.InfraRoleInstances.Shutdown(ResourceGroupName, fabricLocationName, TenantVMName);
                 });
             });
         }
@@ -127,9 +142,8 @@ namespace Fabric.Tests
         public void TestInfraRoleInstancePowerOffOnTenantVM() {
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
-                    var provisioningState = client.InfraRoleInstances.PowerOff(Location, TenantVMName);
-                    Assert.NotEqual("", provisioningState.ProvisioningState);
-                    Assert.Equal("Failed", provisioningState.ProvisioningState);
+                    var fabricLocationName = GetLocation(client);
+                    client.InfraRoleInstances.PowerOff(ResourceGroupName, fabricLocationName, TenantVMName);
                 });
             });
         }
@@ -138,9 +152,8 @@ namespace Fabric.Tests
         public void TestInfraRoleInstanceRebootOnTenantVM() {
             RunTest((client) => {
                 Assert.Throws<CloudException>(() => {
-                    var provisioningState = client.InfraRoleInstances.Reboot(Location, TenantVMName);
-                    Assert.NotEqual("", provisioningState.ProvisioningState);
-                    Assert.Equal("Failed", provisioningState.ProvisioningState);
+                    var fabricLocationName = GetLocation(client);
+                    client.InfraRoleInstances.Reboot(ResourceGroupName, fabricLocationName, TenantVMName);
                 });
             });
         }
@@ -148,16 +161,16 @@ namespace Fabric.Tests
 
         // Disabled Tests
 
-        // TODO: Not sure how safe this is, also not sure of return type or value.
+        // NOTE: Only test this on a multi-node environment, ASDK will not allow for infrastructure VMs to be powered off/rebooted/etc
         [Fact(Skip = "No hardware")]
         public void TestInfraRoleInstanceShutdown() {
             RunTest((client) => {
-                var provisioningState = client.InfraRoleInstances.Shutdown(Location, RoleInstance);
-                Assert.NotEqual("", provisioningState.ProvisioningState);
-                    Assert.Equal("Failed", provisioningState.ProvisioningState);
+                var fabricLocationName = GetLocation(client);
 
-                var instance = client.InfraRoleInstances.Get(Location, RoleInstance);
+                client.InfraRoleInstances.Shutdown(ResourceGroupName, fabricLocationName, RoleInstance);
+                var instance = client.InfraRoleInstances.Get(ResourceGroupName, fabricLocationName, RoleInstance);
                 ValiateInfraRoleInstance(instance);
+                client.InfraRoleInstances.PowerOn(ResourceGroupName, fabricLocationName, RoleInstance);
             });
         }
 
@@ -165,19 +178,20 @@ namespace Fabric.Tests
         [Fact(Skip = "No hardware")]
         public void TestInfraRoleInstancePowerOff() {
             RunTest((client) => {
-                var provisioningState = client.InfraRoleInstances.PowerOff(Location, "502828aa-de3a-4ba9-a66c-5ae6d49589d7");
-                Assert.NotEqual("", provisioningState.ProvisioningState);
-                    Assert.Equal("Failed", provisioningState.ProvisioningState);
+                var fabricLocationName = GetLocation(client);
+
+                client.InfraRoleInstances.PowerOff(ResourceGroupName, fabricLocationName, RoleInstance);
             });
         }
 
         [Fact(Skip = "No hardware")]
         public void TestInfraRoleInstanceReboot() {
             RunTest((client) => {
-                client.InfraRoleInstances.Reboot(Location, RoleInstance);
-                var instance = client.InfraRoleInstances.Get(Location, RoleInstance);
+                var fabricLocationName = GetLocation(client);
+
+                client.InfraRoleInstances.Reboot(ResourceGroupName, fabricLocationName, RoleInstance);
+                var instance = client.InfraRoleInstances.Get(ResourceGroupName, fabricLocationName, RoleInstance);
                 ValiateInfraRoleInstance(instance);
-                // TODO: What are the assertions?
             });
         }
     }

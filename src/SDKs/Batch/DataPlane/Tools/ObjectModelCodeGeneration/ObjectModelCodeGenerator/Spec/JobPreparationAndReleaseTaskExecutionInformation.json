@@ -1,7 +1,7 @@
     {
       "Name": "JobPreparationAndReleaseTaskExecutionInformation",
       "ProtocolName": "Models.JobPreparationAndReleaseTaskExecutionInformation",
-      "Comment": "The status of the Job Preparation task and Job Release task on a compute node.",
+      "SummaryComment": "The status of the Job Preparation task and Job Release task on a compute node.",
       "IsConstructorPublic": false,
       "Properties": [
         {

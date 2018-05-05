@@ -422,7 +422,8 @@ namespace Microsoft.Azure.Batch
         /// </summary>
         /// <remarks>
         /// This property is populated only if the <see cref="CloudJob"/> was retrieved with an <see cref="ODATADetailLevel.ExpandClause"/> 
-        /// including the 'stats' attribute; otherwise it is null.
+        /// including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch 
+        /// service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </remarks>
         public JobStatistics Statistics
         {

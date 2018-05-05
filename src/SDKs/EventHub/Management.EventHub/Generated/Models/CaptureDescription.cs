@@ -33,8 +33,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <param name="enabled">A value that indicates whether capture
         /// description is enabled. </param>
         /// <param name="encoding">Enumerates the possible values for the
-        /// encoding format of capture description. Possible values include:
-        /// 'Avro', 'AvroDeflate'</param>
+        /// encoding format of capture description. Note: 'AvroDeflate' will be
+        /// deprecated in New API Version. Possible values include: 'Avro',
+        /// 'AvroDeflate'</param>
         /// <param name="intervalInSeconds">The time window allows you to set
         /// the frequency with which the capture to Azure Blobs will happen,
         /// value should between 60 to 900 seconds</param>
@@ -67,8 +68,8 @@ namespace Microsoft.Azure.Management.EventHub.Models
 
         /// <summary>
         /// Gets or sets enumerates the possible values for the encoding format
-        /// of capture description. Possible values include: 'Avro',
-        /// 'AvroDeflate'
+        /// of capture description. Note: 'AvroDeflate' will be deprecated in
+        /// New API Version. Possible values include: 'Avro', 'AvroDeflate'
         /// </summary>
         [JsonProperty(PropertyName = "encoding")]
         public EncodingCaptureDescription? Encoding { get; set; }

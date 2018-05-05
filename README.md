@@ -31,12 +31,12 @@ src\SDKs\Compute
 =======
 #### If you have recently cloned the repo or did a pull from upstream or did git clean -xdf you need to the following before you do anything else in order to build your projects
 
- 1. Open VS 2017 command prompt
+ 1. Open **elevated** VS 2017 command prompt
  2. Navigate to repository root directory
- 3. execute MsBuild.exe build.proj (this will pull all the build related tools needed to build the repo)
- 4. Skip verification for the following dlls
-    - Sn -Vr Microsoft.Azure.Build.BootstrapTasks.dll
-    - Sn -Vr Microsoft.Azure.Sdk.Build.Tasks.dll
+ 3. Skip verification for the following dlls
+    - Sn -Vr tools\bootstrapTools\taskBinaries\Microsoft.Azure.Build.BootstrapTasks.dll
+    - Sn -Vr tools\SdkBuildTools\tasks\net46\Microsoft.Azure.Sdk.Build.Tasks.dll
+ 4. Execute MsBuild.exe build.proj (this will pull all the build related tools needed to build the repo)
  5. Follow below steps to start building your repo/project
 
 #### If you are building from VS, add a nuget feed source that points to < root >\tools\LocalNugetFeed directory

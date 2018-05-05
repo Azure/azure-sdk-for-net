@@ -59,7 +59,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
             this._authenticationContext = context;
             this._clientId = clientId;
-            this._tokenAudience = tokenAudience.ToString();
+            this._tokenAudience = tokenAudience.OriginalString;
             this._userid = userId;
         }
 // Interactive authentication is not implemented for CoreCLR.
@@ -299,7 +299,7 @@ namespace Microsoft.Rest.Azure.Authentication
                 try
                 {
                     var result = authenticationContext.AcquireToken(
-                        serviceSettings.TokenAudience.ToString(),
+                        serviceSettings.TokenAudience.OriginalString,
                         clientSettings.ClientId,
                         clientSettings.ClientRedirectUri,
                         clientSettings.PromptBehavior,
@@ -387,7 +387,7 @@ namespace Microsoft.Rest.Azure.Authentication
             var authenticationContext = GetAuthenticationContext(domain, serviceSettings, cache);
             try
             {
-                var authResult = await authenticationContext.AcquireTokenAsync(serviceSettings.TokenAudience.ToString(),
+                var authResult = await authenticationContext.AcquireTokenAsync(serviceSettings.TokenAudience.OriginalString,
                       clientId, credentials).ConfigureAwait(false);
                 return
                     new TokenCredentials(
@@ -496,7 +496,7 @@ namespace Microsoft.Rest.Azure.Authentication
             try
             {
                 DeviceCodeResult codeResult = await authenticationContext.AcquireDeviceCodeAsync(
-                                                                                serviceSettings.TokenAudience.ToString(),
+                                                                                serviceSettings.TokenAudience.OriginalString,
                                                                                 clientId)
                                                                          .ConfigureAwait(false);
 
@@ -592,7 +592,7 @@ namespace Microsoft.Rest.Azure.Authentication
             var authenticationContext = GetAuthenticationContext(domain, serviceSettings, cache);
             try
             {
-                var authResult = await authenticationContext.AcquireTokenSilentAsync(serviceSettings.TokenAudience.ToString(),
+                var authResult = await authenticationContext.AcquireTokenSilentAsync(serviceSettings.TokenAudience.OriginalString,
                       clientId, userId).ConfigureAwait(false);
                 return
                     new TokenCredentials(

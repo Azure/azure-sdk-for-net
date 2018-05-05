@@ -52,9 +52,14 @@
         public string TransportProtocolName { get; set; }
 
         /// <summary>
-        /// Gets or sets the comment for the object model type.
+        /// Gets or sets the summary comment for the object model type.
         /// </summary>
-        public string Comment { get; set; }
+        public string SummaryComment { get; set; }
+
+        /// <summary>
+        /// Gets or sets the remarks comment for the object model type.
+        /// </summary>
+        public string RemarksComment { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating if this type is used in collections and should have the

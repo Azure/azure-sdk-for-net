@@ -14,7 +14,7 @@ namespace EventHub.Tests.ScenarioTests
     using Xunit;
     public partial class ScenarioTests
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void NamespaceCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

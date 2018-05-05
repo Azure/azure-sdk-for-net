@@ -1,10 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "/contentmoderator/moderate/v1.0/ProcessText/Screen/?language=eng&autocorrect=false&PII=false&listId=&classify=false",
-      "EncodedRequestUri": "L2NvbnRlbnRtb2RlcmF0b3IvbW9kZXJhdGUvdjEuMC9Qcm9jZXNzVGV4dC9TY3JlZW4vP2xhbmd1YWdlPWVuZyZhdXRvY29ycmVjdD1mYWxzZSZQSUk9ZmFsc2UmbGlzdElkPSZjbGFzc2lmeT1mYWxzZQ==",
+      "RequestUri": "/contentmoderator/moderate/v1.0/ProcessText/Screen/?autocorrect=false&PII=false&listId=&classify=false",
+      "EncodedRequestUri": "L2NvbnRlbnRtb2RlcmF0b3IvbW9kZXJhdGUvdjEuMC9Qcm9jZXNzVGV4dC9TY3JlZW4vP2F1dG9jb3JyZWN0PWZhbHNlJlBJST1mYWxzZSZsaXN0SWQ9JmNsYXNzaWZ5PWZhbHNl",
       "RequestMethod": "POST",
-      "RequestBody": "crap 764-87-9887",
+      "RequestBody": "crap 764-879-887",
       "RequestHeaders": {
         "Content-Type": [
           "text/plain"
@@ -22,7 +22,7 @@
           "Microsoft.CognitiveServices.ContentModerator.ContentModeratorClient/0.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"OriginalText\": \"crap 764-87-9887\",\r\n  \"NormalizedText\": \"crap 764- 87- 9887\",\r\n  \"Misrepresentation\": null,\r\n  \"Language\": \"eng\",\r\n  \"Terms\": [\r\n    {\r\n      \"Index\": 0,\r\n      \"OriginalIndex\": 0,\r\n      \"ListId\": 0,\r\n      \"Term\": \"crap\"\r\n    }\r\n  ],\r\n  \"Status\": {\r\n    \"Code\": 3000,\r\n    \"Description\": \"OK\",\r\n    \"Exception\": null\r\n  },\r\n  \"TrackingId\": \"fdf029a7-fba5-434e-a9b7-0d1d4a8841ca\"\r\n}",
+      "ResponseBody": "{\r\n  \"OriginalText\": \"crap 764-879-887\",\r\n  \"NormalizedText\": \"crap 764- 879- 887\",\r\n  \"Misrepresentation\": null,\r\n  \"Language\": \"eng\",\r\n  \"Terms\": [\r\n    {\r\n      \"Index\": 0,\r\n      \"OriginalIndex\": 0,\r\n      \"ListId\": 0,\r\n      \"Term\": \"crap\"\r\n    }\r\n  ],\r\n  \"Status\": {\r\n    \"Code\": 3000,\r\n    \"Description\": \"OK\",\r\n    \"Exception\": null\r\n  },\r\n  \"TrackingId\": \"4b411c02-c882-443b-be08-7a736535d0be\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "291"
@@ -37,7 +37,7 @@
           "no-cache"
         ],
         "apim-request-id": [
-          "8e04a65e-c7ec-4818-82e9-263a40275886"
+          "16a5bce3-1817-440b-a503-5b4b90ac601d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -49,7 +49,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 06 Apr 2018 18:33:51 GMT"
+          "Mon, 16 Apr 2018 20:15:26 GMT"
         ],
         "X-AspNet-Version": [
           "4.0.30319"

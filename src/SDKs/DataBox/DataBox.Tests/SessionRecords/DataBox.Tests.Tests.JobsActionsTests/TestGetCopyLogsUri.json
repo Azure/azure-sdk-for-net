@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/resourceGroups/BVTToolRG1/providers/Microsoft.DataBox/jobs/sdktest5497/copyLogsUri?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M2NmRhMjEtNjA3ZS00OWI0LThiZGYtZjI1ZmJiOGY3MDVmL3Jlc291cmNlR3JvdXBzL0JWVFRvb2xSRzEvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhQm94L2pvYnMvYWJiaGF0OU5vdlNtb2tlVGVzdDIvY29weUxvZ3NVcmk/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8f644352-95d5-4100-8aaa-b8c8b54c2268"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"copyLogDetails\": [\r\n    {\r\n      \"accountName\": \"devicemanagertest1\",\r\n      \"copyLogLink\": \"test1234\",\r\n      \"copyLogDetailsType\": \"Pod\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 16 Apr 2018 04:52:12 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "f208fb54-1bc7-4ff6-b2e6-b8575bc18e6b"
+        ],
+        "x-ms-client-request-id": [
+          "8f644352-95d5-4100-8aaa-b8c8b54c2268"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "0fd427cf-9691-4189-abc2-04cbbe2af0b2"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20180416T045212Z:0fd427cf-9691-4189-abc2-04cbbe2af0b2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
+    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+  }
+}

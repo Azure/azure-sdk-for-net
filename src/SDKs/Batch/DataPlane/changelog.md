@@ -1,5 +1,13 @@
 # Azure.Batch release notes
 
+## Changes in 8.1.1
+### Bug fixes
+ - Fixed bug where LeavingPool state was not correctly returned via the `ListPoolNodeCounts` method on `PoolOperations`.
+ - Clarified various confusing documentation.
+
+### REST API version
+This version of the Batch .NET client library targets version 2018-02-01.6.1 of the Azure Batch REST API.
+
 ## Changes in 8.1.0
 ### Features
  - Added the ability to query pool node counts by state, via the new `ListPoolNodeCounts` method on `PoolOperations`.
@@ -10,7 +18,7 @@
 This version of the Batch .NET client library targets version 2018-02-01.6.1 of the Azure Batch REST API.
 
 ### Import Note
-The package will be renamed to Microsoft.Azure.Batch in future release.
+The package will be renamed to Microsoft.Azure.Batch in a future release.
 
 ## Changes in 8.0.1
 ### Bug fixes

@@ -7,15 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>18.0.0-preview</Version>
+		<Version>19.0.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- DDoS Protection Plans
-			- Express Route Circuit Connection
-			- Express Route Provider APIs
-			- GetTopologyOperation supports query parameter
-			- Custom IPsec/IKE policy for Virtual Network Gateway point-to-site clients
+			- Made id read-only by bringing properties from shared resource in DDos Protection plan functionality
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

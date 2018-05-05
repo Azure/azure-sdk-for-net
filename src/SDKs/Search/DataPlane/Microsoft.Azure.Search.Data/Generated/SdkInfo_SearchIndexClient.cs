@@ -11,7 +11,7 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("SearchIndexClient", "DocumentsProxy", "2016-09-01-Preview"),
+                new Tuple<string, string, string>("SearchIndexClient", "DocumentsProxy", "2017-11-11"),
             }.AsEnumerable();
         }
     }

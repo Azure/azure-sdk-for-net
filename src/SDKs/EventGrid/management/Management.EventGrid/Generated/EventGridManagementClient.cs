@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.EventGrid
             Topics = new TopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-01-01";
+            ApiVersion = "2018-05-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -333,6 +333,10 @@ namespace Microsoft.Azure.Management.EventGrid
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

@@ -1,7 +1,7 @@
     {
       "Name": "ApplicationSummary",
       "ProtocolName": "Models.ApplicationSummary",
-      "Comment": "Contains information about an application in an Azure Batch account.",
+      "SummaryComment": "Contains information about an application in an Azure Batch account.",
       "IsConstructorPublic": false,
       "Properties": [
         {

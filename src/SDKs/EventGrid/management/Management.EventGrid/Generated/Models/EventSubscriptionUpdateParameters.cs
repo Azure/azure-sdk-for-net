@@ -38,11 +38,22 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="filter">Information about the filter for the event
         /// subscription.</param>
         /// <param name="labels">List of user defined labels.</param>
-        public EventSubscriptionUpdateParameters(EventSubscriptionDestination destination = default(EventSubscriptionDestination), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>))
+        /// <param name="eventDeliverySchema">The event delivery schema for the
+        /// event subscription. Possible values include: 'EventGridSchema',
+        /// 'InputEventSchema', 'CloudEventV01Schema'</param>
+        /// <param name="retryPolicy">The retry policy for events. This can be
+        /// used to configure maximum number of delivery attempts and time to
+        /// live for events.</param>
+        /// <param name="deadLetterDestination">The DeadLetter destination of
+        /// the event subscription.</param>
+        public EventSubscriptionUpdateParameters(EventSubscriptionDestination destination = default(EventSubscriptionDestination), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>), string eventDeliverySchema = default(string), RetryPolicy retryPolicy = default(RetryPolicy), DeadLetterDestination deadLetterDestination = default(DeadLetterDestination))
         {
             Destination = destination;
             Filter = filter;
             Labels = labels;
+            EventDeliverySchema = eventDeliverySchema;
+            RetryPolicy = retryPolicy;
+            DeadLetterDestination = deadLetterDestination;
             CustomInit();
         }
 
@@ -70,6 +81,28 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "labels")]
         public IList<string> Labels { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event delivery schema for the event subscription.
+        /// Possible values include: 'EventGridSchema', 'InputEventSchema',
+        /// 'CloudEventV01Schema'
+        /// </summary>
+        [JsonProperty(PropertyName = "eventDeliverySchema")]
+        public string EventDeliverySchema { get; set; }
+
+        /// <summary>
+        /// Gets or sets the retry policy for events. This can be used to
+        /// configure maximum number of delivery attempts and time to live for
+        /// events.
+        /// </summary>
+        [JsonProperty(PropertyName = "retryPolicy")]
+        public RetryPolicy RetryPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DeadLetter destination of the event subscription.
+        /// </summary>
+        [JsonProperty(PropertyName = "deadLetterDestination")]
+        public DeadLetterDestination DeadLetterDestination { get; set; }
 
     }
 }

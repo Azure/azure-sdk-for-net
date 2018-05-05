@@ -4,7 +4,7 @@
     <PackageId>ContainerInstance.Tests</PackageId>
     <Description>ContainerInstance.Tests Class Library</Description>
     <AssemblyName>ContainerInstance.Tests</AssemblyName>
-    <VersionPrefix>1.0.2-preview</VersionPrefix>
+    <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
 
   <PropertyGroup>

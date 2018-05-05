@@ -81,40 +81,64 @@ namespace InfrastructureInsights.Tests
         [Fact]
         public void TestListResourceHealths() {
             RunTest((client) => {
-                var serviceHealths = client.ServiceHealths.List(Location);
-                Common.MapOverIPage(serviceHealths, client.ServiceHealths.ListNext, (serviceHealth) => {
-                    var resourceHealths = client.ResourceHealths.List(Location, serviceHealth.RegistrationId);
-                    Common.MapOverIPage(resourceHealths, client.ResourceHealths.ListNext, ValidateResourceHealth);
-                    Common.WriteIPagesToFile(resourceHealths, client.ResourceHealths.ListNext, "ListResourceHealths.txt", ResourceName);
+                var regionHealths = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regionHealths, client.RegionHealths.ListNext, (regionHealth) => {
+                    var rName = ExtractName(regionHealth.Name);
+
+                    var serviceHealths = client.ServiceHealths.List(ResourceGroupName, rName);
+                    Common.MapOverIPage(serviceHealths, client.ServiceHealths.ListNext, (serviceHealth) => {
+                        var sName = ExtractName(serviceHealth.Name);
+
+                        var resourceHealths = client.ResourceHealths.List(ResourceGroupName, rName, sName);
+                        Common.MapOverIPage(resourceHealths, client.ResourceHealths.ListNext, ValidateResourceHealth);
+                        Common.WriteIPagesToFile(resourceHealths, client.ResourceHealths.ListNext, "ListResourceHealths.txt", ResourceName);
+                    });
                 });
             });
         }
         [Fact]
         public void TestGetResourceHealth() {
             RunTest((client) => {
-                var serviceHealth = client.ServiceHealths.List(Location).GetFirst();
-                var resourceHealth = client.ResourceHealths.List(Location, serviceHealth.Name).GetFirst();
-                if(resourceHealth != null)
+                var regionHealth = client.RegionHealths.List(ResourceGroupName).GetFirst();
+                if (regionHealth != null)
                 {
-                    var retrieved = client.ResourceHealths.Get(Location, serviceHealth.RegistrationId, resourceHealth.RegistrationId);
-                    AssertAreSameValidateResourceHealths(resourceHealth, retrieved);
+                    var regionName = ExtractName(regionHealth.Name);
+                    var serviceHealth = client.ServiceHealths.List(ResourceGroupName, regionName).GetFirst();
+                    if (serviceHealth != null)
+                    {
+                        var serviceName = ExtractName(serviceHealth.Name);
+                        var resourceHealth = client.ResourceHealths.List(ResourceGroupName, regionName, serviceName).GetFirst();
+                        if (resourceHealth != null)
+                        {
+                            var resourceName = ExtractName(resourceHealth.Name);
+                            var retrieved = client.ResourceHealths.Get(ResourceGroupName, regionName, serviceName, resourceName);
+                            AssertAreSameValidateResourceHealths(resourceHealth, retrieved);
+                        }
+                    }
                 }
-                
+
+
             });
         }
         [Fact]
         public void TestGetAllResourceHealths() {
             RunTest((client) => {
-                var serviceHealths = client.ServiceHealths.List(Location);
-                Common.MapOverIPage(serviceHealths, client.ServiceHealths.ListNext, (serviceHealth) => {
-                    Assert.NotNull(serviceHealth.RegistrationId);
-                    var resourcesHealths = client.ResourceHealths.List(Location, serviceHealth.RegistrationId);
-                    foreach (var resourceHealth in resourcesHealths)
-                    {
-                        Assert.NotNull(resourceHealth.RegistrationId);
-                        var retrieved = client.ResourceHealths.Get(Location, serviceHealth.RegistrationId, resourceHealth.RegistrationId);
-                        AssertAreSameValidateResourceHealths(resourceHealth, retrieved);
-                    }
+                var regionHealths = client.RegionHealths.List(ResourceGroupName);
+                Common.MapOverIPage(regionHealths, client.RegionHealths.ListNext, (regionHealth) => {
+                    var regionName = ExtractName(regionHealth.Name);
+
+                    var serviceHealths = client.ServiceHealths.List(ResourceGroupName, regionName);
+                    Common.MapOverIPage(serviceHealths, client.ServiceHealths.ListNext, (serviceHealth) => {
+                        var serviceName = ExtractName(serviceHealth.Name);
+
+                        var resourceHealths = client.ResourceHealths.List(ResourceGroupName, regionName, serviceName);
+                        Common.MapOverIPage(resourceHealths, client.ResourceHealths.ListNext, (resourceHealth) => {
+                            var resourceName = ExtractName(resourceHealth.Name);
+
+                            var retrieved = client.ResourceHealths.Get(ResourceGroupName, regionName, serviceName, resourceName);
+                            AssertAreSameValidateResourceHealths(resourceHealth, retrieved);
+                        });
+                    });
                 });
             });
         }

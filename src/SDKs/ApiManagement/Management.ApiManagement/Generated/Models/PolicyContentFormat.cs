@@ -25,5 +25,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// from the API Management service.
         /// </summary>
         public const string XmlLink = "xml-link";
+        /// <summary>
+        /// The contents are inline and Content type is a non XML encoded
+        /// policy document.
+        /// </summary>
+        public const string Rawxml = "rawxml";
+        /// <summary>
+        /// The policy document is not Xml encoded and is hosted on a http
+        /// endpoint accessible from the API Management service.
+        /// </summary>
+        public const string RawxmlLink = "rawxml-link";
     }
 }

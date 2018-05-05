@@ -1,7 +1,7 @@
     {
       "Name": "ComputeNodeInformation",
       "ProtocolName": "Models.ComputeNodeInformation",
-      "Comment": "The compute node information class.",
+      "SummaryComment": "The compute node information class.",
       "IsConstructorPublic": false,
       "Properties": [
         {
