@@ -23,8 +23,8 @@ namespace ServiceBus.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location2 = "South Central US";
-                var location = "East US";
+                var location2 = "West Central US";
+                var location = "West Central US";
 
                 var testRegions = this.ServiceBusManagementClient.PremiumMessagingRegions.List();
 
@@ -119,12 +119,10 @@ namespace ServiceBus.Tests.ScenarioTests
                 }
 
                 // List migrationconfigurations
-
                 var ListMigrationconfigurations = this.ServiceBusManagementClient.MigrationConfigs.List(resourceGroup, namespaceNameStandrad);
 
-
                 // Complete migration
-                //this.ServiceBusManagementClient.MigrationConfigurations.CompleteMigration(resourceGroup, namespaceNameStandrad);
+                this.ServiceBusManagementClient.MigrationConfigs.CompleteMigration(resourceGroup, namespaceNameStandrad);
 
                 // check for entity migration
                 var QueuesPremiumnamespaceResponse = this.ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceNamePremium);
@@ -134,8 +132,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 var TopicsPremiumnamespaceResponse = this.ServiceBusManagementClient.Topics.ListByNamespace(resourceGroup, namespaceNamePremium);
 
                 Assert.Equal(2, TopicsPremiumnamespaceResponse.Count<SBTopic>());
-
-                //this.ServiceBusManagementClient.MigrationConfigurations.Delete(resourceGroup, namespaceNameStandrad);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(60));
 
@@ -151,9 +147,9 @@ namespace ServiceBus.Tests.ScenarioTests
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 }
 
-                //this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNamePremium);
+                this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNamePremium);
 
-                //this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNameStandrad);                
+                this.ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceNameStandrad);
                 
             }
         }
