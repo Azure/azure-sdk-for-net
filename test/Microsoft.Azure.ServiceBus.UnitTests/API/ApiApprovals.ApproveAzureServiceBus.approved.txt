@@ -536,6 +536,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public MessageSender(string connectionString, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(string endpoint, string entityPath, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider, Microsoft.Azure.ServiceBus.TransportType transportType = 0, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        public MessageSender(Microsoft.Azure.ServiceBus.ServiceBusConnection serviceBusConnection, string entityPath, string viaEntityPath, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public override System.TimeSpan OperationTimeout { get; set; }
         public override string Path { get; }
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }

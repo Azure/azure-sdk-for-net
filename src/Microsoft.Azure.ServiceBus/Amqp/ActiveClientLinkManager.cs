@@ -83,25 +83,31 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             try
             {
                 var cbsLink = activeClientLinkObject.Connection.Extensions.Find<AmqpCbsLink>() ?? new AmqpCbsLink(activeClientLinkObject.Connection);
+                DateTime cbsTokenExpiresAtUtc = DateTime.MaxValue;
 
-                MessagingEventSource.Log.AmqpSendAuthenticationTokenStart(activeClientLinkObject.EndpointUri, activeClientLinkObject.Audience, activeClientLinkObject.Audience, activeClientLinkObject.RequiredClaims);
+                foreach (var resource in activeClientLinkObject.Audience)
+                {
+                    MessagingEventSource.Log.AmqpSendAuthenticationTokenStart(activeClientLinkObject.EndpointUri, resource, resource, activeClientLinkObject.RequiredClaims);
 
-                var renewTokenTask = this.retryPolicy.RunOperation(
-                    async () =>
-                    {
-                        activeClientLinkObject.AuthorizationValidUntilUtc = await cbsLink.SendTokenAsync(
-                            this.cbsTokenProvider,
-                            activeClientLinkObject.EndpointUri,
-                            activeClientLinkObject.Audience,
-                            activeClientLinkObject.Audience,
-                            activeClientLinkObject.RequiredClaims,
-                            ActiveClientLinkManager.SendTokenTimeout).ConfigureAwait(false);
-                    }, ActiveClientLinkManager.SendTokenTimeout);
+                    await this.retryPolicy.RunOperation(
+                        async () =>
+                        {
+                            cbsTokenExpiresAtUtc = TimeoutHelper.Min(
+                                cbsTokenExpiresAtUtc, 
+                                await cbsLink.SendTokenAsync(
+                                    this.cbsTokenProvider,
+                                    activeClientLinkObject.EndpointUri,
+                                    resource,
+                                    resource,
+                                    activeClientLinkObject.RequiredClaims,
+                                    ActiveClientLinkManager.SendTokenTimeout).ConfigureAwait(false));
+                        }, ActiveClientLinkManager.SendTokenTimeout).ConfigureAwait(false);
 
-                await renewTokenTask.ConfigureAwait(false);
+                    MessagingEventSource.Log.AmqpSendAuthenticationTokenStop();
+                }
+
+                activeClientLinkObject.AuthorizationValidUntilUtc = cbsTokenExpiresAtUtc;
                 this.SetRenewCbsTokenTimer(activeClientLinkObject);
-
-                MessagingEventSource.Log.AmqpSendAuthenticationTokenStop();
             }
             catch (Exception e)
             {

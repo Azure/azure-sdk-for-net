@@ -25,6 +25,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         const string PublisherName = "x-opt-publisher";
         const string PartitionKeyName = "x-opt-partition-key";
         const string PartitionIdName = "x-opt-partition-id";
+        const string ViaPartitionKeyName = "x-opt-via-partition-key";
         const string DeadLetterSourceName = "x-opt-deadletter-source";
         const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
         const string UriName = AmqpConstants.Vendor + ":uri";
@@ -87,6 +88,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     firstMessage.PartitionKey;
             }
 
+            if (firstMessage.ViaPartitionKey != null)
+            {
+                amqpMessage.MessageAnnotations.Map[AmqpMessageConverter.ViaPartitionKeyName] =
+                    firstMessage.ViaPartitionKey;
+            }
+
             amqpMessage.Batchable = batchable;
             return amqpMessage;
         }
@@ -127,6 +134,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             if (sbMessage.PartitionKey != null)
             {
                 amqpMessage.MessageAnnotations.Map.Add(PartitionKeyName, sbMessage.PartitionKey);
+            }
+
+            if (sbMessage.ViaPartitionKey != null)
+            {
+                amqpMessage.MessageAnnotations.Map.Add(ViaPartitionKeyName, sbMessage.ViaPartitionKey);
             }
 
             if (sbMessage.UserProperties != null && sbMessage.UserProperties.Count > 0)
@@ -307,6 +319,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                             break;
                         case PartitionIdName:
                             sbMessage.SystemProperties.PartitionId = (short)pair.Value;
+                            break;
+                        case ViaPartitionKeyName:
+                            sbMessage.ViaPartitionKey = (string)pair.Value;
                             break;
                         case DeadLetterSourceName:
                             sbMessage.SystemProperties.DeadLetterSource = (string)pair.Value;

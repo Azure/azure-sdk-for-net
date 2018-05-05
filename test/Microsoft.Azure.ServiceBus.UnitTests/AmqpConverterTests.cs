@@ -76,6 +76,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var messageBody = Encoding.UTF8.GetBytes("hello");
             var messageId = Guid.NewGuid().ToString();
             var partitionKey = Guid.NewGuid().ToString();
+            var viaPartitionKey = Guid.NewGuid().ToString();
             var sessionId = Guid.NewGuid().ToString();
             var correlationId = Guid.NewGuid().ToString();
             var label = Guid.NewGuid().ToString();
@@ -90,6 +91,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 MessageId = messageId,
                 PartitionKey = partitionKey,
+                ViaPartitionKey = viaPartitionKey,
                 SessionId = sessionId,
                 CorrelationId = correlationId,
                 Label = label,
@@ -108,6 +110,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(messageBody, convertedSbMessage.Body);
             Assert.Equal(messageId, convertedSbMessage.MessageId);
             Assert.Equal(partitionKey, convertedSbMessage.PartitionKey);
+            Assert.Equal(viaPartitionKey, convertedSbMessage.ViaPartitionKey);
             Assert.Equal(sessionId, convertedSbMessage.SessionId);
             Assert.Equal(correlationId, convertedSbMessage.CorrelationId);
             Assert.Equal(label, convertedSbMessage.Label);

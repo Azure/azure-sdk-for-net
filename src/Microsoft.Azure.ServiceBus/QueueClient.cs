@@ -236,6 +236,7 @@ namespace Microsoft.Azure.ServiceBus
                         {
                             this.innerSender = new MessageSender(
                                 this.QueueName,
+                                null,
                                 MessagingEntityType.Queue,
                                 this.ServiceBusConnection,
                                 this.CbsTokenProvider,

@@ -38,6 +38,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static readonly AmqpSymbol AttachEpoch = AmqpConstants.Vendor + ":epoch";
         public static readonly AmqpSymbol BatchFlushIntervalName = AmqpConstants.Vendor + ":batch-flush-interval";
         public static readonly AmqpSymbol EntityTypeName = AmqpConstants.Vendor + ":entity-type";
+        public static readonly AmqpSymbol TransferDestinationAddress = AmqpConstants.Vendor + ":transfer-destination-address";
         public static readonly AmqpSymbol TimeoutName = AmqpConstants.Vendor + ":timeout";
         public static readonly AmqpSymbol TrackingIdName = AmqpConstants.Vendor + ":tracking-id";
 

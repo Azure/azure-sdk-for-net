@@ -52,6 +52,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             public static readonly MapKey SessionId = new MapKey("session-id");
             public static readonly MapKey MessageId = new MapKey("message-id");
             public static readonly MapKey PartitionKey = new MapKey("partition-key");
+            public static readonly MapKey ViaPartitionKey = new MapKey("via-partition-key");
 
             public static readonly MapKey ReceiverSettleMode = new MapKey("receiver-settle-mode");
             public static readonly MapKey Message = new MapKey("message");

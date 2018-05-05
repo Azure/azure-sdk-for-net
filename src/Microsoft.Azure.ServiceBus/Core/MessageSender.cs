@@ -40,6 +40,8 @@ namespace Microsoft.Azure.ServiceBus.Core
         readonly bool ownsConnection;
         readonly ActiveClientLinkManager clientLinkManager;
         readonly ServiceBusDiagnosticSource diagnosticSource;
+        readonly bool isViaSender;
+        readonly string transferDestinationPath;
 
         /// <summary>
         /// Creates a new AMQP MessageSender.
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             string connectionString,
             string entityPath,
             RetryPolicy retryPolicy = null)
-            : this(entityPath, null, new ServiceBusConnection(connectionString), null, retryPolicy)
+            : this(entityPath, null, null, new ServiceBusConnection(connectionString), null, retryPolicy)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -90,7 +92,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             ITokenProvider tokenProvider,
             TransportType transportType = TransportType.Amqp,
             RetryPolicy retryPolicy = null)
-            : this(entityPath, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy)
+            : this(entityPath, null, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy)
         {
             this.ownsConnection = true;
         }
@@ -105,13 +107,37 @@ namespace Microsoft.Azure.ServiceBus.Core
             ServiceBusConnection serviceBusConnection,
             string entityPath,
             RetryPolicy retryPolicy = null)
-            : this(entityPath, null, serviceBusConnection, null, retryPolicy)
+            : this(entityPath, null, null, serviceBusConnection, null, retryPolicy)
+        {
+            this.ownsConnection = false;
+        }
+
+        /// <summary>
+        /// Creates a ViaMessageSender. This can be used to send messages to a destination entity via another another entity.
+        /// </summary>
+        /// <param name="serviceBusConnection">Connection object to the service bus namespace.</param>
+        /// <param name="entityPath">The final destination of the message.</param>
+        /// <param name="viaEntityPath">The first destination of the message.</param>
+        /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>
+        /// This is mainly to be used when sending messages in a transaction. 
+        /// When messages need to be sent across entities in a single transaction, this can be used to ensure
+        /// all the messages land initially in the same entity/partition for local transactions, and then 
+        /// let service bus handle transferring the message to the actual destination.
+        /// </remarks>
+        public MessageSender(
+            ServiceBusConnection serviceBusConnection,
+            string entityPath,
+            string viaEntityPath,
+            RetryPolicy retryPolicy = null)
+            :this(viaEntityPath, entityPath, null, serviceBusConnection, null, retryPolicy)
         {
             this.ownsConnection = false;
         }
 
         internal MessageSender(
             string entityPath,
+            string transferDestinationPath,
             MessagingEntityType? entityType,
             ServiceBusConnection serviceBusConnection,
             ICbsTokenProvider cbsTokenProvider,
@@ -146,6 +172,12 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(this.CreateRequestResponseLinkAsync, CloseRequestResponseSession);
             this.clientLinkManager = new ActiveClientLinkManager(this, this.CbsTokenProvider);
             this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
+
+            if (!string.IsNullOrWhiteSpace(transferDestinationPath))
+            {
+                this.isViaSender = true;
+                this.transferDestinationPath = transferDestinationPath;
+            }
 
             MessagingEventSource.Log.MessageSenderCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, this.ClientId);
         }
@@ -252,6 +284,11 @@ namespace Microsoft.Azure.ServiceBus.Core
                     "Cannot schedule messages in the past");
             }
 
+            if (this.isViaSender && Transaction.Current != null)
+            {
+                throw new ServiceBusException(false, $"{nameof(ScheduleMessageAsync)} method is not supported in a Via-Sender with transactions.");
+            }
+
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
             MessageSender.ValidateMessage(message);
             MessagingEventSource.Log.ScheduleMessageStart(this.ClientId, scheduleEnqueueTimeUtc);
@@ -298,6 +335,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         public async Task CancelScheduledMessageAsync(long sequenceNumber)
         {
             this.ThrowIfClosed();
+            if (Transaction.Current != null)
+            {
+                throw new ServiceBusException(false, $"{nameof(CancelScheduledMessageAsync)} method is not supported within a transaction.");
+            }
+
             MessagingEventSource.Log.CancelScheduledMessageStart(this.ClientId, sequenceNumber);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
@@ -557,7 +599,12 @@ namespace Microsoft.Azure.ServiceBus.Core
                         {
                             entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
                         }
-                    }
+
+                        if (!string.IsNullOrWhiteSpace(message.ViaPartitionKey))
+                        {
+                            entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
+                        }
+                }
 
                     request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
 
@@ -630,15 +677,28 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             var endpointUri = new Uri(this.ServiceBusConnection.Endpoint, this.Path);
+
+            string[] audience;
+            if (this.isViaSender)
+            {
+                var transferDestinationEndpointUri = new Uri(this.ServiceBusConnection.Endpoint, this.transferDestinationPath);
+                audience = new string[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
+                amqpLinkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, this.transferDestinationPath);
+            }
+            else
+            {
+                audience = new string[] { endpointUri.AbsoluteUri };
+            }
+
             string[] claims = {ClaimConstants.Send};
-            var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.Path, this.ServiceBusConnection, endpointUri, claims, this.CbsTokenProvider, amqpLinkSettings, this.ClientId);
+            var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(this.Path, this.ServiceBusConnection, endpointUri, audience, claims, this.CbsTokenProvider, amqpLinkSettings, this.ClientId);
             Tuple<AmqpObject, DateTime> linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var sendingAmqpLink = (SendingAmqpLink) linkDetails.Item1;
             var activeSendReceiveClientLink = new ActiveSendReceiveClientLink(
                 sendingAmqpLink,
                 endpointUri,
-                endpointUri.AbsoluteUri,
+                audience,
                 claims,
                 linkDetails.Item2);
 
@@ -655,11 +715,25 @@ namespace Microsoft.Azure.ServiceBus.Core
             amqpLinkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
 
             var endpointUri = new Uri(this.ServiceBusConnection.Endpoint, entityPath);
+
+            string[] audience;
+            if (this.isViaSender)
+            {
+                var transferDestinationEndpointUri = new Uri(this.ServiceBusConnection.Endpoint, this.transferDestinationPath);
+                audience = new string[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
+                amqpLinkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, this.transferDestinationPath);
+            }
+            else
+            {
+                audience = new string[] { endpointUri.AbsoluteUri };
+            }
+
             string[] claims = { ClaimConstants.Manage, ClaimConstants.Send };
             var amqpRequestResponseLinkCreator = new AmqpRequestResponseLinkCreator(
                 entityPath,
                 this.ServiceBusConnection,
                 endpointUri,
+                audience,
                 claims,
                 this.CbsTokenProvider,
                 amqpLinkSettings,
@@ -672,7 +746,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var activeRequestResponseClientLink = new ActiveRequestResponseLink(
                 requestResponseAmqpLink,
                 endpointUri,
-                endpointUri.AbsoluteUri,
+                audience,
                 claims,
                 linkDetails.Item2);
             this.clientLinkManager.SetActiveRequestResponseLink(activeRequestResponseClientLink);

@@ -397,5 +397,90 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await connection.CloseAsync();
             }
         }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task TransactionalSendViaCommitTest()
+        {
+            var connection = new ServiceBusConnection(ConnectionString);
+
+            string intermediateQueue = TestConstants.PartitionedQueueName;
+            string destination1 = TestConstants.PartitionedTopicName;
+            string destination1ReceiverName = EntityNameHelper.FormatSubscriptionPath(TestConstants.PartitionedTopicName, TestConstants.SubscriptionName);
+            string destination2 = TestConstants.NonPartitionedQueueName;
+            string destination2ReceiverName = TestConstants.NonPartitionedQueueName;
+
+            var intermediateSender = new MessageSender(connection, intermediateQueue);
+            var intermediateReceiver = new MessageReceiver(connection, intermediateQueue);
+            var destination1Sender = new MessageSender(connection, destination1);
+            var destination1ViaSender = new MessageSender(connection, destination1, intermediateQueue);
+            var destination2ViaSender = new MessageSender(connection, destination2, intermediateQueue);
+            var destination1Receiver = new MessageReceiver(connection, destination1ReceiverName);
+            var destination2Receiver = new MessageReceiver(connection, destination2ReceiverName);
+
+            try
+            {
+                string body = Guid.NewGuid().ToString("N");
+                var message1 = new Message(body.GetBytes()) { MessageId = "1", PartitionKey = "pk1" };
+                var message2 = new Message(body.GetBytes()) { MessageId = "2", PartitionKey = "pk2", ViaPartitionKey = "pk1" };
+                var message3 = new Message(body.GetBytes()) { MessageId = "3", PartitionKey = "pk3", ViaPartitionKey = "pk1" };
+
+                await intermediateSender.SendAsync(message1).ConfigureAwait(false);
+                var receivedMessage = await intermediateReceiver.ReceiveAsync();
+                Assert.NotNull(receivedMessage);
+                Assert.Equal("pk1", receivedMessage.PartitionKey);
+
+                // If the transaction succeeds, then all the operations occurred on the same partition.
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await intermediateReceiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+                    await destination1ViaSender.SendAsync(message2);
+                    await destination2ViaSender.SendAsync(message3);
+                    ts.Complete();
+                }
+
+                // Assert that first message indeed completed.
+                receivedMessage = await intermediateReceiver.ReceiveAsync(ReceiveTimeout);
+                Assert.Null(receivedMessage);
+
+                // Assert that second message reached its destination.
+                var receivedMessage1 = await destination1Receiver.ReceiveAsync();
+                Assert.NotNull(receivedMessage1);
+                Assert.Equal("pk2", receivedMessage1.PartitionKey);
+
+                // Assert destination1 message actually used partitionKey in the destination entity.
+                var destination1Message = new Message(body.GetBytes())
+                {
+                    PartitionKey = "pk2"
+                };
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await destination1Receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
+                    await destination1Sender.SendAsync(destination1Message);
+                    ts.Complete();
+                }
+
+                // Assert that third message reached its destination.
+                var receivedMessage2 = await destination2Receiver.ReceiveAsync();
+                Assert.NotNull(receivedMessage2);
+                Assert.Equal("pk3", receivedMessage2.PartitionKey);
+                await destination2Receiver.CompleteAsync(receivedMessage2.SystemProperties.LockToken);
+
+                // Cleanup
+                receivedMessage1 = await destination1Receiver.ReceiveAsync();
+                await destination1Receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
+            }
+            finally
+            {
+                await intermediateSender.CloseAsync();
+                await intermediateReceiver.CloseAsync();
+                await destination1Sender.CloseAsync();
+                await destination1ViaSender.CloseAsync();
+                await destination2ViaSender.CloseAsync();
+                await destination1Receiver.CloseAsync();
+                await destination2Receiver.CloseAsync();
+            }
+        }
+
     }
 }
