@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.CognitiveServices.Language.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.Tests</AssemblyName>
-    <Version>1.0.1-preview</Version>
+    <Version>1.0.0-preview</Version>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+  <PropertyGroup>    
+    <TargetFramework>netcoreapp1.1</TargetFramework>    
   </PropertyGroup>
 
   <ItemGroup>
