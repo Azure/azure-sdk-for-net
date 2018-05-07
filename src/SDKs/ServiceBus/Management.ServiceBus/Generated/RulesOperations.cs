@@ -65,6 +65,16 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='subscriptionName'>
         /// The subscription name.
         /// </param>
+        /// <param name='skip'>
+        /// Skip is only used if a previous operation returned a partial result. If a
+        /// previous response contains a nextLink element, the value of the nextLink
+        /// element will include a skip parameter that specifies a starting point to
+        /// use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N
+        /// usageDetails.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -86,7 +96,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Rule>>> ListBySubscriptionsWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Rule>>> ListBySubscriptionsWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, int? skip = default(int?), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -152,6 +162,22 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (skip > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "skip", 1000);
+            }
+            if (skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+            }
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -163,6 +189,8 @@ namespace Microsoft.Azure.Management.ServiceBus
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("topicName", topicName);
                 tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("skip", skip);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListBySubscriptions", tracingParameters);
             }
@@ -178,6 +206,14 @@ namespace Microsoft.Azure.Management.ServiceBus
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (skip != null)
+            {
+                _queryParameters.Add(string.Format("$skip={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(skip, Client.SerializationSettings).Trim('"'))));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
