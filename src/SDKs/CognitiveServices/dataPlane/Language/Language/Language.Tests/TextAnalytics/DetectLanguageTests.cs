@@ -1,23 +1,26 @@
 using Language.Tests;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Azure.CognitiveServices.Language.TextAnalytics;
+
 using Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using Xunit;
 
-namespace Language.TextAnalytics.Tests
+namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
 {
     public class DetectLanguageTests : BaseTests
     {
         [Fact]
-        public void DetectLanguage()
+        public async Task DetectLanguage()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
                 ITextAnalyticsAPI client = GetClient(HttpMockServer.CreateInstance());
-                LanguageBatchResult result = client.DetectLanguage(
+                LanguageBatchResult result = await client.DetectLanguageAsync(
                     new BatchInput(
                         new List<Input>()
                         {
