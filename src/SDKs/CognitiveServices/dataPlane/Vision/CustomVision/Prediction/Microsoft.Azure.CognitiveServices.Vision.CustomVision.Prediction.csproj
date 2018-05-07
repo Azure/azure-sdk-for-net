@@ -9,7 +9,7 @@
     <Version>0.10.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Prediction API;Custom Vision Prediction SDK;Vision;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a release of the Cognitive Services Custom Vision Prediction SDK.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a preview release of the Cognitive Services Custom Vision Prediction SDK.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
