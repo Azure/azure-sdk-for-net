@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="fabricLocation">The fabric location. Possible values
         /// include: 'Primary', 'Recovery'</param>
         /// <param name="timeout">The script timeout.</param>
-        public RecoveryPlanScriptActionDetails(string path, RecoveryPlanActionLocation fabricLocation, string timeout = default(string))
+        public RecoveryPlanScriptActionDetails(string path, string fabricLocation, string timeout = default(string))
         {
             Path = path;
             Timeout = timeout;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Primary', 'Recovery'
         /// </summary>
         [JsonProperty(PropertyName = "fabricLocation")]
-        public RecoveryPlanActionLocation FabricLocation { get; set; }
+        public string FabricLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -80,6 +80,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             if (Path == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Path");
+            }
+            if (FabricLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FabricLocation");
             }
         }
     }

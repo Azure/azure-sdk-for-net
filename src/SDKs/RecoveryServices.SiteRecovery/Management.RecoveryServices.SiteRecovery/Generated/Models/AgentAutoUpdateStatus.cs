@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
 
     /// <summary>
-    /// Defines values for A2ARpRecoveryPointType.
+    /// Defines values for AgentAutoUpdateStatus.
     /// </summary>
-    public static class A2ARpRecoveryPointType
+    public static class AgentAutoUpdateStatus
     {
-        public const string Latest = "Latest";
-        public const string LatestApplicationConsistent = "LatestApplicationConsistent";
-        public const string LatestCrashConsistent = "LatestCrashConsistent";
-        public const string LatestProcessed = "LatestProcessed";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }

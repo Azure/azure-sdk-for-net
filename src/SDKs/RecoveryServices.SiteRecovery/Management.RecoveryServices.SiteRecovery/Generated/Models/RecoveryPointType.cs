@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RecoveryPointType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RecoveryPointType
+    public static class RecoveryPointType
     {
-        [EnumMember(Value = "LatestTime")]
-        LatestTime,
-        [EnumMember(Value = "LatestTag")]
-        LatestTag,
-        [EnumMember(Value = "Custom")]
-        Custom
-    }
-    internal static class RecoveryPointTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this RecoveryPointType? value)
-        {
-            return value == null ? null : ((RecoveryPointType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this RecoveryPointType value)
-        {
-            switch( value )
-            {
-                case RecoveryPointType.LatestTime:
-                    return "LatestTime";
-                case RecoveryPointType.LatestTag:
-                    return "LatestTag";
-                case RecoveryPointType.Custom:
-                    return "Custom";
-            }
-            return null;
-        }
-
-        internal static RecoveryPointType? ParseRecoveryPointType(this string value)
-        {
-            switch( value )
-            {
-                case "LatestTime":
-                    return RecoveryPointType.LatestTime;
-                case "LatestTag":
-                    return RecoveryPointType.LatestTag;
-                case "Custom":
-                    return RecoveryPointType.Custom;
-            }
-            return null;
-        }
+        public const string LatestTime = "LatestTime";
+        public const string LatestTag = "LatestTag";
+        public const string Custom = "Custom";
     }
 }

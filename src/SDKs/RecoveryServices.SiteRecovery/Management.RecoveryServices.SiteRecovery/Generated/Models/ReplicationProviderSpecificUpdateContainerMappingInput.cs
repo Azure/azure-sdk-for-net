@@ -13,15 +13,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Container mapping provider specific details.
+    /// Provider specific input for update pairing operations.
     /// </summary>
-    public partial class ProtectionContainerMappingProviderSpecificDetails
+    public partial class ReplicationProviderSpecificUpdateContainerMappingInput
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ProtectionContainerMappingProviderSpecificDetails class.
+        /// ReplicationProviderSpecificUpdateContainerMappingInput class.
         /// </summary>
-        public ProtectionContainerMappingProviderSpecificDetails()
+        public ReplicationProviderSpecificUpdateContainerMappingInput()
         {
             CustomInit();
         }

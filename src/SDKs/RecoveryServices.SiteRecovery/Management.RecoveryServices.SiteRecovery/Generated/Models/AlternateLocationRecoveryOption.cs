@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AlternateLocationRecoveryOption.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AlternateLocationRecoveryOption
+    public static class AlternateLocationRecoveryOption
     {
-        [EnumMember(Value = "CreateVmIfNotFound")]
-        CreateVmIfNotFound,
-        [EnumMember(Value = "NoAction")]
-        NoAction
-    }
-    internal static class AlternateLocationRecoveryOptionEnumExtension
-    {
-        internal static string ToSerializedValue(this AlternateLocationRecoveryOption? value)
-        {
-            return value == null ? null : ((AlternateLocationRecoveryOption)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AlternateLocationRecoveryOption value)
-        {
-            switch( value )
-            {
-                case AlternateLocationRecoveryOption.CreateVmIfNotFound:
-                    return "CreateVmIfNotFound";
-                case AlternateLocationRecoveryOption.NoAction:
-                    return "NoAction";
-            }
-            return null;
-        }
-
-        internal static AlternateLocationRecoveryOption? ParseAlternateLocationRecoveryOption(this string value)
-        {
-            switch( value )
-            {
-                case "CreateVmIfNotFound":
-                    return AlternateLocationRecoveryOption.CreateVmIfNotFound;
-                case "NoAction":
-                    return AlternateLocationRecoveryOption.NoAction;
-            }
-            return null;
-        }
+        public const string CreateVmIfNotFound = "CreateVmIfNotFound";
+        public const string NoAction = "NoAction";
     }
 }

@@ -12,13 +12,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
 
     /// <summary>
-    /// Defines values for A2ARpRecoveryPointType.
+    /// Defines values for PresenceStatus.
     /// </summary>
-    public static class A2ARpRecoveryPointType
+    public static class PresenceStatus
     {
-        public const string Latest = "Latest";
-        public const string LatestApplicationConsistent = "LatestApplicationConsistent";
-        public const string LatestCrashConsistent = "LatestCrashConsistent";
-        public const string LatestProcessed = "LatestProcessed";
+        public const string Unknown = "Unknown";
+        public const string Present = "Present";
+        public const string NotPresent = "NotPresent";
     }
 }

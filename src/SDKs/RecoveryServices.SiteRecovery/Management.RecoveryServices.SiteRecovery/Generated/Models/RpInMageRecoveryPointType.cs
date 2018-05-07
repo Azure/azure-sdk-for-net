@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RpInMageRecoveryPointType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RpInMageRecoveryPointType
+    public static class RpInMageRecoveryPointType
     {
-        [EnumMember(Value = "LatestTime")]
-        LatestTime,
-        [EnumMember(Value = "LatestTag")]
-        LatestTag,
-        [EnumMember(Value = "Custom")]
-        Custom
-    }
-    internal static class RpInMageRecoveryPointTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this RpInMageRecoveryPointType? value)
-        {
-            return value == null ? null : ((RpInMageRecoveryPointType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this RpInMageRecoveryPointType value)
-        {
-            switch( value )
-            {
-                case RpInMageRecoveryPointType.LatestTime:
-                    return "LatestTime";
-                case RpInMageRecoveryPointType.LatestTag:
-                    return "LatestTag";
-                case RpInMageRecoveryPointType.Custom:
-                    return "Custom";
-            }
-            return null;
-        }
-
-        internal static RpInMageRecoveryPointType? ParseRpInMageRecoveryPointType(this string value)
-        {
-            switch( value )
-            {
-                case "LatestTime":
-                    return RpInMageRecoveryPointType.LatestTime;
-                case "LatestTag":
-                    return RpInMageRecoveryPointType.LatestTag;
-                case "Custom":
-                    return RpInMageRecoveryPointType.Custom;
-            }
-            return null;
-        }
+        public const string LatestTime = "LatestTime";
+        public const string LatestTag = "LatestTag";
+        public const string Custom = "Custom";
     }
 }
