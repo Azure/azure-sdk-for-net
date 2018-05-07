@@ -46,10 +46,6 @@
             ITrainingApi client = new TrainingApi(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = TrainingKey,
-#if RECORD_MODE
-                //BaseUri = new Uri("https://deviris2.azure-api.net/V2.0/Training") //new Uri("http://localhost:8080/api_v2.0/training")
-                BaseUri = new Uri("https://cognitivescusppe.azure-api.net/customvision/v2.0/Training")
-#endif
             };
 
             return client;
