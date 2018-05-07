@@ -31,7 +31,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Image class.
         /// </summary>
-        public Image(System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string imageUri = default(string), string thumbnailUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<PredictionTag> predictions = default(IList<PredictionTag>))
+        public Image(System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), int width = default(int), int height = default(int), string imageUri = default(string), string thumbnailUri = default(string), IList<ImageTag> tags = default(IList<ImageTag>), IList<ImageRegion> regions = default(IList<ImageRegion>))
         {
             Id = id;
             Created = created;
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             ImageUri = imageUri;
             ThumbnailUri = thumbnailUri;
             Tags = tags;
-            Predictions = predictions;
+            Regions = regions;
             CustomInit();
         }
 
@@ -51,43 +51,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Created")]
+        [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Width")]
+        [JsonProperty(PropertyName = "width")]
         public int Width { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Height")]
+        [JsonProperty(PropertyName = "height")]
         public int Height { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "ImageUri")]
+        [JsonProperty(PropertyName = "imageUri")]
         public string ImageUri { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "ThumbnailUri")]
+        [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Tags")]
+        [JsonProperty(PropertyName = "tags")]
         public IList<ImageTag> Tags { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Predictions")]
-        public IList<PredictionTag> Predictions { get; private set; }
+        [JsonProperty(PropertyName = "regions")]
+        public IList<ImageRegion> Regions { get; private set; }
 
     }
 }

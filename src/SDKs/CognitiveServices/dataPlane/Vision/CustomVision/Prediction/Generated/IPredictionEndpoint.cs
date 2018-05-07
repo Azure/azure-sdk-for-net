@@ -68,7 +68,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageUrlWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Predict an image and saves the result
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> PredictImageWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Predict an image url without saving the result
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Predict an image without saving the result
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> PredictImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -11,13 +11,8 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// result of an image classification request
-    /// </summary>
     public partial class Prediction
     {
         /// <summary>
@@ -31,15 +26,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Prediction class.
         /// </summary>
-        public Prediction(System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<PredictionTag> predictions = default(IList<PredictionTag>), string imageUri = default(string), string thumbnailUri = default(string))
+        public Prediction(double probability = default(double), System.Guid tagId = default(System.Guid), string tagName = default(string), BoundingBox boundingBox = default(BoundingBox))
         {
-            Id = id;
-            Project = project;
-            Iteration = iteration;
-            Created = created;
-            Predictions = predictions;
-            ImageUri = imageUri;
-            ThumbnailUri = thumbnailUri;
+            Probability = probability;
+            TagId = tagId;
+            TagName = tagName;
+            BoundingBox = boundingBox;
             CustomInit();
         }
 
@@ -50,38 +42,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
-        public System.Guid Id { get; private set; }
+        [JsonProperty(PropertyName = "probability")]
+        public double Probability { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Project")]
-        public System.Guid Project { get; private set; }
+        [JsonProperty(PropertyName = "tagId")]
+        public System.Guid TagId { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Iteration")]
-        public System.Guid Iteration { get; private set; }
+        [JsonProperty(PropertyName = "tagName")]
+        public string TagName { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Created")]
-        public System.DateTime Created { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "Predictions")]
-        public IList<PredictionTag> Predictions { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "ImageUri")]
-        public string ImageUri { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "ThumbnailUri")]
-        public string ThumbnailUri { get; private set; }
+        [JsonProperty(PropertyName = "boundingBox")]
+        public BoundingBox BoundingBox { get; private set; }
 
     }
 }
