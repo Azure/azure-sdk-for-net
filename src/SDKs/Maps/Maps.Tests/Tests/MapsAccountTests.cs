@@ -19,7 +19,8 @@ namespace MapsServices.Tests
 
     // aad tenant id:   72f988bf-86f1-41af-91ab-2d7cd011db47
     // aad application identity:  26ba1730-4c7c-4099-84b8-ec115a357455
-    // application key:  bjrvl/yDY3lMNBn9Ft0R4ydCKlDU27MVOdG2qyWvmsw=
+    // application key must be generated from:
+    // https://ms.portal.azure.com/#blade/Microsoft_AAD_IAM/ApplicationBlade/appId/26ba1730-4c7c-4099-84b8-ec115a357455/objectId/e0e8b1f6-23dd-40dd-af56-abd89d14fb0d
 
 
     public class MapsServicesAccountTests
