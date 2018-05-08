@@ -16,20 +16,22 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     using System.Linq;
 
     /// <summary>
-    /// The child information of a management group.
+    /// The child information of a management group used during creation.
     /// </summary>
-    public partial class ManagementGroupChildInfo
+    public partial class CreateManagementGroupChildInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ManagementGroupChildInfo class.
+        /// Initializes a new instance of the CreateManagementGroupChildInfo
+        /// class.
         /// </summary>
-        public ManagementGroupChildInfo()
+        public CreateManagementGroupChildInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagementGroupChildInfo class.
+        /// Initializes a new instance of the CreateManagementGroupChildInfo
+        /// class.
         /// </summary>
         /// <param name="type">The type of child resource.</param>
         /// <param name="id">The fully qualified ID for the child resource
@@ -41,7 +43,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <param name="roles">The roles definitions associated with the
         /// management group.</param>
         /// <param name="children">The list of children.</param>
-        public ManagementGroupChildInfo(string type = default(string), string id = default(string), string name = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
+        public CreateManagementGroupChildInfo(string type = default(string), string id = default(string), string name = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), IList<CreateManagementGroupChildInfo> children = default(IList<CreateManagementGroupChildInfo>))
         {
             Type = type;
             Id = id;
@@ -58,7 +60,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of child resource.
+        /// Gets the type of child resource.
         /// </summary>
         /// <remarks>
         /// The fully qualified resource type which includes provider namespace
@@ -67,40 +69,39 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// '/subscriptions'
         /// </remarks>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the fully qualified ID for the child resource
-        /// (management group or subscription).  For example,
+        /// Gets the fully qualified ID for the child resource (management
+        /// group or subscription).  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the child entity.
+        /// Gets the name of the child entity.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the friendly name of the child resource.
+        /// Gets the friendly name of the child resource.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the roles definitions associated with the management
-        /// group.
+        /// Gets the roles definitions associated with the management group.
         /// </summary>
         [JsonProperty(PropertyName = "roles")]
-        public IList<string> Roles { get; set; }
+        public IList<string> Roles { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list of children.
+        /// Gets the list of children.
         /// </summary>
         [JsonProperty(PropertyName = "children")]
-        public IList<ManagementGroupChildInfo> Children { get; set; }
+        public IList<CreateManagementGroupChildInfo> Children { get; private set; }
 
     }
 }

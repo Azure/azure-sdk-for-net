@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.ManagementGroups
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The Azure Management Groups API enables consolidation of multiple
@@ -46,9 +50,25 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2017-11-01-preview.
+        /// version is 2018-01-01-preview.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The id of the operation result. Possible values include: 'create',
+        /// 'delete'
+        /// </summary>
+        string OperationResultId { get; set; }
+
+        /// <summary>
+        /// Page continuation token is only used if a previous operation
+        /// returned a partial result.
+        /// If a previous response contains a nextLink element, the value of
+        /// the nextLink element will include a token parameter that specifies
+        /// a starting point to use for subsequent calls.
+        ///
+        /// </summary>
+        string Skiptoken { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -82,6 +102,25 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IEntitiesOperations.
+        /// </summary>
+        IEntitiesOperations Entities { get; }
+
+        /// <summary>
+        /// Checks if the specified management group name is valid and unique
+        /// </summary>
+        /// <param name='checkNameAvailabilityRequest'>
+        /// Management group name availability check parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

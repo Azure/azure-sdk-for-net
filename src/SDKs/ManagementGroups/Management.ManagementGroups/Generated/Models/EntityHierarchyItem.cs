@@ -19,23 +19,21 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     using System.Linq;
 
     /// <summary>
-    /// Management group creation parameters.
+    /// The management group details for the hierarchy view.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class CreateManagementGroupRequest : IResource
+    public partial class EntityHierarchyItem : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the CreateManagementGroupRequest
-        /// class.
+        /// Initializes a new instance of the EntityHierarchyItem class.
         /// </summary>
-        public CreateManagementGroupRequest()
+        public EntityHierarchyItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CreateManagementGroupRequest
-        /// class.
+        /// Initializes a new instance of the EntityHierarchyItem class.
         /// </summary>
         /// <param name="id">The fully qualified ID for the management group.
         /// For example,
@@ -44,25 +42,17 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// /providers/Microsoft.Management/managementGroups</param>
         /// <param name="name">The name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
-        /// <param name="tenantId">The AAD Tenant ID associated with the
-        /// management group. For example,
-        /// 00000000-0000-0000-0000-000000000000</param>
         /// <param name="displayName">The friendly name of the management
-        /// group. If no value is passed then this  field will be set to the
-        /// groupId.</param>
-        /// <param name="roles">The roles definitions associated with the
-        /// management group.</param>
-        /// <param name="details">Details</param>
+        /// group.</param>
+        /// <param name="permissions">Permissions</param>
         /// <param name="children">The list of children.</param>
-        public CreateManagementGroupRequest(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), CreateManagementGroupDetails details = default(CreateManagementGroupDetails), IList<CreateManagementGroupChildInfo> children = default(IList<CreateManagementGroupChildInfo>))
+        public EntityHierarchyItem(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string permissions = default(string), IList<EntityHierarchyItem> children = default(IList<EntityHierarchyItem>))
         {
             Id = id;
             Type = type;
             Name = name;
-            TenantId = tenantId;
             DisplayName = displayName;
-            Roles = roles;
-            Details = details;
+            Permissions = permissions;
             Children = children;
             CustomInit();
         }
@@ -87,43 +77,32 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the management group. For example,
+        /// Gets the name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the AAD Tenant ID associated with the management group. For
-        /// example, 00000000-0000-0000-0000-000000000000
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tenantId")]
-        public string TenantId { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the friendly name of the management group. If no value
-        /// is passed then this  field will be set to the groupId.
+        /// Gets or sets the friendly name of the management group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets the roles definitions associated with the management group.
+        /// Gets or sets permissions
         /// </summary>
-        [JsonProperty(PropertyName = "properties.roles")]
-        public IList<string> Roles { get; private set; }
+        /// <remarks>
+        /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.permissions")]
+        public string Permissions { get; set; }
 
         /// <summary>
-        /// Gets or sets details
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.details")]
-        public CreateManagementGroupDetails Details { get; set; }
-
-        /// <summary>
-        /// Gets the list of children.
+        /// Gets or sets the list of children.
         /// </summary>
         [JsonProperty(PropertyName = "properties.children")]
-        public IList<CreateManagementGroupChildInfo> Children { get; private set; }
+        public IList<EntityHierarchyItem> Children { get; set; }
 
     }
 }

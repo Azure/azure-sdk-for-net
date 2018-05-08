@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups?api-version=2017-11-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTctMTEtMDEtcHJldmlldw==",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups?api-version=2018-01-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "83d1b5fe-cc38-443c-b9c6-3dbff5614ba7"
+          "347bf624-1db9-421d-9f0b-e319802900f5"
         ],
         "Cache-Control": [
           "no-cache"
@@ -17,10 +17,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/0.0.0.0"
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/testGroup123\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"testGroup123\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"New Display Name\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/testGroup123Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"testGroup123Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"TestGroup123->Child1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/testGroup123Child1Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"testGroup123Child1Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"TestGroup123->Child1->Child1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n      \"properties\": {\r\n        \"tenantId\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\",\r\n        \"displayName\": \"6b2064b9-34bd-46e6-9092-52f2dd5f7fc0\"\r\n      }\r\n    }\r\n  ],\r\n  \"@nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"b1af47f1-138c-4ed2-8bba-119041b95450\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"TestGroup1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"TestGroup1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"TestGroup1Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"TestGroup1->Child1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"TestGroup1Child1Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"TestGroup1->Child1->Child1\"\r\n      }\r\n    }\r\n  ],\r\n  \"@nextLink\": null\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,7 +32,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 12 Feb 2018 18:32:44 GMT"
+          "Tue, 08 May 2018 21:34:56 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -48,16 +48,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
+          "14999"
         ],
         "x-ms-request-id": [
-          "westus:1496e893-66c3-4f0d-acdc-2136709c2587"
+          "eastus:96931a89-2c30-4b92-bef7-db22b44907a5"
         ],
         "x-ba-restapi": [
-          "1.0.3.520"
+          "1.0.3.754"
         ],
         "request-id": [
-          "2f4ef7ee-c4af-42e9-bcc3-60e290089ec0"
+          "4788b988-ea4d-4cf2-a873-7f26da37d2fa"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -66,10 +66,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "b3e94a4e-6d86-45f6-9350-0476ef3323ca"
+          "9eb1fa82-797c-4624-ae4e-7a9f3213c6da"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20180212T183244Z:b3e94a4e-6d86-45f6-9350-0476ef3323ca"
+          "NORTHEUROPE:20180508T213457Z:9eb1fa82-797c-4624-ae4e-7a9f3213c6da"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

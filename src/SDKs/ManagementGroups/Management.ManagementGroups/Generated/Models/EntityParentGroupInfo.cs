@@ -16,30 +16,25 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     /// <summary>
     /// (Optional) The ID of the parent management group.
     /// </summary>
-    public partial class ParentGroupInfo
+    public partial class EntityParentGroupInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ParentGroupInfo class.
+        /// Initializes a new instance of the EntityParentGroupInfo class.
         /// </summary>
-        public ParentGroupInfo()
+        public EntityParentGroupInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ParentGroupInfo class.
+        /// Initializes a new instance of the EntityParentGroupInfo class.
         /// </summary>
         /// <param name="id">The fully qualified ID for the parent management
         /// group.  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
-        /// <param name="name">The name of the parent management group</param>
-        /// <param name="displayName">The friendly name of the parent
-        /// management group.</param>
-        public ParentGroupInfo(string id = default(string), string name = default(string), string displayName = default(string))
+        public EntityParentGroupInfo(string id = default(string))
         {
             Id = id;
-            Name = name;
-            DisplayName = displayName;
             CustomInit();
         }
 
@@ -55,18 +50,6 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the parent management group
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the friendly name of the parent management group.
-        /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; set; }
 
     }
 }
