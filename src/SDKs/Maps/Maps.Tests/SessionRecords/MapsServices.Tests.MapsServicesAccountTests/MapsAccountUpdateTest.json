@@ -1,0 +1,216 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourcegroups/res7345?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Jlc291cmNlZ3JvdXBzL3JlczczNDU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "dde31204-086c-47d8-8ec1-65fa92b3ea3e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res7345\",\r\n  \"name\": \"res7345\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "167"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:56 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "1516fae8-6fbc-4d18-8c89-a2d295b6f231"
+        ],
+        "x-ms-correlation-request-id": [
+          "1516fae8-6fbc-4d18-8c89-a2d295b6f231"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002157Z:1516fae8-6fbc-4d18-8c89-a2d295b6f231"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res7345/providers/Microsoft.Maps/accounts/maps9404?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Jlc291cmNlR3JvdXBzL3JlczczNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5NYXBzL2FjY291bnRzL21hcHM5NDA0P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "128"
+        ],
+        "x-ms-client-request-id": [
+          "810ff82b-1c6a-4912-827b-01140dded99e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Maps.MapsManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res7345/providers/Microsoft.Maps/accounts/maps9404\",\r\n  \"name\": \"maps9404\",\r\n  \"type\": \"Microsoft.Maps/accounts\",\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "344"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "5b815e88-c091-4fcb-85e2-20cd8b28292c"
+        ],
+        "x-ms-correlation-request-id": [
+          "5b815e88-c091-4fcb-85e2-20cd8b28292c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002159Z:5b815e88-c091-4fcb-85e2-20cd8b28292c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res7345/providers/Microsoft.Maps/accounts/maps9404?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Jlc291cmNlR3JvdXBzL3JlczczNDUvcHJvdmlkZXJzL01pY3Jvc29mdC5NYXBzL2FjY291bnRzL21hcHM5NDA0P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "128"
+        ],
+        "x-ms-client-request-id": [
+          "6c957ca5-248a-4559-bd72-4058a840863f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Maps.MapsManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res7345/providers/Microsoft.Maps/accounts/maps9404\",\r\n  \"name\": \"maps9404\",\r\n  \"type\": \"Microsoft.Maps/accounts\",\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key3\": \"value3\",\r\n    \"key4\": \"value4\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:59 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "eaf27add-71e3-488e-9590-92e163078ef8"
+        ],
+        "x-ms-correlation-request-id": [
+          "eaf27add-71e3-488e-9590-92e163078ef8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002200Z:eaf27add-71e3-488e-9590-92e163078ef8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "res7345"
+    ],
+    "MapsAccountUpdateTest": [
+      "maps9404"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "21a9967a-e8a9-4656-a70b-96ff1c4d05a0"
+  }
+}
