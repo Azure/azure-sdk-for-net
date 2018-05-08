@@ -46,7 +46,7 @@ namespace Azure.Batch.Unit.Tests
             }
         }
 
-        private static IEnumerable<object[]> HttpMethods()
+        public static IEnumerable<object[]> HttpMethods()
         {
             yield return new[] { HttpMethod.Delete };
             yield return new[] { HttpMethod.Post };

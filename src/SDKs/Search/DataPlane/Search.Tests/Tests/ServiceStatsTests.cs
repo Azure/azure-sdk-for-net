@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Search.Tests
 {
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
-    using System;
     using Xunit;
 
     public sealed class ServiceStatsTests : SearchTestBase<SearchServiceFixture>
@@ -30,9 +29,7 @@ namespace Microsoft.Azure.Search.Tests
                     },
                     Limits = new ServiceLimits
                     {
-                        MaxFieldsPerIndex = 1000,
-                        MaxFieldNestingDepthPerIndex = 10,
-                        MaxComplexCollectionFieldsPerIndex = 100
+                        MaxFieldsPerIndex = 1000
                     }
                 };
 

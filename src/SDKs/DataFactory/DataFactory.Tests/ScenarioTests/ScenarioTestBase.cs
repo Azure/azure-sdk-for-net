@@ -27,6 +27,7 @@ namespace DataFactory.Tests.ScenarioTests
 
         protected async Task RunTest(Func<DataFactoryManagementClient, Task> initialAction, Func<DataFactoryManagementClient, Task> finallyAction, [CallerMemberName] string methodName = "")
         {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
                 this.ResourceGroupName = TestUtilities.GenerateName(ResourceGroupNamePrefix);

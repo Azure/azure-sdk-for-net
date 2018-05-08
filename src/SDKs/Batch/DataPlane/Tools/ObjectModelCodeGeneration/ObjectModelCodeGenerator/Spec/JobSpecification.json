@@ -1,7 +1,7 @@
     {
       "Name": "JobSpecification",
       "ProtocolName": "Models.JobSpecification",
-      "Comment": "The <see cref=\"CloudJobSchedule.JobSpecification\"/> of a <see cref=\"CloudJobSchedule\"/>.",
+      "SummaryComment": "The <see cref=\"CloudJobSchedule.JobSpecification\"/> of a <see cref=\"CloudJobSchedule\"/>.",
       "Properties": [
         {
           "Key": {

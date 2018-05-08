@@ -1,0 +1,182 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/plans?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9wbGFucz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5d43bb26-2627-4051-a7d7-93a62829b4d1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/plans/plan0\",\r\n      \"name\": \"plan0\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"plan0\",\r\n        \"displayName\": \"plan0\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Compute.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.KeyVault.Admin/locations/redmond/quotas/Unlimited\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Network.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/plans/plansub\",\r\n      \"name\": \"plansub\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"plansub\",\r\n        \"displayName\": \"plansub\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/offerdel-rg/providers/Microsoft.Subscriptions.Admin/plans/planb\",\r\n      \"name\": \"planb\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"planb\",\r\n        \"displayName\": \"planb\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Compute.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Network.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/plans/planx\",\r\n      \"name\": \"planx\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"planx\",\r\n        \"displayName\": \"planx\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Compute.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2953"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 10 Apr 2018 18:02:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14785"
+        ],
+        "x-ms-request-id": [
+          "133b4ecc-ebf9-47a9-87b6-113f0b96d1f8"
+        ],
+        "x-ms-correlation-request-id": [
+          "133b4ecc-ebf9-47a9-87b6-113f0b96d1f8"
+        ],
+        "x-ms-routing-request-id": [
+          "REDMOND:20180410T180213Z:133b4ecc-ebf9-47a9-87b6-113f0b96d1f8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourcegroups/planoffer/providers/Microsoft.Subscriptions.Admin/plans?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Jlc291cmNlZ3JvdXBzL3BsYW5vZmZlci9wcm92aWRlcnMvTWljcm9zb2Z0LlN1YnNjcmlwdGlvbnMuQWRtaW4vcGxhbnM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "27d9e8d9-1d5e-4bac-960e-91b00a5dab02"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/plans/plan0\",\r\n      \"name\": \"plan0\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"plan0\",\r\n        \"displayName\": \"plan0\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Compute.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.KeyVault.Admin/locations/redmond/quotas/Unlimited\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Network.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/plans/plansub\",\r\n      \"name\": \"plansub\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"plansub\",\r\n        \"displayName\": \"plansub\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/plans/planx\",\r\n      \"name\": \"planx\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"planx\",\r\n        \"displayName\": \"planx\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Compute.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2122"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 10 Apr 2018 18:02:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14784"
+        ],
+        "x-ms-request-id": [
+          "6446e9b8-70fb-44f8-95a5-b09e4525e251"
+        ],
+        "x-ms-correlation-request-id": [
+          "6446e9b8-70fb-44f8-95a5-b09e4525e251"
+        ],
+        "x-ms-routing-request-id": [
+          "REDMOND:20180410T180214Z:6446e9b8-70fb-44f8-95a5-b09e4525e251"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourcegroups/offerdel-rg/providers/Microsoft.Subscriptions.Admin/plans?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Jlc291cmNlZ3JvdXBzL29mZmVyZGVsLXJnL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9wbGFucz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e8752402-6640-46ee-98bd-e6b55b769c95"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/offerdel-rg/providers/Microsoft.Subscriptions.Admin/plans/planb\",\r\n      \"name\": \"planb\",\r\n      \"type\": \"Microsoft.Subscriptions.Admin/plans\",\r\n      \"location\": \"redmond\",\r\n      \"properties\": {\r\n        \"name\": \"planb\",\r\n        \"displayName\": \"planb\",\r\n        \"subscriptionCount\": 0,\r\n        \"quotaIds\": [\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Compute.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Network.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Storage.Admin/locations/redmond/quotas/Default Quota\",\r\n          \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/locations/redmond/quotas/delegatedProviderQuota\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "842"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 10 Apr 2018 18:02:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14783"
+        ],
+        "x-ms-request-id": [
+          "27757822-e642-410e-92f3-083cc8b11f8a"
+        ],
+        "x-ms-correlation-request-id": [
+          "27757822-e642-410e-92f3-083cc8b11f8a"
+        ],
+        "x-ms-routing-request-id": [
+          "REDMOND:20180410T180214Z:27757822-e642-410e-92f3-083cc8b11f8a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c2a4c80-e594-46eb-b923-98fd98d50155"
+  }
+}

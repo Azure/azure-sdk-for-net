@@ -28,8 +28,19 @@ namespace ObjectModelCodeGenerator
         public virtual string TransformText()
         {
             this.Write("    /// <summary>\r\n");
-            this.Write(this.ToStringHelper.ToStringWithCulture(CommentUtilities.FormatTripleSlashComment(type.Comment, CommentUtilities.Indentation.TypeLevel)));
-            this.Write("\r\n    /// </summary>\r\n    public partial class ");
+            this.Write(this.ToStringHelper.ToStringWithCulture(CommentUtilities.FormatTripleSlashComment(type.SummaryComment, CommentUtilities.Indentation.TypeLevel)));
+            this.Write("\r\n    /// </summary>\r\n");
+
+if (!string.IsNullOrEmpty(type.RemarksComment))
+{
+
+            this.Write("    /// <remarks>\r\n");
+            this.Write(this.ToStringHelper.ToStringWithCulture(CommentUtilities.FormatTripleSlashComment(type.RemarksComment, CommentUtilities.Indentation.TypeLevel)));
+            this.Write("\r\n    /// </remarks>\r\n");
+
+}
+
+            this.Write("    public partial class ");
             this.Write(this.ToStringHelper.ToStringWithCulture(type.Name));
             this.Write(" :");
  if (type.ShouldDefineGetTransportObject) { 

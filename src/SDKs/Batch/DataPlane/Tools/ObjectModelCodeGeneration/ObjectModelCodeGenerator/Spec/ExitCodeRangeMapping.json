@@ -1,7 +1,7 @@
     {
       "Name": "ExitCodeRangeMapping",
       "ProtocolName": "Models.ExitCodeRangeMapping",
-      "Comment": "A range of exit codes and how the Batch service should respond if a task exits with an exit code within that range.",
+      "SummaryComment": "A range of exit codes and how the Batch service should respond if a task exits with an exit code within that range.",
       "IsUsedInCollections": true,
       "ForceConstructorOrder": true,
       "Properties": [

@@ -1,7 +1,7 @@
     {
       "Name": "JobReleaseTaskExecutionInformation",
       "ProtocolName": "Models.JobReleaseTaskExecutionInformation",
-      "Comment": "Details about the execution of a <see cref=\"CloudJob.JobReleaseTask\">Job Release task</see> on a compute node.",
+      "SummaryComment": "Details about the execution of a <see cref=\"CloudJob.JobReleaseTask\">Job Release task</see> on a compute node.",
       "IsConstructorPublic": false,
       "Properties": [
         {

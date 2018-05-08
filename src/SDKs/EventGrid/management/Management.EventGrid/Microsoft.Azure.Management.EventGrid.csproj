@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
 		<Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
-		<Version>1.3.0</Version>
+		<Version>2.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-		<PackageReleaseNotes>Updated the version information to remove the preview suffix.</PackageReleaseNotes>
+		<PackageReleaseNotes>This is a preview SDK for the new features introduced in 2018-05-01-preview API version. The stable version of the SDK targeting the 2018-01-01 API version continues to exist as version 1.3.0</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

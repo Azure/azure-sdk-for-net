@@ -28,10 +28,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageUrlCreateEntry class.
         /// </summary>
-        public ImageUrlCreateEntry(string url = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public ImageUrlCreateEntry(string url = default(string), IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
         {
             Url = url;
             TagIds = tagIds;
+            Regions = regions;
             CustomInit();
         }
 
@@ -42,13 +43,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Url")]
+        [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "TagIds")]
+        [JsonProperty(PropertyName = "tagIds")]
         public IList<System.Guid> TagIds { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "regions")]
+        public IList<Region> Regions { get; set; }
 
     }
 }

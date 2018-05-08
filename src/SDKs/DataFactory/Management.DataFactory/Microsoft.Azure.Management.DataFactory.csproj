@@ -6,19 +6,18 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
 		<Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-		<Version>0.6.0-preview</Version>
+		<Version>0.7.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
 		<PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
         Updates in this release:
-  			- Added new AzureDatabricks LinkedService and DatabricksNotebook Activity
-  			- Added headNodeSize and dataNodeSize properties in HDInsightOnDemand LinkedService
-  			- Added LinkedService, Dataset, CopySource for SalesforceMarketingCloud
-  			- Added support for SecureOutput on all activities 
-  			- Added new BatchCount property on ForEach activity which control how many concurrent activities to run
-  			- Added new Filter Activity
-  			- Added Linked Service Parameters support
+  			- Added execution parameters and connection managers property on ExecuteSSISPackage Activity
+  			- Updated PostgreSql, MySql llinked service to use full connection string instead of server, database, schema, username and password
+  			- Removed the schema from DB2 linked service
+  			- Removed schema property from Teradata linked service
+  			- Added LinkedService, Dataset, CopySource for Responsys
+
                         ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

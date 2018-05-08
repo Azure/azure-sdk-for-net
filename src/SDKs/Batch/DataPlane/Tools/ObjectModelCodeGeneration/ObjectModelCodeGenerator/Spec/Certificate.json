@@ -2,7 +2,7 @@
       "Name": "Certificate",
       "ProtocolName": "Models.Certificate",
       "TransportProtocolName": "Models.CertificateAddParameter",
-      "Comment": "A certificate that can be installed on compute nodes and can be used to authenticate operations on a node.",
+      "SummaryComment": "A certificate that can be installed on compute nodes and can be used to authenticate operations on a node.",
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,
       "Properties": [

@@ -1,7 +1,7 @@
     {
       "Name": "TaskSchedulingPolicy",
       "ProtocolName": "Models.TaskSchedulingPolicy",
-      "Comment": "A scheduling policy for a compute node.",
+      "SummaryComment": "A scheduling policy for a compute node.",
       "Properties": [
         {
           "Key": {

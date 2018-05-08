@@ -18,7 +18,9 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// The definition of the user identity under which the task is run.
+    /// The definition of the user identity under which the task is run. On CloudServiceConfiguration pools, this user is 
+    /// logged in with the INTERACTIVE flag. On Windows VirtualMachineConfiguration pools, this user is logged in with the 
+    /// BATCH flag.
     /// </summary>
     public partial class UserIdentity : ITransportObjectProvider<Models.UserIdentity>, IPropertyMetadata
     {

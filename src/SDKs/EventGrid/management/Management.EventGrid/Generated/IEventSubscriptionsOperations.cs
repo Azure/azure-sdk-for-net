@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription to be created
+        /// Name of the event subscription to be updated
         /// </param>
         /// <param name='eventSubscriptionUpdateParameters'>
         /// Updated event subscription information
@@ -581,7 +581,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription to be created
+        /// Name of the event subscription to be updated
         /// </param>
         /// <param name='eventSubscriptionUpdateParameters'>
         /// Updated event subscription information

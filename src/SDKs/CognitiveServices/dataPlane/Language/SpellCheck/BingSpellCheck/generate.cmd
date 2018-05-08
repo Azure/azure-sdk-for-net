@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\..\..\tools\generate.cmd cognitiveservices/data-plane/SpellCheck %*
+call %~dp0..\..\..\..\..\..\..\tools\generate.cmd cognitiveservices/data-plane/SpellCheck %*

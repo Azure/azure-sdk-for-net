@@ -1,7 +1,7 @@
 {
   "Name": "UserIdentity",
   "ProtocolName": "Models.UserIdentity",
-  "Comment": "The definition of the user identity under which the task is run.",
+  "SummaryComment": "The definition of the user identity under which the task is run. On CloudServiceConfiguration pools, this user is logged in with the INTERACTIVE flag. On Windows VirtualMachineConfiguration pools, this user is logged in with the BATCH flag.",
   "IsConstructorPublic": false,
   "Properties": [
     {

@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.SpellCheck
+namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
 {
     using Models;
     using System.Threading;
@@ -24,6 +24,14 @@ namespace Microsoft.Azure.CognitiveServices.SpellCheck
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='text'>
+            /// The text string to check for spelling and grammar errors. The combined
+            /// length of the text string, preContextText string, and postContextText
+            /// string may not exceed 10,000 characters. You may specify this parameter in
+            /// the query string of a GET request or in the body of a POST request. Because
+            /// of the query string length limit, you'll typically use a POST request
+            /// unless you're checking only short strings.
             /// </param>
             /// <param name='acceptLanguage'>
             /// A comma-delimited list of one or more languages to use for user interface
@@ -206,7 +214,7 @@ namespace Microsoft.Azure.CognitiveServices.SpellCheck
             /// Proof—Finds most spelling and grammar mistakes. 2) Spell—Finds most
             /// spelling mistakes but does not find some of the grammar errors that Proof
             /// catches (for example, capitalization and repeated words). Possible values
-            /// include: 'Proof', 'Spell'
+            /// include: 'proof', 'spell'
             /// </param>
             /// <param name='preContextText'>
             /// A string that gives context to the text string. For example, the text
@@ -228,20 +236,12 @@ namespace Microsoft.Azure.CognitiveServices.SpellCheck
             /// 10,000 characters. You may specify this parameter in the query string of a
             /// GET request or in the body of a POST request.
             /// </param>
-            /// <param name='text'>
-            /// The text string to check for spelling and grammar errors. The combined
-            /// length of the text string, preContextText string, and postContextText
-            /// string may not exceed 10,000 characters. You may specify this parameter in
-            /// the query string of a GET request or in the body of a POST request. Because
-            /// of the query string length limit, you'll typically use a POST request
-            /// unless you're checking only short strings.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpellCheckModel> SpellCheckerAsync(this ISpellCheckAPI operations, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string actionType = default(string), string appName = default(string), string countryCode = default(string), string clientMachineName = default(string), string docId = default(string), string market = default(string), string sessionId = default(string), string setLang = default(string), string userId = default(string), string mode = default(string), string preContextText = default(string), string postContextText = default(string), string text = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SpellCheckModel> SpellCheckerAsync(this ISpellCheckAPI operations, string text, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string actionType = default(string), string appName = default(string), string countryCode = default(string), string clientMachineName = default(string), string docId = default(string), string market = default(string), string sessionId = default(string), string setLang = default(string), string userId = default(string), string mode = default(string), string preContextText = default(string), string postContextText = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SpellCheckerWithHttpMessagesAsync(acceptLanguage, pragma, userAgent, clientId, clientIp, location, actionType, appName, countryCode, clientMachineName, docId, market, sessionId, setLang, userId, mode, preContextText, postContextText, text, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.SpellCheckerWithHttpMessagesAsync(text, acceptLanguage, pragma, userAgent, clientId, clientIp, location, actionType, appName, countryCode, clientMachineName, docId, market, sessionId, setLang, userId, mode, preContextText, postContextText, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
