@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -62,6 +63,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <param name='protectionContainerName'>
         /// Protection container name.
         /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -83,7 +87,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ProtectableItem>>> ListByReplicationProtectionContainersWithHttpMessagesAsync(string fabricName, string protectionContainerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ProtectableItem>>> ListByReplicationProtectionContainersWithHttpMessagesAsync(string fabricName, string protectionContainerName, ODataQuery<ProtectableItemQueryParameter> odataQuery = default(ODataQuery<ProtectableItemQueryParameter>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -116,6 +120,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("protectionContainerName", protectionContainerName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -130,6 +135,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             _url = _url.Replace("{fabricName}", System.Uri.EscapeDataString(fabricName));
             _url = _url.Replace("{protectionContainerName}", System.Uri.EscapeDataString(protectionContainerName));
             List<string> _queryParameters = new List<string>();
+            if (odataQuery != null)
+            {
+                var _odataFilter = odataQuery.ToString();
+                if (!string.IsNullOrEmpty(_odataFilter))
+                {
+                    _queryParameters.Add(_odataFilter);
+                }
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));

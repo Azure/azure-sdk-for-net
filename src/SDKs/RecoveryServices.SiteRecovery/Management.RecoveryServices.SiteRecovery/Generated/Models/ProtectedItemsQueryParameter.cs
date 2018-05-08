@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="multiVmGroupCreateOption">Whether Multi VM group is
         /// auto created or specified by user. Possible values include:
         /// 'AutoCreated', 'UserSpecified'</param>
-        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string), string instanceType = default(string), MultiVmGroupCreateOption? multiVmGroupCreateOption = default(MultiVmGroupCreateOption?))
+        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string), string instanceType = default(string), string multiVmGroupCreateOption = default(string))
         {
             SourceFabricName = sourceFabricName;
             RecoveryPlanName = recoveryPlanName;
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// user. Possible values include: 'AutoCreated', 'UserSpecified'
         /// </summary>
         [JsonProperty(PropertyName = "multiVmGroupCreateOption")]
-        public MultiVmGroupCreateOption? MultiVmGroupCreateOption { get; set; }
+        public string MultiVmGroupCreateOption { get; set; }
 
     }
 }

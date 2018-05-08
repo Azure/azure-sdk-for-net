@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// include: 'NotSpecified', 'MigrationComplete'</param>
         /// <param name="replicationProviderInput">Replication provider
         /// specific input.</param>
-        public DisableProtectionInputProperties(DisableProtectionReason? disableProtectionReason = default(DisableProtectionReason?), DisableProtectionProviderSpecificInput replicationProviderInput = default(DisableProtectionProviderSpecificInput))
+        public DisableProtectionInputProperties(string disableProtectionReason = default(string), DisableProtectionProviderSpecificInput replicationProviderInput = default(DisableProtectionProviderSpecificInput))
         {
             DisableProtectionReason = disableProtectionReason;
             ReplicationProviderInput = replicationProviderInput;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'NotSpecified', 'MigrationComplete'
         /// </summary>
         [JsonProperty(PropertyName = "disableProtectionReason")]
-        public DisableProtectionReason? DisableProtectionReason { get; set; }
+        public string DisableProtectionReason { get; set; }
 
         /// <summary>
         /// Gets or sets replication provider specific input.

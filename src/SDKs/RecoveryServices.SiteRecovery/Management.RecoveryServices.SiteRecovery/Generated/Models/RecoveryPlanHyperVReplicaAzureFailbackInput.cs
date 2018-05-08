@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// include: 'ForDownTime', 'ForSynchronization'</param>
         /// <param name="recoveryVmCreationOption">The ALR option. Possible
         /// values include: 'CreateVmIfNotFound', 'NoAction'</param>
-        public RecoveryPlanHyperVReplicaAzureFailbackInput(DataSyncStatus dataSyncOption, AlternateLocationRecoveryOption recoveryVmCreationOption)
+        public RecoveryPlanHyperVReplicaAzureFailbackInput(string dataSyncOption, string recoveryVmCreationOption)
         {
             DataSyncOption = dataSyncOption;
             RecoveryVmCreationOption = recoveryVmCreationOption;
@@ -53,23 +54,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'ForDownTime', 'ForSynchronization'
         /// </summary>
         [JsonProperty(PropertyName = "dataSyncOption")]
-        public DataSyncStatus DataSyncOption { get; set; }
+        public string DataSyncOption { get; set; }
 
         /// <summary>
         /// Gets or sets the ALR option. Possible values include:
         /// 'CreateVmIfNotFound', 'NoAction'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryVmCreationOption")]
-        public AlternateLocationRecoveryOption RecoveryVmCreationOption { get; set; }
+        public string RecoveryVmCreationOption { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (DataSyncOption == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DataSyncOption");
+            }
+            if (RecoveryVmCreationOption == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryVmCreationOption");
+            }
         }
     }
 }

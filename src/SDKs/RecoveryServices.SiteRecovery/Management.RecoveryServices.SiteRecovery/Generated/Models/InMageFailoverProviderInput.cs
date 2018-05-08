@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointId">The recovery point id to be passed to
         /// failover to a particular recovery point. In case of latest recovery
         /// point, null should be passed.</param>
-        public InMageFailoverProviderInput(RecoveryPointType? recoveryPointType = default(RecoveryPointType?), string recoveryPointId = default(string))
+        public InMageFailoverProviderInput(string recoveryPointType = default(string), string recoveryPointId = default(string))
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointId = recoveryPointId;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'LatestTime', 'LatestTag', 'Custom'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
-        public RecoveryPointType? RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; set; }
 
         /// <summary>
         /// Gets or sets the recovery point id to be passed to failover to a
