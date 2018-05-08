@@ -3,6 +3,9 @@
 	
   <Target Name="GetLatestBuildTools">
 	<Message Text="Updating tools ...."/>
+  <Message Text="NetSdkBuildTargetsDir -- $(NetSdkBuildTargetsDir)" Condition="'$(DebugTrace)' == 'true'"/>
+  <Message Text="NetSdkBuildToolsDir -- $(NetSdkBuildToolsDir)" Condition="'$(DebugTrace)' == 'true'"/>
+
 	<GetBuildTools LocalBranchRootDir="$(LibraryRoot)" RemoteRootDir="$(RemoteRootDir)" DebugTrace="$(DebugTrace)"/>
   </Target>
   
