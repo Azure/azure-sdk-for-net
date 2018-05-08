@@ -13,7 +13,8 @@
     <![CDATA[
     Microsoft Cognitive Services Text Analytics SDK.
 
-    Note: This is the last update for this NuGet package. It will be succeeded by the <a href="https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Language.TextAnalytics/1.0.1-preview">Microsoft.Azure.CognitiveServices.Language.TextAnalytics</a> package.
+    Note: This is the last update for this NuGet package. It will be succeeded by the Microsoft.Azure.CognitiveServices.Language.TextAnalytics package.
+    https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Language.TextAnalytics
 
     Changes in this release:
     1. New /entities endpoint support
