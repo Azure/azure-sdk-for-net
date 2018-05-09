@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.BotService
         /// <returns></returns>
         public async Task<AuthenticationResult> AcquireTokenAsync()
         {
-            var authority = $"https://login.windows.net/{tenantId}";
+            var authority = $"https://login.microsoftonline.us/{tenantId}";
             var context = new AuthenticationContext(
                 authority: authority,
                 validateAuthority: true);

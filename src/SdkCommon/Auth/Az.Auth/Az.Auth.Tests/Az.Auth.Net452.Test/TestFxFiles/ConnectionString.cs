@@ -13,7 +13,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
     /// <summary>
     /// This class represents the connection string being set by the user
-    /// e.g. TEST_CSM_ORGID_AUTHENTICATION="AADTenant=72f98AAD-86f1-2d7cd011db47;ServicePrincipal=72f98AAD-86f1-2d7cd011db47;Password=tzT2+LJBRkSAursui7/Qgo+hyQQ=;SubscriptionId=5562fbd2-HHHH-WWWW-a55d-lkjsldkjf;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/;GraphUri=https://graph.windows.net/"
+    /// e.g. TEST_CSM_ORGID_AUTHENTICATION="AADTenant=72f98AAD-86f1-2d7cd011db47;ServicePrincipal=72f98AAD-86f1-2d7cd011db47;Password=tzT2+LJBRkSAursui7/Qgo+hyQQ=;SubscriptionId=5562fbd2-HHHH-WWWW-a55d-lkjsldkjf;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.microsoftonline.us/;GraphUri=https://graph.windows.net/"
     /// </summary>
     public class ConnectionString
     {

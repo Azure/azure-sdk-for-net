@@ -8,7 +8,7 @@ set AADTenant=6ca57aaf-0074-498a-9c96-2b097515e8cb
 rem Playback or Record
 set HttpRecorderMode=Record
 set AADTokenAudienceUri=https://adminmanagement.azurestackci08.onmicrosoft.com/96ed9507-2f9f-4ef5-b92f-53c14f0141ff
-set AADAuthEndpoint=https://login.windows.net/
+set AADAuthEndpoint=https://login.microsoftonline.us/
 set BaseUri=https://adminmanagement.local.azurestack.external
 set ManagementResource=https://adminmanagement.azurestackci08.onmicrosoft.com/96ed9507-2f9f-4ef5-b92f-53c14f0141ff
 

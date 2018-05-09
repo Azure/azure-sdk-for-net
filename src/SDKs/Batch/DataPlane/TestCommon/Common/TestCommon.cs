@@ -75,7 +75,7 @@
 
             public readonly IReadOnlyDictionary<string, string> BatchTRPExtraHeaders = ParseHeaderEnvironmentVariable(BatchTRPExtraHeadersEnvironmentSettingName);
 
-            public readonly string BatchAuthorityUrl = GetEnvironmentVariableOrDefault(BatchAuthorityUrlEnvironmentSettingName, "https://login.microsoftonline.com/microsoft.onmicrosoft.com");
+            public readonly string BatchAuthorityUrl = GetEnvironmentVariableOrDefault(BatchAuthorityUrlEnvironmentSettingName, "https://login.microsoftonline.us/microsoft.onmicrosoft.com");
 
             private static IReadOnlyDictionary<string, string> ParseHeaderEnvironmentVariable(string environmentSettingName)
             {
