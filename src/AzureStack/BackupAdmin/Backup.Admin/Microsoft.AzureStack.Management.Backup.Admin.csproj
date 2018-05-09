@@ -12,7 +12,10 @@
         <PackageTags>Microsoft Azure Stack;Backup;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Backup Admin SDK. Included with this release is support for creating and restoring backups.
+                Preview release of the Backup administrator SDK that allows administrators to
+                1) Configure where backups are stored
+                2) Perform backups 
+                3) List and restore completed backup. 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

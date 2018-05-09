@@ -1,7 +1,7 @@
     {
       "Name": "BatchErrorDetail",
       "ProtocolName": "Models.BatchErrorDetail",
-      "Comment": "An item of additional information included in a <see cref=\"BatchError\"/>.",
+      "SummaryComment": "An item of additional information included in a <see cref=\"BatchError\"/>.",
       "IsConstructorPublic": false,
       "IsUsedInCollections": true,
       "Properties": [

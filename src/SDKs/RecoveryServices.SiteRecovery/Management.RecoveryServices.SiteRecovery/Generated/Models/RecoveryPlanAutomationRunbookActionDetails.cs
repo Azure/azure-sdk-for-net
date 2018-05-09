@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// include: 'Primary', 'Recovery'</param>
         /// <param name="runbookId">The runbook ARM Id.</param>
         /// <param name="timeout">The runbook timeout.</param>
-        public RecoveryPlanAutomationRunbookActionDetails(RecoveryPlanActionLocation fabricLocation, string runbookId = default(string), string timeout = default(string))
+        public RecoveryPlanAutomationRunbookActionDetails(string fabricLocation, string runbookId = default(string), string timeout = default(string))
         {
             RunbookId = runbookId;
             Timeout = timeout;
@@ -66,16 +67,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Primary', 'Recovery'
         /// </summary>
         [JsonProperty(PropertyName = "fabricLocation")]
-        public RecoveryPlanActionLocation FabricLocation { get; set; }
+        public string FabricLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (FabricLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FabricLocation");
+            }
         }
     }
 }

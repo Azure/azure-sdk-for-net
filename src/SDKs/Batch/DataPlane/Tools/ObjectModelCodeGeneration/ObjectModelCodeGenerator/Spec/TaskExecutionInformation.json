@@ -1,7 +1,7 @@
     {
       "Name": "TaskExecutionInformation",
       "ProtocolName": "Models.TaskExecutionInformation",
-      "Comment": "Task execution information.",
+      "SummaryComment": "Task execution information.",
       "IsConstructorPublic": false,
       "Properties": [
         {

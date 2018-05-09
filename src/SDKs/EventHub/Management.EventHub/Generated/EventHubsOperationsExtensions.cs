@@ -33,9 +33,19 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='namespaceName'>
             /// The Namespace name
             /// </param>
-            public static IPage<Eventhub> ListByNamespace(this IEventHubsOperations operations, string resourceGroupName, string namespaceName)
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
+            /// </param>
+            public static IPage<Eventhub> ListByNamespace(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?))
             {
-                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+                return operations.ListByNamespaceAsync(resourceGroupName, namespaceName, skip, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,12 +60,22 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='namespaceName'>
             /// The Namespace name
             /// </param>
+            /// <param name='skip'>
+            /// Skip is only used if a previous operation returned a partial result. If a
+            /// previous response contains a nextLink element, the value of the nextLink
+            /// element will include a skip parameter that specifies a starting point to
+            /// use for subsequent calls.
+            /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the most recent N
+            /// usageDetails.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Eventhub>> ListByNamespaceAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Eventhub>> ListByNamespaceAsync(this IEventHubsOperations operations, string resourceGroupName, string namespaceName, int? skip = default(int?), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamespaceWithHttpMessagesAsync(resourceGroupName, namespaceName, skip, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -12,7 +12,7 @@
         <PackageTags>Microsoft Azure Stack;Commerce;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Commerce Admin SDK. Included with this release is support for gathering Usage Aggregates for subscriptions.
+               Preview release of the AzureStack Commerce administrator SDK which provides a way to view aggregate data usage across your AzureStack stamp. 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

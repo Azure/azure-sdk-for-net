@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RecoveryPointSyncType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RecoveryPointSyncType
+    public static class RecoveryPointSyncType
     {
-        [EnumMember(Value = "MultiVmSyncRecoveryPoint")]
-        MultiVmSyncRecoveryPoint,
-        [EnumMember(Value = "PerVmRecoveryPoint")]
-        PerVmRecoveryPoint
-    }
-    internal static class RecoveryPointSyncTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this RecoveryPointSyncType? value)
-        {
-            return value == null ? null : ((RecoveryPointSyncType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this RecoveryPointSyncType value)
-        {
-            switch( value )
-            {
-                case RecoveryPointSyncType.MultiVmSyncRecoveryPoint:
-                    return "MultiVmSyncRecoveryPoint";
-                case RecoveryPointSyncType.PerVmRecoveryPoint:
-                    return "PerVmRecoveryPoint";
-            }
-            return null;
-        }
-
-        internal static RecoveryPointSyncType? ParseRecoveryPointSyncType(this string value)
-        {
-            switch( value )
-            {
-                case "MultiVmSyncRecoveryPoint":
-                    return RecoveryPointSyncType.MultiVmSyncRecoveryPoint;
-                case "PerVmRecoveryPoint":
-                    return RecoveryPointSyncType.PerVmRecoveryPoint;
-            }
-            return null;
-        }
+        public const string MultiVmSyncRecoveryPoint = "MultiVmSyncRecoveryPoint";
+        public const string PerVmRecoveryPoint = "PerVmRecoveryPoint";
     }
 }

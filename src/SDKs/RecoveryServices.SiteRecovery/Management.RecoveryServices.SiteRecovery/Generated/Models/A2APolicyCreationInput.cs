@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -39,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// consistent snapshot frequency (in minutes).</param>
         /// <param name="appConsistentFrequencyInMinutes">The app consistent
         /// snapshot frequency (in minutes).</param>
-        public A2APolicyCreationInput(SetMultiVmSyncStatus multiVmSyncStatus, int? recoveryPointHistory = default(int?), int? crashConsistentFrequencyInMinutes = default(int?), int? appConsistentFrequencyInMinutes = default(int?))
+        public A2APolicyCreationInput(string multiVmSyncStatus, int? recoveryPointHistory = default(int?), int? crashConsistentFrequencyInMinutes = default(int?), int? appConsistentFrequencyInMinutes = default(int?))
         {
             RecoveryPointHistory = recoveryPointHistory;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
@@ -78,16 +79,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// include: 'Enable', 'Disable'
         /// </summary>
         [JsonProperty(PropertyName = "multiVmSyncStatus")]
-        public SetMultiVmSyncStatus MultiVmSyncStatus { get; set; }
+        public string MultiVmSyncStatus { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (MultiVmSyncStatus == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MultiVmSyncStatus");
+            }
         }
     }
 }

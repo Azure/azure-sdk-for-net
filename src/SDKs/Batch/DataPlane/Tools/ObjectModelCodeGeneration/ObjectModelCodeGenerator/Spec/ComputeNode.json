@@ -1,7 +1,7 @@
     {
       "Name": "ComputeNode",
       "ProtocolName": "Models.ComputeNode",
-      "Comment": "Summarizes the state of a compute node.",
+      "SummaryComment": "Summarizes the state of a compute node.",
       "ParentPathVariables": [ "parentPoolId" ],
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,

@@ -45,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Gets or sets the id of the Domain to use with this project
         /// </summary>
-        [JsonProperty(PropertyName = "DomainId")]
+        [JsonProperty(PropertyName = "domainId")]
         public System.Guid DomainId { get; set; }
 
     }

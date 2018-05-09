@@ -1,7 +1,7 @@
 {
   "Name": "UploadBatchServiceLogsResult",
   "ProtocolName": "Models.UploadBatchServiceLogsResult",
-  "Comment": "The result of uploading batch service log files from a specific compute node.",
+  "SummaryComment": "The result of uploading batch service log files from a specific compute node.",
   "IsConstructorPublic": false,
   "Properties": [
     {

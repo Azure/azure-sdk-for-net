@@ -1,7 +1,7 @@
     {
       "Name": "PoolInformation",
       "ProtocolName": "Models.PoolInformation",
-      "Comment": "Specifies how a job should be assigned to a pool.",
+      "SummaryComment": "Specifies how a job should be assigned to a pool.",
       "Properties": [
         {
           "Key": {

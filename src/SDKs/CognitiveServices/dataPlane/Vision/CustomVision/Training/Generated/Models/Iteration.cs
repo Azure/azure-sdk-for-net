@@ -69,64 +69,64 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Gets the id of the iteration
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the iteration
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the iteration is the
         /// default iteration for the project
         /// </summary>
-        [JsonProperty(PropertyName = "IsDefault")]
+        [JsonProperty(PropertyName = "isDefault")]
         public bool IsDefault { get; set; }
 
         /// <summary>
         /// Gets the current iteration status
         /// </summary>
-        [JsonProperty(PropertyName = "Status")]
+        [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
 
         /// <summary>
         /// Gets the time this iteration was completed
         /// </summary>
-        [JsonProperty(PropertyName = "Created")]
+        [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
         /// Gets the time this iteration was last modified
         /// </summary>
-        [JsonProperty(PropertyName = "LastModified")]
+        [JsonProperty(PropertyName = "lastModified")]
         public System.DateTime LastModified { get; private set; }
 
         /// <summary>
         /// Gets the time this iteration was last modified
         /// </summary>
-        [JsonProperty(PropertyName = "TrainedAt")]
+        [JsonProperty(PropertyName = "trainedAt")]
         public System.DateTime? TrainedAt { get; private set; }
 
         /// <summary>
         /// Gets the project id of the iteration
         /// </summary>
-        [JsonProperty(PropertyName = "ProjectId")]
+        [JsonProperty(PropertyName = "projectId")]
         public System.Guid ProjectId { get; private set; }
 
         /// <summary>
         /// Gets whether the iteration can be exported to another format for
         /// download
         /// </summary>
-        [JsonProperty(PropertyName = "Exportable")]
+        [JsonProperty(PropertyName = "exportable")]
         public bool Exportable { get; private set; }
 
         /// <summary>
         /// Gets get or sets a guid of the domain the iteration has been
         /// trained on
         /// </summary>
-        [JsonProperty(PropertyName = "DomainId")]
+        [JsonProperty(PropertyName = "domainId")]
         public System.Guid? DomainId { get; private set; }
 
     }
