@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.Helpers
     {
         public const string AadAuthDogfoodEnpoint = "https://login.windows-ppe.net/";
 
-        public const string AadAuthProductionEnpoint = "https://login.microsoftonline.us/";
+        public const string AadAuthProductionEnpoint = "https://login.microsoftonline.com/";
 
         public const string AadGraphDogfoodEnpoint = "https://graph.ppe.windows.net/";
 

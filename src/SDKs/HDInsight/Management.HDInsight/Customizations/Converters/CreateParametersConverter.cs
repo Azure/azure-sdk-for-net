@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 {
                     // Converting the Tenant ID to URI as RP expects this to be URI.
                     // ADL is only supported in a handful of regions in public Azure. We should be on the next API version before this goes to sovereign clouds.
-                    Constants.DataLakeConfigurations.TenantIdKey, string.Format("{0}{1}", "https://login.microsoftonline.us/", servicePrincipal.AADTenantId)
+                    Constants.DataLakeConfigurations.TenantIdKey, string.Format("{0}{1}", "https://login.windows.net/", servicePrincipal.AADTenantId)
                 },
                 {Constants.DataLakeConfigurations.CertificateKey, Convert.ToBase64String(servicePrincipal.CertificateFileBytes)},
                 {Constants.DataLakeConfigurations.CertificatePasswordKey, servicePrincipal.CertificatePassword},

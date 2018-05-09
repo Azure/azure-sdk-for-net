@@ -112,7 +112,7 @@ namespace DataFactory.Tests.Utils
             else if (secrets.Environment == "prod")
             {
                 // Use Service Principal to authenticate against Azure
-                var context = new AuthenticationContext("https://login.microsoftonline.us/" + secrets.TenantId);
+                var context = new AuthenticationContext("https://login.windows.net/" + secrets.TenantId);
                 ClientCredential cc = new ClientCredential(secrets.ClientId, secrets.ClientSecret);
                 AuthenticationResult result = context.AcquireTokenAsync("https://management.azure.com/", cc).Result;
                 ServiceClientCredentials creds = new TokenCredentials(result.AccessToken);
@@ -153,7 +153,7 @@ namespace DataFactory.Tests.Utils
             else if (secrets.Environment == "prod")
             {
                 // Use Service Principal to authenticate against Azure
-                var context = new AuthenticationContext("https://login.microsoftonline.us/" + secrets.TenantId);
+                var context = new AuthenticationContext("https://login.windows.net/" + secrets.TenantId);
                 ClientCredential cc = new ClientCredential(secrets.ClientId, secrets.ClientSecret);
                 AuthenticationResult result = context.AcquireTokenAsync("https://management.azure.com/", cc).Result;
                 ServiceClientCredentials creds = new TokenCredentials(result.AccessToken);

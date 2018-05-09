@@ -38,7 +38,7 @@ namespace ServerManagement.Tests
             Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_HTTPMOCK_OUTPUT",
                 string.Format("{0}\\SessionRecords", Directory.GetParent(GetType().Assembly.Location).FullName));
             Extensions.SetEnvironmentVariableIfNotAlreadySet("TEST_CSM_ORGID_AUTHENTICATION",
-                "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.microsoftonline.us/");
+                "SubscriptionId=3e82a90d-d19e-42f9-bb43-9112945846ef;BaseUri=https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/");
             Extensions.SetEnvironmentVariableIfNotAlreadySet("AZURE_TEST_MODE", "Record");
 #endif
             // since HttpMockServer.Mode doesn't get set until after I'd like to know what state we're in
