@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.reference.props))') " />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Compute.MultiApi</PackageId>
+		<Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
+		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
+		<Version>0.9.0-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.Compute.MultiApi</AssemblyName>
+		<PackageTags>MultiApiCompute;Compute;</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+		This is a public preview release of the Azure Compute SDK with MultiApi Support.
+		]]>
+		</PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.MultiApi.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.MultiApi.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>

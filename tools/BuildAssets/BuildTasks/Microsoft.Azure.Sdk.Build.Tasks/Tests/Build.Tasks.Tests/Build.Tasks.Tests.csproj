@@ -20,17 +20,6 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <PackageReference Include="NuGet.Packaging" Version="[4.4.0, 5.0.0)" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
-    <!--<Reference Include="Microsoft.Build.Tasks.v4.0" />
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
-    <Reference Include="Microsoft.Build">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Microsoft.Build.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Build.Framework">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\Microsoft.Build.Framework.dll</HintPath>
-    </Reference>-->
-    
-  </ItemGroup>
   
   <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
     <ProjectReference Include="..\..\SdkBuildTasks\Microsoft.Azure.Sdk.Build.Tasks.csproj" />
@@ -38,7 +27,7 @@
   </ItemGroup>
   
   <ItemGroup Condition=" '$(AfterBuild)' == 'true' ">
-    <Compile Include="SdkInfoSamples\*.cs" />
+    <Compile Include="TestData\SdkInfoSamples\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

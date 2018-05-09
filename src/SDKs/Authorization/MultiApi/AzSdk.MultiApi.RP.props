@@ -1,0 +1,7 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
+  <PropertyGroup>
+    <AzureApiTag>Authorization_2016-12-01;Authorization_2017-10-01-preview;AuthorizationManagementClient_2016-12-01;AuthorizationManagementClient_2017-10-01-preview;Management_2016-12-01;Authorization_2015-07-01;Authorization_2015-01-01;Authorization_2015-10-01-preview;AuthorizationManagementClient_2015-10-01-preview;AuthorizationManagementClient_2015-07-01;</AzureApiTag>
+    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+  </PropertyGroup>
+</Project>

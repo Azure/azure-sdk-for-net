@@ -3,6 +3,7 @@
 
 using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
 using Microsoft.Azure.Sdk.Build.Tasks.Models;
+using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -343,11 +344,38 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         projectType: pType, isProjectDataPlaneProject: isProjDataPlane,
                         isNonSdkProject: isNonSdkProjectKind);
 
+                    sp.ProjectImports = GetProjectImports(sdkProjMD);
+
                     supportedProjectBag.Add(sp);
                 }
             }
 
             return supportedProjectBag;
+        }
+
+        private List<string> GetProjectImports(SdkProjectMetaData sdkProjMD)
+        {
+            string rpProps = Constants.BuildStageConstant.PROPS_APITAG_FILE_NAME;
+            string multiApiProps = Constants.BuildStageConstant.PROPS_MULTIAPITAG_FILE_NAME;
+            //$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))
+            List<string> importList = new List<string>();
+            ProjectRootElement rootElm = sdkProjMD.MsBuildProject.Xml;
+            ICollection<ProjectImportElement> importElms = rootElm.Imports;
+
+            foreach(ProjectImportElement imp in importElms)
+            {
+                if(imp.Project.Contains(rpProps))
+                {
+                    importList.Add(rpProps);
+                }
+
+                if(imp.Project.Contains(multiApiProps))
+                {
+                    importList.Add(multiApiProps);
+                }
+            }
+
+            return importList;
         }
 
         private string GetTargetFullPath(SdkProjectMetaData sdkProj, string targetFxMoniker)
