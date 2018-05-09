@@ -11,10 +11,11 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("ContainerInstance", "ContainerGroupUsage", "2018-02-01-preview"),
-                new Tuple<string, string, string>("ContainerInstance", "ContainerGroups", "2018-02-01-preview"),
-                new Tuple<string, string, string>("ContainerInstance", "ContainerLogs", "2018-02-01-preview"),
-                new Tuple<string, string, string>("ContainerInstance", "Operations", "2018-02-01-preview"),
+                new Tuple<string, string, string>("ContainerInstance", "ContainerGroupUsage", "2018-04-01"),
+                new Tuple<string, string, string>("ContainerInstance", "ContainerGroups", "2018-04-01"),
+                new Tuple<string, string, string>("ContainerInstance", "ContainerLogs", "2018-04-01"),
+                new Tuple<string, string, string>("ContainerInstance", "Operations", "2018-04-01"),
+                new Tuple<string, string, string>("ContainerInstance", "StartContainer", "2018-04-01"),
             }.AsEnumerable();
         }
     }

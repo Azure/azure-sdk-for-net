@@ -8,8 +8,18 @@
 <#@ import namespace="CodeGenerationLibrary" #>
 <#@ parameter type="CodeGenerationLibrary.ObjectModelTypeData" name="type" #>
     /// <summary>
-<#= CommentUtilities.FormatTripleSlashComment(type.Comment, CommentUtilities.Indentation.TypeLevel) #>
+<#= CommentUtilities.FormatTripleSlashComment(type.SummaryComment, CommentUtilities.Indentation.TypeLevel) #>
     /// </summary>
+<#
+if (!string.IsNullOrEmpty(type.RemarksComment))
+{
+#>
+    /// <remarks>
+<#= CommentUtilities.FormatTripleSlashComment(type.RemarksComment, CommentUtilities.Indentation.TypeLevel) #>
+    /// </remarks>
+<#
+}
+#>
     public partial class <#= type.Name #> :<# if (type.ShouldDefineGetTransportObject) { #> ITransportObjectProvider<<#= type.TransportObjectTypeName #>>,<# } if (type.IsTopLevelObject) { #> IInheritedBehaviors,<# } #> IPropertyMetadata
     {
         private class PropertyContainer : PropertyCollection

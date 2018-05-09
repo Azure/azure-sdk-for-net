@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.IotHub
             IotHubResource = new IotHubResourceOperations(this);
             Certificates = new CertificatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-07-01";
+            ApiVersion = "2018-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

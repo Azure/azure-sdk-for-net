@@ -1,7 +1,7 @@
 {
   "Name": "PoolNodeCounts",
   "ProtocolName": "Models.PoolNodeCounts",
-  "Comment": "A pool in the Azure Batch service.",
+  "SummaryComment": "A pool in the Azure Batch service.",
   "IsConstructorPublic": false,
   "Properties": [
     {

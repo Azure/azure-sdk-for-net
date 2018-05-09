@@ -1,7 +1,7 @@
 {
   "Name": "ContainerConfiguration",
   "ProtocolName": "Models.ContainerConfiguration",
-  "Comment": "The configuration for container-enabled pools.",
+  "SummaryComment": "The configuration for container-enabled pools.",
   "Properties": [
     {
       "Key": {

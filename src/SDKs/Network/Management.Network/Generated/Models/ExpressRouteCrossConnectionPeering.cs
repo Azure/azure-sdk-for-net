@@ -169,10 +169,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the GatewayManager Etag.
+        /// Gets or sets the GatewayManager Etag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.gatewayManagerEtag")]
-        public string GatewayManagerEtag { get; private set; }
+        public string GatewayManagerEtag { get; set; }
 
         /// <summary>
         /// Gets whether the provider or the customer last modified the

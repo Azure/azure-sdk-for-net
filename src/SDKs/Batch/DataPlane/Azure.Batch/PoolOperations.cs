@@ -1735,7 +1735,8 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets lifetime summary statistics for all of the pools in the current account.
-        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics.
+        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
+        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -1758,7 +1759,8 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets lifetime summary statistics for all of the pools in the current account.  
-        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics.
+        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
+        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>The aggregated pool statistics.</returns>

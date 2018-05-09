@@ -1,7 +1,7 @@
 {
   "Name": "AutoUserSpecification",
   "ProtocolName": "Models.AutoUserSpecification",
-  "Comment": "Specifies the parameters for the auto user that runs a task on the Batch service",
+  "SummaryComment": "Specifies the parameters for the auto user that runs a task on the Batch service",
   "IsConstructorPublic": true,
   "Properties": [
     {

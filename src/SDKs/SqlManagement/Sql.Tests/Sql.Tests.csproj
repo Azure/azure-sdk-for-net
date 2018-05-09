@@ -23,7 +23,7 @@
     <PackageReference Include="WindowsAzure.Storage" Version="8.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.Azure.Management.Sql" Version="1.2.0-preview" />-->
+    <!--<PackageReference Include="Microsoft.Azure.Management.Sql" Version="1.15.0-preview" />-->
     <ProjectReference Include="..\Management.Sql\Microsoft.Azure.Management.Sql.csproj" />
   </ItemGroup>
 

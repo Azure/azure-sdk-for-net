@@ -141,6 +141,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IApiDiagnosticLoggerOperations ApiDiagnosticLogger { get; private set; }
 
         /// <summary>
+        /// Gets the IApiIssueOperations.
+        /// </summary>
+        public virtual IApiIssueOperations ApiIssue { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiIssueCommentOperations.
+        /// </summary>
+        public virtual IApiIssueCommentOperations ApiIssueComment { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiIssueAttachmentOperations.
+        /// </summary>
+        public virtual IApiIssueAttachmentOperations ApiIssueAttachment { get; private set; }
+
+        /// <summary>
         /// Gets the IAuthorizationServerOperations.
         /// </summary>
         public virtual IAuthorizationServerOperations AuthorizationServer { get; private set; }
@@ -569,6 +584,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             ApiSchema = new ApiSchemaOperations(this);
             ApiDiagnostic = new ApiDiagnosticOperations(this);
             ApiDiagnosticLogger = new ApiDiagnosticLoggerOperations(this);
+            ApiIssue = new ApiIssueOperations(this);
+            ApiIssueComment = new ApiIssueCommentOperations(this);
+            ApiIssueAttachment = new ApiIssueAttachmentOperations(this);
             AuthorizationServer = new AuthorizationServerOperations(this);
             Backend = new BackendOperations(this);
             Certificate = new CertificateOperations(this);

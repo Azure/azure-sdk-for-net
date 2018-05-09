@@ -13,7 +13,7 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        [Fact]
+        [Fact(Skip = "This is not yet enabled for the new API version, will re-record once it is enabled")]
         public void TopicTypeTests()
         {
             const string StorageTopicType = "Microsoft.Storage.StorageAccounts";

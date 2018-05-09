@@ -3,12 +3,11 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Xunit;
-
 namespace Fabric.Tests
 {
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Xunit;
 
     public class ScaleUnitTests : FabricTestBase
     {
@@ -62,17 +61,22 @@ namespace Fabric.Tests
         [Fact]
         public void TestListScaleUnits() {
             RunTest((client) => {
-                var scaleUnits = client.ScaleUnits.List(Location);
-                Common.MapOverIPage(scaleUnits, client.ScaleUnits.ListNext, ValidateScaleUnit);
-                Common.WriteIPagesToFile(scaleUnits, client.ScaleUnits.ListNext, "ListScaleUnits.txt", ResourceName);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var scaleUnits = client.ScaleUnits.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(scaleUnits, client.ScaleUnits.ListNext, ValidateScaleUnit);
+                    Common.WriteIPagesToFile(scaleUnits, client.ScaleUnits.ListNext, "ListScaleUnits.txt", ResourceName);
+                });
             });
         }
 
         [Fact]
         public void TestGetScaleUnit() {
             RunTest((client) => {
-                var scaleUnit = client.ScaleUnits.List(Location).GetFirst();
-                var retrieved = client.ScaleUnits.Get(Location, scaleUnit.Name);
+                var fabricLocationName = GetLocation(client);
+                var scaleUnit = client.ScaleUnits.List(ResourceGroupName, fabricLocationName).GetFirst();
+
+                var scaleUnitName = ExtractName(scaleUnit.Name);
+                var retrieved = client.ScaleUnits.Get(ResourceGroupName, fabricLocationName, scaleUnitName);
                 AssertScaleUnitsAreSame(scaleUnit, retrieved);
             });
         }
@@ -80,10 +84,13 @@ namespace Fabric.Tests
         [Fact]
         public void TestGetAllScaleUnits() {
             RunTest((client) => {
-                var scaleUnits = client.ScaleUnits.List(Location);
-                Common.MapOverIPage(scaleUnits, client.ScaleUnits.ListNext, (scaleUnit) => {
-                    var retrieved = client.ScaleUnits.Get(Location, scaleUnit.Name);
-                    AssertScaleUnitsAreSame(scaleUnit, retrieved);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var scaleUnits = client.ScaleUnits.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(scaleUnits, client.ScaleUnits.ListNext, (scaleUnit) => {
+                        var scaleUnitName = ExtractName(scaleUnit.Name);
+                        var retrieved = client.ScaleUnits.Get(ResourceGroupName, fabricLocationName, scaleUnitName);
+                        AssertScaleUnitsAreSame(scaleUnit, retrieved);
+                    });
                 });
             });
         }
