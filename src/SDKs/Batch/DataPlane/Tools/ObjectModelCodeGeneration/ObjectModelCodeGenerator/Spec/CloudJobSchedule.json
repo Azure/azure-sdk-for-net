@@ -2,7 +2,7 @@
       "Name": "CloudJobSchedule",
       "ProtocolName": "Models.CloudJobSchedule",
       "TransportProtocolName": "Models.JobScheduleAddParameter",
-      "Comment": "A job schedule that allows recurring jobs by specifying when to run jobs and a specification used to create each job.",
+      "SummaryComment": "A job schedule that allows recurring jobs by specifying when to run jobs and a specification used to create each job.",
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,
       "Properties": [
@@ -163,7 +163,7 @@
             "Type": "JobScheduleStatistics",
             "Name": "Statistics",
             "SummaryComment": "A <see cref=\"JobScheduleStatistics\" /> containing resource usage statistics for the entire lifetime of the job schedule.",
-            "RemarksComment": "This property is populated only if the <see cref=\"CloudJobSchedule\"/> was retrieved with an <see cref=\"ODATADetailLevel.ExpandClause\"/> including the 'stats' attribute; otherwise it is null.",
+            "RemarksComment": "This property is populated only if the <see cref=\"CloudJobSchedule\"/> was retrieved with an <see cref=\"ODATADetailLevel.ExpandClause\"/> including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.",
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },

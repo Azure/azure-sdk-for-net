@@ -2,17 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Microsoft.Rest;
-using Microsoft.Rest.Azure;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
 
 namespace Fabric.Tests
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Text;
 
     /// <summary>
     /// A collection of common values and functions
@@ -105,8 +103,8 @@ namespace Fabric.Tests
         /// <param name="delay">Delay between retries</param>
         /// <returns>True if an exception is thrown, false if we reach our retry limit.</returns>
         public static bool RetryExceptionExpected(Action act, uint retries = 10, int delay = 250 * Common.Milliseconds) {
-            Func<bool> func = () => { try { act() ; return false; } catch {} return true;};
-            return RetryOperation( func, retries, delay);
+            Func<bool> func = () => { try { act(); return false; } catch { } return true; };
+            return RetryOperation(func, retries, delay);
         }
 
         /// <summary>
@@ -118,7 +116,7 @@ namespace Fabric.Tests
         /// <param name="action">What action to perform on each object.</param>
         public static void MapOverIPage<T>(IPage<T> start, Func<string, IPage<T>> getNext, Action<T> action = default(Action<T>)) {
             var curr = start;
-            for (;;)
+            for (; ; )
             {
                 curr.ForEach(action);
 
@@ -141,8 +139,9 @@ namespace Fabric.Tests
         /// <param name="toString">Returns a string representation of object of type T.</param>
         ///
         public static void WriteIPagesToFile<T>(IPage<T> start, Func<string, IPage<T>> getNext, System.String filename, Func<T, string> toString = null) {
-            using(System.IO.FileStream stream = System.IO.File.Create(filename)) {
-                WriteIPagesToStream( start, getNext, stream, toString);
+            using (System.IO.FileStream stream = System.IO.File.Create(filename))
+            {
+                WriteIPagesToStream(start, getNext, stream, toString);
             }
         }
 
@@ -153,9 +152,10 @@ namespace Fabric.Tests
         /// <param name="iter">Input IEnumerable.</param>
         /// <param name="filename">The name of the file.</param>
         /// <param name="toString">Returns a string representation of object of type T.  Default action is to call ToString.</param>
-        public static void WriteIEnumerableToFile<T>(IEnumerable<T> iter, System.String filename, Func<T,string> toString = null) {
-            using(System.IO.FileStream stream = System.IO.File.Create(filename)) {
-                WriteIEnumerableToStream( iter, stream, toString);
+        public static void WriteIEnumerableToFile<T>(IEnumerable<T> iter, System.String filename, Func<T, string> toString = null) {
+            using (System.IO.FileStream stream = System.IO.File.Create(filename))
+            {
+                WriteIEnumerableToStream(iter, stream, toString);
             }
         }
 
@@ -168,7 +168,7 @@ namespace Fabric.Tests
         /// <param name="stream">The stream written to.</param>
         /// <param name="toString">Returns a string representation of object of type T.  Default action is to call ToString.</param>
         public static void WriteIPagesToStream<T>(IPage<T> start, Func<string, IPage<T>> getNext, System.IO.Stream stream, Func<T, string> toString = null) {
-            toString = toString ?? delegate(T t) {return t.ToString();};
+            toString = toString ?? delegate (T t) { return t.ToString(); };
             StringBuilder sb = new StringBuilder();
             Action<T> action = (obj) => { sb.Append(toString(obj)); sb.AppendLine(); };
             MapOverIPage<T>(start, getNext, action);
@@ -186,91 +186,91 @@ namespace Fabric.Tests
         /// <param name="stream">The stream written to.</param>
         /// <param name="toString">Returns a string representation of object of type T.  Default action is to call ToString.</param>
         public static void WriteIEnumerableToStream<T>(IEnumerable<T> iter, System.IO.Stream stream, Func<T, string> toString = null) {
-            toString = toString ?? delegate(T t) {return t.ToString();};
+            toString = toString ?? delegate (T t) { return t.ToString(); };
             StringBuilder sb = new StringBuilder();
             Action<T> action = (obj) => { sb.Append(toString(obj)); sb.AppendLine(); };
             iter.ForEach(action);
             var bytes = Encoding.ASCII.GetBytes(sb.ToString());
             stream.Write(bytes, 0, bytes.Length);
         }
-
-    }
-}
-
-public static class Extensions
-{
-
-    /// <summary>
-    /// Round down the dateTimeOffset to interval.
-    /// </summary>
-    /// <param name="dateTimeOffset">The date time offset.</param>
-    /// <param name="interval">The interval.</param>
-    public static DateTimeOffset Floor(this DateTimeOffset dateTimeOffset, TimeSpan interval) {
-        return new DateTimeOffset(dateTimeOffset.UtcTicks - (dateTimeOffset.UtcTicks % interval.Ticks), TimeSpan.Zero);
-    }
-
-    /// <summary>
-    /// Round down to the day.
-    /// </summary>
-    /// <param name="dateTime">The date time.</param>
-    public static DateTime Floor(this DateTime dateTime) {
-        return dateTime.Floor(TimeSpan.FromDays(1));
-    }
-
-    /// <summary>
-    /// Round down the DateTime to interval.
-    /// </summary>
-    /// <param name="dateTime">The date.</param>
-    /// <param name="interval">The interval.</param>
-    public static DateTime Floor(this DateTime dateTime, TimeSpan interval) {
-        return new DateTimeOffset(dateTime).Floor(interval).DateTime;
     }
 
 
-    /// <summary>
-    /// Apply an operation over an IList object
-    /// </summary>
-    /// <typeparam name="T">Underlying type stored in IEnumerable.</typeparam>
-    /// <param name="list">IEnumerable to apply operation to.</param>
-    /// <param name="action">The action performed.</param>
-    public static void ForEach<T>(this IEnumerable<T> list, Action<T> action = default(Action<T>)) {
-        foreach (var item in list)
-        {
-            action(item);
+    public static class Extensions
+    {
+
+        /// <summary>
+        /// Round down the dateTimeOffset to interval.
+        /// </summary>
+        /// <param name="dateTimeOffset">The date time offset.</param>
+        /// <param name="interval">The interval.</param>
+        public static DateTimeOffset Floor(this DateTimeOffset dateTimeOffset, TimeSpan interval) {
+            return new DateTimeOffset(dateTimeOffset.UtcTicks - (dateTimeOffset.UtcTicks % interval.Ticks), TimeSpan.Zero);
         }
-    }
 
-    /// <summary>
-    /// Given a page we try to grab the first element we can find
-    /// </summary>
-    /// <typeparam name="T">The value that is held within the page.</typeparam>
-    /// <param name="page">The page we wish to extract the object from</param>
-    /// <returns></returns>
-    public static T GetFirst<T>(this IPage<T> page) where T : class {
-        T result = null;
-        if (page != null)
-        {
-            foreach(var r in page) {
-                result = r;
-                break;
+        /// <summary>
+        /// Round down to the day.
+        /// </summary>
+        /// <param name="dateTime">The date time.</param>
+        public static DateTime Floor(this DateTime dateTime) {
+            return dateTime.Floor(TimeSpan.FromDays(1));
+        }
+
+        /// <summary>
+        /// Round down the DateTime to interval.
+        /// </summary>
+        /// <param name="dateTime">The date.</param>
+        /// <param name="interval">The interval.</param>
+        public static DateTime Floor(this DateTime dateTime, TimeSpan interval) {
+            return new DateTimeOffset(dateTime).Floor(interval).DateTime;
+        }
+
+
+        /// <summary>
+        /// Apply an operation over an IList object
+        /// </summary>
+        /// <typeparam name="T">Underlying type stored in IEnumerable.</typeparam>
+        /// <param name="list">IEnumerable to apply operation to.</param>
+        /// <param name="action">The action performed.</param>
+        public static void ForEach<T>(this IEnumerable<T> list, Action<T> action = default(Action<T>)) {
+            foreach (var item in list)
+            {
+                action(item);
             }
         }
-        return result;
-    }
 
-    /// <summary>
-    /// Convert pagination to a list
-    /// </summary>
-    /// <typeparam name="T">Type contained in each Page</typeparam>
-    /// <param name="start">Starting page we want to covert from.</param>
-    /// <param name="getNext">A function that returns the next page.</param>
-    /// <returns></returns>
-    public static IList<T> PageToList<T>(this IPage<T> start, Func<string, IPage<T>> getNext) {
-        List<T> result = new List<T>();
-        Fabric.Tests.Common.MapOverIPage(start, getNext, (page) => {
-            result.Add(page);
-        });
-        return result;
-    }
+        /// <summary>
+        /// Given a page we try to grab the first element we can find
+        /// </summary>
+        /// <typeparam name="T">The value that is held within the page.</typeparam>
+        /// <param name="page">The page we wish to extract the object from</param>
+        /// <returns></returns>
+        public static T GetFirst<T>(this IPage<T> page) where T : class {
+            T result = null;
+            if (page != null)
+            {
+                foreach (var r in page)
+                {
+                    result = r;
+                    break;
+                }
+            }
+            return result;
+        }
 
+        /// <summary>
+        /// Convert pagination to a list
+        /// </summary>
+        /// <typeparam name="T">Type contained in each Page</typeparam>
+        /// <param name="start">Starting page we want to covert from.</param>
+        /// <param name="getNext">A function that returns the next page.</param>
+        /// <returns></returns>
+        public static IList<T> PageToList<T>(this IPage<T> start, Func<string, IPage<T>> getNext) {
+            List<T> result = new System.Collections.Generic.List<T>();
+            Fabric.Tests.Common.MapOverIPage(start, getNext, (page) => {
+                result.Add(page);
+            });
+            return result;
+        }
+    }
 }

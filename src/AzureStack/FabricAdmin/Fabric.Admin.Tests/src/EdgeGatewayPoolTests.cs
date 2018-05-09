@@ -3,17 +3,22 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Xunit;
+namespace Fabric.Tests
+{
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Xunit;
 
-namespace Fabric.Tests {
-    public class EdgeGatewayPoolTests : FabricTestBase {
+    public class EdgeGatewayPoolTests : FabricTestBase
+    {
 
         private void AssertEdgeGatewayPoolAreSame(EdgeGatewayPool expected, EdgeGatewayPool found) {
-            if (expected == null) {
+            if (expected == null)
+            {
                 Assert.Null(found);
-            } else {
+            }
+            else
+            {
                 Assert.True(FabricCommon.ResourceAreSame(expected, found));
 
                 Assert.Equal(expected.Name, found.Name);
@@ -38,19 +43,23 @@ namespace Fabric.Tests {
         [Fact]
         public void TestListEdgeGatewayPools() {
             RunTest((client) => {
-                var pools = client.EdgeGatewayPools.List(Location);
-                Common.MapOverIPage(pools, client.EdgeGatewayPools.ListNext, ValidateEdgeGatewayPool);
-                Common.WriteIPagesToFile(pools, client.EdgeGatewayPools.ListNext, "ListEdgeGatewayPools.txt", (pool) => pool.Name);
-
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var pools = client.EdgeGatewayPools.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(pools, client.EdgeGatewayPools.ListNext, ValidateEdgeGatewayPool);
+                    Common.WriteIPagesToFile(pools, client.EdgeGatewayPools.ListNext, "ListEdgeGatewayPools.txt", (pool) => pool.Name);
+                });
             });
         }
 
         [Fact]
         public void TestGetEdgeGatewayPool() {
             RunTest((client) => {
-                var pool = client.EdgeGatewayPools.List(Location).GetFirst();
-                if (pool != null) {
-                    var retrieved = client.EdgeGatewayPools.Get(Location, pool.Name);
+                var fabricLocationName = GetLocation(client);
+                var pool = client.EdgeGatewayPools.List(ResourceGroupName, fabricLocationName).GetFirst();
+                if (pool != null)
+                {
+                    var pName = ExtractName(pool.Name);
+                    var retrieved = client.EdgeGatewayPools.Get(ResourceGroupName, fabricLocationName, pName);
                     AssertEdgeGatewayPoolAreSame(pool, retrieved);
                 }
             });
@@ -59,13 +68,15 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetAllEdgeGatewayPools() {
             RunTest((client) => {
-                var pools = client.EdgeGatewayPools.List(Location);
-                Common.MapOverIPage(pools, client.EdgeGatewayPools.ListNext, (EdgeGatewayPool pool) => {
-                    var retrieved = client.EdgeGatewayPools.Get(Location, pool.Name);
-                    AssertEdgeGatewayPoolAreSame(pool, retrieved);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var pools = client.EdgeGatewayPools.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(pools, client.EdgeGatewayPools.ListNext, (EdgeGatewayPool pool) => {
+                        var pName = ExtractName(pool.Name);
+                        var retrieved = client.EdgeGatewayPools.Get(ResourceGroupName, fabricLocationName, pName);
+                        AssertEdgeGatewayPoolAreSame(pool, retrieved);
+                    });
                 });
             });
         }
-        
     }
 }

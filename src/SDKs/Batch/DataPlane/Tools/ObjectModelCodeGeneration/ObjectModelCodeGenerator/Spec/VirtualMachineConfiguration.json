@@ -1,7 +1,7 @@
     {
       "Name": "VirtualMachineConfiguration",
       "ProtocolName": "Models.VirtualMachineConfiguration",
-      "Comment": "The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure.",
+      "SummaryComment": "The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure.",
       "ForceConstructorOrder":  true,
       "Properties": [
         {

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9d0cc11b-6b43-4a49-ae4d-27406c539cc2"
+          "49a7ab5a-75ed-47c6-b9ea-9ac3fe055a7a"
         ],
         "accept-language": [
           "en-US"
@@ -17,7 +17,71 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_1\",\r\n      \"name\": \"SU1_Infrastructure_1\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"240dd487\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_2\",\r\n      \"name\": \"SU1_Infrastructure_2\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"240dd487\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_2\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_3\",\r\n      \"name\": \"SU1_Infrastructure_3\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"240dd487\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_3\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_ObjStore\",\r\n      \"name\": \"SU1_ObjStore\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"240dd487\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Public\",\r\n      \"name\": \"SU1_Public\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"240dd487\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Public\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_VmTemp\",\r\n      \"name\": \"SU1_VmTemp\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"240dd487\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_VmTemp\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local\",\r\n      \"name\": \"local\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {}\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "263"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sat, 10 Feb 2018 21:26:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "WWW-Authenticate": [
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv/rkqTNXfr6E1P2/CDxcKiDz4PBAY45jAU0CcEmoNNR6jBbp2FeJBneaRRZZ5M6obGRNAhNsRVWCKxolli4wssxvW4LM2+ZeM/t3gPDs5fAJObmVrFfcTRhClwkCwKrRKN8NRDTclTEDulQyoybCa"
+        ],
+        "x-ms-correlation-request-id": [
+          "04a691b5-7ac0-4a7e-8b27-50aa866da026"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "13983"
+        ],
+        "x-ms-request-id": [
+          "04a691b5-7ac0-4a7e-8b27-50aa866da026"
+        ],
+        "x-ms-routing-request-id": [
+          "LOCAL:20180210T212613Z:04a691b5-7ac0-4a7e-8b27-50aa866da026"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fb2cfa46-5a84-4346-8698-331d8a54a52d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_1\",\r\n      \"name\": \"SU1_Infrastructure_1\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"05c1cbb7\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_2\",\r\n      \"name\": \"SU1_Infrastructure_2\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"05c1cbb7\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_2\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_3\",\r\n      \"name\": \"SU1_Infrastructure_3\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"05c1cbb7\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_3\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_ObjStore\",\r\n      \"name\": \"SU1_ObjStore\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"05c1cbb7\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Public\",\r\n      \"name\": \"SU1_Public\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"05c1cbb7\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Public\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_VmTemp\",\r\n      \"name\": \"SU1_VmTemp\",\r\n      \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n      \"location\": \"local\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"associatedVolume\": \"05c1cbb7\",\r\n        \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_VmTemp\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "2375"
@@ -32,7 +96,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:52:16 GMT"
+          "Sat, 10 Feb 2018 21:26:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,19 +105,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvcHbkDGEi5hjs8M0459tq8v7rAExVuHNLSJrvkq4Yz3eWpBlAZ/d4MH/nUoQ4B5wdvRIum+VLD8pKjmHiV6FQp/Eu2iEK7iq/bBeD5lNFhe0gSh8n7feL6gSRzyE6r13IOswLiTCnLxBFN7IBesjK"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvj7SBr0EWFZojefLDAcnfWgYlL967sDSlvQgx0HacBqGsp0rUpk+8sVDNuVmb9KzG9nXwBUBl4+YQigjQ6WkKpHFKiLcpAMUqXkaIbysfZLeZqWYEBqmDNKQT/YS//diTBXWOU1z6OUXdFWruXOAJ"
         ],
         "x-ms-correlation-request-id": [
-          "4d1e2ad7-87f8-4105-b315-ade628b8d630"
+          "ce5a1f67-93a8-4dbf-a128-58e9b48e95d7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14787"
+          "13982"
         ],
         "x-ms-request-id": [
-          "4d1e2ad7-87f8-4105-b315-ade628b8d630"
+          "ce5a1f67-93a8-4dbf-a128-58e9b48e95d7"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T215216Z:4d1e2ad7-87f8-4105-b315-ade628b8d630"
+          "LOCAL:20180210T212613Z:ce5a1f67-93a8-4dbf-a128-58e9b48e95d7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -65,13 +129,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_1?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfSW5mcmFzdHJ1Y3R1cmVfMT9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_1?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfSW5mcmFzdHJ1Y3R1cmVfMT9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ef54af46-e461-4250-90b9-76de473e0635"
+          "25cf9016-a414-4105-86c1-b1cef248e3f8"
         ],
         "accept-language": [
           "en-US"
@@ -81,7 +145,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_1\",\r\n  \"name\": \"SU1_Infrastructure_1\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"240dd487\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_1\",\r\n  \"name\": \"SU1_Infrastructure_1\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"05c1cbb7\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_1\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "407"
@@ -96,7 +160,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:52:16 GMT"
+          "Sat, 10 Feb 2018 21:26:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,19 +169,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv4m2tWTHWq7VeYSnVgQlFDQp50iJj42UKWiuBgIWMJycBz0c9pU/rTrf3IbZjbf/vqkloXyp9l3kfIaBPNx5OL8YvhO65qTZzHv5HuYfKzO2/IA/6FLcDXe4pmeWic1NU+Qa/Zr5SwOvIifOfvqCj"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvwWTN5ZGD3x09t4vTcqenZOGAAXPY6sJVe8vb6G4gqLqsK41jCx80jWb7nSK4TwOcnvkjfdELl79X+aR8QcZUq+obvFfN2bXpngaqV6Naw+vN3/oIHYDN2Vk5ksq8GCir3y1U37BeTlHcjWfVC/NC"
         ],
         "x-ms-correlation-request-id": [
-          "38f9cb3d-377f-40ed-a6a8-207bfafa525d"
+          "dbe2d782-02f8-4903-b001-30406735013a"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14786"
+          "13981"
         ],
         "x-ms-request-id": [
-          "38f9cb3d-377f-40ed-a6a8-207bfafa525d"
+          "dbe2d782-02f8-4903-b001-30406735013a"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T215217Z:38f9cb3d-377f-40ed-a6a8-207bfafa525d"
+          "LOCAL:20180210T212613Z:dbe2d782-02f8-4903-b001-30406735013a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -129,13 +193,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_2?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfSW5mcmFzdHJ1Y3R1cmVfMj9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_2?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfSW5mcmFzdHJ1Y3R1cmVfMj9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "91310512-ae92-4449-a85b-3d9b81c9d547"
+          "921b7187-e3ba-497d-997f-5f56b2680bf3"
         ],
         "accept-language": [
           "en-US"
@@ -145,7 +209,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_2\",\r\n  \"name\": \"SU1_Infrastructure_2\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"240dd487\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_2\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_2\",\r\n  \"name\": \"SU1_Infrastructure_2\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"05c1cbb7\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_2\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "407"
@@ -160,7 +224,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:52:16 GMT"
+          "Sat, 10 Feb 2018 21:26:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -169,19 +233,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvYqeiVPkbSGfci/M9oXORKeamhQVtkjyl3dgHiN36ZIGdbsRm5wLcDM0frdPKVj+YWWhZ2SxKBbvk0CDiWCTOGH7S9tcbUijYziLz2hCMMhl9QnLxTMHTV9AICkLV0hvvPMKoCjVH7Viy4q1vYjf5"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvV3mUL5RbXZLaSnXRTVkE/APVRFBXW9ow1Syg/itMNgIkTt+SP1qHIytDS50mQUloD/A3uwy89fWvsrQonz65lahFRfSakEvGLSqfvWgWdUz8ngyO/u4ryS8h5hCJWX0qehb0BbHHHMBjSDlaePCb"
         ],
         "x-ms-correlation-request-id": [
-          "e20167d1-6de0-442a-b528-a213a57d8c1b"
+          "ee47fdba-3d15-4901-815c-069cab1b9810"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14785"
+          "13980"
         ],
         "x-ms-request-id": [
-          "e20167d1-6de0-442a-b528-a213a57d8c1b"
+          "ee47fdba-3d15-4901-815c-069cab1b9810"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T215217Z:e20167d1-6de0-442a-b528-a213a57d8c1b"
+          "LOCAL:20180210T212613Z:ee47fdba-3d15-4901-815c-069cab1b9810"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -193,13 +257,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_3?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfSW5mcmFzdHJ1Y3R1cmVfMz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_3?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfSW5mcmFzdHJ1Y3R1cmVfMz9hcGktdmVyc2lvbj0yMDE2LTA1LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "58b9fddc-a803-4541-9737-7ab0684e2667"
+          "06423e78-37e7-4b31-a543-8f35f1f731b9"
         ],
         "accept-language": [
           "en-US"
@@ -209,7 +273,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_3\",\r\n  \"name\": \"SU1_Infrastructure_3\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"240dd487\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_3\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Infrastructure_3\",\r\n  \"name\": \"SU1_Infrastructure_3\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"05c1cbb7\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Infrastructure_3\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "407"
@@ -224,7 +288,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:52:16 GMT"
+          "Sat, 10 Feb 2018 21:26:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -233,19 +297,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvxGjiOUpaAr/BOFqHmaof8E5oyuwX0l+HxsEj1VOA5k1B3pLleRtlkYCMezdkgJlvwLj+RPFYR8PyhuAurCKX5+pQX8T4rM2HTkpG9b7Ix+78H1q85HGhDGB+6IwwPDWHVwmhDBQ4iqJ2EO96fgLS"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvCEh4NfTMND+i/8LqOrNQDcNmWS44srN64OnxmVVkK4tvDltPTMbIlwsTyhIL4Hb+eSSjRZvQ1h/poPLTtN8E8e7/1I0DQWLBVFq0G949VcazyycqFd+K+wBvjkjqeDw5DwuI/dFJPMHiZekSMmzH"
         ],
         "x-ms-correlation-request-id": [
-          "89dea133-1c71-4386-8745-65738b613d4a"
+          "743dd739-4bc3-4a27-9ece-3a88c4ae72f7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14784"
+          "13979"
         ],
         "x-ms-request-id": [
-          "89dea133-1c71-4386-8745-65738b613d4a"
+          "743dd739-4bc3-4a27-9ece-3a88c4ae72f7"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T215217Z:89dea133-1c71-4386-8745-65738b613d4a"
+          "LOCAL:20180210T212614Z:743dd739-4bc3-4a27-9ece-3a88c4ae72f7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -257,13 +321,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_ObjStore?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfT2JqU3RvcmU/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_ObjStore?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfT2JqU3RvcmU/YXBpLXZlcnNpb249MjAxNi0wNS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b64ddf45-b5d3-4672-a22f-1e89ccc16d1b"
+          "207555b4-5549-43d7-91a7-76bb18853d02"
         ],
         "accept-language": [
           "en-US"
@@ -273,7 +337,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_ObjStore\",\r\n  \"name\": \"SU1_ObjStore\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"240dd487\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_ObjStore\",\r\n  \"name\": \"SU1_ObjStore\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"05c1cbb7\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_ObjStore\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "383"
@@ -288,7 +352,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:52:16 GMT"
+          "Sat, 10 Feb 2018 21:26:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -297,19 +361,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvtjEPUTbN2pc2IE5HvcJa+vwx5WpfICHc3i7SUOHB3phNRFLZPetDiXPKnEZgF73ZmNL4lCRkP8fGM2x0AzYX4KLr7vRMFcL49xjn7gLVLcHxbAOzaqSU2JRWkCaGQnzUH8DoBe2xyZlEc8lWSUPp"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvNNhKuqrT0SeLVFAz4SwRDjwESnkozYTbrm0bZCwfr4QxXG2o5PqcPlnBqX5sZalEiBgA90uI77oVJE9XIcoF8Vmk0v/8bf+Hc+QuRolxZZl0+0uq/xyx3WgFH/feVIDyecIEfoo6IQX0jQwPCMUf"
         ],
         "x-ms-correlation-request-id": [
-          "9019e03b-ea0c-41eb-b6bc-5a0e62c22664"
+          "da3be37a-b982-45b6-a6c0-62545a21afaa"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14783"
+          "13978"
         ],
         "x-ms-request-id": [
-          "9019e03b-ea0c-41eb-b6bc-5a0e62c22664"
+          "da3be37a-b982-45b6-a6c0-62545a21afaa"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T215217Z:9019e03b-ea0c-41eb-b6bc-5a0e62c22664"
+          "LOCAL:20180210T212614Z:da3be37a-b982-45b6-a6c0-62545a21afaa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -321,13 +385,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Public?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfUHVibGljP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Public?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfUHVibGljP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b31eb1d3-c6bf-4515-9410-2978ddc647af"
+          "aa45c9f8-9e61-47d8-b3dd-8642e65fb5dd"
         ],
         "accept-language": [
           "en-US"
@@ -337,7 +401,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Public\",\r\n  \"name\": \"SU1_Public\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"240dd487\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Public\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_Public\",\r\n  \"name\": \"SU1_Public\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"05c1cbb7\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_Public\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "377"
@@ -352,7 +416,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:52:16 GMT"
+          "Sat, 10 Feb 2018 21:26:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -361,19 +425,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRv6byLcEnZK/VmXVZnQqG6x0mJc7jVDzuRjaEM0lBnX58nYOsWkb15OQHcMfP19tyv6J3ovKukQsYJdxjelHcNG62RG2YADU7GOBNh4T8qnIIS46sFzrXGnuq92OCflbHVvAZWLDgsr4KU3N2TOqKa"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvwB2Yz2VA7/Ujjpak0m+TBXrYBAU5CvIQs+fHLzDvxVlUoD4yqTO+8HNQwlSe2FvBB626c+0krGil00s6MeYXOmQjl5j6ghc0V2ejnwHOFF/g+1FcjtaCEomfD4ccIRrxbze8Q1fetxdfZDfABOYm"
         ],
         "x-ms-correlation-request-id": [
-          "21dc72f3-adb8-49d4-a2ab-1dc860aa2ad0"
+          "f718bf10-41af-4caf-9f60-8e4ff01ce1be"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14782"
+          "13977"
         ],
         "x-ms-request-id": [
-          "21dc72f3-adb8-49d4-a2ab-1dc860aa2ad0"
+          "f718bf10-41af-4caf-9f60-8e4ff01ce1be"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T215217Z:21dc72f3-adb8-49d4-a2ab-1dc860aa2ad0"
+          "LOCAL:20180210T212614Z:f718bf10-41af-4caf-9f60-8e4ff01ce1be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -385,13 +449,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_VmTemp?api-version=2016-05-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODcwOWI3NjktMzNmMC00ZWI5LTg0NGEtNjI3NTU4YWI0OTg1L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfVm1UZW1wP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
+      "RequestUri": "/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_VmTemp?api-version=2016-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODE1ODQ5OGQtMjdiMS00Y2NmLTlhYTEtZGUwZjkyNTczMWU2L3Jlc291cmNlR3JvdXBzL1N5c3RlbS5sb2NhbC9wcm92aWRlcnMvTWljcm9zb2Z0LkZhYnJpYy5BZG1pbi9mYWJyaWNMb2NhdGlvbnMvbG9jYWwvZmlsZVNoYXJlcy9TVTFfVm1UZW1wP2FwaS12ZXJzaW9uPTIwMTYtMDUtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "789b673f-a23e-43ad-bf9d-6d35d5f3867f"
+          "bc7557b6-f612-40af-b7cb-ac85820f4b6c"
         ],
         "accept-language": [
           "en-US"
@@ -401,7 +465,7 @@
           "Microsoft.AzureStack.Management.Fabric.Admin.FabricAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8709b769-33f0-4eb9-844a-627558ab4985/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_VmTemp\",\r\n  \"name\": \"SU1_VmTemp\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"240dd487\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_VmTemp\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8158498d-27b1-4ccf-9aa1-de0f925731e6/resourceGroups/System.local/providers/Microsoft.Fabric.Admin/fabricLocations/local/fileShares/SU1_VmTemp\",\r\n  \"name\": \"SU1_VmTemp\",\r\n  \"type\": \"Microsoft.Fabric.Admin/fabricLocations/fileShares\",\r\n  \"location\": \"local\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"associatedVolume\": \"05c1cbb7\",\r\n    \"uncPath\": \"\\\\\\\\SU1FileServer.azurestack.local\\\\SU1_VmTemp\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "377"
@@ -416,7 +480,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 21 Sep 2017 21:52:16 GMT"
+          "Sat, 10 Feb 2018 21:26:13 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -425,19 +489,19 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "WWW-Authenticate": [
-          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvd/ph/UoBb5aEcpyRNDQDWeGUS8lbY0m9BA4WZW6Sn4HDuu0I/E2ZQ7VrgmaQN66VPzEmI8s4+yIog4XefDGhXKYUbj5ssfUBOUMc/86WJTTCacmJPxunC9TERd73/kBunk+SzQdvUDNPEwTa6CLd"
+          "oYG3MIG0oAMKAQChCwYJKoZIgvcSAQICooGfBIGcYIGZBgkqhkiG9xIBAgICAG+BiTCBhqADAgEFoQMCAQ+iejB4oAMCARKicQRvarrBcwG/wWRuESZU4jKuQs/7KccnIEZEZwiaKKkVJTb91e8vOhaCr9NSAFWVMKeiT2pIchIlFesciADfGpSjN2HDSlhWlt8MK+5n0GuMBDfBLcOjf8OywHVRzVPLBWmJh2KTjdl0x9HHWlJvYHQs"
         ],
         "x-ms-correlation-request-id": [
-          "1a564948-ecad-4b6b-bc85-dbf20310150b"
+          "f5890961-0b4d-499d-a90b-bdbc60c9793e"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14781"
+          "13976"
         ],
         "x-ms-request-id": [
-          "1a564948-ecad-4b6b-bc85-dbf20310150b"
+          "f5890961-0b4d-499d-a90b-bdbc60c9793e"
         ],
         "x-ms-routing-request-id": [
-          "LOCAL:20170921T215217Z:1a564948-ecad-4b6b-bc85-dbf20310150b"
+          "LOCAL:20180210T212614Z:f5890961-0b4d-499d-a90b-bdbc60c9793e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -451,6 +515,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "8709b769-33f0-4eb9-844a-627558ab4985"
+    "SubscriptionId": "8158498d-27b1-4ccf-9aa1-de0f925731e6"
   }
 }

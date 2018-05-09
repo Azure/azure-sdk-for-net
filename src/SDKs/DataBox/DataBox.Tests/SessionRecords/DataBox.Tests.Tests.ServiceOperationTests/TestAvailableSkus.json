@@ -1,0 +1,82 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/providers/Microsoft.DataBox/locations/westus/availableSkus?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M2NmRhMjEtNjA3ZS00OWI0LThiZGYtZjI1ZmJiOGY3MDVmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL2F2YWlsYWJsZVNrdXM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"country\": \"US\",\r\n  \"location\": \"westus\",\r\n  \"transferType\": \"ImportToAzure\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "84"
+        ],
+        "x-ms-client-request-id": [
+          "8af69075-8522-4c7a-821c-10f071ee4124"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"DataBox\"\r\n      },\r\n      \"enabled\": true,\r\n      \"properties\": {\r\n        \"destinationToServiceLocationMap\": [\r\n          {\r\n            \"destinationLocation\": \"westus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"centralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"eastus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"eastus2\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"northcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"southcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"westcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          }\r\n        ],\r\n        \"capacity\": {\r\n          \"usable\": \"80\",\r\n          \"maximum\": \"100\"\r\n        },\r\n        \"costs\": [\r\n          {\r\n            \"meterId\": \"0cf23ffc-0b64-49e6-9bdd-1db885349042\",\r\n            \"meterType\": \"DataBoxServiceFee\"\r\n          },\r\n          {\r\n            \"meterId\": \"a701f058-119b-4713-a923-bed7da4b7801\",\r\n            \"meterType\": \"DataBoxShippingFee\"\r\n          }\r\n        ],\r\n        \"apiVersions\": [\r\n          \"2018-01-01\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"DataBoxDisk\"\r\n      },\r\n      \"enabled\": true,\r\n      \"properties\": {\r\n        \"destinationToServiceLocationMap\": [\r\n          {\r\n            \"destinationLocation\": \"westus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"centralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"eastus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"eastus2\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"northcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"southcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"westcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          }\r\n        ],\r\n        \"capacity\": {\r\n          \"usable\": \"18\",\r\n          \"maximum\": \"20\"\r\n        },\r\n        \"costs\": [],\r\n        \"apiVersions\": [\r\n          \"2018-01-01\"\r\n        ]\r\n      }\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"DataBoxCabinet\"\r\n      },\r\n      \"enabled\": true,\r\n      \"properties\": {\r\n        \"destinationToServiceLocationMap\": [\r\n          {\r\n            \"destinationLocation\": \"westus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"centralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"eastus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"eastus2\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"northcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"southcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          },\r\n          {\r\n            \"destinationLocation\": \"westcentralus\",\r\n            \"serviceLocation\": \"westus\"\r\n          }\r\n        ],\r\n        \"capacity\": {\r\n          \"usable\": \"800\",\r\n          \"maximum\": \"1000\"\r\n        },\r\n        \"costs\": [],\r\n        \"apiVersions\": [\r\n          \"2018-01-01\"\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Apr 2018 10:39:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "55eaacd7-4367-4732-8e4b-ebd3498f6585"
+        ],
+        "x-ms-client-request-id": [
+          "8af69075-8522-4c7a-821c-10f071ee4124"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1176"
+        ],
+        "x-ms-correlation-request-id": [
+          "c74c0323-a4cd-43b6-b4f1-65a7345f4209"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20180413T103900Z:c74c0323-a4cd-43b6-b4f1-65a7345f4209"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
+    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+  }
+}

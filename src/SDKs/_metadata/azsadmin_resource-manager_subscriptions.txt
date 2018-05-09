@@ -1,0 +1,17 @@
+﻿Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/subscriptions/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\github2\azure-sdk-for-net\src\AzureStack\SubscriptionsAdmin\Subscriptions.Admin
+2018-04-25 20:52:36 UTC
+1) azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      124235c2f66020d38353e43f2ac92b3e9b49b9a6
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Users\bganapa\AppData\Roaming\npm  `-- autorest@2.0.4262
+
+
+Latest installed version:    
+.\tools\generate.ps1 was invoked by generate.ps1
+
+

@@ -3,30 +3,40 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Xunit;
+namespace Fabric.Tests
+{
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Xunit;
 
-namespace Fabric.Tests {
-    
-    public class LogicalNetworkTest : FabricTestBase {
+    public class LogicalNetworkTest : FabricTestBase
+    {
 
         private void AssertLogicalNetworksAreSame(LogicalNetwork expected, LogicalNetwork found) {
-            if (expected == null) {
+            if (expected == null)
+            {
                 Assert.Null(found);
-            } else {
+            }
+            else
+            {
                 Assert.True(FabricCommon.ResourceAreSame(expected, found));
 
                 Assert.Equal(expected.NetworkVirtualizationEnabled, found.NetworkVirtualizationEnabled);
-                if (expected.Subnets != null) {
+                if (expected.Subnets != null)
+                {
                     Assert.Equal(expected.Subnets.Count, found.Subnets.Count);
-                } else {
+                }
+                else
+                {
                     Assert.Null(found.Subnets);
                 }
 
-                if (expected.Metadata != null) {
+                if (expected.Metadata != null)
+                {
                     Assert.Equal(expected.Metadata.Count, found.Metadata.Count);
-                } else {
+                }
+                else
+                {
                     Assert.Null(found.Metadata);
                 }
 
@@ -43,19 +53,24 @@ namespace Fabric.Tests {
         [Fact]
         public void TestListLogicalNetworks() {
             RunTest((client) => {
-                var logicalNetworks = client.LogicalNetworks.List(Location);
-                Common.MapOverIPage(logicalNetworks, client.LogicalNetworks.ListNext, ValidateLogicalNetwork);
-                Common.WriteIPagesToFile(logicalNetworks, client.LogicalNetworks.ListNext, "ListLogicalNetworks.txt", (logicalNetwork) => logicalNetwork.Name);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var logicalNetworks = client.LogicalNetworks.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(logicalNetworks, client.LogicalNetworks.ListNext, ValidateLogicalNetwork);
+                    Common.WriteIPagesToFile(logicalNetworks, client.LogicalNetworks.ListNext, "ListLogicalNetworks.txt", (logicalNetwork) => logicalNetwork.Name);
+                });
             });
         }
 
         [Fact]
         public void TestGetLogicalNetwork() {
             RunTest((client) => {
-                foreach(var logicalNetwork in client.LogicalNetworks.List(Location) ) { 
-                    var retrieved = client.LogicalNetworks.Get(Location, logicalNetwork.Name);
+                var fabricLocationName = GetLocation(client);
+                var logicalNetwork = client.LogicalNetworks.List(ResourceGroupName, fabricLocationName).GetFirst();
+                if (logicalNetwork != null)
+                {
+                    var logicalNetworkName = ExtractName(logicalNetwork.Name);
+                    var retrieved = client.LogicalNetworks.Get(ResourceGroupName, fabricLocationName, logicalNetworkName);
                     AssertLogicalNetworksAreSame(logicalNetwork, retrieved);
-                    break;
                 }
             });
         }
@@ -63,14 +78,17 @@ namespace Fabric.Tests {
         [Fact]
         public void TestGetAllLogicalNetworks() {
             RunTest((client) => {
-                var logicalNetworks = client.LogicalNetworks.List(Location);
-                Common.MapOverIPage(logicalNetworks, client.LogicalNetworks.ListNext, (logicalNetwork) => {
-                    var retrieved = client.LogicalNetworks.Get(Location, logicalNetwork.Name);
-                    AssertLogicalNetworksAreSame(logicalNetwork, retrieved);
-                });
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var logicalNetworks = client.LogicalNetworks.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(logicalNetworks, client.LogicalNetworks.ListNext, (logicalNetwork) => {
 
+                        var logicalNetworkName = ExtractName(logicalNetwork.Name);
+                        var retrieved = client.LogicalNetworks.Get(ResourceGroupName, fabricLocationName, logicalNetworkName);
+                        AssertLogicalNetworksAreSame(logicalNetwork, retrieved);
+                    });
+                });
             });
         }
-        
+
     }
 }

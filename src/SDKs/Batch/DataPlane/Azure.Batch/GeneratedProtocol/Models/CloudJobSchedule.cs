@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="metadata">A list of name-value pairs associated with
         /// the schedule as metadata.</param>
         /// <param name="stats">The lifetime resource usage statistics for the
-        /// job schedule.</param>
+        /// job schedule. The statistics may not be immediately available. The
+        /// Batch service performs periodic roll-up of statistics. The typical
+        /// delay is about 30 minutes.</param>
         public CloudJobSchedule(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobScheduleState? state = default(JobScheduleState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobScheduleState? previousState = default(JobScheduleState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), JobScheduleExecutionInformation executionInfo = default(JobScheduleExecutionInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobScheduleStatistics stats = default(JobScheduleStatistics))
         {
             Id = id;
@@ -206,7 +208,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the lifetime resource usage statistics for the job
-        /// schedule.
+        /// schedule. The statistics may not be immediately available. The
+        /// Batch service performs periodic roll-up of statistics. The typical
+        /// delay is about 30 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "stats")]
         public JobScheduleStatistics Stats { get; set; }

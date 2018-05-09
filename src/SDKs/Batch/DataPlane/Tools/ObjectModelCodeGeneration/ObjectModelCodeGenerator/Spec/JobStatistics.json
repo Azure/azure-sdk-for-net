@@ -1,7 +1,7 @@
     {
       "Name": "JobStatistics",
       "ProtocolName": "Models.JobStatistics",
-      "Comment": "Resource usage statistics for the job.",
+      "SummaryComment": "Resource usage statistics for the job.",
       "IsConstructorPublic": false,
       "Properties": [
         {

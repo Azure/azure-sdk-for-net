@@ -21,7 +21,7 @@ namespace InfrastructureInsights.Tests
         // Helpful funcs
         protected static Func<Resource, string> ResourceName = (resource) => resource.Name;
         protected static Func<Resource, string> ResourceId = (resource) => resource.Id;
-        protected static Func<Resource, string> ResourceLocation = (resource) => resource.Location;
+        protected static Func<TrackedResource, string> ResourceLocation = (resource) => resource.Location;
         protected static Func<Resource, string> ResourceType = (resource) => resource.Type;
 
         protected override void ValidateClient(InfrastructureInsightsAdminClient client) {
