@@ -16,7 +16,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         private static readonly ActiveDirectoryServiceSettings AzureSettings = new ActiveDirectoryServiceSettings
         {
-            AuthenticationEndpoint= new Uri("https://login.microsoftonline.us/"), 
+            AuthenticationEndpoint= new Uri("https://login.microsoftonline.com/"), 
             TokenAudience = new Uri("https://management.core.windows.net/"),
             ValidateAuthority = true
         };
