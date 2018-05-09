@@ -287,6 +287,11 @@ namespace Microsoft.Azure.Management.Sql
         ICapabilitiesOperations Capabilities { get; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }

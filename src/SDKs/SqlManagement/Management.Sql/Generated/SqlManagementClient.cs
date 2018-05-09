@@ -292,6 +292,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
@@ -541,6 +546,7 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
+            DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
