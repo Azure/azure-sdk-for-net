@@ -29,42 +29,42 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobInnerError class.
         /// </summary>
-        /// <param name="diagnosticCode">the diagnostic error code.</param>
-        /// <param name="severity">the severity level of the failure. Possible
+        /// <param name="errorId">The specific identifier for the type of error
+        /// encountered in the job.</param>
+        /// <param name="severity">The severity level of the failure. Possible
         /// values include: 'Warning', 'Error', 'Info', 'SevereWarning',
         /// 'Deprecated', 'UserWarning'</param>
-        /// <param name="details">the details of the error message.</param>
-        /// <param name="component">the component that failed.</param>
-        /// <param name="errorId">the specific identifier for the type of error
-        /// encountered in the job.</param>
-        /// <param name="helpLink">the link to MSDN or Azure help for this type
+        /// <param name="source">The ultimate source of the failure (usually
+        /// either SYSTEM or USER).</param>
+        /// <param name="message">The user friendly error message for the
+        /// failure.</param>
+        /// <param name="description">The error message description.</param>
+        /// <param name="details">The details of the error message.</param>
+        /// <param name="diagnosticCode">The diagnostic error code.</param>
+        /// <param name="component">The component that failed.</param>
+        /// <param name="resolution">The recommended resolution for the
+        /// failure, if any.</param>
+        /// <param name="helpLink">The link to MSDN or Azure help for this type
         /// of error, if any.</param>
-        /// <param name="internalDiagnostics">the internal diagnostic stack
+        /// <param name="internalDiagnostics">The internal diagnostic stack
         /// trace if the user requesting the job error details has sufficient
         /// permissions it will be retrieved, otherwise it will be
         /// empty.</param>
-        /// <param name="message">the user friendly error message for the
-        /// failure.</param>
-        /// <param name="resolution">the recommended resolution for the
-        /// failure, if any.</param>
-        /// <param name="source">the ultimate source of the failure (usually
-        /// either SYSTEM or USER).</param>
-        /// <param name="description">the error message description</param>
-        /// <param name="innerError">the inner error of this specific job error
+        /// <param name="innerError">The inner error of this specific job error
         /// message, if any.</param>
-        public JobInnerError(int? diagnosticCode = default(int?), SeverityTypes? severity = default(SeverityTypes?), string details = default(string), string component = default(string), string errorId = default(string), string helpLink = default(string), string internalDiagnostics = default(string), string message = default(string), string resolution = default(string), string source = default(string), string description = default(string), JobInnerError innerError = default(JobInnerError))
+        public JobInnerError(string errorId = default(string), SeverityTypes? severity = default(SeverityTypes?), string source = default(string), string message = default(string), string description = default(string), string details = default(string), int? diagnosticCode = default(int?), string component = default(string), string resolution = default(string), string helpLink = default(string), string internalDiagnostics = default(string), JobInnerError innerError = default(JobInnerError))
         {
-            DiagnosticCode = diagnosticCode;
-            Severity = severity;
-            Details = details;
-            Component = component;
             ErrorId = errorId;
+            Severity = severity;
+            Source = source;
+            Message = message;
+            Description = description;
+            Details = details;
+            DiagnosticCode = diagnosticCode;
+            Component = component;
+            Resolution = resolution;
             HelpLink = helpLink;
             InternalDiagnostics = internalDiagnostics;
-            Message = message;
-            Resolution = resolution;
-            Source = source;
-            Description = description;
             InnerError = innerError;
             CustomInit();
         }
@@ -75,10 +75,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the diagnostic error code.
+        /// Gets the specific identifier for the type of error encountered in
+        /// the job.
         /// </summary>
-        [JsonProperty(PropertyName = "diagnosticCode")]
-        public int? DiagnosticCode { get; private set; }
+        [JsonProperty(PropertyName = "errorId")]
+        public string ErrorId { get; private set; }
 
         /// <summary>
         /// Gets the severity level of the failure. Possible values include:
@@ -89,10 +90,35 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public SeverityTypes? Severity { get; private set; }
 
         /// <summary>
+        /// Gets the ultimate source of the failure (usually either SYSTEM or
+        /// USER).
+        /// </summary>
+        [JsonProperty(PropertyName = "source")]
+        public string Source { get; private set; }
+
+        /// <summary>
+        /// Gets the user friendly error message for the failure.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
+
+        /// <summary>
+        /// Gets the error message description.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; private set; }
+
+        /// <summary>
         /// Gets the details of the error message.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
         public string Details { get; private set; }
+
+        /// <summary>
+        /// Gets the diagnostic error code.
+        /// </summary>
+        [JsonProperty(PropertyName = "diagnosticCode")]
+        public int? DiagnosticCode { get; private set; }
 
         /// <summary>
         /// Gets the component that failed.
@@ -101,11 +127,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Component { get; private set; }
 
         /// <summary>
-        /// Gets the specific identifier for the type of error encountered in
-        /// the job.
+        /// Gets the recommended resolution for the failure, if any.
         /// </summary>
-        [JsonProperty(PropertyName = "errorId")]
-        public string ErrorId { get; private set; }
+        [JsonProperty(PropertyName = "resolution")]
+        public string Resolution { get; private set; }
 
         /// <summary>
         /// Gets the link to MSDN or Azure help for this type of error, if any.
@@ -120,31 +145,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "internalDiagnostics")]
         public string InternalDiagnostics { get; private set; }
-
-        /// <summary>
-        /// Gets the user friendly error message for the failure.
-        /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
-
-        /// <summary>
-        /// Gets the recommended resolution for the failure, if any.
-        /// </summary>
-        [JsonProperty(PropertyName = "resolution")]
-        public string Resolution { get; private set; }
-
-        /// <summary>
-        /// Gets the ultimate source of the failure (usually either SYSTEM or
-        /// USER).
-        /// </summary>
-        [JsonProperty(PropertyName = "source")]
-        public string Source { get; private set; }
-
-        /// <summary>
-        /// Gets the error message description
-        /// </summary>
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; private set; }
 
         /// <summary>
         /// Gets the inner error of this specific job error message, if any.

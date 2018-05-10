@@ -33,29 +33,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobPipelineInformation class.
         /// </summary>
-        /// <param name="pipelineId">the job relationship pipeline identifier
+        /// <param name="pipelineId">The job relationship pipeline identifier
         /// (a GUID).</param>
-        /// <param name="pipelineName">the friendly name of the job
+        /// <param name="pipelineName">The friendly name of the job
         /// relationship pipeline, which does not need to be unique.</param>
-        /// <param name="pipelineUri">the pipeline uri, unique, links to the
+        /// <param name="pipelineUri">The pipeline uri, unique, links to the
         /// originating service for this pipeline.</param>
-        /// <param name="numJobsFailed">the number of jobs in this pipeline
+        /// <param name="numJobsFailed">The number of jobs in this pipeline
         /// that have failed.</param>
-        /// <param name="numJobsCanceled">the number of jobs in this pipeline
+        /// <param name="numJobsCanceled">The number of jobs in this pipeline
         /// that have been canceled.</param>
-        /// <param name="numJobsSucceeded">the number of jobs in this pipeline
+        /// <param name="numJobsSucceeded">The number of jobs in this pipeline
         /// that have succeeded.</param>
-        /// <param name="auHoursFailed">the number of job execution hours that
+        /// <param name="auHoursFailed">The number of job execution hours that
         /// resulted in failed jobs.</param>
-        /// <param name="auHoursCanceled">the number of job execution hours
+        /// <param name="auHoursCanceled">The number of job execution hours
         /// that resulted in canceled jobs.</param>
-        /// <param name="auHoursSucceeded">the number of job execution hours
+        /// <param name="auHoursSucceeded">The number of job execution hours
         /// that resulted in successful jobs.</param>
-        /// <param name="lastSubmitTime">the last time a job in this pipeline
+        /// <param name="lastSubmitTime">The last time a job in this pipeline
         /// was submitted.</param>
-        /// <param name="runs">the list of recurrence identifiers representing
+        /// <param name="runs">The list of recurrence identifiers representing
         /// each run of this pipeline.</param>
-        /// <param name="recurrences">the list of recurrence identifiers
+        /// <param name="recurrences">The list of recurrence identifiers
         /// representing each run of this pipeline.</param>
         public JobPipelineInformation(System.Guid? pipelineId = default(System.Guid?), string pipelineName = default(string), string pipelineUri = default(string), int? numJobsFailed = default(int?), int? numJobsCanceled = default(int?), int? numJobsSucceeded = default(int?), double? auHoursFailed = default(double?), double? auHoursCanceled = default(double?), double? auHoursSucceeded = default(double?), System.DateTimeOffset? lastSubmitTime = default(System.DateTimeOffset?), IList<JobPipelineRunInformation> runs = default(IList<JobPipelineRunInformation>), IList<System.Guid?> recurrences = default(IList<System.Guid?>))
         {
