@@ -1,10 +1,11 @@
 ﻿namespace Microsoft.Azure.Management.Automation
 {
+    using System;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
     using Microsoft.Azure.Management.Automation.Models;
-    using System;
 
     /// <summary>
     /// Extension methods for SoftwareUpdateConfigurationRunsOperations.
@@ -67,7 +68,7 @@
             string clientRequestId = default(string), string skip = default(string), string top = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = string.Format(FilterFormatStringEqual, StatusProperty, status);
+            var filter = GetStatusFilter(status);
             using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
@@ -125,7 +126,7 @@
             string clientRequestId = default(string), string skip = default(string), string top = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = string.Format(FilterFormatEqual, CorrelationIdProperty, correlationId);
+            var filter = GetCorrelationIdFilter(correlationId);
             using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
@@ -183,12 +184,100 @@
             string clientRequestId = default(string), string skip = default(string), string top = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = string.Format(FilterFormatStringEqual, TargetComputerProperty, targetComputer);
+            var filter = GetTargetComputerFilter(targetComputer);
             using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
         }
         #endregion
+
+        #region combined filters
+        /// <summary>
+        /// Return list of software update configuration machine runs targeting the given computer
+        /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='osType'>
+        /// The computer osType targeted by this machine run
+        /// </param>
+        /// <param name='skip'>
+        /// number of entries you skip before returning results
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of entries returned in the results collection
+        /// </param>
+        public static SoftwareUpdateConfigurationMachineRunListResult ListAll(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName,
+            Guid? correlationId = null, string status = null, string targetComputer = null,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string))
+        {
+            return operations.ListAllAsync(resourceGroupName, automationAccountName, correlationId, status, targetComputer, clientRequestId, skip, top).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Return list of software update configuration machine runs targeting the given computer
+        /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='targetComputer'>
+        /// The computer targeted by this machine run
+        /// </param>
+        /// <param name='skip'>
+        /// number of entries you skip before returning results
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of entries returned in the results collection
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<SoftwareUpdateConfigurationMachineRunListResult> ListAllAsync(
+            this ISoftwareUpdateConfigurationMachineRunsOperations operations,
+            string resourceGroupName, string automationAccountName,
+            Guid? correlationId = null, string status = null, string targetComputer = null,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var filter = GetCombinedFilter(correlationId, status, targetComputer);
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+        #endregion
+
+        private static string GetStatusFilter(string status)
+        {
+            return string.IsNullOrWhiteSpace(status) ? null : string.Format(FilterFormatStringEqual, StatusProperty, status);
+        }
+
+        private static string GetCorrelationIdFilter(Guid correlationId)
+        {
+            return string.Format(FilterFormatEqual, CorrelationIdProperty, correlationId);
+        }
+
+        private static string GetTargetComputerFilter(string targetComputer)
+        {
+            return string.IsNullOrWhiteSpace(targetComputer) ? null : string.Format(FilterFormatStringEqual, TargetComputerProperty, targetComputer);
+        }
+
+        private static string GetCombinedFilter(Guid? correlationId = null, string status = null, string targetComputer = null)
+        {
+            var filters = new string[]
+            {
+                !correlationId.HasValue ? null : GetCorrelationIdFilter(correlationId.Value),
+                string.IsNullOrWhiteSpace(status) ? null : GetStatusFilter(status),
+                string.IsNullOrWhiteSpace(targetComputer) ? null : GetTargetComputerFilter(targetComputer)
+            };
+
+            var filter = string.Join(" and ", filters.Where(f => !string.IsNullOrWhiteSpace(f)));
+            return string.IsNullOrWhiteSpace(filter) ? null : filter;
+        }
     }
 }

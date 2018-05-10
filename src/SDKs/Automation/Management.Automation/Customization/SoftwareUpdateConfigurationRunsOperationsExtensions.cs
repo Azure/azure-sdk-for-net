@@ -1,10 +1,11 @@
 ﻿namespace Microsoft.Azure.Management.Automation
 {
+    using System;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
     using Microsoft.Azure.Management.Automation.Models;
-    using System;
 
     /// <summary>
     /// Extension methods for SoftwareUpdateConfigurationRunsOperations.
@@ -68,7 +69,7 @@
             string clientRequestId = default(string), string skip = default(string), string top = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = string.Format(FilterFormatStringEqual, ConfigurationNameProperty, configurationName);
+            var filter = GetConfigurationNameFilter(configurationName);
             using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
@@ -126,7 +127,7 @@
             string clientRequestId = default(string), string skip = default(string), string top = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = string.Format(FilterFormatStringEqual, OsTypeProperty, osType);
+            var filter = GetOsTypeFilter(osType);
             using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
@@ -184,7 +185,7 @@
             string clientRequestId = default(string), string skip = default(string), string top = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = string.Format(FilterFormatStringEqual, StatusProperty, status);
+            var filter = GetStatusFilter(status);
             using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
@@ -242,12 +243,125 @@
             string clientRequestId = default(string), string skip = default(string), string top = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var filter = string.Format(FilterFormatGreaterEqual, StartTimeProperty, startTime.ToString("o"));
+            var filter = GetStartTimeFilter(startTime);
             using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
         }
         #endregion
+
+        #region all filters
+
+        /// <summary>
+        /// Return list of software update configuration runs started at or after the given time
+        /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Name of the software update configuration triggered this run
+        /// </param>
+        /// <param name='osType'>
+        /// Operating system type
+        /// </param>
+        /// <param name='status'>
+        /// status of the run
+        /// </param>
+        /// <param name='startTime'>
+        /// start time of the run
+        /// </param>
+        /// <param name='skip'>
+        /// number of entries you skip before returning results
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of entries returned in the results collection
+        /// </param>
+        public static SoftwareUpdateConfigurationRunListResult ListAll(
+            this ISoftwareUpdateConfigurationRunsOperations operations,
+            string resourceGroupName, string automationAccountName,
+            string configurationName = null, string osType = null, string status = null, DateTime? startTime = null,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string))
+        {
+            return operations.ListAllAsync(resourceGroupName, automationAccountName, configurationName, osType, status, startTime, clientRequestId, skip, top).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Return list of software update configuration runs started at or after the given time
+        /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='configurationName'>
+        /// Name of the software update configuration triggered this run
+        /// </param>
+        /// <param name='osType'>
+        /// Operating system type
+        /// </param>
+        /// <param name='status'>
+        /// status of the run
+        /// </param>
+        /// <param name='startTime'>
+        /// start time of the run
+        /// </param>
+
+        /// <param name='skip'>
+        /// number of entries you skip before returning results
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of entries returned in the results collection
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<SoftwareUpdateConfigurationRunListResult> ListAllAsync(
+            this ISoftwareUpdateConfigurationRunsOperations operations,
+            string resourceGroupName, string automationAccountName,
+            string configurationName = null, string osType = null, string status = null, DateTime? startTime = null,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var filter = GetCombinedFilters(configurationName, osType, status, startTime);
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, skip, top, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+        #endregion
+
+        private static string GetConfigurationNameFilter(string configurationName)
+        {
+            return string.IsNullOrWhiteSpace(configurationName) ? null : string.Format(FilterFormatStringEqual, ConfigurationNameProperty, configurationName);
+        }
+
+        private static string GetOsTypeFilter(string osType)
+        {
+            return string.IsNullOrWhiteSpace(osType) ? null : string.Format(FilterFormatStringEqual, OsTypeProperty, osType);
+        }
+
+        private static string GetStatusFilter(string status)
+        {
+            return string.IsNullOrWhiteSpace(status) ? null : string.Format(FilterFormatStringEqual, StatusProperty, status);
+        }
+
+        private static string GetStartTimeFilter(DateTime startTime)
+        {
+            return string.Format(FilterFormatGreaterEqual, StartTimeProperty, startTime.ToString("o"));
+        }
+
+        private static string GetCombinedFilters(string configurationName, string osType, string status, DateTime? startTime)
+        {
+            var filters = new string[] {
+                string.IsNullOrWhiteSpace(configurationName) ? null : GetConfigurationNameFilter(configurationName),
+                string.IsNullOrWhiteSpace(osType)            ? null : GetOsTypeFilter(osType),
+                string.IsNullOrWhiteSpace(status)            ? null : GetStatusFilter(status),
+                !startTime.HasValue                          ? null : GetStartTimeFilter(startTime.Value)
+            };
+
+            var filter = string.Join(" and ", filters.Where(f => !string.IsNullOrWhiteSpace(f)));
+            return string.IsNullOrWhiteSpace(filter) ? null : filter;
+        }
     }
 }
