@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the SourceControlSyncJobById class.
         /// </summary>
         /// <param name="id">Gets the id of the job.</param>
-        /// <param name="sourceControlSyncJobId">Gets the source control sync
-        /// job id.</param>
+        /// <param name="syncJobId">Gets the source control sync job
+        /// id.</param>
         /// <param name="creationTime">Gets the creation time of the
         /// job.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
@@ -42,20 +42,20 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// 'Running'</param>
         /// <param name="startTime">Gets the start time of the job.</param>
         /// <param name="endTime">Gets the end time of the job.</param>
-        /// <param name="startedBy">Gets the user who started the sync
-        /// job.</param>
-        /// <param name="errors">Error details of the source control sync
-        /// job.</param>
-        public SourceControlSyncJobById(string id = default(string), string sourceControlSyncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string startedBy = default(string), SourceControlSyncJobByIdErrors errors = default(SourceControlSyncJobByIdErrors))
+        /// <param name="startType">Gets the type of start for the sync job.
+        /// Possible values include: 'AutoSync', 'ManualSync'</param>
+        /// <param name="exception">Gets the exceptions that occured while
+        /// running the sync job.</param>
+        public SourceControlSyncJobById(string id = default(string), string syncJobId = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string startType = default(string), string exception = default(string))
         {
             Id = id;
-            SourceControlSyncJobId = sourceControlSyncJobId;
+            SyncJobId = syncJobId;
             CreationTime = creationTime;
             ProvisioningState = provisioningState;
             StartTime = startTime;
             EndTime = endTime;
-            StartedBy = startedBy;
-            Errors = errors;
+            StartType = startType;
+            Exception = exception;
             CustomInit();
         }
 
@@ -73,8 +73,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Gets the source control sync job id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sourceControlSyncJobId")]
-        public string SourceControlSyncJobId { get; set; }
+        [JsonProperty(PropertyName = "properties.syncJobId")]
+        public string SyncJobId { get; set; }
 
         /// <summary>
         /// Gets the creation time of the job.
@@ -102,16 +102,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets the user who started the sync job.
+        /// Gets the type of start for the sync job. Possible values include:
+        /// 'AutoSync', 'ManualSync'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.startedBy")]
-        public string StartedBy { get; set; }
+        [JsonProperty(PropertyName = "properties.startType")]
+        public string StartType { get; set; }
 
         /// <summary>
-        /// Gets or sets error details of the source control sync job.
+        /// Gets the exceptions that occured while running the sync job.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.errors")]
-        public SourceControlSyncJobByIdErrors Errors { get; set; }
+        [JsonProperty(PropertyName = "properties.exception")]
+        public string Exception { get; set; }
 
     }
 }
