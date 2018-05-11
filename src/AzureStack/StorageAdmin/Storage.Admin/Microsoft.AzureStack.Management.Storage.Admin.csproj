@@ -12,7 +12,13 @@
         <PackageTags>Microsoft Azure Stack;Storage;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Storage Admin SDK. Included with this release is support for gathering information about your AzureStack infrastructure and performing administrative operations.
+                Preview release of the AzureStack Storage administrator SDK.  In this release we provide the functionality to 
+                1) Manage storage quotas 
+                2) Garbage collect deleted storage resources 
+                3) Restore deleted storage accounts 
+                4) Migrate containers from one share to another. 
+                5) View information about the individual storage components. 
+                6) View usage and performance information 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

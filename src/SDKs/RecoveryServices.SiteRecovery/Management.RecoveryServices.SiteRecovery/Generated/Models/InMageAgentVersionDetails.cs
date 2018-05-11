@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="status">A value indicating whether security update
         /// required. Possible values include: 'Supported', 'NotSupported',
         /// 'Deprecated', 'UpdateRequired', 'SecurityUpdateRequired'</param>
-        public InMageAgentVersionDetails(string postUpdateRebootStatus = default(string), string version = default(string), System.DateTime? expiryDate = default(System.DateTime?), AgentVersionStatus? status = default(AgentVersionStatus?))
+        public InMageAgentVersionDetails(string postUpdateRebootStatus = default(string), string version = default(string), System.DateTime? expiryDate = default(System.DateTime?), string status = default(string))
         {
             PostUpdateRebootStatus = postUpdateRebootStatus;
             Version = version;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'UpdateRequired', 'SecurityUpdateRequired'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public AgentVersionStatus? Status { get; set; }
+        public string Status { get; set; }
 
     }
 }

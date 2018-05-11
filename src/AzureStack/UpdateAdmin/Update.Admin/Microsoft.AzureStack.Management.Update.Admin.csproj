@@ -12,7 +12,10 @@
         <PackageTags>Microsoft Azure Stack;Update;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack Update Admin SDK.
+                Preview release of the AzureStack Update administrator SDK.  With this SDK administrators can 
+                1) List and install available updates 
+                2) Resume interrupted updates 
+                3) View installed updates 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

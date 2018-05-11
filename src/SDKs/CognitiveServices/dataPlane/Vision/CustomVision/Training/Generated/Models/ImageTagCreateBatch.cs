@@ -41,7 +41,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Tags")]
+        [JsonProperty(PropertyName = "tags")]
         public IList<ImageTagCreateEntry> Tags { get; set; }
 
     }

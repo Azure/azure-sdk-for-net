@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RecoveryPlanGroupType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RecoveryPlanGroupType
+    public static class RecoveryPlanGroupType
     {
-        [EnumMember(Value = "Shutdown")]
-        Shutdown,
-        [EnumMember(Value = "Boot")]
-        Boot,
-        [EnumMember(Value = "Failover")]
-        Failover
-    }
-    internal static class RecoveryPlanGroupTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this RecoveryPlanGroupType? value)
-        {
-            return value == null ? null : ((RecoveryPlanGroupType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this RecoveryPlanGroupType value)
-        {
-            switch( value )
-            {
-                case RecoveryPlanGroupType.Shutdown:
-                    return "Shutdown";
-                case RecoveryPlanGroupType.Boot:
-                    return "Boot";
-                case RecoveryPlanGroupType.Failover:
-                    return "Failover";
-            }
-            return null;
-        }
-
-        internal static RecoveryPlanGroupType? ParseRecoveryPlanGroupType(this string value)
-        {
-            switch( value )
-            {
-                case "Shutdown":
-                    return RecoveryPlanGroupType.Shutdown;
-                case "Boot":
-                    return RecoveryPlanGroupType.Boot;
-                case "Failover":
-                    return RecoveryPlanGroupType.Failover;
-            }
-            return null;
-        }
+        public const string Shutdown = "Shutdown";
+        public const string Boot = "Boot";
+        public const string Failover = "Failover";
     }
 }

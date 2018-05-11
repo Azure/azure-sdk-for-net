@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for MultiVmGroupCreateOption.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MultiVmGroupCreateOption
+    public static class MultiVmGroupCreateOption
     {
-        [EnumMember(Value = "AutoCreated")]
-        AutoCreated,
-        [EnumMember(Value = "UserSpecified")]
-        UserSpecified
-    }
-    internal static class MultiVmGroupCreateOptionEnumExtension
-    {
-        internal static string ToSerializedValue(this MultiVmGroupCreateOption? value)
-        {
-            return value == null ? null : ((MultiVmGroupCreateOption)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this MultiVmGroupCreateOption value)
-        {
-            switch( value )
-            {
-                case MultiVmGroupCreateOption.AutoCreated:
-                    return "AutoCreated";
-                case MultiVmGroupCreateOption.UserSpecified:
-                    return "UserSpecified";
-            }
-            return null;
-        }
-
-        internal static MultiVmGroupCreateOption? ParseMultiVmGroupCreateOption(this string value)
-        {
-            switch( value )
-            {
-                case "AutoCreated":
-                    return MultiVmGroupCreateOption.AutoCreated;
-                case "UserSpecified":
-                    return MultiVmGroupCreateOption.UserSpecified;
-            }
-            return null;
-        }
+        public const string AutoCreated = "AutoCreated";
+        public const string UserSpecified = "UserSpecified";
     }
 }

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="failoverDirections">The list of failover
         /// directions.</param>
         /// <param name="customDetails">The custom details.</param>
-        public RecoveryPlanAction(string actionName, IList<ReplicationProtectedItemOperation?> failoverTypes, IList<PossibleOperationsDirections?> failoverDirections, RecoveryPlanActionDetails customDetails)
+        public RecoveryPlanAction(string actionName, IList<string> failoverTypes, IList<string> failoverDirections, RecoveryPlanActionDetails customDetails)
         {
             ActionName = actionName;
             FailoverTypes = failoverTypes;
@@ -61,13 +61,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Gets or sets the list of failover types.
         /// </summary>
         [JsonProperty(PropertyName = "failoverTypes")]
-        public IList<ReplicationProtectedItemOperation?> FailoverTypes { get; set; }
+        public IList<string> FailoverTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the list of failover directions.
         /// </summary>
         [JsonProperty(PropertyName = "failoverDirections")]
-        public IList<PossibleOperationsDirections?> FailoverDirections { get; set; }
+        public IList<string> FailoverDirections { get; set; }
 
         /// <summary>
         /// Gets or sets the custom details.
