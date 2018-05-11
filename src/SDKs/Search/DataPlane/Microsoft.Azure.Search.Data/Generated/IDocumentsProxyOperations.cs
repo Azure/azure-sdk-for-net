@@ -46,5 +46,68 @@ namespace Microsoft.Azure.Search
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<long?>> CountWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Autocompletes incomplete query terms based on input text and
+        /// matching terms in the Azure Search index.
+        /// </summary>
+        /// <param name='autocompleteMode'>
+        /// Autocomplete mode. Possible values include: 'oneTerm', 'twoTerms',
+        /// 'oneTermWithContext'
+        /// </param>
+        /// <param name='search'>
+        /// The incomplete term which should be autocompleted.
+        /// </param>
+        /// <param name='suggesterName'>
+        /// The name of the suggester as specified in the suggesters collection
+        /// that's part of the index definition.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='autocompleteParametersPayload'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(AutocompleteMode autocompleteMode, string search = default(string), string suggesterName = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParametersPayload autocompleteParametersPayload = default(AutocompleteParametersPayload), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Autocompletes incomplete query terms based on input text and
+        /// matching terms in the Azure Search index.
+        /// </summary>
+        /// <param name='autocompleteRequest'>
+        /// The definition of the Autocomplete request.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AutocompleteResult>> AutocompletePostWithHttpMessagesAsync(AutocompleteRequest autocompleteRequest, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
