@@ -8,14 +8,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules.
     /// </summary>
-    public partial class SharedAccessAuthorizationRuleCreateOrUpdateParameters : Resource
+    public partial class SharedAccessAuthorizationRuleCreateOrUpdateParameters
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -30,16 +28,9 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Initializes a new instance of the
         /// SharedAccessAuthorizationRuleCreateOrUpdateParameters class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="properties">Properties of the Namespace
         /// AuthorizationRules.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
-        /// <param name="sku">The sku of the created namespace</param>
-        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(string location, SharedAccessAuthorizationRuleProperties properties, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku))
-            : base(location, id, name, type, tags, sku)
+        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(SharedAccessAuthorizationRuleProperties properties)
         {
             Properties = properties;
             CustomInit();
@@ -62,9 +53,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");

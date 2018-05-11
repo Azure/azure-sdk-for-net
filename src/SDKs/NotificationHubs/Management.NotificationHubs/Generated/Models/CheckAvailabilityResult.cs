@@ -27,17 +27,17 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Initializes a new instance of the CheckAvailabilityResult class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">The sku of the created namespace</param>
         /// <param name="isAvailiable">True if the name is available and can be
         /// used to create new Namespace/NotificationHub. Otherwise
         /// false.</param>
-        public CheckAvailabilityResult(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
-            : base(location, id, name, type, tags, sku)
+        public CheckAvailabilityResult(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
+            : base(id, name, type, location, tags, sku)
         {
             IsAvailiable = isAvailiable;
             CustomInit();

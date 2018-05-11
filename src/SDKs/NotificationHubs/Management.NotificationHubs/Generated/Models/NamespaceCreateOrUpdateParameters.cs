@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Initializes a new instance of the NamespaceCreateOrUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">The sku of the created namespace</param>
         /// <param name="namespaceCreateOrUpdateParametersName">The name of the
@@ -47,10 +47,13 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Australia EastAustralia SoutheastCentral USEast USEast US 2West
         /// USNorth Central USSouth Central USEast AsiaSoutheast AsiaBrazil
         /// SouthJapan EastJapan WestNorth EuropeWest Europe</param>
+        /// <param name="metricId">Identifier for Azure Insights
+        /// metrics</param>
         /// <param name="status">Status of the namespace. It can be any of
         /// these values:1 = Created/Active2 = Creating3 = Suspended4 =
         /// Deleting</param>
         /// <param name="createdAt">The time the namespace was created.</param>
+        /// <param name="updatedAt">The time the namespace was updated.</param>
         /// <param name="serviceBusEndpoint">Endpoint you can use to perform
         /// NotificationHub operations.</param>
         /// <param name="subscriptionId">The Id of the Azure subscription
@@ -61,21 +64,25 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// enabled.</param>
         /// <param name="critical">Whether or not the namespace is set as
         /// Critical.</param>
+        /// <param name="dataCenter">Data center for the namespace</param>
         /// <param name="namespaceType">The namespace type. Possible values
         /// include: 'Messaging', 'NotificationHub'</param>
-        public NamespaceCreateOrUpdateParameters(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string namespaceCreateOrUpdateParametersName = default(string), string provisioningState = default(string), string region = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string subscriptionId = default(string), string scaleUnit = default(string), bool? enabled = default(bool?), bool? critical = default(bool?), NamespaceType? namespaceType = default(NamespaceType?))
-            : base(location, id, name, type, tags, sku)
+        public NamespaceCreateOrUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string namespaceCreateOrUpdateParametersName = default(string), string provisioningState = default(string), string region = default(string), string metricId = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string subscriptionId = default(string), string scaleUnit = default(string), bool? enabled = default(bool?), bool? critical = default(bool?), string dataCenter = default(string), NamespaceType? namespaceType = default(NamespaceType?))
+            : base(id, name, type, location, tags, sku)
         {
             NamespaceCreateOrUpdateParametersName = namespaceCreateOrUpdateParametersName;
             ProvisioningState = provisioningState;
             Region = region;
+            MetricId = metricId;
             Status = status;
             CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
             SubscriptionId = subscriptionId;
             ScaleUnit = scaleUnit;
             Enabled = enabled;
             Critical = critical;
+            DataCenter = dataCenter;
             NamespaceType = namespaceType;
             CustomInit();
         }
@@ -108,6 +115,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         public string Region { get; set; }
 
         /// <summary>
+        /// Gets identifier for Azure Insights metrics
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metricId")]
+        public string MetricId { get; private set; }
+
+        /// <summary>
         /// Gets or sets status of the namespace. It can be any of these
         /// values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting
         /// </summary>
@@ -119,6 +132,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
         public System.DateTime? CreatedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time the namespace was updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.updatedAt")]
+        public System.DateTime? UpdatedAt { get; set; }
 
         /// <summary>
         /// Gets or sets endpoint you can use to perform NotificationHub
@@ -151,6 +170,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.critical")]
         public bool? Critical { get; set; }
+
+        /// <summary>
+        /// Gets or sets data center for the namespace
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataCenter")]
+        public string DataCenter { get; set; }
 
         /// <summary>
         /// Gets or sets the namespace type. Possible values include:
