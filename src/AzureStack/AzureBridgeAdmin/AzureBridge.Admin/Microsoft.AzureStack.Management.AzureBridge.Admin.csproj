@@ -12,7 +12,7 @@
         <PackageTags>Microsoft Azure Stack;AzureBridge;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack AzureBridge Admin SDK.
+                Preview release of the AzureStack AzureBridge administrator SDK which allows you to manage your AzureStack marketplace items. 
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

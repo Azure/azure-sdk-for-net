@@ -86,6 +86,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         IDisasterRecoveryConfigsOperations DisasterRecoveryConfigs { get; }
 
         /// <summary>
+        /// Gets the IMigrationConfigsOperations.
+        /// </summary>
+        IMigrationConfigsOperations MigrationConfigs { get; }
+
+        /// <summary>
         /// Gets the IQueuesOperations.
         /// </summary>
         IQueuesOperations Queues { get; }

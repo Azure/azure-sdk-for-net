@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Search.CustomImageSearch", "BingCustomImageSearch\Microsoft.Azure.CognitiveServices.Search.CustomImageSearch.csproj", "{9342F8F7-F2FF-4CE7-92FC-CE40BAE68438}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Search.CustomImageSearch.Tests", "BingCustomImageSearch.Tests\Microsoft.Azure.CognitiveServices.Search.CustomImageSearch.Tests.csproj", "{2718FE8B-5804-4BCA-AA68-6859BF7A7B6D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9342F8F7-F2FF-4CE7-92FC-CE40BAE68438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9342F8F7-F2FF-4CE7-92FC-CE40BAE68438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9342F8F7-F2FF-4CE7-92FC-CE40BAE68438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9342F8F7-F2FF-4CE7-92FC-CE40BAE68438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2718FE8B-5804-4BCA-AA68-6859BF7A7B6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2718FE8B-5804-4BCA-AA68-6859BF7A7B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2718FE8B-5804-4BCA-AA68-6859BF7A7B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2718FE8B-5804-4BCA-AA68-6859BF7A7B6D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77CF9909-F3EA-478E-904C-A01A9181C017}
+	EndGlobalSection
+EndGlobal

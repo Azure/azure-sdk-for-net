@@ -12,7 +12,9 @@
         <PackageTags>Microsoft Azure Stack;InfrastructureInsights;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                This is a preview release of the AzureStack InfrastructureInsights Admin SDK. Included with this release is support for gathering information about the health of your AzureStack infrastructure.
+                Preview release of the InfrastructureInsights administrator SDK which allows administrators  
+                1) View the health of their AzureStack stamp resources 
+                2) View and manage alerts
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="failoverDeploymentModel">The failover deployment
         /// model. Possible values include: 'NotApplicable', 'Classic',
         /// 'ResourceManager'</param>
-        public CreateRecoveryPlanInputProperties(string primaryFabricId, string recoveryFabricId, IList<RecoveryPlanGroup> groups, FailoverDeploymentModel? failoverDeploymentModel = default(FailoverDeploymentModel?))
+        public CreateRecoveryPlanInputProperties(string primaryFabricId, string recoveryFabricId, IList<RecoveryPlanGroup> groups, string failoverDeploymentModel = default(string))
         {
             PrimaryFabricId = primaryFabricId;
             RecoveryFabricId = recoveryFabricId;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// include: 'NotApplicable', 'Classic', 'ResourceManager'
         /// </summary>
         [JsonProperty(PropertyName = "failoverDeploymentModel")]
-        public FailoverDeploymentModel? FailoverDeploymentModel { get; set; }
+        public string FailoverDeploymentModel { get; set; }
 
         /// <summary>
         /// Gets or sets the recovery plan groups.

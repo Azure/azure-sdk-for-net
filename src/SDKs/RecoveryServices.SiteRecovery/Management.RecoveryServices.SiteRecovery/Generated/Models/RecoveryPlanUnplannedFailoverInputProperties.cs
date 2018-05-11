@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Required', 'NotRequired'</param>
         /// <param name="providerSpecificDetails">The provider specific
         /// properties.</param>
-        public RecoveryPlanUnplannedFailoverInputProperties(PossibleOperationsDirections failoverDirection, SourceSiteOperations sourceSiteOperations, IList<RecoveryPlanProviderSpecificFailoverInput> providerSpecificDetails = default(IList<RecoveryPlanProviderSpecificFailoverInput>))
+        public RecoveryPlanUnplannedFailoverInputProperties(string failoverDirection, string sourceSiteOperations, IList<RecoveryPlanProviderSpecificFailoverInput> providerSpecificDetails = default(IList<RecoveryPlanProviderSpecificFailoverInput>))
         {
             FailoverDirection = failoverDirection;
             SourceSiteOperations = sourceSiteOperations;
@@ -58,14 +59,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'PrimaryToRecovery', 'RecoveryToPrimary'
         /// </summary>
         [JsonProperty(PropertyName = "failoverDirection")]
-        public PossibleOperationsDirections FailoverDirection { get; set; }
+        public string FailoverDirection { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether source site operations are
         /// required. Possible values include: 'Required', 'NotRequired'
         /// </summary>
         [JsonProperty(PropertyName = "sourceSiteOperations")]
-        public SourceSiteOperations SourceSiteOperations { get; set; }
+        public string SourceSiteOperations { get; set; }
 
         /// <summary>
         /// Gets or sets the provider specific properties.
@@ -76,11 +77,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (FailoverDirection == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FailoverDirection");
+            }
+            if (SourceSiteOperations == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SourceSiteOperations");
+            }
         }
     }
 }

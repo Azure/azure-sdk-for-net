@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Disabled'</param>
         /// <param name="crashConsistentFrequencyInMinutes">The crash
         /// consistent snapshot frequency in minutes.</param>
-        public RcmAzureMigrationPolicyDetails(int? recoveryPointThresholdInMinutes = default(int?), int? recoveryPointHistory = default(int?), int? appConsistentFrequencyInMinutes = default(int?), MultiVmSyncStatus? multiVmSyncStatus = default(MultiVmSyncStatus?), int? crashConsistentFrequencyInMinutes = default(int?))
+        public RcmAzureMigrationPolicyDetails(int? recoveryPointThresholdInMinutes = default(int?), int? recoveryPointHistory = default(int?), int? appConsistentFrequencyInMinutes = default(int?), string multiVmSyncStatus = default(string), int? crashConsistentFrequencyInMinutes = default(int?))
         {
             RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;
             RecoveryPointHistory = recoveryPointHistory;
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// enabled. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "multiVmSyncStatus")]
-        public MultiVmSyncStatus? MultiVmSyncStatus { get; set; }
+        public string MultiVmSyncStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the crash consistent snapshot frequency in minutes.

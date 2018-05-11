@@ -123,7 +123,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://southcentralus.api.cognitive.microsoft.com/customvision/v1.1/Prediction");
+            BaseUri = new System.Uri("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageUrlWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (imageUrl == null)
             {
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<ImagePredictionResultModel>();
+            var _result = new HttpOperationResponse<ImagePrediction>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePredictionResultModel>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePrediction>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImagePrediction>> PredictImageWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (imageData == null)
             {
@@ -491,7 +491,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<ImagePredictionResultModel>();
+            var _result = new HttpOperationResponse<ImagePrediction>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -500,7 +500,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePredictionResultModel>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePrediction>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (imageUrl == null)
             {
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<ImagePredictionResultModel>();
+            var _result = new HttpOperationResponse<ImagePrediction>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -680,7 +680,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePredictionResultModel>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePrediction>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -735,7 +735,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImagePredictionResultModel>> PredictImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImagePrediction>> PredictImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (imageData == null)
             {
@@ -859,7 +859,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<ImagePredictionResultModel>();
+            var _result = new HttpOperationResponse<ImagePrediction>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -868,7 +868,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePredictionResultModel>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ImagePrediction>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

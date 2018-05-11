@@ -12,7 +12,13 @@
        <PackageTags>Microsoft Azure Stack;Subscription;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
           <![CDATA[
-            This is a preview release of the AzureStack Subscription Admin SDK.
+            Preview release of the AzureStack Subscription administrator SDK.  This SDK provides functionality for administrators to 
+            1) Manage plans and offers 
+            2) Manage subscription
+            3) Manage plan acquisitions
+            4) Manage offer delegation
+            5) Manage locations
+            6) Manage directory tenants
           ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
