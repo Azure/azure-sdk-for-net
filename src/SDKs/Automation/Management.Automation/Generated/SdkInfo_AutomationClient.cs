@@ -50,6 +50,7 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "SoftwareUpdateConfigurations", "2017-05-15-preview"),
                 new Tuple<string, string, string>("Automation", "SourceControl", "2017-05-15-preview"),
                 new Tuple<string, string, string>("Automation", "SourceControlSyncJob", "2017-05-15-preview"),
+                new Tuple<string, string, string>("Automation", "SourceControlSyncJobStreams", "2017-05-15-preview"),
                 new Tuple<string, string, string>("Automation", "Statistics", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "TestJob", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "TestJobStreams", "2015-10-31"),

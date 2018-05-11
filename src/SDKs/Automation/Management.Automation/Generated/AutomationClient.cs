@@ -216,6 +216,11 @@ namespace Microsoft.Azure.Management.Automation
         public virtual ISourceControlSyncJobOperations SourceControlSyncJob { get; private set; }
 
         /// <summary>
+        /// Gets the ISourceControlSyncJobStreamsOperations.
+        /// </summary>
+        public virtual ISourceControlSyncJobStreamsOperations SourceControlSyncJobStreams { get; private set; }
+
+        /// <summary>
         /// Gets the IJobOperations.
         /// </summary>
         public virtual IJobOperations Job { get; private set; }
@@ -485,6 +490,7 @@ namespace Microsoft.Azure.Management.Automation
             SoftwareUpdateConfigurationMachineRuns = new SoftwareUpdateConfigurationMachineRunsOperations(this);
             SourceControl = new SourceControlOperations(this);
             SourceControlSyncJob = new SourceControlSyncJobOperations(this);
+            SourceControlSyncJobStreams = new SourceControlSyncJobStreamsOperations(this);
             Job = new JobOperations(this);
             JobStream = new JobStreamOperations(this);
             AgentRegistrationInformation = new AgentRegistrationInformationOperations(this);

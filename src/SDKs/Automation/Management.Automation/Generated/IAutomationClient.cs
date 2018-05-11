@@ -211,6 +211,11 @@ namespace Microsoft.Azure.Management.Automation
         ISourceControlSyncJobOperations SourceControlSyncJob { get; }
 
         /// <summary>
+        /// Gets the ISourceControlSyncJobStreamsOperations.
+        /// </summary>
+        ISourceControlSyncJobStreamsOperations SourceControlSyncJobStreams { get; }
+
+        /// <summary>
         /// Gets the IJobOperations.
         /// </summary>
         IJobOperations Job { get; }
