@@ -16,7 +16,7 @@ namespace Automation.Tests.ScenarioTests
 
     public class AutomationTest 
     {
-        //[Fact]
+        [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateUpdateDeleteRunbook()
         {
             using (var context = MockContext.Start(GetType().FullName))
@@ -269,7 +269,7 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        //[Fact]
+        [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateUpdateDeleteDscNodeConfiguration()
         {
             using (var context = MockContext.Start(GetType().FullName))
@@ -429,7 +429,7 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        //[Fact]
+        [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateSourceControlSyncJob()
         {
             using (var context = MockContext.Start(GetType().FullName))
