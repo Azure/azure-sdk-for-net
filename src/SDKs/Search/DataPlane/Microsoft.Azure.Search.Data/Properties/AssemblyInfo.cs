@@ -18,6 +18,6 @@ namespace Microsoft.Azure.Search
     internal class Consts
     {
         // Putting this in AssemblyInfo.cs so we remember to change it when the major SDK version changes.
-        public const string TargetApiVersion = "2016-09-01-Preview";
+        public const string TargetApiVersion = "2017-11-11-Preview";
     }
 }
