@@ -39,6 +39,16 @@
   <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="TestData\SigningManifests\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="TestData\SigningManifests\SingleFileSignRequestManifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <Target Name="BuildCmdletModule" BeforeTargets="Build" Condition="'$(AfterBuild)' != 'true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" BuildInParallel="true" Properties="EnableDefaultCompileItems=false;AfterBuild=true;AssemblyName=$(SdkSampleAssemblyName);OutputType=Library;IntermediateOutputPath=$(IntermediateOutputPath)sdkInfoSam\" />

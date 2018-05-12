@@ -1,5 +1,4 @@
-﻿using Microsoft.WindowsAzure.Build.Tasks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,23 +6,19 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Build.Tasks.Tests
+namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
 {
-    public class BuildTestBase
+    class FileSystemUtility
     {
-        internal string rootDir = string.Empty;
-        internal string sourceRootDir = string.Empty;
 
-        public string RootDir { get; private set; }
-        public string SourceRootDir { get; private set; }
+        //internal string SplitDirPath(string split)
 
-        public BuildTestBase()
-        {
-            RootDir = GetSourceRootDir();
-            SourceRootDir = Path.Combine(RootDir, "src");
-        }
-
-        internal string GetSourceRootDir()
+        /// <summary>
+        /// Given a directory path, traverses one directory
+        /// </summary>
+        /// <param name="directoryNameToken"></param>
+        /// <returns></returns>
+        internal string TraverseTowardsRoot(string directoryNameToken)
         {
             string srcRootDir = string.Empty;
             string currDir = Directory.GetCurrentDirectory();
@@ -57,21 +52,6 @@ namespace Build.Tasks.Tests
             return srcRootDir;
         }
 
-        internal string GetSourceDir()
-        {
-            return Path.Combine(GetSourceRootDir(), "src");
-        }
 
-
-
-        protected SDKCategorizeProjects GetCategorizedProjects(string scope)
-        {
-            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
-            cproj.SourceRootDirPath = GetSourceDir();
-            cproj.BuildScope = scope;
-            cproj.Execute();
-
-            return cproj;
-        }
     }
 }

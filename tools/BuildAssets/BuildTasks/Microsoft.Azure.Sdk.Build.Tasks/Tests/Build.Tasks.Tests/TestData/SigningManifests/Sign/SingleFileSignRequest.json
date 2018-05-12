@@ -1,0 +1,39 @@
+{
+  "Version": "1.0.0", 
+
+  "ContextData": { 
+    "mykey1": "myValue1",
+    "myKey2": "myValue2"
+  },
+  "DriEmail": [ "test1@microsoft.com", "test2@microsoft.com" ], 
+  "GroupId": null, 
+  "CorrelationVector": null, 
+  "SignBatches": [
+    {
+      "SourceLocationType": "UNC",
+      "SourceRootDirectory": "c:\\temp\\ClientExe\\Input",
+      "DestinationLocationType": "UNC",
+      "DestinationRootDirectory": "c:\\temp\\ClientExe\\Output",
+      "SignRequestFiles": [
+        {
+          "CustomerCorrelationId": "01A7F55F-6CDD-4123-B255-77E6F212CDAD",
+          "SourceLocation": "InputFile\\4-StaticBvt-notepad.exe",
+          "SourceHash": "",
+          "HashType": null,
+          "SizeInBytes": 0,
+          "Name": "4-StaticBvt-notepad.exe",
+          "DestinationLocation": "Signed1\\4-StaticBvt-notepad.exe"
+        }
+      ],
+      "SigningInfo": {
+        "Operations": [
+          {
+            "KeyCode": "CodeSignTestCertSha2TestRoot",
+            "OperationCode": "Authenticode_SignTool6.2.9304_NPH",
+            "Parameters": {}
+          }
+        ]
+      }
+    }
+  ]
+}
