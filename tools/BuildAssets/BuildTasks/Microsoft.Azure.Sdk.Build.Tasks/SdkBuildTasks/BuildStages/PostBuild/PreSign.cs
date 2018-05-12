@@ -23,22 +23,27 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         public bool DebugTrace { get; set; }
 
         public ITaskItem[] SdkProjects { get; set; }
+        
+        /// <summary>
+        /// space delimited extension include . char
+        /// e.g. .nupkg .dll
+        /// </summary>
+        public string FileToSignSearchExtension { get; set; }
 
         public string[] FilesToSignWithFullPath { get; set; }
 
         public string SignedFilesRootDirPath { get; set; }
 
-        /// <summary>
-        /// Supported values are:
-        /// nupkg, dll
-        /// 
-        /// </summary>
-        public string FileType { get; set; }
-
-
 
         #region private internal fields
         List<string> FinalFileListToBeSigned { get; set; }
+
+        List<string> SignFilesFromProjects { get; set; }
+
+        List<string> SignFileFromFullPath { get; set; }
+
+        List<string> SignFileFromRootDir { get; set; }
+
         #endregion
 
 
@@ -46,54 +51,201 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         {
             DebugTraceEnabled = DebugTrace;
             FinalFileListToBeSigned = new List<string>();
+
+            SignFilesFromProjects = new List<string>();
+            SignFileFromFullPath = new List<string>();
+            SignFileFromRootDir = new List<string>();
         }
 
 
         public override bool Execute()
         {
-            if(SdkProjects.Any<ITaskItem>())
-            {
-                List<SdkProjectMetaData> filteredProjects = TaskData.GetSdkProjects(SdkProjects);
-                
-                foreach (SdkProjectMetaData sdkProj in filteredProjects)
-                {
-                    FinalFileListToBeSigned.Add(sdkProj.TargetOutputFullPath);
-                }
-            }
-
-            if(FilesToSignWithFullPath != null)
-            {
-                if (FilesToSignWithFullPath.Any<string>())
-                {
-                    FinalFileListToBeSigned.AddRange(FilesToSignWithFullPath);
-                }
-            }
-
-
-
-
+            InitFileList();
             return true;
         }
 
 
-        private void CreateScanManifest()
+        private void InitFileList()
         {
-            string[] pathSplitToken = new string[] { "bin" };
-
-            SignRequest signReq = new SignRequest();
-            SignBatch signBatch = new SignBatch();
-            //SignRequestFile signReqFile = new SignRequestFile();
-            
-
-            foreach(string fp in FinalFileListToBeSigned)
+            #region From Projects
+            // Build File list from projects that got built
+            if (SdkProjects.Any<ITaskItem>())
             {
-                string[] fileSplitPaths = fp.Split(pathSplitToken, StringSplitOptions.RemoveEmptyEntries);
+                List<SdkProjectMetaData> filteredProjects = TaskData.GetSdkProjects(SdkProjects);
 
-                SignRequestFile srf = new SignRequestFile();
-
-                srf.Name = Path.GetFileName(fp);
-                srf.SourceLocation = Path.GetDirectoryName(fp);
+                foreach (SdkProjectMetaData sdkProj in filteredProjects)
+                {
+                    SignFilesFromProjects.Add(sdkProj.TargetOutputFullPath);
+                }
             }
+            #endregion
+
+            #region FullPath File list
+            // Build file list from provided file list
+
+            if (FilesToSignWithFullPath != null)
+            {
+                if (FilesToSignWithFullPath.Any<string>())
+                {
+                    SignFileFromFullPath.AddRange(FilesToSignWithFullPath);
+                }
+            }
+            #endregion
+
+            #region from root directory and searching providing file extensions
+            // Build file list from provided root directory and file extension
+            // this will include search for list of files with expected file extensions in the root directory
+
+            if(string.IsNullOrEmpty(SignedFilesRootDirPath))
+            {
+                this.TaskLogger.LogDebugInfo("'SignedFilesRootDirPath' Provided directory path is empty");
+            }
+            else
+            {
+                if(!Directory.Exists(SignedFilesRootDirPath))
+                {
+                    this.TaskLogger.LogDebugInfo("Provided directory root '{0}' does not exists, files from the provided will be skipped", SignedFilesRootDirPath);
+                }
+                else
+                {
+                    char[] extSplitToken = new char[] { ' ' };
+                    string[] fileExt = FileToSignSearchExtension.Split(extSplitToken, StringSplitOptions.RemoveEmptyEntries);
+
+                    IEnumerable<string> files = null;
+                    foreach (string extToSearch in fileExt)
+                    {
+                        files.Concat(Directory.EnumerateFiles(SignedFilesRootDirPath, extToSearch));
+                    }
+                }
+            }
+
+            #endregion
+
+        }
+
+
+        private void CreateNugetSignManifest()
+        {
+            SignRequest nugetSignReq = CreateSignRequestModel("binaries");
+        }
+
+
+        private SignRequest CreateSignRequestModel(string rootDirSplitToken)
+        {
+            string[] pathSplitToken = new string[] { rootDirSplitToken };
+
+            Dictionary<string, SignBatch> signBatchDictionary = new Dictionary<string, SignBatch>();
+            SignRequest signReq = null;
+
+            foreach (string signFilePath in FinalFileListToBeSigned)
+            {
+                string[] fileSplitPaths = signFilePath.Split(pathSplitToken, StringSplitOptions.RemoveEmptyEntries);
+
+                if (fileSplitPaths != null)
+                {
+                    if (fileSplitPaths.Length >= 2)
+                    {
+                        if (!signBatchDictionary.ContainsKey(fileSplitPaths[0]))
+                        {
+                            SignBatch signBatch = new SignBatch();
+                            signBatch.SourceRootDirectory = fileSplitPaths[0];
+                            signBatch.DestinationRootDirectory = fileSplitPaths[0];
+                            SigningInfo sInfo = new SigningInfo();
+
+                            SignRequestFile srf = new SignRequestFile();
+                            srf.Name = Path.GetFileName(signFilePath);
+                            srf.SourceLocation = fileSplitPaths[1];
+                            srf.DestinationLocation = fileSplitPaths[1];
+
+                            signBatch.SignRequestFiles.Add(srf);
+                            signBatchDictionary.Add(fileSplitPaths[0], signBatch);
+                        }
+                        else
+                        {
+                            if (signBatchDictionary.TryGetValue(fileSplitPaths[0], out SignBatch sb))
+                            {
+                                sb.SignRequestFiles[0].SourceLocation = fileSplitPaths[1];
+                                sb.SignRequestFiles[0].DestinationLocation = fileSplitPaths[1];
+                                sb.SignRequestFiles[0].Name = Path.GetFileName(signFilePath);
+
+                                signBatchDictionary[fileSplitPaths[0]] = sb;
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (KeyValuePair<string, SignBatch> sbKeyVal in signBatchDictionary)
+            {
+                if (signReq == null)
+                {
+                    signReq = new SignRequest();
+                }
+                else
+                {
+                    signReq.SignBatches.Add(sbKeyVal.Value);
+                }
+            }
+
+            return signReq;
+        }
+
+
+        private void CreateDllSignManifest()
+        {
+            //string[] pathSplitToken = new string[] { "bin" };
+            //Dictionary<string, SignBatch> signBatchDictionary = new Dictionary<string, SignBatch>();
+            //SignRequest signReq = null;
+
+            //foreach(string signFilePath in FinalFileListToBeSigned)
+            //{
+            //    string[] fileSplitPaths = signFilePath.Split(pathSplitToken, StringSplitOptions.RemoveEmptyEntries);
+
+            //    if(fileSplitPaths != null)
+            //    {
+            //        if (fileSplitPaths.Length >= 2)
+            //        {
+            //            if(!signBatchDictionary.ContainsKey(fileSplitPaths[0]))
+            //            {
+            //                SignBatch signBatch = new SignBatch();
+            //                signBatch.SourceRootDirectory = fileSplitPaths[0];
+            //                signBatch.DestinationRootDirectory = fileSplitPaths[0];
+            //                SigningInfo sInfo = new SigningInfo();
+                            
+            //                SignRequestFile srf = new SignRequestFile();
+            //                srf.Name = Path.GetFileName(signFilePath);
+            //                srf.SourceLocation = fileSplitPaths[1];
+            //                srf.DestinationLocation = fileSplitPaths[1];
+
+            //                signBatch.SignRequestFiles.Add(srf);
+            //                signBatchDictionary.Add(fileSplitPaths[0], signBatch);
+            //            }
+            //            else
+            //            {
+            //                if(signBatchDictionary.TryGetValue(fileSplitPaths[0], out SignBatch sb))
+            //                {
+            //                    sb.SignRequestFiles[0].SourceLocation = fileSplitPaths[1];
+            //                    sb.SignRequestFiles[0].DestinationLocation = fileSplitPaths[1];
+            //                    sb.SignRequestFiles[0].Name = Path.GetFileName(signFilePath);
+
+            //                    signBatchDictionary[fileSplitPaths[0]] = sb;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+            //foreach(KeyValuePair<string, SignBatch> sbKeyVal in signBatchDictionary)
+            //{
+            //    if(signReq == null)
+            //    {
+            //        signReq = new SignRequest();
+            //    }
+            //    else
+            //    {
+            //        signReq.SignBatches.Add(sbKeyVal.Value);
+            //    }
+            //}
         }
 
         /*
@@ -115,4 +267,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         */
 
     }
+
+
+
+    internal class SignInternalRequest
+    {
+
+    }
+
 }
