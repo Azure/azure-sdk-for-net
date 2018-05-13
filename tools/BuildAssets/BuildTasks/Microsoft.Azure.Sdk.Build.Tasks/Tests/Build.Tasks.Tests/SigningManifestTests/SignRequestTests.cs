@@ -12,9 +12,8 @@ namespace Build.Tasks.Tests.SigningManifestTests
     using Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp.Sign;
     using System.IO;
 
-    public class SignRequestTests : SdkBuildTestBase
+    public class SignRequestTests : BuildTestBase
     {
-
         public SignRequestTests() { }
 
         [Fact]

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp.Sign
+namespace Microsoft.Azure.Sdk.Build.Common.Models.Esrp.Sign
 {
     using Newtonsoft.Json;
     using System.Collections.Generic;
@@ -30,15 +30,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp.Sign
 
         public SignRequest()
         {
-            Version = "1.0.0";
+            Version = "";
             ContextData = new ContextData();
             SignBatches = new List<SignBatch>();
-            DriEmail = new List<string>() { "abhishah@microsoft.com" };
-        }
 
-        public SignRequest(string signBuildName) : this()
-        {
-            ContextData.SignBuildName = signBuildName;
+
         }
 
 
@@ -47,7 +43,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp.Sign
             SignRequest signReq = new SignRequest();
 
             signReq.Version = "1.0.0";
-            signReq.ContextData = new ContextData("");
+            signReq.ContextData = new ContextData();
             signReq.DriEmail = new List<string>() { "abhishah@microsoft.com" };
             signReq.SignBatches = new List<SignBatch>();
 
@@ -76,22 +72,21 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp.Sign
 
             return signReq;
         }
+
+        //public SignRequest FromJson(string json) => JsonConvert.DeserializeObject<SignRequest>(json, this.EsrpModelDeSerializerSetting);
+
+        //public SignRequest FromJsonFile(string jsonFilePath) => FromJson(File.ReadAllText(jsonFilePath));
+
+        //public string ToJson() => JsonConvert.SerializeObject(this, this.EsrpModelSerializerSetting);
     }
 
     public partial class ContextData
     {
-        [JsonProperty("signbuildname")]
-        public string SignBuildName { get; set; }
+        [JsonProperty("mykey1")]
+        public string Mykey1 { get; set; }
 
         [JsonProperty("myKey2")]
         public string MyKey2 { get; set; }
-
-        public ContextData(string buildName)
-        {
-            SignBuildName = buildName;
-        }
-
-        public ContextData() { }
     }
 
     public partial class SignBatch

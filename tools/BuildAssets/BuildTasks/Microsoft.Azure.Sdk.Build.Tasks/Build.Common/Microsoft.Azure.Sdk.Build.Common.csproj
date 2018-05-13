@@ -1,9 +1,9 @@
 ﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.Sdk.Build.Tasks</PackageId>
-    <Description>Provides .NET SDK Build tools tasks</Description>
-    <AssemblyTitle>Microsoft.Azure.Sdk.Build.Tasks</AssemblyTitle>
-    <AssemblyName>Microsoft.Azure.Sdk.Build.Tasks</AssemblyName>
+    <PackageId>Microsoft.Azure.Sdk.Build.Common</PackageId>
+    <Description>Azure SDK build common </Description>
+    <AssemblyTitle>Microsoft.Azure.Sdk.Build.Common</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Sdk.Build.Common</AssemblyName>
     <Version>1.0.0</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(CmdLineBuild)' == 'true'">
@@ -17,15 +17,13 @@
     <OutputPath>$(TaskBinaryOutput)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="StaticAnalysisTasks\**" />
-    <EmbeddedResource Remove="StaticAnalysisTasks\**" />
-    <None Remove="StaticAnalysisTasks\**" />
-  </ItemGroup>  
-  <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utilities\" />
   </ItemGroup>
 </Project>

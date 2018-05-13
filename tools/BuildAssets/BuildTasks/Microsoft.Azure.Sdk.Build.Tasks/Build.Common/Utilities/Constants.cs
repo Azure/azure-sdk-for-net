@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
+namespace Microsoft.Azure.Sdk.Build.Common.Utilities
 {
     /// <summary>
     /// Constants used within the Build.Tasks library
@@ -39,13 +39,6 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             // Switch to Attributes on enums for description
             public static string Net452 = "net452";
             public static string NetStd14 = "netstandard1.4";
-        }
-
-        internal static class SigningConstants
-        {
-            public const string SigningsProjectsManifestFileName = "AzSdkProject_SigningRequest.json";
-            public const string SigningsFullFilePathManifestFileName = "FullFilePath_SigningRequest.json";
-            public const string SigningsRootDirFilesManifestFileName = "RootDirFiles_SigningRequest.json";
         }
     }
 }

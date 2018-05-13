@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp
+namespace Microsoft.Azure.Sdk.Build.Common.Models.Esrp
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -81,29 +81,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp
 
         public string ToJson() => JsonConvert.SerializeObject(this, EsrpModelSerializerSetting);
 
-        public string ToJsonFile(string jsonFilePath)
-        {
-            if(File.Exists(jsonFilePath))
-            {
-                File.Delete(jsonFilePath);
-            }
 
-            string dirPath = Path.GetDirectoryName(jsonFilePath);
-            if(!Directory.Exists(dirPath))
-            {
-                DirectoryInfo dirInfo = new DirectoryInfo(Path.GetDirectoryName(jsonFilePath));
-                dirInfo.Create();
-            }
-
-            string jsonContents = this.ToJson();
-            File.WriteAllText(jsonFilePath, jsonContents);
-
-            if(!File.Exists(jsonFilePath))
-            {
-                //Log error
-            }
-
-            return jsonFilePath;
-        }
     }
 }
