@@ -242,6 +242,16 @@ namespace Microsoft.Azure.Management.Sql
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        IDatabaseVulnerabilityAssessmentRuleBaselinesOperations DatabaseVulnerabilityAssessmentRuleBaselines { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IDatabaseVulnerabilityAssessmentsOperations DatabaseVulnerabilityAssessments { get; }
+
+        /// <summary>
         /// Gets the ILongTermRetentionBackupsOperations.
         /// </summary>
         ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; }
