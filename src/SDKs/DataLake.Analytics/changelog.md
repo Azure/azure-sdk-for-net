@@ -1,5 +1,13 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
+### Changes in 3.5.0-preview
+
+**Notes**
+
+- Added new Catalog APIs:
+    - Catalog_PreviewTablePartition
+    - Catalog_PreviewTable
+
 ### Changes in 3.4.0-preview
 
 **Notes**
