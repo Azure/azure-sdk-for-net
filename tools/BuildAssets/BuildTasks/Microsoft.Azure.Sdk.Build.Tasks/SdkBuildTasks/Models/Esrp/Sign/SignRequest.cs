@@ -197,6 +197,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp.Sign
 
         [JsonProperty("Parameters")]
         public Parameters Parameters { get; set; }
+
+        [JsonProperty("ToolName")]
+        public string ToolName { get; set; }
+
+        [JsonProperty("ToolVersion")]
+        public string ToolVersion { get; set; }
     }
 
     public partial class Parameters

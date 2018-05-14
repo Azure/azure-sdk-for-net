@@ -45,6 +45,12 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Update="TestData\PublishedNugets\Microsoft.Azure.Management.Compute.18.0.0.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\PublishedNugets\Microsoft.Azure.Management.Compute.18.0.0.symbols.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\SigningManifests\SingleFileSignRequestManifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

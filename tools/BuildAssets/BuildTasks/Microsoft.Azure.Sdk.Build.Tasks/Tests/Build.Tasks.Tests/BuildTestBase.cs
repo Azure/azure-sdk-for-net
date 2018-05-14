@@ -51,10 +51,10 @@ namespace Build.Tasks.Tests
 
             string dirRoot = Directory.GetDirectoryRoot(currDir);
 
-            var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
-
             while (currDir != dirRoot)
             {
+                var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
+
                 if (buildProjFile.Any<string>())
                 {
                     srcRootDir = Path.GetDirectoryName(buildProjFile.First<string>());
@@ -62,12 +62,7 @@ namespace Build.Tasks.Tests
                 }
 
                 currDir = Directory.GetParent(currDir).FullName;
-                buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
-            }
-
-            if (string.IsNullOrEmpty(srcRootDir))
-            {
-                srcRootDir = @"C:\MyFork\vs17Dev";
+                //buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
             }
 
             return srcRootDir;

@@ -72,13 +72,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp
         {
 
         }
-
-
-
-        public static T FromJson(string json) => JsonConvert.DeserializeObject<T>(json, EsrpModelDeSerializerSetting);
-
-        public static T FromJsonFile(string jsonFilePath) => FromJson(File.ReadAllText(jsonFilePath));
-
         public string ToJson() => JsonConvert.SerializeObject(this, EsrpModelSerializerSetting);
 
         public string ToJsonFile(string jsonFilePath)
@@ -105,5 +98,14 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp
 
             return jsonFilePath;
         }
+
+
+        #region Static Methods
+        public static T FromJson(string json) => JsonConvert.DeserializeObject<T>(json, EsrpModelDeSerializerSetting);
+
+        public static T FromJsonFile(string jsonFilePath) => FromJson(File.ReadAllText(jsonFilePath));
+
+
+        #endregion
     }
 }

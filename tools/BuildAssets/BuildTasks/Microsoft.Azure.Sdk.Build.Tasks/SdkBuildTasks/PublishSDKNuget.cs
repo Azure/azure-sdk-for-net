@@ -6,14 +6,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks
     using System;
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
-    using Microsoft.WindowsAzure.Build.Tasks.ExecProcess;
+    //using Microsoft.WindowsAzure.Build.Tasks.ExecProcess;
     using Microsoft.WindowsAzure.Build.Tasks.Utilities;
     using System.IO;
     using System.Collections.Generic;
     using System.Linq;
     using System.Diagnostics;
+    using Microsoft.Azure.Sdk.Build.ExecProcess;
 
-    public class PublishSDKNuget : Task
+    public class PublishSDKNugetTask : Task
     {
         #region fields
         /// <summary>
@@ -24,7 +25,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         private string _apiKey;
         #endregion
 
-        public PublishSDKNuget()
+        public PublishSDKNugetTask()
         {
             _publishAllNugetsunderScope = false;
             _buildEngineInitialized = false;

@@ -28,9 +28,18 @@
       "SigningInfo": {
         "Operations": [
           {
-            "KeyCode": "CodeSignTestCertSha2TestRoot",
-            "OperationCode": "Authenticode_SignTool6.2.9304_NPH",
-            "Parameters": {}
+            "KeyCode": "CP-401405",
+            "OperationCode": "NuGetSign",
+            "Parameters": {},
+            "ToolName": "sign",
+            "ToolVersion": "1.0"
+          },
+          {
+            "KeyCode": "CP-401405",
+            "OperationCode": "NuGetVerify",
+            "Parameters": {},
+            "ToolName": "sign",
+            "ToolVersion": "1.0"
           }
         ]
       }

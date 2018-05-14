@@ -48,7 +48,16 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         /// <summary>
         /// Root directory for creating manifest files needed for signing service
         /// </summary>
+        [Required]
         public string InSignManifestDirPath { get; set; }
+
+        /// <summary>
+        /// Possible values
+        /// 1) nuget
+        /// more types will be added
+        /// </summary>
+        [Required]
+        public string InSigningOperation { get; set; }
 
         #endregion
 
@@ -103,7 +112,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
             if (SignFileListFromRootDir.Count > 0)
             {
-                SignRequest projSignReq = CreateSignRequestModel(SignFileListFromRootDir, @"binaries\");
+                SignRequest projSignReq = CreateSignRequestModel(SignFileListFromRootDir, InSignedFilesRootDirPath);
                 if (projSignReq != null)
                 {
                     manifestFileList.Add(projSignReq.ToJsonFile(Path.Combine(InSignManifestDirPath, Constants.SigningConstants.SigningsRootDirFilesManifestFileName)));
@@ -119,15 +128,19 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         {
             #region From Projects
             // Build File list from projects that got built
-            if (InSdkProjects.Any<ITaskItem>())
+            if(InSdkProjects != null)
             {
-                List<SdkProjectMetaData> filteredProjects = TaskData.GetSdkProjects(InSdkProjects);
-
-                foreach (SdkProjectMetaData sdkProj in filteredProjects)
+                if (InSdkProjects.Any<ITaskItem>())
                 {
-                    SignFileListFromProjects.Add(sdkProj.TargetOutputFullPath);
+                    List<SdkProjectMetaData> filteredProjects = TaskData.GetSdkProjects(InSdkProjects);
+
+                    foreach (SdkProjectMetaData sdkProj in filteredProjects)
+                    {
+                        SignFileListFromProjects.Add(sdkProj.TargetOutputFullPath);
+                    }
                 }
             }
+            
             #endregion
 
             #region FullPath File list
@@ -161,17 +174,22 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                     char[] extSplitToken = new char[] { ' ' };
                     string[] fileExt = InSearchExtensionToSearch.Split(extSplitToken, StringSplitOptions.RemoveEmptyEntries);
 
-                    IEnumerable<string> files = null;
+                    List<string> searchedFiles = new List<string>();
                     foreach (string extToSearch in fileExt)
                     {
-                        files.Concat(Directory.EnumerateFiles(InSignedFilesRootDirPath, extToSearch, SearchOption.AllDirectories));
+                        string searchPattern = string.Concat("*", extToSearch);
+                        var enumFiles = Directory.EnumerateFiles(InSignedFilesRootDirPath, searchPattern, SearchOption.AllDirectories);
+                        if(enumFiles.Any<string>())
+                        {
+                            searchedFiles.AddRange(enumFiles.ToList<string>());
+                        }
                     }
 
-                    if(files != null)
+                    if(searchedFiles != null)
                     {
-                        if(files.Any<string>())
+                        if(searchedFiles.Any<string>())
                         {
-                            SignFileListFromRootDir.AddRange(files);
+                            SignFileListFromRootDir.AddRange(searchedFiles);
                         }
                     }
                 }
@@ -182,6 +200,15 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
         private SignRequest CreateSignRequestModel(List<string> fileList, string rootDirSplitToken)
         {
+            if(Directory.Exists(rootDirSplitToken))
+            {
+                DirectoryInfo dInfo = new DirectoryInfo(rootDirSplitToken);
+                
+                // We do this in order to get trailing directory separator character
+                rootDirSplitToken = Path.Combine(dInfo.Name, " ").Trim();
+            }
+            
+            //TODO: guard against empty rootDirSplitToken
             string[] pathSplitToken = new string[] { rootDirSplitToken };
 
             Dictionary<string, SignBatch> signBatchDictionary = new Dictionary<string, SignBatch>();
@@ -201,15 +228,17 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                             SignBatch signBatch = new SignBatch();
                             signBatch.SourceRootDirectory = fileSplitPaths[0];
                             signBatch.DestinationRootDirectory = fileSplitPaths[0];
-                            SigningInfo sInfo = new SigningInfo();
 
                             SignRequestFile srf = new SignRequestFile();
                             srf.Name = Path.GetFileName(signFilePath);
                             srf.SourceLocation = fileSplitPaths[1];
                             srf.DestinationLocation = fileSplitPaths[1];
-
+                            
                             signBatch.SignRequestFiles.Add(srf);
                             signBatchDictionary.Add(fileSplitPaths[0], signBatch);
+
+                            //TODO: Identify signingInfo from provided files, do not depend supplied property (InSigningOperation)
+                            signBatch.SigningInfo = CreateSigningInfo(InSigningOperation);
                         }
                         else
                         {
@@ -245,63 +274,33 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         }
 
 
-        private void CreateDllSignManifest()
+        private SigningInfo CreateSigningInfo(string signingOperationType)
         {
-            SignRequest dllSignReq = CreateSignRequestModel(this.SignFileListFromProjects, "bin");
+            SigningInfo signInfo = new SigningInfo();
+            if(signingOperationType != null)
+            {
+                if (signingOperationType.Equals("nuget", StringComparison.OrdinalIgnoreCase))
+                {
+                    Operation signOp = new Operation();
+                    signOp.KeyCode = "CP-401405";
+                    signOp.OperationCode = "NuGetSign";
+                    signOp.ToolName = "sign";
+                    signOp.ToolVersion = "1.0";
+                    signOp.Parameters = new Parameters();
 
-            //string[] pathSplitToken = new string[] { "bin" };
-            //Dictionary<string, SignBatch> signBatchDictionary = new Dictionary<string, SignBatch>();
-            //SignRequest signReq = null;
+                    Operation signVerifyOp = new Operation();
+                    signVerifyOp.KeyCode = "CP-401405";
+                    signVerifyOp.OperationCode = "NuGetVerify";
+                    signVerifyOp.ToolName = "sign";
+                    signVerifyOp.ToolVersion = "1.0";
+                    signVerifyOp.Parameters = new Parameters();
 
-            //foreach(string signFilePath in FinalFileListToBeSigned)
-            //{
-            //    string[] fileSplitPaths = signFilePath.Split(pathSplitToken, StringSplitOptions.RemoveEmptyEntries);
+                    signInfo.Operations.Add(signOp);
+                    signInfo.Operations.Add(signVerifyOp);
+                }
+            }
 
-            //    if(fileSplitPaths != null)
-            //    {
-            //        if (fileSplitPaths.Length >= 2)
-            //        {
-            //            if(!signBatchDictionary.ContainsKey(fileSplitPaths[0]))
-            //            {
-            //                SignBatch signBatch = new SignBatch();
-            //                signBatch.SourceRootDirectory = fileSplitPaths[0];
-            //                signBatch.DestinationRootDirectory = fileSplitPaths[0];
-            //                SigningInfo sInfo = new SigningInfo();
-                            
-            //                SignRequestFile srf = new SignRequestFile();
-            //                srf.Name = Path.GetFileName(signFilePath);
-            //                srf.SourceLocation = fileSplitPaths[1];
-            //                srf.DestinationLocation = fileSplitPaths[1];
-
-            //                signBatch.SignRequestFiles.Add(srf);
-            //                signBatchDictionary.Add(fileSplitPaths[0], signBatch);
-            //            }
-            //            else
-            //            {
-            //                if(signBatchDictionary.TryGetValue(fileSplitPaths[0], out SignBatch sb))
-            //                {
-            //                    sb.SignRequestFiles[0].SourceLocation = fileSplitPaths[1];
-            //                    sb.SignRequestFiles[0].DestinationLocation = fileSplitPaths[1];
-            //                    sb.SignRequestFiles[0].Name = Path.GetFileName(signFilePath);
-
-            //                    signBatchDictionary[fileSplitPaths[0]] = sb;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            //foreach(KeyValuePair<string, SignBatch> sbKeyVal in signBatchDictionary)
-            //{
-            //    if(signReq == null)
-            //    {
-            //        signReq = new SignRequest();
-            //    }
-            //    else
-            //    {
-            //        signReq.SignBatches.Add(sbKeyVal.Value);
-            //    }
-            //}
+            return signInfo;
         }
 
         /*
@@ -323,12 +322,4 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         */
 
     }
-
-
-
-    internal class SignInternalRequest
-    {
-
-    }
-
 }
