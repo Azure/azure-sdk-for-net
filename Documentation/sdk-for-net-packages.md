@@ -58,7 +58,7 @@ Below are the packages maintained in this repository.
 
 | Azure Data Plane Library | Package Name                            | NuGet Download |
 | ------------------------ | --------------------------------------- | -------------- |
-| Batch                    | `Azure.Batch`                           | [![Search](https://img.shields.io/nuget/vpre/Azure.Batch.svg)](https://www.nuget.org/packages/Azure.Batch) |
+| Batch                    | `Microsoft.Azure.Batch`                 | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch) |
 | Graph.RBAC               | `Microsoft.Azure.Graph.RBAC`            | [![Graph.RBAC](https://img.shields.io/nuget/vpre/Microsoft.Azure.Graph.RBAC.svg)](https://www.nuget.org/packages/Microsoft.Azure.Graph.RBAC) |
 | KeyVault                 | `Microsoft.Azure.KeyVault`              | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault) |
 | KeyVault Core            | `Microsoft.Azure.KeyVault.Core`         | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Core.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Core) |
@@ -81,5 +81,5 @@ Below are the packages maintained in this repository.
 
 | Library                  | Package Name                              | NuGet Download |
 | ------------------------ | ----------------------------------------- | -------------- |
-| Batch File Staging       | `Azure.Batch.FileStaging`                 | [![Search](https://img.shields.io/nuget/vpre/Azure.Batch.FileStaging.svg)](https://www.nuget.org/packages/Azure.Batch.FileStaging) |
+| Batch File Staging       | `Microsoft.Azure.Batch.FileStaging`       | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.FileStaging.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch.FileStaging) |
 | Batch File Conventions   | `Microsoft.Azure.Batch.Conventions.Files` | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.Conventions.Files.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch.Conventions.Files) |
