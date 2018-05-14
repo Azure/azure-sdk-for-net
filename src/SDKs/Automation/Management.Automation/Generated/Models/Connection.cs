@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the connection.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Connection
+    public partial class Connection : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Connection class.
@@ -34,8 +34,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the Connection class.
         /// </summary>
-        /// <param name="id">Gets the id of the resource.</param>
-        /// <param name="name">Gets the name of the connection.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="connectionType">Gets or sets the connectionType of the
         /// connection.</param>
         /// <param name="fieldDefinitionValues">Gets the field definition
@@ -43,10 +45,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="creationTime">Gets the creation time.</param>
         /// <param name="lastModifiedTime">Gets the last modified time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public Connection(string id = default(string), string name = default(string), ConnectionTypeAssociationProperty connectionType = default(ConnectionTypeAssociationProperty), IDictionary<string, string> fieldDefinitionValues = default(IDictionary<string, string>), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string))
+        public Connection(string id = default(string), string name = default(string), string type = default(string), ConnectionTypeAssociationProperty connectionType = default(ConnectionTypeAssociationProperty), IDictionary<string, string> fieldDefinitionValues = default(IDictionary<string, string>), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
             ConnectionType = connectionType;
             FieldDefinitionValues = fieldDefinitionValues;
             CreationTime = creationTime;
@@ -59,18 +60,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the id of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the connection.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or sets the connectionType of the connection.
@@ -88,13 +77,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the description.

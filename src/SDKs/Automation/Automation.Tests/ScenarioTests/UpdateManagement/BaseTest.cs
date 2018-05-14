@@ -22,8 +22,6 @@
             {
                 var handler = new RecordedDelegatingHandler();
                 this.automationClient = context.GetServiceClient<AutomationClient>(false, handler);
-                this.automationClient.ResourceGroupName = ResourceGroupName;
-                this.automationClient.AutomationAccountName = AutomationAccountName;
             }
         }
     }

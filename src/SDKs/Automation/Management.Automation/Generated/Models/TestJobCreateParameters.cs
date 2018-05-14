@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,14 +31,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the TestJobCreateParameters class.
         /// </summary>
-        /// <param name="runbookName">Gets or sets the runbook name.</param>
         /// <param name="parameters">Gets or sets the parameters of the test
         /// job.</param>
         /// <param name="runOn">Gets or sets the runOn which specifies the
         /// group name where the job is to be executed.</param>
-        public TestJobCreateParameters(string runbookName, IDictionary<string, string> parameters = default(IDictionary<string, string>), string runOn = default(string))
+        public TestJobCreateParameters(IDictionary<string, string> parameters = default(IDictionary<string, string>), string runOn = default(string))
         {
-            RunbookName = runbookName;
             Parameters = parameters;
             RunOn = runOn;
             CustomInit();
@@ -49,12 +46,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the runbook name.
-        /// </summary>
-        [JsonProperty(PropertyName = "runbookName")]
-        public string RunbookName { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters of the test job.
@@ -69,18 +60,5 @@ namespace Microsoft.Azure.Management.Automation.Models
         [JsonProperty(PropertyName = "runOn")]
         public string RunOn { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (RunbookName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RunbookName");
-            }
-        }
     }
 }

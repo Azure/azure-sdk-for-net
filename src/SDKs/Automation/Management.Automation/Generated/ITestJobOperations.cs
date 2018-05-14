@@ -19,14 +19,17 @@ namespace Microsoft.Azure.Management.Automation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TestJobsOperations operations.
+    /// TestJobOperations operations.
     /// </summary>
-    public partial interface ITestJobsOperations
+    public partial interface ITestJobOperations
     {
         /// <summary>
         /// Create a test job of the runbook.
         /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -51,11 +54,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TestJob>> CreateWithHttpMessagesAsync(string automationAccountName, string runbookName, TestJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestJob>> CreateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, TestJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the test job for the specified runbook.
         /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -77,11 +83,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TestJob>> GetWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestJob>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Resume the test job.
         /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -100,11 +109,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ResumeWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ResumeWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Stop the test job.
         /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -123,11 +135,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> StopWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Suspend the test job.
         /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -146,6 +161,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SuspendWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SuspendWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

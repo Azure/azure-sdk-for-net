@@ -27,8 +27,11 @@ namespace Microsoft.Azure.Management.Automation
         /// Retrieve the automation agent registration information.
         /// <see href="http://aka.ms/azureautomationsdk/agentregistrationoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -45,13 +48,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AgentRegistration>> GetWithHttpMessagesAsync(string automationAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AgentRegistration>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Regenerate a primary or secondary agent registration key
         /// <see href="http://aka.ms/azureautomationsdk/agentregistrationoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='parameters'>
         /// The name of the agent registration key to be regenerated
@@ -71,6 +77,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AgentRegistration>> RegenerateKeyWithHttpMessagesAsync(string automationAccountName, AgentRegistrationRegenerateKeyParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AgentRegistration>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyParameter parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

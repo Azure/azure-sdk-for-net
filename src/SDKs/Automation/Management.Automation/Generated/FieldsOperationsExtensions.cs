@@ -30,6 +30,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
             /// </param>
@@ -39,9 +42,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='typeName'>
             /// The name of type.
             /// </param>
-            public static IEnumerable<TypeField> ListByType(this IFieldsOperations operations, string automationAccountName, string moduleName, string typeName)
+            public static IEnumerable<TypeField> ListByType(this IFieldsOperations operations, string resourceGroupName, string automationAccountName, string moduleName, string typeName)
             {
-                return operations.ListByTypeAsync(automationAccountName, moduleName, typeName).GetAwaiter().GetResult();
+                return operations.ListByTypeAsync(resourceGroupName, automationAccountName, moduleName, typeName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,6 +53,9 @@ namespace Microsoft.Azure.Management.Automation
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
             /// The automation account name.
@@ -63,9 +69,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<TypeField>> ListByTypeAsync(this IFieldsOperations operations, string automationAccountName, string moduleName, string typeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<TypeField>> ListByTypeAsync(this IFieldsOperations operations, string resourceGroupName, string automationAccountName, string moduleName, string typeName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByTypeWithHttpMessagesAsync(automationAccountName, moduleName, typeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTypeWithHttpMessagesAsync(resourceGroupName, automationAccountName, moduleName, typeName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

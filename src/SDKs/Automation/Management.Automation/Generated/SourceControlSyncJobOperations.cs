@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Automation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TestJobsOperations operations.
+    /// SourceControlSyncJobOperations operations.
     /// </summary>
-    internal partial class TestJobsOperations : IServiceOperations<AutomationClient>, ITestJobsOperations
+    internal partial class SourceControlSyncJobOperations : IServiceOperations<AutomationClient>, ISourceControlSyncJobOperations
     {
         /// <summary>
-        /// Initializes a new instance of the TestJobsOperations class.
+        /// Initializes a new instance of the SourceControlSyncJobOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal TestJobsOperations(AutomationClient client)
+        internal SourceControlSyncJobOperations(AutomationClient client)
         {
             if (client == null)
             {
@@ -51,17 +51,23 @@ namespace Microsoft.Azure.Management.Automation
         public AutomationClient Client { get; private set; }
 
         /// <summary>
-        /// Create a test job of the runbook.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Creates the sync job for a source control.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='runbookName'>
-        /// The parameters supplied to the create test job operation.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='sourceControlName'>
+        /// The source control name.
+        /// </param>
+        /// <param name='sourceControlSyncJobId'>
+        /// The source control sync job id.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create test job operation.
+        /// The parameters supplied to the create source control sync job operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -84,40 +90,44 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TestJob>> CreateWithHttpMessagesAsync(string automationAccountName, string runbookName, TestJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControlSyncJob>> CreateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string sourceControlName, System.Guid sourceControlSyncJobId, SourceControlSyncJobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
             if (automationAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
             }
-            if (runbookName == null)
+            if (sourceControlName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "runbookName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlName");
             }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-10-31";
+            string apiVersion = "2017-05-15-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -125,8 +135,10 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
-                tracingParameters.Add("runbookName", runbookName);
+                tracingParameters.Add("sourceControlName", sourceControlName);
+                tracingParameters.Add("sourceControlSyncJobId", sourceControlSyncJobId);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -134,10 +146,11 @@ namespace Microsoft.Azure.Management.Automation
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
-            _url = _url.Replace("{runbookName}", System.Uri.EscapeDataString(runbookName));
+            _url = _url.Replace("{sourceControlName}", System.Uri.EscapeDataString(sourceControlName));
+            _url = _url.Replace("{sourceControlSyncJobId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(sourceControlSyncJobId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -238,7 +251,7 @@ namespace Microsoft.Azure.Management.Automation
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TestJob>();
+            var _result = new AzureOperationResponse<SourceControlSyncJob>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -251,7 +264,7 @@ namespace Microsoft.Azure.Management.Automation
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TestJob>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlSyncJob>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -271,14 +284,20 @@ namespace Microsoft.Azure.Management.Automation
         }
 
         /// <summary>
-        /// Retrieve the test job for the specified runbook.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Retrieve the source control sync job identified by job id.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='sourceControlName'>
+        /// The source control name.
+        /// </param>
+        /// <param name='sourceControlSyncJobId'>
+        /// The source control sync job id.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -301,32 +320,40 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TestJob>> GetWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SourceControlSyncJobById>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string sourceControlName, System.Guid sourceControlSyncJobId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
             if (automationAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
             }
-            if (runbookName == null)
+            if (sourceControlName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "runbookName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlName");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-10-31";
+            string apiVersion = "2017-05-15-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -334,18 +361,21 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
-                tracingParameters.Add("runbookName", runbookName);
+                tracingParameters.Add("sourceControlName", sourceControlName);
+                tracingParameters.Add("sourceControlSyncJobId", sourceControlSyncJobId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
-            _url = _url.Replace("{runbookName}", System.Uri.EscapeDataString(runbookName));
+            _url = _url.Replace("{sourceControlName}", System.Uri.EscapeDataString(sourceControlName));
+            _url = _url.Replace("{sourceControlSyncJobId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(sourceControlSyncJobId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -440,7 +470,7 @@ namespace Microsoft.Azure.Management.Automation
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TestJob>();
+            var _result = new AzureOperationResponse<SourceControlSyncJobById>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -453,7 +483,7 @@ namespace Microsoft.Azure.Management.Automation
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TestJob>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlSyncJobById>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -473,14 +503,20 @@ namespace Microsoft.Azure.Management.Automation
         }
 
         /// <summary>
-        /// Resume the test job.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Retrieve a list of source control sync jobs.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='sourceControlName'>
+        /// The source control name.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -491,6 +527,9 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -500,32 +539,40 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ResumeWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SourceControlSyncJob>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string sourceControlName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (resourceGroupName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (Client.ResourceGroupName != null)
+            if (resourceGroupName != null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
+                if (resourceGroupName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
             if (automationAccountName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
             }
-            if (runbookName == null)
+            if (sourceControlName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "runbookName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlName");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-10-31";
+            string apiVersion = "2017-05-15-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -533,20 +580,26 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
-                tracingParameters.Add("runbookName", runbookName);
+                tracingParameters.Add("sourceControlName", sourceControlName);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Resume", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByAutomationAccount", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/resume").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs").ToString();
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
-            _url = _url.Replace("{runbookName}", System.Uri.EscapeDataString(runbookName));
+            _url = _url.Replace("{sourceControlName}", System.Uri.EscapeDataString(sourceControlName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
@@ -558,7 +611,7 @@ namespace Microsoft.Azure.Management.Automation
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -639,12 +692,30 @@ namespace Microsoft.Azure.Management.Automation
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<IPage<SourceControlSyncJob>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SourceControlSyncJob>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -654,14 +725,11 @@ namespace Microsoft.Azure.Management.Automation
         }
 
         /// <summary>
-        /// Stop the test job.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
+        /// Retrieve a list of source control sync jobs.
+        /// <see href="http://aka.ms/azureautomationsdk/sourcecontrolsyncjoboperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -672,6 +740,9 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -681,32 +752,12 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> StopWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SourceControlSyncJob>>> ListByAutomationAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ResourceGroupName == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (Client.ResourceGroupName != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
-                }
-            }
-            if (automationAccountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
-            }
-            if (runbookName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "runbookName");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            string apiVersion = "2015-10-31";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -714,24 +765,14 @@ namespace Microsoft.Azure.Management.Automation
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("automationAccountName", automationAccountName);
-                tracingParameters.Add("runbookName", runbookName);
-                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Stop", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByAutomationAccountNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/stop").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
-            _url = _url.Replace("{runbookName}", System.Uri.EscapeDataString(runbookName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -739,7 +780,7 @@ namespace Microsoft.Azure.Management.Automation
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -820,193 +861,30 @@ namespace Microsoft.Azure.Management.Automation
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<IPage<SourceControlSyncJob>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
-            if (_shouldTrace)
+            // Deserialize Response
+            if ((int)_statusCode == 200)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Suspend the test job.
-        /// <see href="http://aka.ms/azureautomationsdk/testjoboperations" />
-        /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
-        /// </param>
-        /// <param name='runbookName'>
-        /// The runbook name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse> SuspendWithHttpMessagesAsync(string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.ResourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ResourceGroupName");
-            }
-            if (Client.ResourceGroupName != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.ResourceGroupName, "^[-\\w\\._]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.ResourceGroupName", "^[-\\w\\._]+$");
-                }
-            }
-            if (automationAccountName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
-            }
-            if (runbookName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "runbookName");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            string apiVersion = "2015-10-31";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("automationAccountName", automationAccountName);
-                tracingParameters.Add("runbookName", runbookName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Suspend", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/suspend").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(Client.ResourceGroupName));
-            _url = _url.Replace("{automationAccountName}", System.Uri.EscapeDataString(automationAccountName));
-            _url = _url.Replace("{runbookName}", System.Uri.EscapeDataString(runbookName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SourceControlSyncJob>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
                     {
-                        ex.Body = _errorBody;
+                        _httpResponse.Dispose();
                     }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             if (_shouldTrace)
             {
