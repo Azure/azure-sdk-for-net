@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Storage.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,18 +34,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Initializes a new instance of the StorageAccountManagementPolicies
         /// class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Tags assigned to a resource; can be used for
-        /// viewing and grouping a resource (across resource groups).</param>
+        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. Ex-
+        /// Microsoft.Compute/virtualMachines or
+        /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="policy">The Storage Account ManagementPolicies Rules,
         /// in JSON format. //TODO: Link of the sample rules.</param>
         /// <param name="lastModifiedTime">Returns the date and time the
         /// ManagementPolicies was last modified.</param>
-        public StorageAccountManagementPolicies(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object policy = default(object), System.DateTime? lastModifiedTime = default(System.DateTime?))
-            : base(id, name, type, location, tags)
+        public StorageAccountManagementPolicies(string id = default(string), string name = default(string), string type = default(string), object policy = default(object), System.DateTime? lastModifiedTime = default(System.DateTime?))
+            : base(id, name, type)
         {
             Policy = policy;
             LastModifiedTime = lastModifiedTime;
