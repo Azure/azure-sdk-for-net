@@ -1,5 +1,8 @@
 # Azure.Batch release notes
 
+## Changes in 8.1.2
+Add deprecation announcement to nuget package.
+
 ## Changes in 8.1.1
 ### Bug fixes
  - Fixed bug where LeavingPool state was not correctly returned via the `ListPoolNodeCounts` method on `PoolOperations`.
