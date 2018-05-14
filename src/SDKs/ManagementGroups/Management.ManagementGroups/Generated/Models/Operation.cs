@@ -31,9 +31,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </summary>
         /// <param name="name">Operation name:
         /// {provider}/{resource}/{operation}.</param>
-        /// <param name="display">The object that represents the
-        /// operation.</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
+        /// <param name="display">Display</param>
+        public Operation(string name = default(string), OperationDisplayProperties display = default(OperationDisplayProperties))
         {
             Name = name;
             Display = display;
@@ -52,10 +51,10 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the object that represents the operation.
+        /// Gets or sets display
         /// </summary>
         [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        public OperationDisplayProperties Display { get; set; }
 
     }
 }

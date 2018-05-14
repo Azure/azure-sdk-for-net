@@ -14,20 +14,20 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     using System.Linq;
 
     /// <summary>
-    /// (Optional) The ID of the parent management group.
+    /// (Optional) The ID of the parent management group used during creation.
     /// </summary>
-    public partial class ParentGroupInfo
+    public partial class CreateParentGroupInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ParentGroupInfo class.
+        /// Initializes a new instance of the CreateParentGroupInfo class.
         /// </summary>
-        public ParentGroupInfo()
+        public CreateParentGroupInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ParentGroupInfo class.
+        /// Initializes a new instance of the CreateParentGroupInfo class.
         /// </summary>
         /// <param name="id">The fully qualified ID for the parent management
         /// group.  For example,
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <param name="name">The name of the parent management group</param>
         /// <param name="displayName">The friendly name of the parent
         /// management group.</param>
-        public ParentGroupInfo(string id = default(string), string name = default(string), string displayName = default(string))
+        public CreateParentGroupInfo(string id = default(string), string name = default(string), string displayName = default(string))
         {
             Id = id;
             Name = name;
@@ -57,16 +57,16 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the parent management group
+        /// Gets the name of the parent management group
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the friendly name of the parent management group.
+        /// Gets the friendly name of the parent management group.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; private set; }
 
     }
 }

@@ -1,0 +1,88 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Management/getEntities?api-version=2018-01-01-preview&groupName=TestGroup1",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9nZXRFbnRpdGllcz9hcGktdmVyc2lvbj0yMDE4LTAxLTAxLXByZXZpZXcmZ3JvdXBOYW1lPVRlc3RHcm91cDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b221afa6-56c4-4300-ad26-595baecb223b"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"TestGroup1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"TestGroup1\",\r\n        \"parent\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/b1af47f1-138c-4ed2-8bba-119041b95450\"\r\n        },\r\n        \"permissions\": \"noaccess\",\r\n        \"inheritedPermissions\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"TestGroup1Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"TestGroup1->Child1\",\r\n        \"parent\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1\"\r\n        },\r\n        \"permissions\": \"noaccess\",\r\n        \"inheritedPermissions\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1Child1\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"TestGroup1Child1Child1\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"TestGroup1->Child1->Child1\",\r\n        \"parent\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1\"\r\n        },\r\n        \"permissions\": \"noaccess\",\r\n        \"inheritedPermissions\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/7635efed-eeec-4c03-885d-fa004067132a\",\r\n      \"type\": \"/subscriptions\",\r\n      \"name\": \"7635efed-eeec-4c03-885d-fa004067132a\",\r\n      \"properties\": {\r\n        \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"Pay-As-You-Go\",\r\n        \"parent\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1Child1\"\r\n        },\r\n        \"permissions\": \"noaccess\",\r\n        \"inheritedPermissions\": \"delete\"\r\n      }\r\n    }\r\n  ],\r\n  \"@nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 10 May 2018 00:24:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "eastus:ab70b354-3b0c-47d4-9bc9-8730ae9b1f84"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.758"
+        ],
+        "request-id": [
+          "c160c2fb-3dd1-4576-99a0-1878bf39d6bc"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "499c18d6-1807-48ec-9c9e-690763963125"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180510T002413Z:499c18d6-1807-48ec-9c9e-690763963125"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "394ae65d-9e71-4462-930f-3332dedf845c"
+  }
+}

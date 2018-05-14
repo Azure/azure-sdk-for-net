@@ -16,18 +16,18 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     /// <summary>
     /// The object that represents the operation.
     /// </summary>
-    public partial class OperationDisplay
+    public partial class OperationDisplayProperties
     {
         /// <summary>
-        /// Initializes a new instance of the OperationDisplay class.
+        /// Initializes a new instance of the OperationDisplayProperties class.
         /// </summary>
-        public OperationDisplay()
+        public OperationDisplayProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationDisplay class.
+        /// Initializes a new instance of the OperationDisplayProperties class.
         /// </summary>
         /// <param name="provider">The name of the provider.</param>
         /// <param name="resource">The resource on which the operation is
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <param name="operation">The operation that can be
         /// performed.</param>
         /// <param name="description">Operation description.</param>
-        public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
+        public OperationDisplayProperties(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;

@@ -11,56 +11,49 @@
 namespace Microsoft.Azure.Management.ManagementGroups.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The management group details.
+    /// The entity.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ManagementGroup : IResource
+    public partial class EntityInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ManagementGroup class.
+        /// Initializes a new instance of the EntityInfo class.
         /// </summary>
-        public ManagementGroup()
+        public EntityInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagementGroup class.
+        /// Initializes a new instance of the EntityInfo class.
         /// </summary>
-        /// <param name="id">The fully qualified ID for the management group.
-        /// For example,
+        /// <param name="id">The fully qualified ID for the entity.  For
+        /// example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
-        /// <param name="type">The type of the resource.  For example,
+        /// <param name="type">The type of the resource. For example,
         /// /providers/Microsoft.Management/managementGroups</param>
-        /// <param name="name">The name of the management group. For example,
+        /// <param name="name">The name of the entity. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
         /// <param name="tenantId">The AAD Tenant ID associated with the
-        /// management group. For example,
-        /// 00000000-0000-0000-0000-000000000000</param>
+        /// entity. For example, 00000000-0000-0000-0000-000000000000</param>
         /// <param name="displayName">The friendly name of the management
         /// group.</param>
-        /// <param name="roles">The role definitions associated with the
-        /// management group.</param>
-        /// <param name="details">Details</param>
-        /// <param name="children">The list of children.</param>
-        public ManagementGroup(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), ManagementGroupDetails details = default(ManagementGroupDetails), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
+        /// <param name="parent">Parent</param>
+        /// <param name="permissions">Permissions</param>
+        public EntityInfo(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), EntityParentGroupInfo parent = default(EntityParentGroupInfo), string permissions = default(string))
         {
             Id = id;
             Type = type;
             Name = name;
             TenantId = tenantId;
             DisplayName = displayName;
-            Roles = roles;
-            Details = details;
-            Children = children;
+            Parent = parent;
+            Permissions = permissions;
             CustomInit();
         }
 
@@ -70,29 +63,29 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the fully qualified ID for the management group.  For example,
+        /// Gets the fully qualified ID for the entity.  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the type of the resource.  For example,
+        /// Gets the type of the resource. For example,
         /// /providers/Microsoft.Management/managementGroups
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the name of the management group. For example,
+        /// Gets the name of the entity. For example,
         /// 00000000-0000-0000-0000-000000000000
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the AAD Tenant ID associated with the management
-        /// group. For example, 00000000-0000-0000-0000-000000000000
+        /// Gets or sets the AAD Tenant ID associated with the entity. For
+        /// example, 00000000-0000-0000-0000-000000000000
         /// </summary>
         [JsonProperty(PropertyName = "properties.tenantId")]
         public string TenantId { get; set; }
@@ -104,23 +97,19 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the role definitions associated with the management
-        /// group.
+        /// Gets or sets parent
         /// </summary>
-        [JsonProperty(PropertyName = "properties.roles")]
-        public IList<string> Roles { get; set; }
+        [JsonProperty(PropertyName = "properties.parent")]
+        public EntityParentGroupInfo Parent { get; set; }
 
         /// <summary>
-        /// Gets or sets details
+        /// Gets or sets permissions
         /// </summary>
-        [JsonProperty(PropertyName = "properties.details")]
-        public ManagementGroupDetails Details { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of children.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.children")]
-        public IList<ManagementGroupChildInfo> Children { get; set; }
+        /// <remarks>
+        /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.permissions")]
+        public string Permissions { get; set; }
 
     }
 }
