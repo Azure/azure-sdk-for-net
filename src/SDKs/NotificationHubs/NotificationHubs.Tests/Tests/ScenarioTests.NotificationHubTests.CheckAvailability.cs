@@ -35,7 +35,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 }
 
                 var createNSResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, validNamespaceName,
-                    new NamespaceCreateOrUpdateParameters(location));
+                    new NamespaceCreateOrUpdateParameters { Location = location });
 
                 Assert.NotNull(createNSResponse);
 
@@ -50,7 +50,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 // create Notificationhub  
                 var createNHResponse = NotificationHubsManagementClient.NotificationHubs.CreateOrUpdate(resourceGroup, validNamespaceName, 
                     validNotificationHubName,
-                    new NotificationHubCreateOrUpdateParameters(location));
+                    new NotificationHubCreateOrUpdateParameters {Location = location});
 
                 Assert.NotNull(createNHResponse);
 
