@@ -18,7 +18,7 @@ namespace Network.Tests.Tests
 
     public class FlowLogTests
     {
-        [Fact(Skip = "Test can be run after fixes for this API will be deployed in every region")]
+        [Fact()]
         public void FlowLogApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -34,7 +34,7 @@ namespace Network.Tests.Tests
                 var computeManagementClient = NetworkManagementTestUtilities.GetComputeManagementClientWithHandler(context, handler3);
                 var storageManagementClient = NetworkManagementTestUtilities.GetStorageManagementClientWithHandler(context, handler4);
 
-                string location = "westcentralus";
+                string location = "eastus2euap";
 
                 string resourceGroupName = TestUtilities.GenerateName();
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,

@@ -15,27 +15,24 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters that define a resource to query flow log and traffic
-    /// analytics (optional) status.
+    /// Parameters that define the configuration of traffic analytics.
     /// </summary>
-    public partial class FlowLogStatusParameters
+    public partial class TrafficAnalyticsProperties
     {
         /// <summary>
-        /// Initializes a new instance of the FlowLogStatusParameters class.
+        /// Initializes a new instance of the TrafficAnalyticsProperties class.
         /// </summary>
-        public FlowLogStatusParameters()
+        public TrafficAnalyticsProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FlowLogStatusParameters class.
+        /// Initializes a new instance of the TrafficAnalyticsProperties class.
         /// </summary>
-        /// <param name="targetResourceId">The target resource where getting
-        /// the flow log and traffic analytics (optional) status.</param>
-        public FlowLogStatusParameters(string targetResourceId)
+        public TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration)
         {
-            TargetResourceId = targetResourceId;
+            NetworkWatcherFlowAnalyticsConfiguration = networkWatcherFlowAnalyticsConfiguration;
             CustomInit();
         }
 
@@ -45,11 +42,9 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the target resource where getting the flow log and
-        /// traffic analytics (optional) status.
         /// </summary>
-        [JsonProperty(PropertyName = "targetResourceId")]
-        public string TargetResourceId { get; set; }
+        [JsonProperty(PropertyName = "networkWatcherFlowAnalyticsConfiguration")]
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -59,9 +54,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TargetResourceId == null)
+            if (NetworkWatcherFlowAnalyticsConfiguration == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetResourceId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "NetworkWatcherFlowAnalyticsConfiguration");
+            }
+            if (NetworkWatcherFlowAnalyticsConfiguration != null)
+            {
+                NetworkWatcherFlowAnalyticsConfiguration.Validate();
             }
         }
     }
