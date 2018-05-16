@@ -265,7 +265,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             }
 
             Assert.Equal(sentMessagesCount, GetPropertyValueFromAnonymousTypeInstance<int>(payload, "RequestedMessageCount"));
-            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<Message>>(payload, "Messages");
+            var messages = GetPropertyValueFromAnonymousTypeInstance<IList<Message>>(payload, "Messages", true);
 
             if (receivedMessagesCount != -1)
             {
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             }
 
             AssertTags(messages, activity);
-            return messages.Count;
+            return messages?.Count ?? 0;
         }
 
         #endregion
@@ -414,6 +414,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         protected void AssertTags(IList<Message> messageList, Activity activity)
         {
+            if (messageList == null)
+            {
+                return;
+            }
+
             var messagesWithId = messageList.Where(m => m.MessageId != null).ToArray();
             if (messagesWithId.Any())
             {
@@ -441,13 +446,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         protected void AssertTags(Message message, Activity activity)
         {
-            if (message.MessageId != null)
+            if (message?.MessageId != null)
             {
                 Assert.Contains("MessageId", activity.Tags.Select(t => t.Key));
                 Assert.Equal(message.MessageId, activity.Tags.Single(t => t.Key == "MessageId").Value);
             }
 
-            if (message.SessionId != null)
+            if (message?.SessionId != null)
             {
                 Assert.Contains("SessionId", activity.Tags.Select(t => t.Key));
                 Assert.Equal(message.SessionId, activity.Tags.Single(t => t.Key == "SessionId").Value);
@@ -483,15 +488,22 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             Assert.Equal(TaskStatus.RanToCompletion, status);
         }
 
-        protected T GetPropertyValueFromAnonymousTypeInstance<T>(object obj, string propertyName)
+        protected T GetPropertyValueFromAnonymousTypeInstance<T>(object obj, string propertyName, bool canValueBeNull = false)
         {
             Type t = obj.GetType();
 
             PropertyInfo p = t.GetRuntimeProperty(propertyName);
 
             object propertyValue = p.GetValue(obj);
-            Assert.NotNull(propertyValue);
-            Assert.IsAssignableFrom<T>(propertyValue);
+            if (!canValueBeNull)
+            {
+                Assert.NotNull(propertyValue); 
+            }
+
+            if (propertyValue != null)
+            {
+                Assert.IsAssignableFrom<T>(propertyValue); 
+            }
 
             return (T)propertyValue;
         }

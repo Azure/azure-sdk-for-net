@@ -650,7 +650,7 @@ namespace Microsoft.Azure.ServiceBus
         private void Inject(IList<Message> messageList)
         {
             var currentActivity = Activity.Current;
-            if (currentActivity != null)
+            if (currentActivity != null && messageList != null)
             {
                 var correlationContext = SerializeCorrelationContext(currentActivity.Baggage.ToList());
 
@@ -672,7 +672,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private void Inject(Message message, string id, string correlationContext)
         {
-            if (!message.UserProperties.ContainsKey(ActivityIdPropertyName))
+            if (message != null && !message.UserProperties.ContainsKey(ActivityIdPropertyName))
             {
                 message.UserProperties[ActivityIdPropertyName] = id;
                 if (correlationContext != null)
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private string SerializeCorrelationContext(IList<KeyValuePair<string,string>> baggage)
         {
-            if (baggage.Any())
+            if (baggage != null && baggage.Count > 0)
             {
                 return string.Join(",", baggage.Select(kvp => kvp.Key + "=" + kvp.Value));
             }
@@ -716,7 +716,7 @@ namespace Microsoft.Azure.ServiceBus
             Activity activity = null;
             string activityName = BaseActivityName + operationName;
 
-            if (DiagnosticListener.IsEnabled(activityName, entityPath))
+            if (message != null && DiagnosticListener.IsEnabled(activityName, entityPath))
             {
                 var tmpActivity = message.ExtractActivity(activityName);
                 setTags?.Invoke(tmpActivity);
@@ -739,6 +739,11 @@ namespace Microsoft.Azure.ServiceBus
 
         private void SetTags(Activity activity, IList<Message> messageList)
         {
+            if (messageList == null)
+            {
+                return;
+            }
+
             var messageIds = messageList.Where(m => m.MessageId != null).Select(m => m.MessageId).ToArray();
             if (messageIds.Any())
             {
@@ -754,6 +759,11 @@ namespace Microsoft.Azure.ServiceBus
 
         private void SetTags(Activity activity, Message message)
         {
+            if (message == null)
+            {
+                return;
+            }
+
             if (message.MessageId != null)
             {
                 activity.AddTag(MessageIdTag, message.MessageId);

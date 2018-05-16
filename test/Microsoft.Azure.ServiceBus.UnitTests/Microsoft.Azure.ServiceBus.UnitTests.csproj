@@ -24,15 +24,15 @@
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\RetryTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\SubscriptionClientTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\ExtractActivityTests.cs" />
-    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\QueueClientDiagnosticsTests.cs" />
-    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SubscriptionClientDiagnosticsTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SessionDiagnosticsTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\QueueClientDiagnosticsTests.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageTopicSubscriptionTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\TopicClientTests.cs" />
-    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionTopicSubscriptionTests.cs" />    
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionTopicSubscriptionTests.cs" />
+    <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SubscriptionClientDiagnosticsTests.cs" />
   </ItemGroup>
 
   <ItemGroup>

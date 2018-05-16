@@ -241,6 +241,32 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         [Fact]
         [DisplayTestMethodName]
+        async Task ReceiveNoMessageFireEvents()
+        {
+            this.queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName,
+                ReceiveMode.ReceiveAndDelete);
+
+            this.listener.Enable((name, queuName, arg) => name.Contains("Send") || name.Contains("Receive"));
+            var messages = await this.queueClient.InnerReceiver.ReceiveAsync(2, TimeSpan.FromSeconds(5));
+
+            int receivedStopCount = 0;
+            Assert.Equal(2, this.events.Count);
+            while (this.events.TryDequeue(out var receiveStart))
+            {
+                var startCount = AssertReceiveStart(receiveStart.eventName, receiveStart.payload, receiveStart.activity,
+                    -1);
+
+                Assert.True(this.events.TryDequeue(out var receiveStop));
+                receivedStopCount += AssertReceiveStop(receiveStop.eventName, receiveStop.payload, receiveStop.activity,
+                    receiveStart.activity, null, startCount, -1);
+            }
+
+            Assert.Equal(0, receivedStopCount);
+            Assert.True(this.events.IsEmpty);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
         async Task BatchSendReceiveFireEvents()
         {
             this.queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName,
