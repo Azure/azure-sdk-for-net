@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
 	<!-- Please do not move/edit code below this line -->
@@ -7,11 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.0.0-preview</Version>
+		<Version>19.1.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Made id read-only by bringing properties from shared resource in DDos Protection plan functionality
+			- Added additioanl traffic analytics config fields (TrafficAnalyticsConfigurationProperties) with existing flowlog config fields
+			- The added fileds are 1. Enable (For Traffic Analytics)
+                             2. WorksapceResourceId
+                             3. WorkspaceId
+                             4.WorkspaceRegion
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
