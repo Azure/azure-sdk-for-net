@@ -11,7 +11,11 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Made id read-only by bringing properties from shared resource in DDos Protection plan functionality
+			- Added additioanl traffic analytics config fields (TrafficAnalyticsConfigurationProperties) with existing flowlog config fields
+			- The added fileds are 1. Enable (For Traffic Analytics)
+                             2. WorksapceResourceId
+                             3. WorkspaceId
+                             4.WorkspaceRegion
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
