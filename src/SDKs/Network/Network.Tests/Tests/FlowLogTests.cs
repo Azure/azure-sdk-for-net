@@ -21,7 +21,7 @@ namespace Network.Tests.Tests
 
     public class FlowLogTests
     {
-        [Fact(Skip = "Test can be run after fixes for this API will be deployed in every region")]
+        [Fact(Skip = "Test can be run after latest SDK for all dependent modules is available")]
         public void FlowLogApiTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
