@@ -12,6 +12,7 @@ tasks/net46/Microsoft.Build.Utilities.Core.dll
 tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll
 tasks/net46/System.Threading.Thread.dll
 psModules/CodeGenerationModules/generateDotNetSdkCode.psm1
+../../build.proj
 ../../Directory.Build.props
 ../../Directory.Build.targets
 ../../test.props
