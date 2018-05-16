@@ -21,12 +21,45 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         
         #region Fields
         Process _shellProc;
-        
+        ProcessStartInfo _shellProcStartInfo;
+        string _shellProcCommandPath;
+
         #endregion
 
         protected int LastExitCode { get; set; }
 
         protected Exception LastException { get; set; }
+
+        protected virtual string ShellProcessCommandPath
+        {
+            get => _shellProcCommandPath;
+            set => _shellProcCommandPath = value;
+        }
+        
+        protected virtual int DefaultTimeOut
+        {
+            get => DEFAULT_WAIT_TIMEOUT;
+        }
+
+        public virtual ProcessStartInfo ShellProcessInfo
+        {
+            get
+            {
+                if (_shellProcStartInfo == null)
+                {
+                    _shellProcStartInfo = new ProcessStartInfo(ShellProcessCommandPath);
+                    _shellProcStartInfo.CreateNoWindow = true;
+                    _shellProcStartInfo.UseShellExecute = false;
+                    _shellProcStartInfo.RedirectStandardError = true;
+                    _shellProcStartInfo.RedirectStandardInput = true;
+                    _shellProcStartInfo.RedirectStandardOutput = true;
+                    //ShellProcess.StartInfo = _shellProcStartInfo;
+                }
+
+                return _shellProcStartInfo;
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -36,25 +69,40 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             get
             {
                 if (_shellProc == null)
+                {
                     _shellProc = new Process();
-
+                    _shellProc.StartInfo = ShellProcessInfo;
+                }
+                
                 return _shellProc;
             }
         }
 
         protected ShellExec()
         {
+            _shellProcCommandPath = string.Empty;
         }
 
         public ShellExec(string commandPath): this()
-        {   
-            ProcessStartInfo procInfo = new ProcessStartInfo(commandPath);
-            procInfo.CreateNoWindow = true;
-            procInfo.UseShellExecute = false;
-            procInfo.RedirectStandardError = true;
-            procInfo.RedirectStandardInput = true;
-            procInfo.RedirectStandardOutput = true;
-            ShellProcess.StartInfo = procInfo;
+        {
+            ShellProcessCommandPath = commandPath;
+            //ProcessStartInfo procInfo = new ProcessStartInfo(commandPath);
+            //procInfo.CreateNoWindow = true;
+            //procInfo.UseShellExecute = false;
+            //procInfo.RedirectStandardError = true;
+            //procInfo.RedirectStandardInput = true;
+            //procInfo.RedirectStandardOutput = true;
+            //ShellProcess.StartInfo = procInfo;
+        }
+
+        protected virtual string BuildShellProcessArgs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual int ExecuteCommand()
+        {
+            return ExecuteCommand(BuildShellProcessArgs());
         }
 
         public virtual int ExecuteCommand(string args)
@@ -63,7 +111,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             {
                 ShellProcess.StartInfo.Arguments = args;
                 ShellProcess.Start();
-                ShellProcess.WaitForExit(DEFAULT_WAIT_TIMEOUT);
+                ShellProcess.WaitForExit(DefaultTimeOut);
                 LastExitCode = ShellProcess.ExitCode;
 
                 //if (ShellProcess.HasExited == false)

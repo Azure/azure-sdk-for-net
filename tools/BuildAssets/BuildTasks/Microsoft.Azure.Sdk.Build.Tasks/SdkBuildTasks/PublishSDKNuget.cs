@@ -13,6 +13,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
     using System.Linq;
     using System.Diagnostics;
     using Microsoft.Azure.Sdk.Build.ExecProcess;
+    using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
 
     public class PublishSDKNugetTask : Task
     {

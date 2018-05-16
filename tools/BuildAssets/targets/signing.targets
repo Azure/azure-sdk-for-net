@@ -22,6 +22,10 @@
 			ExpectedDelaySigned="true"
 			ContinueOnError="false"
 			Condition="'@(DelaySignedAssembliesToValidate)' != ''"/>
+			
+	<PreSignTask InSignManifestDirPath="$(SignManifestRootDir)" InSigningOperation="nuget" >
+		<Output TaskParameter="OutSignManifestFiles" ItemName="GeneratedManifestForSigningService" />
+	</PreSignTask>
   </Target>
 
   <Target Name="GlobalReadinessTools" Condition=" '$(RunGlobalReadinessTools)' == 'true'" DependsOnTargets="GlobalReadinessToolsInfo;RunPoliCheck">
@@ -53,6 +57,10 @@
 			SigningLogPath="$(LibraryRoot)\binaries"
 			ToolsPath="$(CIToolsPath)"
 			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''" />
+			
+	<NugetSigningTask GeneratedManifestDir="$(SignManifestRootDir)">
+		<Output TaskParameter="SigningOutput" PropertyName="signOutput"/>
+	</NugetSigningTask>
   </Target>
 
   <Target Name="PostSign" Condition=" '$(CodeSign)' == 'true' ">

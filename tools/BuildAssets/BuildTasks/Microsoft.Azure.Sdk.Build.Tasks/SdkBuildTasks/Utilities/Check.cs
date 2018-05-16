@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
+//namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
+namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
 {
     using System;
     using System.IO;
