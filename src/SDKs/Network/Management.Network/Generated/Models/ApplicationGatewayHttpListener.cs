@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource of an application gateway.</param>
         /// <param name="frontendPort">Frontend port resource of an application
         /// gateway.</param>
-        /// <param name="protocol">Protocol. Possible values include: 'Http',
+        /// <param name="protocol">Protocol of the HTTP listener. Possible
+        /// values are 'Http' and 'Https'. Possible values include: 'Http',
         /// 'Https'</param>
         /// <param name="hostName">Host name of HTTP listener.</param>
         /// <param name="sslCertificate">SSL certificate resource of an
@@ -49,9 +50,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">Provisioning state of the HTTP
         /// listener resource. Possible values are: 'Updating', 'Deleting', and
         /// 'Failed'.</param>
-        /// <param name="name">Name of the resource that is unique within a
-        /// resource group. This name can be used to access the
-        /// resource.</param>
+        /// <param name="name">Name of the HTTP listener that is unique within
+        /// an Application Gateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
@@ -90,7 +90,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource FrontendPort { get; set; }
 
         /// <summary>
-        /// Gets or sets protocol. Possible values include: 'Http', 'Https'
+        /// Gets or sets protocol of the HTTP listener. Possible values are
+        /// 'Http' and 'Https'. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
@@ -122,8 +123,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the resource that is unique within a resource
-        /// group. This name can be used to access the resource.
+        /// Gets or sets name of the HTTP listener that is unique within an
+        /// Application Gateway.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
