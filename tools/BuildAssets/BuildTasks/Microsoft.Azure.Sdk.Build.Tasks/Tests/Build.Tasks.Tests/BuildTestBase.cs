@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.Build.Tasks;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,10 +17,26 @@ namespace Build.Tasks.Tests
         public string RootDir { get; private set; }
         public string SourceRootDir { get; private set; }
 
+        public string BinariesRootDir { get; private set; }
+
+        public string SignManifestDir { get; private set; }
+
+        public string TestBinaryOutputDir { get; set; }
+        public string TestDataRuntimeDir { get; set; }
+
         public BuildTestBase()
         {
+            string codeBasePath = Assembly.GetExecutingAssembly().CodeBase;
+            var uri = new UriBuilder(codeBasePath);
+            string path = Uri.UnescapeDataString(uri.Path);
+            path = Path.GetDirectoryName(path);
+            TestBinaryOutputDir = path;
+            TestDataRuntimeDir = Path.Combine(TestBinaryOutputDir, "TestData");
+
             RootDir = GetSourceRootDir();
             SourceRootDir = Path.Combine(RootDir, "src");
+            BinariesRootDir = Path.Combine(RootDir, "binaries");
+            SignManifestDir = Path.Combine(BinariesRootDir, "signManifest");
         }
 
         internal string GetSourceRootDir()
@@ -34,10 +51,10 @@ namespace Build.Tasks.Tests
 
             string dirRoot = Directory.GetDirectoryRoot(currDir);
 
-            var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
-
             while (currDir != dirRoot)
             {
+                var buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
+
                 if (buildProjFile.Any<string>())
                 {
                     srcRootDir = Path.GetDirectoryName(buildProjFile.First<string>());
@@ -45,15 +62,27 @@ namespace Build.Tasks.Tests
                 }
 
                 currDir = Directory.GetParent(currDir).FullName;
-                buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
-            }
-
-            if (string.IsNullOrEmpty(srcRootDir))
-            {
-                srcRootDir = @"C:\MyFork\vs17Dev";
+                //buildProjFile = Directory.EnumerateFiles(currDir, "build.proj", SearchOption.TopDirectoryOnly);
             }
 
             return srcRootDir;
+        }
+
+        internal string GetSourceDir()
+        {
+            return Path.Combine(GetSourceRootDir(), "src");
+        }
+
+
+
+        protected SDKCategorizeProjects GetCategorizedProjects(string scope)
+        {
+            SDKCategorizeProjects cproj = new SDKCategorizeProjects();
+            cproj.SourceRootDirPath = GetSourceDir();
+            cproj.BuildScope = scope;
+            cproj.Execute();
+
+            return cproj;
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.PackageTasks
             addTagsTask.SdkProjectInfo = SdkProjectInfo;
             addTagsTask.BuildEngine = this.BuildEngine;
             addTagsTask.BuildScope = this.BuildScope;
-            addTagsTask.DebugTrace = this.DebugTrace;
+            addTagsTask.DebugTraceEnabled = this.DebugTraceEnabled;
             //addTagsTask.SdkMetaProjects = SdkMetaProjects;
             
             addTagsTask.Execute();

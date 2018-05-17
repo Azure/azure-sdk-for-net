@@ -1,0 +1,52 @@
+{
+  "Version": "1.0.0", 
+  "ContextData": { 
+    "mykey1": "myValue1",
+    "myKey2": "myValue2"
+  },
+  "DriEmail": [ "test1@microsoft.com", "test2@microsoft.com" ], 
+  "GroupId": null, 
+  "CorrelationVector": null, 
+  "ScanBatches": [
+    {
+      "SourceLocationType": "unc",
+      "SourceRootDirectory": null,
+      "ScanRequestFiles": [
+        {
+          "CustomerCorrelationId": "a8c3a8c8-ea1b-4a20-8fff-6fb7775e6bb1",
+          "SourceLocation": "c:\\temp\\ClientExe\\Input\\InputFile\\4-StaticBvt-notepad.exe",
+          "SizeInBytes": 252368,
+          "HashType": "Sha256",
+          "SourceHash": "KVSa/eJbSQuoPuHMoLP2HdbzxLXdWFojGK01Ym2O29g="
+        },
+        {
+          "CustomerCorrelationId": "b8c3a8c8-ea1b-4a20-8fff-6fb7775e6bb7",
+          "SourceLocation": "c:\\temp\\ClientExe\\Input\\InputFile\\322_aac_axecore.dll",
+          "SizeInBytes": 37064,
+          "HashType": "Sha256",
+          "SourceHash": "iHi0tWc3QlZPH5ZMShCpR9/7zuysDC8g7eXO7QdDWDI="
+        }
+      ]
+    },
+    {
+      "SourceLocationType": "unc",
+      "SourceRootDirectory": "c:\\temp\\ClientExe\\Input",
+      "ScanRequestFiles": [
+        {
+          "CustomerCorrelationId": "a8c3a8c8-ea1b-hb20-8fff-6fb7775e6bb7",
+          "SourceLocation": "InputFile\\4-StaticBvt-notepad.exe",
+          "SizeInBytes": 252368,
+          "HashType": "Sha256",
+          "SourceHash": "KVSa/eJbSQuoPuHMoLP2HdbzxLXdWFojGK01Ym2O29g="
+        },
+        {
+          "CustomerCorrelationId": "a8c3a8c8-ea1b-hb20-8fff-6fb7775e6bb7",
+          "SourceLocation": "InputFile\\4-StaticBvt-notepad.exe",
+          "SizeInBytes": 252368,
+          "HashType": "Sha256",
+          "SourceHash": "KVSa/eJbSQuoPuHMoLP2HdbzxLXdWFojGK01Ym2O29g="
+        }
+      ]
+    }
+  ]
+}

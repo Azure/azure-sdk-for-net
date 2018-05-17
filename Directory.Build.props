@@ -8,7 +8,7 @@
     <AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
     <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
-	  <BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
+	<BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
     <PoliCheckOutputDir>$(LibraryRoot)PolicheckOutput</PoliCheckOutputDir>
     <BuiltPackageOutputDir>$(BinariesFolder)\packages</BuiltPackageOutputDir>
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
@@ -17,12 +17,13 @@
     <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
     <BuildInParallel>true</BuildInParallel>
-	  <SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
+	<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
   </PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
+	<CISignToolsRootDir>$(CIToolsPath)\tools</CISignToolsRootDir>
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>

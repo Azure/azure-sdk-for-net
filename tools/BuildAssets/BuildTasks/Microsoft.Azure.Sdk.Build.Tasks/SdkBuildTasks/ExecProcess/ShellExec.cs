@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
+//namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
+namespace Microsoft.Azure.Sdk.Build.ExecProcess
 {
     using System;
     using System.ComponentModel;
@@ -11,22 +12,53 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
     public class ShellExec
     {
         #region CONST
-        const int DEFAULT_WAIT_TIMEOUT = 60000;  // 60 seconds default timeout
+        const int DEFAULT_WAIT_TIMEOUT = 240000;  // 60 seconds default timeout
                                                  //const string COMMAND_ARGS = "push {0} -source {1} -ApiKey {2} -NonInteractive -Timeout {3}";
 
         const int E_FAIL = -2147467259;
         const int ERROR_FILE_NOT_FOUND = 2;
         #endregion
-
-
+        
         #region Fields
         Process _shellProc;
-        
+        ProcessStartInfo _shellProcStartInfo;
+        string _shellProcCommandPath;
+
         #endregion
 
         protected int LastExitCode { get; set; }
 
         protected Exception LastException { get; set; }
+
+        protected virtual string ShellProcessCommandPath
+        {
+            get => _shellProcCommandPath;
+            set => _shellProcCommandPath = value;
+        }
+        
+        protected virtual int DefaultTimeOut
+        {
+            get => DEFAULT_WAIT_TIMEOUT;
+        }
+
+        public virtual ProcessStartInfo ShellProcessInfo
+        {
+            get
+            {
+                if (_shellProcStartInfo == null)
+                {
+                    _shellProcStartInfo = new ProcessStartInfo(ShellProcessCommandPath);
+                    _shellProcStartInfo.CreateNoWindow = true;
+                    _shellProcStartInfo.UseShellExecute = false;
+                    _shellProcStartInfo.RedirectStandardError = true;
+                    _shellProcStartInfo.RedirectStandardInput = true;
+                    _shellProcStartInfo.RedirectStandardOutput = true;
+                }
+
+                return _shellProcStartInfo;
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -36,25 +68,33 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
             get
             {
                 if (_shellProc == null)
+                {
                     _shellProc = new Process();
-
+                    _shellProc.StartInfo = ShellProcessInfo;
+                }
+                
                 return _shellProc;
             }
         }
 
         protected ShellExec()
         {
+            _shellProcCommandPath = string.Empty;
         }
 
         public ShellExec(string commandPath): this()
-        {   
-            ProcessStartInfo procInfo = new ProcessStartInfo(commandPath);
-            procInfo.CreateNoWindow = true;
-            procInfo.UseShellExecute = false;
-            procInfo.RedirectStandardError = true;
-            procInfo.RedirectStandardInput = true;
-            procInfo.RedirectStandardOutput = true;
-            ShellProcess.StartInfo = procInfo;
+        {
+            ShellProcessCommandPath = commandPath;
+        }
+
+        protected virtual string BuildShellProcessArgs()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual int ExecuteCommand()
+        {
+            return ExecuteCommand(BuildShellProcessArgs());
         }
 
         public virtual int ExecuteCommand(string args)
@@ -63,7 +103,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.ExecProcess
             {
                 ShellProcess.StartInfo.Arguments = args;
                 ShellProcess.Start();
-                ShellProcess.WaitForExit(DEFAULT_WAIT_TIMEOUT);
+                ShellProcess.WaitForExit(DefaultTimeOut);
                 LastExitCode = ShellProcess.ExitCode;
 
                 //if (ShellProcess.HasExited == false)
