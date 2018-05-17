@@ -14,14 +14,21 @@ binaries/
 [Dd]ebug*/
 [Rr]elease/
 build/
+src/NuGet.Config
+tools/7-zip/
+
+#Build related files
 restoredPackages/
 PolicheckOutput/
 tools/net46/
 tools/SdkBuildTools/
 tools/Microsoft.WindowsAzure.Build.Tasks/packages/
 PublishedNugets/
-src/NuGet.Config
-tools/7-zip/
+AzSdk.props
+build.proj
+Directory.Build.props
+Directory.Build.targets
+test.props
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*
