@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
     {
         NetSdkTaskLogger _taskLogger;
         string _netSdkTaskName;
-        public bool DebugTrace { get; set; }
+        public bool DebugTraceEnabled { get; set; }
 
         public string BuildScope { get; set; }
 
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
             {
                 if(_taskLogger == null)
                 {
-                    _taskLogger = new NetSdkTaskLogger(TaskInstance, DebugTrace);
+                    _taskLogger = new NetSdkTaskLogger(TaskInstance, DebugTraceEnabled);
                 }
 
                 return _taskLogger;

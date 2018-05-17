@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Sdk.Build.ExecProcess;
 using Microsoft.WindowsAzure.Build.Tasks;
-using Microsoft.WindowsAzure.Build.Tasks.ExecProcess;
+//using Microsoft.WindowsAzure.Build.Tasks.ExecProcess;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -67,7 +68,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void PublishSingleNuget()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;
@@ -85,7 +86,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void NonExistentPublishLocation()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = "http://somelocation";
@@ -98,7 +99,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void SkipPublishingSymbols()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;
@@ -129,7 +130,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void PublishOnlySymbol()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = "https://www.nuget.org/api/v2/package/";
@@ -141,7 +142,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void PublishWithUnAuthenticatedKey()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = "https://www.nuget.org/api/v2/package/";
@@ -164,7 +165,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void IncorrectNugetExePath()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;
@@ -176,7 +177,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void MissingNugetPackageName()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.PublishNugetToPath = PublishToDir;
             pubNug.SkipSymbolPublishing = true;
@@ -186,7 +187,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void PublishAllNugetUnderScope()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.publishAllNugetsUnderScope = true;
             Assert.Throws<NotSupportedException>(() => pubNug.Execute());
         }
@@ -194,14 +195,14 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void MissingRequiredProperties()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             Assert.ThrowsAny<NullReferenceException>(() => pubNug.Execute());
         }
 
         [Fact]
         public void SkipPublishingCompletely()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;
@@ -214,7 +215,7 @@ namespace Build.Tasks.Tests.PublishNugetTests
         [Fact]
         public void GetInnerExceptionWhilePublishing()
         {
-            PublishSDKNuget pubNug = new PublishSDKNuget();
+            PublishSDKNugetTask pubNug = new PublishSDKNugetTask();
             pubNug.PackageOutputPath = NugetPkgBuiltDir;
             pubNug.NugetPackageName = NUGET_PKG_NAME;
             pubNug.PublishNugetToPath = PublishToDir;

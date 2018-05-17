@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
             IEnumerable<SdkProjectMetaData> distinctList = new List<SdkProjectMetaData>();
             if (CategorizedProjects != null)
             {
-                var filtered = CategorizedProjects.Where((cat) => filterProjectOn.Any<ITaskItem>((fil) => fil.ItemSpec.Equals(cat.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+                //var filtered = CategorizedProjects.Where((cat) => filterProjectOn.Any<ITaskItem>((fil) => fil.ItemSpec.Equals(cat.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+
+                List<SdkProjectMetaData> filtered = GetSdkProjects(filterProjectOn);
 
                 if (filterSdkProjectsOnly == true)
                 {
@@ -65,6 +67,18 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BaseTasks
             }
 
             return distinctList?.ToList<SdkProjectMetaData>();
+        }
+
+        public static List<SdkProjectMetaData> GetSdkProjects(ITaskItem[] sdkProjects)
+        {
+            List<SdkProjectMetaData> returnedList = new List<SdkProjectMetaData>();
+            if (CategorizedProjects != null)
+            {   
+                var filtered = CategorizedProjects.Where((cat) => sdkProjects.Any<ITaskItem>((fil) => fil.ItemSpec.Equals(cat.FullProjectPath, StringComparison.OrdinalIgnoreCase)));
+                returnedList = filtered.ToList<SdkProjectMetaData>();
+            }
+
+            return returnedList;
         }
     }
 }

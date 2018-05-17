@@ -40,5 +40,16 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             public static string Net452 = "net452";
             public static string NetStd14 = "netstandard1.4";
         }
+
+        internal static class SigningConstants
+        {
+            public const string SigningsProjectsManifestFileName = "AzSdkProject_SigningRequest.json";
+            public const string SigningsFullFilePathManifestFileName = "FullFilePath_SigningRequest.json";
+            public const string SigningsRootDirFilesManifestFileName = "RootDirFiles_SigningRequest.json";
+
+            public const string SignClientCertAuthConfigFileName = "SignClientCertAuthConfig.json";
+            public const string SignClientConfigFileName = "SignClientConfig.json";
+            public const string SignClientPolicyConfigFileName = "SignClientPolicyConfig.json";
+        }
     }
 }
