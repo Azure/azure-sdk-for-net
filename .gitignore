@@ -143,3 +143,8 @@ build.out
 csx/
 *.GhostDoc.xml
 pingme.txt
+
+# Build tools that get updated
+/*.proj
+/*.props
+/*.targets
