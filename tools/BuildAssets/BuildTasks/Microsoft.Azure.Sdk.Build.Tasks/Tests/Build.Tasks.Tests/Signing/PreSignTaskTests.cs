@@ -56,7 +56,7 @@ namespace Build.Tasks.Tests.Signing
         /// <summary>
         /// Trying to create manifest file from non-existant directory root
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Code Moved to SignNugetTask")]
         public void PreSignTaskNonExistantDirectory()
         {
             PreSignTask pst = new PreSignTask();
@@ -73,7 +73,7 @@ namespace Build.Tasks.Tests.Signing
         /// <summary>
         /// Trying to create manifest file with non-existant file extensions
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Code Moved to SignNugetTask")]
         public void PreSignTaskNoFilesToSign()
         {
             PreSignTask pst = new PreSignTask();

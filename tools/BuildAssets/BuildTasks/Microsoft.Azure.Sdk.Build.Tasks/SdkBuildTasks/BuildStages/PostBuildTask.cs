@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 }
                 else
                 {
-                    sdkInfoTypes = sdkAsm.GetTypes().Where<Type>((t) => t.Name.Equals(FQTypeName, StringComparison.OrdinalIgnoreCase));
+                    sdkInfoTypes = sdkAsm.GetTypes().Where<Type>((t) => t.FullName.Equals(FQTypeName, StringComparison.OrdinalIgnoreCase));
                 }
 
                 foreach(Type sdkInfo in sdkInfoTypes)

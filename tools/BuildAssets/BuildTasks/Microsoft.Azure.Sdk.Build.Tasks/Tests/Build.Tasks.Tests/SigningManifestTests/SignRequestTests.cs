@@ -64,12 +64,10 @@ namespace Build.Tasks.Tests.SigningManifestTests
         [Fact]
         public void DeSerializeSignRequest()
         {
-            string testSignRequestManifestFilePath = Path.Combine(TestDataRuntimeDir, "SigningManifests", "SingleFileSignRequestManifest.json");
-
+            string testSignRequestManifestFilePath = Path.Combine(TestDataRuntimeDir, "SigningManifests", "Sign", "SingleFileSignRequest.json");
             Assert.True(File.Exists(testSignRequestManifestFilePath));
 
-
-            SignRequest sr = SignRequest.FromJson(testSignRequestManifestFilePath);
+            SignRequest sr = SignRequest.FromJsonFile(testSignRequestManifestFilePath);
             Assert.Equal("1.0.0", sr.Version);
         }
     }

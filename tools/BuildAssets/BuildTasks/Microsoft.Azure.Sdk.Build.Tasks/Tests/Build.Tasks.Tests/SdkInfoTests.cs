@@ -28,7 +28,7 @@ namespace Build.Tasks.Tests
         [Fact]
         public void TagMultipleApiVersions()
         {
-            GetApiMap("SdkInfo_Compute");
+            GetApiMap("ApiInfo_Compute");
             VerifyNupkg();
         }
 
