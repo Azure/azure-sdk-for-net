@@ -5,7 +5,9 @@
 namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Utility to check Null/Empty and throw appropriate exceptions
@@ -65,6 +67,16 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
             if (!Directory.Exists(dirPath))
             {
                 throw new DirectoryNotFoundException(string.Format("'{0}' does not exists. Please check the validity of the directory path", dirPath));
+            }
+        }
+
+        public static void Empty<T>(IEnumerable<T> collection, bool expectedResult, string exceptionMessage = "Collection items do not match with expectedResult" )
+        {
+            if (collection == null) throw new ArgumentNullException(exceptionMessage);
+
+            if(collection.Any<T>() == expectedResult)
+            {
+                throw new ArgumentException(exceptionMessage);
             }
         }
 

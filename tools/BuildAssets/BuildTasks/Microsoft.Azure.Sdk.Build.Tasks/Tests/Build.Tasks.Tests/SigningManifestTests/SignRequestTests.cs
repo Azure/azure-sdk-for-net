@@ -30,7 +30,7 @@ namespace Build.Tasks.Tests.SigningManifestTests
 
             signReq.Version = "1.0.0";
             signReq.ContextData = new ContextData();
-            signReq.DriEmail = new List<string>() { "abhishah@microsoft.com" };
+            signReq.DriEmail = new List<string>() { "someemail@someDomain.com" };
             signReq.SignBatches = new List<SignBatch>();
 
             SignBatch sbatch = new SignBatch();

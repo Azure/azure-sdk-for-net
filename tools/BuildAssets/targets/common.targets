@@ -256,7 +256,7 @@
       <Output TaskParameter="TargetOutputs" ItemName="NonSdkNuGetPackages" />
     </MSBuild>
 
-    <Message Text="Built Nugets @(SdkNuGetPackages);@(NonSdkNugetPackages)"/>
+    <!-- <Message Text="Built Nugets @(SdkNuGetPackages);@(NonSdkNugetPackages)"/> -->
   </Target>
   
   <Target Name="PublishingNuget">
@@ -270,7 +270,7 @@
     </PropertyGroup>
     
     <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
-    <PublishSDKNuget 
+    <PublishSDKNugetTask 
       NugetPackageName="$(NugetPackageName)" 
       PackageOutputPath="$(PackageOutputPath)" 
       PublishNugetToPath="$(PublishNugetToDir)" 

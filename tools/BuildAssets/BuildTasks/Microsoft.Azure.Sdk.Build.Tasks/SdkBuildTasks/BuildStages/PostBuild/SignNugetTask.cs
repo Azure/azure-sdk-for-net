@@ -94,6 +94,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         public override bool Execute()
         {
             List<string> manifestList = GenerateManifestFiles();
+
+            if (manifestList.Count == 0)
+            {
+                TaskLogger.LogError("No manifest files were generated. Exiting Signing");
+            }
+
             SignClientExec signClient = new SignClientExec();
             signClient.CiToolsRootDir = CiToolsRootDir;
             signClient.SigningInputManifestFilePath = manifestList.First<string>();
@@ -104,10 +110,18 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             string signOutputFilePath = Path.Combine(Path.GetDirectoryName(sf), String.Concat(Path.GetFileNameWithoutExtension(sf), "_output", ".json"));
             signClient.SigningResultOutputFilePath = signOutputFilePath;
 
+            TaskLogger.LogInfo("Submitting for nuget signing. This might take several minutes.");
             int exitCode = signClient.ExecuteCommand();
-            string signTaskOutput = signClient.AnalyzeExitCode();
 
-            this.TaskLogger.LogDebugInfo(signTaskOutput);
+            if(exitCode != 0)
+            {
+                string signTaskOutput = signClient.AnalyzeExitCode();
+                this.TaskLogger.LogInfo(signTaskOutput);
+            }
+            else
+            {
+                TaskLogger.LogInfo("Nuget signing completed successfully");
+            }
 
             return true;
         }
@@ -174,6 +188,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                 }
             }
 
+           
             return manifestFileList;
         }
         
@@ -196,6 +211,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
             foreach (string signFilePath in fileList)
             {
+                TaskLogger.LogDebugInfo("Adding '{0}' to the signing manifest", signFilePath);
                 string[] fileSplitPaths = signFilePath.Split(pathSplitToken, StringSplitOptions.RemoveEmptyEntries);
 
                 if (fileSplitPaths != null)
