@@ -12,7 +12,7 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
-    <ProjectReference Include="..\BingCustomSearch\Microsoft.Azure.CognitiveServices.Search.CustomSearch.csproj" />
+    <ProjectReference Include="..\BingCustomWebSearch\Microsoft.Azure.CognitiveServices.Search.CustomSearch.csproj" />
   </ItemGroup>
 
   <ItemGroup>
