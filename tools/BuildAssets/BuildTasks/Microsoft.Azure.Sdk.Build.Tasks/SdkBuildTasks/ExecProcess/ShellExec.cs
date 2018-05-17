@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
     public class ShellExec
     {
         #region CONST
-        const int DEFAULT_WAIT_TIMEOUT = 60000;  // 60 seconds default timeout
+        const int DEFAULT_WAIT_TIMEOUT = 240000;  // 60 seconds default timeout
                                                  //const string COMMAND_ARGS = "push {0} -source {1} -ApiKey {2} -NonInteractive -Timeout {3}";
 
         const int E_FAIL = -2147467259;
@@ -53,7 +53,6 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
                     _shellProcStartInfo.RedirectStandardError = true;
                     _shellProcStartInfo.RedirectStandardInput = true;
                     _shellProcStartInfo.RedirectStandardOutput = true;
-                    //ShellProcess.StartInfo = _shellProcStartInfo;
                 }
 
                 return _shellProcStartInfo;
@@ -86,13 +85,6 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         public ShellExec(string commandPath): this()
         {
             ShellProcessCommandPath = commandPath;
-            //ProcessStartInfo procInfo = new ProcessStartInfo(commandPath);
-            //procInfo.CreateNoWindow = true;
-            //procInfo.UseShellExecute = false;
-            //procInfo.RedirectStandardError = true;
-            //procInfo.RedirectStandardInput = true;
-            //procInfo.RedirectStandardOutput = true;
-            //ShellProcess.StartInfo = procInfo;
         }
 
         protected virtual string BuildShellProcessArgs()

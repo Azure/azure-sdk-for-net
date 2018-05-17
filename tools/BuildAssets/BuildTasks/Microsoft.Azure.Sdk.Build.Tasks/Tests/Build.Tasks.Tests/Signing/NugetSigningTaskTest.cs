@@ -17,9 +17,9 @@ namespace Build.Tasks.Tests.Signing
         public void SignOneNuet()
         {
             SignClientExec signExec = new SignClientExec();
-            signExec.CiSignToolsPath = @"D:\myFork\ci-signing\adxsdk";
-            signExec.InputArg = @"D:\myFork\netSdkBuild\binaries\SignManifest\RootDirFiles_SigningRequest.json";
-            signExec.OutputArg = @"D:\myFork\netSdkBuild\binaries\SignManifest\SignServiceOutput.json";
+            signExec.CiToolsRootDir = @"D:\myFork\ci-signing\adxsdk";
+            signExec.SigningInputManifestFilePath = @"D:\myFork\netSdkBuild\binaries\SignManifest\RootDirFiles_SigningRequest.json";
+            signExec.SigningResultOutputFilePath = @"D:\myFork\netSdkBuild\binaries\SignManifest\SignServiceOutput.json";
 
             int foo = signExec.ExecuteCommand();
             Assert.Equal(0, foo);

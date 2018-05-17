@@ -17,17 +17,20 @@
     <NuGetCommand>&quot;$(LibraryToolsFolder)\nuget.exe&quot;</NuGetCommand>
     <NuGetKey Condition=" '$(NuGetKey)' == '' ">1234</NuGetKey>
     <BuildInParallel>true</BuildInParallel>
-	<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>	
+	<SdkBuildToolsDir>$(LibraryToolsFolder)\SdkBuildTools</SdkBuildToolsDir>
+	<BuildNameLabel>DesktopBuild</BuildNameLabel>
     <NugetPackageName/>
     <ImportDirectoryBuildTargets>true</ImportDirectoryBuildTargets>
   </PropertyGroup>
   <PropertyGroup>
 	<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
 	<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
-	<SignClientConfigDir>$(SignManifestRootDir)\signClientConfig</SignClientConfigDir>	
+	<SignClientConfigDir>$(SignManifestRootDir)\signClientConfig</SignClientConfigDir>
+	<AuthenticodeSign>false</AuthenticodeSign>
   </PropertyGroup>
   <PropertyGroup>
     <CIToolsPath>$(OnPremiseBuildTasks)</CIToolsPath>
+	<CISignToolsRootDir>$(CIToolsPath)\tools</CISignToolsRootDir>
     <OnPremiseBuild Condition=" Exists($(OnPremiseBuildTasks)) ">true</OnPremiseBuild>
     <OnPremiseBuild Condition=" ! Exists($(OnPremiseBuildTasks)) ">false</OnPremiseBuild>
   </PropertyGroup>

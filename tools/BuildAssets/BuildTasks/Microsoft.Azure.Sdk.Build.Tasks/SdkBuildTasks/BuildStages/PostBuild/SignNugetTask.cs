@@ -3,31 +3,27 @@
 
 namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 {
+    using Microsoft.Azure.Sdk.Build.ExecProcess;
     using Microsoft.Azure.Sdk.Build.Tasks.BaseTasks;
-    using Microsoft.Azure.Sdk.Build.Tasks.Models;
     using Microsoft.Azure.Sdk.Build.Tasks.Models.Esrp.Sign;
+    using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
     using Microsoft.Build.Framework;
     using Microsoft.WindowsAzure.Build.Tasks.Utilities;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
-    public class PreSignTask : NetSdkTask
+    public class SignNugetTask : NetSdkTask
     {
+
         protected override INetSdkTask TaskInstance { get => this; }
 
         public override string NetSdkTaskName => "PreSignTask";
 
         public bool DebugTrace { get; set; }
-        
-        #region Input
 
-        public string InSignBuildName { get; set; }
-        public ITaskItem[] InSdkProjects { get; set; }
-        
+        #region Input
         [Required]
         public string InNugetPackageRootDir { get; set; }
         /// <summary>
@@ -43,17 +39,23 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         /// </summary>
         [Required]
         public string InSignedFilesRootDirPath { get; set; }
-        
+
         /// <summary>
         /// List of full file path that needs to be signed
         /// </summary>
-        public string[] InFilesToSignWithFullPath { get; set; }
+        //public string[] InFilesToSignWithFullPath { get; set; }
 
         /// <summary>
         /// Root directory for creating manifest files needed for signing service
         /// </summary>
-        //[Required]
+        [Required]
         public string InSignManifestDirPath { get; set; }
+
+        [Required]
+        public string InSignBuildName { get; set; }
+
+        [Required]
+        public string CiToolsRootDir { get; set; }
 
         /// <summary>
         /// Possible values
@@ -63,7 +65,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         [Required]
         public string InSigningOperation { get; set; }
 
-        #endregion
+#endregion
 
         #region output
         [Output]
@@ -72,8 +74,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
 
         #region private internal fields
-        //List<string> FinalFileListToBeSigned { get; set; }
-
         List<string> SignFileListFromProjects { get; set; }
 
         List<string> SignFileListFromFullPath { get; set; }
@@ -82,8 +82,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
         #endregion
 
-
-        public PreSignTask()
+        public SignNugetTask()
         {
             DebugTraceEnabled = DebugTrace;
 
@@ -92,89 +91,42 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             SignFileListFromRootDir = new List<string>();
         }
 
-
         public override bool Execute()
         {
-            InitFileList();
-            List<string> manifestFiles = GenerateManifestFiles();
-            if(manifestFiles.Any<string>())
-            {
-                OutSignManifestFiles = manifestFiles.ToArray<string>();
-            }
-            
+            List<string> manifestList = GenerateManifestFiles();
+            SignClientExec signClient = new SignClientExec();
+            signClient.CiToolsRootDir = CiToolsRootDir;
+            signClient.SigningInputManifestFilePath = manifestList.First<string>();
+
+            Check.FileExists(signClient.SigningInputManifestFilePath);
+
+            string sf = signClient.SigningInputManifestFilePath;
+            string signOutputFilePath = Path.Combine(Path.GetDirectoryName(sf), String.Concat(Path.GetFileNameWithoutExtension(sf), "_output", ".json"));
+            signClient.SigningResultOutputFilePath = signOutputFilePath;
+
+            int exitCode = signClient.ExecuteCommand();
+            string signTaskOutput = signClient.AnalyzeExitCode();
+
+            this.TaskLogger.LogDebugInfo(signTaskOutput);
+
             return true;
         }
 
-        private List<string> GenerateManifestFiles()
-        {
-            List<string> manifestFileList = new List<string>();
-
-            if(SignFileListFromProjects.Count > 0)
-            {
-                SignRequest projSignReq = CreateSignRequestModel(SignFileListFromProjects, @"bin\");
-                if(projSignReq != null)
-                {
-                    manifestFileList.Add(projSignReq.ToJsonFile(Path.Combine(InSignManifestDirPath, Constants.SigningConstants.SigningsProjectsManifestFileName)));
-                }
-            }
-
-            if (SignFileListFromRootDir.Count > 0)
-            {
-                SignRequest projSignReq = CreateSignRequestModel(SignFileListFromRootDir, InSignedFilesRootDirPath);
-                if (projSignReq != null)
-                {
-                    manifestFileList.Add(projSignReq.ToJsonFile(Path.Combine(InSignManifestDirPath, Constants.SigningConstants.SigningsRootDirFilesManifestFileName)));
-                }
-            }
-
-            return manifestFileList;
-            //OutSignManifestFiles = manifestFileList.ToArray<string>();
-        }
-
-
-
+        #region Create Manifest
         private void InitFileList()
         {
-            #region From Projects
-            // Build File list from projects that got built
-            if(InSdkProjects != null)
-            {
-                if (InSdkProjects.Any<ITaskItem>())
-                {
-                    List<SdkProjectMetaData> filteredProjects = TaskData.GetSdkProjects(InSdkProjects);
-
-                    foreach (SdkProjectMetaData sdkProj in filteredProjects)
-                    {
-                        SignFileListFromProjects.Add(sdkProj.TargetOutputFullPath);
-                    }
-                }
-            }
-            
-            #endregion
-
-            #region FullPath File list
-            // Build file list from provided file list
-
-            if (InFilesToSignWithFullPath != null)
-            {
-                if (InFilesToSignWithFullPath.Any<string>())
-                {
-                    SignFileListFromFullPath.AddRange(InFilesToSignWithFullPath);
-                }
-            }
-            #endregion
 
             #region from root directory and searching providing file extensions
             // Build file list from provided root directory and file extension
             // this will include search for list of files with expected file extensions in the root directory
 
-            if(string.IsNullOrEmpty(InSignedFilesRootDirPath))
+            if (string.IsNullOrEmpty(InSignedFilesRootDirPath))
             {
                 this.TaskLogger.LogDebugInfo("'SignedFilesRootDirPath' Provided directory path is empty");
             }
             else
             {
-                if(!Directory.Exists(InSignedFilesRootDirPath))
+                if (!Directory.Exists(InSignedFilesRootDirPath))
                 {
                     this.TaskLogger.LogDebugInfo("Provided directory root '{0}' does not exists, files from the provided will be skipped", InSignedFilesRootDirPath);
                 }
@@ -188,15 +140,15 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                     {
                         string searchPattern = string.Concat("*", extToSearch);
                         var enumFiles = Directory.EnumerateFiles(InSignedFilesRootDirPath, searchPattern, SearchOption.AllDirectories);
-                        if(enumFiles.Any<string>())
+                        if (enumFiles.Any<string>())
                         {
                             searchedFiles.AddRange(enumFiles.ToList<string>());
                         }
                     }
 
-                    if(searchedFiles != null)
+                    if (searchedFiles != null)
                     {
-                        if(searchedFiles.Any<string>())
+                        if (searchedFiles.Any<string>())
                         {
                             SignFileListFromRootDir.AddRange(searchedFiles);
                         }
@@ -207,16 +159,35 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             #endregion
         }
 
+        private List<string> GenerateManifestFiles()
+        {
+            InitFileList();
+
+            List<string> manifestFileList = new List<string>();
+
+            if (SignFileListFromRootDir.Count > 0)
+            {
+                SignRequest projSignReq = CreateSignRequestModel(SignFileListFromRootDir, InSignedFilesRootDirPath);
+                if (projSignReq != null)
+                {
+                    manifestFileList.Add(projSignReq.ToJsonFile(Path.Combine(InSignManifestDirPath, Constants.SigningConstants.SigningsRootDirFilesManifestFileName)));
+                }
+            }
+
+            return manifestFileList;
+        }
+        
+
         private SignRequest CreateSignRequestModel(List<string> fileList, string rootDirSplitToken)
         {
-            if(Directory.Exists(rootDirSplitToken))
+            if (Directory.Exists(rootDirSplitToken))
             {
                 DirectoryInfo dInfo = new DirectoryInfo(rootDirSplitToken);
-                
+
                 // We do this in order to get trailing directory separator character
                 rootDirSplitToken = Path.Combine(dInfo.Name, " ").Trim();
             }
-            
+
             //TODO: guard against empty rootDirSplitToken
             string[] pathSplitToken = new string[] { rootDirSplitToken };
 
@@ -242,7 +213,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                             srf.Name = Path.GetFileName(signFilePath);
                             srf.SourceLocation = fileSplitPaths[1];
                             srf.DestinationLocation = fileSplitPaths[1];
-                            
+
                             signBatch.SignRequestFiles.Add(srf);
                             signBatchDictionary.Add(fileSplitPaths[0], signBatch);
 
@@ -286,7 +257,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         private SigningInfo CreateSigningInfo(string signingOperationType)
         {
             SigningInfo signInfo = new SigningInfo();
-            if(signingOperationType != null)
+            if (signingOperationType != null)
             {
                 if (signingOperationType.Equals("nuget", StringComparison.OrdinalIgnoreCase))
                 {
@@ -311,24 +282,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
             return signInfo;
         }
-
-        /*
-        {Microsoft.Azure.Sdk.Build.Tasks.Models.SdkProjectMetaData}
-    FullProjectPath: "D:\\myFork\\netSdkBuild\\src\\SDKs\\Compute\\Management.Compute\\Microsoft.Azure.Management.Compute.csproj"
-    FxMoniker: net452
-    FxMonikerString: "net452"
-    IsFxFullDesktopVersion: true
-    IsFxNetCore: false
-    IsNonSdkProject: false
-    IsProjectDataPlane: false
-    IsTargetFxSupported: true
-    MsBuildProject: "D:\\myFork\\netSdkBuild\\src\\SDKs\\Compute\\Management.Compute\\Microsoft.Azure.Management.Compute.csproj" 
-    EffectiveToolsVersion="15.0" #GlobalProperties=0 #Properties=288 #ItemTypes=4 #ItemDefinitions=0 #Items=64 #Targets=45
-    ProjectImports: Count = 1
-    ProjectTaskItem: {Microsoft.Build.Utilities.TaskItem}
-    ProjectType: Sdk
-    TargetOutputFullPath: "D:\\myFork\\netSdkBuild\\src\\SDKs\\Compute\\Management.Compute\\bin\\Debug\\net452\\Microsoft.Azure.Management.Compute.dll"
-        */
+        #endregion
 
     }
 }

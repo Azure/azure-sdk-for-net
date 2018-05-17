@@ -11,85 +11,81 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// TODO: Make exec base as Task
+    /// </summary>
     public class SignClientExec : ShellExec
     {
         //ESRPClient sign ​-a c:/somefolder/auth.json, -c c:/somefolder/config.json -p c:/somefolder/policy.json -i c:/somefolder/input.json -o c:/somefolder/output.json
 
-        private const int SignUtilityDefaultTimeOut = 120000;
-        private string ciConfigDir= @"tools\ESRPClientUtility\configs";
-        private string _signUtilityCommandLineArgs;
+        private const int SignUtilityDefaultTimeOut = 360000;
+
+        private string signClientExecName = "ESRPClient.exe";
+        private string ciConfigDir;
+
         /// <summary>
-        /// Path to the CI Sign tools directory
+        /// Root direcotry for CI tools
         /// </summary>
-        public string CiSignToolsPath { get; set; }
 
-        private string SignUtilityFullPath = "";
+        public string CiToolsRootDir { get; set; }
 
-        public string InputArg { get; set; }
+        /// <summary>
+        /// Signing Client input file
+        /// </summary>
+        public string SigningInputManifestFilePath { get; set; }
 
-        public string OutputArg { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string SigningResultOutputFilePath { get; set; }
 
+        /// <summary>
+        /// Defautl time for the shell process
+        /// </summary>
         protected override int DefaultTimeOut => SignUtilityDefaultTimeOut;
 
-        public string SignUtilityCommandLineArgs
-        {
-            get
-            {
-                if(string.IsNullOrEmpty(_signUtilityCommandLineArgs))
-                {
-                    _signUtilityCommandLineArgs = string.Format("{0} -a {1} -c {2} -p {3} -i {4} -o {5}", "Sign", SignUtilityFullPath, Path.Combine(ciConfigDir, "Auth.json"),
-                        Path.Combine(ciConfigDir, "Config.json"), Path.Combine(ciConfigDir, "Policy.json"), InputArg, OutputArg);
-                }
-
-                return _signUtilityCommandLineArgs;
-            }
-        }
-
+        /// <summary>
+        /// Build commandline args string
+        /// </summary>
+        /// <returns></returns>
         protected override string BuildShellProcessArgs()
         {
-            if (string.IsNullOrEmpty(_signUtilityCommandLineArgs))
-            {
-                _signUtilityCommandLineArgs = string.Format("{0} -a {1} -c {2} -p {3} -i {4} -o {5}", "Sign", Path.Combine(ciConfigDir, "Auth.json"),
-                    Path.Combine(ciConfigDir, "Config.json"), Path.Combine(ciConfigDir, "Policy.json"), InputArg, OutputArg);
-            }
-
-            return _signUtilityCommandLineArgs;
+            return string.Format("{0} -a {1} -c {2} -p {3} -i {4} -o {5}", "Sign", Path.Combine(ciConfigDir, "AdxSdkAuth.json"),
+                Path.Combine(ciConfigDir, "Config.json"), Path.Combine(ciConfigDir, "Policy.json"), SigningInputManifestFilePath, SigningResultOutputFilePath);
         }
 
 
-        public SignClientExec() : base()
-        {
+        public SignClientExec() : base() { }
 
-        }
-
-        public SignClientExec(string commandPath) : base(commandPath)
-        {
-            //this.ShellProcessCommandPath = commandPath;
-        }
+        public SignClientExec(string commandPath) : base(commandPath) { }
 
 
         public override int ExecuteCommand()
         {
-
-            //OnPremiseBuildTasks
-            Check.DirectoryExists(CiSignToolsPath);
-            ciConfigDir = Path.Combine(CiSignToolsPath, ciConfigDir);
-            Check.DirectoryExists(ciConfigDir);
-            SignUtilityFullPath = Path.Combine(CiSignToolsPath, @"tools\ESRPClientUtility\EsrpClient.1.0.24\tools\EsrpClient.exe");
-            Check.FileExists(SignUtilityFullPath);
-
-            this.ShellProcessCommandPath = SignUtilityFullPath;
+            VerifyRequiredProperties();
 
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
-            string output = this.AnalyzeExitCode();
+            //string output = this.AnalyzeExitCode();
             return exitCode;
         }
 
-
-        private void SignNuget()
+        private void VerifyRequiredProperties()
         {
-            int exitCode = ExecuteCommand(BuildShellProcessArgs());
-            string output = this.AnalyzeExitCode();
+            //OnPremiseBuildTasks
+            Check.DirectoryExists(CiToolsRootDir);
+            var clientExes = Directory.EnumerateFiles(CiToolsRootDir, signClientExecName, SearchOption.AllDirectories);
+            Check.NotNull(clientExes, "SignUtility not found");
+            if(clientExes.Any<string>())
+            {
+                this.ShellProcessCommandPath = clientExes.First<string>();
+                Check.FileExists(this.ShellProcessCommandPath);
+            }
+
+            ciConfigDir = Path.Combine(CiToolsRootDir, @"tools\ESRPClient\configs");
+            Check.DirectoryExists(ciConfigDir);
+            Check.FileExists(Path.Combine(ciConfigDir, "AdxSdkAuth.json"));
+            Check.FileExists(Path.Combine(ciConfigDir, "Config.json"));
+            Check.FileExists(Path.Combine(ciConfigDir, "Policy.json"));
         }
     }
 }
