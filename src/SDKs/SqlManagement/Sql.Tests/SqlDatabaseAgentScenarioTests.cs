@@ -166,7 +166,6 @@ namespace Sql.Tests
                         DatabaseId = db1.Id
                     });
 
-
                     // Create credential
                     JobCredential credential = sqlClient.JobCredentials.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, SqlManagementTestUtilities.DefaultLogin, new JobCredential
                     {
@@ -177,61 +176,61 @@ namespace Sql.Tests
                     // Create target group
                     JobTargetGroup targetGroup = sqlClient.JobTargetGroups.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, "tg1", new JobTargetGroup
                     {
-                        Members =
-                    {
-                        // server target
-                        new JobTarget
+                        Members = new List<JobTarget>
                         {
-                            ServerName = "s1",
-                            Type = JobTargetType.SqlServer,
-                            RefreshCredential = credential.Name,
-                            MembershipType = JobTargetGroupMembershipType.Include,
+                            // server target
+                            new JobTarget
+                            {
+                                ServerName = "s1",
+                                Type = JobTargetType.SqlServer,
+                                RefreshCredential = credential.Name,
+                                MembershipType = JobTargetGroupMembershipType.Include,
+                            }
                         }
-                    }
                     });
 
                     // Update target group with each type of target
                     targetGroup = sqlClient.JobTargetGroups.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, "tg1", new JobTargetGroup
                     {
-                        Members =
-                    {
-                        // server target
-                        new JobTarget
+                        Members = new List<JobTarget>
                         {
-                            ServerName = "s1",
-                            Type = JobTargetType.SqlServer,
-                            RefreshCredential = credential.Name,
-                            MembershipType = JobTargetGroupMembershipType.Include,
-                        },
-                        // db target
-                        new JobTarget
-                        {
-                            DatabaseName = "db1",
-                            ServerName = "s1",
-                            Type = JobTargetType.SqlDatabase,
-                            MembershipType = JobTargetGroupMembershipType.Include,
-                        },
-                        // shard map target
-                        new JobTarget
-                        {
-                            ShardMapName = "sm1",
-                            DatabaseName = "db1",
-                            ServerName = "s1",
-                            RefreshCredential = credential.Name,
-                            Type = JobTargetType.SqlShardMap,
-                            MembershipType = JobTargetGroupMembershipType.Exclude,
-                        },
-                        // elastic pool target
-                        new JobTarget
-                        {
-                            ElasticPoolName = "ep1",
-                            DatabaseName = "db1",
-                            ServerName = "s1",
-                            RefreshCredential = credential.Name,
-                            Type = JobTargetType.SqlElasticPool,
-                            MembershipType = JobTargetGroupMembershipType.Exclude,
-                        },
-                    }
+                            // server target
+                            new JobTarget
+                            {
+                                ServerName = "s1",
+                                Type = JobTargetType.SqlServer,
+                                RefreshCredential = credential.Name,
+                                MembershipType = JobTargetGroupMembershipType.Include,
+                            },
+                            // db target
+                            new JobTarget
+                            {
+                                DatabaseName = "db1",
+                                ServerName = "s1",
+                                Type = JobTargetType.SqlDatabase,
+                                MembershipType = JobTargetGroupMembershipType.Include,
+                            },
+                            // shard map target
+                            new JobTarget
+                            {
+                                ShardMapName = "sm1",
+                                DatabaseName = "db1",
+                                ServerName = "s1",
+                                RefreshCredential = credential.Name,
+                                Type = JobTargetType.SqlShardMap,
+                                MembershipType = JobTargetGroupMembershipType.Exclude,
+                            },
+                            // elastic pool target
+                            new JobTarget
+                            {
+                                ElasticPoolName = "ep1",
+                                DatabaseName = "db1",
+                                ServerName = "s1",
+                                RefreshCredential = credential.Name,
+                                Type = JobTargetType.SqlElasticPool,
+                                MembershipType = JobTargetGroupMembershipType.Exclude,
+                            },
+                        }
                     });
 
                     // List target groups
@@ -359,17 +358,17 @@ namespace Sql.Tests
                     // Create target group
                     JobTargetGroup targetGroup = sqlClient.JobTargetGroups.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, "tg1", new JobTargetGroup
                     {
-                        Members =
-                    {
-                        // server target
-                        new JobTarget
+                        Members = new List<JobTarget>
                         {
-                            ServerName = server.Name,
-                            Type = JobTargetType.SqlServer,
-                            RefreshCredential = credential.Name,
-                            MembershipType = JobTargetGroupMembershipType.Include,
+                            // server target
+                            new JobTarget
+                            {
+                                ServerName = server.Name,
+                                Type = JobTargetType.SqlServer,
+                                RefreshCredential = credential.Name,
+                                MembershipType = JobTargetGroupMembershipType.Include,
+                            }
                         }
-                    }
                     });
 
                     // Create job that runs once
@@ -486,17 +485,17 @@ namespace Sql.Tests
                     // Create target group
                     JobTargetGroup targetGroup = sqlClient.JobTargetGroups.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, "tg1", new JobTargetGroup
                     {
-                        Members =
-                    {
-                        // server target
-                        new JobTarget
+                        Members = new List<JobTarget>
                         {
-                            ServerName = server.Name,
-                            Type = JobTargetType.SqlServer,
-                            RefreshCredential = credential.Name,
-                            MembershipType = JobTargetGroupMembershipType.Include,
+                            // server target
+                            new JobTarget
+                            {
+                                ServerName = server.Name,
+                                Type = JobTargetType.SqlServer,
+                                RefreshCredential = credential.Name,
+                                MembershipType = JobTargetGroupMembershipType.Include,
+                            }
                         }
-                    }
                     });
 
                     // Create job that runs once
