@@ -17,6 +17,17 @@ namespace Sql.Tests
 {
     public class SqlDatabaseAgentScenarioTests
     {
+        private string _subscriptionId;
+
+        public SqlDatabaseAgentScenarioTests()
+        {
+            // Sort of a hacky way to grab the subscription id from the environment variables, but given that developer set their
+            // TEST_CSM_ORGID_AUTHENTICATION environment variable in this format then:
+            // SubscriptionId={SubId};ServicePrincipal={clientId};ServicePrincipalSecret={clientSecret};AADTenant={tenantId};Environment={env};HttpRecorderMode=Record;
+            // The below string split and getting the {SubId} should work.
+            this._subscriptionId = Environment.GetEnvironmentVariables()["TEST_CSM_ORGID_AUTHENTICATION"].ToString().Split(';')[0].Split('=')[1];
+        }
+
         /// <summary>
         /// Test end to end agent
         /// </summary>
@@ -183,7 +194,7 @@ namespace Sql.Tests
                             {
                                 ServerName = "s1",
                                 Type = JobTargetType.SqlServer,
-                                RefreshCredential = credential.Name,
+                                RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                                 MembershipType = JobTargetGroupMembershipType.Include,
                             }
                         }
@@ -199,7 +210,7 @@ namespace Sql.Tests
                             {
                                 ServerName = "s1",
                                 Type = JobTargetType.SqlServer,
-                                RefreshCredential = credential.Name,
+                                RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                                 MembershipType = JobTargetGroupMembershipType.Include,
                             },
                             // db target
@@ -216,7 +227,7 @@ namespace Sql.Tests
                                 ShardMapName = "sm1",
                                 DatabaseName = "db1",
                                 ServerName = "s1",
-                                RefreshCredential = credential.Name,
+                                RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                                 Type = JobTargetType.SqlShardMap,
                                 MembershipType = JobTargetGroupMembershipType.Exclude,
                             },
@@ -226,7 +237,7 @@ namespace Sql.Tests
                                 ElasticPoolName = "ep1",
                                 DatabaseName = "db1",
                                 ServerName = "s1",
-                                RefreshCredential = credential.Name,
+                                RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                                 Type = JobTargetType.SqlElasticPool,
                                 MembershipType = JobTargetGroupMembershipType.Exclude,
                             },
@@ -355,6 +366,7 @@ namespace Sql.Tests
                     });
 
 
+
                     // Create target group
                     JobTargetGroup targetGroup = sqlClient.JobTargetGroups.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, "tg1", new JobTargetGroup
                     {
@@ -365,7 +377,7 @@ namespace Sql.Tests
                             {
                                 ServerName = server.Name,
                                 Type = JobTargetType.SqlServer,
-                                RefreshCredential = credential.Name,
+                                RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                                 MembershipType = JobTargetGroupMembershipType.Include,
                             }
                         }
@@ -385,12 +397,12 @@ namespace Sql.Tests
                     // Create step with min params
                     JobStep step1 = sqlClient.JobSteps.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, job1.Name, "step1", new JobStep
                     {
-                        Credential = credential.Name,
+                        Credential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                         Action = new JobStepAction
                         {
                             Value = "SELECT 1"
                         },
-                        TargetGroup = targetGroup.Name,
+                        TargetGroup = FormatTargetGroupId(resourceGroup.Name, server.Name, agent.Name, targetGroup.Name)
                     });
 
 
@@ -398,14 +410,14 @@ namespace Sql.Tests
                     // Update step with max params
                     step1 = sqlClient.JobSteps.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, job1.Name, "step1", new JobStep
                     {
-                        Credential = credential.Name,
+                        Credential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                         Action = new JobStepAction
                         {
                             Value = "SELECT 1",
                             Source = "Inline",
                             Type = "TSql"
                         },
-                        TargetGroup = targetGroup.Name,
+                        TargetGroup = FormatTargetGroupId(resourceGroup.Name, server.Name, agent.Name, targetGroup.Name),
                         ExecutionOptions = new JobStepExecutionOptions
                         {
                             InitialRetryIntervalSeconds = 100,
@@ -422,7 +434,7 @@ namespace Sql.Tests
                             SchemaName = "dbo",
                             TableName = "tbl",
                             SubscriptionId = new Guid(),
-                            Credential = credential.Name,
+                            Credential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                             Type = JobTargetType.SqlDatabase
                         }
                     });
@@ -492,7 +504,7 @@ namespace Sql.Tests
                             {
                                 ServerName = server.Name,
                                 Type = JobTargetType.SqlServer,
-                                RefreshCredential = credential.Name,
+                                RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                                 MembershipType = JobTargetGroupMembershipType.Include,
                             }
                         }
@@ -512,12 +524,12 @@ namespace Sql.Tests
                     // Create job step
                     JobStep step1 = sqlClient.JobSteps.CreateOrUpdate(resourceGroup.Name, server.Name, agent.Name, job1.Name, "step1", new JobStep
                     {
-                        Credential = credential.Name,
+                        Credential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                         Action = new JobStepAction
                         {
                             Value = "SELECT 1"
                         },
-                        TargetGroup = targetGroup.Name,
+                        TargetGroup = FormatTargetGroupId(resourceGroup.Name, server.Name, agent.Name, targetGroup.Name)
                     });
 
 
@@ -557,6 +569,26 @@ namespace Sql.Tests
                     context.DeleteResourceGroup(resourceGroup.Name);
                 }
             }
+        }
+
+        /// <summary>
+        /// Helper to format credential id string
+        /// </summary>
+        /// <returns>Refresh credential string</returns>
+        private string FormatCredentialId(string resourceGroupName, string serverName, string agentName, string credentialName)
+        {
+            return string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}/jobAgents/{3}/credentials/{4}",
+                this._subscriptionId, resourceGroupName, serverName, agentName, credentialName);
+        }
+
+        /// <summary>
+        /// Helper to format target group id string
+        /// </summary>
+        /// <returns>Refresh credential string</returns>
+        private string FormatTargetGroupId(string resourceGroupName, string serverName, string agentName, string targetGroupName)
+        {
+            return string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}/jobAgents/{3}/targetGroups/{4}",
+                this._subscriptionId, resourceGroupName, serverName, agentName, targetGroupName);
         }
     }
 }
