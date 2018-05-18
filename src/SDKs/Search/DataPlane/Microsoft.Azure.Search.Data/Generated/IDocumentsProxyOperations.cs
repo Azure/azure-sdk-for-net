@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Search
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
-        /// <param name='autocompleteParametersPayload'>
+        /// <param name='autocompleteParameters'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(AutocompleteMode autocompleteMode, string search = default(string), string suggesterName = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParametersPayload autocompleteParametersPayload = default(AutocompleteParametersPayload), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(AutocompleteMode autocompleteMode, string search = default(string), string suggesterName = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.

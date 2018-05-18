@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters for fuzzy matching, and other suggestions query behaviors.
+    /// Parameters for fuzzy matching, and other autocomplete query behaviors.
     /// </summary>
     public partial class AutocompleteRequest
     {
@@ -32,35 +32,36 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="autocompleteMode">Specifies the mode for Autocomplete.
         /// The default is 'oneTerm'. Use 'twoTerms' to get shingles and
         /// 'oneTermWithContext' to use the current context while producing
-        /// suggetions. Possible values include: 'oneTerm', 'twoTerms',
-        /// 'oneTermWithContext'</param>
+        /// autocompleted terms. Possible values include: 'oneTerm',
+        /// 'twoTerms', 'oneTermWithContext'</param>
         /// <param name="fuzzy">A value indicating whether to use fuzzy
-        /// matching for the suggestion query. Default is false. when set to
-        /// true, the query will find suggestions even if there's a substituted
-        /// or missing character in the search text. While this provides a
-        /// better experience in some scenarios it comes at a performance cost
-        /// as fuzzy suggestion searches are slower and consume more
-        /// resources.</param>
+        /// matching for the autocomplete query. Default is false. when set to
+        /// true, the query will autocomplete terms even if there's a
+        /// substituted or missing character in the search text. While this
+        /// provides a better experience in some scenarios it comes at a
+        /// performance cost as fuzzy autocomplete queries are slower and
+        /// consume more resources.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
         /// highlights. Must be set with HighlightPreTag. If omitted, hit
-        /// highlighting of suggestions is disabled.</param>
+        /// highlighting is disabled.</param>
         /// <param name="highlightPreTag">A string tag that is prepended to hit
         /// highlights. Must be set with HighlightPostTag. If omitted, hit
-        /// highlighting of suggestions is disabled.</param>
+        /// highlighting is disabled.</param>
         /// <param name="minimumCoverage">A number between 0 and 100 indicating
-        /// the percentage of the index that must be covered by a suggestion
+        /// the percentage of the index that must be covered by am autocomplete
         /// query in order for the query to be reported as a success. This
         /// parameter can be useful for ensuring search availability even for
         /// services with only one replica. The default is 80.</param>
         /// <param name="search">The search text on which to base autocomplete
         /// results.</param>
         /// <param name="searchFields">The comma-separated list of field names
-        /// to consider when querying for suggestions.</param>
+        /// to consider when querying for autucompleted terms.</param>
         /// <param name="suggesterName">The name of the suggester as specified
         /// in the suggesters collection that's part of the index
         /// definition.</param>
-        /// <param name="top">The number of suggestions to retrieve. This must
-        /// be a value between 1 and 100. The default is to 5.</param>
+        /// <param name="top">The number of autocompleted terms to retrieve.
+        /// This must be a value between 1 and 100. The default is to
+        /// 5.</param>
         public AutocompleteRequest(AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string search = default(string), string searchFields = default(string), string suggesterName = default(string), int? top = default(int?))
         {
             AutocompleteMode = autocompleteMode;
@@ -83,42 +84,43 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets specifies the mode for Autocomplete. The default is
         /// 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext'
-        /// to use the current context while producing suggetions. Possible
-        /// values include: 'oneTerm', 'twoTerms', 'oneTermWithContext'
+        /// to use the current context while producing autocompleted terms.
+        /// Possible values include: 'oneTerm', 'twoTerms',
+        /// 'oneTermWithContext'
         /// </summary>
         [JsonProperty(PropertyName = "autocompleteMode")]
         public AutocompleteMode? AutocompleteMode { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use fuzzy matching for
-        /// the suggestion query. Default is false. when set to true, the query
-        /// will find suggestions even if there's a substituted or missing
-        /// character in the search text. While this provides a better
+        /// the autocomplete query. Default is false. when set to true, the
+        /// query will autocomplete terms even if there's a substituted or
+        /// missing character in the search text. While this provides a better
         /// experience in some scenarios it comes at a performance cost as
-        /// fuzzy suggestion searches are slower and consume more resources.
+        /// fuzzy autocomplete queries are slower and consume more resources.
         /// </summary>
         [JsonProperty(PropertyName = "fuzzy")]
         public bool? Fuzzy { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
-        /// be set with HighlightPreTag. If omitted, hit highlighting of
-        /// suggestions is disabled.
+        /// be set with HighlightPreTag. If omitted, hit highlighting is
+        /// disabled.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPostTag")]
         public string HighlightPostTag { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is prepended to hit highlights. Must
-        /// be set with HighlightPostTag. If omitted, hit highlighting of
-        /// suggestions is disabled.
+        /// be set with HighlightPostTag. If omitted, hit highlighting is
+        /// disabled.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPreTag")]
         public string HighlightPreTag { get; set; }
 
         /// <summary>
         /// Gets or sets a number between 0 and 100 indicating the percentage
-        /// of the index that must be covered by a suggestion query in order
+        /// of the index that must be covered by am autocomplete query in order
         /// for the query to be reported as a success. This parameter can be
         /// useful for ensuring search availability even for services with only
         /// one replica. The default is 80.
@@ -134,7 +136,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the comma-separated list of field names to consider
-        /// when querying for suggestions.
+        /// when querying for autucompleted terms.
         /// </summary>
         [JsonProperty(PropertyName = "searchFields")]
         public string SearchFields { get; set; }
@@ -147,8 +149,8 @@ namespace Microsoft.Azure.Search.Models
         public string SuggesterName { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of suggestions to retrieve. This must be a
-        /// value between 1 and 100. The default is to 5.
+        /// Gets or sets the number of autocompleted terms to retrieve. This
+        /// must be a value between 1 and 100. The default is to 5.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public int? Top { get; set; }

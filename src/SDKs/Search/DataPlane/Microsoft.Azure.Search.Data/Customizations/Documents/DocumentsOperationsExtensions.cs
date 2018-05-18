@@ -64,17 +64,17 @@ namespace Microsoft.Azure.Search
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
-        public static AutocompleteResult AutocompleteGet(
+        public static AutocompleteResult Autocomplete(
             this IDocumentsOperations operations, 
             AutocompleteMode autocompleteMode,
             string search,
-            string suggesterName,
+            string suggesterName = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            AutocompleteParametersPayload autocompleteParametersPayload = null,
+            AutocompleteParameters autocompleteParameters = null,
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return operations.AutocompleteGetAsync(autocompleteMode, search, suggesterName, searchRequestOptions, autocompleteParametersPayload, customHeaders, cancellationToken).GetAwaiter().GetResult();
+            return operations.AutocompleteAsync(autocompleteMode, search, suggesterName, searchRequestOptions, autocompleteParameters, customHeaders, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -89,61 +89,17 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<AutocompleteResult> AutocompleteGetAsync(
+        public static async Task<AutocompleteResult> AutocompleteAsync(
             this IDocumentsOperations operations,
             AutocompleteMode autocompleteMode,
             string search,
             string suggesterName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            AutocompleteParametersPayload autocompleteParametersPayload = null,
+            AutocompleteParameters autocompleteParameters = null,
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.AutocompleteGetWithHttpMessagesAsync(autocompleteMode, search, suggesterName, searchRequestOptions, autocompleteParametersPayload, customHeaders, cancellationToken).ConfigureAwait(false))
-            {
-                return _result.Body;
-            }
-        }
-
-        /// <summary>
-        /// Queries the number of documents in the Azure Search index.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        public static AutocompleteResult AutocompletePost(
-            this IDocumentsOperations operations,
-            AutocompleteRequest autocompleteRequest,
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return operations.AutocompletePostAsync(autocompleteRequest, searchRequestOptions, customHeaders, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Queries the number of documents in the Azure Search index.
-        /// </summary>
-        /// <param name='operations'>
-        /// The operations group for this extension method.
-        /// </param>
-        /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public static async Task<AutocompleteResult> AutocompletePostAsync(
-            this IDocumentsOperations operations,
-            AutocompleteRequest autocompleteRequest,
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            using (var _result = await operations.AutocompletePostWithHttpMessagesAsync(autocompleteRequest, searchRequestOptions, customHeaders, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.AutocompleteWithHttpMessagesAsync(autocompleteMode, search, suggesterName, searchRequestOptions, autocompleteParameters, customHeaders, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

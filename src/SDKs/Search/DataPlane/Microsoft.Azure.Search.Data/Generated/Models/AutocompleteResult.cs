@@ -31,11 +31,11 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the AutocompleteResult class.
         /// </summary>
-        /// <param name="value">The list of returned Autocompleted
+        /// <param name="results">The list of returned Autocompleted
         /// items.</param>
-        public AutocompleteResult(IList<AutocompleteItem> value = default(IList<AutocompleteItem>))
+        public AutocompleteResult(IList<AutocompleteItem> results = default(IList<AutocompleteItem>))
         {
-            Value = value;
+            Results = results;
             CustomInit();
         }
 
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets the list of returned Autocompleted items.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<AutocompleteItem> Value { get; private set; }
+        public IList<AutocompleteItem> Results { get; private set; }
 
     }
 }

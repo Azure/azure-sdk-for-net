@@ -65,17 +65,22 @@ namespace Microsoft.Azure.Search
             };
         }
 
-        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(
+        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteWithHttpMessagesAsync(
             AutocompleteMode autocompleteMode,
             string search,
             string suggesterName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            AutocompleteParametersPayload autocompleteParametersPayload = null,
+            AutocompleteParameters autocompleteParametersPayload = null,
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<AutocompleteResult> response =
-                await this.Client.DocumentsProxy.AutocompleteGetWithHttpMessagesAsync(
+            bool useGet = Client.UseHttpGetForQueries;
+
+            AzureOperationResponse<AutocompleteResult> response;
+
+            if (useGet)
+            {
+                response = await this.Client.DocumentsProxy.AutocompleteGetWithHttpMessagesAsync(
                     autocompleteMode,
                     search,
                     suggesterName,
@@ -83,28 +88,28 @@ namespace Microsoft.Azure.Search
                     autocompleteParametersPayload,
                     customHeaders,
                     cancellationToken);
-
-            return new AzureOperationResponse<AutocompleteResult>()
+            }
+            else
             {
-                Body = response.Body,
-                Request = response.Request,
-                RequestId = response.RequestId,
-                Response = response.Response
-            };
-        }
+                AutocompleteRequest request = new AutocompleteRequest()
+                {
+                    AutocompleteMode = autocompleteMode,
+                    Fuzzy = autocompleteParametersPayload?.Fuzzy,
+                    HighlightPostTag = autocompleteParametersPayload?.HighlightPostTag,
+                    HighlightPreTag = autocompleteParametersPayload?.HighlightPreTag,
+                    MinimumCoverage = autocompleteParametersPayload?.MinimumCoverage,
+                    SearchFields = autocompleteParametersPayload?.SearchFields,
+                    Search = search,
+                    SuggesterName = suggesterName,
+                    Top = autocompleteParametersPayload?.Top
+                };
 
-        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompletePostWithHttpMessagesAsync(
-            AutocompleteRequest autocompleteRequest,
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            AzureOperationResponse<AutocompleteResult> response =
-                await this.Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(
-                    autocompleteRequest,
+                response = await this.Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(
+                    request,
                     searchRequestOptions,
                     customHeaders,
                     cancellationToken);
+            }    
 
             return new AzureOperationResponse<AutocompleteResult>()
             {

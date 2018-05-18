@@ -6,504 +6,192 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
-    using Microsoft.Azure.Search.Tests.Utilities;
     using Xunit;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.
     public class AutocompleteTests : QueryTests
     {
-        [Fact]
-        public void TestAutocompleteGetStaticallyTypedDocuments()
+        protected void TestAutocompleteStaticallyTypedDocuments()
         {
             var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
             var expectedQueryPlusText = new List<String>() { "very police", "very polite", "very pool", "very popular" };
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
+            SearchIndexClient client = GetClientForQuery();
 
-                var autocompleteParameters = new AutocompleteParametersPayload() { Fuzzy = false };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "very po", "sg", autocompleteParametersPayload: autocompleteParameters);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });
+            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = false };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "very po", "sg", autocompleteParameters: autocompleteParameters);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
+        }
+
+        protected void TestAutocompleteThrowsWhenRequestIsMalformed()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var autocompleteRequest = new AutocompleteRequest() { Fuzzy = false, AutocompleteMode = AutocompleteMode.OneTerm, Search = "very po" };
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Autocomplete(AutocompleteMode.OneTerm, "very po", String.Empty),
+                HttpStatusCode.BadRequest,
+                "Cannot find fields enabled for suggestions. Please provide a value for 'suggesterName' in the query.\r\nParameter name: suggestions");
+        }
+
+        protected void TestAutcompleteThrowsWhenGivenBadSuggesterName()
+        {
+            SearchIndexClient client = GetClientForQuery();
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Autocomplete(AutocompleteMode.OneTerm, "very po", "Invalid suggester"),
+                HttpStatusCode.BadRequest,
+                "The specified suggester name 'Invalid suggester' does not exist in this index definition.\r\nParameter name: name");
         }
         
-        [Fact]
-        public void TestAutocompletePostStaticallyTypedDocuments()
+        protected void TestAutocompleteFuzzyIsOffByDefault()
         {
-            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "very police", "very polite", "very pool", "very popular" };
+            SearchIndexClient client = GetClientForQuery();
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "pi", "sg");
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-
-                var autocompleteRequest = new AutocompleteRequest() { Fuzzy = false, AutocompleteMode = AutocompleteMode.OneTerm, SuggesterName = "sg", Search = "very po" };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });
+            Assert.NotNull(response.Results);
+            Assert.Equal(0, response.Results.Count);
         }
 
-        [Fact]
-        public void TestAutocompleteGetThrowsWhenRequestIsMalformed()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClient();
-
-                var autocompleteRequest = new AutocompleteRequest() { Fuzzy = false, AutocompleteMode = AutocompleteMode.OneTerm, Search = "very po" };
-                SearchAssert.ThrowsCloudException(
-                    () => client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "very po", null),
-                    HttpStatusCode.BadRequest,
-                    "Cannot find fields enabled for suggestions. Please provide a value for 'suggesterName' in the query.\r\nParameter name: suggestions");
-            });           
-        }
-
-        [Fact]
-        public void TestAutocompletePostThrowsWhenRequestIsMalformed()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClient();
-
-                var autocompleteRequest = new AutocompleteRequest() { Fuzzy = false, AutocompleteMode = AutocompleteMode.OneTerm, Search = "very po" };
-                SearchAssert.ThrowsCloudException(
-                    () => client.Documents.AutocompletePost(autocompleteRequest),
-                    HttpStatusCode.BadRequest,
-                    "The request is invalid. Details: parameters : One or more parameters of the operation 'autocomplete' are missing from the request payload. The missing parameters are: suggesterName.");
-            });            
-        }
-
-        [Fact]
-        public void TestAutcompleteGetThrowsWhenGivenBadSuggesterName()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClient();
-                SearchAssert.ThrowsCloudException(
-                    () => client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "very po", "Invalid suggester"),
-                    HttpStatusCode.BadRequest,
-                    "The specified suggester name 'Invalid suggester' does not exist in this index definition.\r\nParameter name: name");
-            });            
-        }
-
-        [Fact]
-        public void TestAutcompletePostThrowsWhenGivenBadSuggesterName()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClient();
-                var autocompleteRequest = new AutocompleteRequest() { Fuzzy = false, AutocompleteMode = AutocompleteMode.OneTerm, Search = "very po", SuggesterName = "Invalid suggester" };
-                SearchAssert.ThrowsCloudException(
-                    () => client.Documents.AutocompletePost(autocompleteRequest),
-                    HttpStatusCode.BadRequest,
-                    "The specified suggester name 'Invalid suggester' does not exist in this index definition.\r\nParameter name: name");
-            });            
-        }
-        
-        public void TestAutocompleteGetFuzzyIsOffByDefault()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "pi", "sg");
-
-                Assert.NotNull(result.Value);
-                Assert.Equal(0, result.Value.Count);
-            });            
-        }
-
-        [Fact]
-        public void TestAutocompletePostFuzzyIsOffByDefault()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest() { AutocompleteMode = AutocompleteMode.OneTerm, Search = "pi", SuggesterName = "sg" };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result.Value);
-                Assert.Equal(0, result.Value.Count);
-            });           
-        }
-
-        [Fact]
-        public void TestAutocompleteGetOneTerm()
+        protected void TestAutocompleteOneTerm()
         {
             var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
             var expectedQueryPlusText = new List<String>() { "police", "polite", "pool", "popular" };
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "po", "sg");
+            SearchIndexClient client = GetClientForQuery();
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "po", "sg");
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });           
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompleteGetTwoTerms()
+        protected void TestAutocompleteTwoTerms()
         {
             var expectedText = new List<String>() { "police station", "polite staff", "pool a", "popular hotel" };
             var expectedQueryPlusText = new List<String>() { "police station", "polite staff", "pool a", "popular hotel" };
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.TwoTerms, "po", "sg");
+            SearchIndexClient client = GetClientForQuery();
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.TwoTerms, "po", "sg");
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });                     
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompleteGetOneTermWithContext()
+        protected void TestAutocompleteOneTermWithContext()
         {
             var expectedText = new List<String>() { "very police", "very polite", "very popular" };
             var expectedQueryPlusText = new List<String>() { "looking for very police", "looking for very polite", "looking for very popular" };
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTermWithContext, "looking for very po", "sg");
+            SearchIndexClient client = GetClientForQuery();
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTermWithContext, "looking for very po", "sg");
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });          
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompletePostOneTerm()
-        {
-            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "police", "polite", "pool", "popular" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest() { AutocompleteMode = AutocompleteMode.OneTerm, Search = "po", SuggesterName = "sg" };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });           
-        }
-
-        [Fact]
-        public void TestAutocompletePostTwoTerms()
-        {
-            var expectedText = new List<String>() { "police station", "polite staff", "pool a", "popular hotel" };
-            var expectedQueryPlusText = new List<String>() { "police station", "polite staff", "pool a", "popular hotel" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest() { AutocompleteMode = AutocompleteMode.TwoTerms, Search = "po", SuggesterName = "sg" };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });            
-        }
-
-        [Fact]
-        public void TestAutocompletePostOneTermWithContext()
-        {
-            var expectedText = new List<String>() { "very police", "very polite", "very popular" };
-            var expectedQueryPlusText = new List<String>() { "looking for very police", "looking for very polite", "looking for very popular" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest() { AutocompleteMode = AutocompleteMode.OneTermWithContext, Search = "looking for very po", SuggesterName = "sg" };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });          
-        }
-
-        [Fact]
-        public void TestAutocompleteGetOneTermWithFuzzy()
+        protected void TestAutocompleteOneTermWithFuzzy()
         {
             var expectedText = new List<String>() { "model", "modern", "morel", "motel" };
             var expectedQueryPlusText = new List<String>() { "model", "modern", "morel", "motel" };
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteParameters = new AutocompleteParametersPayload() { Fuzzy = true };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParametersPayload: autocompleteParameters);
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = true };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });           
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompleteGetTwoTermsWithFuzzy()
+        protected void TestAutocompleteTwoTermsWithFuzzy()
         {
             var expectedText = new List<String>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
             var expectedQueryPlusText = new List<String>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteParameters = new AutocompleteParametersPayload() { Fuzzy = true };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.TwoTerms, "mod", "sg", autocompleteParametersPayload: autocompleteParameters);
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = true };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.TwoTerms, "mod", "sg", autocompleteParameters: autocompleteParameters);
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });           
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompleteGetOneTermWithContextWithFuzzy()
+        protected void TestAutocompleteOneTermWithContextWithFuzzy()
         {
             var expectedText = new List<String>() { "very polite", "very police" };
             var expectedQueryPlusText = new List<String>() { "very polite", "very police" };
 
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteParameters = new AutocompleteParametersPayload() { Fuzzy = true };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTermWithContext, "very polit", "sg", autocompleteParametersPayload: autocompleteParameters);
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = true };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTermWithContext, "very polit", "sg", autocompleteParameters: autocompleteParameters);
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });           
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompletePostOneTermWithFuzzy()
-        {
-            var expectedText = new List<String>() { "model", "modern", "morel", "motel" };
-            var expectedQueryPlusText = new List<String>() { "model", "modern", "morel", "motel" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest() { AutocompleteMode = AutocompleteMode.OneTerm, Search = "mod", SuggesterName = "sg", Fuzzy = true };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });            
-        }
-
-        [Fact]
-        public void TestAutocompletePostTwoTermsWithFuzzy()
-        {
-            var expectedText = new List<String>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
-            var expectedQueryPlusText = new List<String>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest() { AutocompleteMode = AutocompleteMode.TwoTerms, Search = "mod", SuggesterName = "sg", Fuzzy = true };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });           
-        }
-
-        [Fact]
-        public void TestAutocompletePostOneTermWithContextWithFuzzy()
-        {
-            var expectedText = new List<String>() { "very polite", "very police" };
-            var expectedQueryPlusText = new List<String>() { "looking for very polite", "looking for very police" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest() { AutocompleteMode = AutocompleteMode.OneTermWithContext, Search = "looking for very polit", SuggesterName = "sg", Fuzzy = true };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });          
-        }
-
-        [Fact]
-        public void TestAutocompleteGetCanUseHitHighlighting()
+        protected void TestAutocompleteCanUseHitHighlighting()
         {
             var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
             var expectedQueryPlusText = new List<String>() { "<b>police</b>", "<b>polite</b>", "<b>pool</b>", "<b>popular</b>" };
 
-            Run(() =>
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters()
             {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteParameters = new AutocompleteParametersPayload()
-                {
-                    HighlightPreTag = "<b>",
-                    HighlightPostTag = "</b>",
-                };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "po", "sg", autocompleteParametersPayload: autocompleteParameters);
+                HighlightPreTag = "<b>",
+                HighlightPostTag = "</b>",
+            };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "po", "sg", autocompleteParameters: autocompleteParameters);
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });           
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompletePostCanUseHitHighlighting()
-        {
-            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "<b>police</b>", "<b>polite</b>", "<b>pool</b>", "<b>popular</b>" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest()
-                {
-                    AutocompleteMode = AutocompleteMode.OneTerm,
-                    Search = "po",
-                    SuggesterName = "sg",
-                    HighlightPreTag = "<b>",
-                    HighlightPostTag = "</b>"
-                };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });
-        }
-
-        [Fact]
-        public void TestAutocompleteGetTopTrimsResults()
+        protected void TestAutocompleteTopTrimsResults()
         {
             var expectedText = new List<String>() { "police", "polite" };
             var expectedQueryPlusText = new List<String>() { "police", "polite" };
 
-            Run(() =>
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters()
             {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteParameters = new AutocompleteParametersPayload()
-                {
-                    Top = 2
-                };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "po", "sg", autocompleteParametersPayload: autocompleteParameters);
+                Top = 2
+            };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "po", "sg", autocompleteParameters: autocompleteParameters);
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompletePostTopTrimsResults()
-        {
-            var expectedText = new List<String>() { "police", "polite" };
-            var expectedQueryPlusText = new List<String>() { "police", "polite" };
-
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest()
-                {
-                    AutocompleteMode = AutocompleteMode.OneTerm,
-                    Search = "po",
-                    SuggesterName = "sg",
-                    Top = 2
-                };
-
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });
-        }
-
-        [Fact]
-        public void TestAutocompleteGetWithSelectedFields()
+        protected void TestAutocompleteWithSelectedFields()
         {
             var expectedText = new List<String>() { "modern"};
             var expectedQueryPlusText = new List<String>() { "modern" };
 
-            Run(() =>
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters()
             {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteParameters = new AutocompleteParametersPayload()
-                {
-                    SearchFields = "hotelName"
-                };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParametersPayload: autocompleteParameters);
+                SearchFields = "hotelName"
+            };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-            });
-            
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        [Fact]
-        public void TestAutocompletePostWithSelectedFields()
+        protected void TestAutocompleteExcludesFieldsNotInSuggester()
         {
-            var expectedText = new List<String>() { "modern" };
-            var expectedQueryPlusText = new List<String>() { "modern" };
-
-            Run(() =>
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters()
             {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest()
-                {
-                    AutocompleteMode = AutocompleteMode.OneTerm,
-                    Search = "mod",
-                    SuggesterName = "sg",
-                    SearchFields = "hotelName"
-                };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
+                SearchFields = "hotelName"
+            };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "luxu", "sg", autocompleteParameters: autocompleteParameters);
 
-                Assert.NotNull(result);
-                ValidateResults(result.Value, expectedText, expectedQueryPlusText);
-
-            });
-        }
-
-        [Fact]
-        public void TestAutocompleteGetExcludesFieldsNotInSuggester()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteParameters = new AutocompleteParametersPayload()
-                {
-                    SearchFields = "hotelName"
-                };
-                AutocompleteResult result = client.Documents.AutocompleteGet(AutocompleteMode.OneTerm, "luxu", "sg", autocompleteParametersPayload: autocompleteParameters);
-
-                Assert.NotNull(result);
-                Assert.NotNull(result.Value);
-                Assert.Equal(0, result.Value.Count);
-            });
-        }
-
-        [Fact]
-        public void TestAutocompletePostExcludesFieldsNotInSuggester()
-        {
-            Run(() =>
-            {
-                SearchIndexClient client = GetClientForQuery();
-                var autocompleteRequest = new AutocompleteRequest()
-                {
-                    AutocompleteMode = AutocompleteMode.OneTerm,
-                    Search = "luxu",
-                    SuggesterName = "sg",
-                    SearchFields = "hotelName"
-                };
-                AutocompleteResult result = client.Documents.AutocompletePost(autocompleteRequest);
-
-                Assert.NotNull(result);
-                Assert.NotNull(result.Value);
-                Assert.Equal(0, result.Value.Count);
-            });           
+            Assert.NotNull(response);
+            Assert.NotNull(response.Results);
+            Assert.Equal(0, response.Results.Count);
         }
 
         private void ValidateResults(IList<AutocompleteItem> autocompletedItems, List<String> expectedText, List<String> expectedQueryPlusText)
@@ -511,6 +199,20 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedText.Count, autocompletedItems.Count);
             Assert.True(autocompletedItems.Select(c => c.Text).ToList().SequenceEqual(expectedText));
             Assert.True(autocompletedItems.Select(c => c.QueryPlusText).ToList().SequenceEqual(expectedQueryPlusText));
+        }
+
+        protected override SearchIndexClient GetClient()
+        {
+            SearchIndexClient client = base.GetClient();
+            client.UseHttpGetForQueries = true;
+            return client;
+        }
+
+        protected override SearchIndexClient GetClientForQuery()
+        {
+            SearchIndexClient client = base.GetClientForQuery();
+            client.UseHttpGetForQueries = true;
+            return client;
         }
     }
 }

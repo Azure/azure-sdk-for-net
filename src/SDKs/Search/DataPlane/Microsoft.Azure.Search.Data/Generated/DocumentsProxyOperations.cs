@@ -274,7 +274,7 @@ namespace Microsoft.Azure.Search
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
         /// </param>
-        /// <param name='autocompleteParametersPayload'>
+        /// <param name='autocompleteParameters'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -298,7 +298,7 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(AutocompleteMode autocompleteMode, string search = default(string), string suggesterName = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParametersPayload autocompleteParametersPayload = default(AutocompleteParametersPayload), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(AutocompleteMode autocompleteMode, string search = default(string), string suggesterName = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SearchServiceName == null)
             {
@@ -322,34 +322,34 @@ namespace Microsoft.Azure.Search
                 clientRequestId = searchRequestOptions.ClientRequestId;
             }
             bool? fuzzy = default(bool?);
-            if (autocompleteParametersPayload != null)
+            if (autocompleteParameters != null)
             {
-                fuzzy = autocompleteParametersPayload.Fuzzy;
+                fuzzy = autocompleteParameters.Fuzzy;
             }
             string highlightPostTag = default(string);
-            if (autocompleteParametersPayload != null)
+            if (autocompleteParameters != null)
             {
-                highlightPostTag = autocompleteParametersPayload.HighlightPostTag;
+                highlightPostTag = autocompleteParameters.HighlightPostTag;
             }
             string highlightPreTag = default(string);
-            if (autocompleteParametersPayload != null)
+            if (autocompleteParameters != null)
             {
-                highlightPreTag = autocompleteParametersPayload.HighlightPreTag;
+                highlightPreTag = autocompleteParameters.HighlightPreTag;
             }
             double? minimumCoverage = default(double?);
-            if (autocompleteParametersPayload != null)
+            if (autocompleteParameters != null)
             {
-                minimumCoverage = autocompleteParametersPayload.MinimumCoverage;
+                minimumCoverage = autocompleteParameters.MinimumCoverage;
             }
             string searchFields = default(string);
-            if (autocompleteParametersPayload != null)
+            if (autocompleteParameters != null)
             {
-                searchFields = autocompleteParametersPayload.SearchFields;
+                searchFields = autocompleteParameters.SearchFields;
             }
             int? top = default(int?);
-            if (autocompleteParametersPayload != null)
+            if (autocompleteParameters != null)
             {
-                top = autocompleteParametersPayload.Top;
+                top = autocompleteParameters.Top;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
