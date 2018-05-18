@@ -23,6 +23,18 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         public bool DebugTrace { get; set; }
 
         #region Input
+        //[Required]
+        //public string InPackageRootDir { get; set; }
+
+        //[Required]
+        //public string InPackageUnsignedRootDir { get; set; }
+
+        //[Required]
+        //public string InPackageSignedRootDir { get; set; }
+
+
+
+
         [Required]
         public string InNugetPackageRootDir { get; set; }
         /// <summary>
@@ -116,8 +128,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
             if(exitCode != 0)
             {
-                string signTaskOutput = signClient.AnalyzeExitCode();
-                this.TaskLogger.LogException(new Exception(signTaskOutput));
+                this.TaskLogger.LogException(new ApplicationException("Signing Nuget operation failed. See SigningLog.txt for more details"), true);
+                //string signTaskOutput = signClient.AnalyzeExitCode();
+                //this.TaskLogger.LogException(new Exception(signTaskOutput));
             }
             else
             {

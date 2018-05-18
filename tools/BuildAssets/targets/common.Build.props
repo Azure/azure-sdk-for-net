@@ -21,13 +21,18 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 	
-	
   <PropertyGroup>
 	<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
 	<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
 	<SignClientConfigDir>$(SignManifestRootDir)\signClientConfig</SignClientConfigDir>
 	<AuthenticodeSign>false</AuthenticodeSign>
   </PropertyGroup>
+  <PropertyGroup>
+	<PackageRootDir>$(BuiltPackageOutputDir)</PackageRootDir>
+	<UnsignedPackageRootDir>$(PackageRootDir)\unsigned</UnsignedPackageRootDir>
+	<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
+  </PropertyGroup>
+  
   <PropertyGroup>	
 	<BuildNameLabel>DesktopBuild</BuildNameLabel>
   </PropertyGroup>

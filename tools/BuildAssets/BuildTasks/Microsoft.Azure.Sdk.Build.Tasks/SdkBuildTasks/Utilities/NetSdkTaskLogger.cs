@@ -90,6 +90,18 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Utilities
             }
         }
 
+        public void LogException(Exception ex, bool showDetails)
+        {
+            if (IsBuildEngineInitialized)
+            {
+                NetSdkLogger.LogErrorFromException(ex, showDetails);
+            }
+            else
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
         public void LogError(string errorMessage)
         {
             if (IsBuildEngineInitialized)

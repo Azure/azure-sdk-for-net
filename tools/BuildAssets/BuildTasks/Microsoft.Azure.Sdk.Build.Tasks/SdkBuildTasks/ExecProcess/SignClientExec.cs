@@ -4,8 +4,12 @@
 namespace Microsoft.Azure.Sdk.Build.ExecProcess
 {
     using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
+    using System;
+    using System.ComponentModel;
     using System.IO;
     using System.Linq;
+    using System.Diagnostics;
+    using System.Threading;
 
     /// <summary>
     /// TODO: Make exec base as Task
@@ -18,7 +22,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
 
         private string signClientExecName = "ESRPClient.exe";
         private string ciConfigDir;
-        
+        ProcessStartInfo _shellProcStartInfo;
 
         /// <summary>
         /// Root direcotry for CI tools
@@ -71,11 +75,57 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         public SignClientExec(string commandPath) : base(commandPath) { }
 
 
+        public override ProcessStartInfo ShellProcessInfo
+        {
+            get
+            {
+                if (_shellProcStartInfo == null)
+                {
+                    _shellProcStartInfo = new ProcessStartInfo(ShellProcessCommandPath);
+                    _shellProcStartInfo.CreateNoWindow = true;
+                    _shellProcStartInfo.UseShellExecute = true;
+                    //_shellProcStartInfo.RedirectStandardError = true;
+                    //_shellProcStartInfo.RedirectStandardInput = true;
+                    //_shellProcStartInfo.RedirectStandardOutput = true;
+                }
+
+                return _shellProcStartInfo;
+            }
+        }
+
         public override int ExecuteCommand()
         {
             VerifyRequiredProperties();
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
             return exitCode;
+        }
+
+        public override int ExecuteCommand(string args)
+        {
+            try
+            {
+                ShellProcess.StartInfo.Arguments = args;
+                //ShellProcess.StartInfo.UseShellExecute = true;
+                //ShellProcess.StartInfo.RedirectStandardError = false;
+                ShellProcess.Start();
+                int procId = ShellProcess.Id;
+                //ShellProcess.WaitForExit(DefaultTimeOut);
+                //LastExitCode = ShellProcess.ExitCode;
+                TrackProcess(procId);
+                LastExitCode = ShellProcess.ExitCode;
+            }
+            catch (Win32Exception win32Ex)
+            {
+                LastExitCode = win32Ex.ErrorCode;
+                LastException = win32Ex;
+            }
+            catch (Exception ex)
+            {
+                LastExitCode = ex.HResult;
+                LastException = ex;
+            }
+
+            return LastExitCode;
         }
 
         private void VerifyRequiredProperties()
@@ -94,6 +144,28 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             Check.FileExists(Path.Combine(ciConfigDir, "AdxSdkAuth.json"));
             Check.FileExists(Path.Combine(ciConfigDir, "Config.json"));
             Check.FileExists(Path.Combine(ciConfigDir, "Policy.json"));
+        }
+
+        private void TrackProcess(int procIdToTrack)
+        {
+            var process2 = Process.GetProcessById(procIdToTrack);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            TimeSpan elapsed = sw.Elapsed;
+            while ((elapsed < TimeSpan.FromMinutes(5)) && (process2.HasExited == false))
+            {
+                Thread.Sleep(30000);
+                elapsed = sw.Elapsed;
+                try
+                {
+                    process2 = Process.GetProcessById(procIdToTrack);
+                }
+                catch (ArgumentException)
+                {
+                    sw.Stop();
+                    break;
+                }
+            }
         }
     }
 }
