@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Search
         /// 'oneTermWithContext'
         /// </param>
         /// <param name='search'>
-        /// The incomplete term which should be autocompleted.
+        /// The incomplete term which should be auto-completed.
         /// </param>
         /// <param name='suggesterName'>
         /// The name of the suggester as specified in the suggesters collection that's
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Search
             {
                 minimumCoverage = autocompleteParameters.MinimumCoverage;
             }
-            string searchFields = default(string);
+            IList<string> searchFields = default(IList<string>);
             if (autocompleteParameters != null)
             {
                 searchFields = autocompleteParameters.SearchFields;
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Search
             }
             if (searchFields != null)
             {
-                _queryParameters.Add(string.Format("searchFields={0}", System.Uri.EscapeDataString(searchFields)));
+                _queryParameters.Add(string.Format("searchFields={0}", System.Uri.EscapeDataString(string.Join(",", searchFields))));
             }
             if (top != null)
             {

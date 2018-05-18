@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Search
             string search,
             string suggesterName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            AutocompleteParameters autocompleteParametersPayload = null,
+            AutocompleteParameters autocompleteParameters = null,
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -85,23 +85,28 @@ namespace Microsoft.Azure.Search
                     search,
                     suggesterName,
                     searchRequestOptions,
-                    autocompleteParametersPayload,
+                    autocompleteParameters,
                     customHeaders,
                     cancellationToken);
             }
             else
             {
+                string searchFieldsStr = null;
+                if (autocompleteParameters != null && autocompleteParameters.SearchFields != null)
+                {
+                    searchFieldsStr = string.Join(",", autocompleteParameters?.SearchFields);
+                }
                 AutocompleteRequest request = new AutocompleteRequest()
                 {
                     AutocompleteMode = autocompleteMode,
-                    Fuzzy = autocompleteParametersPayload?.Fuzzy,
-                    HighlightPostTag = autocompleteParametersPayload?.HighlightPostTag,
-                    HighlightPreTag = autocompleteParametersPayload?.HighlightPreTag,
-                    MinimumCoverage = autocompleteParametersPayload?.MinimumCoverage,
-                    SearchFields = autocompleteParametersPayload?.SearchFields,
+                    Fuzzy = autocompleteParameters?.Fuzzy,
+                    HighlightPostTag = autocompleteParameters?.HighlightPostTag,
+                    HighlightPreTag = autocompleteParameters?.HighlightPreTag,
+                    MinimumCoverage = autocompleteParameters?.MinimumCoverage,
+                    SearchFields = searchFieldsStr,
                     Search = search,
                     SuggesterName = suggesterName,
-                    Top = autocompleteParametersPayload?.Top
+                    Top = autocompleteParameters?.Top
                 };
 
                 response = await this.Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(

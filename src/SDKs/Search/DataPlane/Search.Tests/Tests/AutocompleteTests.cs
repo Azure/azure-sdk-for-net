@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
-                SearchFields = "hotelName"
+                SearchFields = new[] { "hotelName" }
             };
             AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
 
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
-                SearchFields = "hotelName"
+                SearchFields = new[] { "hotelName" }
             };
             AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "luxu", "sg", autocompleteParameters: autocompleteParameters);
 

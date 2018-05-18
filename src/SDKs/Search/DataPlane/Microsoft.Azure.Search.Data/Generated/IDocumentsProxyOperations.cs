@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Search
         /// 'oneTermWithContext'
         /// </param>
         /// <param name='search'>
-        /// The incomplete term which should be autocompleted.
+        /// The incomplete term which should be auto-completed.
         /// </param>
         /// <param name='suggesterName'>
         /// The name of the suggester as specified in the suggesters collection

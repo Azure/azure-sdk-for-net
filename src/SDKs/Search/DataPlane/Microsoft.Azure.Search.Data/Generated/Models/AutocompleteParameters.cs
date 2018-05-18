@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -48,11 +50,11 @@ namespace Microsoft.Azure.Search.Models
         /// parameter can be useful for ensuring search availability even for
         /// services with only one replica. The default is 80.</param>
         /// <param name="searchFields">The comma-separated list of field names
-        /// to consider when querying for autucompleted terms.</param>
-        /// <param name="top">The number of autocompleted terms to retrieve.
+        /// to consider when querying for auto-completed terms.</param>
+        /// <param name="top">The number of auto-completed terms to retrieve.
         /// This must be a value between 1 and 100. The default is to
         /// 5.</param>
-        public AutocompleteParameters(bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string searchFields = default(string), int? top = default(int?))
+        public AutocompleteParameters(bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> searchFields = default(IList<string>), int? top = default(int?))
         {
             Fuzzy = fuzzy;
             HighlightPostTag = highlightPostTag;
@@ -107,13 +109,13 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the comma-separated list of field names to consider
-        /// when querying for autucompleted terms.
+        /// when querying for auto-completed terms.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
-        public string SearchFields { get; set; }
+        public IList<string> SearchFields { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of autocompleted terms to retrieve. This
+        /// Gets or sets the number of auto-completed terms to retrieve. This
         /// must be a value between 1 and 100. The default is to 5.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="autocompleteMode">Specifies the mode for Autocomplete.
         /// The default is 'oneTerm'. Use 'twoTerms' to get shingles and
         /// 'oneTermWithContext' to use the current context while producing
-        /// autocompleted terms. Possible values include: 'oneTerm',
+        /// auto-completed terms. Possible values include: 'oneTerm',
         /// 'twoTerms', 'oneTermWithContext'</param>
         /// <param name="fuzzy">A value indicating whether to use fuzzy
         /// matching for the autocomplete query. Default is false. when set to
@@ -55,11 +55,11 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="search">The search text on which to base autocomplete
         /// results.</param>
         /// <param name="searchFields">The comma-separated list of field names
-        /// to consider when querying for autucompleted terms.</param>
+        /// to consider when querying for auto-completed terms.</param>
         /// <param name="suggesterName">The name of the suggester as specified
         /// in the suggesters collection that's part of the index
         /// definition.</param>
-        /// <param name="top">The number of autocompleted terms to retrieve.
+        /// <param name="top">The number of auto-completed terms to retrieve.
         /// This must be a value between 1 and 100. The default is to
         /// 5.</param>
         public AutocompleteRequest(AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string search = default(string), string searchFields = default(string), string suggesterName = default(string), int? top = default(int?))
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets specifies the mode for Autocomplete. The default is
         /// 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext'
-        /// to use the current context while producing autocompleted terms.
+        /// to use the current context while producing auto-completed terms.
         /// Possible values include: 'oneTerm', 'twoTerms',
         /// 'oneTermWithContext'
         /// </summary>
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the comma-separated list of field names to consider
-        /// when querying for autucompleted terms.
+        /// when querying for auto-completed terms.
         /// </summary>
         [JsonProperty(PropertyName = "searchFields")]
         public string SearchFields { get; set; }
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Search.Models
         public string SuggesterName { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of autocompleted terms to retrieve. This
+        /// Gets or sets the number of auto-completed terms to retrieve. This
         /// must be a value between 1 and 100. The default is to 5.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
