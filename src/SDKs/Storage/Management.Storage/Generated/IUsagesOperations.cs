@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// UsageOperations operations.
+    /// UsagesOperations operations.
     /// </summary>
-    public partial interface IUsageOperations
+    public partial interface IUsagesOperations
     {
         /// <summary>
         /// Gets the current usage count and the limit for the resources under

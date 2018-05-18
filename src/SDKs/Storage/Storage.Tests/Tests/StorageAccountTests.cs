@@ -821,7 +821,7 @@ namespace Storage.Tests
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
 
                 // Query usage
-                var usages = storageMgmtClient.Usage.List();
+                var usages = storageMgmtClient.Usages.List();
                 Assert.Equal(1, usages.Count());
                 Assert.Equal(UsageUnit.Count, usages.First().Unit);
                 Assert.NotNull(usages.First().CurrentValue);
@@ -1653,44 +1653,49 @@ namespace Storage.Tests
                 storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 string rules = @"{
-  ""version"": 0.5,
-  ""rules"": [ 
-    {
-      ""name"": ""ruleFoo"", 
-      ""type"": ""lifecycle"", 
-      ""definition"": {
-        ""filters"": {
-          ""blobTypes"": [ ""blockBlob"" ],
-          ""nameMatch"": [ ""foo"" ]
-        },
-        ""actions"": {
-          ""baseBlob"": {
-            ""tierToCool"": { ""daysAfterLastModifiedGreaterThan"": 30 },
-            ""tierToArchive"": { ""daysAfterLastModifiedGreaterThan"": 90 },
-            ""delete"": { ""daysAfterLastModifiedGreaterThan"": 2555 }
-          },
-          ""snapshot"": {
-            ""delete"": { ""daysAfterCreationGreaterThan"": 90 }
-          }
-        }
-      }
-    },
-    {
-      ""name"": ""expirationRule"", 
-      ""type"": ""Lifecycle"", 
-      ""definition"": 
-        {
-          ""filters"": {
-            ""blobTypes"": [ ""blockBlob"" ]
-          },
-          ""actions"": {
-            ""baseBlob"": {
-              ""delete"": { ""daysAfterLastModifiedGreaterThan"": 365 }
+    ""version"":""0.5"",
+    ""rules"":
+    [{
+        ""type"": ""Lifecycle"",
+        ""name"": ""olcmtest"",
+        ""definition"": {
+            ""filters"":
+            {
+                ""blobTypes"":[""blockBlob""],
+                ""prefixMatch"":[""olcmtestcontainer""]
+            },
+            ""actions"":
+            {
+                ""baseBlob"":
+                {
+                    ""delete"":
+                    {
+                        ""daysAfterModificationGreaterThan"":1000
+                    },
+					""tierToArchive"" : {
+						""daysAfterModificationGreaterThan"" : 90
+					},
+                    ""tierToCool"":
+                    {
+                        ""daysAfterModificationGreaterThan"":1000
+                    }
+                },
+				""snapshot"":
+                {
+                    ""delete"":
+                    {
+                        ""daysAfterCreationGreaterThan"":5000
+                    },
+					""tierToArchive"" : {
+						""daysAfterCreationGreaterThan"" : 30
+					},
+					""tierToCool"" : {
+						""daysAfterCreationGreaterThan"" : 1
+					}
+                }
             }
-          }
-        }      
-    }
-  ]
+        }
+    }]
 }";
                 //Set Management Policies
                 Newtonsoft.Json.Linq.JObject rule1 = Newtonsoft.Json.Linq.JObject.Parse(rules);

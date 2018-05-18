@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Storage
                 new Tuple<string, string, string>("Storage", "Operations", "2018-03-01-preview"),
                 new Tuple<string, string, string>("Storage", "Skus", "2018-03-01-preview"),
                 new Tuple<string, string, string>("Storage", "StorageAccounts", "2018-03-01-preview"),
-                new Tuple<string, string, string>("Storage", "Usage", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Storage", "Usages", "2018-03-01-preview"),
               }.AsEnumerable();
           }
       }
