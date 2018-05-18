@@ -4,12 +4,8 @@
 namespace Microsoft.Azure.Sdk.Build.ExecProcess
 {
     using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
-    using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// TODO: Make exec base as Task
@@ -22,6 +18,8 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
 
         private string signClientExecName = "ESRPClient.exe";
         private string ciConfigDir;
+
+        internal NetSdkTaskLogger TaskLogger { get; set; }
 
         /// <summary>
         /// Root direcotry for CI tools
@@ -39,6 +37,14 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         /// </summary>
         public string SigningResultOutputFilePath { get; set; }
 
+        private string SigningLogFilePath
+        {
+            get
+            {
+                return Path.Combine(Path.GetDirectoryName(SigningInputManifestFilePath), "SigningLog.txt");
+            }
+        }
+
         /// <summary>
         /// Defautl time for the shell process
         /// </summary>
@@ -50,8 +56,14 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         /// <returns></returns>
         protected override string BuildShellProcessArgs()
         {
-            return string.Format("{0} -a {1} -c {2} -p {3} -i {4} -o {5}", "Sign", Path.Combine(ciConfigDir, "AdxSdkAuth.json"),
-                Path.Combine(ciConfigDir, "Config.json"), Path.Combine(ciConfigDir, "Policy.json"), SigningInputManifestFilePath, SigningResultOutputFilePath);
+            return string.Format("{0} -a {1} -c {2} -p {3} -i {4} -o {5} -l {6} -f {7}", "Sign", Path.Combine(ciConfigDir, "AdxSdkAuth.json"),
+                Path.Combine(ciConfigDir, "Config.json"), Path.Combine(ciConfigDir, "Policy.json"), SigningInputManifestFilePath, SigningResultOutputFilePath, "Verbose", SigningLogFilePath);
+        }
+
+        private string GetShellProcessArgsForLogging()
+        {
+            return string.Format("{0} -a {1} -c {2} -p {3} -i {4} -o {5} -l {6} -f {7}", "Sign", "AdxSdkAuth.json",  "Config.json", "Policy.json",
+                SigningInputManifestFilePath, SigningResultOutputFilePath, "Verbose", SigningLogFilePath);
         }
 
 
@@ -62,8 +74,8 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
 
         public override int ExecuteCommand()
         {
-            VerifyRequiredProperties();
-
+            VerifyRequiredProperties();            
+            TaskLogger?.LogInfo(GetShellProcessArgsForLogging());
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
             //string output = this.AnalyzeExitCode();
             return exitCode;

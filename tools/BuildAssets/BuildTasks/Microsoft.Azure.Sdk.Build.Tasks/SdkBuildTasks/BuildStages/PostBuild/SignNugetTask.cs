@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
     public class SignNugetTask : NetSdkTask
     {
-
         protected override INetSdkTask TaskInstance { get => this; }
 
         public override string NetSdkTaskName => "PreSignTask";
@@ -101,6 +100,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             }
 
             SignClientExec signClient = new SignClientExec();
+            signClient.TaskLogger = this.TaskLogger;
             signClient.CiToolsRootDir = CiToolsRootDir;
             signClient.SigningInputManifestFilePath = manifestList.First<string>();
 
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             if(exitCode != 0)
             {
                 string signTaskOutput = signClient.AnalyzeExitCode();
-                this.TaskLogger.LogInfo(signTaskOutput);
+                this.TaskLogger.LogException(new Exception(signTaskOutput));
             }
             else
             {
