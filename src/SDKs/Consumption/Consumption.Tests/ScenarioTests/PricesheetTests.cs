@@ -46,7 +46,7 @@ namespace Consumption.Tests.ScenarioTests
         }
 
         [Fact]
-        public void PriceSheetGetTestWithTop()
+        public void PriceSheetGetTopTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
