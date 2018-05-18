@@ -10,7 +10,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <PackageId>Azure.Batch</PackageId>
     <Description>This client library provides access to the Microsoft Azure Batch service.</Description>
-    <VersionPrefix>8.1.1</VersionPrefix>
+    <VersionPrefix>8.1.2</VersionPrefix>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
@@ -28,7 +28,7 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageReleaseNotes>For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog</PackageReleaseNotes>
+    <PackageReleaseNotes>This nuget package has been replaced by Microsoft.Azure.Batch. For detailed release notes, see: https://aka.ms/batch-net-dataplane-changelog</PackageReleaseNotes>
     <Authors>Microsoft</Authors>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <PackageProjectUrl>http://aka.ms/batch</PackageProjectUrl>
