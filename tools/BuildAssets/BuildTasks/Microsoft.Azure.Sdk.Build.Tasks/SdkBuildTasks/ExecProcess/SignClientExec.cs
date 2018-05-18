@@ -18,8 +18,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
 
         private string signClientExecName = "ESRPClient.exe";
         private string ciConfigDir;
-
-        internal NetSdkTaskLogger TaskLogger { get; set; }
+        
 
         /// <summary>
         /// Root direcotry for CI tools
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
                 Path.Combine(ciConfigDir, "Config.json"), Path.Combine(ciConfigDir, "Policy.json"), SigningInputManifestFilePath, SigningResultOutputFilePath, "Verbose", SigningLogFilePath);
         }
 
-        private string GetShellProcessArgsForLogging()
+        public string GetShellProcessArgsForLogging()
         {
             return string.Format("{0} -a {1} -c {2} -p {3} -i {4} -o {5} -l {6} -f {7}", "Sign", "AdxSdkAuth.json",  "Config.json", "Policy.json",
                 SigningInputManifestFilePath, SigningResultOutputFilePath, "Verbose", SigningLogFilePath);
@@ -74,16 +73,13 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
 
         public override int ExecuteCommand()
         {
-            VerifyRequiredProperties();            
-            TaskLogger?.LogInfo(GetShellProcessArgsForLogging());
+            VerifyRequiredProperties();
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
-            //string output = this.AnalyzeExitCode();
             return exitCode;
         }
 
         private void VerifyRequiredProperties()
         {
-            //OnPremiseBuildTasks
             Check.DirectoryExists(CiToolsRootDir);
             var clientExes = Directory.EnumerateFiles(CiToolsRootDir, signClientExecName, SearchOption.AllDirectories);
             Check.NotNull(clientExes, "SignUtility not found");

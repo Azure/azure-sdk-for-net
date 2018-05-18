@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             }
 
             SignClientExec signClient = new SignClientExec();
-            signClient.TaskLogger = this.TaskLogger;
+            //signClient.TaskLogger = this.TaskLogger;
             signClient.CiToolsRootDir = CiToolsRootDir;
             signClient.SigningInputManifestFilePath = manifestList.First<string>();
 
@@ -111,6 +111,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             signClient.SigningResultOutputFilePath = signOutputFilePath;
 
             TaskLogger.LogInfo("Submitting for nuget signing. This might take several minutes.");
+            //TaskLogger.LogInfo(signClient.GetShellProcessArgsForLogging());
             int exitCode = signClient.ExecuteCommand();
 
             if(exitCode != 0)
@@ -129,7 +130,6 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
         #region Create Manifest
         private void InitFileList()
         {
-
             #region from root directory and searching providing file extensions
             // Build file list from provided root directory and file extension
             // this will include search for list of files with expected file extensions in the root directory
@@ -157,6 +157,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                         if (enumFiles.Any<string>())
                         {
                             searchedFiles.AddRange(enumFiles.ToList<string>());
+                            searchedFiles.RemoveAll((item) => item.EndsWith(".symbols.nupkg"));
                         }
                     }
 
