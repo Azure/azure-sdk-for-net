@@ -235,7 +235,6 @@ namespace Sql.Tests
                             new JobTarget
                             {
                                 ElasticPoolName = "ep1",
-                                DatabaseName = "db1",
                                 ServerName = "s1",
                                 RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
                                 Type = JobTargetType.SqlElasticPool,
@@ -464,10 +463,18 @@ namespace Sql.Tests
             {
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
                 Server server = context.CreateServer(resourceGroup);
+
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 try
                 {
+                    // Allow all conenctions for test
+                    sqlClient.FirewallRules.CreateOrUpdate(resourceGroup.Name, server.Name, "allowAll", new FirewallRule
+                    {
+                        StartIpAddress = "0.0.0.0",
+                        EndIpAddress = "255.255.255.255",
+                    });
+
                     // Create database only required parameters
                     string dbName = SqlManagementTestUtilities.GenerateName();
                     var db1 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, new Database()
@@ -503,8 +510,8 @@ namespace Sql.Tests
                             new JobTarget
                             {
                                 ServerName = server.Name,
-                                Type = JobTargetType.SqlServer,
-                                RefreshCredential = FormatCredentialId(resourceGroup.Name, server.Name, agent.Name, credential.Name),
+                                DatabaseName = db1.Name,
+                                Type = JobTargetType.SqlDatabase,
                                 MembershipType = JobTargetGroupMembershipType.Include,
                             }
                         }
@@ -533,8 +540,8 @@ namespace Sql.Tests
                     });
 
 
-                    // Create job execution from job1
-                    JobExecution jobExecution = sqlClient.JobExecutions.BeginCreate(resourceGroup.Name, server.Name, agent.Name, job1.Name);
+                    // Create job execution from job1 - do sync so we can be sure a step execution succeeds
+                    JobExecution jobExecution = sqlClient.JobExecutions.Create(resourceGroup.Name, server.Name, agent.Name, job1.Name);
 
                     // List executions by agent
                     sqlClient.JobExecutions.ListByAgent(resourceGroup.Name, server.Name, agent.Name);
@@ -543,7 +550,7 @@ namespace Sql.Tests
                     sqlClient.JobExecutions.ListByJob(resourceGroup.Name, server.Name, agent.Name, job1.Name);
 
                     // Get root job execution
-                    sqlClient.JobExecutions.Get(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value);
+                    jobExecution = sqlClient.JobExecutions.Get(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value);
 
                     // List step executions by root execution
                     sqlClient.JobStepExecutions.ListByJobExecution(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value);
@@ -551,12 +558,12 @@ namespace Sql.Tests
                     // Get step1 execution
                     sqlClient.JobStepExecutions.Get(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value, step1.Name);
 
-
                     // List target executions by root job execution
-                    IPage<JobExecution> targetExecutions = sqlClient.JobTargetExecutions.ListByJobExecution(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value);
-
+                    sqlClient.JobTargetExecutions.ListByJobExecution(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value);
+                    
                     // List target executions by job step
                     IPage<JobExecution> targetStepExecutions = sqlClient.JobTargetExecutions.ListByStep(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value, step1.Name);
+                    Assert.Single(targetStepExecutions);
 
                     // Get target execution
                     sqlClient.JobTargetExecutions.Get(resourceGroup.Name, server.Name, agent.Name, job1.Name, jobExecution.JobExecutionId.Value, step1.Name, Guid.Parse(targetStepExecutions.FirstOrDefault().Name));
