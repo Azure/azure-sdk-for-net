@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using System.Threading.Tasks;
 
     /// <summary>
-    /// FirewallRulesOperations operations.
+    /// VirtualNetworkRulesOperations operations.
     /// </summary>
-    internal partial class FirewallRulesOperations : IServiceOperations<DataLakeStoreAccountManagementClient>, IFirewallRulesOperations
+    internal partial class VirtualNetworkRulesOperations : IServiceOperations<DataLakeStoreAccountManagementClient>, IVirtualNetworkRulesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the FirewallRulesOperations class.
+        /// Initializes a new instance of the VirtualNetworkRulesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal FirewallRulesOperations(DataLakeStoreAccountManagementClient client)
+        internal VirtualNetworkRulesOperations(DataLakeStoreAccountManagementClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public DataLakeStoreAccountManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the Data Lake Store firewall rules within the specified Data Lake
-        /// Store account.
+        /// Lists the Data Lake Store virtual network rules within the specified Data
+        /// Lake Store account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FirewallRule>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualNetworkRule>>> ListByAccountWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<FirewallRule>>();
+            var _result = new AzureOperationResponse<IPage<VirtualNetworkRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallRule>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<VirtualNetworkRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -248,8 +248,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Creates or updates the specified firewall rule. During update, the firewall
-        /// rule with the specified name will be replaced with this new firewall rule.
+        /// Creates or updates the specified virtual network rule. During update, the
+        /// virtual network rule with the specified name will be replaced with this new
+        /// virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group.
@@ -257,11 +258,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The name of the Data Lake Store account.
         /// </param>
-        /// <param name='firewallRuleName'>
-        /// The name of the firewall rule to create or update.
+        /// <param name='virtualNetworkRuleName'>
+        /// The name of the virtual network rule to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create or update the firewall rule.
+        /// Parameters supplied to create or update the virtual network rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -284,7 +285,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FirewallRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkRule>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string virtualNetworkRuleName, CreateOrUpdateVirtualNetworkRuleParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -298,9 +299,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (firewallRuleName == null)
+            if (virtualNetworkRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkRuleName");
             }
             if (parameters == null)
             {
@@ -323,18 +324,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("firewallRuleName", firewallRuleName);
+                tracingParameters.Add("virtualNetworkRuleName", virtualNetworkRuleName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
+            _url = _url.Replace("{virtualNetworkRuleName}", System.Uri.EscapeDataString(virtualNetworkRuleName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -439,7 +440,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FirewallRule>();
+            var _result = new AzureOperationResponse<VirtualNetworkRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -452,7 +453,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallRule>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -472,7 +473,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Gets the specified Data Lake Store firewall rule.
+        /// Gets the specified Data Lake Store virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group.
@@ -480,8 +481,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The name of the Data Lake Store account.
         /// </param>
-        /// <param name='firewallRuleName'>
-        /// The name of the firewall rule to retrieve.
+        /// <param name='virtualNetworkRuleName'>
+        /// The name of the virtual network rule to retrieve.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -504,7 +505,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FirewallRule>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkRule>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -518,9 +519,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (firewallRuleName == null)
+            if (virtualNetworkRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkRuleName");
             }
             if (Client.ApiVersion == null)
             {
@@ -535,17 +536,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("firewallRuleName", firewallRuleName);
+                tracingParameters.Add("virtualNetworkRuleName", virtualNetworkRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
+            _url = _url.Replace("{virtualNetworkRuleName}", System.Uri.EscapeDataString(virtualNetworkRuleName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -644,7 +645,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FirewallRule>();
+            var _result = new AzureOperationResponse<VirtualNetworkRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -657,7 +658,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallRule>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -677,7 +678,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Updates the specified firewall rule.
+        /// Updates the specified virtual network rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group.
@@ -685,11 +686,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The name of the Data Lake Store account.
         /// </param>
-        /// <param name='firewallRuleName'>
-        /// The name of the firewall rule to update.
+        /// <param name='virtualNetworkRuleName'>
+        /// The name of the virtual network rule to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to update the firewall rule.
+        /// Parameters supplied to update the virtual network rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -712,7 +713,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FirewallRule>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkRule>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string virtualNetworkRuleName, UpdateVirtualNetworkRuleParameters parameters = default(UpdateVirtualNetworkRuleParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -726,9 +727,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (firewallRuleName == null)
+            if (virtualNetworkRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkRuleName");
             }
             if (Client.ApiVersion == null)
             {
@@ -743,18 +744,18 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("firewallRuleName", firewallRuleName);
+                tracingParameters.Add("virtualNetworkRuleName", virtualNetworkRuleName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
+            _url = _url.Replace("{virtualNetworkRuleName}", System.Uri.EscapeDataString(virtualNetworkRuleName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -859,7 +860,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FirewallRule>();
+            var _result = new AzureOperationResponse<VirtualNetworkRule>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -872,7 +873,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FirewallRule>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VirtualNetworkRule>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -892,8 +893,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Deletes the specified firewall rule from the specified Data Lake Store
-        /// account.
+        /// Deletes the specified virtual network rule from the specified Data Lake
+        /// Store account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group.
@@ -901,8 +902,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='accountName'>
         /// The name of the Data Lake Store account.
         /// </param>
-        /// <param name='firewallRuleName'>
-        /// The name of the firewall rule to delete.
+        /// <param name='virtualNetworkRuleName'>
+        /// The name of the virtual network rule to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -922,7 +923,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string virtualNetworkRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -936,9 +937,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
             }
-            if (firewallRuleName == null)
+            if (virtualNetworkRuleName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "firewallRuleName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkRuleName");
             }
             if (Client.ApiVersion == null)
             {
@@ -953,17 +954,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("firewallRuleName", firewallRuleName);
+                tracingParameters.Add("virtualNetworkRuleName", virtualNetworkRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/firewallRules/{firewallRuleName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
-            _url = _url.Replace("{firewallRuleName}", System.Uri.EscapeDataString(firewallRuleName));
+            _url = _url.Replace("{virtualNetworkRuleName}", System.Uri.EscapeDataString(virtualNetworkRuleName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -1077,8 +1078,8 @@ namespace Microsoft.Azure.Management.DataLake.Store
         }
 
         /// <summary>
-        /// Lists the Data Lake Store firewall rules within the specified Data Lake
-        /// Store account.
+        /// Lists the Data Lake Store virtual network rules within the specified Data
+        /// Lake Store account.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1104,7 +1105,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FirewallRule>>> ListByAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<VirtualNetworkRule>>> ListByAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1218,7 +1219,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<FirewallRule>>();
+            var _result = new AzureOperationResponse<IPage<VirtualNetworkRule>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1231,7 +1232,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FirewallRule>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<VirtualNetworkRule>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
