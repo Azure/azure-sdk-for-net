@@ -11,8 +11,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
     using Microsoft.WindowsAzure.Build.Tasks.Utilities;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Threading;
 
     public class SignNugetTask : NetSdkTask
     {
@@ -104,6 +106,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
 
         public override bool Execute()
         {
+            bool isTaskSuccessful = false;
             List<string> manifestList = GenerateManifestFiles();
 
             if (manifestList.Count == 0)
@@ -123,21 +126,24 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
             signClient.SigningResultOutputFilePath = signOutputFilePath;
 
             TaskLogger.LogInfo("Submitting for nuget signing. This might take several minutes.");
-            //TaskLogger.LogInfo(signClient.GetShellProcessArgsForLogging());
+            TaskLogger.LogInfo(signClient.GetShellProcessArgsForLogging());
+            TaskLogger.LogDebugInfo("Waiting for file locks to be released");
             int exitCode = signClient.ExecuteCommand();
 
             if(exitCode != 0)
             {
                 this.TaskLogger.LogException(new ApplicationException("Signing Nuget operation failed. See SigningLog.txt for more details"), true);
+                isTaskSuccessful = false;
                 //string signTaskOutput = signClient.AnalyzeExitCode();
                 //this.TaskLogger.LogException(new Exception(signTaskOutput));
             }
             else
             {
                 TaskLogger.LogInfo("Nuget signing completed successfully");
+                isTaskSuccessful = true;
             }
 
-            return true;
+            return isTaskSuccessful;
         }
 
         #region Create Manifest
@@ -181,6 +187,28 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages.PostBuild
                             SignFileListFromRootDir.AddRange(searchedFiles);
                         }
                     }
+
+                    //foreach(string filePath in SignFileListFromRootDir)
+                    //{
+                    //    Stopwatch sw = new Stopwatch();
+                    //    sw.Start();
+                    //    TimeSpan elapsed = sw.Elapsed;
+                    //    while ((elapsed < TimeSpan.FromMinutes(5)))
+                    //    {
+                    //        try
+                    //        {
+                    //            FileStream fs = File.Open(filePath, FileMode.Open);
+                    //            fs.Close();
+                    //            //fs.Unlock(0, fs.Length);
+                    //            fs.Dispose();
+                    //            break;
+                    //        }
+                    //        catch
+                    //        {
+                    //            Thread.Sleep(5000);
+                    //        }
+                    //    }
+                    //}
                 }
             }
 

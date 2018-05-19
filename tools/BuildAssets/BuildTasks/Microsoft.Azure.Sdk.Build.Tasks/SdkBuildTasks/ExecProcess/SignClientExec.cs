@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
                 if (_shellProcStartInfo == null)
                 {
                     _shellProcStartInfo = new ProcessStartInfo(ShellProcessCommandPath);
-                    _shellProcStartInfo.CreateNoWindow = true;
+                    //_shellProcStartInfo.CreateNoWindow = true;
                     _shellProcStartInfo.UseShellExecute = true;
                     //_shellProcStartInfo.RedirectStandardError = true;
                     //_shellProcStartInfo.RedirectStandardInput = true;
@@ -96,6 +96,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         public override int ExecuteCommand()
         {
             VerifyRequiredProperties();
+            Thread.Sleep(15000);
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
             return exitCode;
         }
@@ -105,13 +106,10 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             try
             {
                 ShellProcess.StartInfo.Arguments = args;
-                //ShellProcess.StartInfo.UseShellExecute = true;
-                //ShellProcess.StartInfo.RedirectStandardError = false;
                 ShellProcess.Start();
                 int procId = ShellProcess.Id;
-                //ShellProcess.WaitForExit(DefaultTimeOut);
-                //LastExitCode = ShellProcess.ExitCode;
                 TrackProcess(procId);
+                Thread.Sleep(15000);
                 LastExitCode = ShellProcess.ExitCode;
             }
             catch (Win32Exception win32Ex)

@@ -40,14 +40,16 @@
     <SignNugetDependsOn>
       $(RunTestProjectsDependsOn);
       RunSignTargets;
-	    PackgNugetBootStrap;
-      <!-- Package; -->
+	    <!-- PackgNugetBootStrap; -->
+      Package;
+	  SignNugetPackage
     </SignNugetDependsOn>
     <PackageNugetDependsOn>
       $(RunTestProjectsDependsOn);
       RunSignTargets;
-	    PackgNugetBootStrap;
-      <!-- Package -->
+	    <!-- PackgNugetBootStrap; -->
+      Package;
+	  SignNugetPackage
     </PackageNugetDependsOn>
     <PublishNugetDependsOn>
       $(PackageNugetDependsOn);

@@ -78,6 +78,7 @@
 	<Message Text="CurrentUser $(USERNAME)" Condition=" '$(DebugTrace)' == 'true' "/>
 	<Message Text="CodeSign=$(CodeSign), AuthenticodeSign=$(AuthenticodeSign)" Condition=" '$(DebugTrace)' == 'true' "/>
 	
+	<DebugTask/>
 	<!-- InSignedFilesRootDirPath="$(PackageOutputPath)"  -->
 	<SignNugetTask 
 		InSignedFilesRootDirPath="$(BinariesFolder)" 
@@ -86,7 +87,7 @@
 		InNugetPackageRootDir="$(PackageOutputPath)" 
 		InSignManifestDirPath="$(SignManifestRootDir)"
 		InSignBuildName="$(BuildNameLabel)"
-		CiToolsRootDir="$(CIToolsPath)" >
+		CiToolsRootDir="$(CIToolsPath)" ContinueOnError="ErrorAndStop" >
 	</SignNugetTask>
 	
   </Target>
