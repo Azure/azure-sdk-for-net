@@ -87,6 +87,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanAutocompleteWithMultipleSelectedFields()
+        {
+            Run(TestAutocompleteWithMultipleSelectedFields);
+        }
+
+        [Fact]
         public void CanAutocompleteExcludesFieldsNotInSuggester()
         {
             Run(TestAutocompleteExcludesFieldsNotInSuggester);

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search.Tests
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.
-    public class AutocompleteTests : QueryTests
+    public abstract class AutocompleteTests : QueryTests
     {
         protected void TestAutocompleteStaticallyTypedDocuments()
         {
@@ -173,6 +173,22 @@ namespace Microsoft.Azure.Search.Tests
             var autocompleteParameters = new AutocompleteParameters()
             {
                 SearchFields = new[] { "hotelName" }
+            };
+            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
+
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
+        }
+
+        protected void TestAutocompleteWithMultipleSelectedFields()
+        {
+            var expectedText = new List<String>() { "model", "modern" };
+            var expectedQueryPlusText = new List<String>() { "model", "modern" };
+
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters()
+            {
+                SearchFields = new[] { "hotelName", "description" }
             };
             AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
 

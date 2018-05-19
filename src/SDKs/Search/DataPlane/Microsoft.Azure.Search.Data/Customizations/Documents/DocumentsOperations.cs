@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Search
             else
             {
                 string searchFieldsStr = null;
-                if (autocompleteParameters != null && autocompleteParameters.SearchFields != null)
+                if (autocompleteParameters?.SearchFields != null)
                 {
                     searchFieldsStr = string.Join(",", autocompleteParameters?.SearchFields);
                 }
