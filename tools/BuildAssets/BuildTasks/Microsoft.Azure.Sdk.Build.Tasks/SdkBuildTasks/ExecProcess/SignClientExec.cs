@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         public override int ExecuteCommand()
         {
             VerifyRequiredProperties();
-            Thread.Sleep(30000);
+            Thread.Sleep(60000);
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
             return exitCode;
         }
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
                 ShellProcess.Start();
                 int procId = ShellProcess.Id;
                 TrackProcess(procId);
-                Thread.Sleep(15000);
+                Thread.Sleep(30000);
                 LastExitCode = ShellProcess.ExitCode;
             }
             catch (Win32Exception win32Ex)
