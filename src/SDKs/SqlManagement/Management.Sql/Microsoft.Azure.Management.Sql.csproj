@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Adding support for SQL Database Agent
+    * With new types such as JobAgent, JobCredential, JobTargetGroup, Job, JobStep, and JobExecution
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
