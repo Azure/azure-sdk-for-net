@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         public override int ExecuteCommand()
         {
             VerifyRequiredProperties();
-            Thread.Sleep(15000);
+            Thread.Sleep(30000);
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
             return exitCode;
         }
