@@ -1,0 +1,32 @@
+{
+  "Version": "1.0.0",
+  "EsrpClientSessionGuid": "f387751c-fde0-41dd-a63e-e366373651fa",
+  "SubmissionResponses": [
+    {
+      "FileHash": "0A0B0B",
+      "FileHashType": "Sha256",
+      "OperationId": "a9b1fd4a-63d6-4db5-a84a-16492dcedc80",
+      "CustomerCorrelationId": "FileSubmittedId1",
+      "StatusCode": "Pass",
+      "ErrorInfo": null
+    },
+    {
+      "FileHash": "0A0B0BAA",
+      "FileHashType": "Sha256",
+      "OperationId": "40145078-a717-44d9-9898-9f4512babfde",
+      "CustomerCorrelationId": "FileSubmittedId2",
+      "ErrorInfo": {
+        "code": "InvalidData", 
+        "details": null, 
+        "innerError": {
+          "code": "FailedToDecompress", 
+          "details": { 
+            "clientId": "ABS123",
+            "keyCode": "Xyz"
+          },
+          "innerError": null 
+        }
+      }
+    }
+  ]
+}

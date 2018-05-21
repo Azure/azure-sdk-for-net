@@ -1,4 +1,5 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!-- EnablePre/PostTargets are meant to be executed on local machines only -->
 	<Target Name="PreAzSdkBuild" BeforeTargets="BeforeBuild" DependsOnTargets="TargetTrace" 
 			Condition=" ('$(EnablePreBuildTarget)' == 'true') AND ( '$(CIBuild)' != 'true' ) AND ( '$(TargetFramework)' == '$(NetFx452)' ) AND ( '$(Scope)' != 'All')">
 		<PreBuildTask

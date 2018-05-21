@@ -3,6 +3,7 @@
 
 namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
 {
+    using Microsoft.Azure.Sdk.Build.Tasks.Utilities;
     using System;
     using System.Collections.Generic;
     using System.IO;

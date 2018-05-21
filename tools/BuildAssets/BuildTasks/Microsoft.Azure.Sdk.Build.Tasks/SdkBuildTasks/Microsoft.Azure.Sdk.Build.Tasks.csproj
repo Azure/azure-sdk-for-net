@@ -15,14 +15,17 @@
   <PropertyGroup>
     <TargetFramework>net46</TargetFramework>
     <OutputPath>$(TaskBinaryOutput)</OutputPath>
-  </PropertyGroup>  
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="StaticAnalysisTasks\**" />
+    <EmbeddedResource Remove="StaticAnalysisTasks\**" />
+    <None Remove="StaticAnalysisTasks\**" />
+  </ItemGroup>  
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="StaticAnalysisTasks\" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 </Project>

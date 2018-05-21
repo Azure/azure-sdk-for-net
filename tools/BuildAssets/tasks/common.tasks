@@ -15,9 +15,11 @@
   <UsingTask TaskName="SDKCategorizeProjects" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="PostBuildTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="PreBuildTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
-  <UsingTask TaskName="PublishSDKNuget" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
+  <UsingTask TaskName="SignNugetTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
+  <UsingTask TaskName="PublishSDKNugetTask" AssemblyFile="$(CustomTaskDirectory)\Microsoft.Azure.Sdk.Build.Tasks.dll"  />
   <UsingTask TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
   <UsingTask TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
   <UsingTask TaskName="CodeSigningTask" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
   <UsingTask TaskName="CorporateValidation" AssemblyFile="$(CIToolsPath)\Microsoft.WindowsAzure.Tools.Build.Tasks.OnPremise.dll" Condition=" '$(OnPremiseBuild)' != '' " />
+  
 </Project>

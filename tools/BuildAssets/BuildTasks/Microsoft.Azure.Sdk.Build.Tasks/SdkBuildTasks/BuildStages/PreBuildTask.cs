@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
         public PreBuildTask()
         {
-            DebugTrace = EnableDebugTrace;
+            DebugTraceEnabled = EnableDebugTrace;
         }
         public override bool Execute()
         {

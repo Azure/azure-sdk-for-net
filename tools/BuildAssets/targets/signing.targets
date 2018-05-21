@@ -44,7 +44,7 @@
     <Message Text="Running PoliCheck on ..... $(CorporateScanPaths)" Condition=" '$(CorporateScanPaths)' != '' and '$(RunGlobalReadinessTools)' == 'true'"/>
   </Target>
 
-  <Target Name="Sign" Condition=" '$(CodeSign)' == 'true' ">
+  <Target Name="Sign" Condition=" '$(CodeSign)' == 'true' AND '$(AuthenticodeSign)' == 'true' ">
     <CodeSigningTask
 			Description="Microsoft Azure SDK"
 			Keywords="Microsoft Azure .NET SDK"
@@ -53,16 +53,42 @@
 			SigningLogPath="$(LibraryRoot)\binaries"
 			ToolsPath="$(CIToolsPath)"
 			Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''" />
+			
+	<!-- <NugetSigningTask GeneratedManifestDir="$(SignManifestRootDir)"> -->
+		<!-- <Output TaskParameter="SigningOutput" PropertyName="signOutput"/> -->
+	<!-- </NugetSigningTask> -->
   </Target>
 
-  <Target Name="PostSign" Condition=" '$(CodeSign)' == 'true' ">
+  <Target Name="PostSign" Condition=" '$(CodeSign)' == 'true' AND '$(AuthenticodeSign)' == 'true'">
     <ValidateStrongNameSignatureTask
-    WindowsSdkPath="$(WindowsSdkPath)"
-    Assembly="%(DelaySignedAssembliesToValidate.Identity)"
-    ExpectedTokenSignature="$(StrongNameToken)"
-    ExpectedDelaySigned="false"
-    ContinueOnError="false"
-    Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>
+		WindowsSdkPath="$(WindowsSdkPath)"
+		Assembly="%(DelaySignedAssembliesToValidate.Identity)"
+		ExpectedTokenSignature="$(StrongNameToken)"
+		ExpectedDelaySigned="false"
+		ContinueOnError="false"
+		Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>
+  </Target>
+  
+  <Target Name="SignNugetPackage" Condition=" '$(CodeSign)' == 'true' AND '$(SkipSignNugetPackage)' != 'true' ">
+  
+  <Message Text="Generating nuget manifest for Nuget Signing....."/>
+	<Message Text="SignManifestRootDir - $(SignManifestRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="BinariesFolder - $(BinariesFolder)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="PackageOutputPath - $(PackageOutputPath)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="CurrentUser $(USERNAME)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="CodeSign=$(CodeSign), AuthenticodeSign=$(AuthenticodeSign)" Condition=" '$(DebugTrace)' == 'true' "/>
+	
+	<!-- InSignedFilesRootDirPath="$(PackageOutputPath)"  -->
+	<SignNugetTask 
+		InSignedFilesRootDirPath="$(BinariesFolder)" 
+		InSigningOperation="nuget" 
+		InSearchExtensionToSearch=".nupkg" 
+		InNugetPackageRootDir="$(PackageOutputPath)" 
+		InSignManifestDirPath="$(SignManifestRootDir)"
+		InSignBuildName="$(BuildNameLabel)"
+		CiToolsRootDir="$(CIToolsPath)" ContinueOnError="ErrorAndStop" >
+	</SignNugetTask>
+	
   </Target>
 
   <Target Name="RunSignTargets" DependsOnTargets="PreSign;Sign;PostSign"/>
