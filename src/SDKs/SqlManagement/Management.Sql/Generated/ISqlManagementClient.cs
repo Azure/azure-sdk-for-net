@@ -242,6 +242,16 @@ namespace Microsoft.Azure.Management.Sql
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        IDatabaseVulnerabilityAssessmentRuleBaselinesOperations DatabaseVulnerabilityAssessmentRuleBaselines { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        IDatabaseVulnerabilityAssessmentsOperations DatabaseVulnerabilityAssessments { get; }
+
+        /// <summary>
         /// Gets the IJobAgentsOperations.
         /// </summary>
         IJobAgentsOperations JobAgents { get; }
@@ -332,9 +342,19 @@ namespace Microsoft.Azure.Management.Sql
         ICapabilitiesOperations Capabilities { get; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
+
+        /// <summary>
+        /// Gets the IShortTermRetentionPoliciesOperations.
+        /// </summary>
+        IShortTermRetentionPoliciesOperations ShortTermRetentionPolicies { get; }
 
     }
 }

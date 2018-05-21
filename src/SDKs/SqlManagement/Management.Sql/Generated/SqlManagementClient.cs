@@ -247,6 +247,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentRuleBaselinesOperations DatabaseVulnerabilityAssessmentRuleBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentsOperations DatabaseVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
         /// Gets the IJobAgentsOperations.
         /// </summary>
         public virtual IJobAgentsOperations JobAgents { get; private set; }
@@ -337,9 +347,19 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IShortTermRetentionPoliciesOperations ShortTermRetentionPolicies { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -577,6 +597,8 @@ namespace Microsoft.Azure.Management.Sql
             SyncMembers = new SyncMembersOperations(this);
             SubscriptionUsages = new SubscriptionUsagesOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
+            DatabaseVulnerabilityAssessmentRuleBaselines = new DatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
+            DatabaseVulnerabilityAssessments = new DatabaseVulnerabilityAssessmentsOperations(this);
             JobAgents = new JobAgentsOperations(this);
             JobCredentials = new JobCredentialsOperations(this);
             JobExecutions = new JobExecutionsOperations(this);
@@ -595,7 +617,9 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
+            DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
+            ShortTermRetentionPolicies = new ShortTermRetentionPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
