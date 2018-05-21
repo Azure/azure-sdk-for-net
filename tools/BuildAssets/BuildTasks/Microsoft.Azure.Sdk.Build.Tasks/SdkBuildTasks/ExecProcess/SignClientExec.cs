@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             Stopwatch sw = new Stopwatch();
             sw.Start();
             TimeSpan elapsed = sw.Elapsed;
-            while ((elapsed < TimeSpan.FromMinutes(2)) && (process2.HasExited == false))
+            while ((elapsed < TimeSpan.FromMinutes(5)) && (process2.HasExited == false))
             {
                 elapsed = sw.Elapsed;
                 try
