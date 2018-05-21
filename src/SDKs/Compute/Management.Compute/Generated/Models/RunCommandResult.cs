@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Run command operation response.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class RunCommandResult : OperationStatusResponse
+    public partial class RunCommandResult
     {
         /// <summary>
         /// Initializes a new instance of the RunCommandResult class.
@@ -32,14 +32,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the RunCommandResult class.
         /// </summary>
-        /// <param name="name">Operation ID</param>
-        /// <param name="status">Operation status</param>
-        /// <param name="startTime">Start time of the operation</param>
-        /// <param name="endTime">End time of the operation</param>
-        /// <param name="error">Api error</param>
         /// <param name="output">Operation output data (raw JSON)</param>
-        public RunCommandResult(string name = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), ApiError error = default(ApiError), object output = default(object))
-            : base(name, status, startTime, endTime, error)
+        public RunCommandResult(object output = default(object))
         {
             Output = output;
             CustomInit();

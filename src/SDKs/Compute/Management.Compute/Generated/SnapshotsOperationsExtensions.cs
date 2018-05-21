@@ -179,9 +179,9 @@ namespace Microsoft.Azure.Management.Compute
             /// after the snapshot is created. Supported characters for the name are a-z,
             /// A-Z, 0-9 and _. The max name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse Delete(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
+            public static void Delete(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
-                return operations.DeleteAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -201,12 +201,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -337,9 +334,9 @@ namespace Microsoft.Azure.Management.Compute
             /// after the snapshot is created. Supported characters for the name are a-z,
             /// A-Z, 0-9 and _. The max name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse RevokeAccess(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
+            public static void RevokeAccess(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
-                return operations.RevokeAccessAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
+                operations.RevokeAccessAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -359,12 +356,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> RevokeAccessAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RevokeAccessAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RevokeAccessWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RevokeAccessWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -481,9 +475,9 @@ namespace Microsoft.Azure.Management.Compute
             /// after the snapshot is created. Supported characters for the name are a-z,
             /// A-Z, 0-9 and _. The max name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse BeginDelete(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
+            public static void BeginDelete(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
-                return operations.BeginDeleteAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -503,12 +497,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginDeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -577,9 +568,9 @@ namespace Microsoft.Azure.Management.Compute
             /// after the snapshot is created. Supported characters for the name are a-z,
             /// A-Z, 0-9 and _. The max name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse BeginRevokeAccess(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
+            public static void BeginRevokeAccess(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName)
             {
-                return operations.BeginRevokeAccessAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
+                operations.BeginRevokeAccessAsync(resourceGroupName, snapshotName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -599,12 +590,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginRevokeAccessAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRevokeAccessAsync(this ISnapshotsOperations operations, string resourceGroupName, string snapshotName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRevokeAccessWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginRevokeAccessWithHttpMessagesAsync(resourceGroupName, snapshotName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

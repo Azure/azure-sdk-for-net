@@ -1,28 +1,26 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/73084a9e-e740-4c7d-8c11-6b3c0ec486b1/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2017-12-01&platformUpdateDomain=0",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzMwODRhOWUtZTc0MC00YzdkLThjMTEtNmIzYzBlYzQ4NmIxL3Jlc291cmNlR3JvdXBzL2NycHRlc3RyZ3I5N3J5bzBuaS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVTY2FsZVNldHMvY3JwdGVzdGh0bjM5aHZlL2ZvcmNlUmVjb3ZlcnlTZXJ2aWNlRmFicmljUGxhdGZvcm1VcGRhdGVEb21haW5XYWxrP2FwaS12ZXJzaW9uPTIwMTctMTItMDEmcGxhdGZvcm1VcGRhdGVEb21haW49MA==",
+      "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2018-04-01&platformUpdateDomain=0",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjRmYjIzZTMtNmJhMy00MWYwLTliNmUtZTQxMTMxZDVkNjFlL3Jlc291cmNlR3JvdXBzL2NycHRlc3RyZ3I5N3J5bzBuaS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVTY2FsZVNldHMvY3JwdGVzdGh0bjM5aHZlL2ZvcmNlUmVjb3ZlcnlTZXJ2aWNlRmFicmljUGxhdGZvcm1VcGRhdGVEb21haW5XYWxrP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDEmcGxhdGZvcm1VcGRhdGVEb21haW49MA==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4debdeca-0d1a-4d5f-9ed0-6774875ed217"
+          "214f6dbc-0c95-494a-a50f-9cd23cab45d9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.1641.0"
+          "FxVersion/4.6.25714.03",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"walkPerformed\": true,\r\n  \"nextPlatformUpdateDomain\": 1\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'crptestrgr97ryo0ni' could not be found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "63"
+          "110"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,381 +28,39 @@
         "Expires": [
           "-1"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/VMScaleSetActions3Min;239,Microsoft.Compute/VMScaleSetActions30Min;1196"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-served-by": [
-          "6128d483-fbbc-4675-ba59-14895ca4b533_131600203863290858"
-        ],
-        "x-ms-request-id": [
-          "330a48e5-5935-45f4-93fc-7d3590d3dce2"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
-        ],
-        "x-ms-correlation-request-id": [
-          "93a55bb4-6c89-4e68-83c0-572f15b077e4"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180201T011807Z:93a55bb4-6c89-4e68-83c0-572f15b077e4"
-        ],
         "Date": [
-          "Thu, 01 Feb 2018 01:18:07 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/73084a9e-e740-4c7d-8c11-6b3c0ec486b1/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2017-12-01&platformUpdateDomain=1",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzMwODRhOWUtZTc0MC00YzdkLThjMTEtNmIzYzBlYzQ4NmIxL3Jlc291cmNlR3JvdXBzL2NycHRlc3RyZ3I5N3J5bzBuaS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVTY2FsZVNldHMvY3JwdGVzdGh0bjM5aHZlL2ZvcmNlUmVjb3ZlcnlTZXJ2aWNlRmFicmljUGxhdGZvcm1VcGRhdGVEb21haW5XYWxrP2FwaS12ZXJzaW9uPTIwMTctMTItMDEmcGxhdGZvcm1VcGRhdGVEb21haW49MQ==",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "d7e0dccc-4bee-48e5-9c2e-e261964dbc44"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.1641.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"walkPerformed\": true,\r\n  \"nextPlatformUpdateDomain\": 2\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "63"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
+          "Thu, 03 May 2018 15:09:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/VMScaleSetActions3Min;238,Microsoft.Compute/VMScaleSetActions30Min;1195"
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "be3175a0-aeba-4fc8-842a-e50349c380d6"
+        ],
+        "x-ms-correlation-request-id": [
+          "be3175a0-aeba-4fc8-842a-e50349c380d6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T150928Z:be3175a0-aeba-4fc8-842a-e50349c380d6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-served-by": [
-          "6128d483-fbbc-4675-ba59-14895ca4b533_131600203863290858"
-        ],
-        "x-ms-request-id": [
-          "7127ea95-a50f-455b-b870-7a0592e1643a"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1190"
-        ],
-        "x-ms-correlation-request-id": [
-          "8a8539ca-0e22-4407-a784-bd38ecfa63ac"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180201T011808Z:8a8539ca-0e22-4407-a784-bd38ecfa63ac"
-        ],
-        "Date": [
-          "Thu, 01 Feb 2018 01:18:08 GMT"
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/73084a9e-e740-4c7d-8c11-6b3c0ec486b1/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2017-12-01&platformUpdateDomain=2",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzMwODRhOWUtZTc0MC00YzdkLThjMTEtNmIzYzBlYzQ4NmIxL3Jlc291cmNlR3JvdXBzL2NycHRlc3RyZ3I5N3J5bzBuaS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVTY2FsZVNldHMvY3JwdGVzdGh0bjM5aHZlL2ZvcmNlUmVjb3ZlcnlTZXJ2aWNlRmFicmljUGxhdGZvcm1VcGRhdGVEb21haW5XYWxrP2FwaS12ZXJzaW9uPTIwMTctMTItMDEmcGxhdGZvcm1VcGRhdGVEb21haW49Mg==",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "44bbeceb-8fc5-41d0-a32d-33b60bb9db33"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.1641.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"walkPerformed\": true,\r\n  \"nextPlatformUpdateDomain\": 3\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "63"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/VMScaleSetActions3Min;237,Microsoft.Compute/VMScaleSetActions30Min;1194"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-served-by": [
-          "6128d483-fbbc-4675-ba59-14895ca4b533_131600203863290858"
-        ],
-        "x-ms-request-id": [
-          "85520759-95af-4143-aa20-63da0f1eed9c"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
-        ],
-        "x-ms-correlation-request-id": [
-          "e9289b19-352f-428c-bc37-12daca18c7db"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180201T011809Z:e9289b19-352f-428c-bc37-12daca18c7db"
-        ],
-        "Date": [
-          "Thu, 01 Feb 2018 01:18:09 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/73084a9e-e740-4c7d-8c11-6b3c0ec486b1/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2017-12-01&platformUpdateDomain=3",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzMwODRhOWUtZTc0MC00YzdkLThjMTEtNmIzYzBlYzQ4NmIxL3Jlc291cmNlR3JvdXBzL2NycHRlc3RyZ3I5N3J5bzBuaS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVTY2FsZVNldHMvY3JwdGVzdGh0bjM5aHZlL2ZvcmNlUmVjb3ZlcnlTZXJ2aWNlRmFicmljUGxhdGZvcm1VcGRhdGVEb21haW5XYWxrP2FwaS12ZXJzaW9uPTIwMTctMTItMDEmcGxhdGZvcm1VcGRhdGVEb21haW49Mw==",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "22b35253-d5c3-40f6-8b6f-accf57caa475"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.1641.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"walkPerformed\": true,\r\n  \"nextPlatformUpdateDomain\": 4\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "63"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/VMScaleSetActions3Min;236,Microsoft.Compute/VMScaleSetActions30Min;1193"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-served-by": [
-          "6128d483-fbbc-4675-ba59-14895ca4b533_131600203863290858"
-        ],
-        "x-ms-request-id": [
-          "112c30ff-7b9f-408b-af8a-07ac97e89819"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
-        ],
-        "x-ms-correlation-request-id": [
-          "eeca5592-cb5d-4b4e-bc8b-ddcd281c14eb"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180201T011809Z:eeca5592-cb5d-4b4e-bc8b-ddcd281c14eb"
-        ],
-        "Date": [
-          "Thu, 01 Feb 2018 01:18:09 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/73084a9e-e740-4c7d-8c11-6b3c0ec486b1/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2017-12-01&platformUpdateDomain=4",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzMwODRhOWUtZTc0MC00YzdkLThjMTEtNmIzYzBlYzQ4NmIxL3Jlc291cmNlR3JvdXBzL2NycHRlc3RyZ3I5N3J5bzBuaS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVTY2FsZVNldHMvY3JwdGVzdGh0bjM5aHZlL2ZvcmNlUmVjb3ZlcnlTZXJ2aWNlRmFicmljUGxhdGZvcm1VcGRhdGVEb21haW5XYWxrP2FwaS12ZXJzaW9uPTIwMTctMTItMDEmcGxhdGZvcm1VcGRhdGVEb21haW49NA==",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "a3c324db-400b-447e-b838-e47f9f993696"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.1641.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"walkPerformed\": true,\r\n  \"nextPlatformUpdateDomain\": 5\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "63"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/VMScaleSetActions3Min;235,Microsoft.Compute/VMScaleSetActions30Min;1192"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-served-by": [
-          "6128d483-fbbc-4675-ba59-14895ca4b533_131600203863290858"
-        ],
-        "x-ms-request-id": [
-          "d840ee95-812e-4332-a6d9-349660bff7f1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1187"
-        ],
-        "x-ms-correlation-request-id": [
-          "aea86d33-4f64-4ed4-b178-edd4b141d31c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180201T011810Z:aea86d33-4f64-4ed4-b178-edd4b141d31c"
-        ],
-        "Date": [
-          "Thu, 01 Feb 2018 01:18:10 GMT"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/73084a9e-e740-4c7d-8c11-6b3c0ec486b1/resourceGroups/crptestrgr97ryo0ni/providers/Microsoft.Compute/virtualMachineScaleSets/crptesthtn39hve/forceRecoveryServiceFabricPlatformUpdateDomainWalk?api-version=2017-12-01&platformUpdateDomain=5",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzMwODRhOWUtZTc0MC00YzdkLThjMTEtNmIzYzBlYzQ4NmIxL3Jlc291cmNlR3JvdXBzL2NycHRlc3RyZ3I5N3J5bzBuaS9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVTY2FsZVNldHMvY3JwdGVzdGh0bjM5aHZlL2ZvcmNlUmVjb3ZlcnlTZXJ2aWNlRmFicmljUGxhdGZvcm1VcGRhdGVEb21haW5XYWxrP2FwaS12ZXJzaW9uPTIwMTctMTItMDEmcGxhdGZvcm1VcGRhdGVEb21haW49NQ==",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "9259bdfa-f796-4788-9a4b-b81b23a3a458"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2600.0",
-          "OSName/Windows_10_Enterprise",
-          "OSVersion/6.3.16299",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/1.0.1641.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"walkPerformed\": true\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "29"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/VMScaleSetActions3Min;234,Microsoft.Compute/VMScaleSetActions30Min;1191"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-served-by": [
-          "6128d483-fbbc-4675-ba59-14895ca4b533_131600203863290858"
-        ],
-        "x-ms-request-id": [
-          "34b359a5-2a94-44f3-af63-70556b86ac79"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1186"
-        ],
-        "x-ms-correlation-request-id": [
-          "a764bc4d-6499-4c06-9c21-3e0497d697b2"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180201T011810Z:a764bc4d-6499-4c06-9c21-3e0497d697b2"
-        ],
-        "Date": [
-          "Thu, 01 Feb 2018 01:18:10 GMT"
-        ]
-      },
-      "StatusCode": 200
+      "StatusCode": 404
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "73084a9e-e740-4c7d-8c11-6b3c0ec486b1"
+    "SubscriptionId": "24fb23e3-6ba3-41f0-9b6e-e41131d5d61e"
   }
 }

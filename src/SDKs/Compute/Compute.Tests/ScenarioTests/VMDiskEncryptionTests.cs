@@ -22,9 +22,8 @@ namespace Compute.Tests
         /// Delete RG
         /// TODO: Add negative test case validation
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestDiskEncryption")]
-        [Trait("Failure", "Password policy")]
         public void TestVMDiskEncryption()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

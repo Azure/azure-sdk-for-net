@@ -71,6 +71,11 @@ namespace Microsoft.Azure.Management.Compute
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
@@ -84,6 +89,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineExtensionsOperations.
         /// </summary>
         public virtual IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineImagesOperations.
@@ -104,11 +114,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IImagesOperations.
         /// </summary>
         public virtual IImagesOperations Images { get; private set; }
-
-        /// <summary>
-        /// Gets the IVirtualMachinesOperations.
-        /// </summary>
-        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetsOperations.
@@ -361,14 +366,15 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
+            VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
             Usage = new UsageOperations(this);
             VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             Images = new ImagesOperations(this);
-            VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
