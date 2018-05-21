@@ -4,7 +4,7 @@
     <PackageId>DeviceProvisioningServices.Tests</PackageId>
     <Description>DeviceProvisioningServices.Tests Class Library</Description>
     <AssemblyName>DeviceProvisioningServices.Tests</AssemblyName>
-    <VersionPrefix>1.0.1</VersionPrefix>    
+    <VersionPrefix>1.0.0</VersionPrefix>    
   </PropertyGroup>
 
   <PropertyGroup>
