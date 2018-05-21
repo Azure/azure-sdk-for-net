@@ -56,6 +56,56 @@ namespace Microsoft.Azure.Search
         }
 
         /// <summary>
+        /// Queries the number of documents in the Azure Search index.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        public static AutocompleteResult Autocomplete(
+            this IDocumentsOperations operations, 
+            AutocompleteMode autocompleteMode,
+            string search,
+            string suggesterName = null,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            AutocompleteParameters autocompleteParameters = null,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return operations.AutocompleteAsync(autocompleteMode, search, suggesterName, searchRequestOptions, autocompleteParameters, customHeaders, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Queries the number of documents in the Azure Search index.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<AutocompleteResult> AutocompleteAsync(
+            this IDocumentsOperations operations,
+            AutocompleteMode autocompleteMode,
+            string search,
+            string suggesterName,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
+            AutocompleteParameters autocompleteParameters = null,
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.AutocompleteWithHttpMessagesAsync(autocompleteMode, search, suggesterName, searchRequestOptions, autocompleteParameters, customHeaders, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        /// <summary>
         /// Retrieves the next page of search results from the Azure Search index. 
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Search-Documents"/>
         /// </summary>
