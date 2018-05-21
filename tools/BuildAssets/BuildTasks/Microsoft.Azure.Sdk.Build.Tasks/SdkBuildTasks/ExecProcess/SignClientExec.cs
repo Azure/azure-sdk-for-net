@@ -96,7 +96,9 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
         public override int ExecuteCommand()
         {
             VerifyRequiredProperties();
-            Thread.Sleep(120000);
+            //CloseOpenedHandles();
+            //Thread.Sleep(120000);
+            Thread.Sleep(5000);
             int exitCode = ExecuteCommand(BuildShellProcessArgs());
             return exitCode;
         }
@@ -144,24 +146,51 @@ namespace Microsoft.Azure.Sdk.Build.ExecProcess
             Check.FileExists(Path.Combine(ciConfigDir, "Policy.json"));
         }
 
+        private void CloseOpenedHandles()
+        {
+            Process currProc = Process.GetCurrentProcess();
+            int currProcId = currProc.Id;
+
+            var msbuildProcs = Process.GetProcessesByName("Msbuild");
+            var orphanedProc = msbuildProcs.Where<Process>((p) => p.Id != currProcId);
+
+            if(orphanedProc.Any<Process>())
+            {
+                Process procToClose = orphanedProc.First<Process>();
+                int procToTrackForClosing = procToClose.Id;
+
+                try
+                {
+                    if (procToClose != null)
+                    {
+                        procToClose.Close();
+                        procToClose.Kill();
+                    }
+                }
+                catch { }
+
+                TrackProcess(procToTrackForClosing);
+            }
+        }
+
         private void TrackProcess(int procIdToTrack)
         {
             var process2 = Process.GetProcessById(procIdToTrack);
             Stopwatch sw = new Stopwatch();
             sw.Start();
             TimeSpan elapsed = sw.Elapsed;
-            while ((elapsed < TimeSpan.FromMinutes(5)) && (process2.HasExited == false))
+            while ((elapsed < TimeSpan.FromMinutes(2)) && (process2.HasExited == false))
             {
-                Thread.Sleep(30000);
                 elapsed = sw.Elapsed;
                 try
                 {
                     process2 = Process.GetProcessById(procIdToTrack);
+                    Thread.Sleep(10000);
                 }
                 catch (ArgumentException)
                 {
                     sw.Stop();
-                    Thread.Sleep(30000);
+                    Thread.Sleep(5000);
                     break;
                 }
             }

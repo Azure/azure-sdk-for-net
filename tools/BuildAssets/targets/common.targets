@@ -42,17 +42,18 @@
       RunSignTargets;
 	    <!-- PackgNugetBootStrap; -->
       Package;
-	  SignNugetPackage
+	  <!-- SignNugetPackage -->
     </SignNugetDependsOn>
     <PackageNugetDependsOn>
       $(RunTestProjectsDependsOn);
       RunSignTargets;
 	    <!-- PackgNugetBootStrap; -->
       Package;
-	  SignNugetPackage
+	  <!-- SignNugetPackage -->
     </PackageNugetDependsOn>
     <PublishNugetDependsOn>
-      $(PackageNugetDependsOn);
+      <!-- $(PackageNugetDependsOn); -->
+	  SignNugetPackage;
       PublishingNuget
     </PublishNugetDependsOn>
     <HelpDependsOn>
@@ -270,7 +271,13 @@
       <SkipNugetPublishing Condition=" '$(SkipNugetPublishing)' == '' ">false</SkipNugetPublishing>
       <SkipSymbolPublishing Condition=" '$(SkipSymbolPublishing)' == '' ">false</SkipSymbolPublishing>
     </PropertyGroup>
-    
+	
+	<Message Text="NugetPackageName...... $(NugetPackageName)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="PackageOutputPath...... $(PackageOutputPath)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="PublishNugetToDir...... $(PublishNugetToDir)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="NuGetCommand...... $(NuGetCommand)" Condition=" '$(DebugTrace)' == 'true' "/>
+	<Message Text="UserId...... $(UserId)" Condition=" '$(DebugTrace)' == 'true' "/>
+	
     <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
     <PublishSDKNugetTask 
       NugetPackageName="$(NugetPackageName)" 
