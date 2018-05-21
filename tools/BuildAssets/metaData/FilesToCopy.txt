@@ -12,4 +12,5 @@ tasks/net46/Microsoft.Build.Utilities.Core.dll
 tasks/net46/Microsoft.Azure.Sdk.Build.Tasks.dll
 tasks/net46/Microsoft.Azure.Sdk.Build.Common.dll
 tasks/net46/System.Threading.Thread.dll
+tasks/net46/Newtonsoft.Json.dll
 psModules/CodeGenerationModules/generateDotNetSdkCode.psm1
