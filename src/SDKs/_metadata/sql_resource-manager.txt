@@ -1,12 +1,10 @@
 
 Type dsc to start/install the DS Consolidated Console
 
-2018-05-12 18:15:45 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: yaakoviyun
 Branch:      master
-Commit:      2344dd5a986df8d4dc87a9cd74df62d35e0f6f08
 
 2) AutoRest information
 Requested version: latest
