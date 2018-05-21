@@ -168,8 +168,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         {
             string nugPattern = string.Format("*{0}*.nupkg", nugetPkgName);
             string nugSymPkgPattern = string.Format("*{0}*.symbols.nupkg", nugetPkgName);
-            IEnumerable<string> dupeFiles = Directory.EnumerateFiles(PackageOutputPath, nugPattern);
-            IEnumerable<string> foundSymbolPkgFiles = Directory.EnumerateFiles(PackageOutputPath, nugSymPkgPattern);
+            IEnumerable<string> dupeFiles = Directory.EnumerateFiles(PackageOutputPath, nugPattern, SearchOption.AllDirectories);
+            IEnumerable<string> foundSymbolPkgFiles = Directory.EnumerateFiles(PackageOutputPath, nugSymPkgPattern, SearchOption.AllDirectories);
 
             var foundNugetPkgFiles = dupeFiles.Except<string>(foundSymbolPkgFiles, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
 

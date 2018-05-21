@@ -69,7 +69,7 @@
 		Condition="'$(CodeSign)' == 'true' and '@(DelaySignedAssembliesToValidate)' != ''"/>
   </Target>
   
-  <Target Name="SignNugetPackage" Condition=" '$(CodeSign)' == 'true' AND '$(SkipSignNugetPackage)' != 'true' ">
+  <Target Name="SignNugetPackage" Condition=" '$(CodeSign)' == 'true' AND '$(SkipSignNugetPackage)' != 'true' AND '$(SkipNugetSigning)' != 'true' ">
   
   <Message Text="Generating nuget manifest for Nuget Signing....."/>
 	<Message Text="SignManifestRootDir - $(SignManifestRootDir)" Condition=" '$(DebugTrace)' == 'true' "/>
@@ -78,6 +78,7 @@
 	<Message Text="CurrentUser $(USERNAME)" Condition=" '$(DebugTrace)' == 'true' "/>
 	<Message Text="CodeSign=$(CodeSign), AuthenticodeSign=$(AuthenticodeSign)" Condition=" '$(DebugTrace)' == 'true' "/>
 	
+	<!-- <DebugTask/> -->
 	<!-- InSignedFilesRootDirPath="$(PackageOutputPath)"  -->
 	<SignNugetTask 
 		InSignedFilesRootDirPath="$(BinariesFolder)" 
