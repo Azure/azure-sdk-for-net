@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
     /// subscriptions/resources into an organizational hierarchy and centrally
     /// manage access control, policies, alerting and reporting for those
     /// resources.
-    ///
     /// </summary>
     public partial interface IManagementGroupsAPIClient : System.IDisposable
     {
@@ -53,22 +52,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// version is 2018-01-01-preview.
         /// </summary>
         string ApiVersion { get; }
-
-        /// <summary>
-        /// The id of the operation result. Possible values include: 'create',
-        /// 'delete'
-        /// </summary>
-        string OperationResultId { get; set; }
-
-        /// <summary>
-        /// Page continuation token is only used if a previous operation
-        /// returned a partial result.
-        /// If a previous response contains a nextLink element, the value of
-        /// the nextLink element will include a token parameter that specifies
-        /// a starting point to use for subsequent calls.
-        ///
-        /// </summary>
-        string Skiptoken { get; set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -121,6 +104,28 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Starts backfilling subscriptions for the Tenant.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<TenantBackfillStatusResult>> StartTenantBackfillWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets tenant backfill status
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<TenantBackfillStatusResult>> TenantBackfillStatusWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

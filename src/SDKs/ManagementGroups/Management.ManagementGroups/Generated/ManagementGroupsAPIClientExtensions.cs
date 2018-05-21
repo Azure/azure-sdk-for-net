@@ -55,5 +55,61 @@ namespace Microsoft.Azure.Management.ManagementGroups
                 }
             }
 
+            /// <summary>
+            /// Starts backfilling subscriptions for the Tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static TenantBackfillStatusResult StartTenantBackfill(this IManagementGroupsAPIClient operations)
+            {
+                return operations.StartTenantBackfillAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Starts backfilling subscriptions for the Tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TenantBackfillStatusResult> StartTenantBackfillAsync(this IManagementGroupsAPIClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.StartTenantBackfillWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets tenant backfill status
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static TenantBackfillStatusResult TenantBackfillStatus(this IManagementGroupsAPIClient operations)
+            {
+                return operations.TenantBackfillStatusAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets tenant backfill status
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TenantBackfillStatusResult> TenantBackfillStatusAsync(this IManagementGroupsAPIClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TenantBackfillStatusWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
