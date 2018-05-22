@@ -2,20 +2,15 @@
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sql.Tests
 {
-    public class SqlDatabaseAgentScenarioTests
+    public class ElasticJobAgentScenarioTests
     {
         /// <summary>
         /// Test end to end agent
