@@ -231,7 +231,13 @@ namespace Sql.Tests
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
                 Server server = context.CreateServer(resourceGroup);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-                Database database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(), new Database { Location = server.Location, Edition = DatabaseEdition.Premium });
+                Database database = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1)
+                    });
 
                 // Decrease retention period to 8 days and verfiy that it was updated.
                 ShortTermRetentionPolicy parameters = new ShortTermRetentionPolicy(retentionDays: 8);
@@ -260,7 +266,13 @@ namespace Sql.Tests
                 ResourceGroup resourceGroup = context.CreateResourceGroup();
                 Server server = context.CreateServer(resourceGroup);
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
-                Database database = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(), new Database { Location = server.Location, Edition = DatabaseEdition.Basic });
+                Database database = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.Basic)
+                    });
 
                 // Attempt to increase retention period to 8 days and verfiy that the operation fails.
                 ShortTermRetentionPolicy parameters = new ShortTermRetentionPolicy(retentionDays: 8);
@@ -378,7 +390,7 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 // List geo recoverable database backups
-                IEnumerable<RecoverableDatabase> recoverableDatabases = 
+                IEnumerable<RecoverableDatabase> recoverableDatabases =
                     sqlClient.RecoverableDatabases.ListByServer(resourceGroupName, serverName);
                 Assert.True(recoverableDatabases.Any(), "No recoverable databases found.");
 
