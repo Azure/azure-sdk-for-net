@@ -20,6 +20,7 @@ New features:
     * ElasticPool.PerDatabaseSettings has replaced ElasticPool.DatabaseDtuMin and ElasticPool.DatabaseDtuMax.
  - Database.MaxSizeBytes is now a long instead of string.
  - LocationCapabilities tree has been changed in order to support capabilities of new vCore-based database and elastic pool editions.
+- Added support for short term retention policies.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

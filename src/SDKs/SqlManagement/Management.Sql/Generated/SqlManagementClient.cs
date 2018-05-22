@@ -297,6 +297,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
 
         /// <summary>
+        /// Gets the IShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IShortTermRetentionPoliciesOperations ShortTermRetentionPolicies { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -542,6 +547,7 @@ namespace Microsoft.Azure.Management.Sql
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
+            ShortTermRetentionPolicies = new ShortTermRetentionPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
