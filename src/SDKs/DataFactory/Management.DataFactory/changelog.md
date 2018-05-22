@@ -4,6 +4,7 @@
 
 ###  Feature Additions
 
+* Added configure factory repository information
 * Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
 
 ## Version 0.7.0-preview
