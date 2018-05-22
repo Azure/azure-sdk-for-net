@@ -247,6 +247,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentRuleBaselinesOperations DatabaseVulnerabilityAssessmentRuleBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentsOperations DatabaseVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
         /// Gets the ILongTermRetentionBackupsOperations.
         /// </summary>
         public virtual ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; private set; }
@@ -290,6 +300,11 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the ICapabilitiesOperations.
         /// </summary>
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; private set; }
 
         /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
@@ -537,6 +552,8 @@ namespace Microsoft.Azure.Management.Sql
             SyncMembers = new SyncMembersOperations(this);
             SubscriptionUsages = new SubscriptionUsagesOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
+            DatabaseVulnerabilityAssessmentRuleBaselines = new DatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
+            DatabaseVulnerabilityAssessments = new DatabaseVulnerabilityAssessmentsOperations(this);
             LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
             BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
@@ -546,6 +563,7 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
+            DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
             ShortTermRetentionPolicies = new ShortTermRetentionPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");

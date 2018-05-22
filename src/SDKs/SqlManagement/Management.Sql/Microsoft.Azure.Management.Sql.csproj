@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Added support for short term retention policies.
+- Support for database Vulnerability Assessment.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
