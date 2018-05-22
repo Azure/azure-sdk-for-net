@@ -295,5 +295,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IShortTermRetentionPoliciesOperations.
         /// </summary>
         IShortTermRetentionPoliciesOperations ShortTermRetentionPolicies { get; }
+
     }
 }
