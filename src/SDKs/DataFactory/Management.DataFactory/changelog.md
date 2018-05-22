@@ -1,11 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
+## Version 0.8.0-preview
 
 ###  Feature Additions
 
-* Added configure factory repository information
 * Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
+* Updated Several models, updating types from SecretBase to Object
 
 ## Version 0.7.0-preview
 
