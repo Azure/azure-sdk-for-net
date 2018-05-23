@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
     using System.Collections.Generic;
     using System.IO;
     using System.Net;
+    using System.Linq;
 
     /// <summary>
     /// Bootstrap task, which simply copies all build tools to local branch
@@ -192,6 +193,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
                     CopyFile(copyFrom, copyTo);
                 }
 
+                CopyPowershellModules(Path.Combine(LocalBranchCopyToRootDir), filesToCopy);
                 ReportErrors();
             }
             catch (Exception ex)
@@ -208,6 +210,30 @@ namespace Microsoft.Azure.Build.BootstrapTasks
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Copy powershell modules to the user profile powershell dir
+        /// </summary>
+        /// <param name="psModulesDir">Powershell modules source dir</param>
+        /// <param name="filesToCopy">List of files to copy to tools dir</param>
+        /// <returns></returns>
+
+        private void CopyPowershellModules(string psModulesDir, string[] filesToCopy)
+        {
+            string userProfilePSModulesPath = Environment.GetEnvironmentVariable("PSModulePath").Split(';').Where(p => p.StartsWith(Environment.GetEnvironmentVariable("USERPROFILE"))).DefaultIfEmpty().First();
+            if (string.IsNullOrEmpty(userProfilePSModulesPath))
+            {
+                throw new Exception(string.Format("Please add '{0}' to Environment variable '{1}' to import the powershell cmdlets.", new String[] { Environment.GetEnvironmentVariable("USERPROFILE") + "\\Documents\\WindowsPowerShell\\Modules", "PSModulePath" }));
+            }
+            IEnumerable<string> psModulesToCopy = filesToCopy.Where(p=>p.StartsWith("psModules"))
+                                                             .Where(p=>p.EndsWith(".psm1")||p.EndsWith(".psd1")||p.EndsWith(".ps1"));
+            foreach (var module in psModulesToCopy)
+            {
+                var srcFile = Path.GetFullPath(Path.Combine(psModulesDir, module));
+                var destFile = Path.GetFullPath(Path.Combine(userProfilePSModulesPath, module.Replace("psModules/", "")));
+                CopyFile(srcFile, destFile);
+            }
         }
 
         /// <summary>
