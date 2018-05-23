@@ -19,6 +19,7 @@
   			- Added LinkedService, Dataset, CopySource for Responsys
   			- Added Configure factory repository operation
         - Updated Several models, updating types from SecretBase to Object
+        - Added Blob Events trigger
 
                         ]]>
 		</PackageReleaseNotes>
