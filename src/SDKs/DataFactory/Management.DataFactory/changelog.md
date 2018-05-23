@@ -5,6 +5,7 @@
 
 ###  Feature Additions
 
+* Added Configure factory repository operation
 * Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
 * Updated Several models, updating types from SecretBase to Object
 
