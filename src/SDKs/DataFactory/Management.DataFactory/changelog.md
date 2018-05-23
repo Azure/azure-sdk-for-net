@@ -1,7 +1,6 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
 ## Current version
-## Version 0.8.0-preview
 
 ###  Feature Additions
 
