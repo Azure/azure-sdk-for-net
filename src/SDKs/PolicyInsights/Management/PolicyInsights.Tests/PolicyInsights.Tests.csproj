@@ -4,7 +4,7 @@
     <PackageId>PolicyInsights.Tests</PackageId>
     <Description>PolicyInsights.Tests Class Library</Description>
     <AssemblyName>PolicyInsights.Tests</AssemblyName>
-    <VersionPrefix>0.9.0-preview</VersionPrefix>
+    <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>

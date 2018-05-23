@@ -14,7 +14,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/0.9.0.0"
+          "Microsoft.Azure.Management.PolicyInsights.PolicyInsightsClient/1.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"@odata.context\": \"https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/bulenttestrg/providers/Microsoft.Authorization/policyAssignments/45ab2ab7898d45ebb3087573/providers/Microsoft.PolicyInsights/policyEvents/$metadata#default\",\r\n  \"@odata.count\": 0,\r\n  \"value\": []\r\n}",
