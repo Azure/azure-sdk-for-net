@@ -12,10 +12,9 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for short term retention policies.
-- Support for database Vulnerability Assessment.
-- Adding support for SQL Database Agent
-    * With new types such as JobAgent, JobCredential, JobTargetGroup, Job, JobStep, and JobExecution
+- Added support for backup short term retention policies.
+- Added support for database Vulnerability Assessment.
+- Adding support for Elastic Jobs (JobAgent, JobCredential, JobTargetGroup, Job, JobStep, and JobExecution)
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
