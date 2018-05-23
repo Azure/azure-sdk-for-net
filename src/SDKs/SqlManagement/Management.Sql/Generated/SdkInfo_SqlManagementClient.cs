@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Sql
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Sql", "BackupLongTermRetentionPolicies", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "BackupShortTermRetentionPolicies", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "Capabilities", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "DataMaskingPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingRules", "2014-04-01"),
@@ -72,7 +73,6 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "Servers", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServiceObjectives", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServiceTierAdvisors", "2014-04-01"),
-                new Tuple<string, string, string>("Sql", "ShortTermRetentionPolicies", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "SubscriptionUsages", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncAgents", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "SyncGroups", "2015-05-01-preview"),

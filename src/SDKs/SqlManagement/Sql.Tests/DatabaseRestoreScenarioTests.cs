@@ -240,17 +240,17 @@ namespace Sql.Tests
                     });
 
                 // Decrease retention period to 8 days and verfiy that it was updated.
-                ShortTermRetentionPolicy parameters = new ShortTermRetentionPolicy(retentionDays: 8);
-                sqlClient.ShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                BackupShortTermRetentionPolicy parameters = new BackupShortTermRetentionPolicy(retentionDays: 8);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
                 Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
-                ShortTermRetentionPolicy policy = sqlClient.ShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                BackupShortTermRetentionPolicy policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
                 Assert.Equal(parameters.RetentionDays, policy.RetentionDays);
 
                 // Increase retention period to 35 days again and verfiy that it was updated.
-                parameters = new ShortTermRetentionPolicy(retentionDays: 35);
-                sqlClient.ShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                parameters = new BackupShortTermRetentionPolicy(retentionDays: 35);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
                 Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
-                policy = sqlClient.ShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
                 Assert.Equal(parameters.RetentionDays, policy.RetentionDays);
             }
         }
@@ -275,17 +275,17 @@ namespace Sql.Tests
                     });
 
                 // Attempt to increase retention period to 8 days and verfiy that the operation fails.
-                ShortTermRetentionPolicy parameters = new ShortTermRetentionPolicy(retentionDays: 8);
-                sqlClient.ShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                BackupShortTermRetentionPolicy parameters = new BackupShortTermRetentionPolicy(retentionDays: 8);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
                 Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
-                ShortTermRetentionPolicy policy = sqlClient.ShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                BackupShortTermRetentionPolicy policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
                 Assert.Equal(basicRetention, policy.RetentionDays);
 
                 // Attempt to dncrease retention period to 3 days and verify operation failure.
-                parameters = new ShortTermRetentionPolicy(retentionDays: 3);
-                sqlClient.ShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                parameters = new BackupShortTermRetentionPolicy(retentionDays: 3);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
                 Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
-                policy = sqlClient.ShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
                 Assert.Equal(basicRetention, policy.RetentionDays);
             }
         }

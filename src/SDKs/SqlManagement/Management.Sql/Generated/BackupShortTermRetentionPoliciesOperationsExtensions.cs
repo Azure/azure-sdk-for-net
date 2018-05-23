@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ShortTermRetentionPoliciesOperations.
+    /// Extension methods for BackupShortTermRetentionPoliciesOperations.
     /// </summary>
-    public static partial class ShortTermRetentionPoliciesOperationsExtensions
+    public static partial class BackupShortTermRetentionPoliciesOperationsExtensions
     {
             /// <summary>
             /// Gets a database's short term retention policy.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database.
             /// </param>
-            public static ShortTermRetentionPolicy Get(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static BackupShortTermRetentionPolicy Get(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.GetAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ShortTermRetentionPolicy> GetAsync(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupShortTermRetentionPolicy> GetAsync(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The short term retention policy info.
             /// </param>
-            public static ShortTermRetentionPolicy CreateOrUpdate(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters)
+            public static BackupShortTermRetentionPolicy CreateOrUpdate(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ShortTermRetentionPolicy> CreateOrUpdateAsync(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupShortTermRetentionPolicy> CreateOrUpdateAsync(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The short term retention policy info.
             /// </param>
-            public static ShortTermRetentionPolicy Update(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters)
+            public static BackupShortTermRetentionPolicy Update(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ShortTermRetentionPolicy> UpdateAsync(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupShortTermRetentionPolicy> UpdateAsync(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The short term retention policy info.
             /// </param>
-            public static ShortTermRetentionPolicy BeginCreateOrUpdate(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters)
+            public static BackupShortTermRetentionPolicy BeginCreateOrUpdate(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ShortTermRetentionPolicy> BeginCreateOrUpdateAsync(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupShortTermRetentionPolicy> BeginCreateOrUpdateAsync(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='parameters'>
             /// The short term retention policy info.
             /// </param>
-            public static ShortTermRetentionPolicy BeginUpdate(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters)
+            public static BackupShortTermRetentionPolicy BeginUpdate(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ShortTermRetentionPolicy> BeginUpdateAsync(this IShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupShortTermRetentionPolicy> BeginUpdateAsync(this IBackupShortTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupShortTermRetentionPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

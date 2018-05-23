@@ -352,9 +352,9 @@ namespace Microsoft.Azure.Management.Sql
         IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; }
 
         /// <summary>
-        /// Gets the IShortTermRetentionPoliciesOperations.
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
         /// </summary>
-        IShortTermRetentionPoliciesOperations ShortTermRetentionPolicies { get; }
+        IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
 
     }
 }

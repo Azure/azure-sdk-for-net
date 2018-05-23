@@ -16,21 +16,23 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A short term retention policy resource.
+    /// A short term retention policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ShortTermRetentionPolicy : ProxyResource
+    public partial class BackupShortTermRetentionPolicy : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the ShortTermRetentionPolicy class.
+        /// Initializes a new instance of the BackupShortTermRetentionPolicy
+        /// class.
         /// </summary>
-        public ShortTermRetentionPolicy()
+        public BackupShortTermRetentionPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ShortTermRetentionPolicy class.
+        /// Initializes a new instance of the BackupShortTermRetentionPolicy
+        /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -38,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="retentionDays">The backup retention period in days.
         /// This is how many days Point-in-Time Restore will be
         /// supported.</param>
-        public ShortTermRetentionPolicy(string id = default(string), string name = default(string), string type = default(string), int? retentionDays = default(int?))
+        public BackupShortTermRetentionPolicy(string id = default(string), string name = default(string), string type = default(string), int? retentionDays = default(int?))
             : base(id, name, type)
         {
             RetentionDays = retentionDays;

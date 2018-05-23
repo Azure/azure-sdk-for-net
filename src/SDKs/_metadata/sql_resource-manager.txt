@@ -1,14 +1,17 @@
-
-Type dsc to start/install the DS Consolidated Console
-
-2018-05-21 20:53:08 UTC
-
+﻿Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/sql/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\git\azure-sdk-for-net\tools\..\src\SDKs\
+2018-05-23 16:49:49 UTC
 1) azure-rest-api-specs repository information
-GitHub user: Azure
+GitHub fork: Azure
 Branch:      master
-Commit:      c6fea13a449c7e60d515759d687f18c9079c8522
+Commit:      fd4877c357ca30c867958b9f51332270449c2b31
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\joke\AppData\Roaming\npm `-- autorest@2.0.4262
-Latest installed version:
+Bootstrapper version:    C:\Users\jaredmoo\AppData\Roaming\npm  `-- autorest@2.0.4262
+
+
+Latest installed version:    
+.\tools\generate.ps1 was invoked by generate.ps1
+
+
