@@ -5,6 +5,7 @@
 ###  Feature Additions
 
 * Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
+* Added Blob Events Trigger
 
 ## Version 0.7.0-preview
 
