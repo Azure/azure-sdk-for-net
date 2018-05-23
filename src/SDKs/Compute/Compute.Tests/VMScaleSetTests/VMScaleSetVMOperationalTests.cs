@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Compute;
@@ -46,7 +47,6 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
-        [Trait("Failure", "Unable Match Http")]
         public void TestVMScaleSetVMOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -75,7 +75,6 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
-        [Trait("Failure", "Unable Match Http")]
         public void TestVMScaleSetVMOperations_ManagedDisks()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -157,19 +156,19 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
-        [Trait("Failure", "Unable Match Http")]
         public void TestVMScaleSetVMOperations_Put()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                InitializeCommon(context);
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
                 bool passed = false;
-                instanceId = "0";
-
-                m_location = "southcentralus"; // Right now some regions are in hotfix that do not have this API
 
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                    InitializeCommon(context);
+                    instanceId = "0";
+
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                     VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
@@ -189,6 +188,7 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
@@ -206,20 +206,20 @@ namespace Compute.Tests
         /// Delete RG
         /// </summary>
         [Fact]
-        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetVMOperations_Redeploy()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var originalLocation = ComputeManagementTestUtilities.DefaultLocation;
-                ComputeManagementTestUtilities.DefaultLocation = "EastUS2";
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
-                InitializeCommon(context);
                 instanceId = "0";
                 bool passed = false;
 
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
+                    InitializeCommon(context);
+
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
                         storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
@@ -229,10 +229,10 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
-                    ComputeManagementTestUtilities.DefaultLocation = originalLocation;
                 }
 
                 Assert.True(passed);
@@ -246,15 +246,13 @@ namespace Compute.Tests
         /// Perform maintenance on one instance of VM Scale Set
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestVMScaleSetVMOperations_PerformMaintenance()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var originalLocation = ComputeManagementTestUtilities.DefaultLocation;
-                ComputeManagementTestUtilities.DefaultLocation = "EastUS2";
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
-                InitializeCommon(context);
                 instanceId = "0";
                 VirtualMachineScaleSet vmScaleSet = null;
 
@@ -262,6 +260,9 @@ namespace Compute.Tests
 
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "EastUS2");
+                    InitializeCommon(context);
+
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef,
                         out inputVMScaleSet, createWithManagedDisks: true);
@@ -279,10 +280,10 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
-                    ComputeManagementTestUtilities.DefaultLocation = originalLocation;
                 }
 
                 Assert.True(passed);

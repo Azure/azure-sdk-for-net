@@ -14,27 +14,26 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Compute-specific operation properties, including output
+    /// The configuration parameters used for performing automatic OS upgrade.
     /// </summary>
-    public partial class ComputeLongRunningOperationProperties
+    public partial class AutoOSUpgradePolicy
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ComputeLongRunningOperationProperties class.
+        /// Initializes a new instance of the AutoOSUpgradePolicy class.
         /// </summary>
-        public ComputeLongRunningOperationProperties()
+        public AutoOSUpgradePolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ComputeLongRunningOperationProperties class.
+        /// Initializes a new instance of the AutoOSUpgradePolicy class.
         /// </summary>
-        /// <param name="output">Operation output data (raw JSON)</param>
-        public ComputeLongRunningOperationProperties(object output = default(object))
+        /// <param name="disableAutoRollback">Whether OS image rollback feature
+        /// should be disabled. Default value is false.</param>
+        public AutoOSUpgradePolicy(bool? disableAutoRollback = default(bool?))
         {
-            Output = output;
+            DisableAutoRollback = disableAutoRollback;
             CustomInit();
         }
 
@@ -44,10 +43,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets operation output data (raw JSON)
+        /// Gets or sets whether OS image rollback feature should be disabled.
+        /// Default value is false.
         /// </summary>
-        [JsonProperty(PropertyName = "output")]
-        public object Output { get; set; }
+        [JsonProperty(PropertyName = "disableAutoRollback")]
+        public bool? DisableAutoRollback { get; set; }
 
     }
 }
