@@ -16,19 +16,26 @@ namespace PolicyInsights.Tests
     {
         #region Test setup
 
-        static PolicyInsightsTests()
-        {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
-            }
-        }
+        private static string ManagementGroupName = "azgovtest4";
+        private static string SubscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
+        private static string ResourceGroupName = "bulenttestrg";
+        private static string ResourceId = "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/govintpolicyrp/providers/microsoft.network/trafficmanagerprofiles/gov-int-policy-rp";
+        private static string PolicySetDefinitionName = "db6c5074-a529-4cc8-8882-43f10ef42002";
+        private static string PolicyDefinitionName = "d7b13c30-e6aa-47e1-b50a-8e33f152d086";
+        private static string PolicyAssignmentName = "45ab2ab7898d45ebb3087573";
+        private static QueryOptions DefaultQueryOptions = new QueryOptions { FromProperty = DateTime.Parse("2018-04-04 00:00:00Z"), Top = 10 };
 
-        public static TestEnvironment TestEnvironment { get; }
+        public static TestEnvironment TestEnvironment { get; private set; }
 
         private static PolicyInsightsClient GetPolicyInsightsClient(MockContext context)
         {
+            if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                TestEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+            }
+
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
+
             var policyInsightsClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<PolicyInsightsClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<PolicyInsightsClient>(handlers: handler);
@@ -45,10 +52,9 @@ namespace PolicyInsights.Tests
 
             Assert.False(string.IsNullOrEmpty(queryResults.Odatacontext));
             Assert.True(queryResults.Odatacount.HasValue);
-            Assert.True(queryResults.Odatacount.Value > 0);
+            Assert.True(queryResults.Odatacount.Value >= 0);
 
             Assert.NotNull(queryResults.Value);
-            Assert.NotEmpty(queryResults.Value);
 
             foreach (var policyEvent in queryResults.Value)
             {
@@ -77,10 +83,9 @@ namespace PolicyInsights.Tests
 
             Assert.False(string.IsNullOrEmpty(queryResults.Odatacontext));
             Assert.True(queryResults.Odatacount.HasValue);
-            Assert.True(queryResults.Odatacount.Value > 0);
+            Assert.True(queryResults.Odatacount.Value >= 0);
 
             Assert.NotNull(queryResults.Value);
-            Assert.NotEmpty(queryResults.Value);
 
             foreach (var policyState in queryResults.Value)
             {
@@ -125,7 +130,6 @@ namespace PolicyInsights.Tests
             Assert.True(summary.Results.NonCompliantPolicies.HasValue);
 
             Assert.NotNull(summary.PolicyAssignments);
-            Assert.True(summary.PolicyAssignments.Count == summary.Results.NonCompliantPolicies.Value);
 
             foreach (var policyAssignmentSummary in summary.PolicyAssignments)
             {
@@ -168,11 +172,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ManagementGroupScope()
         {
-            var managementGroupName = "AzGovTest1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForManagementGroup(managementGroupName);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForManagementGroup(ManagementGroupName, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -180,11 +183,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_SubscriptionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForSubscription(subscriptionId);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForSubscription(SubscriptionId, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -192,12 +194,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ResourceGroupScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "defaultresourcegroup-eus";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResourceGroup(subscriptionId, resourceGroupName);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResourceGroup(SubscriptionId, ResourceGroupName, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -205,11 +205,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ResourceScope()
         {
-            var resourceId = "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/defaultresourcegroup-eus/providers/microsoft.operationalinsights/workspaces/defaultworkspace-d0610b27-9663-4c05-89f8-5b4be01e86a5-eus/linkedservices/security";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResource(resourceId);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResource(ResourceId, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -217,12 +216,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_PolicySetDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policySetDefinitionName = "a03db67e-a286-43c3-9098-b2da83d361ad";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForPolicySetDefinition(subscriptionId, policySetDefinitionName);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForPolicySetDefinition(SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -230,12 +227,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_PolicyDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyDefinitionName = "24813039-7534-408a-9842-eb99f45721b1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForPolicyDefinition(subscriptionId, policyDefinitionName);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForPolicyDefinition(SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -243,12 +238,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_SubscriptionLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyAssignmentName = "e46af646ebdb461dba708e01";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForSubscriptionLevelPolicyAssignment(subscriptionId, policyAssignmentName);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForSubscriptionLevelPolicyAssignment(SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -256,13 +249,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyEvents_ResourceGroupLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "cheggpolicy";
-            var policyAssignmentName = "9cdb41aa9f304cdeb4a8b090";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResourceGroupLevelPolicyAssignment(subscriptionId, resourceGroupName, policyAssignmentName);
+                var queryResults = policyInsightsClient.PolicyEvents.ListQueryResultsForResourceGroupLevelPolicyAssignment(SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
                 ValidatePolicyEventsQueryResults(queryResults);
             }
         }
@@ -274,11 +264,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestManagementGroupScope()
         {
-            var managementGroupName = "AzGovTest1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Latest, managementGroupName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Latest, ManagementGroupName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -286,11 +275,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestSubscriptionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -298,12 +286,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestResourceGroupScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "defaultresourcegroup-eus";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroup(PolicyStatesResource.Latest, subscriptionId, resourceGroupName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroup(PolicyStatesResource.Latest, SubscriptionId, ResourceGroupName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -311,11 +297,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestResourceScope()
         {
-            var resourceId = "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/defaultresourcegroup-eus/providers/microsoft.operationalinsights/workspaces/defaultworkspace-d0610b27-9663-4c05-89f8-5b4be01e86a5-eus/linkedservices/security";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Latest, resourceId);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Latest, ResourceId, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -323,12 +308,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestPolicySetDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policySetDefinitionName = "a03db67e-a286-43c3-9098-b2da83d361ad";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicySetDefinition(PolicyStatesResource.Latest, subscriptionId, policySetDefinitionName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicySetDefinition(PolicyStatesResource.Latest, SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -336,12 +319,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestPolicyDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyDefinitionName = "24813039-7534-408a-9842-eb99f45721b1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicyDefinition(PolicyStatesResource.Latest, subscriptionId, policyDefinitionName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicyDefinition(PolicyStatesResource.Latest, SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -349,12 +330,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestSubscriptionLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyAssignmentName = "e46af646ebdb461dba708e01";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionLevelPolicyAssignment(PolicyStatesResource.Latest, subscriptionId, policyAssignmentName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionLevelPolicyAssignment(PolicyStatesResource.Latest, SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -362,13 +341,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_LatestResourceGroupLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "cheggpolicy";
-            var policyAssignmentName = "b413d679fbe64e90862c204f";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroupLevelPolicyAssignment(PolicyStatesResource.Latest, subscriptionId, resourceGroupName, policyAssignmentName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroupLevelPolicyAssignment(PolicyStatesResource.Latest, SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -380,11 +356,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultManagementGroupScope()
         {
-            var managementGroupName = "AzGovTest1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Default, managementGroupName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForManagementGroup(PolicyStatesResource.Default, ManagementGroupName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -392,11 +367,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultSubscriptionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Default, subscriptionId);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Default, SubscriptionId, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -404,12 +378,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultResourceGroupScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "defaultresourcegroup-eus";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroup(PolicyStatesResource.Default, subscriptionId, resourceGroupName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroup(PolicyStatesResource.Default, SubscriptionId, ResourceGroupName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -417,11 +389,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultResourceScope()
         {
-            var resourceId = "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/defaultresourcegroup-eus/providers/microsoft.operationalinsights/workspaces/defaultworkspace-d0610b27-9663-4c05-89f8-5b4be01e86a5-eus/linkedservices/security";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Default, resourceId);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Default, ResourceId, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -429,12 +400,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultPolicySetDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policySetDefinitionName = "a03db67e-a286-43c3-9098-b2da83d361ad";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicySetDefinition(PolicyStatesResource.Default, subscriptionId, policySetDefinitionName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicySetDefinition(PolicyStatesResource.Default, SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -442,12 +411,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultPolicyDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyDefinitionName = "24813039-7534-408a-9842-eb99f45721b1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicyDefinition(PolicyStatesResource.Default, subscriptionId, policyDefinitionName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForPolicyDefinition(PolicyStatesResource.Default, SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -455,12 +422,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultSubscriptionLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyAssignmentName = "e46af646ebdb461dba708e01";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionLevelPolicyAssignment(PolicyStatesResource.Default, subscriptionId, policyAssignmentName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscriptionLevelPolicyAssignment(PolicyStatesResource.Default, SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -468,13 +433,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_DefaultResourceGroupLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "cheggpolicy";
-            var policyAssignmentName = "0b6f73d144a441099992d432";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroupLevelPolicyAssignment(PolicyStatesResource.Default, subscriptionId, resourceGroupName, policyAssignmentName);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResourceGroupLevelPolicyAssignment(PolicyStatesResource.Default, SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -486,11 +448,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeManagementGroupScope()
         {
-            var managementGroupName = "AzGovTest1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForManagementGroup(managementGroupName);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForManagementGroup(ManagementGroupName, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -498,11 +459,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeSubscriptionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForSubscription(subscriptionId);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForSubscription(SubscriptionId, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -510,12 +470,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeResourceGroupScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "defaultresourcegroup-eus";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResourceGroup(subscriptionId, resourceGroupName);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResourceGroup(SubscriptionId, ResourceGroupName, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -523,11 +481,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeResourceScope()
         {
-            var resourceId = "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/defaultresourcegroup-eus/providers/microsoft.operationalinsights/workspaces/defaultworkspace-d0610b27-9663-4c05-89f8-5b4be01e86a5-eus/linkedservices/security";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResource(resourceId);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResource(ResourceId, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -535,12 +492,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizePolicySetDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policySetDefinitionName = "a03db67e-a286-43c3-9098-b2da83d361ad";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForPolicySetDefinition(subscriptionId, policySetDefinitionName);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForPolicySetDefinition(SubscriptionId, PolicySetDefinitionName, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -548,12 +503,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizePolicyDefinitionScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyDefinitionName = "24813039-7534-408a-9842-eb99f45721b1";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForPolicyDefinition(subscriptionId, policyDefinitionName);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForPolicyDefinition(SubscriptionId, PolicyDefinitionName, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -561,12 +514,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeSubscriptionLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var policyAssignmentName = "e46af646ebdb461dba708e01";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForSubscriptionLevelPolicyAssignment(subscriptionId, policyAssignmentName);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForSubscriptionLevelPolicyAssignment(SubscriptionId, PolicyAssignmentName, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -574,13 +525,10 @@ namespace PolicyInsights.Tests
         [Fact]
         public void PolicyStates_SummarizeResourceGroupLevelPolicyAssignmentScope()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
-            var resourceGroupName = "cheggpolicy";
-            var policyAssignmentName = "0b6f73d144a441099992d432";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResourceGroupLevelPolicyAssignment(subscriptionId, resourceGroupName, policyAssignmentName);
+                var summarizeResults = policyInsightsClient.PolicyStates.SummarizeForResourceGroupLevelPolicyAssignment(SubscriptionId, ResourceGroupName, PolicyAssignmentName, DefaultQueryOptions);
                 ValidateSummarizeResults(summarizeResults);
             }
         }
@@ -592,12 +540,11 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithFrom()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryOptions = new QueryOptions { FromProperty = DateTime.Parse("2018-03-01 15:14:13Z") };
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                var queryOptions = new QueryOptions { FromProperty = DefaultQueryOptions.FromProperty };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -605,12 +552,11 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithTo()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
-                var queryOptions = new QueryOptions { To = DateTime.Parse("2018-03-01 15:14:13Z") };
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                var queryOptions = new QueryOptions { To = DefaultQueryOptions.To };
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -618,12 +564,11 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithTop()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Top = 10 };
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
                 Assert.True(10 == queryResults.Odatacount.Value);
                 Assert.True(10 == queryResults.Value.Count);
@@ -633,12 +578,11 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithOrderBy()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { OrderBy = "PolicyAssignmentId desc" };
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -646,12 +590,11 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithSelect()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Select = "Timestamp, ResourceId, PolicyAssignmentId, PolicyDefinitionId, IsCompliant, SubscriptionId, PolicyDefinitionAction" };
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -659,12 +602,11 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithFilter()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Filter = "IsCompliant eq false and PolicyDefinitionAction eq 'deny'" };
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
             }
         }
@@ -672,12 +614,11 @@ namespace PolicyInsights.Tests
         [Fact]
         public void QueryOptions_QueryResultsWithApply()
         {
-            var subscriptionId = "d0610b27-9663-4c05-89f8-5b4be01e86a5";
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryOptions = new QueryOptions { Apply = "groupby((PolicyAssignmentId, PolicyDefinitionId, ResourceId))/groupby((PolicyAssignmentId, PolicyDefinitionId), aggregate($count as NumResources))" };
-                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, subscriptionId, queryOptions);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForSubscription(PolicyStatesResource.Latest, SubscriptionId, queryOptions);
 
                 Assert.NotNull(queryResults);
 
