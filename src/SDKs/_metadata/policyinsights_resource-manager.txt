@@ -1,10 +1,11 @@
-2018-03-08 22:52:34 UTC
+2018-05-22 21:30:47 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: Azure
 Branch:      master
+Commit:      617a162a791e685f208a112de86fb77c1ddc7ae6
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\bulente\AppData\Roaming\npm `-- autorest@2.0.4245  
+Bootstrapper version:    C:\Users\bulente\AppData\Roaming\npm +-- autorest@2.0.4262  `-- oad@0.1.7   `-- autorest@1.9.1  
 Latest installed version:    
