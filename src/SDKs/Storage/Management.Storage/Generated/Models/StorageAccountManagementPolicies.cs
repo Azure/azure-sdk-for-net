@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="policy">The Storage Account ManagementPolicies Rules,
-        /// in JSON format. //TODO: Link of the sample rules.</param>
+        /// in JSON format. See more details in:
+        /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.</param>
         /// <param name="lastModifiedTime">Returns the date and time the
         /// ManagementPolicies was last modified.</param>
         public StorageAccountManagementPolicies(string id = default(string), string name = default(string), string type = default(string), object policy = default(object), System.DateTime? lastModifiedTime = default(System.DateTime?))
@@ -59,7 +60,8 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the Storage Account ManagementPolicies Rules, in JSON
-        /// format. //TODO: Link of the sample rules.
+        /// format. See more details in:
+        /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policy")]
         public object Policy { get; set; }

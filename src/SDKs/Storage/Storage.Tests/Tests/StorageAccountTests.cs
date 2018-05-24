@@ -1656,8 +1656,8 @@ namespace Storage.Tests
     ""version"":""0.5"",
     ""rules"":
     [{
-        ""type"": ""Lifecycle"",
         ""name"": ""olcmtest"",
+        ""type"": ""Lifecycle"",
         ""definition"": {
             ""filters"":
             {
@@ -1668,14 +1668,14 @@ namespace Storage.Tests
             {
                 ""baseBlob"":
                 {
-                    ""delete"":
+                    ""tierToCool"":
                     {
                         ""daysAfterModificationGreaterThan"":1000
                     },
 					""tierToArchive"" : {
 						""daysAfterModificationGreaterThan"" : 90
 					},
-                    ""tierToCool"":
+                    ""delete"":
                     {
                         ""daysAfterModificationGreaterThan"":1000
                     }
@@ -1685,13 +1685,7 @@ namespace Storage.Tests
                     ""delete"":
                     {
                         ""daysAfterCreationGreaterThan"":5000
-                    },
-					""tierToArchive"" : {
-						""daysAfterCreationGreaterThan"" : 30
-					},
-					""tierToCool"" : {
-						""daysAfterCreationGreaterThan"" : 1
-					}
+                    }
                 }
             }
         }

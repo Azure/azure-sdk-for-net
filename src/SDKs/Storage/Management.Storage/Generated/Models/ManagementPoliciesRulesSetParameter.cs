@@ -16,8 +16,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// The Storage Account ManagementPolicies Rules, in JSON format. //TODO:
-    /// Link of the sample rules.
+    /// The Storage Account ManagementPolicies Rules, in JSON format. See more
+    /// details in:
+    /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ManagementPoliciesRulesSetParameter
@@ -36,7 +37,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// ManagementPoliciesRulesSetParameter class.
         /// </summary>
         /// <param name="policy">The Storage Account ManagementPolicies Rules,
-        /// in JSON format. //TODO: Link of the sample rules.</param>
+        /// in JSON format. See more details in:
+        /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.</param>
         public ManagementPoliciesRulesSetParameter(object policy = default(object))
         {
             Policy = policy;
@@ -50,7 +52,8 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets or sets the Storage Account ManagementPolicies Rules, in JSON
-        /// format. //TODO: Link of the sample rules.
+        /// format. See more details in:
+        /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policy")]
         public object Policy { get; set; }

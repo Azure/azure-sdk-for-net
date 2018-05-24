@@ -616,8 +616,9 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='policy'>
-            /// The Storage Account ManagementPolicies Rules, in JSON format. //TODO: Link
-            /// of the sample rules.
+            /// The Storage Account ManagementPolicies Rules, in JSON format. See more
+            /// details in:
+            /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
             /// </param>
             public static StorageAccountManagementPolicies CreateOrUpdateManagementPolicies(this IStorageAccountsOperations operations, string resourceGroupName, string accountName, object policy = default(object))
             {
@@ -640,8 +641,9 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='policy'>
-            /// The Storage Account ManagementPolicies Rules, in JSON format. //TODO: Link
-            /// of the sample rules.
+            /// The Storage Account ManagementPolicies Rules, in JSON format. See more
+            /// details in:
+            /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

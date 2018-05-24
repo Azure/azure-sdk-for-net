@@ -2693,8 +2693,9 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers and lower-case letters only.
         /// </param>
         /// <param name='policy'>
-        /// The Storage Account ManagementPolicies Rules, in JSON format. //TODO: Link
-        /// of the sample rules.
+        /// The Storage Account ManagementPolicies Rules, in JSON format. See more
+        /// details in:
+        /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
