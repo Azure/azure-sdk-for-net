@@ -52,10 +52,15 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// List management groups for the authenticated user.
-        ///
         /// </summary>
         /// <param name='cacheControl'>
         /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Page continuation token is only used if a previous operation returned a
+        /// partial result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a token parameter that specifies
+        /// a starting point to use for subsequent calls.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -78,7 +83,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListWithHttpMessagesAsync(string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListWithHttpMessagesAsync(string cacheControl = "no-cache", string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -92,6 +97,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cacheControl", cacheControl);
+                tracingParameters.Add("skiptoken", skiptoken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -103,9 +109,9 @@ namespace Microsoft.Azure.Management.ManagementGroups
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (Client.Skiptoken != null)
+            if (skiptoken != null)
             {
-                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(Client.Skiptoken)));
+                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -237,7 +243,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// Get the details of the management group.
-        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -455,11 +460,9 @@ namespace Microsoft.Azure.Management.ManagementGroups
         }
 
         /// <summary>
-        /// Create or update a management group.
-        /// If a management group is already created and a subsequent create request is
-        /// issued with different properties, the management group properties will be
-        /// updated.
-        ///
+        /// Create or update a management group. If a management group is already
+        /// created and a subsequent create request is issued with different
+        /// properties, the management group properties will be updated.
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -485,7 +488,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// Update a management group.
-        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -688,9 +690,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
         }
 
         /// <summary>
-        /// Delete management group.
-        /// If a management group contains child resources, the request will fail.
-        ///
+        /// Delete management group. If a management group contains child resources,
+        /// the request will fail.
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -712,11 +713,9 @@ namespace Microsoft.Azure.Management.ManagementGroups
         }
 
         /// <summary>
-        /// Create or update a management group.
-        /// If a management group is already created and a subsequent create request is
-        /// issued with different properties, the management group properties will be
-        /// updated.
-        ///
+        /// Create or update a management group. If a management group is already
+        /// created and a subsequent create request is issued with different
+        /// properties, the management group properties will be updated.
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -937,9 +936,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
         }
 
         /// <summary>
-        /// Delete management group.
-        /// If a management group contains child resources, the request will fail.
-        ///
+        /// Delete management group. If a management group contains child resources,
+        /// the request will fail.
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -1129,7 +1127,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// List management groups for the authenticated user.
-        ///
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
