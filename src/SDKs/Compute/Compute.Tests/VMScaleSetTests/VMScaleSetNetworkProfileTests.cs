@@ -19,8 +19,7 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet to an Application gateway
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestVMScaleSetWithApplciationGateway()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -78,8 +77,7 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with DnsSettings
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestVMScaleSetWithDnsSettings()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -143,20 +141,11 @@ namespace Compute.Tests
         /// Associates a VMScaleSet with PublicIp
         /// </summary>
         [Fact]
-        [Trait("Failure", "Password policy")]
         public void TestVMScaleSetWithPublicIP()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                // Hard code the location to "westcentralus".
-                // This is because NRP is still deploying to other regions and is not available worldwide.
-                // Before changing the default location, we have to save it to be reset it at the end of the test.
-                // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
-                var originallocation = ComputeManagementTestUtilities.DefaultLocation;
-                ComputeManagementTestUtilities.DefaultLocation = "westcentralus";
-                EnsureClientsInitialized(context);
-
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
                 // Create resource group
                 string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
@@ -168,6 +157,14 @@ namespace Compute.Tests
                 bool passed = false;
                 try
                 {
+                    // Hard code the location to "westcentralus".
+                    // This is because NRP is still deploying to other regions and is not available worldwide.
+                    // Before changing the default location, we have to save it to be reset it at the end of the test.
+                    // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     var vnetResponse = CreateVNETWithSubnets(rgName, 2);
                     var vmssSubnet = vnetResponse.Subnets[1];
@@ -201,8 +198,8 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
-                    ComputeManagementTestUtilities.DefaultLocation = originallocation;
                 }
 
                 Assert.True(passed);
@@ -212,8 +209,7 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with Nsg
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestVMScaleSetWithnNsg()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -277,8 +273,7 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with ipv6
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestVMScaleSetWithnIpv6()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -339,8 +334,7 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with multiple IPConfigurations on a single NIC
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestVMSSWithMultiCA()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -400,8 +394,7 @@ namespace Compute.Tests
         /// <summary>
         /// Associates a VMScaleSet with a NIC that has accelerated networking enabled.
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestVMSSAccelNtwkng()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

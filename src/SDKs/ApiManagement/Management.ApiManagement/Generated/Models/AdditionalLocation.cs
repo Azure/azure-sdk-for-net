@@ -36,17 +36,23 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// among Azure Data center regions.</param>
         /// <param name="sku">SKU properties of the API Management
         /// service.</param>
-        /// <param name="publicIPAddresses">Static IP addresses of the
-        /// location's virtual machines.</param>
+        /// <param name="publicIPAddresses">Public Static Load Balanced IP
+        /// addresses of the API Management service in the additional location.
+        /// Available only for Basic, Standard and Premium SKU.</param>
+        /// <param name="privateIPAddresses">Private Static Load Balanced IP
+        /// addresses of the API Management service which is deployed in an
+        /// Internal Virtual Network in a particular additional location.
+        /// Available only for Basic, Standard and Premium SKU.</param>
         /// <param name="virtualNetworkConfiguration">Virtual network
         /// configuration for the location.</param>
         /// <param name="gatewayRegionalUrl">Gateway URL of the API Management
         /// service in the Region.</param>
-        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> publicIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string))
+        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string))
         {
             Location = location;
             Sku = sku;
             PublicIPAddresses = publicIPAddresses;
+            PrivateIPAddresses = privateIPAddresses;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             GatewayRegionalUrl = gatewayRegionalUrl;
             CustomInit();
@@ -71,10 +77,21 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public ApiManagementServiceSkuProperties Sku { get; set; }
 
         /// <summary>
-        /// Gets static IP addresses of the location's virtual machines.
+        /// Gets public Static Load Balanced IP addresses of the API Management
+        /// service in the additional location. Available only for Basic,
+        /// Standard and Premium SKU.
         /// </summary>
         [JsonProperty(PropertyName = "publicIPAddresses")]
         public IList<string> PublicIPAddresses { get; private set; }
+
+        /// <summary>
+        /// Gets private Static Load Balanced IP addresses of the API
+        /// Management service which is deployed in an Internal Virtual Network
+        /// in a particular additional location. Available only for Basic,
+        /// Standard and Premium SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateIPAddresses")]
+        public IList<string> PrivateIPAddresses { get; private set; }
 
         /// <summary>
         /// Gets or sets virtual network configuration for the location.

@@ -26,11 +26,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Domain class.
         /// </summary>
-        public Domain(System.Guid id = default(System.Guid), string name = default(string), bool exportable = default(bool))
+        /// <param name="type">Possible values include: 'Classification',
+        /// 'ObjectDetection'</param>
+        public Domain(System.Guid id = default(System.Guid), string name = default(string), string type = default(string), bool exportable = default(bool), bool enabled = default(bool))
         {
             Id = id;
             Name = name;
+            Type = type;
             Exportable = exportable;
+            Enabled = enabled;
             CustomInit();
         }
 
@@ -41,18 +45,29 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets possible values include: 'Classification', 'ObjectDetection'
         /// </summary>
-        [JsonProperty(PropertyName = "Exportable")]
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "exportable")]
         public bool Exportable { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "enabled")]
+        public bool Enabled { get; private set; }
 
     }
 }

@@ -42,12 +42,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Dataset.</param>
-        /// <param name="connectionString">An ODBC connection string.</param>
+        /// <param name="connectionString">An ODBC connection string. Type:
+        /// string, SecureString or AzureKeyVaultSecretReference.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public NetezzaLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), SecretBase connectionString = default(SecretBase), object encryptedCredential = default(object))
+        public NetezzaLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object connectionString = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -61,10 +62,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an ODBC connection string.
+        /// Gets or sets an ODBC connection string. Type: string, SecureString
+        /// or AzureKeyVaultSecretReference.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
-        public SecretBase ConnectionString { get; set; }
+        public object ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.

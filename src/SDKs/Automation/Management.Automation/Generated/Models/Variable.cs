@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the varible.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Variable
+    public partial class Variable : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Variable class.
@@ -32,8 +32,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the Variable class.
         /// </summary>
-        /// <param name="id">Gets or sets the id of the resource.</param>
-        /// <param name="name">Gets or sets the name of the variable.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="value">Gets or sets the value of the variable.</param>
         /// <param name="isEncrypted">Gets or sets the encrypted flag of the
         /// variable.</param>
@@ -41,10 +43,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public Variable(string id = default(string), string name = default(string), string value = default(string), bool? isEncrypted = default(bool?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string))
+        public Variable(string id = default(string), string name = default(string), string type = default(string), string value = default(string), bool? isEncrypted = default(bool?), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
             Value = value;
             IsEncrypted = isEncrypted;
             CreationTime = creationTime;
@@ -57,18 +58,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the id of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the variable.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the variable.
@@ -86,13 +75,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the description.

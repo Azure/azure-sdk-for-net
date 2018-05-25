@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// LogAnalytics operation status response
     /// </summary>
-    public partial class LogAnalyticsOperationResult : OperationStatusResponse
+    public partial class LogAnalyticsOperationResult
     {
         /// <summary>
         /// Initializes a new instance of the LogAnalyticsOperationResult
@@ -31,14 +31,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the LogAnalyticsOperationResult
         /// class.
         /// </summary>
-        /// <param name="name">Operation ID</param>
-        /// <param name="status">Operation status</param>
-        /// <param name="startTime">Start time of the operation</param>
-        /// <param name="endTime">End time of the operation</param>
-        /// <param name="error">Api error</param>
         /// <param name="properties">LogAnalyticsOutput</param>
-        public LogAnalyticsOperationResult(string name = default(string), string status = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), ApiError error = default(ApiError), LogAnalyticsOutput properties = default(LogAnalyticsOutput))
-            : base(name, status, startTime, endTime, error)
+        public LogAnalyticsOperationResult(LogAnalyticsOutput properties = default(LogAnalyticsOutput))
         {
             Properties = properties;
             CustomInit();

@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourcegroups?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "212228dc-d138-4dfe-a778-83f393695595"
+          "d6b3bff7-97a4-4d26-ae88-c28098943ab4"
         ],
         "accept-language": [
           "en-US"
@@ -17,7 +17,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid\",\r\n  \"namespace\": \"Microsoft.EventGrid\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"4962773b-9cdb-44cf-a8bf-237846a00ab7\",\r\n      \"roleDefinitionId\": \"7FE036D8-246F-48BF-A78F-AB3EE699C8F3\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/eventSubscriptions\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"eventSubscriptions\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"topics\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"topicTypes\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationsStatus\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/topicTypes\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"extensionTopics\",\r\n      \"locations\": [\r\n        \"West US 2\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"West Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operationResults\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operationsStatus\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2018-01-01\",\r\n        \"2017-09-15-preview\",\r\n        \"2017-06-15-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Acis-KeyVault-int\",\r\n      \"name\": \"Acis-KeyVault-int\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AcisKeyVaultInt\",\r\n      \"name\": \"AcisKeyVaultInt\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AhamadTest2ResourceGroup\",\r\n      \"name\": \"AhamadTest2ResourceGroup\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AhamadTest3ResourceGoup\",\r\n      \"name\": \"AhamadTest3ResourceGoup\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/ahamadTestRG\",\r\n      \"name\": \"ahamadTestRG\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/alitest\",\r\n      \"name\": \"alitest\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AzureFunctions-AustraliaEast\",\r\n      \"name\": \"AzureFunctions-AustraliaEast\",\r\n      \"location\": \"australiaeast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/clitestingrg\",\r\n      \"name\": \"clitestingrg\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cloud-shell-storage-southcentralus\",\r\n      \"name\": \"cloud-shell-storage-southcentralus\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cloud-shell-storage-westus\",\r\n      \"name\": \"cloud-shell-storage-westus\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/datalaketestRG\",\r\n      \"name\": \"datalaketestRG\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-ApplicationInsights-EastUS\",\r\n      \"name\": \"Default-ApplicationInsights-EastUS\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-EventHub-WestUS\",\r\n      \"name\": \"Default-EventHub-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-Networking\",\r\n      \"name\": \"Default-Networking\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-ServiceBus-WestUS\",\r\n      \"name\": \"Default-ServiceBus-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-Storage-CentralUS\",\r\n      \"name\": \"Default-Storage-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/DefaultResourceGroup-EUS\",\r\n      \"name\": \"DefaultResourceGroup-EUS\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/DefaultResourceGroup-WEU\",\r\n      \"name\": \"DefaultResourceGroup-WEU\",\r\n      \"location\": \"westeurope\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/DnsZonesRG\",\r\n      \"name\": \"DnsZonesRG\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/E2E\",\r\n      \"name\": \"E2E\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf\",\r\n      \"name\": \"eg-hitesh-perf\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-1\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-2\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-3\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-3\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-4\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-4\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-5\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-5\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-6\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-6\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-7\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-7\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-8\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-8\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-ussc\",\r\n      \"name\": \"eg-hitesh-perf-functions-ussc\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-ussc-2\",\r\n      \"name\": \"eg-hitesh-perf-functions-ussc-2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-int-ussc-001\",\r\n      \"name\": \"eg-int-ussc-001\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-kal-usnw2\",\r\n      \"name\": \"eg-kal-usnw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-kkp-usw\",\r\n      \"name\": \"eg-kkp-usw\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-kkp-usw2\",\r\n      \"name\": \"eg-kkp-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-nok1-usw2\",\r\n      \"name\": \"eg-nok1-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-nok-usw2\",\r\n      \"name\": \"eg-nok-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-one\",\r\n      \"name\": \"eg-one\",\r\n      \"location\": \"japaneast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-one-jpea\",\r\n      \"name\": \"eg-one-jpea\",\r\n      \"location\": \"japaneast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr1-usc\",\r\n      \"name\": \"eg-rgr1-usc\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr1-ussc\",\r\n      \"name\": \"eg-rgr1-ussc\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr1-uswc\",\r\n      \"name\": \"eg-rgr1-uswc\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-ussc\",\r\n      \"name\": \"eg-rgr-ussc\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-usw\",\r\n      \"name\": \"eg-rgr-usw\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-usw2\",\r\n      \"name\": \"eg-rgr-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-uswc\",\r\n      \"name\": \"eg-rgr-uswc\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EGRPTestRG\",\r\n      \"name\": \"EGRPTestRG\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/egtestrg\",\r\n      \"name\": \"egtestrg\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EGTestRP2\",\r\n      \"name\": \"EGTestRP2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/egvm\",\r\n      \"name\": \"egvm\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventg\",\r\n      \"name\": \"eventg\",\r\n      \"location\": \"japaneast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgrid-int-traffic-profiles\",\r\n      \"name\": \"eventgrid-int-traffic-profiles\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgrid-monitoring\",\r\n      \"name\": \"eventgrid-monitoring\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridAcisKeyVault\",\r\n      \"name\": \"EventGridAcisKeyVault\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridedge\",\r\n      \"name\": \"eventgridedge\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridintglobal\",\r\n      \"name\": \"eventgridintglobal\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridmonitoring\",\r\n      \"name\": \"eventgridmonitoring\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridpocv2rg\",\r\n      \"name\": \"eventgridpocv2rg\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridpocv2rg1\",\r\n      \"name\": \"eventgridpocv2rg1\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridResourceGroup\",\r\n      \"name\": \"EventGridResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridRG\",\r\n      \"name\": \"EventGridRG\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridRP2\",\r\n      \"name\": \"EventGridRP2\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridtestdev\",\r\n      \"name\": \"eventgridtestdev\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridTrafficManagerProfilesRG\",\r\n      \"name\": \"EventGridTrafficManagerProfilesRG\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridWestUSResourceGroup\",\r\n      \"name\": \"EventGridWestUSResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManageaustraliasoutheast\",\r\n      \"name\": \"GenevaWarmPathManageaustraliasoutheast\",\r\n      \"location\": \"australiasoutheast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagecentralus\",\r\n      \"name\": \"GenevaWarmPathManagecentralus\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManageeastasia\",\r\n      \"name\": \"GenevaWarmPathManageeastasia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManageeastus\",\r\n      \"name\": \"GenevaWarmPathManageeastus\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagenortheurope\",\r\n      \"name\": \"GenevaWarmPathManagenortheurope\",\r\n      \"location\": \"northeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagesouthcentralus\",\r\n      \"name\": \"GenevaWarmPathManagesouthcentralus\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagewesteurope\",\r\n      \"name\": \"GenevaWarmPathManagewesteurope\",\r\n      \"location\": \"westeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagewestus\",\r\n      \"name\": \"GenevaWarmPathManagewestus\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/gremlintest\",\r\n      \"name\": \"gremlintest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GridToHubResourceGroup\",\r\n      \"name\": \"GridToHubResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GridToServiceBusTest\",\r\n      \"name\": \"GridToServiceBusTest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GrouppTestingCLI\",\r\n      \"name\": \"GrouppTestingCLI\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/hannah\",\r\n      \"name\": \"hannah\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/int-central\",\r\n      \"name\": \"int-central\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalsdemo\",\r\n      \"name\": \"kalsdemo\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/KalsResourceGroupCLI\",\r\n      \"name\": \"KalsResourceGroupCLI\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest\",\r\n      \"name\": \"kalstest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kishp-rg\",\r\n      \"name\": \"kishp-rg\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kishptestrg\",\r\n      \"name\": \"kishptestrg\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/KishTestResourceGroup\",\r\n      \"name\": \"KishTestResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/maflow-0912\",\r\n      \"name\": \"maflow-0912\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/mockpublisherrp\",\r\n      \"name\": \"mockpublisherrp\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/mysql\",\r\n      \"name\": \"mysql\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/MyVNet\",\r\n      \"name\": \"MyVNet\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/rg1move1\",\r\n      \"name\": \"rg1move1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RoutesResourceGroup\",\r\n      \"name\": \"RoutesResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sampleresourcegroupcli\",\r\n      \"name\": \"sampleresourcegroupcli\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sanariel-test\",\r\n      \"name\": \"sanariel-test\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-3553\",\r\n      \"name\": \"sdk-EventGrid-RG-3553\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-6044\",\r\n      \"name\": \"sdk-EventGrid-RG-6044\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-6370\",\r\n      \"name\": \"sdk-EventGrid-RG-6370\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-980\",\r\n      \"name\": \"sdk-EventGrid-RG-980\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests\",\r\n      \"name\": \"SDKTests\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Test1RG\",\r\n      \"name\": \"Test1RG\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TestignGeoDR\",\r\n      \"name\": \"TestignGeoDR\",\r\n      \"location\": \"northcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TestingAlternatename\",\r\n      \"name\": \"TestingAlternatename\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TestingCLI\",\r\n      \"name\": \"TestingCLI\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TesttingArm\",\r\n      \"name\": \"TesttingArm\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TMTestRG\",\r\n      \"name\": \"TMTestRG\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/vinsutestgrid\",\r\n      \"name\": \"vinsutestgrid\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/VNet\",\r\n      \"name\": \"VNet\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:28 GMT"
+          "Tue, 01 May 2018 21:16:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,28 +41,37 @@
           "14997"
         ],
         "x-ms-request-id": [
-          "1fc34461-e88a-4a79-9b95-8062c82244bf"
+          "1c36f5f5-832e-4d9e-b763-b3bccc021cf2"
         ],
         "x-ms-correlation-request-id": [
-          "1fc34461-e88a-4a79-9b95-8062c82244bf"
+          "1c36f5f5-832e-4d9e-b763-b3bccc021cf2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203228Z:1fc34461-e88a-4a79-9b95-8062c82244bf"
+          "WESTUS:20180501T211604Z:1c36f5f5-832e-4d9e-b763-b3bccc021cf2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourcegroups?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourcegroups/sdk-EventGrid-RG-8533?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlZ3JvdXBzL3Nkay1FdmVudEdyaWQtUkctODUzMz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westcentralus\"\r\n}",
       "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "35"
+        ],
         "x-ms-client-request-id": [
-          "30291a25-e32a-49df-be9c-73760f33e6f7"
+          "2b812ce8-9d4c-42f9-b5a8-4882f73a5ffa"
         ],
         "accept-language": [
           "en-US"
@@ -72,8 +81,11 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Acis-KeyVault-int\",\r\n      \"name\": \"Acis-KeyVault-int\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AcisKeyVaultInt\",\r\n      \"name\": \"AcisKeyVaultInt\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AhamadTest2ResourceGroup\",\r\n      \"name\": \"AhamadTest2ResourceGroup\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AhamadTest3ResourceGoup\",\r\n      \"name\": \"AhamadTest3ResourceGoup\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/ahamadTestRG\",\r\n      \"name\": \"ahamadTestRG\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/alitest\",\r\n      \"name\": \"alitest\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/AzureFunctions-AustraliaEast\",\r\n      \"name\": \"AzureFunctions-AustraliaEast\",\r\n      \"location\": \"australiaeast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_alias2ent77voy7rwbiswwiop34bey35mxim3qb5qvzpligs53ynxgg7m6ukfx4\",\r\n      \"name\": \"cli_test_eh_alias2ent77voy7rwbiswwiop34bey35mxim3qb5qvzpligs53ynxgg7m6ukfx4\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_alias2mv7ov6fsgikow24xobpownip4z7mijgbqjghkrz5zav4njw5lcf6lf7px\",\r\n      \"name\": \"cli_test_eh_alias2mv7ov6fsgikow24xobpownip4z7mijgbqjghkrz5zav4njw5lcf6lf7px\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_alias7hu7sgo7urftiyxrlj3lgvj5ydon22elqoem6wm6dwfc737vydqwdk7sxh\",\r\n      \"name\": \"cli_test_eh_alias7hu7sgo7urftiyxrlj3lgvj5ydon22elqoem6wm6dwfc737vydqwdk7sxh\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasapj44zuqfujsl26kgqs5brvhhfc5zofi2uyqsp6knwtlucxftxaxmif6a2\",\r\n      \"name\": \"cli_test_eh_aliasapj44zuqfujsl26kgqs5brvhhfc5zofi2uyqsp6knwtlucxftxaxmif6a2\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliascky7msnikdvg7monugngsco6s44dsylbg6ubkzabkjg3pq457pyq7kmcqu\",\r\n      \"name\": \"cli_test_eh_aliascky7msnikdvg7monugngsco6s44dsylbg6ubkzabkjg3pq457pyq7kmcqu\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasf5s5nkcheqjmc2mzn75m4snwj2wigrjvsqzse5ppwzn7si5ect3tsrravj\",\r\n      \"name\": \"cli_test_eh_aliasf5s5nkcheqjmc2mzn75m4snwj2wigrjvsqzse5ppwzn7si5ect3tsrravj\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasfbbatpr2evcnfafcvf4ss7zyy6qdqbhc5mbsalcb63gfwbjhukcicv6b3q\",\r\n      \"name\": \"cli_test_eh_aliasfbbatpr2evcnfafcvf4ss7zyy6qdqbhc5mbsalcb63gfwbjhukcicv6b3q\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasg4iqo576d2twd4qc2lh7nicaqrbiop577a6ay6jdmyf6ttnncvwttfraa5\",\r\n      \"name\": \"cli_test_eh_aliasg4iqo576d2twd4qc2lh7nicaqrbiop577a6ay6jdmyf6ttnncvwttfraa5\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliash6srcvrszaufw5liurq6vjxjgylz2ehpxjmnpaujh2fievbmshaeckggfg\",\r\n      \"name\": \"cli_test_eh_aliash6srcvrszaufw5liurq6vjxjgylz2ehpxjmnpaujh2fievbmshaeckggfg\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasidgr3hilhuj2666kgpjl7s2hxqafg54ykpee3s6tjnl7qdna2rdh5uzzzf\",\r\n      \"name\": \"cli_test_eh_aliasidgr3hilhuj2666kgpjl7s2hxqafg54ykpee3s6tjnl7qdna2rdh5uzzzf\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasincisbatr7gdt44xretopkgunmqv5vxsrtk3iq7d4wqporp2yxa3uu2sys\",\r\n      \"name\": \"cli_test_eh_aliasincisbatr7gdt44xretopkgunmqv5vxsrtk3iq7d4wqporp2yxa3uu2sys\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliaskpunb5qmw2gwu5h7snjaqdtkq2pn3hxfwodkt3krnjo23u7qvuwbnkp7m6\",\r\n      \"name\": \"cli_test_eh_aliaskpunb5qmw2gwu5h7snjaqdtkq2pn3hxfwodkt3krnjo23u7qvuwbnkp7m6\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliaskvxl3r7gta5a3xp5hh6arbwhcwxjqnvyaukvsik46wlomw2vy4hzbjxn3u\",\r\n      \"name\": \"cli_test_eh_aliaskvxl3r7gta5a3xp5hh6arbwhcwxjqnvyaukvsik46wlomw2vy4hzbjxn3u\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasluiavtblxmux2kd6hennir4fqnbacd5gopkeuj6imcogpn5nfhvfx7bpkl\",\r\n      \"name\": \"cli_test_eh_aliasluiavtblxmux2kd6hennir4fqnbacd5gopkeuj6imcogpn5nfhvfx7bpkl\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasnjnzdt2jvteq55ydkxnizbptzi46kbxpu5n4xr7ax3wadiiqaow4xcziwa\",\r\n      \"name\": \"cli_test_eh_aliasnjnzdt2jvteq55ydkxnizbptzi46kbxpu5n4xr7ax3wadiiqaow4xcziwa\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasqntnpeizwqrb7tm33v2657das6z4nfis3cgc43vjowr65wjvip4z6vntjz\",\r\n      \"name\": \"cli_test_eh_aliasqntnpeizwqrb7tm33v2657das6z4nfis3cgc43vjowr65wjvip4z6vntjz\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasrdwk3qo25uvmozoy46edwk5dxzoyevdhfg6dknv2qmsgo47phzgttwpaky\",\r\n      \"name\": \"cli_test_eh_aliasrdwk3qo25uvmozoy46edwk5dxzoyevdhfg6dknv2qmsgo47phzgttwpaky\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasu6lcs66vwhtxj4d62fqcdlkqt3yotasky4m7lybezc63e43c4kxu6ppp3h\",\r\n      \"name\": \"cli_test_eh_aliasu6lcs66vwhtxj4d62fqcdlkqt3yotasky4m7lybezc63e43c4kxu6ppp3h\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasuabxoisqt5ghyuwgudrymd4wwztlqyh6poga4g3w54qnzu3z7robkl6t5q\",\r\n      \"name\": \"cli_test_eh_aliasuabxoisqt5ghyuwgudrymd4wwztlqyh6poga4g3w54qnzu3z7robkl6t5q\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasxdyxbx75xbfdhtkchxrdnk7drdb7lusuik742vmrirdnr5x5durtbrgvno\",\r\n      \"name\": \"cli_test_eh_aliasxdyxbx75xbfdhtkchxrdnk7drdb7lusuik742vmrirdnr5x5durtbrgvno\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_aliasxh4udftkei2q74xi4exyt6ybmabkv6usze4edptutozpf5gvtct5ebcbb7\",\r\n      \"name\": \"cli_test_eh_aliasxh4udftkei2q74xi4exyt6ybmabkv6usze4edptutozpf5gvtct5ebcbb7\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_consumergroup6zkjq27jmssof7oladl7huufb4m7h3pz3eq66mts52xzu3druo\",\r\n      \"name\": \"cli_test_eh_consumergroup6zkjq27jmssof7oladl7huufb4m7h3pz3eq66mts52xzu3druo\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_eventnhubwagv7k5zdiae4egzly65yuwbpoxubow45bq5v5sggvfcnb4w3cqdvn\",\r\n      \"name\": \"cli_test_eh_eventnhubwagv7k5zdiae4egzly65yuwbpoxubow45bq5v5sggvfcnb4w3cqdvn\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_eh_namespace3q5lltod3bkd7vplj7dt6leygj2i4mqw4ajikdjjamsds7na2eu4od\",\r\n      \"name\": \"cli_test_eh_namespace3q5lltod3bkd7vplj7dt6leygj2i4mqw4ajikdjjamsds7na2eu4od\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_sb_alias2tinyjvsn4mama6b2cczzzxqaswwbnv7eo6lxlaiyikys2exxli6ifemmv\",\r\n      \"name\": \"cli_test_sb_alias2tinyjvsn4mama6b2cczzzxqaswwbnv7eo6lxlaiyikys2exxli6ifemmv\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_sb_alias3bjuthaskhtdcs7eewkamcvcxwu5pv2z52x4sfa24inr46ur666xlmkq5a\",\r\n      \"name\": \"cli_test_sb_alias3bjuthaskhtdcs7eewkamcvcxwu5pv2z52x4sfa24inr46ur666xlmkq5a\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_sb_alias4qsg3szpjfeswzswn5ehdqk3xj43a3guhwna53kx63wgmr733lul5jyd24\",\r\n      \"name\": \"cli_test_sb_alias4qsg3szpjfeswzswn5ehdqk3xj43a3guhwna53kx63wgmr733lul5jyd24\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_sb_aliasa7l2lr4xms34cxoibvd6huzi4bbyzbkhprxve4tks7dru3trmgkdml2swo\",\r\n      \"name\": \"cli_test_sb_aliasa7l2lr4xms34cxoibvd6huzi4bbyzbkhprxve4tks7dru3trmgkdml2swo\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_sb_aliase44kwz23r2fwzbospfvpii5hh3ahxcj54f7zabhvvmeelj4aribi3luoyw\",\r\n      \"name\": \"cli_test_sb_aliase44kwz23r2fwzbospfvpii5hh3ahxcj54f7zabhvvmeelj4aribi3luoyw\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cli_test_sb_namespace6n6pvsxu54odomkb2efb756nycx6jdcnw3cuhnqmght2fv4wa4apve\",\r\n      \"name\": \"cli_test_sb_namespace6n6pvsxu54odomkb2efb756nycx6jdcnw3cuhnqmght2fv4wa4apve\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"use\": \"az-test\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cloud-shell-storage-southcentralus\",\r\n      \"name\": \"cloud-shell-storage-southcentralus\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/cloud-shell-storage-westus\",\r\n      \"name\": \"cloud-shell-storage-westus\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/datalaketestRG\",\r\n      \"name\": \"datalaketestRG\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-ApplicationInsights-EastUS\",\r\n      \"name\": \"Default-ApplicationInsights-EastUS\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-EventHub-WestUS\",\r\n      \"name\": \"Default-EventHub-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-Networking\",\r\n      \"name\": \"Default-Networking\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-ServiceBus-WestUS\",\r\n      \"name\": \"Default-ServiceBus-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-Storage-CentralUS\",\r\n      \"name\": \"Default-Storage-CentralUS\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Default-Storage-WestUS\",\r\n      \"name\": \"Default-Storage-WestUS\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/DnsZonesRG\",\r\n      \"name\": \"DnsZonesRG\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf\",\r\n      \"name\": \"eg-hitesh-perf\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-1\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-2\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-3\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-3\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-4\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-4\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-5\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-5\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-6\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-6\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-7\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-7\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-payg-ussc-8\",\r\n      \"name\": \"eg-hitesh-perf-functions-payg-ussc-8\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-ussc\",\r\n      \"name\": \"eg-hitesh-perf-functions-ussc\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-hitesh-perf-functions-ussc-2\",\r\n      \"name\": \"eg-hitesh-perf-functions-ussc-2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-int-ussc-001\",\r\n      \"name\": \"eg-int-ussc-001\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-kal-usnw2\",\r\n      \"name\": \"eg-kal-usnw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-kkp-usw\",\r\n      \"name\": \"eg-kkp-usw\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-kkp-usw2\",\r\n      \"name\": \"eg-kkp-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-nok1-usw2\",\r\n      \"name\": \"eg-nok1-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-nok-usw2\",\r\n      \"name\": \"eg-nok-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr1-usc\",\r\n      \"name\": \"eg-rgr1-usc\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr1-ussc\",\r\n      \"name\": \"eg-rgr1-ussc\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr1-uswc\",\r\n      \"name\": \"eg-rgr1-uswc\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-ussc\",\r\n      \"name\": \"eg-rgr-ussc\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-usw\",\r\n      \"name\": \"eg-rgr-usw\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-usw2\",\r\n      \"name\": \"eg-rgr-usw2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eg-rgr-uswc\",\r\n      \"name\": \"eg-rgr-uswc\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EGRPTestRG\",\r\n      \"name\": \"EGRPTestRG\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/egtestrg\",\r\n      \"name\": \"egtestrg\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EGTestRP2\",\r\n      \"name\": \"EGTestRP2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/egvm\",\r\n      \"name\": \"egvm\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgrid-int-traffic-profiles\",\r\n      \"name\": \"eventgrid-int-traffic-profiles\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgrid-monitoring\",\r\n      \"name\": \"eventgrid-monitoring\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridAcisKeyVault\",\r\n      \"name\": \"EventGridAcisKeyVault\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridBuildAgents\",\r\n      \"name\": \"EventGridBuildAgents\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridintglobal\",\r\n      \"name\": \"eventgridintglobal\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridmonitoring\",\r\n      \"name\": \"eventgridmonitoring\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridpocv2rg\",\r\n      \"name\": \"eventgridpocv2rg\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridpocv2rg1\",\r\n      \"name\": \"eventgridpocv2rg1\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridResourceGroup\",\r\n      \"name\": \"EventGridResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridRG\",\r\n      \"name\": \"EventGridRG\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridRP2\",\r\n      \"name\": \"EventGridRP2\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/eventgridtestdev\",\r\n      \"name\": \"eventgridtestdev\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridTrafficManagerProfilesRG\",\r\n      \"name\": \"EventGridTrafficManagerProfilesRG\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/EventGridWestUSResourceGroup\",\r\n      \"name\": \"EventGridWestUSResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManageaustraliasoutheast\",\r\n      \"name\": \"GenevaWarmPathManageaustraliasoutheast\",\r\n      \"location\": \"australiasoutheast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagecentralus\",\r\n      \"name\": \"GenevaWarmPathManagecentralus\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManageeastasia\",\r\n      \"name\": \"GenevaWarmPathManageeastasia\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManageeastus\",\r\n      \"name\": \"GenevaWarmPathManageeastus\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagenortheurope\",\r\n      \"name\": \"GenevaWarmPathManagenortheurope\",\r\n      \"location\": \"northeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagesouthcentralus\",\r\n      \"name\": \"GenevaWarmPathManagesouthcentralus\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagewesteurope\",\r\n      \"name\": \"GenevaWarmPathManagewesteurope\",\r\n      \"location\": \"westeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GenevaWarmPathManagewestus\",\r\n      \"name\": \"GenevaWarmPathManagewestus\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/gremlintest\",\r\n      \"name\": \"gremlintest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GridToHubResourceGroup\",\r\n      \"name\": \"GridToHubResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GridToServiceBusTest\",\r\n      \"name\": \"GridToServiceBusTest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/GrouppTestingCLI\",\r\n      \"name\": \"GrouppTestingCLI\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/hannah\",\r\n      \"name\": \"hannah\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/int-central\",\r\n      \"name\": \"int-central\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/KalsResourceGroupCLI\",\r\n      \"name\": \"KalsResourceGroupCLI\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest\",\r\n      \"name\": \"kalstest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kishp-rg\",\r\n      \"name\": \"kishp-rg\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kishptestrg\",\r\n      \"name\": \"kishptestrg\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/KishTestResourceGroup\",\r\n      \"name\": \"KishTestResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/maflow-0912\",\r\n      \"name\": \"maflow-0912\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/mockpublisherrp\",\r\n      \"name\": \"mockpublisherrp\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/mysql\",\r\n      \"name\": \"mysql\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/MyVNet\",\r\n      \"name\": \"MyVNet\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk1\",\r\n      \"name\": \"PSTestRG-onesdk1\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk1053\",\r\n      \"name\": \"PSTestRG-onesdk1053\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk2283\",\r\n      \"name\": \"PSTestRG-onesdk2283\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk3369\",\r\n      \"name\": \"PSTestRG-onesdk3369\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk4917\",\r\n      \"name\": \"PSTestRG-onesdk4917\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk5566\",\r\n      \"name\": \"PSTestRG-onesdk5566\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk5986\",\r\n      \"name\": \"PSTestRG-onesdk5986\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk6590\",\r\n      \"name\": \"PSTestRG-onesdk6590\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk6784\",\r\n      \"name\": \"PSTestRG-onesdk6784\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk7150\",\r\n      \"name\": \"PSTestRG-onesdk7150\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk7174\",\r\n      \"name\": \"PSTestRG-onesdk7174\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk7900\",\r\n      \"name\": \"PSTestRG-onesdk7900\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk8011\",\r\n      \"name\": \"PSTestRG-onesdk8011\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk8160\",\r\n      \"name\": \"PSTestRG-onesdk8160\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk888\",\r\n      \"name\": \"PSTestRG-onesdk888\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/PSTestRG-onesdk9903\",\r\n      \"name\": \"PSTestRG-onesdk9903\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/rg1move1\",\r\n      \"name\": \"rg1move1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk1052\",\r\n      \"name\": \"RGName-onesdk1052\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk1442\",\r\n      \"name\": \"RGName-onesdk1442\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk188\",\r\n      \"name\": \"RGName-onesdk188\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk1900\",\r\n      \"name\": \"RGName-onesdk1900\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk1940\",\r\n      \"name\": \"RGName-onesdk1940\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2165\",\r\n      \"name\": \"RGName-onesdk2165\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2274\",\r\n      \"name\": \"RGName-onesdk2274\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk231\",\r\n      \"name\": \"RGName-onesdk231\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2381\",\r\n      \"name\": \"RGName-onesdk2381\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2400\",\r\n      \"name\": \"RGName-onesdk2400\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2433\",\r\n      \"name\": \"RGName-onesdk2433\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2814\",\r\n      \"name\": \"RGName-onesdk2814\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk2980\",\r\n      \"name\": \"RGName-onesdk2980\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk3146\",\r\n      \"name\": \"RGName-onesdk3146\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk3237\",\r\n      \"name\": \"RGName-onesdk3237\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4171\",\r\n      \"name\": \"RGName-onesdk4171\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4376\",\r\n      \"name\": \"RGName-onesdk4376\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4501\",\r\n      \"name\": \"RGName-onesdk4501\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4708\",\r\n      \"name\": \"RGName-onesdk4708\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4730\",\r\n      \"name\": \"RGName-onesdk4730\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4773\",\r\n      \"name\": \"RGName-onesdk4773\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk4936\",\r\n      \"name\": \"RGName-onesdk4936\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5115\",\r\n      \"name\": \"RGName-onesdk5115\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5277\",\r\n      \"name\": \"RGName-onesdk5277\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5504\",\r\n      \"name\": \"RGName-onesdk5504\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5524\",\r\n      \"name\": \"RGName-onesdk5524\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5605\",\r\n      \"name\": \"RGName-onesdk5605\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5798\",\r\n      \"name\": \"RGName-onesdk5798\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk5861\",\r\n      \"name\": \"RGName-onesdk5861\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6029\",\r\n      \"name\": \"RGName-onesdk6029\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6073\",\r\n      \"name\": \"RGName-onesdk6073\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6098\",\r\n      \"name\": \"RGName-onesdk6098\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6142\",\r\n      \"name\": \"RGName-onesdk6142\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6174\",\r\n      \"name\": \"RGName-onesdk6174\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6225\",\r\n      \"name\": \"RGName-onesdk6225\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6283\",\r\n      \"name\": \"RGName-onesdk6283\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6680\",\r\n      \"name\": \"RGName-onesdk6680\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6687\",\r\n      \"name\": \"RGName-onesdk6687\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk6713\",\r\n      \"name\": \"RGName-onesdk6713\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7192\",\r\n      \"name\": \"RGName-onesdk7192\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7416\",\r\n      \"name\": \"RGName-onesdk7416\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7620\",\r\n      \"name\": \"RGName-onesdk7620\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7813\",\r\n      \"name\": \"RGName-onesdk7813\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7940\",\r\n      \"name\": \"RGName-onesdk7940\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk7953\",\r\n      \"name\": \"RGName-onesdk7953\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8089\",\r\n      \"name\": \"RGName-onesdk8089\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8172\",\r\n      \"name\": \"RGName-onesdk8172\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8237\",\r\n      \"name\": \"RGName-onesdk8237\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8317\",\r\n      \"name\": \"RGName-onesdk8317\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk846\",\r\n      \"name\": \"RGName-onesdk846\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8487\",\r\n      \"name\": \"RGName-onesdk8487\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8515\",\r\n      \"name\": \"RGName-onesdk8515\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8544\",\r\n      \"name\": \"RGName-onesdk8544\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8548\",\r\n      \"name\": \"RGName-onesdk8548\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8677\",\r\n      \"name\": \"RGName-onesdk8677\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk8905\",\r\n      \"name\": \"RGName-onesdk8905\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9019\",\r\n      \"name\": \"RGName-onesdk9019\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9145\",\r\n      \"name\": \"RGName-onesdk9145\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9180\",\r\n      \"name\": \"RGName-onesdk9180\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9303\",\r\n      \"name\": \"RGName-onesdk9303\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk945\",\r\n      \"name\": \"RGName-onesdk945\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-onesdk9880\",\r\n      \"name\": \"RGName-onesdk9880\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps1049\",\r\n      \"name\": \"RGName-ps1049\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps112\",\r\n      \"name\": \"RGName-ps112\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps2074\",\r\n      \"name\": \"RGName-ps2074\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps2924\",\r\n      \"name\": \"RGName-ps2924\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps3024\",\r\n      \"name\": \"RGName-ps3024\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps3277\",\r\n      \"name\": \"RGName-ps3277\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps3336\",\r\n      \"name\": \"RGName-ps3336\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps3364\",\r\n      \"name\": \"RGName-ps3364\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps4589\",\r\n      \"name\": \"RGName-ps4589\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps4688\",\r\n      \"name\": \"RGName-ps4688\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5155\",\r\n      \"name\": \"RGName-ps5155\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5157\",\r\n      \"name\": \"RGName-ps5157\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5242\",\r\n      \"name\": \"RGName-ps5242\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5492\",\r\n      \"name\": \"RGName-ps5492\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5541\",\r\n      \"name\": \"RGName-ps5541\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps5740\",\r\n      \"name\": \"RGName-ps5740\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps576\",\r\n      \"name\": \"RGName-ps576\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps6259\",\r\n      \"name\": \"RGName-ps6259\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps6407\",\r\n      \"name\": \"RGName-ps6407\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps6471\",\r\n      \"name\": \"RGName-ps6471\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps6741\",\r\n      \"name\": \"RGName-ps6741\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps6913\",\r\n      \"name\": \"RGName-ps6913\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps720\",\r\n      \"name\": \"RGName-ps720\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps7568\",\r\n      \"name\": \"RGName-ps7568\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps7840\",\r\n      \"name\": \"RGName-ps7840\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8163\",\r\n      \"name\": \"RGName-ps8163\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8164\",\r\n      \"name\": \"RGName-ps8164\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8229\",\r\n      \"name\": \"RGName-ps8229\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8804\",\r\n      \"name\": \"RGName-ps8804\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps8948\",\r\n      \"name\": \"RGName-ps8948\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps9059\",\r\n      \"name\": \"RGName-ps9059\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps9211\",\r\n      \"name\": \"RGName-ps9211\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RGName-ps9932\",\r\n      \"name\": \"RGName-ps9932\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/RoutesResourceGroup\",\r\n      \"name\": \"RoutesResourceGroup\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sanariel-test\",\r\n      \"name\": \"sanariel-test\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests\",\r\n      \"name\": \"SDKTests\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/Test1RG\",\r\n      \"name\": \"Test1RG\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TestingSBCLI\",\r\n      \"name\": \"TestingSBCLI\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/TMTestRG\",\r\n      \"name\": \"TMTestRG\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/vinsutestgrid\",\r\n      \"name\": \"vinsutestgrid\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/VNet\",\r\n      \"name\": \"VNet\",\r\n      \"location\": \"centralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533\",\r\n  \"name\": \"sdk-EventGrid-RG-8533\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Content-Length": [
+          "202"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
@@ -84,46 +96,46 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:28 GMT"
+          "Tue, 01 May 2018 21:16:04 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
         ],
         "x-ms-request-id": [
-          "69644430-47a8-4dfb-8618-5347499d69d8"
+          "b0385175-72b6-4bed-a494-bdb195d76e2c"
         ],
         "x-ms-correlation-request-id": [
-          "69644430-47a8-4dfb-8618-5347499d69d8"
+          "b0385175-72b6-4bed-a494-bdb195d76e2c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203228Z:69644430-47a8-4dfb-8618-5347499d69d8"
+          "WESTUS:20180501T211605Z:b0385175-72b6-4bed-a494-bdb195d76e2c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
-      "StatusCode": 200
+      "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNTg2OD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL3Nkay1FdmVudEdyaWQtUkctODUzMy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTUxODk/YXBpLXZlcnNpb249MjAxOC0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "95"
+          "99"
         ],
         "x-ms-client-request-id": [
-          "09a14200-41a8-4c9c-96b4-31a108eb2b3d"
+          "df4ab0df-4b9f-449e-8b16-22057aa808eb"
         ],
         "accept-language": [
           "en-US"
@@ -133,10 +145,10 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"endpoint\": null\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868\",\r\n  \"name\": \"sdk-Topic-5868\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"endpoint\": null\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189\",\r\n  \"name\": \"sdk-Topic-5189\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "322"
+          "339"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -148,7 +160,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:28 GMT"
+          "Tue, 01 May 2018 21:16:07 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -163,26 +175,29 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/112C5039-0113-4401-8857-580912CBDC86?api-version=2018-01-01"
+          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/42B1B555-A701-4105-BB81-17AB41076014?api-version=2018-05-01-preview"
         ],
         "x-ms-request-id": [
-          "2e2e96fb-e04b-48de-ba8b-4fdba09bf512"
+          "a55df676-5d60-45b3-a0f5-b94eb958e83c"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "61671924-a6cd-4ce4-9380-5cba7fab7d13"
+          "9e988594-f278-4c54-8f6a-6a732b0b4cd0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203229Z:61671924-a6cd-4ce4-9380-5cba7fab7d13"
+          "WESTUS:20180501T211608Z:9e988594-f278-4c54-8f6a-6a732b0b4cd0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/112C5039-0113-4401-8857-580912CBDC86?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvMTEyQzUwMzktMDExMy00NDAxLTg4NTctNTgwOTEyQ0JEQzg2P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/42B1B555-A701-4105-BB81-17AB41076014?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvNDJCMUI1NTUtQTcwMS00MTA1LUJCODEtMTdBQjQxMDc2MDE0P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -191,7 +206,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/112C5039-0113-4401-8857-580912CBDC86?api-version=2018-01-01\",\r\n  \"name\": \"112c5039-0113-4401-8857-580912cbdc86\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/42B1B555-A701-4105-BB81-17AB41076014?api-version=2018-05-01-preview\",\r\n  \"name\": \"42b1b555-a701-4105-bb81-17ab41076014\",\r\n  \"status\": \"Succeeded\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -203,7 +218,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:38 GMT"
+          "Tue, 01 May 2018 21:16:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -221,23 +236,26 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1cd5862d-0674-406a-b655-0b6407ada79c"
+          "d2f16f4e-47d4-4898-8c7a-72f525a14419"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14994"
         ],
         "x-ms-correlation-request-id": [
-          "2d496c3d-0020-4447-b595-b60a5c3b2df3"
+          "33aba65a-724c-4893-9c77-79f01d6b3123"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203239Z:2d496c3d-0020-4447-b595-b60a5c3b2df3"
+          "WESTUS:20180501T211618Z:33aba65a-724c-4893-9c77-79f01d6b3123"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNTg2OD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL3Nkay1FdmVudEdyaWQtUkctODUzMy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTUxODk/YXBpLXZlcnNpb249MjAxOC0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -246,7 +264,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-5868.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868\",\r\n  \"name\": \"sdk-Topic-5868\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-5189.westcentralus-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189\",\r\n  \"name\": \"sdk-Topic-5189\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -258,7 +276,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:38 GMT"
+          "Tue, 01 May 2018 21:16:17 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -276,28 +294,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "9b5d7956-f0e8-4eab-981d-8aef874f95ff"
+          "cb24709c-f3a5-49ef-8baa-367f04a73fc0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14993"
         ],
         "x-ms-correlation-request-id": [
-          "d40a9f42-dc7b-4eb5-a887-cf31b542d57f"
+          "1cbed31e-7efa-4fda-9c54-f0a32e958bf5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203239Z:d40a9f42-dc7b-4eb5-a887-cf31b542d57f"
+          "WESTUS:20180501T211618Z:1cbed31e-7efa-4fda-9c54-f0a32e958bf5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNTg2OD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL3Nkay1FdmVudEdyaWQtUkctODUzMy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTUxODk/YXBpLXZlcnNpb249MjAxOC0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4c0bce21-ccd1-450b-a9ee-256a554a0f6c"
+          "9a192d2b-f7bb-4493-9270-5a5dc54c089b"
         ],
         "accept-language": [
           "en-US"
@@ -307,7 +328,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-5868.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868\",\r\n  \"name\": \"sdk-Topic-5868\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-5189.westcentralus-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189\",\r\n  \"name\": \"sdk-Topic-5189\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -319,7 +340,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:43 GMT"
+          "Tue, 01 May 2018 21:16:22 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -337,28 +358,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c545f3c2-c3b1-470a-babe-52517f123a48"
+          "ee4e933e-0e46-47c9-958d-531f0e7949ad"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14992"
         ],
         "x-ms-correlation-request-id": [
-          "0bd300f7-0459-4c86-bbe1-9373651a1e34"
+          "204e24ca-a707-4ea4-8208-f595850a0d3c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203244Z:0bd300f7-0459-4c86-bbe1-9373651a1e34"
+          "WESTUS:20180501T211623Z:204e24ca-a707-4ea4-8208-f595850a0d3c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNTg2OD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL3Nkay1FdmVudEdyaWQtUkctODUzMy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTUxODk/YXBpLXZlcnNpb249MjAxOC0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "795f88a2-a335-4502-a5a8-35031f57fa4d"
+          "6f194680-6f90-4d94-98cf-c4224ea2ab0b"
         ],
         "accept-language": [
           "en-US"
@@ -368,7 +392,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-5868.westus2-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"West US 2\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868\",\r\n  \"name\": \"sdk-Topic-5868\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"endpoint\": \"https://sdk-topic-5189.westcentralus-1.eventgrid.azure.net/api/events\"\r\n  },\r\n  \"location\": \"westcentralus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189\",\r\n  \"name\": \"sdk-Topic-5189\",\r\n  \"type\": \"Microsoft.EventGrid/topics\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -380,7 +404,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:43 GMT"
+          "Tue, 01 May 2018 21:16:22 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -398,34 +422,37 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "26a2b5b2-6a61-4fde-bd3d-c6dfdf827bf3"
+          "027c7740-02d7-4662-b6ee-0c4380940cbe"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14991"
         ],
         "x-ms-correlation-request-id": [
-          "7d0d5150-7b22-4923-a727-15c1b56bd5bb"
+          "b082a886-3a32-43dd-81f0-4717ecd4a423"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203244Z:7d0d5150-7b22-4923-a727-15c1b56bd5bb"
+          "WESTUS:20180501T211623Z:b082a886-3a32-43dd-81f0-4717ecd4a423"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9TREtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTU4NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvZXZlbnRTdWJzY3JpcHRpb25zL3Nkay1FdmVudFN1YnNjcmlwdGlvbi01NzY1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9zZGstRXZlbnRHcmlkLVJHLTg1MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvdG9waWNzL3Nkay1Ub3BpYy01MTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucy9zZGstRXZlbnRTdWJzY3JpcHRpb24tMTE1Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"destination\": {\r\n      \"endpointType\": \"WebHook\",\r\n      \"properties\": {\r\n        \"endpointUrl\": \"https://requestb.in/1e1g85v1\"\r\n      }\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"destination\": {\r\n      \"endpointType\": \"WebHook\",\r\n      \"properties\": {\r\n        \"endpointUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1?code=D5/lX4xgFOvJrgvgZsjhMpg9h/eC3XVdQzGuDvwQuGmrDUfxFNeyiQ==\"\r\n      }\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "445"
+          "537"
         ],
         "x-ms-client-request-id": [
-          "8870b8ca-e0ca-4e59-bf0a-daafec72d18b"
+          "ad87cbc1-c79a-4704-9e1c-2b7827ca51ce"
         ],
         "accept-language": [
           "en-US"
@@ -435,10 +462,10 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdktests/providers/microsoft.eventgrid/topics/sdk-topic-5868\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://requestb.in/1e1g85v1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765\",\r\n  \"name\": \"sdk-EventSubscription-5765\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-eventgrid-rg-8533/providers/microsoft.eventgrid/topics/sdk-topic-5189\",\r\n    \"provisioningState\": \"Creating\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153\",\r\n  \"name\": \"sdk-EventSubscription-1153\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "775"
+          "831"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -450,7 +477,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:44 GMT"
+          "Tue, 01 May 2018 21:16:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -465,26 +492,29 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/D75FE787-DD13-455E-88DE-5A50CF4F0433?api-version=2018-01-01"
+          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/F3ECE3F2-8617-4BBE-B7F6-CBB34D6E72F5?api-version=2018-05-01-preview"
         ],
         "x-ms-request-id": [
-          "e8d8fd8b-1f8a-4214-9692-ed4c8a8fecec"
+          "b7f50356-2a86-433f-a659-5232012f54bc"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "41c51cd3-23e7-4dc7-b853-fc0641d1ad33"
+          "2f99c0f7-77c6-49c7-9d3c-4255c58974a2"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203245Z:41c51cd3-23e7-4dc7-b853-fc0641d1ad33"
+          "WESTUS:20180501T211624Z:2f99c0f7-77c6-49c7-9d3c-4255c58974a2"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/D75FE787-DD13-455E-88DE-5A50CF4F0433?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvRDc1RkU3ODctREQxMy00NTVFLTg4REUtNUE1MENGNEYwNDMzP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/F3ECE3F2-8617-4BBE-B7F6-CBB34D6E72F5?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvRjNFQ0UzRjItODYxNy00QkJFLUI3RjYtQ0JCMzRENkU3MkY1P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -493,7 +523,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/D75FE787-DD13-455E-88DE-5A50CF4F0433?api-version=2018-01-01\",\r\n  \"name\": \"d75fe787-dd13-455e-88de-5a50cf4f0433\",\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/F3ECE3F2-8617-4BBE-B7F6-CBB34D6E72F5?api-version=2018-05-01-preview\",\r\n  \"name\": \"f3ece3f2-8617-4bbe-b7f6-cbb34d6e72f5\",\r\n  \"status\": \"Succeeded\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -505,7 +535,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:32:55 GMT"
+          "Tue, 01 May 2018 21:16:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -523,23 +553,26 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1ec40df3-2543-4d1e-9101-c26ba83c253b"
+          "c8dcb201-6637-4e12-883b-049944c49677"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14990"
         ],
         "x-ms-correlation-request-id": [
-          "b5cebc11-947c-4ff3-b44d-f23060a02a5b"
+          "33f1df66-a6ce-40bf-b84c-db612c392325"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203255Z:b5cebc11-947c-4ff3-b44d-f23060a02a5b"
+          "WESTUS:20180501T211634Z:33f1df66-a6ce-40bf-b84c-db612c392325"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/D75FE787-DD13-455E-88DE-5A50CF4F0433?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvRDc1RkU3ODctREQxMy00NTVFLTg4REUtNUE1MENGNEYwNDMzP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9zZGstRXZlbnRHcmlkLVJHLTg1MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvdG9waWNzL3Nkay1Ub3BpYy01MTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucy9zZGstRXZlbnRTdWJzY3JpcHRpb24tMTE1Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -548,7 +581,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/D75FE787-DD13-455E-88DE-5A50CF4F0433?api-version=2018-01-01\",\r\n  \"name\": \"d75fe787-dd13-455e-88de-5a50cf4f0433\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-eventgrid-rg-8533/providers/microsoft.eventgrid/topics/sdk-topic-5189\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153\",\r\n  \"name\": \"sdk-EventSubscription-1153\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -560,7 +593,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:04 GMT"
+          "Tue, 01 May 2018 21:16:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -578,32 +611,41 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e6571ea2-ede7-426f-b1c4-d052a9f06932"
+          "f3b6d794-9dc2-4a0b-be20-f577c1723586"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14989"
         ],
         "x-ms-correlation-request-id": [
-          "4affcf30-f418-4e17-ac8a-261b495a905f"
+          "80b2d3a4-4b94-4a13-81ae-379eb9dcd1bd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203305Z:4affcf30-f418-4e17-ac8a-261b495a905f"
+          "WESTUS:20180501T211634Z:80b2d3a4-4b94-4a13-81ae-379eb9dcd1bd"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9TREtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTU4NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvZXZlbnRTdWJzY3JpcHRpb25zL3Nkay1FdmVudFN1YnNjcmlwdGlvbi01NzY1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9zZGstRXZlbnRHcmlkLVJHLTg1MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvdG9waWNzL3Nkay1Ub3BpYy01MTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucy9zZGstRXZlbnRTdWJzY3JpcHRpb24tMTE1Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ed0488be-f524-43f6-a0b4-d3fa2264f14f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdktests/providers/microsoft.eventgrid/topics/sdk-topic-5868\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://requestb.in/1e1g85v1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765\",\r\n  \"name\": \"sdk-EventSubscription-5765\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-eventgrid-rg-8533/providers/microsoft.eventgrid/topics/sdk-topic-5189\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153\",\r\n  \"name\": \"sdk-EventSubscription-1153\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -615,7 +657,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:04 GMT"
+          "Tue, 01 May 2018 21:16:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -633,28 +675,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "59d2fea8-4cac-4815-863f-4b64804cf7e6"
+          "b4867fee-21ba-49cb-a4bb-032cffb9c0cb"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14988"
         ],
         "x-ms-correlation-request-id": [
-          "98bff98a-523d-472b-a6b9-391cd7f30f44"
+          "fd5a646c-041e-4d6e-a376-2341039fe1b4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203305Z:98bff98a-523d-472b-a6b9-391cd7f30f44"
+          "WESTUS:20180501T211639Z:fd5a646c-041e-4d6e-a376-2341039fe1b4"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9TREtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTU4NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvZXZlbnRTdWJzY3JpcHRpb25zL3Nkay1FdmVudFN1YnNjcmlwdGlvbi01NzY1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9zZGstRXZlbnRHcmlkLVJHLTg1MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvdG9waWNzL3Nkay1Ub3BpYy01MTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucy9zZGstRXZlbnRTdWJzY3JpcHRpb24tMTE1Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "36669c79-8693-4b64-8a30-7b8ffe4d3574"
+          "c5f75def-98be-460b-a9e0-c20ef99d0bba"
         ],
         "accept-language": [
           "en-US"
@@ -664,7 +709,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdktests/providers/microsoft.eventgrid/topics/sdk-topic-5868\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://requestb.in/1e1g85v1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765\",\r\n  \"name\": \"sdk-EventSubscription-5765\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-eventgrid-rg-8533/providers/microsoft.eventgrid/topics/sdk-topic-5189\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153\",\r\n  \"name\": \"sdk-EventSubscription-1153\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -676,7 +721,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:09 GMT"
+          "Tue, 01 May 2018 21:16:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -694,38 +739,35 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d795e7dc-3330-4080-aa74-d4e6b4b705c2"
+          "8f167fe6-e20a-497b-9aad-55411ddd7592"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14987"
         ],
         "x-ms-correlation-request-id": [
-          "1686170d-962b-43a2-968e-3d82520e503c"
+          "98e7a4b7-ee8e-4316-b8c2-3710f41c1b61"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203310Z:1686170d-962b-43a2-968e-3d82520e503c"
+          "WESTUS:20180501T211639Z:98e7a4b7-ee8e-4316-b8c2-3710f41c1b61"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9TREtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTU4NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvZXZlbnRTdWJzY3JpcHRpb25zL3Nkay1FdmVudFN1YnNjcmlwdGlvbi01NzY1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9zZGstRXZlbnRHcmlkLVJHLTg1MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvdG9waWNzL3Nkay1Ub3BpYy01MTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucy9zZGstRXZlbnRTdWJzY3JpcHRpb24tMTE1Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "82a8ca39-6476-4dfa-9a43-3f2802ac58bf"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdktests/providers/microsoft.eventgrid/topics/sdk-topic-5868\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://requestb.in/1e1g85v1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \"TestSuffix\",\r\n      \"includedEventTypes\": [\r\n        \"All\"\r\n      ],\r\n      \"isSubjectCaseSensitive\": true\r\n    },\r\n    \"labels\": [\r\n      \"TestLabel1\",\r\n      \"TestLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765\",\r\n  \"name\": \"sdk-EventSubscription-5765\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-eventgrid-rg-8533/providers/microsoft.eventgrid/topics/sdk-topic-5189\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \".jpg\",\r\n      \"includedEventTypes\": [\r\n        \"Event1\",\r\n        \"Event2\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"UpdatedLabel1\",\r\n      \"UpdatedLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153\",\r\n  \"name\": \"sdk-EventSubscription-1153\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -737,7 +779,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:09 GMT"
+          "Tue, 01 May 2018 21:16:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -755,89 +797,37 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "daf5ae78-97f3-4895-bd25-e8052a9294bd"
+          "f822d908-716b-4276-84b2-5e269b2ffb0c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14986"
+          "14985"
         ],
         "x-ms-correlation-request-id": [
-          "96c75fbd-9faa-4395-a5cb-c89441a900e4"
+          "4dacaf58-a2a8-41e8-957d-60cd9c4579f5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203310Z:96c75fbd-9faa-4395-a5cb-c89441a900e4"
+          "WESTUS:20180501T211649Z:4dacaf58-a2a8-41e8-957d-60cd9c4579f5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9TREtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTU4NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvZXZlbnRTdWJzY3JpcHRpb25zL3Nkay1FdmVudFN1YnNjcmlwdGlvbi01NzY1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdktests/providers/microsoft.eventgrid/topics/sdk-topic-5868\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://requestb.in/1e1g85v1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \".jpg\",\r\n      \"includedEventTypes\": [\r\n        \"Event1\",\r\n        \"Event2\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"UpdatedLabel1\",\r\n      \"UpdatedLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765\",\r\n  \"name\": \"sdk-EventSubscription-5765\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 16 Feb 2018 20:33:20 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "6dddfe99-2f8f-4002-bd06-8acfad9e70e2"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
-        ],
-        "x-ms-correlation-request-id": [
-          "17d1e292-f114-4817-8d11-70ed46b7c289"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203320Z:17d1e292-f114-4817-8d11-70ed46b7c289"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9TREtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTU4NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvZXZlbnRTdWJzY3JpcHRpb25zL3Nkay1FdmVudFN1YnNjcmlwdGlvbi01NzY1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9zZGstRXZlbnRHcmlkLVJHLTg1MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvdG9waWNzL3Nkay1Ub3BpYy01MTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucy9zZGstRXZlbnRTdWJzY3JpcHRpb24tMTE1Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"destination\": {\r\n    \"endpointType\": \"WebHook\",\r\n    \"properties\": {\r\n      \"endpointUrl\": \"https://requestb.in/1e1g85v1\"\r\n    }\r\n  },\r\n  \"filter\": {\r\n    \"subjectBeginsWith\": \"TestPrefix\",\r\n    \"subjectEndsWith\": \".jpg\",\r\n    \"includedEventTypes\": [\r\n      \"Event1\",\r\n      \"Event2\"\r\n    ]\r\n  },\r\n  \"labels\": [\r\n    \"UpdatedLabel1\",\r\n    \"UpdatedLabel2\"\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"destination\": {\r\n    \"endpointType\": \"WebHook\",\r\n    \"properties\": {\r\n      \"endpointUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1?code=D5/lX4xgFOvJrgvgZsjhMpg9h/eC3XVdQzGuDvwQuGmrDUfxFNeyiQ==\"\r\n    }\r\n  },\r\n  \"filter\": {\r\n    \"subjectBeginsWith\": \"TestPrefix\",\r\n    \"subjectEndsWith\": \".jpg\",\r\n    \"includedEventTypes\": [\r\n      \"Event1\",\r\n      \"Event2\"\r\n    ]\r\n  },\r\n  \"labels\": [\r\n    \"UpdatedLabel1\",\r\n    \"UpdatedLabel2\"\r\n  ]\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "368"
+          "460"
         ],
         "x-ms-client-request-id": [
-          "838a24b5-73a6-4c09-a81b-6814acf0e335"
+          "a762bf25-698b-49ed-8322-8dbfef979cb9"
         ],
         "accept-language": [
           "en-US"
@@ -847,10 +837,10 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdktests/providers/microsoft.eventgrid/topics/sdk-topic-5868\",\r\n    \"provisioningState\": \"Updating\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://requestb.in/1e1g85v1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \".jpg\",\r\n      \"includedEventTypes\": [\r\n        \"Event1\",\r\n        \"Event2\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"UpdatedLabel1\",\r\n      \"UpdatedLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765\",\r\n  \"name\": \"sdk-EventSubscription-5765\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-eventgrid-rg-8533/providers/microsoft.eventgrid/topics/sdk-topic-5189\",\r\n    \"provisioningState\": \"Updating\",\r\n    \"destination\": {\r\n      \"properties\": {\r\n        \"endpointUrl\": null,\r\n        \"endpointBaseUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1\"\r\n      },\r\n      \"endpointType\": \"WebHook\"\r\n    },\r\n    \"filter\": {\r\n      \"subjectBeginsWith\": \"TestPrefix\",\r\n      \"subjectEndsWith\": \".jpg\",\r\n      \"includedEventTypes\": [\r\n        \"Event1\",\r\n        \"Event2\"\r\n      ]\r\n    },\r\n    \"labels\": [\r\n      \"UpdatedLabel1\",\r\n      \"UpdatedLabel2\"\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153\",\r\n  \"name\": \"sdk-EventSubscription-1153\",\r\n  \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "757"
+          "813"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -862,7 +852,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:10 GMT"
+          "Tue, 01 May 2018 21:16:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -877,26 +867,29 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/61B39A22-1653-409B-9DBC-0434C08C2D80?api-version=2018-01-01"
+          "https://management.azure.com:443/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/E6BE6672-ABE4-4A1B-A2BD-9844F0F3EE7A?api-version=2018-05-01-preview"
         ],
         "x-ms-request-id": [
-          "a9be9c0d-20bb-4bcb-859d-97453ebeaf34"
+          "3536c611-2701-4e96-9f46-064beee4e1b8"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "3ee385f4-f9af-4097-8498-def4942eff21"
+          "aac45706-f22c-4270-951b-5b6d50911a4f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203310Z:3ee385f4-f9af-4097-8498-def4942eff21"
+          "WESTUS:20180501T211639Z:aac45706-f22c-4270-951b-5b6d50911a4f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/61B39A22-1653-409B-9DBC-0434C08C2D80?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvbnNTdGF0dXMvNjFCMzlBMjItMTY1My00MDlCLTlEQkMtMDQzNEMwOEMyRDgwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/E6BE6672-ABE4-4A1B-A2BD-9844F0F3EE7A?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvbnNTdGF0dXMvRTZCRTY2NzItQUJFNC00QTFCLUEyQkQtOTg0NEYwRjNFRTdBP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -905,7 +898,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationsStatus/61B39A22-1653-409B-9DBC-0434C08C2D80?api-version=2018-01-01\",\r\n  \"name\": \"61b39a22-1653-409b-9dbc-0434c08c2d80\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationsStatus/E6BE6672-ABE4-4A1B-A2BD-9844F0F3EE7A?api-version=2018-05-01-preview\",\r\n  \"name\": \"e6be6672-abe4-4a1b-a2bd-9844f0f3ee7a\",\r\n  \"status\": \"Succeeded\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -917,7 +910,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:20 GMT"
+          "Tue, 01 May 2018 21:16:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -935,28 +928,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "5905c7a8-03a0-4a10-972d-68dc76a3e50b"
+          "1b891db8-c95f-4454-a69d-5d63358007bd"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14985"
+          "14986"
         ],
         "x-ms-correlation-request-id": [
-          "70ad14ea-3fa7-4276-bc95-31983dffb91e"
+          "84f3e346-79ba-481e-9463-6adbbf45e5f7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203320Z:70ad14ea-3fa7-4276-bc95-31983dffb91e"
+          "WESTUS:20180501T211649Z:84f3e346-79ba-481e-9463-6adbbf45e5f7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/locations/West%20US%202/eventSubscriptions?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy9XZXN0JTIwVVMlMjAyL2V2ZW50U3Vic2NyaXB0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/locations/westcentralus/eventSubscriptions?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL3Nkay1FdmVudEdyaWQtUkctODUzMy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC9sb2NhdGlvbnMvd2VzdGNlbnRyYWx1cy9ldmVudFN1YnNjcmlwdGlvbnM/YXBpLXZlcnNpb249MjAxOC0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "947730ec-c187-4dc2-8bec-b267cbaa483b"
+          "ee2df5c7-39bd-47e1-b51a-abdc6e3c2b77"
         ],
         "accept-language": [
           "en-US"
@@ -966,7 +962,7 @@
           "Microsoft.Azure.Management.EventGrid.EventGridManagementClient/1.3.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdktests/providers/microsoft.eventgrid/topics/sdk-topic-5868\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"destination\": {\r\n          \"properties\": {\r\n            \"endpointUrl\": null,\r\n            \"endpointBaseUrl\": \"https://requestb.in/1e1g85v1\"\r\n          },\r\n          \"endpointType\": \"WebHook\"\r\n        },\r\n        \"filter\": {\r\n          \"subjectBeginsWith\": \"TestPrefix\",\r\n          \"subjectEndsWith\": \".jpg\",\r\n          \"includedEventTypes\": [\r\n            \"Event1\",\r\n            \"Event2\"\r\n          ]\r\n        },\r\n        \"labels\": [\r\n          \"UpdatedLabel1\",\r\n          \"UpdatedLabel2\"\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765\",\r\n      \"name\": \"sdk-EventSubscription-5765\",\r\n      \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"topic\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-eventgrid-rg-8533/providers/microsoft.eventgrid/topics/sdk-topic-5189\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"destination\": {\r\n          \"properties\": {\r\n            \"endpointUrl\": null,\r\n            \"endpointBaseUrl\": \"https://kalsfunc1.azurewebsites.net/api/HttpTriggerCSharp1\"\r\n          },\r\n          \"endpointType\": \"WebHook\"\r\n        },\r\n        \"filter\": {\r\n          \"subjectBeginsWith\": \"TestPrefix\",\r\n          \"subjectEndsWith\": \".jpg\",\r\n          \"includedEventTypes\": [\r\n            \"Event1\",\r\n            \"Event2\"\r\n          ]\r\n        },\r\n        \"labels\": [\r\n          \"UpdatedLabel1\",\r\n          \"UpdatedLabel2\"\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153\",\r\n      \"name\": \"sdk-EventSubscription-1153\",\r\n      \"type\": \"Microsoft.EventGrid/eventSubscriptions\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -978,7 +974,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:20 GMT"
+          "Tue, 01 May 2018 21:16:48 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -996,28 +992,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "ad8fba9d-ea29-4031-b8b9-1d2ea6f02b5a"
+          "1a2005dc-7f56-4b05-92e3-5d7ea375f1ac"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14983"
+          "14984"
         ],
         "x-ms-correlation-request-id": [
-          "cafb5cf3-e136-4880-936b-c27082e0017a"
+          "ba080459-dcfa-4a46-9b42-2f8411a5ccce"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203321Z:cafb5cf3-e136-4880-936b-c27082e0017a"
+          "WESTUS:20180501T211649Z:ba080459-dcfa-4a46-9b42-2f8411a5ccce"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-5765?api-version=2018-01-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9TREtUZXN0cy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTU4NjgvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvZXZlbnRTdWJzY3JpcHRpb25zL3Nkay1FdmVudFN1YnNjcmlwdGlvbi01NzY1P2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "//subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189/providers/Microsoft.EventGrid/eventSubscriptions/sdk-EventSubscription-1153?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzU1ZjNkY2Q0LWNhYzctNDNiNC05OTBiLWExMzlkNjJhMWViMi9yZXNvdXJjZUdyb3Vwcy9zZGstRXZlbnRHcmlkLVJHLTg1MzMvcHJvdmlkZXJzL01pY3Jvc29mdC5FdmVudEdyaWQvdG9waWNzL3Nkay1Ub3BpYy01MTg5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2V2ZW50U3Vic2NyaXB0aW9ucy9zZGstRXZlbnRTdWJzY3JpcHRpb24tMTE1Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAxLXByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2c2aec38-9262-46a2-89c6-0797504e5e17"
+          "442f9438-a662-42dd-91af-bcb1ad294c1c"
         ],
         "accept-language": [
           "en-US"
@@ -1039,13 +1038,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:21 GMT"
+          "Tue, 01 May 2018 21:16:49 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/5867C1CE-2603-4885-92C5-B13460D21BD1?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationResults/A8D82C39-B29E-4A03-91EA-9C6A2221F1CC?api-version=2018-05-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -1060,20 +1059,23 @@
           "1196"
         ],
         "x-ms-request-id": [
-          "c838e99f-7926-4794-b01f-2951b6c77774"
+          "8907be53-a7f7-4008-a0a6-d43945738b21"
         ],
         "x-ms-correlation-request-id": [
-          "c838e99f-7926-4794-b01f-2951b6c77774"
+          "8907be53-a7f7-4008-a0a6-d43945738b21"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203321Z:c838e99f-7926-4794-b01f-2951b6c77774"
+          "WESTUS:20180501T211650Z:8907be53-a7f7-4008-a0a6-d43945738b21"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/5867C1CE-2603-4885-92C5-B13460D21BD1?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvNTg2N0MxQ0UtMjYwMy00ODg1LTkyQzUtQjEzNDYwRDIxQkQxP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationResults/A8D82C39-B29E-4A03-91EA-9C6A2221F1CC?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvQThEODJDMzktQjI5RS00QTAzLTkxRUEtOUM2QTIyMjFGMUNDP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1094,7 +1096,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:30 GMT"
+          "Tue, 01 May 2018 21:17:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1106,23 +1108,26 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f0368a96-2118-4f85-8b4f-8c21b99cbf5e"
+          "4fcbdf51-074a-4dbd-bf73-d7a22714ada7"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14982"
+          "14983"
         ],
         "x-ms-correlation-request-id": [
-          "c9404348-f27f-4e7a-9ea8-097e6ee08e29"
+          "37e7e781-1e9c-4445-9501-8dae161b8795"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203331Z:c9404348-f27f-4e7a-9ea8-097e6ee08e29"
+          "WESTUS:20180501T211700Z:37e7e781-1e9c-4445-9501-8dae161b8795"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/5867C1CE-2603-4885-92C5-B13460D21BD1?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvNTg2N0MxQ0UtMjYwMy00ODg1LTkyQzUtQjEzNDYwRDIxQkQxP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationResults/A8D82C39-B29E-4A03-91EA-9C6A2221F1CC?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvQThEODJDMzktQjI5RS00QTAzLTkxRUEtOUM2QTIyMjFGMUNDP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1143,7 +1148,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:30 GMT"
+          "Tue, 01 May 2018 21:17:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1155,28 +1160,31 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f0368a96-2118-4f85-8b4f-8c21b99cbf5e"
+          "196123b5-80de-46a6-bebf-6823a1351098"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14982"
         ],
         "x-ms-correlation-request-id": [
-          "c9404348-f27f-4e7a-9ea8-097e6ee08e29"
+          "7f24e403-7de3-438c-a59c-ec3ad98d5333"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203331Z:c9404348-f27f-4e7a-9ea8-097e6ee08e29"
+          "WESTUS:20180501T211700Z:7f24e403-7de3-438c-a59c-ec3ad98d5333"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/SDKTests/providers/Microsoft.EventGrid/topics/sdk-Topic-5868?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RzL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL3RvcGljcy9zZGstVG9waWMtNTg2OD9hcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/sdk-EventGrid-RG-8533/providers/Microsoft.EventGrid/topics/sdk-Topic-5189?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Jlc291cmNlR3JvdXBzL3Nkay1FdmVudEdyaWQtUkctODUzMy9wcm92aWRlcnMvTWljcm9zb2Z0LkV2ZW50R3JpZC90b3BpY3Mvc2RrLVRvcGljLTUxODk/YXBpLXZlcnNpb249MjAxOC0wNS0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "19cd539b-0ac0-481a-a695-74b025eb9da8"
+          "263432f8-0850-4ff9-af90-cf288f27ab5d"
         ],
         "accept-language": [
           "en-US"
@@ -1198,13 +1206,13 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:31 GMT"
+          "Tue, 01 May 2018 21:17:00 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/15FA7950-3C11-4A3D-B285-81059A94F9AA?api-version=2018-01-01"
+          "https://management.azure.com/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationResults/7F12FCC4-267E-4C51-8BAB-04A76AD6FF2D?api-version=2018-05-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -1219,20 +1227,23 @@
           "1195"
         ],
         "x-ms-request-id": [
-          "7f921367-f445-4df2-9e41-cf7360d56405"
+          "7e7fbacc-ae6c-4b96-9cbf-b00585da4d28"
         ],
         "x-ms-correlation-request-id": [
-          "7f921367-f445-4df2-9e41-cf7360d56405"
+          "7e7fbacc-ae6c-4b96-9cbf-b00585da4d28"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203331Z:7f921367-f445-4df2-9e41-cf7360d56405"
+          "WESTUS:20180501T211700Z:7e7fbacc-ae6c-4b96-9cbf-b00585da4d28"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/15FA7950-3C11-4A3D-B285-81059A94F9AA?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvMTVGQTc5NTAtM0MxMS00QTNELUIyODUtODEwNTlBOTRGOUFBP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationResults/7F12FCC4-267E-4C51-8BAB-04A76AD6FF2D?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvN0YxMkZDQzQtMjY3RS00QzUxLThCQUItMDRBNzZBRDZGRjJEP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1253,7 +1264,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:40 GMT"
+          "Tue, 01 May 2018 21:17:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1265,23 +1276,26 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "cf050dfd-4f92-41c7-a091-c18c6d111032"
+          "bc40595b-3e24-4a0b-81fa-ba22e908b03d"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "14981"
         ],
         "x-ms-correlation-request-id": [
-          "12f407b0-fbe6-4a63-88cc-cc7e8df46bfa"
+          "6a2c05e6-e405-40ad-b0fa-f60c2427859f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203341Z:12f407b0-fbe6-4a63-88cc-cc7e8df46bfa"
+          "WESTUS:20180501T211710Z:6a2c05e6-e405-40ad-b0fa-f60c2427859f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westus2/operationResults/15FA7950-3C11-4A3D-B285-81059A94F9AA?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0dXMyL29wZXJhdGlvblJlc3VsdHMvMTVGQTc5NTAtM0MxMS00QTNELUIyODUtODEwNTlBOTRGOUFBP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestUri": "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/providers/Microsoft.EventGrid/locations/westcentralus/operationResults/7F12FCC4-267E-4C51-8BAB-04A76AD6FF2D?api-version=2018-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTVmM2RjZDQtY2FjNy00M2I0LTk5MGItYTEzOWQ2MmExZWIyL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRHcmlkL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvblJlc3VsdHMvN0YxMkZDQzQtMjY3RS00QzUxLThCQUItMDRBNzZBRDZGRjJEP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1302,7 +1316,7 @@
           "no-cache"
         ],
         "Date": [
-          "Fri, 16 Feb 2018 20:33:40 GMT"
+          "Tue, 01 May 2018 21:17:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1314,16 +1328,19 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "cf050dfd-4f92-41c7-a091-c18c6d111032"
+          "1dec9178-c3c8-4230-963b-f38ca41d19d4"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14981"
+          "14980"
         ],
         "x-ms-correlation-request-id": [
-          "12f407b0-fbe6-4a63-88cc-cc7e8df46bfa"
+          "55ee2d6a-2b6c-4f39-b074-1df310f232ab"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180216T203341Z:12f407b0-fbe6-4a63-88cc-cc7e8df46bfa"
+          "WESTUS:20180501T211710Z:55ee2d6a-2b6c-4f39-b074-1df310f232ab"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -1331,8 +1348,9 @@
   ],
   "Names": {
     "EventSubscriptionCreateGetUpdateDelete": [
-      "sdk-Topic-5868",
-      "sdk-EventSubscription-5765"
+      "sdk-EventGrid-RG-8533",
+      "sdk-Topic-5189",
+      "sdk-EventSubscription-1153"
     ]
   },
   "Variables": {

@@ -31,11 +31,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitRoutesTable
         /// class.
         /// </summary>
-        /// <param name="network">network</param>
-        /// <param name="nextHop">nextHop</param>
-        /// <param name="locPrf">locPrf</param>
-        /// <param name="weight">weight.</param>
-        /// <param name="path">path</param>
+        /// <param name="network">IP address of a network entity</param>
+        /// <param name="nextHop">NextHop address</param>
+        /// <param name="locPrf">Local preference value as set with the set
+        /// local-preference route-map configuration command</param>
+        /// <param name="weight">Route Weight.</param>
+        /// <param name="path">Autonomous system paths to the destination
+        /// network.</param>
         public ExpressRouteCircuitRoutesTable(string network = default(string), string nextHop = default(string), string locPrf = default(string), int? weight = default(int?), string path = default(string))
         {
             Network = network;
@@ -52,31 +54,32 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets network
+        /// Gets or sets IP address of a network entity
         /// </summary>
         [JsonProperty(PropertyName = "network")]
         public string Network { get; set; }
 
         /// <summary>
-        /// Gets or sets nextHop
+        /// Gets or sets nextHop address
         /// </summary>
         [JsonProperty(PropertyName = "nextHop")]
         public string NextHop { get; set; }
 
         /// <summary>
-        /// Gets or sets locPrf
+        /// Gets or sets local preference value as set with the set
+        /// local-preference route-map configuration command
         /// </summary>
         [JsonProperty(PropertyName = "locPrf")]
         public string LocPrf { get; set; }
 
         /// <summary>
-        /// Gets or sets weight.
+        /// Gets or sets route Weight.
         /// </summary>
         [JsonProperty(PropertyName = "weight")]
         public int? Weight { get; set; }
 
         /// <summary>
-        /// Gets or sets path
+        /// Gets or sets autonomous system paths to the destination network.
         /// </summary>
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }

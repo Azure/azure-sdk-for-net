@@ -247,6 +247,18 @@ namespace DataLakeAnalytics.Tests
 
                     Assert.Equal(specificPartition.Name, partitionGetResponse.Name);
 
+                    // Get the fragment list
+                    var fragmentList =
+                        clientToUse.Catalog.ListTableFragments(
+                            commonData.SecondDataLakeAnalyticsAccountName,
+                            commonData.DatabaseName,
+                            CommonTestFixture.SchemaName,
+                            commonData.TableName
+                        );
+
+                    Assert.NotNull(fragmentList);
+                    Assert.NotEmpty(fragmentList);
+
                     // Get all the types
                     var typeGetResponse = 
                         clientToUse.Catalog.ListTypes(

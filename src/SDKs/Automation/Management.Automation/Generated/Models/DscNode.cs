@@ -10,15 +10,18 @@
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Definition of the dsc node type.
+    /// Definition of a DscNode
     /// </summary>
-    public partial class DscNode : Resource
+    [Rest.Serialization.JsonTransformation]
+    public partial class DscNode : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the DscNode class.
@@ -31,11 +34,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the DscNode class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="lastSeen">Gets or sets the last seen time of the
         /// node.</param>
         /// <param name="registrationTime">Gets or sets the registration time
@@ -43,24 +45,27 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="ip">Gets or sets the ip of the node.</param>
         /// <param name="accountId">Gets or sets the account id of the
         /// node.</param>
-        /// <param name="nodeConfiguration">Gets or sets the configuration of
-        /// the node.</param>
+        /// <param name="dscNodeName">Gets or sets the name of the dsc
+        /// nodeconfiguration.</param>
         /// <param name="status">Gets or sets the status of the node.</param>
         /// <param name="nodeId">Gets or sets the node id.</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
+        /// <param name="totalCount">Gets the total number of records matching
+        /// filter criteria.</param>
         /// <param name="extensionHandler">Gets or sets the list of
         /// extensionHandler properties for a Node.</param>
-        public DscNode(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.DateTime? lastSeen = default(System.DateTime?), System.DateTime? registrationTime = default(System.DateTime?), string ip = default(string), string accountId = default(string), DscNodeConfigurationAssociationProperty nodeConfiguration = default(DscNodeConfigurationAssociationProperty), string status = default(string), string nodeId = default(string), string etag = default(string), IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler = default(IList<DscNodeExtensionHandlerAssociationProperty>))
-            : base(location, id, name, type, tags)
+        public DscNode(string id = default(string), string name = default(string), string type = default(string), System.DateTimeOffset lastSeen = default(System.DateTimeOffset), System.DateTimeOffset registrationTime = default(System.DateTimeOffset), string ip = default(string), string accountId = default(string), string dscNodeName = default(string), string status = default(string), string nodeId = default(string), string etag = default(string), int? totalCount = default(int?), IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler = default(IList<DscNodeExtensionHandlerAssociationProperty>))
+            : base(id, name, type)
         {
             LastSeen = lastSeen;
             RegistrationTime = registrationTime;
             Ip = ip;
             AccountId = accountId;
-            NodeConfiguration = nodeConfiguration;
+            DscNodeName = dscNodeName;
             Status = status;
             NodeId = nodeId;
             Etag = etag;
+            TotalCount = totalCount;
             ExtensionHandler = extensionHandler;
             CustomInit();
         }
@@ -73,66 +78,62 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Gets or sets the last seen time of the node.
         /// </summary>
-        [JsonProperty(PropertyName = "lastSeen")]
-        public System.DateTime? LastSeen { get; set; }
+        [JsonProperty(PropertyName = "properties.lastSeen")]
+        public System.DateTimeOffset LastSeen { get; set; }
 
         /// <summary>
         /// Gets or sets the registration time of the node.
         /// </summary>
-        [JsonProperty(PropertyName = "registrationTime")]
-        public System.DateTime? RegistrationTime { get; set; }
+        [JsonProperty(PropertyName = "properties.registrationTime")]
+        public System.DateTimeOffset RegistrationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the ip of the node.
         /// </summary>
-        [JsonProperty(PropertyName = "ip")]
+        [JsonProperty(PropertyName = "properties.ip")]
         public string Ip { get; set; }
 
         /// <summary>
         /// Gets or sets the account id of the node.
         /// </summary>
-        [JsonProperty(PropertyName = "accountId")]
+        [JsonProperty(PropertyName = "properties.accountId")]
         public string AccountId { get; set; }
 
         /// <summary>
-        /// Gets or sets the configuration of the node.
+        /// Gets or sets the name of the dsc nodeconfiguration.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeConfiguration")]
-        public DscNodeConfigurationAssociationProperty NodeConfiguration { get; set; }
+        [JsonProperty(PropertyName = "properties.nodeConfiguration.name")]
+        public string DscNodeName { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the node.
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets the node id.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeId")]
+        [JsonProperty(PropertyName = "properties.nodeId")]
         public string NodeId { get; set; }
 
         /// <summary>
         /// Gets or sets the etag of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [JsonProperty(PropertyName = "properties.etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets the total number of records matching filter criteria.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.totalCount")]
+        public int? TotalCount { get; set; }
 
         /// <summary>
         /// Gets or sets the list of extensionHandler properties for a Node.
         /// </summary>
-        [JsonProperty(PropertyName = "extensionHandler")]
+        [JsonProperty(PropertyName = "properties.extensionHandler")]
         public IList<DscNodeExtensionHandlerAssociationProperty> ExtensionHandler { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

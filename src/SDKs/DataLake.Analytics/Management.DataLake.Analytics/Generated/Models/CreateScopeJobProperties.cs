@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Scope job properties used when submitting Scope jobs.
+    /// Scope job properties used when submitting Scope jobs. (Only for use
+    /// internally with Scope job type.)
     /// </summary>
     [Newtonsoft.Json.JsonObject("Scope")]
     public partial class CreateScopeJobProperties : CreateJobProperties
@@ -32,14 +33,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the CreateScopeJobProperties class.
         /// </summary>
-        /// <param name="script">the script to run. Please note that the
+        /// <param name="script">The script to run. Please note that the
         /// maximum script size is 3 MB.</param>
-        /// <param name="runtimeVersion">the runtime version of the Data Lake
+        /// <param name="runtimeVersion">The runtime version of the Data Lake
         /// Analytics engine to use for the specific type of job being
         /// run.</param>
-        /// <param name="resources">the list of resources that are required by
+        /// <param name="resources">The list of resources that are required by
         /// the job.</param>
-        /// <param name="notifier">the list of email addresses, separated by
+        /// <param name="notifier">The list of email addresses, separated by
         /// semi-colons, to notify when the job reaches a terminal
         /// state.</param>
         public CreateScopeJobProperties(string script, string runtimeVersion = default(string), IList<ScopeJobResource> resources = default(IList<ScopeJobResource>), string notifier = default(string))

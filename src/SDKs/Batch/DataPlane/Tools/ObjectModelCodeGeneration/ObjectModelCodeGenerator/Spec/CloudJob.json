@@ -2,7 +2,7 @@
       "Name": "CloudJob",
       "ProtocolName": "Models.CloudJob",
       "TransportProtocolName": "Models.JobAddParameter",
-      "Comment": "An Azure Batch job.",
+      "SummaryComment": "An Azure Batch job.",
       "IsTopLevelObject": true,
       "IsConstructorPublic": false,
       "Properties": [
@@ -248,7 +248,7 @@
             "Type": "JobStatistics",
             "Name": "Statistics",
             "SummaryComment": "Resource usage statistics for the entire lifetime of the job.",
-            "RemarksComment": "This property is populated only if the <see cref=\"CloudJob\"/> was retrieved with an <see cref=\"ODATADetailLevel.ExpandClause\"/> including the 'stats' attribute; otherwise it is null.",
+            "RemarksComment": "This property is populated only if the <see cref=\"CloudJob\"/> was retrieved with an <see cref=\"ODATADetailLevel.ExpandClause\"/> including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.",
             "BoundAccess": "read",
             "UnboundAccess": "none"
           },

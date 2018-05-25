@@ -179,9 +179,9 @@ namespace Microsoft.Azure.Management.Compute
             /// changed after the disk is created. Supported characters for the name are
             /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse Delete(this IDisksOperations operations, string resourceGroupName, string diskName)
+            public static void Delete(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
-                return operations.DeleteAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -201,12 +201,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeleteAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -335,9 +332,9 @@ namespace Microsoft.Azure.Management.Compute
             /// changed after the disk is created. Supported characters for the name are
             /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse RevokeAccess(this IDisksOperations operations, string resourceGroupName, string diskName)
+            public static void RevokeAccess(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
-                return operations.RevokeAccessAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
+                operations.RevokeAccessAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -357,12 +354,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> RevokeAccessAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RevokeAccessAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RevokeAccessWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.RevokeAccessWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -479,9 +473,9 @@ namespace Microsoft.Azure.Management.Compute
             /// changed after the disk is created. Supported characters for the name are
             /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse BeginDelete(this IDisksOperations operations, string resourceGroupName, string diskName)
+            public static void BeginDelete(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
-                return operations.BeginDeleteAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -501,12 +495,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginDeleteAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -573,9 +564,9 @@ namespace Microsoft.Azure.Management.Compute
             /// changed after the disk is created. Supported characters for the name are
             /// a-z, A-Z, 0-9 and _. The maximum name length is 80 characters.
             /// </param>
-            public static OperationStatusResponse BeginRevokeAccess(this IDisksOperations operations, string resourceGroupName, string diskName)
+            public static void BeginRevokeAccess(this IDisksOperations operations, string resourceGroupName, string diskName)
             {
-                return operations.BeginRevokeAccessAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
+                operations.BeginRevokeAccessAsync(resourceGroupName, diskName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -595,12 +586,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginRevokeAccessAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginRevokeAccessAsync(this IDisksOperations operations, string resourceGroupName, string diskName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginRevokeAccessWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginRevokeAccessWithHttpMessagesAsync(resourceGroupName, diskName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

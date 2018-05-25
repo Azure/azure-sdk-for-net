@@ -6,14 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.EventHub</PackageId>
 		<Description>Provides developers with a library to create and manage all Azure Event Hubs resources. Note: This client library is for EventHub under Azure Resource Manager.</Description>
-		<Version>2.0.3</Version>
+		<Version>2.1.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
 		<PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-		This change adds metadata Geo-Disaster recovery support to the Eventhub .NET management client.
-		1) Added APIs for creating and managing Disaster recovery configurations which allows users to pair two Eventhub namespaces in a primary-secondary configuration and creates an alias to represent the DR pair.
-		2) Added APIs to trigger a Geo-DR failover which re-points the alias from the primary to the secondary namespace and APIs to break DR pairing which disables Geo-DR
+		This change adds $skip and $top support to Entity list calls in Eventhub .NET management client.
+		1) $skip and $top parameters (query) for the list calls to support fetch the required number of entities in list calls
 	  ]]>
 		</PackageReleaseNotes>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

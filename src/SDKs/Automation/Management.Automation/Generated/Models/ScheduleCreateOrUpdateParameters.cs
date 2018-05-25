@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// schedule.</param>
         /// <param name="advancedSchedule">Gets or sets the
         /// AdvancedSchedule.</param>
-        public ScheduleCreateOrUpdateParameters(string name, System.DateTime startTime, string frequency, string description = default(string), System.DateTime? expiryTime = default(System.DateTime?), object interval = default(object), string timeZone = default(string), AdvancedSchedule advancedSchedule = default(AdvancedSchedule))
+        public ScheduleCreateOrUpdateParameters(string name, System.DateTimeOffset startTime, string frequency, string description = default(string), System.DateTimeOffset? expiryTime = default(System.DateTimeOffset?), object interval = default(object), string timeZone = default(string), AdvancedSchedule advancedSchedule = default(AdvancedSchedule))
         {
             Name = name;
             Description = description;
@@ -83,13 +83,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the start time of the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
-        public System.DateTime StartTime { get; set; }
+        public System.DateTimeOffset StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end time of the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expiryTime")]
-        public System.DateTime? ExpiryTime { get; set; }
+        public System.DateTimeOffset? ExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the interval of the schedule.

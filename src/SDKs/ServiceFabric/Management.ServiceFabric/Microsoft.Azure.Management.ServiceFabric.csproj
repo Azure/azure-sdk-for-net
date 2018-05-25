@@ -7,9 +7,17 @@
 		<PackageId>Microsoft.Azure.Management.ServiceFabric</PackageId>
 		<Description>Microsoft Azure Management ServiceFabric Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.ServiceFabric</AssemblyName>
-		<Version>1.0.1-preview</Version>
+		<Version>1.1.0</Version>
 		<PackageTags>Microsoft Azure Management Library;ServiceFabric;ServiceFabric management;</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>
+
+			<![CDATA[
+
+        This release of the Azure Service Fabric SDK introduces support for the latest version of the REST API (2018-02-01).
+
+      ]]>
+
+		</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>

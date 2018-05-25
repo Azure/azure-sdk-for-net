@@ -5,6 +5,7 @@ using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -25,8 +26,7 @@ namespace Compute.Tests
         /// Delete VMSS Extension
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Unable Match Http")]
+        [Fact]
         public void TestVMScaleSetExtensions()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -37,19 +37,17 @@ namespace Compute.Tests
 
         private void TestVMScaleSetExtensionsImpl(MockContext context)
         {
-            EnsureClientsInitialized(context);
-
-            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-
             // Create resource group
             string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
             var vmssName = TestUtilities.GenerateName("vmss");
             string storageAccountName = TestUtilities.GenerateName(TestPrefix);
             VirtualMachineScaleSet inputVMScaleSet;
             bool passed = false;
-
             try
             {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                 var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                 VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(

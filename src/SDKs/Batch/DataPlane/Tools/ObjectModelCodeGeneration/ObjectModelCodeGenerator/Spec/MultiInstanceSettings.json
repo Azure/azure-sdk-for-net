@@ -1,7 +1,7 @@
     {
       "Name": "MultiInstanceSettings",
       "ProtocolName": "Models.MultiInstanceSettings",
-      "Comment": "Settings which specify how to run a multi-instance task. Multi-instance tasks are commonly used to support MPI tasks. For more information see https://azure.microsoft.com/documentation/articles/batch-mpi/.",
+      "SummaryComment": "Settings which specify how to run a multi-instance task. Multi-instance tasks are commonly used to support MPI tasks. For more information see https://azure.microsoft.com/documentation/articles/batch-mpi/.",
       "Properties": [
         {
           "Key": {

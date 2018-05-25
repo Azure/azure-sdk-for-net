@@ -27,8 +27,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Get a single software update configuration machine run by Id.
         /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
         /// <param name='softwareUpdateConfigurationMachineRunId'>
         /// The Id of the software update configuration machine run.
+        /// </param>
+        /// <param name='clientRequestId'>
+        /// Identifies this specific client request.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -36,7 +45,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -45,11 +54,20 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SoftwareUpdateConfigurationMachineRun>> GetByIdWithHttpMessagesAsync(System.Guid softwareUpdateConfigurationMachineRunId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SoftwareUpdateConfigurationMachineRun>> GetByIdWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, System.Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Return list of software update configuration machine runs
         /// <see href="http://aka.ms/azureautomationsdk/softwareupdateconfigurationoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='clientRequestId'>
+        /// Identifies this specific client request.
+        /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation. You can use the following
         /// filters: 'properties/osType', 'properties/status',
@@ -68,7 +86,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -77,6 +95,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SoftwareUpdateConfigurationMachineRunListResult>> ListWithHttpMessagesAsync(string filter = default(string), string skip = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SoftwareUpdateConfigurationMachineRunListResult>> ListWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string clientRequestId = default(string), string filter = default(string), string skip = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
