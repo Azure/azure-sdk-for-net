@@ -1,7 +1,7 @@
 {
     "Name": "PoolEndpointConfiguration",
     "ProtocolName": "Models.PoolEndpointConfiguration",
-    "Comment": "The endpoint configuration for a pool.",
+    "SummaryComment": "The endpoint configuration for a pool.",
     "Properties": [
         {
             "Key": {

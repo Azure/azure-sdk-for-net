@@ -57,6 +57,7 @@ namespace DataFactory.Tests.Utils
                 // Start Factories operations, leaving factory available
                 CaptureFactories_CreateOrUpdate(); // 200
                 CaptureFactories_Update(); // 200
+                CaptureFactories_ConfigureRepo(); // 200
                 CaptureFactories_Get(); // 200
                 CaptureFactories_ListByResourceGroup(); // 200
                 CaptureFactories_List();
@@ -217,6 +218,27 @@ namespace DataFactory.Tests.Utils
                 { "exampleTag", "exampleValue" }
             };
             Factory resource = client.Factories.Update(secrets.ResourceGroupName, secrets.FactoryName, new FactoryUpdateParameters { Tags = tags });
+        }
+
+        private void CaptureFactories_ConfigureRepo()
+        {
+            interceptor.CurrentExampleName = "Factories_Update";
+            var repoUpdate = new FactoryRepoUpdate()
+            {
+                FactoryResourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.DataFactory/factories/{2}", ExampleSecrets.ExampleSubId,ExampleSecrets.ExampleResourceGroupName, ExampleSecrets.ExampleFactoryName),
+                ResourceGroupName = ExampleSecrets.ExampleResourceGroupName,
+                VstsConfiguration = new FactoryVSTSConfiguration()
+                {
+                    AccountName = "ADF",
+                    ProjectName= "project",
+                    RepositoryName= "repo",
+                    CollaborationBranch= "master",
+                    RootFolder= "/",
+                    LastCommitId= "",
+                    TenantId= ""
+                }
+            };
+            Factory resource = client.Factories.ConfigureFactoryRepo(secrets.FactoryLocation, repoUpdate);
         }
 
         private void CaptureFactories_Get()

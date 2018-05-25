@@ -1,7 +1,7 @@
 {
   "Name": "NodeCounts",
   "ProtocolName": "Models.NodeCounts",
-  "Comment": "The number of nodes in each node state.",
+  "SummaryComment": "The number of nodes in each node state.",
   "IsConstructorPublic": false,
   "Properties": [
     {
@@ -130,6 +130,17 @@
         "Type": "int",
         "Name": "WaitingForStartTask",
         "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.WaitingForStartTask\" />.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "LeavingPool",
+        "SummaryComment": "The number of nodes in <see cref=\"Common.ComputeNodeState.LeavingPool\" />.",
         "RemarksComment": null,
         "BoundAccess": "read",
         "UnboundAccess": "none"

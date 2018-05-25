@@ -68,6 +68,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Update an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='imageName'>
+            /// The name of the image.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Image operation.
+            /// </param>
+            public static Image Update(this IImagesOperations operations, string resourceGroupName, string imageName, ImageUpdate parameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, imageName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='imageName'>
+            /// The name of the image.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Image operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Image> UpdateAsync(this IImagesOperations operations, string resourceGroupName, string imageName, ImageUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, imageName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes an Image.
             /// </summary>
             /// <param name='operations'>
@@ -79,9 +125,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='imageName'>
             /// The name of the image.
             /// </param>
-            public static OperationStatusResponse Delete(this IImagesOperations operations, string resourceGroupName, string imageName)
+            public static void Delete(this IImagesOperations operations, string resourceGroupName, string imageName)
             {
-                return operations.DeleteAsync(resourceGroupName, imageName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, imageName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -99,12 +145,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeleteAsync(this IImagesOperations operations, string resourceGroupName, string imageName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IImagesOperations operations, string resourceGroupName, string imageName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, imageName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, imageName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -266,6 +309,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Update an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='imageName'>
+            /// The name of the image.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Image operation.
+            /// </param>
+            public static Image BeginUpdate(this IImagesOperations operations, string resourceGroupName, string imageName, ImageUpdate parameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, imageName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='imageName'>
+            /// The name of the image.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update Image operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Image> BeginUpdateAsync(this IImagesOperations operations, string resourceGroupName, string imageName, ImageUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, imageName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes an Image.
             /// </summary>
             /// <param name='operations'>
@@ -277,9 +366,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='imageName'>
             /// The name of the image.
             /// </param>
-            public static OperationStatusResponse BeginDelete(this IImagesOperations operations, string resourceGroupName, string imageName)
+            public static void BeginDelete(this IImagesOperations operations, string resourceGroupName, string imageName)
             {
-                return operations.BeginDeleteAsync(resourceGroupName, imageName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, imageName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -297,12 +386,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginDeleteAsync(this IImagesOperations operations, string resourceGroupName, string imageName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IImagesOperations operations, string resourceGroupName, string imageName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, imageName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, imageName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

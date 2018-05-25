@@ -1,7 +1,7 @@
     {
       "Name": "JobPreparationTaskExecutionInformation",
       "ProtocolName": "Models.JobPreparationTaskExecutionInformation",
-      "Comment": "Details about the execution of a <see cref=\"CloudJob.JobPreparationTask\">Job Preparation task</see> on a compute node.",
+      "SummaryComment": "Details about the execution of a <see cref=\"CloudJob.JobPreparationTask\">Job Preparation task</see> on a compute node.",
       "IsConstructorPublic": false,
       "Properties": [
         {

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="status">Possible values include: 'OK', 'OKDuplicate',
         /// 'ErrorSource', 'ErrorImageFormat', 'ErrorImageSize',
         /// 'ErrorStorage', 'ErrorLimitExceed', 'ErrorTagLimitExceed',
-        /// 'ErrorUnknown'</param>
+        /// 'ErrorRegionLimitExceed', 'ErrorUnknown'</param>
         public ImageCreateResult(string sourceUrl = default(string), string status = default(string), Image image = default(Image))
         {
             SourceUrl = sourceUrl;
@@ -45,20 +45,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "SourceUrl")]
+        [JsonProperty(PropertyName = "sourceUrl")]
         public string SourceUrl { get; private set; }
 
         /// <summary>
         /// Gets possible values include: 'OK', 'OKDuplicate', 'ErrorSource',
         /// 'ErrorImageFormat', 'ErrorImageSize', 'ErrorStorage',
-        /// 'ErrorLimitExceed', 'ErrorTagLimitExceed', 'ErrorUnknown'
+        /// 'ErrorLimitExceed', 'ErrorTagLimitExceed',
+        /// 'ErrorRegionLimitExceed', 'ErrorUnknown'
         /// </summary>
-        [JsonProperty(PropertyName = "Status")]
+        [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Image")]
+        [JsonProperty(PropertyName = "image")]
         public Image Image { get; private set; }
 
     }

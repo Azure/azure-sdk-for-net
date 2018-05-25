@@ -533,7 +533,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -553,7 +554,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -579,7 +581,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -591,7 +594,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             public static FlowLogInformation GetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -599,7 +603,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -611,7 +616,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1040,7 +1046,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1060,7 +1067,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log on a specified resource.
+            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1086,7 +1094,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1098,7 +1107,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             public static FlowLogInformation BeginGetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -1106,7 +1116,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Queries status of flow log on a specified resource.
+            /// Queries status of flow log and traffic analytics (optional) on a specified
+            /// resource.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1118,7 +1129,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the network watcher resource.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters that define a resource to query flow log status.
+            /// Parameters that define a resource to query flow log and traffic analytics
+            /// (optional)  status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

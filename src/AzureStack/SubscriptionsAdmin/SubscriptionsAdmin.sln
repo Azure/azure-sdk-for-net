@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3A13F014-3E55-4ECA-98BA-55216B70A8D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Subscriptions.Tests", "Subscriptions.Admin.Tests\Subscriptions.Tests.csproj", "{1B24BC4A-6E4D-4FEB-B5D5-C9684C60A308}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AzureStack.Management.Subscriptions.Admin", "Subscriptions.Admin\Microsoft.AzureStack.Management.Subscriptions.Admin.csproj", "{5F30AD46-8F37-4416-8EAE-5B56A1471926}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B24BC4A-6E4D-4FEB-B5D5-C9684C60A308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B24BC4A-6E4D-4FEB-B5D5-C9684C60A308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B24BC4A-6E4D-4FEB-B5D5-C9684C60A308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B24BC4A-6E4D-4FEB-B5D5-C9684C60A308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F30AD46-8F37-4416-8EAE-5B56A1471926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F30AD46-8F37-4416-8EAE-5B56A1471926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F30AD46-8F37-4416-8EAE-5B56A1471926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F30AD46-8F37-4416-8EAE-5B56A1471926}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B505F272-DA2F-4A45-902F-04DAD2D4AB19}
+	EndGlobalSection
+EndGlobal

@@ -1,7 +1,7 @@
     {
       "Name": "FileProperties",
       "ProtocolName": "Models.FileProperties",
-      "Comment": "The properties of a file on a compute node.",
+      "SummaryComment": "The properties of a file on a compute node.",
       "IsConstructorPublic": false,
       "Properties": [
         {

@@ -30,18 +30,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the HiveJobProperties class.
         /// </summary>
-        /// <param name="script">the script to run. Please note that the
+        /// <param name="script">The script to run. Please note that the
         /// maximum script size is 3 MB.</param>
-        /// <param name="runtimeVersion">the runtime version of the Data Lake
+        /// <param name="runtimeVersion">The runtime version of the Data Lake
         /// Analytics engine to use for the specific type of job being
         /// run.</param>
-        /// <param name="logsLocation">the Hive logs location</param>
-        /// <param name="outputLocation">the location of Hive job output files
-        /// (both execution output and results)</param>
-        /// <param name="statementCount">the number of statements that will be
-        /// run based on the script</param>
-        /// <param name="executedStatementCount">the number of statements that
-        /// have been run based on the script</param>
+        /// <param name="logsLocation">The Hive logs location.</param>
+        /// <param name="outputLocation">The location of Hive job output files
+        /// (both execution output and results).</param>
+        /// <param name="statementCount">The number of statements that will be
+        /// run based on the script.</param>
+        /// <param name="executedStatementCount">The number of statements that
+        /// have been run based on the script.</param>
         public HiveJobProperties(string script, string runtimeVersion = default(string), string logsLocation = default(string), string outputLocation = default(string), int? statementCount = default(int?), int? executedStatementCount = default(int?))
             : base(script, runtimeVersion)
         {
@@ -58,27 +58,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the Hive logs location
+        /// Gets the Hive logs location.
         /// </summary>
         [JsonProperty(PropertyName = "logsLocation")]
         public string LogsLocation { get; private set; }
 
         /// <summary>
         /// Gets the location of Hive job output files (both execution output
-        /// and results)
+        /// and results).
         /// </summary>
         [JsonProperty(PropertyName = "outputLocation")]
         public string OutputLocation { get; private set; }
 
         /// <summary>
-        /// Gets the number of statements that will be run based on the script
+        /// Gets the number of statements that will be run based on the script.
         /// </summary>
         [JsonProperty(PropertyName = "statementCount")]
         public int? StatementCount { get; private set; }
 
         /// <summary>
         /// Gets the number of statements that have been run based on the
-        /// script
+        /// script.
         /// </summary>
         [JsonProperty(PropertyName = "executedStatementCount")]
         public int? ExecutedStatementCount { get; private set; }

@@ -66,6 +66,11 @@ namespace Microsoft.Azure.Management.Compute
 
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         IAvailabilitySetsOperations AvailabilitySets { get; }
@@ -79,6 +84,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineExtensionsOperations.
         /// </summary>
         IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        IVirtualMachinesOperations VirtualMachines { get; }
 
         /// <summary>
         /// Gets the IVirtualMachineImagesOperations.
@@ -99,11 +109,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IImagesOperations.
         /// </summary>
         IImagesOperations Images { get; }
-
-        /// <summary>
-        /// Gets the IVirtualMachinesOperations.
-        /// </summary>
-        IVirtualMachinesOperations VirtualMachines { get; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetsOperations.

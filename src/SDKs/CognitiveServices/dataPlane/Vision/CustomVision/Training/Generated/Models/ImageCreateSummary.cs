@@ -42,12 +42,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "IsBatchSuccessful")]
+        [JsonProperty(PropertyName = "isBatchSuccessful")]
         public bool IsBatchSuccessful { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Images")]
+        [JsonProperty(PropertyName = "images")]
         public IList<ImageCreateResult> Images { get; private set; }
 
     }

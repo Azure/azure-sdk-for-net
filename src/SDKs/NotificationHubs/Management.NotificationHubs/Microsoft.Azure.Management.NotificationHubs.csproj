@@ -7,9 +7,16 @@
 		<PackageId>Microsoft.Azure.Management.NotificationHubs</PackageId>
 		<Description>Provides developers with libraries to create and manager Namespaces of type NotificationHub and NotificationHubs. Manage Authorization Rules at both the resource levels. Note: This client library is for NotificationHubs under Azure Resource Manager.</Description>
 		<AssemblyName>Microsoft.Azure.Management.NotificationHubs</AssemblyName>
-		<Version>2.3.1-preview</Version>
+		<Version>2.4.0</Version>
 		<PackageTags>Microsoft Azure NotificationHubs Management;NotificationHubs;NotificationHubs management;</PackageTags>
-		<PackageReleaseNotes/>
+        <PackageReleaseNotes>
+            <![CDATA[
+                Updating the Notification Hubs Management SDK with:   
+					1) Adding support for authorization rules for both namespaces and notification hubs
+					2) Fixing bugs in CheckNamespaceAvailability
+					3) Adding more documentation for existing operations
+            ]]>
+        </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

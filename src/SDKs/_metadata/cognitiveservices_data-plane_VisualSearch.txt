@@ -1,0 +1,17 @@
+﻿Executing AutoRest command
+cmd.exe /c autorest.cmd D:/azure-rest-api-specs/specification/cognitiveservices/data-plane/VisualSearch/readme.md --csharp --csharp-sdks-folder=D:\tmp\azure-sdk-for-net\tools\..\src\SDKs\ --version=latest --reflect-api-versions
+2018-04-24 22:06:12 UTC
+1) azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      e6d46513662f00ab4d0d560ab710be4a849609c3
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Users\shakao\AppData\Roaming\npm  `-- autorest@2.0.4262
+
+
+Latest installed version:    
+.\tools\generate.ps1 was invoked by generate.ps1
+
+

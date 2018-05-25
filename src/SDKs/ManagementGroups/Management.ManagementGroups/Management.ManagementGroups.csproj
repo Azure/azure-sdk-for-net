@@ -5,11 +5,11 @@
   
   <PropertyGroup>
 		<Description>Microsoft Azure Management Groups Library</Description>
-		<Version>1.0.0-preview</Version>
+		<Version>1.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ManagementGroups</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.ManagementGroups</PackageId>
 		<PackageTags>Microsoft Azure Management Groups;Management Groups;Groups;</PackageTags>
-		<PackageReleaseNotes />
+		<PackageReleaseNotes>This is a general availibility release of the Azure Management Groups SDK</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup>

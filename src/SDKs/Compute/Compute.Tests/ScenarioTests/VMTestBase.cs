@@ -25,7 +25,7 @@ namespace Compute.Tests
     public class VMTestBase
     {
         protected const string TestPrefix = "crptestar";
-        protected const string PLACEHOLDER = "[PLACEHOLDERr1]";
+        protected const string PLACEHOLDER = "[PLACEHOLDER]";
         protected const string ComputerName = "Test";
 
         protected ResourceManagementClient m_ResourcesClient;
@@ -100,7 +100,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.04");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.10");
             }
             return m_linuxImageReference;
         }
