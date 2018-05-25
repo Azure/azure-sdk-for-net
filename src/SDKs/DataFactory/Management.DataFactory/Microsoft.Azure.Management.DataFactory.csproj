@@ -16,7 +16,6 @@
 			- Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
 			- Updated Several model types from SecretBase to Object
 			- Added Blob Events trigger
-
                         ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
