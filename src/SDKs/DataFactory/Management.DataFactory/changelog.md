@@ -4,9 +4,13 @@
 
 ###  Feature Additions
 
+## Version 0.8.0-preview
+
+### Feature Additions
+
 * Added Configure factory repository operation
 * Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
-* Updated Several models, updating types from SecretBase to Object
+* Updated Several model types from SecretBase to Object
 * Added Blob Events trigger
 
 ## Version 0.7.0-preview
