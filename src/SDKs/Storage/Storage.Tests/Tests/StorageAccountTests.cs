@@ -1148,22 +1148,7 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                //// 2. Explicitly disable file encryption service.
-                //parameters.Encryption.Services.File.Enabled = false;
-                //account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
-                //Assert.NotNull(account.Encryption);
-
-                //// Validate
-                //account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
-
-                //Assert.NotNull(account.Encryption);
-                //Assert.NotNull(account.Encryption.Services.Blob);
-                //Assert.Equal(true, account.Encryption.Services.Blob.Enabled);
-                //Assert.NotNull(account.Encryption.Services.Blob.LastEnabledTime);
-
-                //Assert.Null(account.Encryption.Services.File);
-
-                // 3. Restore storage encryption
+                // 2. Restore storage encryption
                 parameters = new StorageAccountUpdateParameters
                 {
                     Encryption = new Encryption()
@@ -1187,7 +1172,7 @@ namespace Storage.Tests
                 Assert.Equal(true, account.Encryption.Services.File.Enabled);
                 Assert.NotNull(account.Encryption.Services.File.LastEnabledTime);
 
-                // 4. Remove file encryption service field.
+                // 3. Remove file encryption service field.
                 parameters = new StorageAccountUpdateParameters
                 {
                     Encryption = new Encryption()

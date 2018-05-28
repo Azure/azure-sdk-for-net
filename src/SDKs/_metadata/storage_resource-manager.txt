@@ -1,9 +1,9 @@
-2018-05-25 03:21:52 UTC
+2018-05-28 05:14:07 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: blueww
-Branch:      managepolicy
-Commit:      b2fb19541810d9b9b3800eaf9552e7fb59b49089
+GitHub user: azure
+Branch:      master
+Commit:      49a53b1fb1fe28e93e2929befdeaae2d1695cea0
 
 2) AutoRest information
 Requested version: latest
