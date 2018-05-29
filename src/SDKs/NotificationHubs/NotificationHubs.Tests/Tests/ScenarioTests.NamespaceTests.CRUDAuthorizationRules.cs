@@ -62,7 +62,6 @@ namespace NotificationHubs.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", NotificationHubsManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
                 {
-                    Location = location,
                     Properties = new SharedAccessAuthorizationRuleProperties()
                     {
                         Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send },
@@ -109,7 +108,6 @@ namespace NotificationHubs.Tests.ScenarioTests
                 //Update namespace authorizationRule
                 var updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
                 {
-                    Location = location,
                     Properties = new SharedAccessAuthorizationRuleProperties()
                     {
                         Rights = new List<AccessRights?>() { AccessRights.Listen},
@@ -142,12 +140,6 @@ namespace NotificationHubs.Tests.ScenarioTests
                 //Get the connectionString to the namespace for a Authorization rule created
                 var listKeysResponse = NotificationHubsManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(listKeysResponse);
-                Assert.Equal(listKeysResponse.KeyName, authorizationRuleName);
-                Assert.NotNull(listKeysResponse.PrimaryConnectionString);
-                Assert.NotNull(listKeysResponse.SecondaryConnectionString);
-                Assert.True(listKeysResponse.PrimaryConnectionString.Contains(listKeysResponse.PrimaryKey));
-                Assert.True(listKeysResponse.SecondaryConnectionString.Contains(listKeysResponse.SecondaryKey));
-
                 var policyKey = new PolicykeyResource()
                 {
                     PolicyKey = "primary KEY"
@@ -158,27 +150,10 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.Equal(regenerateKeys.KeyName, authorizationRuleName);
                 Assert.NotNull(regenerateKeys.PrimaryConnectionString);
                 Assert.NotNull(regenerateKeys.SecondaryConnectionString);
-                Assert.True(regenerateKeys.PrimaryConnectionString.Contains(regenerateKeys.PrimaryKey));
-                Assert.True(regenerateKeys.SecondaryConnectionString.Contains(regenerateKeys.SecondaryKey));
-                Assert.Equal(regenerateKeys.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
-                Assert.NotEqual(regenerateKeys.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
-                Assert.Equal(regenerateKeys.SecondaryKey, listKeysResponse.SecondaryKey);
-                Assert.NotEqual(regenerateKeys.PrimaryKey, listKeysResponse.PrimaryKey);
 
                 //Get the connectionString to the namespace for a Authorization rule after regenerating the primary key 
                 var listKeysAfterRegenerateResponse = NotificationHubsManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(listKeysAfterRegenerateResponse);
-                Assert.Equal(listKeysAfterRegenerateResponse.KeyName, authorizationRuleName);
-                Assert.NotNull(listKeysAfterRegenerateResponse.PrimaryConnectionString);
-                Assert.NotNull(listKeysAfterRegenerateResponse.SecondaryConnectionString);
-                Assert.True(listKeysAfterRegenerateResponse.PrimaryConnectionString.Contains(listKeysAfterRegenerateResponse.PrimaryKey));
-                Assert.True(listKeysAfterRegenerateResponse.SecondaryConnectionString.Contains(listKeysAfterRegenerateResponse.SecondaryKey));
-                Assert.Equal(listKeysAfterRegenerateResponse.SecondaryConnectionString, listKeysResponse.SecondaryConnectionString);
-                Assert.NotEqual(listKeysAfterRegenerateResponse.PrimaryConnectionString, listKeysResponse.PrimaryConnectionString);
-                Assert.Equal(listKeysAfterRegenerateResponse.SecondaryKey, listKeysResponse.SecondaryKey);
-                Assert.NotEqual(listKeysAfterRegenerateResponse.PrimaryKey, listKeysResponse.PrimaryKey);
-                Assert.Equal(listKeysAfterRegenerateResponse.PrimaryKey, regenerateKeys.PrimaryKey);
-                Assert.Equal(listKeysAfterRegenerateResponse.PrimaryConnectionString, regenerateKeys.PrimaryConnectionString);
 
                 //Delete namespace authorizationRule
                 NotificationHubsManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);

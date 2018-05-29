@@ -16,6 +16,13 @@
                              2. WorksapceResourceId
                              3. WorkspaceId
                              4.WorkspaceRegion
+		<Version>20.0.0-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<PackageReleaseNotes>
+		<![CDATA[
+			- Expose new SKUs for VMSS VPN and ER gateways
+			- Add optional traffic analytics config fields to network watcher
+			- Remove two VirtualNetworkGateways' methods that are not in production
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

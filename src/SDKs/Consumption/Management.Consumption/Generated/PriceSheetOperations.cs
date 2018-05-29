@@ -65,6 +65,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// nextLink element will include a skiptoken parameter that specifies a
         /// starting point to use for subsequent calls.
         /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the top N results.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -86,8 +89,16 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PriceSheetResult>> GetWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PriceSheetResult>> GetWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -105,6 +116,7 @@ namespace Microsoft.Azure.Management.Consumption
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("skiptoken", skiptoken);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -120,6 +132,10 @@ namespace Microsoft.Azure.Management.Consumption
             if (skiptoken != null)
             {
                 _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (Client.ApiVersion != null)
             {
@@ -263,6 +279,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// nextLink element will include a skiptoken parameter that specifies a
         /// starting point to use for subsequent calls.
         /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the top N results.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -284,8 +303,16 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PriceSheetResult>> GetByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PriceSheetResult>> GetByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -307,6 +334,7 @@ namespace Microsoft.Azure.Management.Consumption
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("skiptoken", skiptoken);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("billingPeriodName", billingPeriodName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetByBillingPeriod", tracingParameters);
@@ -324,6 +352,10 @@ namespace Microsoft.Azure.Management.Consumption
             if (skiptoken != null)
             {
                 _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (Client.ApiVersion != null)
             {

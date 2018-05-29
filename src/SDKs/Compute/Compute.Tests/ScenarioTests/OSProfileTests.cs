@@ -201,8 +201,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Unable Match Http")]
+        [Fact]
         public void TestVMWithLinuxOSProfile()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
