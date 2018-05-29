@@ -7,7 +7,16 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>20.0.0-preview</Version>
+		<Version>19.0.1-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<PackageReleaseNotes>
+		<![CDATA[
+			- Added additioanl traffic analytics config fields (TrafficAnalyticsConfigurationProperties) with existing flowlog config fields
+			- The added fileds are 1. Enable (For Traffic Analytics)
+                             2. WorksapceResourceId
+                             3. WorkspaceId
+                             4.WorkspaceRegion
+		<Version>19.0.1-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
