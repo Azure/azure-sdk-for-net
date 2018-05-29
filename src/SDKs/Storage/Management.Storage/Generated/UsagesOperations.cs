@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// UsageOperations operations.
+    /// UsagesOperations operations.
     /// </summary>
-    internal partial class UsageOperations : IServiceOperations<StorageManagementClient>, IUsageOperations
+    internal partial class UsagesOperations : IServiceOperations<StorageManagementClient>, IUsagesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the UsageOperations class.
+        /// Initializes a new instance of the UsagesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal UsageOperations(StorageManagementClient client)
+        internal UsagesOperations(StorageManagementClient client)
         {
             if (client == null)
             {

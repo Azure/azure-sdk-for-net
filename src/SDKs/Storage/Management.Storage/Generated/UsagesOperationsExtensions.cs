@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Storage
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for UsageOperations.
+    /// Extension methods for UsagesOperations.
     /// </summary>
-    public static partial class UsageOperationsExtensions
+    public static partial class UsagesOperationsExtensions
     {
             /// <summary>
             /// Gets the current usage count and the limit for the resources under the
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Usage> List(this IUsageOperations operations)
+            public static IEnumerable<Usage> List(this IUsagesOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Usage>> ListAsync(this IUsageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Usage>> ListAsync(this IUsagesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='location'>
             /// The location of the Azure Storage resource.
             /// </param>
-            public static IEnumerable<Usage> ListByLocation(this IUsageOperations operations, string location)
+            public static IEnumerable<Usage> ListByLocation(this IUsagesOperations operations, string location)
             {
                 return operations.ListByLocationAsync(location).GetAwaiter().GetResult();
             }
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Usage>> ListByLocationAsync(this IUsageOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Usage>> ListByLocationAsync(this IUsagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByLocationWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
