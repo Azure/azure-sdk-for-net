@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v1.0/models/landmarks/analyze?language=pt",
+      "EncodedRequestUri": "L3Zpc2lvbi92MS4wL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
+      "RequestMethod": "POST",
+      "IsRequestBodyBinary": false,
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/spaceneedle.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "192"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/0.0.0.0"
+        ]
+      },
+      "IsResponseBodyBinary": false,
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991440773010254\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"97769c03-45bb-4167-91f0-88e0d93a4dcb\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "193"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Tue, 29 May 2018 22:32:04 GMT"
+        ],
+        "apim-request-id": [
+          "97769c03-45bb-4167-91f0-88e0d93a4dcb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
