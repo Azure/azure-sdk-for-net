@@ -6,4 +6,8 @@
     <AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   -->
+  <PropertyGroup Label="PackageMetaData">
+    <PackageProjectUrl>https://github.com/Azure/azure-sdk-for-net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
+  </PropertyGroup>
 </Project>
