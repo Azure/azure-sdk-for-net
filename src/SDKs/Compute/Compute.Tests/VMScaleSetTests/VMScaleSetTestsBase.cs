@@ -445,6 +445,12 @@ namespace Compute.Tests
                 }
             }
 
+            if(vmScaleSet.UpgradePolicy.AutoOSUpgradePolicy!=null)
+            {
+                Assert.True(vmScaleSetOut.UpgradePolicy.AutoOSUpgradePolicy.DisableAutoRollback == 
+                    vmScaleSet.UpgradePolicy.AutoOSUpgradePolicy.DisableAutoRollback);
+            }
+
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&
                vmScaleSet.VirtualMachineProfile.OsProfile.Secrets.Any())
             {

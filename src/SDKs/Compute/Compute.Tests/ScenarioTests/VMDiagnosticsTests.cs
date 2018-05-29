@@ -22,9 +22,8 @@ namespace Compute.Tests
         /// Delete VM
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMBootDiagnostics")]
-        [Trait("Failure", "Password policy")]
         public void TestVMBootDiagnostics()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

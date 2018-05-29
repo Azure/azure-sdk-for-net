@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the OdbcLinkedService class.
         /// </summary>
         /// <param name="connectionString">The non-access credential portion of
-        /// the connection string as well as an optional encrypted
-        /// credential.</param>
+        /// the connection string as well as an optional encrypted credential.
+        /// Type: string, SecureString or AzureKeyVaultSecretReference.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public OdbcLinkedService(SecretBase connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object authenticationType = default(object), SecretBase credential = default(SecretBase), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public OdbcLinkedService(object connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object authenticationType = default(object), SecretBase credential = default(SecretBase), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ConnectionString = connectionString;
@@ -77,10 +77,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the non-access credential portion of the connection
-        /// string as well as an optional encrypted credential.
+        /// string as well as an optional encrypted credential. Type: string,
+        /// SecureString or AzureKeyVaultSecretReference.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
-        public SecretBase ConnectionString { get; set; }
+        public object ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets type of authentication used to connect to the ODBC

@@ -43,15 +43,16 @@ namespace Compute.Tests
         const int UDTooLow = 0;
         const int UDTooHi = 21;
 
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                Initialize(context);
-
                 try
                 {
+                    EnsureClientsInitialized(context);
+                    Initialize(context);
+
                     // Attempt to Create Availability Set with out of bounds FD and UD values
                     VerifyInvalidFDUDValuesFail();
 
@@ -78,7 +79,7 @@ namespace Compute.Tests
             computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, handler);
 
             subId = computeClient.SubscriptionId;
-            location = ComputeManagementTestUtilities.DefaultLocation;
+            location = m_location;
 
             resourceGroupName = ComputeManagementTestUtilities.GenerateName(testPrefix);
 
@@ -210,6 +211,17 @@ namespace Compute.Tests
             var listResponse = computeClient.AvailabilitySets.List(resourceGroupName);
             ValidateAvailabilitySet(inputAvailabilitySet, listResponse.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
                 inputAvailabilitySetName, expectedAvailabilitySetId, defaultFD, defaultUD);
+
+            AvailabilitySetUpdate updateParams = new AvailabilitySetUpdate()
+            {
+                Tags = inputAvailabilitySet.Tags
+            };
+
+            string updateKey = "UpdateTag";
+            updateParams.Tags.Add(updateKey, "updateValue");
+            createOrUpdateResponse = computeClient.AvailabilitySets.Update(resourceGroupName, inputAvailabilitySetName, updateParams);
+
+            Assert.True(createOrUpdateResponse.Tags.ContainsKey(updateKey));
 
             // This call will also delete the Availability Set
             ValidateResults(createOrUpdateResponse, inputAvailabilitySet, inputAvailabilitySetName, defaultFD, defaultUD);

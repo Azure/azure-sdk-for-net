@@ -52,7 +52,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// Associates existing subscription with the management group.
-        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -230,7 +229,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// De-associates subscription from the management group.
-        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.

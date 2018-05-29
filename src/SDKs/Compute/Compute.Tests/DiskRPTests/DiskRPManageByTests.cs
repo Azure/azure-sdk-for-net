@@ -16,9 +16,7 @@ namespace Compute.Tests.DiskRPTests
         /// This test tests the new managedby feature that is replacing ownerid.
         /// It creates a VM, then gets the disk from that VM to check for the vm name in the manageby field
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
-        [Trait("Failure", "New Unable Match Http")]
+        [Fact]
         public void DiskManagedByTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

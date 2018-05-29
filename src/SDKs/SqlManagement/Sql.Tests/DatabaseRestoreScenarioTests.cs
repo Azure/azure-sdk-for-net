@@ -221,6 +221,75 @@ namespace Sql.Tests
             }
         }
 
+
+        [Fact]
+        public void TestShortTermRetentionPolicyOnPremium()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                // Create a Premium DB so it defaults to 35 days retention.
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Database database = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.P1)
+                    });
+
+                // Decrease retention period to 8 days and verfiy that it was updated.
+                BackupShortTermRetentionPolicy parameters = new BackupShortTermRetentionPolicy(retentionDays: 8);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                BackupShortTermRetentionPolicy policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(parameters.RetentionDays, policy.RetentionDays);
+
+                // Increase retention period to 35 days again and verfiy that it was updated.
+                parameters = new BackupShortTermRetentionPolicy(retentionDays: 35);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(parameters.RetentionDays, policy.RetentionDays);
+            }
+        }
+
+        [Fact]
+        public void TestShortTermRetentionPolicyOnBasic()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                int basicRetention = 7;
+
+                // Create a Basic DB so it defaults to 7 days retention.
+                ResourceGroup resourceGroup = context.CreateResourceGroup();
+                Server server = context.CreateServer(resourceGroup);
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                Database database = sqlClient.Databases.CreateOrUpdate(
+                    resourceGroup.Name, server.Name, SqlManagementTestUtilities.GenerateName(),
+                    new Database
+                    {
+                        Location = server.Location,
+                        Sku = new Microsoft.Azure.Management.Sql.Models.Sku(ServiceObjectiveName.Basic)
+                    });
+
+                // Attempt to increase retention period to 8 days and verfiy that the operation fails.
+                BackupShortTermRetentionPolicy parameters = new BackupShortTermRetentionPolicy(retentionDays: 8);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                BackupShortTermRetentionPolicy policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(basicRetention, policy.RetentionDays);
+
+                // Attempt to dncrease retention period to 3 days and verify operation failure.
+                parameters = new BackupShortTermRetentionPolicy(retentionDays: 3);
+                sqlClient.BackupShortTermRetentionPolicies.CreateOrUpdateWithHttpMessagesAsync(resourceGroup.Name, server.Name, database.Name, parameters);
+                Microsoft.Rest.ClientRuntime.Azure.TestFramework.TestUtilities.Wait(TimeSpan.FromSeconds(3));
+                policy = sqlClient.BackupShortTermRetentionPolicies.Get(resourceGroup.Name, server.Name, database.Name);
+                Assert.Equal(basicRetention, policy.RetentionDays);
+            }
+        }
+
         [Fact(Skip = "Manual test due to long setup time required (over 18 hours).")]
         public void TestLongTermRetentionV2Crud()
         {
@@ -321,7 +390,7 @@ namespace Sql.Tests
                 SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
 
                 // List geo recoverable database backups
-                IEnumerable<RecoverableDatabase> recoverableDatabases = 
+                IEnumerable<RecoverableDatabase> recoverableDatabases =
                     sqlClient.RecoverableDatabases.ListByServer(resourceGroupName, serverName);
                 Assert.True(recoverableDatabases.Any(), "No recoverable databases found.");
 

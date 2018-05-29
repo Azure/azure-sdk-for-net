@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -45,7 +47,13 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// group.</param>
         /// <param name="parent">Parent</param>
         /// <param name="permissions">Permissions</param>
-        public EntityInfo(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), EntityParentGroupInfo parent = default(EntityParentGroupInfo), string permissions = default(string))
+        /// <param name="inheritedPermissions">Inherited Permissions</param>
+        /// <param name="numberOfDescendants">Number of Descendants</param>
+        /// <param name="parentDisplayNameChain">The parent display name chain
+        /// from the root group to the immediate parent</param>
+        /// <param name="parentNameChain">The parent name chain from the root
+        /// group to the immediate parent</param>
+        public EntityInfo(string id = default(string), string type = default(string), string name = default(string), string tenantId = default(string), string displayName = default(string), EntityParentGroupInfo parent = default(EntityParentGroupInfo), string permissions = default(string), string inheritedPermissions = default(string), int? numberOfDescendants = default(int?), IList<string> parentDisplayNameChain = default(IList<string>), IList<string> parentNameChain = default(IList<string>))
         {
             Id = id;
             Type = type;
@@ -54,6 +62,10 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
             DisplayName = displayName;
             Parent = parent;
             Permissions = permissions;
+            InheritedPermissions = inheritedPermissions;
+            NumberOfDescendants = numberOfDescendants;
+            ParentDisplayNameChain = parentDisplayNameChain;
+            ParentNameChain = parentNameChain;
             CustomInit();
         }
 
@@ -110,6 +122,35 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.permissions")]
         public string Permissions { get; set; }
+
+        /// <summary>
+        /// Gets or sets inherited Permissions
+        /// </summary>
+        /// <remarks>
+        /// Possible values include: 'noaccess', 'view', 'edit', 'delete'
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.inheritedPermissions")]
+        public string InheritedPermissions { get; set; }
+
+        /// <summary>
+        /// Gets or sets number of Descendants
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.numberOfDescendants")]
+        public int? NumberOfDescendants { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent display name chain from the root group to
+        /// the immediate parent
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.parentDisplayNameChain")]
+        public IList<string> ParentDisplayNameChain { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent name chain from the root group to the
+        /// immediate parent
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.parentNameChain")]
+        public IList<string> ParentNameChain { get; set; }
 
     }
 }

@@ -19,6 +19,7 @@ Below are the packages maintained in this repository.
 | Customer Insights             | `Microsoft.Azure.Management.CustomerInsights`               | [![Customer Insights](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.CustomerInsights.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.CustomerInsights) |
 | Data Lake Analytics           | `Microsoft.Azure.Management.DataLakeAnalytics`              | [![Data Lake Analytics](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.DataLake.Analytics.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.Analytics) |
 | Data Lake Store               | `Microsoft.Azure.Management.DataLakeStore`                  | [![Data Lake Store](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.DataLake.Store.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.Store) |
+| DeviceProvisioningServices    | `Microsoft.Azure.Management.DeviceProvisioningServices`     | [![DeviceProvisioningServices](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.DeviceProvisioningServices.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.DeviceProvisioningServices) |
 | DevTest Labs                  | `Microsoft.Azure.Management.DevTestLabs`                    | [![DevTest Labs](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.DevTestLabs.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.DevTestLabs) |
 | Dns                           | `Microsoft.Azure.Management.Dns`                            | [![Dns](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Dns.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Dns) |
 | Event Grid                    | `Microsoft.Azure.Management.EventGrid`                      | [![Event Grid](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.EventGrid.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.EventGrid) |
@@ -58,7 +59,7 @@ Below are the packages maintained in this repository.
 
 | Azure Data Plane Library | Package Name                            | NuGet Download |
 | ------------------------ | --------------------------------------- | -------------- |
-| Batch                    | `Azure.Batch`                           | [![Search](https://img.shields.io/nuget/vpre/Azure.Batch.svg)](https://www.nuget.org/packages/Azure.Batch) |
+| Batch                    | `Microsoft.Azure.Batch`                 | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch) |
 | Graph.RBAC               | `Microsoft.Azure.Graph.RBAC`            | [![Graph.RBAC](https://img.shields.io/nuget/vpre/Microsoft.Azure.Graph.RBAC.svg)](https://www.nuget.org/packages/Microsoft.Azure.Graph.RBAC) |
 | KeyVault                 | `Microsoft.Azure.KeyVault`              | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault) |
 | KeyVault Core            | `Microsoft.Azure.KeyVault.Core`         | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Core.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Core) |
@@ -81,5 +82,5 @@ Below are the packages maintained in this repository.
 
 | Library                  | Package Name                              | NuGet Download |
 | ------------------------ | ----------------------------------------- | -------------- |
-| Batch File Staging       | `Azure.Batch.FileStaging`                 | [![Search](https://img.shields.io/nuget/vpre/Azure.Batch.FileStaging.svg)](https://www.nuget.org/packages/Azure.Batch.FileStaging) |
+| Batch File Staging       | `Microsoft.Azure.Batch.FileStaging`       | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.FileStaging.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch.FileStaging) |
 | Batch File Conventions   | `Microsoft.Azure.Batch.Conventions.Files` | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.Conventions.Files.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch.Conventions.Files) |

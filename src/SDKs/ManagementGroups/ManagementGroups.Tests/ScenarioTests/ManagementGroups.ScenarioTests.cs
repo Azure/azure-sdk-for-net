@@ -136,16 +136,16 @@ namespace ResourceGroups.Tests
                 var entities = managementGroupsClient.Entities.List(groupId);
 
                 Assert.NotNull(entities);
-                Assert.Equal("/providers/Microsoft.Management/managementGroups/TestGroup1", entities.First().Id);
-                Assert.Equal("TestGroup1", entities.First().Name);
-                Assert.Equal("TestGroup1", entities.First().DisplayName);
-                Assert.Equal("/providers/Microsoft.Management/managementGroups", entities.First().Type);
-
-                Assert.NotNull(entities.ElementAt(1));
-                Assert.Equal("/providers/Microsoft.Management/managementGroups/TestGroup1Child1", entities.ElementAt(1).Id);
-                Assert.Equal("TestGroup1Child1", entities.ElementAt(1).Name);
-                Assert.Equal("TestGroup1->Child1", entities.ElementAt(1).DisplayName);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups/TestGroup1", entities.ElementAt(1).Id);
+                Assert.Equal("TestGroup1", entities.ElementAt(1).Name);
+                Assert.Equal("TestGroup1", entities.ElementAt(1).DisplayName);
                 Assert.Equal("/providers/Microsoft.Management/managementGroups", entities.ElementAt(1).Type);
+
+                Assert.NotNull(entities.ElementAt(2));
+                Assert.Equal("/providers/Microsoft.Management/managementGroups/TestGroup1Child1", entities.ElementAt(2).Id);
+                Assert.Equal("TestGroup1Child1", entities.ElementAt(2).Name);
+                Assert.Equal("TestGroup1->Child1", entities.ElementAt(2).DisplayName);
+                Assert.Equal("/providers/Microsoft.Management/managementGroups", entities.ElementAt(2).Type);
             }
         }
 
@@ -261,6 +261,36 @@ namespace ResourceGroups.Tests
                     managementGroupsClient.CheckNameAvailability(new CheckNameAvailabilityRequest(groupName, Type.HyphenMinusprovidersHyphenMinusMicrosoftFullStopManagementHyphenMinusmanagementGroups));
 
                 Assert.False(response.NameAvailable);
+            }
+        }
+
+        [Fact]
+        public void StartTenantBackfill()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var response =
+                    managementGroupsClient.StartTenantBackfill();
+
+                Assert.Equal(Status.Completed, response.Status);
+            }
+        }
+
+        [Fact]
+        public void TenantBackfillStatus()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var managementGroupsClient = ManagementGroupsTestUtilities.GetManagementGroupsApiClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var response =
+                    managementGroupsClient.TenantBackfillStatus();
+
+                Assert.Equal(Status.Completed, response.Status);
             }
         }
     }
