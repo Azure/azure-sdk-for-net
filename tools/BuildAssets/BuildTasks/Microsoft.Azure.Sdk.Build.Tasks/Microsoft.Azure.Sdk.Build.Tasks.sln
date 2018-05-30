@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Sdk.Build.Tasks", "SdkBuildTasks\Microsoft.Azure.Sdk.Build.Tasks.csproj", "{F7170FBA-EB69-4910-9F52-3259E73FC4ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build.Tasks.Tests", "Tests\Build.Tasks.Tests\Build.Tasks.Tests.csproj", "{98FB3C6B-FA06-48AF-A73B-6557A47EFAEC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Build.BootstrapTasks", "BootstrapTasks\Microsoft.Azure.Build.BootstrapTasks.csproj", "{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MsbuildTests", "MsbuildTests", "{27B52FD2-92FC-482C-A3AC-7606F658510F}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\MsbuildTests\BuildTasksTest.BuildProjectTemplates.proj = Tests\MsbuildTests\BuildTasksTest.BuildProjectTemplates.proj
+		Tests\MsbuildTests\PackagingTests.proj = Tests\MsbuildTests\PackagingTests.proj
+		Tests\MsbuildTests\PublishNugetPackageTests.proj = Tests\MsbuildTests\PublishNugetPackageTests.proj
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7170FBA-EB69-4910-9F52-3259E73FC4ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7170FBA-EB69-4910-9F52-3259E73FC4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7170FBA-EB69-4910-9F52-3259E73FC4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7170FBA-EB69-4910-9F52-3259E73FC4ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98FB3C6B-FA06-48AF-A73B-6557A47EFAEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98FB3C6B-FA06-48AF-A73B-6557A47EFAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98FB3C6B-FA06-48AF-A73B-6557A47EFAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98FB3C6B-FA06-48AF-A73B-6557A47EFAEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

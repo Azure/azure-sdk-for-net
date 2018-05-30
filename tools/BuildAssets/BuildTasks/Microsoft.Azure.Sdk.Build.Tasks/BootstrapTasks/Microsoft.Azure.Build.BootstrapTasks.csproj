@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Build.BootstrapTasks</PackageId>
+    <Description>Provides .NET SDK Build bootstrapper tasks</Description>
+    <AssemblyTitle>Microsoft.Azure.Build.BootstrapperTasks</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Build.BootstrapTasks</AssemblyName>
+    <Version>1.0.0</Version>
+  </PropertyGroup>  
+  <PropertyGroup Condition="'$(CIBuild)' == 'true'">
+    <TaskBinaryOutput>bin\$(Configuration)\</TaskBinaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CIBuild)' != 'true'">
+    <TaskBinaryOutput>..\..\..\tasks</TaskBinaryOutput>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <OutputPath>$(TaskBinaryOutput)</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build" Version="15.1.1012" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="15.1.1012" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.1.1012" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.1012" />
+  </ItemGroup>
+  <!-- <Target Name="CopyOutput" AfterTargets="AfterBuild" Condition="'$(CIBuild)' != 'true'"> -->
+	<!-- <Message Text="CIBuild status ... $(CIBuild)"/> -->
+    <!-- <Copy  -->
+      <!-- SourceFiles="$(OutputPath)\$(AssemblyName).dll"  -->
+      <!-- DestinationFiles="..\..\..\..\bootstraptools\taskBinaries\Microsoft.Azure.Build.BootstrapTasks.dll"  -->
+      <!-- ContinueOnError="false" />     -->
+  <!-- </Target> -->
+</Project>
