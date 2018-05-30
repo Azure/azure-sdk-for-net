@@ -2,14 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-
 namespace Fabric.Tests
 {
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Generic delegation handler.

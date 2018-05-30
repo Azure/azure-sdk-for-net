@@ -132,8 +132,7 @@
 
                         // get an empty unbound Task
                         CloudTask hwTask = new CloudTask(id: "multi1", commandline: "hostname");
-                        hwTask.MultiInstanceSettings = new MultiInstanceSettings(3);
-                        hwTask.MultiInstanceSettings.CoordinationCommandLine = "cmd /c set";
+                        hwTask.MultiInstanceSettings = new MultiInstanceSettings("cmd /c set", numberOfInstances: 3);
 
                         // add Task to Job
                         boundJob.AddTask(hwTask);
@@ -230,8 +229,7 @@
 
                         // get an empty unbound Task
                         CloudTask hwTask = new CloudTask(id: "mpi", commandline: @"cmd /c ""%MSMPI_BIN%\mpiexec.exe"" -p 6050 -wdir %AZ_BATCH_TASK_SHARED_DIR%\ Sieve.exe 1000");
-                        hwTask.MultiInstanceSettings = new MultiInstanceSettings(3);
-                        hwTask.MultiInstanceSettings.CoordinationCommandLine = @"cmd /c start cmd /c ""%MSMPI_BIN%\smpd.exe"" -d 3 -p 6050";
+                        hwTask.MultiInstanceSettings = new MultiInstanceSettings(@"cmd /c start cmd /c ""%MSMPI_BIN%\smpd.exe"" -d 3 -p 6050", 3);
                         hwTask.MultiInstanceSettings.CommonResourceFiles = new List<ResourceFile>();
                         hwTask.MultiInstanceSettings.CommonResourceFiles.Add(new ResourceFile("https://manoj123.blob.core.windows.net/mpi/Sieve.exe", "Sieve.exe"));
 
@@ -1057,7 +1055,7 @@
                     const string testName = "Bug1770926_UpdateTask";
                     const string taskId = "Bug1770926_UpdateTask_Task1";
 
-                    string jobId = Microsoft.Azure.Batch.Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-" + testName;
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-" + testName;
                     TaskConstraints defaultConstraints = new TaskConstraints(TimeSpan.MaxValue, TimeSpan.MaxValue, 0);
                     try
                     {
@@ -1123,7 +1121,7 @@
                     }
                     finally
                     {
-                        batchCli.JobOperations.DeleteJob(jobId);
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
                     }
                 }
             };
@@ -1199,5 +1197,52 @@
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
+        [Fact(Skip="Containers take custom images right now")]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
+        public void AddTaskOnContainerPool_TaskIsExecuted()
+        {
+            Action test = () =>
+            {
+                using (BatchClient batchCli = TestUtilities.OpenBatchClientAsync(TestUtilities.GetCredentialsFromEnvironment()).Result)
+                {
+                    const string taskId = "t1";
+                    const string poolId = nameof(AddTaskOnContainerPool_TaskIsExecuted);
+                    string jobId = Constants.DefaultConveniencePrefix + TestUtilities.GetMyName() + "-" + nameof(AddTaskOnContainerPool_TaskIsExecuted);
+                    try
+                    {
+                        var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new VirtualMachineConfiguration(
+                                imageDetails.ImageReference,
+                                imageDetails.NodeAgentSku.Id)
+                            {
+                                ContainerConfiguration = new ContainerConfiguration()
+                                {
+                                    ContainerImageNames = new List<string> {"busybox"}
+                                }
+                            });
+                        pool.Commit();
+
+                        pool = PoolFixture.WaitForPoolAllocation(batchCli, poolId);
+
+                        CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation() {PoolId = poolId});
+                        job.Commit();
+
+                        var task = new CloudTask(taskId, "echo hello");
+                        batchCli.JobOperations.AddTask(jobId, task);
+                    }
+                    finally
+                    {
+                        TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                        TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).Wait();
+                    }
+                }
+            };
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
     }
 }

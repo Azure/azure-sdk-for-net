@@ -59,9 +59,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             searchClient.DataSources.Create(dataSource);
         }
 
-        public Indexer CreateTestIndexer()
-        {
-            return new Indexer(SearchTestUtilities.GenerateName(), DataSourceName, TargetIndexName)
+        public Indexer CreateTestIndexer() =>
+            new Indexer(SearchTestUtilities.GenerateName(), DataSourceName, TargetIndexName)
             {
                 // We can't test startTime because it's an absolute time that must be within 24 hours of the current
                 // time. That doesn't play well with recorded mock payloads.
@@ -77,7 +76,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     new FieldMapping("history", FieldMappingFunction.JsonArrayToStringCollection())
                 }
             };
-        }
 
         public Indexer MutateIndexer(Indexer indexer)
         {

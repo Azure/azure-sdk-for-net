@@ -1,7 +1,7 @@
 {
     "Name": "InboundNatPool",
     "ProtocolName": "Models.InboundNATPool",
-    "Comment": "A inbound NAT pool that can be used to address specific ports on compute nodes in a Batch pool externally.",
+    "SummaryComment": "A inbound NAT pool that can be used to address specific ports on compute nodes in a Batch pool externally.",
     "IsUsedInCollections": true,
     "Properties": [
         {

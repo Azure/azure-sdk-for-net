@@ -30,24 +30,24 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor<int?>("MaxTaskRetryCount", BindingAccess.Read | BindingAccess.Write);
-                this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("MaxWallClockTime", BindingAccess.Read | BindingAccess.Write);
-                this.RetentionTimeProperty = this.CreatePropertyAccessor<TimeSpan?>("RetentionTime", BindingAccess.Read | BindingAccess.Write);
+                this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor<int?>(nameof(MaxTaskRetryCount), BindingAccess.Read | BindingAccess.Write);
+                this.MaxWallClockTimeProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(MaxWallClockTime), BindingAccess.Read | BindingAccess.Write);
+                this.RetentionTimeProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(RetentionTime), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.TaskConstraints protocolObject) : base(BindingState.Bound)
             {
                 this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxTaskRetryCount,
-                    "MaxTaskRetryCount",
+                    nameof(MaxTaskRetryCount),
                     BindingAccess.Read | BindingAccess.Write);
                 this.MaxWallClockTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxWallClockTime,
-                    "MaxWallClockTime",
+                    nameof(MaxWallClockTime),
                     BindingAccess.Read | BindingAccess.Write);
                 this.RetentionTimeProperty = this.CreatePropertyAccessor(
                     protocolObject.RetentionTime,
-                    "RetentionTime",
+                    nameof(RetentionTime),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -86,6 +86,14 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets or sets the maximum number of retries for the task.
         /// </summary>
+        /// <remarks>
+        /// Note that this value specifically controls the number of retries for the task executable due to a nonzero exit 
+        /// code. The Batch service will try the task once, and may then retry up to this limit. For example, if the maximum 
+        /// retry count is 3, Batch tries the task up to 4 times (one initial try and 3 retries). If the maximum retry count 
+        /// is 0, the Batch service does not retry the task after the first attempt. If the maximum retry count is -1, the 
+        /// Batch service retries the task without limit. Resource files and application packages are only downloaded again 
+        /// if the task is retried on a new compute node.
+        /// </remarks>
         public int? MaxTaskRetryCount
         {
             get { return this.propertyContainer.MaxTaskRetryCountProperty.Value; }

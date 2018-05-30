@@ -29,19 +29,19 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.AutoPoolSpecificationProperty = this.CreatePropertyAccessor<AutoPoolSpecification>("AutoPoolSpecification", BindingAccess.Read | BindingAccess.Write);
-                this.PoolIdProperty = this.CreatePropertyAccessor<string>("PoolId", BindingAccess.Read | BindingAccess.Write);
+                this.AutoPoolSpecificationProperty = this.CreatePropertyAccessor<AutoPoolSpecification>(nameof(AutoPoolSpecification), BindingAccess.Read | BindingAccess.Write);
+                this.PoolIdProperty = this.CreatePropertyAccessor<string>(nameof(PoolId), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.PoolInformation protocolObject) : base(BindingState.Bound)
             {
                 this.AutoPoolSpecificationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AutoPoolSpecification, o => new AutoPoolSpecification(o)),
-                    "AutoPoolSpecification",
+                    nameof(AutoPoolSpecification),
                     BindingAccess.Read | BindingAccess.Write);
                 this.PoolIdProperty = this.CreatePropertyAccessor(
                     protocolObject.PoolId,
-                    "PoolId",
+                    nameof(PoolId),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

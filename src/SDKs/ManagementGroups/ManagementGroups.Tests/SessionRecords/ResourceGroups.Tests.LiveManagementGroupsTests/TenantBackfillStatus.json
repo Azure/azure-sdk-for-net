@@ -1,0 +1,85 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Management/tenantBackfillStatus?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC90ZW5hbnRCYWNrZmlsbFN0YXR1cz9hcGktdmVyc2lvbj0yMDE4LTAzLTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "63e5218a-9905-42e8-a159-3089a867692d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n  \"status\": \"Completed\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 22 May 2018 03:17:52 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "eastus:9cf878ac-443d-4a6e-b052-2e0c0c87685d"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.787"
+        ],
+        "request-id": [
+          "16193ee7-8bf2-471b-9621-72fec1cd8a4c"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "0a987bd6-0c36-44b7-9f08-9383fdb6867a"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20180522T031752Z:0a987bd6-0c36-44b7-9f08-9383fdb6867a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "394ae65d-9e71-4462-930f-3332dedf845c"
+  }
+}

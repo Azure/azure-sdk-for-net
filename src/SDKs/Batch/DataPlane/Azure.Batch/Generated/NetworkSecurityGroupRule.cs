@@ -22,10 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class NetworkSecurityGroupRule : ITransportObjectProvider<Models.NetworkSecurityGroupRule>, IPropertyMetadata
     {
-        private readonly Common.NetworkSecurityGroupRuleAccess access;
-        private readonly int priority;
-        private readonly string sourceAddressPrefix;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="NetworkSecurityGroupRule"/> class.
@@ -38,16 +34,16 @@ namespace Microsoft.Azure.Batch
             Common.NetworkSecurityGroupRuleAccess access,
             string sourceAddressPrefix)
         {
-            this.priority = priority;
-            this.access = access;
-            this.sourceAddressPrefix = sourceAddressPrefix;
+            this.Priority = priority;
+            this.Access = access;
+            this.SourceAddressPrefix = sourceAddressPrefix;
         }
 
         internal NetworkSecurityGroupRule(Models.NetworkSecurityGroupRule protocolObject)
         {
-            this.access = UtilitiesInternal.MapEnum<Models.NetworkSecurityGroupRuleAccess, Common.NetworkSecurityGroupRuleAccess>(protocolObject.Access);
-            this.priority = protocolObject.Priority;
-            this.sourceAddressPrefix = protocolObject.SourceAddressPrefix;
+            this.Access = UtilitiesInternal.MapEnum<Models.NetworkSecurityGroupRuleAccess, Common.NetworkSecurityGroupRuleAccess>(protocolObject.Access);
+            this.Priority = protocolObject.Priority;
+            this.SourceAddressPrefix = protocolObject.SourceAddressPrefix;
         }
 
         #endregion Constructors
@@ -57,10 +53,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the action that should be taken for a specified IP address, subnet range or tag.
         /// </summary>
-        public Common.NetworkSecurityGroupRuleAccess Access
-        {
-            get { return this.access; }
-        }
+        public Common.NetworkSecurityGroupRuleAccess Access { get; }
 
         /// <summary>
         /// Gets the priority for this rule.
@@ -70,10 +63,7 @@ namespace Microsoft.Azure.Batch
         /// the priority. For example, rules could be specified with order numbers of 150, 250, and 350. The rule with the 
         /// order number of 150 takes precedence over the rule that has an order of 250. Allowed priorities are 150 to 3500.
         /// </remarks>
-        public int Priority
-        {
-            get { return this.priority; }
-        }
+        public int Priority { get; }
 
         /// <summary>
         /// Gets the source address prefix or tag to match for the rule.
@@ -82,10 +72,7 @@ namespace Microsoft.Azure.Batch
         /// Valid values are a single IP address (i.e. 10.10.10.10), IP subnet (i.e. 192.168.1.0/24), default tag, or * (for 
         /// all addresses).
         /// </remarks>
-        public string SourceAddressPrefix
-        {
-            get { return this.sourceAddressPrefix; }
-        }
+        public string SourceAddressPrefix { get; }
 
         #endregion // NetworkSecurityGroupRule
 

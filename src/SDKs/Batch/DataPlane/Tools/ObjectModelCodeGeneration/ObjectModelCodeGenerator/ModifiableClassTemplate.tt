@@ -8,8 +8,18 @@
 <#@ import namespace="CodeGenerationLibrary" #>
 <#@ parameter type="CodeGenerationLibrary.ObjectModelTypeData" name="type" #>
     /// <summary>
-<#= CommentUtilities.FormatTripleSlashComment(type.Comment, CommentUtilities.Indentation.TypeLevel) #>
+<#= CommentUtilities.FormatTripleSlashComment(type.SummaryComment, CommentUtilities.Indentation.TypeLevel) #>
     /// </summary>
+<#
+if (!string.IsNullOrEmpty(type.RemarksComment))
+{
+#>
+    /// <remarks>
+<#= CommentUtilities.FormatTripleSlashComment(type.RemarksComment, CommentUtilities.Indentation.TypeLevel) #>
+    /// </remarks>
+<#
+}
+#>
     public partial class <#= type.Name #> :<# if (type.ShouldDefineGetTransportObject) { #> ITransportObjectProvider<<#= type.TransportObjectTypeName #>>,<# } if (type.IsTopLevelObject) { #> IInheritedBehaviors,<# } #> IPropertyMetadata
     {
         private class PropertyContainer : PropertyCollection
@@ -31,7 +41,7 @@ if (type.UnboundProperties.Any())
     foreach (var property in type.OrderedPublicProperties.Select(p => p.Key))
     {
 #>
-                this.<#= property.PropertyContainerPropertyName #> = this.CreatePropertyAccessor<<#= property.Type #>>("<#= property.Name #>", <#= CodeGenerationUtilities.GenerateBindingAccessString(property.UnboundAccess) #>);
+                this.<#= property.PropertyContainerPropertyName #> = this.CreatePropertyAccessor<<#= property.Type #>>(nameof(<#= property.Name #>), <#= CodeGenerationUtilities.GenerateBindingAccessString(property.UnboundAccess) #>);
 <#
     }
 #>
@@ -53,7 +63,7 @@ if (type.BoundProperties.Any())
 #>
                 this.<#= kvp.Key.PropertyContainerPropertyName #> = this.CreatePropertyAccessor(
                     <#= protocolObjectGetter #>,
-                    "<#= kvp.Key.Name #>",
+                    nameof(<#= kvp.Key.Name #>),
                     <#= CodeGenerationUtilities.GenerateBindingAccessString(kvp.Key.BoundAccess) #>);
 <#
         }
@@ -61,7 +71,7 @@ if (type.BoundProperties.Any())
         {
 #>
                 this.<#= kvp.Key.PropertyContainerPropertyName #> = this.CreatePropertyAccessor<<#= kvp.Key.Type #>>(
-                    "<#= kvp.Key.Name #>",
+                    nameof(<#= kvp.Key.Name #>),
                     <#= CodeGenerationUtilities.GenerateBindingAccessString(kvp.Key.BoundAccess) #>);
 <#
         }

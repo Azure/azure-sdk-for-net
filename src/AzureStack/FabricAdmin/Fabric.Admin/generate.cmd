@@ -4,4 +4,4 @@
 ::
 
 @echo off
-call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/fabric latest Azure current azure-rest-api-specs %CD%
+call %~dp0..\..\..\..\tools\generate.cmd azsadmin/resource-manager/fabric latest Azure master azure-rest-api-specs %CD%

@@ -26,8 +26,7 @@ namespace AzureRedisCache.Tests
             fixture = data;
         }
         
-        /*
-        [Fact(Skip = "Missing cleanup.json file")]
+        [Fact]
         public void CreateUpdateDeleteTest()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -37,7 +36,7 @@ namespace AzureRedisCache.Tests
                 var responseCreate = _client.Redis.Create(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
                                         parameters: new RedisCreateParameters
                                         {
-                                            Location = fixture.Location,
+                                            Location = RedisCacheManagementHelper.Location,
                                             Sku = new Sku()
                                             {
                                                 Name = SkuName.Basic,
@@ -47,7 +46,7 @@ namespace AzureRedisCache.Tests
                                         });
 
                 Assert.Contains(fixture.RedisCacheName, responseCreate.Id);
-                Assert.Equal(fixture.Location, responseCreate.Location);
+                Assert.Equal(RedisCacheManagementHelper.Location, responseCreate.Location);
                 Assert.Equal(fixture.RedisCacheName, responseCreate.Name);
                 Assert.Equal("Microsoft.Cache/Redis", responseCreate.Type);
 
@@ -77,7 +76,7 @@ namespace AzureRedisCache.Tests
                                         });
 
                 Assert.Contains(fixture.RedisCacheName, responseUpdate.Id);
-                Assert.Equal(fixture.Location, responseUpdate.Location);
+                Assert.Equal(RedisCacheManagementHelper.Location, responseUpdate.Location);
                 Assert.Equal(fixture.RedisCacheName, responseUpdate.Name);
                 Assert.Equal("Microsoft.Cache/Redis", responseUpdate.Type);
 
@@ -94,6 +93,5 @@ namespace AzureRedisCache.Tests
                 _client.Redis.Delete(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
             }
         }
-        */
     }
 }

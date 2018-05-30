@@ -22,13 +22,11 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ComputeNodeEndpointConfiguration : IPropertyMetadata
     {
-        private readonly IReadOnlyList<InboundEndpoint> inboundEndpoints;
-
         #region Constructors
 
         internal ComputeNodeEndpointConfiguration(Models.ComputeNodeEndpointConfiguration protocolObject)
         {
-            this.inboundEndpoints = InboundEndpoint.ConvertFromProtocolCollectionReadOnly(protocolObject.InboundEndpoints);
+            this.InboundEndpoints = InboundEndpoint.ConvertFromProtocolCollectionReadOnly(protocolObject.InboundEndpoints);
         }
 
         #endregion Constructors
@@ -38,10 +36,7 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the list of inbound endpoints that are accessible on the compute node.
         /// </summary>
-        public IReadOnlyList<InboundEndpoint> InboundEndpoints
-        {
-            get { return this.inboundEndpoints; }
-        }
+        public IReadOnlyList<InboundEndpoint> InboundEndpoints { get; }
 
         #endregion // ComputeNodeEndpointConfiguration
 

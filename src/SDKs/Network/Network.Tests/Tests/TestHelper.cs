@@ -54,8 +54,8 @@ namespace Networks.Tests
         {
                 var peering = new ExpressRouteCircuitPeering()
                 {
-                    Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
-                    PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
+                    Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
+                    PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                     PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                     VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
                     PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
@@ -97,8 +97,8 @@ namespace Networks.Tests
 
             var peering = new ExpressRouteCircuitPeering()
             {
-                Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
-                PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
+                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
+                PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 VlanId = Convert.ToInt32(ExpressRouteTests.MS_VlanId),
                 Ipv6PeeringConfig = ipv6Peering
@@ -118,8 +118,8 @@ namespace Networks.Tests
 
             var peering = new ExpressRouteCircuitPeering()
             {
-                Name = ExpressRouteCircuitPeeringType.MicrosoftPeering.ToString(),
-                PeeringType = ExpressRouteCircuitPeeringType.MicrosoftPeering,
+                Name = ExpressRoutePeeringType.MicrosoftPeering.ToString(),
+                PeeringType = ExpressRoutePeeringType.MicrosoftPeering,
                 PeerASN = Convert.ToInt32(ExpressRouteTests.MS_PeerASN),
                 PrimaryPeerAddressPrefix = ExpressRouteTests.MS_PrimaryPrefix,
                 SecondaryPeerAddressPrefix = ExpressRouteTests.MS_SecondaryPrefix,

@@ -21,11 +21,21 @@ namespace Microsoft.Azure.Batch
     /// A task which is run when a compute node joins a pool in the Azure Batch service, or when the compute node is rebooted 
     /// or reimaged.
     /// </summary>
+    /// <remarks>
+    /// Batch will retry tasks when a recovery operation is triggered on a compute node. Examples of recovery operations 
+    /// include (but are not limited to) when an unhealthy compute node is rebooted or a compute node disappeared due to 
+    /// host failure. Retries due to recovery operations are independent of and are not counted against the <see cref="TaskConstraints.MaxTaskRetryCount" 
+    /// />. Even if the <see cref="TaskConstraints.MaxTaskRetryCount" /> is 0, an internal retry due to a recovery operation 
+    /// may occur. Because of this, all tasks should be idempotent. This means tasks need to tolerate being interrupted and 
+    /// restarted without causing any corruption or duplicate data. The best practice for long running tasks is to use some 
+    /// form of checkpointing.
+    /// </remarks>
     public partial class StartTask : ITransportObjectProvider<Models.StartTask>, IPropertyMetadata
     {
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<string> CommandLineProperty;
+            public readonly PropertyAccessor<TaskContainerSettings> ContainerSettingsProperty;
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<int?> MaxTaskRetryCountProperty;
             public readonly PropertyAccessor<IList<ResourceFile>> ResourceFilesProperty;
@@ -34,39 +44,44 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
-                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
-                this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor<int?>("MaxTaskRetryCount", BindingAccess.Read | BindingAccess.Write);
-                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
-                this.WaitForSuccessProperty = this.CreatePropertyAccessor<bool?>("WaitForSuccess", BindingAccess.Read | BindingAccess.Write);
+                this.CommandLineProperty = this.CreatePropertyAccessor<string>(nameof(CommandLine), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>(nameof(ContainerSettings), BindingAccess.Read | BindingAccess.Write);
+                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(EnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
+                this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor<int?>(nameof(MaxTaskRetryCount), BindingAccess.Read | BindingAccess.Write);
+                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(ResourceFiles), BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>(nameof(UserIdentity), BindingAccess.Read | BindingAccess.Write);
+                this.WaitForSuccessProperty = this.CreatePropertyAccessor<bool?>(nameof(WaitForSuccess), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.StartTask protocolObject) : base(BindingState.Bound)
             {
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
-                    "CommandLine",
+                    nameof(CommandLine),
                     BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
+                    nameof(ContainerSettings),
+                    BindingAccess.Read);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.EnvironmentSettings),
-                    "EnvironmentSettings",
+                    nameof(EnvironmentSettings),
                     BindingAccess.Read | BindingAccess.Write);
                 this.MaxTaskRetryCountProperty = this.CreatePropertyAccessor(
                     protocolObject.MaxTaskRetryCount,
-                    "MaxTaskRetryCount",
+                    nameof(MaxTaskRetryCount),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
-                    "ResourceFiles",
+                    nameof(ResourceFiles),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
-                    "UserIdentity",
+                    nameof(UserIdentity),
                     BindingAccess.Read | BindingAccess.Write);
                 this.WaitForSuccessProperty = this.CreatePropertyAccessor(
                     protocolObject.WaitForSuccess,
-                    "WaitForSuccess",
+                    nameof(WaitForSuccess),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -101,12 +116,28 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment 
         /// variable expansion. If you want to take advantage of such features, you should invoke the shell in the command 
-        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line 
+        /// refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch 
+        /// provided environment variables (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         public string CommandLine
         {
             get { return this.propertyContainer.CommandLineProperty.Value; }
             set { this.propertyContainer.CommandLineProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for the container under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch 
+        /// directories on the node) are mapped into the container, all task environment variables are mapped into the container, 
+        /// and the task command line is executed in the container.
+        /// </remarks>
+        public TaskContainerSettings ContainerSettings
+        {
+            get { return this.propertyContainer.ContainerSettingsProperty.Value; }
+            set { this.propertyContainer.ContainerSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -195,6 +226,7 @@ namespace Microsoft.Azure.Batch
             Models.StartTask result = new Models.StartTask()
             {
                 CommandLine = this.CommandLine,
+                ContainerSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerSettings, (o) => o.GetTransportObject()),
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
                 MaxTaskRetryCount = this.MaxTaskRetryCount,
                 ResourceFiles = UtilitiesInternal.ConvertToProtocolCollection(this.ResourceFiles),

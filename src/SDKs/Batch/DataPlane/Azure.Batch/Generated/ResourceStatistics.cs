@@ -22,37 +22,23 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ResourceStatistics : IPropertyMetadata
     {
-        private readonly double averageCpuPercentage;
-        private readonly double averageDiskGiB;
-        private readonly double averageMemoryGiB;
-        private readonly double diskReadGiB;
-        private readonly long diskReadIOps;
-        private readonly double diskWriteGiB;
-        private readonly long diskWriteIOps;
-        private readonly DateTime lastUpdateTime;
-        private readonly double networkReadGiB;
-        private readonly double networkWriteGiB;
-        private readonly double peakDiskGiB;
-        private readonly double peakMemoryGiB;
-        private readonly DateTime startTime;
-
         #region Constructors
 
         internal ResourceStatistics(Models.ResourceStatistics protocolObject)
         {
-            this.averageCpuPercentage = protocolObject.AvgCPUPercentage;
-            this.averageDiskGiB = protocolObject.AvgDiskGiB;
-            this.averageMemoryGiB = protocolObject.AvgMemoryGiB;
-            this.diskReadGiB = protocolObject.DiskReadGiB;
-            this.diskReadIOps = protocolObject.DiskReadIOps;
-            this.diskWriteGiB = protocolObject.DiskWriteGiB;
-            this.diskWriteIOps = protocolObject.DiskWriteIOps;
-            this.lastUpdateTime = protocolObject.LastUpdateTime;
-            this.networkReadGiB = protocolObject.NetworkReadGiB;
-            this.networkWriteGiB = protocolObject.NetworkWriteGiB;
-            this.peakDiskGiB = protocolObject.PeakDiskGiB;
-            this.peakMemoryGiB = protocolObject.PeakMemoryGiB;
-            this.startTime = protocolObject.StartTime;
+            this.AverageCpuPercentage = protocolObject.AvgCPUPercentage;
+            this.AverageDiskGiB = protocolObject.AvgDiskGiB;
+            this.AverageMemoryGiB = protocolObject.AvgMemoryGiB;
+            this.DiskReadGiB = protocolObject.DiskReadGiB;
+            this.DiskReadIOps = protocolObject.DiskReadIOps;
+            this.DiskWriteGiB = protocolObject.DiskWriteGiB;
+            this.DiskWriteIOps = protocolObject.DiskWriteIOps;
+            this.LastUpdateTime = protocolObject.LastUpdateTime;
+            this.NetworkReadGiB = protocolObject.NetworkReadGiB;
+            this.NetworkWriteGiB = protocolObject.NetworkWriteGiB;
+            this.PeakDiskGiB = protocolObject.PeakDiskGiB;
+            this.PeakMemoryGiB = protocolObject.PeakMemoryGiB;
+            this.StartTime = protocolObject.StartTime;
         }
 
         #endregion Constructors
@@ -62,107 +48,68 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the average CPU usage across all compute nodes in the pool (percentage per compute node).
         /// </summary>
-        public double AverageCpuPercentage
-        {
-            get { return this.averageCpuPercentage; }
-        }
+        public double AverageCpuPercentage { get; }
 
         /// <summary>
         /// Gets the average used disk space in gibibytes across all compute nodes in the pool.
         /// </summary>
-        public double AverageDiskGiB
-        {
-            get { return this.averageDiskGiB; }
-        }
+        public double AverageDiskGiB { get; }
 
         /// <summary>
         /// Gets the average memory usage in gibibytes across all compute nodes in the pool.
         /// </summary>
-        public double AverageMemoryGiB
-        {
-            get { return this.averageMemoryGiB; }
-        }
+        public double AverageMemoryGiB { get; }
 
         /// <summary>
         /// Gets the total amount of data in gibibytes of disk reads across all compute nodes in the pool.
         /// </summary>
-        public double DiskReadGiB
-        {
-            get { return this.diskReadGiB; }
-        }
+        public double DiskReadGiB { get; }
 
         /// <summary>
         /// Gets the total number of disk read operations across all compute nodes in the pool.
         /// </summary>
-        public long DiskReadIOps
-        {
-            get { return this.diskReadIOps; }
-        }
+        public long DiskReadIOps { get; }
 
         /// <summary>
         /// Gets the total amount of data in gibibytes of disk writes across all compute nodes in the pool.
         /// </summary>
-        public double DiskWriteGiB
-        {
-            get { return this.diskWriteGiB; }
-        }
+        public double DiskWriteGiB { get; }
 
         /// <summary>
         /// Gets the total number of disk write operations across all compute nodes in the pool.
         /// </summary>
-        public long DiskWriteIOps
-        {
-            get { return this.diskWriteIOps; }
-        }
+        public long DiskWriteIOps { get; }
 
         /// <summary>
         /// Gets the time at which the statistics were last updated. All statistics are limited to the range between <see 
         /// cref="StartTime"/> and this value.
         /// </summary>
-        public DateTime LastUpdateTime
-        {
-            get { return this.lastUpdateTime; }
-        }
+        public DateTime LastUpdateTime { get; }
 
         /// <summary>
         /// Gets the total amount of data in gibibytes of network reads across all compute nodes in the pool.
         /// </summary>
-        public double NetworkReadGiB
-        {
-            get { return this.networkReadGiB; }
-        }
+        public double NetworkReadGiB { get; }
 
         /// <summary>
         /// Gets the total amount of data in gibibytes of network writes across all compute nodes in the pool.
         /// </summary>
-        public double NetworkWriteGiB
-        {
-            get { return this.networkWriteGiB; }
-        }
+        public double NetworkWriteGiB { get; }
 
         /// <summary>
         /// Gets the peak used disk space in gibibytes across all compute nodes in the pool.
         /// </summary>
-        public double PeakDiskGiB
-        {
-            get { return this.peakDiskGiB; }
-        }
+        public double PeakDiskGiB { get; }
 
         /// <summary>
         /// Gets the peak memory usage in gibibytes across all compute nodes in the pool.
         /// </summary>
-        public double PeakMemoryGiB
-        {
-            get { return this.peakMemoryGiB; }
-        }
+        public double PeakMemoryGiB { get; }
 
         /// <summary>
         /// Gets the start time of the time range covered by the statistics.
         /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+        public DateTime StartTime { get; }
 
         #endregion // ResourceStatistics
 

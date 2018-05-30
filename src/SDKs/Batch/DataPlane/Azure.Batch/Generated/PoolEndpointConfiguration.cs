@@ -22,8 +22,6 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class PoolEndpointConfiguration : ITransportObjectProvider<Models.PoolEndpointConfiguration>, IPropertyMetadata
     {
-        private readonly IReadOnlyList<InboundNatPool> inboundNatPools;
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolEndpointConfiguration"/> class.
@@ -32,12 +30,12 @@ namespace Microsoft.Azure.Batch
         public PoolEndpointConfiguration(
             IReadOnlyList<InboundNatPool> inboundNatPools)
         {
-            this.inboundNatPools = inboundNatPools;
+            this.InboundNatPools = inboundNatPools;
         }
 
         internal PoolEndpointConfiguration(Models.PoolEndpointConfiguration protocolObject)
         {
-            this.inboundNatPools = InboundNatPool.ConvertFromProtocolCollectionReadOnly(protocolObject.InboundNATPools);
+            this.InboundNatPools = InboundNatPool.ConvertFromProtocolCollectionReadOnly(protocolObject.InboundNATPools);
         }
 
         #endregion Constructors
@@ -50,10 +48,7 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The maximum number of inbound NAT pools per Batch pool is 5.
         /// </remarks>
-        public IReadOnlyList<InboundNatPool> InboundNatPools
-        {
-            get { return this.inboundNatPools; }
-        }
+        public IReadOnlyList<InboundNatPool> InboundNatPools { get; }
 
         #endregion // PoolEndpointConfiguration
 

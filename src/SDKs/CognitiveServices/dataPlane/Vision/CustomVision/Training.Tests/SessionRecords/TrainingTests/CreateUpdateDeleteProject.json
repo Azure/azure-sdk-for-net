@@ -1,0 +1,120 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/customvision/v2.0/Training/projects?name=Test%20Project&description=This%20is%20a%20test%20project",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3QmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjBwcm9qZWN0",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"80278e0c-88a9-45fc-849b-e5df1b31fe75\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"useNegativeSet\": true,\r\n    \"classificationType\": \"MultiLabel\",\r\n    \"detectionParameters\": null\r\n  },\r\n  \"created\": \"2018-04-25T20:54:48.1533333\",\r\n  \"lastModified\": \"2018-04-25T20:54:48.1533333\",\r\n  \"thumbnailUri\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "357"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Wed, 25 Apr 2018 20:54:48 GMT"
+        ],
+        "apim-request-id": [
+          "ad29d7a7-5ca1-4f02-89b1-ff3c1e930fe6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/customvision/v2.0/Training/projects/80278e0c-88a9-45fc-849b-e5df1b31fe75",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzLzgwMjc4ZTBjLTg4YTktNDVmYy04NDliLWU1ZGYxYjMxZmU3NQ==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"name\": \"Another Name\",\r\n  \"description\": \"Updated Project Description\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "79"
+        ],
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"80278e0c-88a9-45fc-849b-e5df1b31fe75\",\r\n  \"name\": \"Another Name\",\r\n  \"description\": \"Updated Project Description\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"useNegativeSet\": true,\r\n    \"classificationType\": \"MultiLabel\",\r\n    \"detectionParameters\": null\r\n  },\r\n  \"created\": \"2018-04-25T20:54:48.1533333\",\r\n  \"lastModified\": \"2018-04-25T20:54:48.3320249\",\r\n  \"thumbnailUri\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "362"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Wed, 25 Apr 2018 20:54:48 GMT"
+        ],
+        "apim-request-id": [
+          "f2bd3fe3-fce2-45b3-bc2e-9b83ddc34cd4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/customvision/v2.0/Training/projects/80278e0c-88a9-45fc-849b-e5df1b31fe75",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzLzgwMjc4ZTBjLTg4YTktNDVmYy04NDliLWU1ZGYxYjMxZmU3NQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26011.01",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Date": [
+          "Wed, 25 Apr 2018 20:54:48 GMT"
+        ],
+        "apim-request-id": [
+          "5ea7f5c2-ac14-49ef-adfd-2e4cc383493f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

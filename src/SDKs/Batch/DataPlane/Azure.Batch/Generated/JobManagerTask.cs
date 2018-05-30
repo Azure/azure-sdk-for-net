@@ -18,8 +18,17 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// Represents an Azure Batch JobManager task. 
+    /// Represents an Azure Batch JobManager task.
     /// </summary>
+    /// <remarks>
+    /// Batch will retry tasks when a recovery operation is triggered on a compute node. Examples of recovery operations 
+    /// include (but are not limited to) when an unhealthy compute node is rebooted or a compute node disappeared due to 
+    /// host failure. Retries due to recovery operations are independent of and are not counted against the <see cref="TaskConstraints.MaxTaskRetryCount" 
+    /// />. Even if the <see cref="TaskConstraints.MaxTaskRetryCount" /> is 0, an internal retry due to a recovery operation 
+    /// may occur. Because of this, all tasks should be idempotent. This means tasks need to tolerate being interrupted and 
+    /// restarted without causing any corruption or duplicate data. The best practice for long running tasks is to use some 
+    /// form of checkpointing.
+    /// </remarks>
     public partial class JobManagerTask : ITransportObjectProvider<Models.JobManagerTask>, IPropertyMetadata
     {
         private class PropertyContainer : PropertyCollection
@@ -29,6 +38,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<AuthenticationTokenSettings> AuthenticationTokenSettingsProperty;
             public readonly PropertyAccessor<string> CommandLineProperty;
             public readonly PropertyAccessor<TaskConstraints> ConstraintsProperty;
+            public readonly PropertyAccessor<TaskContainerSettings> ContainerSettingsProperty;
             public readonly PropertyAccessor<string> DisplayNameProperty;
             public readonly PropertyAccessor<IList<EnvironmentSetting>> EnvironmentSettingsProperty;
             public readonly PropertyAccessor<string> IdProperty;
@@ -40,74 +50,79 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor<bool?>("AllowLowPriorityNode", BindingAccess.Read | BindingAccess.Write);
-                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>("ApplicationPackageReferences", BindingAccess.Read | BindingAccess.Write);
-                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>("AuthenticationTokenSettings", BindingAccess.Read | BindingAccess.Write);
-                this.CommandLineProperty = this.CreatePropertyAccessor<string>("CommandLine", BindingAccess.Read | BindingAccess.Write);
-                this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>("Constraints", BindingAccess.Read | BindingAccess.Write);
-                this.DisplayNameProperty = this.CreatePropertyAccessor<string>("DisplayName", BindingAccess.Read | BindingAccess.Write);
-                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>("EnvironmentSettings", BindingAccess.Read | BindingAccess.Write);
-                this.IdProperty = this.CreatePropertyAccessor<string>("Id", BindingAccess.Read | BindingAccess.Write);
-                this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>("KillJobOnCompletion", BindingAccess.Read | BindingAccess.Write);
-                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>("OutputFiles", BindingAccess.Read | BindingAccess.Write);
-                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>("ResourceFiles", BindingAccess.Read | BindingAccess.Write);
-                this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>("RunExclusive", BindingAccess.Read | BindingAccess.Write);
-                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>("UserIdentity", BindingAccess.Read | BindingAccess.Write);
+                this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor<bool?>(nameof(AllowLowPriorityNode), BindingAccess.Read | BindingAccess.Write);
+                this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor<IList<ApplicationPackageReference>>(nameof(ApplicationPackageReferences), BindingAccess.Read | BindingAccess.Write);
+                this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor<AuthenticationTokenSettings>(nameof(AuthenticationTokenSettings), BindingAccess.Read | BindingAccess.Write);
+                this.CommandLineProperty = this.CreatePropertyAccessor<string>(nameof(CommandLine), BindingAccess.Read | BindingAccess.Write);
+                this.ConstraintsProperty = this.CreatePropertyAccessor<TaskConstraints>(nameof(Constraints), BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor<TaskContainerSettings>(nameof(ContainerSettings), BindingAccess.Read | BindingAccess.Write);
+                this.DisplayNameProperty = this.CreatePropertyAccessor<string>(nameof(DisplayName), BindingAccess.Read | BindingAccess.Write);
+                this.EnvironmentSettingsProperty = this.CreatePropertyAccessor<IList<EnvironmentSetting>>(nameof(EnvironmentSettings), BindingAccess.Read | BindingAccess.Write);
+                this.IdProperty = this.CreatePropertyAccessor<string>(nameof(Id), BindingAccess.Read | BindingAccess.Write);
+                this.KillJobOnCompletionProperty = this.CreatePropertyAccessor<bool?>(nameof(KillJobOnCompletion), BindingAccess.Read | BindingAccess.Write);
+                this.OutputFilesProperty = this.CreatePropertyAccessor<IList<OutputFile>>(nameof(OutputFiles), BindingAccess.Read | BindingAccess.Write);
+                this.ResourceFilesProperty = this.CreatePropertyAccessor<IList<ResourceFile>>(nameof(ResourceFiles), BindingAccess.Read | BindingAccess.Write);
+                this.RunExclusiveProperty = this.CreatePropertyAccessor<bool?>(nameof(RunExclusive), BindingAccess.Read | BindingAccess.Write);
+                this.UserIdentityProperty = this.CreatePropertyAccessor<UserIdentity>(nameof(UserIdentity), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.JobManagerTask protocolObject) : base(BindingState.Bound)
             {
                 this.AllowLowPriorityNodeProperty = this.CreatePropertyAccessor(
                     protocolObject.AllowLowPriorityNode,
-                    "AllowLowPriorityNode",
+                    nameof(AllowLowPriorityNode),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ApplicationPackageReferencesProperty = this.CreatePropertyAccessor(
                     ApplicationPackageReference.ConvertFromProtocolCollection(protocolObject.ApplicationPackageReferences),
-                    "ApplicationPackageReferences",
+                    nameof(ApplicationPackageReferences),
                     BindingAccess.Read | BindingAccess.Write);
                 this.AuthenticationTokenSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.AuthenticationTokenSettings, o => new AuthenticationTokenSettings(o)),
-                    "AuthenticationTokenSettings",
+                    nameof(AuthenticationTokenSettings),
                     BindingAccess.Read | BindingAccess.Write);
                 this.CommandLineProperty = this.CreatePropertyAccessor(
                     protocolObject.CommandLine,
-                    "CommandLine",
+                    nameof(CommandLine),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ConstraintsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.Constraints, o => new TaskConstraints(o)),
-                    "Constraints",
+                    nameof(Constraints),
                     BindingAccess.Read | BindingAccess.Write);
+                this.ContainerSettingsProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ContainerSettings, o => new TaskContainerSettings(o).Freeze()),
+                    nameof(ContainerSettings),
+                    BindingAccess.Read);
                 this.DisplayNameProperty = this.CreatePropertyAccessor(
                     protocolObject.DisplayName,
-                    "DisplayName",
+                    nameof(DisplayName),
                     BindingAccess.Read | BindingAccess.Write);
                 this.EnvironmentSettingsProperty = this.CreatePropertyAccessor(
                     EnvironmentSetting.ConvertFromProtocolCollection(protocolObject.EnvironmentSettings),
-                    "EnvironmentSettings",
+                    nameof(EnvironmentSettings),
                     BindingAccess.Read | BindingAccess.Write);
                 this.IdProperty = this.CreatePropertyAccessor(
                     protocolObject.Id,
-                    "Id",
+                    nameof(Id),
                     BindingAccess.Read | BindingAccess.Write);
                 this.KillJobOnCompletionProperty = this.CreatePropertyAccessor(
                     protocolObject.KillJobOnCompletion,
-                    "KillJobOnCompletion",
+                    nameof(KillJobOnCompletion),
                     BindingAccess.Read | BindingAccess.Write);
                 this.OutputFilesProperty = this.CreatePropertyAccessor(
                     OutputFile.ConvertFromProtocolCollection(protocolObject.OutputFiles),
-                    "OutputFiles",
+                    nameof(OutputFiles),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ResourceFilesProperty = this.CreatePropertyAccessor(
                     ResourceFile.ConvertFromProtocolCollection(protocolObject.ResourceFiles),
-                    "ResourceFiles",
+                    nameof(ResourceFiles),
                     BindingAccess.Read | BindingAccess.Write);
                 this.RunExclusiveProperty = this.CreatePropertyAccessor(
                     protocolObject.RunExclusive,
-                    "RunExclusive",
+                    nameof(RunExclusive),
                     BindingAccess.Read | BindingAccess.Write);
                 this.UserIdentityProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.UserIdentity, o => new UserIdentity(o)),
-                    "UserIdentity",
+                    nameof(UserIdentity),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -141,7 +156,7 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets or sets whether the Job Manager task may run on a low-priority compute node. If omitted, the default is 
-        /// false.
+        /// true.
         /// </summary>
         public bool? AllowLowPriorityNode
         {
@@ -184,7 +199,9 @@ namespace Microsoft.Azure.Batch
         /// <remarks>
         /// The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment 
         /// variable expansion. If you want to take advantage of such features, you should invoke the shell in the command 
-        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line 
+        /// refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch 
+        /// provided environment variables (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         public string CommandLine
         {
@@ -199,6 +216,22 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.ConstraintsProperty.Value; }
             set { this.propertyContainer.ConstraintsProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the settings for the container under which the task runs.
+        /// </summary>
+        /// <remarks>
+        /// If the pool that will run this task has <see cref="VirtualMachineConfiguration.ContainerConfiguration"/> set, 
+        /// this must be set as well. If the pool that will run this task doesn't have <see cref="VirtualMachineConfiguration.ContainerConfiguration"/> 
+        /// set, this must not be set. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR 
+        /// (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables 
+        /// are mapped into the container, and the task command line is executed in the container.
+        /// </remarks>
+        public TaskContainerSettings ContainerSettings
+        {
+            get { return this.propertyContainer.ContainerSettingsProperty.Value; }
+            set { this.propertyContainer.ContainerSettingsProperty.Value = value; }
         }
 
         /// <summary>
@@ -319,6 +352,7 @@ namespace Microsoft.Azure.Batch
                 AuthenticationTokenSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.AuthenticationTokenSettings, (o) => o.GetTransportObject()),
                 CommandLine = this.CommandLine,
                 Constraints = UtilitiesInternal.CreateObjectWithNullCheck(this.Constraints, (o) => o.GetTransportObject()),
+                ContainerSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.ContainerSettings, (o) => o.GetTransportObject()),
                 DisplayName = this.DisplayName,
                 EnvironmentSettings = UtilitiesInternal.ConvertToProtocolCollection(this.EnvironmentSettings),
                 Id = this.Id,

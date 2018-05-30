@@ -17,7 +17,7 @@ namespace EventHub.Tests.ScenarioTests
     using Xunit;
     public partial class ScenarioTests
     {
-        [Fact]
+        [Fact()]
         public void EventhubCreateGetUpdateDeleteAuthorizationRules_Length()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

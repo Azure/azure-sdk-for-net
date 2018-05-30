@@ -1,9 +1,82 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
+
+### Changes in 3.4.0-preview
+
+**Notes**
+
+- Added new Catalog APIs:
+    - Catalog_ListTableFragments
+
+### Changes in 3.3.0-preview
+
+**Breaking changes**
+
+- The `Account` operations object has been changed from `Account` to `Accounts`
+    - E.g., `Account.Get(...)` to `Accounts.Get(...)`
+- When creating or updating resources (`accounts`, `compute policies`, etc.), explicit parameter objects are now required:
+    - Account creation:
+        - `DataLakeAnalyticsAccount` to `CreateDataLakeAnalyticsAccountParameters`
+            - List of `DataLakeStoreInfo` to `AddDataLakeStoreWithAccountParameters`
+            - List of `StorageAccountInfo` to `AddStorageAccountWithAccountParameters`
+            - List of `FirewallRule` to `CreateFirewallRuleWithAccountParameters`
+            - List of `ComputePolicy` to `CreateComputePolicyWithAccountParameters`
+    - Account update:
+        - `DataLakeAnalyticsUpdateParameters` to `UpdateDataLakeAnalyticsParameters`
+            - List of `DataLakeStoreInfo` to `UpdateDataLakeStoreWithAccountParameters`
+            - List of `StorageAccountInfo` to `UpdateStorageAccountWithAccountParameters`
+            - List of `FirewallRule` to `UpdateFirewallRuleWithAccountParameters`
+            - List of `ComputePolicy` to `UpdateComputePolicyWithAccountParameters`
+    - Data Lake Store account addition:
+        - `DataLakeStoreAccountInfo` to `AddDataLakeStoreParameters`
+    - Storage account addition and update:
+        - `StorageAccountInfo` to `AddStorageAccountParameters`
+        - `StorageAccountInfo` to `UpdateStorageAccountParameters`
+    - Compute policy creation and update:
+        - `ComputePolicy` to `CreateOrUpdateComputePolicyParameters`
+        - `ComputePolicy` to `UpdateComputePolicyParameters`
+    - Firewall rule creation and update:
+        - `FirewallRule` to `CreateOrUpdateFirewallRuleParameters`
+        - `FirewallRule` to `UpdateFirewallRuleParameters`
+- When retrieving resources, all the properties are now read-only and the following object names have been changed:
+    - Changed `DataLakeStoreAccountInfo` to `DataLakeStoreAccountInformation`
+    - Changed `StorageAccountInfo` to `StorageAccountInformation`
+- Changed the `ODataQuery` parameter type from `JobInformation` to `JobInformationBasic` for the Job_List API
+- Changed the `ODataQuery` parameter type from `DataLakeStoreAccountInfo` to `DataLakeStoreAccountInformation` for the DataLakeStoreAccounts_ListByAccount API
+- Changed the `ODataQuery` parameter type from `StorageAccountInfo` to `StorageAccountInformation` for the StorageAccounts_ListByAccount API
+- Changed the return type from `AclList` to `IPage<Acl>` for these APIs:
+    - Catalog_ListAclsByDatabase
+    - Catalog_ListAcls
+
+### Changes in 3.2.3-preview
+
+**Breaking changes**
+
+- Changed the `ODataQuery` parameter type from `DataLakeAnalyticsAccount` to `DataLakeAnalyticsAccountBasic` for these APIs:
+    - Account_List
+    - Account_ListByResourceGroup
+- For `USqlJobProperties`, fixed the property name of `TotalPauseTime` to `TotalPausedTime` 
+
+**Notes**
+
+- Added more properties to `JobStatisticsVertexStage`
+- Added two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled`
+- Added new Account APIs:
+    - Account_CheckNameAvailability
+    - Location_GetCapability
+    - Operation_List
+- Added new Catalog APIs:
+    - Catalog_ListAclsByDatabase
+    - Catalog_ListAcls
+    - Catalog_GrantAclToDatabase
+    - Catalog_RevokeAclFromDatabase
+    - Catalog_GrantAcl
+    - Catalog_RevokeAcl
+
 ### Changes in 3.1.2-preview
 
 **Notes**
 
-- The JobInnerError object is now recursively defined in order to capture additional error information returned by the service.
+- Added a read-only field, InnerError of type JobInnerError, to the JobInnerError class.
 
 ### Changes in 3.1.1-preview
 
@@ -48,9 +121,16 @@
         - endpoint
 - When retrieving account information, an account id field called "accountId" is now included.
     - accountId's description: The unique identifier associated with this Data Lake Analytics account.
+- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
 
 ### Changes in 3.0.1
-- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required.
+
+**Notes**
+
+- This is a hotfix release; therefore, the changes addressed here do not carry over to the versions above.
+- Add support for a `basic` parameter on `ListTables` and `ListTablesByDatabase` which enables a user to retrieve a limited set of properties when listing their tables, resulting in a performance improvement when full metadata is not required. (this is addressed in version 3.1.0-preview)
+- Add a read-only field, InnerError of type JobInnerError, to the JobInnerError class (this is addressed in version 3.1.2-preview)
+- Add two more states to `DataLakeAnalyticsAccountStatus` enum: `Undeleting` and `Canceled` (this is addressed in version 3.2.3-preview)
 
 ### Changes in 3.0.0
 - All previous preview changes (below) are now stable and part of the official release

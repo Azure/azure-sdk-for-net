@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/providers/Microsoft.ContainerRegistry?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnk/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "060c9c9d-62e7-4eca-9cb7-d459f734dc7f"
+          "55dc6e53-c99c-491b-990e-7007e74771e0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/providers/Microsoft.ContainerRegistry\",\r\n  \"namespace\": \"Microsoft.ContainerRegistry\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"6a0ec4d3-30cb-4a83-91c0-ae56bc0e3d26\",\r\n    \"roleDefinitionId\": \"78e18383-93eb-418a-9887-bc9271046576\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"registries\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-03-01\",\r\n        \"2016-06-27-preview\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/GetCredentials\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/listCredentials\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/regenerateCredential\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/regenerateCredentials\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-03-01\",\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-03-01\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry\",\r\n  \"namespace\": \"Microsoft.ContainerRegistry\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"6a0ec4d3-30cb-4a83-91c0-ae56bc0e3d26\",\r\n    \"roleDefinitionId\": \"78e18383-93eb-418a-9887-bc9271046576\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"registries\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-03-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks/ping\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Central US EUAP\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks/getCallbackConfig\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Central US EUAP\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/webhooks/listEvents\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Central US EUAP\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Central US EUAP\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/GetCredentials\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"West Central US\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/listCredentials\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/regenerateCredential\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/listUsages\",\r\n      \"locations\": [\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"Central US EUAP\",\r\n        \"South Central US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/regenerateCredentials\",\r\n      \"locations\": [\r\n        \"West US\",\r\n        \"East US\",\r\n        \"South Central US\",\r\n        \"West Europe\",\r\n        \"West Central US\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\",\r\n        \"2017-03-01\",\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\",\r\n        \"2017-03-01\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"registries/replications\",\r\n      \"locations\": [\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\",\r\n        \"South Central US\",\r\n        \"West Central US\",\r\n        \"East US\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"Japan East\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"North Central US\",\r\n        \"East US 2\",\r\n        \"West US 2\",\r\n        \"Brazil South\",\r\n        \"Australia East\",\r\n        \"Central India\",\r\n        \"Central US\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia Southeast\",\r\n        \"East Asia\",\r\n        \"Japan West\",\r\n        \"South India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"swagger\",\r\n      \"locations\": [\r\n        \"South Central US\",\r\n        \"East US\",\r\n        \"West US\",\r\n        \"Central US\",\r\n        \"East US 2\",\r\n        \"North Central US\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\",\r\n        \"Brazil South\",\r\n        \"Canada East\",\r\n        \"Canada Central\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Southeast Asia\",\r\n        \"South India\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2017-10-01\",\r\n        \"2017-06-01-preview\",\r\n        \"2017-03-01\",\r\n        \"2016-06-27-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Mar 2017 22:56:05 GMT"
+          "Fri, 20 Oct 2017 00:41:21 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,16 +38,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14786"
         ],
         "x-ms-request-id": [
-          "37dd45ac-2238-4300-bf70-9a53964bc66e"
+          "ee4de96b-59ee-4b06-b8d0-beb56a9e8049"
         ],
         "x-ms-correlation-request-id": [
-          "37dd45ac-2238-4300-bf70-9a53964bc66e"
+          "ee4de96b-59ee-4b06-b8d0-beb56a9e8049"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225606Z:37dd45ac-2238-4300-bf70-9a53964bc66e"
+          "WESTUS2:20171020T004122Z:ee4de96b-59ee-4b06-b8d0-beb56a9e8049"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -56,32 +56,32 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/resourcegroups/acr_rg130?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Jlc291cmNlZ3JvdXBzL2Fjcl9yZzEzMD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourcegroups/acr_rg2068?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlZ3JvdXBzL2Fjcl9yZzIwNjg/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "28"
+          "29"
         ],
         "x-ms-client-request-id": [
-          "1ecb15f0-f2a8-4613-a867-8d02cb610b65"
+          "f42d693e-a70b-4ad3-b664-8eea937a8e89"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/resourceGroups/acr_rg130\",\r\n  \"name\": \"acr_rg130\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg2068\",\r\n  \"name\": \"acr_rg2068\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "171"
+          "173"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -93,22 +93,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Mar 2017 22:56:06 GMT"
+          "Fri, 20 Oct 2017 00:41:22 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
+          "1190"
         ],
         "x-ms-request-id": [
-          "c3f722d0-6f02-493e-91ac-de336192ea3a"
+          "9bf066d4-8961-49d6-8388-6637d4618177"
         ],
         "x-ms-correlation-request-id": [
-          "c3f722d0-6f02-493e-91ac-de336192ea3a"
+          "9bf066d4-8961-49d6-8388-6637d4618177"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225606Z:c3f722d0-6f02-493e-91ac-de336192ea3a"
+          "WESTUS2:20171020T004123Z:9bf066d4-8961-49d6-8388-6637d4618177"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,196 +117,10 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/resourceGroups/acr_rg130/providers/Microsoft.Storage/storageAccounts/acrstorage5345?api-version=2016-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Jlc291cmNlR3JvdXBzL2Fjcl9yZzEzMC9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL2FjcnN0b3JhZ2U1MzQ1P2FwaS12ZXJzaW9uPTIwMTYtMDEtMDE=",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_LRS\"\r\n  },\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"westus\"\r\n}",
-      "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "96"
-        ],
-        "x-ms-client-request-id": [
-          "2b07dbd0-68b9-4c65-bd63-ab7c9ea1c79d"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/5.0.2-preview"
-        ]
-      },
-      "ResponseBody": "",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Mar 2017 22:56:07 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/providers/Microsoft.Storage/operations/47e8748b-1867-44fe-ac4a-ee96e5eca922?monitor=true&api-version=2016-01-01"
-        ],
-        "Retry-After": [
-          "17"
-        ],
-        "Server": [
-          "Microsoft-Azure-Storage-Resource-Provider/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1184"
-        ],
-        "x-ms-request-id": [
-          "cda0e802-0fe9-4acd-9106-d05fc169a731"
-        ],
-        "x-ms-correlation-request-id": [
-          "cda0e802-0fe9-4acd-9106-d05fc169a731"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225608Z:cda0e802-0fe9-4acd-9106-d05fc169a731"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 202
-    },
-    {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/providers/Microsoft.Storage/operations/47e8748b-1867-44fe-ac4a-ee96e5eca922?monitor=true&api-version=2016-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9vcGVyYXRpb25zLzQ3ZTg3NDhiLTE4NjctNDRmZS1hYzRhLWVlOTZlNWVjYTkyMj9tb25pdG9yPXRydWUmYXBpLXZlcnNpb249MjAxNi0wMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/5.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/resourceGroups/acr_rg130/providers/Microsoft.Storage/storageAccounts/acrstorage5345\",\r\n  \"kind\": \"Storage\",\r\n  \"location\": \"westus\",\r\n  \"name\": \"acrstorage5345\",\r\n  \"properties\": {\r\n    \"creationTime\": \"2017-03-16T22:56:07.7550247Z\",\r\n    \"primaryEndpoints\": {\r\n      \"blob\": \"https://acrstorage5345.blob.core.windows.net/\",\r\n      \"file\": \"https://acrstorage5345.file.core.windows.net/\",\r\n      \"queue\": \"https://acrstorage5345.queue.core.windows.net/\",\r\n      \"table\": \"https://acrstorage5345.table.core.windows.net/\"\r\n    },\r\n    \"primaryLocation\": \"westus\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"statusOfPrimary\": \"available\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Standard_LRS\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"tags\": {},\r\n  \"type\": \"Microsoft.Storage/storageAccounts\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Mar 2017 22:56:38 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-Azure-Storage-Resource-Provider/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "3a4c2840-0a7e-4533-9186-721f9d6d86c0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
-        ],
-        "x-ms-correlation-request-id": [
-          "3a4c2840-0a7e-4533-9186-721f9d6d86c0"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225639Z:3a4c2840-0a7e-4533-9186-721f9d6d86c0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/resourceGroups/acr_rg130/providers/Microsoft.Storage/storageAccounts/acrstorage5345/listKeys?api-version=2016-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Jlc291cmNlR3JvdXBzL2Fjcl9yZzEzMC9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL2FjcnN0b3JhZ2U1MzQ1L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMTYtMDEtMDE=",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "2be52d97-14fe-4e30-9277-07b51689a153"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Storage.StorageManagementClient/5.0.2-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"keys\": [\r\n    {\r\n      \"keyName\": \"key1\",\r\n      \"permissions\": \"Full\",\r\n      \"value\": \"S/HB2nelE4UpnKyjQ8w9miTohq6PpnOffxVACsRGTg+Svk2A3DO+g51lp1Ty9nCKsS7qXoTRRdAx5FC4t3s/xQ==\"\r\n    },\r\n    {\r\n      \"keyName\": \"key2\",\r\n      \"permissions\": \"Full\",\r\n      \"value\": \"BQd9rn6zE5L9wDAs/JaBTJM54LDoyZnSEmMQYuvkvucG7C0e+WZ1dFXypBwg2oqgej3yKDAxIbhkpjPf+xcuLg==\"\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Thu, 16 Mar 2017 22:56:38 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-Azure-Storage-Resource-Provider/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "5a872545-a333-4dc9-bcfb-6c2a54f2c20c"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1183"
-        ],
-        "x-ms-correlation-request-id": [
-          "5a872545-a333-4dc9-bcfb-6c2a54f2c20c"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225639Z:5a872545-a333-4dc9-bcfb-6c2a54f2c20c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMDMtMDE=",
-      "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"acrregistry5548\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"acrregistry2054\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -315,14 +129,14 @@
           "86"
         ],
         "x-ms-client-request-id": [
-          "5e0ebdba-0b86-4bee-84be-460225775ad7"
+          "e8ee88a2-1e56-4dfc-839d-52afaafd29fc"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/1.2.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"nameAvailable\": true\r\n}",
@@ -337,7 +151,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Mar 2017 22:56:39 GMT"
+          "Fri, 20 Oct 2017 00:41:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -355,23 +169,23 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "14785"
         ],
         "x-ms-request-id": [
-          "c4fa4d27-9fb2-4d99-a735-16b0bc59eb05"
+          "748f763b-0dc3-43cf-8598-6d0b16f834a3"
         ],
         "x-ms-correlation-request-id": [
-          "c4fa4d27-9fb2-4d99-a735-16b0bc59eb05"
+          "748f763b-0dc3-43cf-8598-6d0b16f834a3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225640Z:c4fa4d27-9fb2-4d99-a735-16b0bc59eb05"
+          "WESTUS2:20171020T004124Z:748f763b-0dc3-43cf-8598-6d0b16f834a3"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMDMtMDE=",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"Microsoft\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
       "RequestHeaders": {
@@ -382,17 +196,17 @@
           "80"
         ],
         "x-ms-client-request-id": [
-          "37aee96c-fd71-4ec2-b4f3-f13e394c3266"
+          "bf129c63-74c6-4243-a583-712c50f4689b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/1.2.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"Invalid\",\r\n  \"message\": \"The specified registry name is disallowed\"\r\n}",
+      "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"Invalid\",\r\n  \"message\": \"The specified resource name is disallowed\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -404,7 +218,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Mar 2017 22:56:39 GMT"
+          "Fri, 20 Oct 2017 00:41:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -422,25 +236,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
+          "14784"
         ],
         "x-ms-request-id": [
-          "ea8832fc-3a86-4462-8415-0fe50b866217"
+          "2f084061-06a6-4e00-9d16-60c18b4b6085"
         ],
         "x-ms-correlation-request-id": [
-          "ea8832fc-3a86-4462-8415-0fe50b866217"
+          "2f084061-06a6-4e00-9d16-60c18b4b6085"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225640Z:ea8832fc-3a86-4462-8415-0fe50b866217"
+          "WESTUS2:20171020T004124Z:2f084061-06a6-4e00-9d16-60c18b4b6085"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMDMtMDE=",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/providers/Microsoft.ContainerRegistry/checkNameAvailability?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29udGFpbmVyUmVnaXN0cnkvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"acrregistry6760\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"acrregistry1872\",\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -449,17 +263,17 @@
           "86"
         ],
         "x-ms-client-request-id": [
-          "e0454ff5-2ba2-45d2-9cd5-f38799106907"
+          "237c9a2a-70bd-4edb-9b45-8194d92cd660"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/1.2.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"The registry acrregistry6760 is already in use.\"\r\n}",
+      "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"The registry acrregistry1872 is already in use.\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -471,7 +285,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Mar 2017 22:56:42 GMT"
+          "Fri, 20 Oct 2017 00:41:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -489,44 +303,44 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14986"
+          "14783"
         ],
         "x-ms-request-id": [
-          "3b383815-17eb-4b57-a394-8b0b6d4834cf"
+          "0058cbaa-fd0a-4e09-a593-3f83f3389956"
         ],
         "x-ms-correlation-request-id": [
-          "3b383815-17eb-4b57-a394-8b0b6d4834cf"
+          "0058cbaa-fd0a-4e09-a593-3f83f3389956"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225643Z:3b383815-17eb-4b57-a394-8b0b6d4834cf"
+          "WESTUS2:20171020T004128Z:0058cbaa-fd0a-4e09-a593-3f83f3389956"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/resourceGroups/acr_rg130/providers/Microsoft.ContainerRegistry/registries/acrregistry6760?api-version=2017-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2ViMzFkOGQtMjg3OS00NzA2LTg5YjQtNGRjNDA0NzcyNmM2L3Jlc291cmNlR3JvdXBzL2Fjcl9yZzEzMC9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbnRhaW5lclJlZ2lzdHJ5L3JlZ2lzdHJpZXMvYWNycmVnaXN0cnk2NzYwP2FwaS12ZXJzaW9uPTIwMTctMDMtMDE=",
+      "RequestUri": "/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg2068/providers/Microsoft.ContainerRegistry/registries/acrregistry1872?api-version=2017-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODRjNTU5YzYtMzBhMC00MTdjLWJhMDYtOGEyMjUzYjM4OGMzL3Jlc291cmNlR3JvdXBzL2Fjcl9yZzIwNjgvcHJvdmlkZXJzL01pY3Jvc29mdC5Db250YWluZXJSZWdpc3RyeS9yZWdpc3RyaWVzL2FjcnJlZ2lzdHJ5MTg3Mj9hcGktdmVyc2lvbj0yMDE3LTEwLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  },\r\n  \"properties\": {\r\n    \"storageAccount\": {\r\n      \"name\": \"acrstorage5345\",\r\n      \"accessKey\": \"S/HB2nelE4UpnKyjQ8w9miTohq6PpnOffxVACsRGTg+Svk2A3DO+g51lp1Ty9nCKsS7qXoTRRdAx5FC4t3s/xQ==\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "332"
+          "133"
         ],
         "x-ms-client-request-id": [
-          "4b9ff5c7-45c3-45d2-b620-1860c1c3d32b"
+          "65e01b16-2897-41b1-89a0-d700f38645d6"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/1.2.0"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ContainerRegistry.ContainerRegistryManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Basic\",\r\n    \"tier\": \"Basic\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/3eb31d8d-2879-4706-89b4-4dc4047726c6/resourcegroups/acr_rg130/providers/Microsoft.ContainerRegistry/registries/acrregistry6760\",\r\n  \"name\": \"acrregistry6760\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"loginServer\": \"acrregistry6760.azurecr.io\",\r\n    \"creationDate\": \"2017-03-16T22:56:42.4447349Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": false,\r\n    \"storageAccount\": {\r\n      \"name\": \"acrstorage5345\"\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Premium\",\r\n    \"tier\": \"Premium\"\r\n  },\r\n  \"type\": \"Microsoft.ContainerRegistry/registries\",\r\n  \"id\": \"/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/acr_rg2068/providers/Microsoft.ContainerRegistry/registries/acrregistry1872\",\r\n  \"name\": \"acrregistry1872\",\r\n  \"location\": \"westus\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"loginServer\": \"acrregistry1872.azurecr.io\",\r\n    \"creationDate\": \"2017-10-20T00:41:26.2776042Z\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"adminUserEnabled\": false\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -538,7 +352,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 16 Mar 2017 22:56:42 GMT"
+          "Fri, 20 Oct 2017 00:41:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -556,16 +370,16 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1182"
+          "1189"
         ],
         "x-ms-request-id": [
-          "85f6f2c2-82b9-47fd-9fa3-28256215009d"
+          "34304b7b-2976-483c-b2c8-dfa62eafcf12"
         ],
         "x-ms-correlation-request-id": [
-          "85f6f2c2-82b9-47fd-9fa3-28256215009d"
+          "34304b7b-2976-483c-b2c8-dfa62eafcf12"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170316T225643Z:85f6f2c2-82b9-47fd-9fa3-28256215009d"
+          "WESTUS2:20171020T004128Z:34304b7b-2976-483c-b2c8-dfa62eafcf12"
         ]
       },
       "StatusCode": 200
@@ -573,19 +387,16 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "acr_rg130"
-    ],
-    "CreateStorageAccount": [
-      "acrstorage5345"
+      "acr_rg2068"
     ],
     "ContainerRegistryCheckNameTest": [
-      "acrregistry5548"
+      "acrregistry2054"
     ],
-    "CreateContainerRegistry": [
-      "acrregistry6760"
+    "CreateManagedContainerRegistry": [
+      "acrregistry1872"
     ]
   },
   "Variables": {
-    "SubscriptionId": "3eb31d8d-2879-4706-89b4-4dc4047726c6"
+    "SubscriptionId": "84c559c6-30a0-417c-ba06-8a2253b388c3"
   }
 }

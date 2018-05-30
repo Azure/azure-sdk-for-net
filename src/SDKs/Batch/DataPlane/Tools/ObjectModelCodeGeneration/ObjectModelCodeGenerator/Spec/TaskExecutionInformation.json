@@ -1,7 +1,7 @@
     {
       "Name": "TaskExecutionInformation",
       "ProtocolName": "Models.TaskExecutionInformation",
-      "Comment": "Task execution information.",
+      "SummaryComment": "Task execution information.",
       "IsConstructorPublic": false,
       "Properties": [
         {
@@ -107,6 +107,20 @@
           "Value": {
             "Type": "Models.TaskExecutionResult?",
             "Name": "Result"
+          }
+        },
+        {
+          "Key": {
+            "Type": "TaskContainerExecutionInformation",
+            "Name": "ContainerInformation",
+            "SummaryComment": "Information about the container under which the task is executing.",
+            "RemarksComment": "This property is set only if the task runs in a container context.",
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.TaskContainerExecutionInformation",
+            "Name": "ContainerInfo"
           }
         }
       ]

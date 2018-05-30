@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/3fe33797-691c-4114-a369-8a8bc17f93e4?api-version=2017-11-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvNTU3OTNiYzItZTVjMi00YTk4LTlkNWMtMGEwYmNlNmNmOTk4L3Jlc2VydmF0aW9ucy8zZmUzMzc5Ny02OTFjLTQxMTQtYTM2OS04YThiYzE3ZjkzZTQ/YXBpLXZlcnNpb249MjAxNy0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "89bb5765-4653-42a5-95bc-a7a73dc3ef2e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_DS1_v2\"\r\n  },\r\n  \"id\": \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/3fe33797-691c-4114-a369-8a8bc17f93e4\",\r\n  \"type\": \"Microsoft.Capacity/reservationOrders/reservations\",\r\n  \"name\": \"55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/3fe33797-691c-4114-a369-8a8bc17f93e4\",\r\n  \"etag\": 10,\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/98df3792-7962-4f18-8be2-d5576f122de3\"\r\n    ],\r\n    \"appliedScopeType\": \"Single\",\r\n    \"quantity\": 5,\r\n    \"meters\": [\r\n      \"c90f4d88-01c1-48e9-ba9d-cb9c6ccaedd3\"\r\n    ],\r\n    \"provisioningState\": \"Cancelled\",\r\n    \"expiryDate\": \"2018-09-26T00:00:00Z\",\r\n    \"provisioningSubState\": \"Active\",\r\n    \"displayName\": \"cabri_test\",\r\n    \"region\": \"eastus\",\r\n    \"effectiveDateTime\": \"2017-09-27T19:06:21.1558452Z\",\r\n    \"extendedStatusInfo\": {\r\n      \"statusCode\": \"Split\",\r\n      \"message\": \"This reservation was split and is no longer active.\"\r\n    },\r\n    \"lastUpdatedDateTime\": \"2017-09-27T19:06:26.0958806Z\",\r\n    \"splitProperties\": {\r\n      \"splitDestinations\": [\r\n        \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/a1c5acec-c516-43a1-b8b4-baf8f48f99b1\",\r\n        \"/providers/microsoft.capacity/reservationOrders/55793bc2-e5c2-4a98-9d5c-0a0bce6cf998/reservations/18923add-7bc3-4824-9fdd-3337da67e1da\"\r\n      ]\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 28 Sep 2017 18:47:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "westus:04bdb249-cd48-4f23-8cf0-261265e11450"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "x-ms-correlation-request-id": [
+          "c7a65f28-9548-4358-b91e-815be314d1c2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20170928T184736Z:c7a65f28-9548-4358-b91e-815be314d1c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "98df3792-7962-4f18-8be2-d5576f122de3"
+  }
+}

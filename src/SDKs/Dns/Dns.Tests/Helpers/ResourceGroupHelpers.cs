@@ -1,23 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Azure.Management.Dns.Models;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using SubResource = Microsoft.Azure.Management.Dns.Models.SubResource;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
-    using Rest.ClientRuntime.Azure.TestFramework;
-    using SubResource = Models.SubResource;
-
     public static class ResourceGroupHelper
     {
+        // DNS resources are in location "global" but resource groups cannot be in that same location
+        private const string ResourceLocation = "Central US";
+
+        private static readonly Random RandomGenerator = new Random();
+
         /// <summary>
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
@@ -28,8 +32,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
             RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(
-                handlers: handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
             return client;
         }
 
@@ -38,25 +41,22 @@ namespace Microsoft.Azure.Management.Dns.Testing
         ///  using the TestSupport Infrastructure
         /// </summary>
         /// <param name="handler"></param>
-        /// <returns>A resource management client, created from the current context
-        ///  (environment variables)</returns>
+        /// <returns>A resource management client, created from the current context (environment variables)</returns>
         public static DnsManagementClient GetDnsClient(
             MockContext context,
             RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<DnsManagementClient>(
-                handlers: handler);
+            var client = context.GetServiceClient<DnsManagementClient>(handlers: handler);
             return client;
         }
 
         /// <summary>
-        /// Default constructor for network clients, 
-        /// using the TestSupport Infrastructure
+        /// Default constructor for network clients,
+        ///  using the TestSupport Infrastructure
         /// </summary>
-        /// <param name="context"></param>
         /// <param name="handler"></param>
-        /// <returns>A network management client, created from the current context (environment variables)</returns>
+        /// <returns>A netowrk management client, created from the current context (environment variables)</returns>
         public static NetworkManagementClient GetNetworkClient(
             MockContext context,
             RecordedDelegatingHandler handler)
@@ -87,8 +87,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     parts[1],
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    location = resource.Locations.FirstOrDefault(
-                        loca => !string.IsNullOrEmpty(loca));
+                    location = resource.Locations.FirstOrDefault(loca => !string.IsNullOrEmpty(loca));
                 }
             }
 
@@ -98,66 +97,16 @@ namespace Microsoft.Azure.Management.Dns.Testing
         public static ResourceGroup CreateResourceGroup(
             ResourceManagementClient resourcesClient)
         {
-            string resourceGroupName =
-                TestUtilities.GenerateName("hydratestdnsrg");
-
-            // DNS resources are in location "global" but resource groups 
-            // can't be in that same location
-            string location = "Central US";
-
-            Assert.False(
-                string.IsNullOrEmpty(location),
-                "CSM did not return any valid locations for DNS resources");
+            string resourceGroupName = TestUtilities.GenerateName("hydratestdnsrg");
 
             var response = resourcesClient.ResourceGroups.CreateOrUpdate(
                 resourceGroupName,
                 new ResourceGroup
                 {
-                    Location = location
+                    Location = ResourceLocation
                 });
 
             return response;
-        }
-
-        public static VirtualNetwork CreateVirtualNetwork(
-            string resourceGroupName,
-            NetworkManagementClient networkClient)
-        {
-            var virtualNetworkName =
-                TestUtilities.GenerateName("hydratestdnsvn");
-            var subNetworkName =
-                TestUtilities.GenerateName("hydratestdnssn");
-            
-            // DNS resources are in location "global" but resource groups 
-            // can't be in that same location
-            const string location = "Central US";
-            var subnetIndex = new Random();
-            var vnet = new VirtualNetwork()
-            {
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = new List<string>()
-                    {
-                        "10.0.0.0/16"
-                    }
-                },
-                Subnets = new List<Subnet>()
-                {
-                    new Subnet()
-                    {
-                        Name = subNetworkName,
-                        AddressPrefix = "10.0." + subnetIndex.Next(0, 255) + ".0/24"
-                    }
-
-                },
-                Location = location
-            };
-            var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, virtualNetworkName, vnet);
-            Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
-
-            var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroupName, virtualNetworkName);
-
-            return getVnetResponse;
         }
 
         public static Zone CreateZone(
@@ -169,7 +118,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
             return dnsClient.Zones.CreateOrUpdate(
                 resourceGroup.Name,
                 zoneName,
-                new Microsoft.Azure.Management.Dns.Models.Zone
+                new Zone
                 {
                     ZoneType = ZoneType.Public,
                     Location = location,
@@ -196,10 +145,44 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     Location = location,
                     Etag = null,
                     RegistrationVirtualNetworks = registrationVnets,
-                    ResolutionVirtualNetworks = resolutionVnets
+                    ResolutionVirtualNetworks = resolutionVnets,
                 },
                 null,
                 null);
+        }
+
+        public static VirtualNetwork CreateVirtualNetwork(
+            string resourceGroupName,
+            NetworkManagementClient networkClient)
+        {
+            var virtualNetworkName = TestUtilities.GenerateName("hydratestdnsvn");
+            var subnetName = TestUtilities.GenerateName("hydratestdnssubnet");
+
+            var vnet = new VirtualNetwork
+            {
+                AddressSpace = new AddressSpace
+                {
+                    AddressPrefixes = new List<string>
+                    {
+                        "10.0.0.0/16"
+                    }
+                },
+                Subnets = new List<Subnet>
+                {
+                    new Subnet
+                    {
+                        Name = subnetName,
+                        AddressPrefix = "10.0." + RandomGenerator.Next(0, 255) + ".0/24"
+                    }
+                },
+                Location = ResourceLocation
+            };
+
+            var putVnetResponse = networkClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, virtualNetworkName, vnet);
+            Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+            var getVnetResponse = networkClient.VirtualNetworks.Get(resourceGroupName, virtualNetworkName);
+            return getVnetResponse;
         }
     }
 }

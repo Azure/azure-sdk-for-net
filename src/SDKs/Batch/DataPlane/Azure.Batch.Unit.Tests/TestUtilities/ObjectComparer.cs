@@ -117,8 +117,8 @@
             Type o1Type = o1.GetType();
             Type o2Type = o2.GetType();
 
-            PropertyInfo[] o1Properties = o1Type.GetProperties();
-            PropertyInfo[] o2Properties = o2Type.GetProperties();
+            PropertyInfo[] o1Properties = o1Type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            PropertyInfo[] o2Properties = o2Type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
             List<string> o1PropertyNames = o1Properties.Select(prop => prop.Name).ToList();
 

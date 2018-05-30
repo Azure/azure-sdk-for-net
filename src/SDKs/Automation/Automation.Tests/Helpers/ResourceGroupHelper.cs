@@ -4,27 +4,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Automation;
 using Microsoft.Azure.Management.Resources;
-//using Microsoft.Azure.Test;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Net.Http;
 
-namespace Microsoft.Azure.Management.Automation.Testing
+namespace Automation.Tests.Helpers
 {
     public static class ResourceGroupHelper
     {
 
-        public static AutomationManagementClient GetAutomationClient(MockContext context, RecordedDelegatingHandler handler)
+        public static AutomationClient GetAutomationClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            //return TestBase.GetServiceClient<AutomationManagementClient>(new CSMTestEnvironmentFactory());
-            return context.GetServiceClient<AutomationManagementClient>(false, handler);
+            return context.GetServiceClient<AutomationClient>(false, handler);
         }
 
         public static ResourceManagementClient GetResourcesClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            
             return context.GetServiceClient<ResourceManagementClient>(false, handler);
-            //return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
         }
 
         /// <summary>

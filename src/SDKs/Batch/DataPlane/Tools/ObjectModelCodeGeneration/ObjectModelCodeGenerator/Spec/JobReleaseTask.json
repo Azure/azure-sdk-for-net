@@ -1,7 +1,7 @@
     {
       "Name": "JobReleaseTask",
       "ProtocolName": "Models.JobReleaseTask",
-      "Comment": "A Job Release task to run on job completion on any compute node where the job has run.",
+      "SummaryComment": "A Job Release task to run on job completion on any compute node where the job has run.",
       "Properties": [
         {
           "Key": {
@@ -19,7 +19,7 @@
             "Type": "string",
             "Name": "CommandLine",
             "SummaryComment": "The command line of the task.",
-            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux. If the command line refers to file paths, it should use a relative path (relative to the task working directory), or use the Batch provided environment variables (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).",
             "BoundAccess": "read,write",
             "UnboundAccess": "read,write",
             "ConstructorArgumentType": "Required"
@@ -83,6 +83,17 @@
             "SummaryComment": "The duration of time for which files in the task's working directory are retained, from the time it completes execution. After this duration, the task's working directory is reclaimed.",
             "RemarksComment": null,
             "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TaskContainerSettings",
+            "Name": "ContainerSettings",
+            "SummaryComment": "The settings for the container under which the task runs.",
+            "RemarksComment": "When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are mapped into the container, all task environment variables are mapped into the container, and the task command line is executed in the container.",
+            "BoundAccess": "read",
             "UnboundAccess": "read,write"
           },
           "Value": null

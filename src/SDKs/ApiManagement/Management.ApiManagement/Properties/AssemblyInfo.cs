@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft Azure API Management Resource Management Library")]
-[assembly: AssemblyDescription("Provides api management capabilities for Microsoft Azure.")]
+[assembly: AssemblyDescription("Provides Api management capabilities for Microsoft Azure.")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]

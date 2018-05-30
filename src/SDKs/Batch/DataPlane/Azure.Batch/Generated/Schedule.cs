@@ -31,29 +31,29 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.DoNotRunAfterProperty = this.CreatePropertyAccessor<DateTime?>("DoNotRunAfter", BindingAccess.Read | BindingAccess.Write);
-                this.DoNotRunUntilProperty = this.CreatePropertyAccessor<DateTime?>("DoNotRunUntil", BindingAccess.Read | BindingAccess.Write);
-                this.RecurrenceIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>("RecurrenceInterval", BindingAccess.Read | BindingAccess.Write);
-                this.StartWindowProperty = this.CreatePropertyAccessor<TimeSpan?>("StartWindow", BindingAccess.Read | BindingAccess.Write);
+                this.DoNotRunAfterProperty = this.CreatePropertyAccessor<DateTime?>(nameof(DoNotRunAfter), BindingAccess.Read | BindingAccess.Write);
+                this.DoNotRunUntilProperty = this.CreatePropertyAccessor<DateTime?>(nameof(DoNotRunUntil), BindingAccess.Read | BindingAccess.Write);
+                this.RecurrenceIntervalProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(RecurrenceInterval), BindingAccess.Read | BindingAccess.Write);
+                this.StartWindowProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(StartWindow), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.Schedule protocolObject) : base(BindingState.Bound)
             {
                 this.DoNotRunAfterProperty = this.CreatePropertyAccessor(
                     protocolObject.DoNotRunAfter,
-                    "DoNotRunAfter",
+                    nameof(DoNotRunAfter),
                     BindingAccess.Read | BindingAccess.Write);
                 this.DoNotRunUntilProperty = this.CreatePropertyAccessor(
                     protocolObject.DoNotRunUntil,
-                    "DoNotRunUntil",
+                    nameof(DoNotRunUntil),
                     BindingAccess.Read | BindingAccess.Write);
                 this.RecurrenceIntervalProperty = this.CreatePropertyAccessor(
                     protocolObject.RecurrenceInterval,
-                    "RecurrenceInterval",
+                    nameof(RecurrenceInterval),
                     BindingAccess.Read | BindingAccess.Write);
                 this.StartWindowProperty = this.CreatePropertyAccessor(
                     protocolObject.StartWindow,
-                    "StartWindow",
+                    nameof(StartWindow),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

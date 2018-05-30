@@ -59,21 +59,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(backendResponse);
 
                     // get to check it was created
-                    var getResponse = await testBase.client.Backend.GetWithHttpMessagesAsync(testBase.rgName, testBase.serviceName, backendId);
+                    BackendContract backendContract = await testBase.client.Backend.GetAsync(testBase.rgName, testBase.serviceName, backendId);
 
-                    Assert.NotNull(getResponse);
-                    Assert.NotNull(getResponse.Body);
-                    Assert.NotNull(getResponse.Headers);
-                    Assert.Equal(backendId, getResponse.Body.Name);
-                    Assert.NotNull(getResponse.Body.Description);
-                    Assert.NotNull(getResponse.Body.Credentials.Authorization);
-                    Assert.NotNull(getResponse.Body.Credentials.Query);
-                    Assert.NotNull(getResponse.Body.Credentials.Header);
-                    Assert.Equal(BackendProtocol.Http, getResponse.Body.Protocol);
-                    Assert.Equal(1, getResponse.Body.Credentials.Query.Keys.Count);
-                    Assert.Equal(1, getResponse.Body.Credentials.Header.Keys.Count);
-                    Assert.NotNull(getResponse.Body.Credentials.Authorization);
-                    Assert.Equal("basic", getResponse.Body.Credentials.Authorization.Scheme);
+                    Assert.NotNull(backendContract);
+                    Assert.Equal(backendId, backendContract.Name);
+                    Assert.NotNull(backendContract.Description);
+                    Assert.NotNull(backendContract.Credentials.Authorization);
+                    Assert.NotNull(backendContract.Credentials.Query);
+                    Assert.NotNull(backendContract.Credentials.Header);
+                    Assert.Equal(BackendProtocol.Http, backendContract.Protocol);
+                    Assert.Equal(1, backendContract.Credentials.Query.Keys.Count);
+                    Assert.Equal(1, backendContract.Credentials.Header.Keys.Count);
+                    Assert.NotNull(backendContract.Credentials.Authorization);
+                    Assert.Equal("basic", backendContract.Credentials.Authorization.Scheme);
 
                     var listBackends = testBase.client.Backend.ListByService(testBase.rgName, testBase.serviceName, null);
 
@@ -81,6 +79,14 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // there should be one user
                     Assert.True(listBackends.Count() >= 1);
+
+                    // get the backend etag
+                    var backendTag = await testBase.client.Backend.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        backendId);
+                    Assert.NotNull(backendTag);
+                    Assert.NotNull(backendTag.ETag);
 
                     // patch backend
                     string patchedDescription = TestUtilities.GenerateName("patchedDescription");
@@ -92,21 +98,30 @@ namespace ApiManagement.Tests.ManagementApiTests
                         {
                             Description = patchedDescription
                         },
-                        getResponse.Headers.ETag);
+                        backendTag.ETag);
 
                     // get to check it was patched
-                    var backendGetResponse = await testBase.client.Backend.GetWithHttpMessagesAsync(testBase.rgName, testBase.serviceName, backendId);
+                    backendContract = await testBase.client.Backend.GetAsync(
+                        testBase.rgName, 
+                        testBase.serviceName, 
+                        backendId);
 
-                    Assert.NotNull(backendGetResponse);
-                    Assert.Equal(backendId, backendGetResponse.Body.Name);
-                    Assert.Equal(patchedDescription, backendGetResponse.Body.Description);
+                    Assert.NotNull(backendContract);
+                    Assert.Equal(backendId, backendContract.Name);
+                    Assert.Equal(patchedDescription, backendContract.Description);
+
+                    // get the etag
+                    backendTag = await testBase.client.Backend.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        backendId);                
 
                     // delete the backend
                     testBase.client.Backend.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         backendId,
-                        backendGetResponse.Headers.ETag);
+                        backendTag.ETag);
 
                     // get the deleted backend to make sure it was deleted
                     try
@@ -156,8 +171,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     Assert.NotNull(createResponse);
                     Assert.Equal(certificateId, createResponse.Name);
-
-
+                    
                     string backendName = TestUtilities.GenerateName("backendName");
                     string urlParameter = new UriBuilder("https", backendName, 443).Uri.ToString();
 
@@ -172,34 +186,39 @@ namespace ApiManagement.Tests.ManagementApiTests
                     backendCreateParameters.Properties.ServiceFabricCluster.ServerX509Names = new List<X509CertificateName>();
                     backendCreateParameters.Properties.ServiceFabricCluster.ServerX509Names.Add(new X509CertificateName("serverCommonName1", "issuerThumbprint1"));
 
-                    var backendResponse = testBase.client.Backend.CreateOrUpdate(
+                    var backendContract = testBase.client.Backend.CreateOrUpdate(
                         testBase.rgName,
                         testBase.serviceName,
                         backendId,
                         backendCreateParameters);
 
-                    Assert.NotNull(backendResponse);
-
-                    // get to check it was created
-                    var getResponse = await testBase.client.Backend.GetWithHttpMessagesAsync(testBase.rgName, testBase.serviceName, backendId);
-
-                    Assert.NotNull(getResponse);
-                    Assert.NotNull(getResponse.Body);
-                    Assert.NotNull(getResponse.Headers);
-                    Assert.Equal(backendId, getResponse.Body.Name);
-                    Assert.NotNull(getResponse.Body.Description);
-                    Assert.NotNull(getResponse.Body.Properties.ServiceFabricCluster);
-                    Assert.Equal(BackendProtocol.Http, getResponse.Body.Protocol);
-                    Assert.Equal(1, getResponse.Body.Properties.ServiceFabricCluster.ServerX509Names.Count);
-                    Assert.Equal(1, getResponse.Body.Properties.ServiceFabricCluster.ManagementEndpoints.Count);
-                    Assert.Equal(5, getResponse.Body.Properties.ServiceFabricCluster.MaxPartitionResolutionRetries);
+                    Assert.NotNull(backendContract);
+                    Assert.Equal(backendId, backendContract.Name);
+                    Assert.NotNull(backendContract.Description);
+                    Assert.NotNull(backendContract.Properties.ServiceFabricCluster);
+                    Assert.Equal(BackendProtocol.Http, backendContract.Protocol);
+                    Assert.Equal(1, backendContract.Properties.ServiceFabricCluster.ServerX509Names.Count);
+                    Assert.Equal(1, backendContract.Properties.ServiceFabricCluster.ManagementEndpoints.Count);
+                    Assert.Equal(5, backendContract.Properties.ServiceFabricCluster.MaxPartitionResolutionRetries);
 
                     var listBackends = testBase.client.Backend.ListByService(testBase.rgName, testBase.serviceName, null);
 
                     Assert.NotNull(listBackends);
 
-                    // there should be one user
+                    // there should be atleast one backend
                     Assert.True(listBackends.Count() >= 1);
+
+                    // reconnect backend
+                    var backendReconnectParams = new BackendReconnectContract()
+                    {
+                        After = TimeSpan.FromMinutes(5d)
+                    };
+
+                    await testBase.client.Backend.ReconnectAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        backendId,
+                        backendReconnectParams);
 
                     // patch backend
                     string patchedDescription = TestUtilities.GenerateName("patchedDescription");
@@ -211,21 +230,32 @@ namespace ApiManagement.Tests.ManagementApiTests
                         {
                             Description = patchedDescription
                         },
-                        getResponse.Headers.ETag);
+                        "*");
 
                     // get to check it was patched
-                    var backendGetResponse = await testBase.client.Backend.GetWithHttpMessagesAsync(testBase.rgName, testBase.serviceName, backendId);
+                    backendContract = await testBase.client.Backend.GetAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        backendId);
 
-                    Assert.NotNull(backendGetResponse);
-                    Assert.Equal(backendId, backendGetResponse.Body.Name);
-                    Assert.Equal(patchedDescription, backendGetResponse.Body.Description);
+                    Assert.NotNull(backendContract);
+                    Assert.Equal(backendId, backendContract.Name);
+                    Assert.Equal(patchedDescription, backendContract.Description);
+                    
+                    // get the etag
+                    var backendTag = await testBase.client.Backend.GetEntityTagAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        backendId);
+                    Assert.NotNull(backendTag);
+                    Assert.NotNull(backendTag.ETag);
 
                     // delete the backend
                     testBase.client.Backend.Delete(
                         testBase.rgName,
                         testBase.serviceName,
                         backendId,
-                        backendGetResponse.Headers.ETag);
+                        backendTag.ETag);
 
                     // get the deleted backend to make sure it was deleted
                     try

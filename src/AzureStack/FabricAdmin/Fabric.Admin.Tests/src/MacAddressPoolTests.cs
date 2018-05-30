@@ -3,12 +3,12 @@
 // license information.
 //
 
-using Microsoft.AzureStack.Management.Fabric.Admin;
-using Microsoft.AzureStack.Management.Fabric.Admin.Models;
-using Xunit;
-
 namespace Fabric.Tests
 {
+    using Microsoft.AzureStack.Management.Fabric.Admin;
+    using Microsoft.AzureStack.Management.Fabric.Admin.Models;
+    using Xunit;
+
     public class MacAddressPoolTests : FabricTestBase
     {
         private void AssertMacAddressPoolsAreSame(MacAddressPool expected, MacAddressPool found) {
@@ -48,19 +48,23 @@ namespace Fabric.Tests
         [Fact]
         public void TestListMacAddressPools() {
             RunTest((client) => {
-                var macAddressPools = client.MacAddressPools.List(Location);
-                Common.MapOverIPage(macAddressPools, client.MacAddressPools.ListNext, ValidateMacAddressPool);
-                Common.WriteIPagesToFile(macAddressPools, client.MacAddressPools.ListNext, "ListMacAddressPools.txt", (macAddressPool) => macAddressPool.Name);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var macAddressPools = client.MacAddressPools.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(macAddressPools, client.MacAddressPools.ListNext, ValidateMacAddressPool);
+                    Common.WriteIPagesToFile(macAddressPools, client.MacAddressPools.ListNext, "ListMacAddressPools.txt", (macAddressPool) => macAddressPool.Name);
+                });
             });
         }
 
         [Fact]
         public void TestGetMacAddressPool() {
             RunTest((client) => {
-                var macAddressPool = client.MacAddressPools.List(Location).GetFirst();
+                var fabricLocationName = GetLocation(client);
+                var macAddressPool = client.MacAddressPools.List(ResourceGroupName, fabricLocationName).GetFirst();
                 if (macAddressPool != null)
                 {
-                    var retrieved = client.MacAddressPools.Get(Location, macAddressPool.Name);
+                    var macAddressPoolName = ExtractName(macAddressPool.Name);
+                    var retrieved = client.MacAddressPools.Get(ResourceGroupName, fabricLocationName, macAddressPoolName);
                     AssertMacAddressPoolsAreSame(macAddressPool, retrieved);
                 }
             });
@@ -69,13 +73,15 @@ namespace Fabric.Tests
         [Fact]
         public void TestGetAllMacAddressPools() {
             RunTest((client) => {
-                var macAddressPools = client.MacAddressPools.List(Location);
-                Common.MapOverIPage(macAddressPools, client.MacAddressPools.ListNext, (macAddressPool) => {
-                    var retrieved = client.MacAddressPools.Get(Location, macAddressPool.Name);
-                    AssertMacAddressPoolsAreSame(macAddressPool, retrieved);
+                OverFabricLocations(client, (fabricLocationName) => {
+                    var macAddressPools = client.MacAddressPools.List(ResourceGroupName, fabricLocationName);
+                    Common.MapOverIPage(macAddressPools, client.MacAddressPools.ListNext, (macAddressPool) => {
+                        var macAddressPoolName = ExtractName(macAddressPool.Name);
+                        var retrieved = client.MacAddressPools.Get(ResourceGroupName, fabricLocationName, macAddressPoolName);
+                        AssertMacAddressPoolsAreSame(macAddressPool, retrieved);
+                    });
                 });
             });
         }
-
     }
 }

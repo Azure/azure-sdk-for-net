@@ -32,34 +32,34 @@ namespace Microsoft.Azure.Batch
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
-                this.StoreLocationProperty = this.CreatePropertyAccessor<Common.CertStoreLocation?>("StoreLocation", BindingAccess.Read | BindingAccess.Write);
-                this.StoreNameProperty = this.CreatePropertyAccessor<string>("StoreName", BindingAccess.Read | BindingAccess.Write);
-                this.ThumbprintProperty = this.CreatePropertyAccessor<string>("Thumbprint", BindingAccess.Read | BindingAccess.Write);
-                this.ThumbprintAlgorithmProperty = this.CreatePropertyAccessor<string>("ThumbprintAlgorithm", BindingAccess.Read | BindingAccess.Write);
-                this.VisibilityProperty = this.CreatePropertyAccessor<Common.CertificateVisibility?>("Visibility", BindingAccess.Read | BindingAccess.Write);
+                this.StoreLocationProperty = this.CreatePropertyAccessor<Common.CertStoreLocation?>(nameof(StoreLocation), BindingAccess.Read | BindingAccess.Write);
+                this.StoreNameProperty = this.CreatePropertyAccessor<string>(nameof(StoreName), BindingAccess.Read | BindingAccess.Write);
+                this.ThumbprintProperty = this.CreatePropertyAccessor<string>(nameof(Thumbprint), BindingAccess.Read | BindingAccess.Write);
+                this.ThumbprintAlgorithmProperty = this.CreatePropertyAccessor<string>(nameof(ThumbprintAlgorithm), BindingAccess.Read | BindingAccess.Write);
+                this.VisibilityProperty = this.CreatePropertyAccessor<Common.CertificateVisibility?>(nameof(Visibility), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.CertificateReference protocolObject) : base(BindingState.Bound)
             {
                 this.StoreLocationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.CertificateStoreLocation, Common.CertStoreLocation>(protocolObject.StoreLocation),
-                    "StoreLocation",
+                    nameof(StoreLocation),
                     BindingAccess.Read | BindingAccess.Write);
                 this.StoreNameProperty = this.CreatePropertyAccessor(
                     protocolObject.StoreName,
-                    "StoreName",
+                    nameof(StoreName),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ThumbprintProperty = this.CreatePropertyAccessor(
                     protocolObject.Thumbprint,
-                    "Thumbprint",
+                    nameof(Thumbprint),
                     BindingAccess.Read | BindingAccess.Write);
                 this.ThumbprintAlgorithmProperty = this.CreatePropertyAccessor(
                     protocolObject.ThumbprintAlgorithm,
-                    "ThumbprintAlgorithm",
+                    nameof(ThumbprintAlgorithm),
                     BindingAccess.Read | BindingAccess.Write);
                 this.VisibilityProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.ParseCertificateVisibility(protocolObject.Visibility),
-                    "Visibility",
+                    nameof(Visibility),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }

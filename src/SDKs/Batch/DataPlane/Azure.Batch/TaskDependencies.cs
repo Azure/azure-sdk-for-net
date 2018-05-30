@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch
                 taskIdRanges = Enumerable.Empty<TaskIdRange>();
             }
 
-            this.taskIds = new List<string>(taskIds).AsReadOnly();
-            this.taskIdRanges = new List<TaskIdRange>(taskIdRanges).AsReadOnly();
+            this.TaskIds = new List<string>(taskIds).AsReadOnly();
+            this.TaskIdRanges = new List<TaskIdRange>(taskIdRanges).AsReadOnly();
         }
 
         /// <summary>

@@ -28,8 +28,19 @@ namespace ObjectModelCodeGenerator
         public virtual string TransformText()
         {
             this.Write("    /// <summary>\r\n");
-            this.Write(this.ToStringHelper.ToStringWithCulture(CommentUtilities.FormatTripleSlashComment(type.Comment, CommentUtilities.Indentation.TypeLevel)));
-            this.Write("\r\n    /// </summary>\r\n    public partial class ");
+            this.Write(this.ToStringHelper.ToStringWithCulture(CommentUtilities.FormatTripleSlashComment(type.SummaryComment, CommentUtilities.Indentation.TypeLevel)));
+            this.Write("\r\n    /// </summary>\r\n");
+
+if (!string.IsNullOrEmpty(type.RemarksComment))
+{
+
+            this.Write("    /// <remarks>\r\n");
+            this.Write(this.ToStringHelper.ToStringWithCulture(CommentUtilities.FormatTripleSlashComment(type.RemarksComment, CommentUtilities.Indentation.TypeLevel)));
+            this.Write("\r\n    /// </remarks>\r\n");
+
+}
+
+            this.Write("    public partial class ");
             this.Write(this.ToStringHelper.ToStringWithCulture(type.Name));
             this.Write(" :");
  if (type.ShouldDefineGetTransportObject) { 
@@ -65,9 +76,9 @@ if (type.UnboundProperties.Any())
             this.Write(this.ToStringHelper.ToStringWithCulture(property.PropertyContainerPropertyName));
             this.Write(" = this.CreatePropertyAccessor<");
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
-            this.Write(">(\"");
+            this.Write(">(nameof(");
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
-            this.Write("\", ");
+            this.Write("), ");
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeGenerationUtilities.GenerateBindingAccessString(property.UnboundAccess)));
             this.Write(");\r\n");
 
@@ -93,9 +104,9 @@ if (type.BoundProperties.Any())
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.PropertyContainerPropertyName));
             this.Write(" = this.CreatePropertyAccessor(\r\n                    ");
             this.Write(this.ToStringHelper.ToStringWithCulture(protocolObjectGetter));
-            this.Write(",\r\n                    \"");
+            this.Write(",\r\n                    nameof(");
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.Name));
-            this.Write("\",\r\n                    ");
+            this.Write("),\r\n                    ");
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeGenerationUtilities.GenerateBindingAccessString(kvp.Key.BoundAccess)));
             this.Write(");\r\n");
 
@@ -107,9 +118,9 @@ if (type.BoundProperties.Any())
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.PropertyContainerPropertyName));
             this.Write(" = this.CreatePropertyAccessor<");
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.Type));
-            this.Write(">(\r\n                    \"");
+            this.Write(">(\r\n                    nameof(");
             this.Write(this.ToStringHelper.ToStringWithCulture(kvp.Key.Name));
-            this.Write("\",\r\n                    ");
+            this.Write("),\r\n                    ");
             this.Write(this.ToStringHelper.ToStringWithCulture(CodeGenerationUtilities.GenerateBindingAccessString(kvp.Key.BoundAccess)));
             this.Write(");\r\n");
 

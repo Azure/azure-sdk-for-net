@@ -1,0 +1,82 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/resourceGroups/BVTToolRG1/providers/Microsoft.DataBox/jobs/sdktest5497/bookShipmentPickUp?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M2NmRhMjEtNjA3ZS00OWI0LThiZGYtZjI1ZmJiOGY3MDVmL3Jlc291cmNlR3JvdXBzL0JWVFRvb2xSRzEvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhQm94L2pvYnMvYWJiaGF0OU5vdlNtb2tlVGVzdDIvYm9va1NoaXBtZW50UGlja1VwP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"startTime\": \"2018-04-15T18:30:00Z\",\r\n  \"endTime\": \"2018-04-17T18:30:00Z\",\r\n  \"shipmentLocation\": \"Front desk\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "118"
+        ],
+        "x-ms-client-request-id": [
+          "2dcbcdcf-c3a5-4dd5-ad7c-e608a3ca8a5f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"confirmationNumber\": \"2929602E9CP\",\r\n  \"readyByTime\": \"2023-04-19T00:00:00Z\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 16 Apr 2018 04:57:20 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "e09ee5c1-cf3e-48b9-a74a-056fcc691fd6"
+        ],
+        "x-ms-client-request-id": [
+          "2dcbcdcf-c3a5-4dd5-ad7c-e608a3ca8a5f"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "8a6c25ae-8481-4db3-90d7-3fffef74988e"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20180416T045720Z:8a6c25ae-8481-4db3-90d7-3fffef74988e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
+    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+  }
+}
