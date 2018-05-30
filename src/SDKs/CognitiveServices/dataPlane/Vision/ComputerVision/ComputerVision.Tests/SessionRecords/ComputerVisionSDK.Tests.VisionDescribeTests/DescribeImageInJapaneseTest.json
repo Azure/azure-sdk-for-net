@@ -4,7 +4,6 @@
       "RequestUri": "/vision/v1.0/describe?maxCandidates=1&language=ja",
       "EncodedRequestUri": "L3Zpc2lvbi92MS4wL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9MSZsYW5ndWFnZT1qYQ==",
       "RequestMethod": "POST",
-      "IsRequestBodyBinary": false,
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/dog.jpg\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
@@ -21,8 +20,7 @@
           "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/0.0.0.0"
         ]
       },
-      "IsResponseBodyBinary": false,
-      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"イエロー\",\r\n      \"フロント\",\r\n      \"大きい\",\r\n      \"木製\",\r\n      \"小さい\",\r\n      \"ホワイト\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.80020958730655689\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"f5944346-bf45-4aff-a140-f284d30fe59a\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"犬\",\r\n      \"屋外\",\r\n      \"座る\",\r\n      \"動物\",\r\n      \"哺乳類\",\r\n      \"探す\",\r\n      \"茶色\",\r\n      \"ベンチ\",\r\n      \"イエロー\",\r\n      \"フロント\",\r\n      \"大きい\",\r\n      \"木製\",\r\n      \"小さい\",\r\n      \"ホワイト\",\r\n      \"立つ\",\r\n      \"閉じる\",\r\n      \"テーブル\",\r\n      \"オレンジ\",\r\n      \"横たわる\",\r\n      \"公園\",\r\n      \"頭\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"犬の顔\",\r\n        \"confidence\": 0.80020958730655689\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"f602086d-a901-420e-b90e-86592fc2d5d7\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "432"
@@ -34,10 +32,10 @@
           "close"
         ],
         "Date": [
-          "Tue, 29 May 2018 22:32:01 GMT"
+          "Wed, 30 May 2018 20:53:38 GMT"
         ],
         "apim-request-id": [
-          "f5944346-bf45-4aff-a140-f284d30fe59a"
+          "f602086d-a901-420e-b90e-86592fc2d5d7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

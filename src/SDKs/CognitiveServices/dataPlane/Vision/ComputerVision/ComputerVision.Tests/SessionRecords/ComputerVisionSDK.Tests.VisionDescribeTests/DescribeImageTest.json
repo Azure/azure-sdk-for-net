@@ -4,7 +4,6 @@
       "RequestUri": "/vision/v1.0/describe?maxCandidates=2",
       "EncodedRequestUri": "L3Zpc2lvbi92MS4wL2Rlc2NyaWJlP21heENhbmRpZGF0ZXM9Mg==",
       "RequestMethod": "POST",
-      "IsRequestBodyBinary": false,
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/dog.jpg\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
@@ -21,8 +20,7 @@
           "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/0.0.0.0"
         ]
       },
-      "IsResponseBodyBinary": false,
-      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"dog\",\r\n      \"outdoor\",\r\n      \"sitting\",\r\n      \"animal\",\r\n      \"mammal\",\r\n      \"looking\",\r\n      \"brown\",\r\n      \"bench\",\r\n      \"yellow\",\r\n      \"front\",\r\n      \"large\",\r\n      \"wooden\",\r\n      \"small\",\r\n      \"white\",\r\n      \"standing\",\r\n      \"close\",\r\n      \"table\",\r\n      \"orange\",\r\n      \"laying\",\r\n      \"park\",\r\n      \"head\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"a close up of a dog\",\r\n        \"confidence\": 0.96541176672082818\r\n      },\r\n      {\r\n        \"text\": \"close up of a dog\",\r\n        \"confidence\": 0.95799109896890555\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"a8e94e8f-ab5c-4dd7-b445-bded91865a40\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"description\": {\r\n    \"tags\": [\r\n      \"dog\",\r\n      \"outdoor\",\r\n      \"sitting\",\r\n      \"animal\",\r\n      \"mammal\",\r\n      \"looking\",\r\n      \"brown\",\r\n      \"bench\",\r\n      \"yellow\",\r\n      \"front\",\r\n      \"large\",\r\n      \"wooden\",\r\n      \"small\",\r\n      \"white\",\r\n      \"standing\",\r\n      \"close\",\r\n      \"table\",\r\n      \"orange\",\r\n      \"laying\",\r\n      \"park\",\r\n      \"head\"\r\n    ],\r\n    \"captions\": [\r\n      {\r\n        \"text\": \"a close up of a dog\",\r\n        \"confidence\": 0.96541176672082818\r\n      },\r\n      {\r\n        \"text\": \"close up of a dog\",\r\n        \"confidence\": 0.95799109896890555\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"b17f1aed-b5bb-4cc3-9ddf-eaedc8f7c9c3\",\r\n  \"metadata\": {\r\n    \"height\": 599,\r\n    \"width\": 455,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "449"
@@ -34,10 +32,10 @@
           "close"
         ],
         "Date": [
-          "Tue, 29 May 2018 22:32:00 GMT"
+          "Wed, 30 May 2018 20:53:37 GMT"
         ],
         "apim-request-id": [
-          "a8e94e8f-ab5c-4dd7-b445-bded91865a40"
+          "b17f1aed-b5bb-4cc3-9ddf-eaedc8f7c9c3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
