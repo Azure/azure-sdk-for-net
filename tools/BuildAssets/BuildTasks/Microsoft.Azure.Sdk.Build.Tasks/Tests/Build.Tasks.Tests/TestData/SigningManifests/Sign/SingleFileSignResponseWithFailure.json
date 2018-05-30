@@ -1,0 +1,45 @@
+{
+  "Version": "1.0.0",
+  "EsrpClientSessionGuid": "f387751c-fde0-41dd-a63e-e366373651fa",
+  "SubmissionResponses": [
+    {
+      "FilesStatusDetail": [
+        {
+          "SourceHash": "0A0B0B",
+          "HashType": "Sha256",
+          "DestinationHash" : "0A0B0B"
+        }
+      ],
+      "OperationId": "a9b1fd4a-63d6-4db5-a84a-16492dcedc80",
+      "CustomerCorrelationId": "FileSubmittedId1",
+      "StatusCode": "Pass",
+      "ErrorInfo": null,
+      "CertificateThumbprint": null
+    },
+    {
+      "FilesStatusDetail": [
+        {
+          "SourceHash": "0A0B0BAA",
+          "HashType": "Sha256",
+          "DestinationHash": "0A0B0B"
+        }
+      ],
+      "OperationId": "5b96a9bb-10a0-4af9-af29-030f73707607",
+      "CustomerCorrelationId": "FileSubmittedId2",
+      "StatusCode": "FailDoNotRetry",
+      "ErrorInfo": {
+        "code": "InvalidKeyCode",
+        "details": null, 
+        "innerError": {
+          "code": "NotAuthorizedToUseKeyCode",
+          "details": { 
+            "clientId": "ABS123",
+            "keyCode": "Xyz"
+          },
+          "innerError": null 
+        }
+      },
+      "CertificateThumbprint": null
+    }
+  ]
+}
