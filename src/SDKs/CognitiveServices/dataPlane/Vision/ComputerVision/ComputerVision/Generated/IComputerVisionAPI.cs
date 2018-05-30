@@ -84,6 +84,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// return.  By default, image categories are returned in the response.
         /// </summary>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='visualFeatures'>
         /// A string indicating what visual feature types to return. Multiple
@@ -106,11 +107,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// the image.
         /// </param>
         /// <param name='language'>
-        /// A string indicating which language to return. The service will
-        /// return recognition results in specified language. If this parameter
-        /// is not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.zh
-        /// - Simplified Chinese. Possible values include: 'en', 'zh'
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -118,7 +119,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), Language1 language = default(Language1), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a thumbnail image with the user-specified
@@ -139,6 +140,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// minimum of 50.
         /// </param>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='smartCropping'>
         /// Boolean flag for enabling smart cropping.
@@ -167,6 +169,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// upside-down).
         /// </param>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='language'>
         /// The BCP-47 language code of the text to be detected in the image.
@@ -196,10 +199,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// understand what went wrong.
         /// </summary>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='maxCandidates'>
         /// Maximum number of candidate descriptions to be returned.  The
         /// default is 1.
+        /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -207,7 +218,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, string maxCandidates = "1", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, string maxCandidates = "1", string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a list of words, or tags, that are
@@ -216,10 +227,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// actions found in images. Unlike categories, tags are not organized
         /// according to a hierarchical classification system, but correspond
         /// to image content. Tags may contain hints to avoid ambiguity or
-        /// provide context, for example the tag “cello” may be accompanied by
-        /// the hint “musical instrument”. All tags are in English.
+        /// provide context, for example the tag 'cello' may be accompanied by
+        /// the hint 'musical instrument'. All tags are in English.
         /// </summary>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
+        /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -227,7 +246,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation recognizes content within an image by applying a
@@ -241,10 +260,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// help understand what went wrong.
         /// </summary>
         /// <param name='model'>
-        /// The domain-specific content to recognize. Possible values include:
-        /// 'Celebrities', 'Landmarks'
+        /// The domain-specific content to recognize.
         /// </param>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
+        /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -252,20 +278,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(DomainModels model, string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(string model, string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Recognize Text operation. When you use the Recognize Text
         /// interface, the response contains a field called
-        /// “Operation-Location”. The “Operation-Location” field contains the
+        /// 'Operation-Location'. The 'Operation-Location' field contains the
         /// URL that you must use for your Get Handwritten Text Operation
         /// Result operation.
         /// </summary>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='detectHandwriting'>
-        /// If “true” is specified, handwriting recognition is performed. If
-        /// this parameter is set to “false” or is not specified, printed text
+        /// If 'true' is specified, handwriting recognition is performed. If
+        /// this parameter is set to 'false' or is not specified, printed text
         /// recognition is performed.
         /// </param>
         /// <param name='customHeaders'>
@@ -321,11 +348,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// the image. Possible values include: 'Celebrities', 'Landmarks'
         /// </param>
         /// <param name='language'>
-        /// A string indicating which language to return. The service will
-        /// return recognition results in specified language. If this parameter
-        /// is not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.zh
-        /// - Simplified Chinese. Possible values include: 'en', 'zh'
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -419,13 +446,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Maximum number of candidate descriptions to be returned.  The
         /// default is 1.
         /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, string maxCandidates = "1", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, string maxCandidates = "1", string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation generates a list of words, or tags, that are
@@ -434,11 +468,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// actions found in images. Unlike categories, tags are not organized
         /// according to a hierarchical classification system, but correspond
         /// to image content. Tags may contain hints to avoid ambiguity or
-        /// provide context, for example the tag “cello” may be accompanied by
-        /// the hint “musical instrument”. All tags are in English.
+        /// provide context, for example the tag 'cello' may be accompanied by
+        /// the hint 'musical instrument'. All tags are in English.
         /// </summary>
         /// <param name='image'>
         /// An image stream.
+        /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -446,7 +487,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation recognizes content within an image by applying a
@@ -465,18 +506,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
+        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
+        /// include: 'en', 'ja', 'pt', 'zh'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Recognize Text operation. When you use the Recognize Text
         /// interface, the response contains a field called
-        /// “Operation-Location”. The “Operation-Location” field contains the
+        /// 'Operation-Location'. The 'Operation-Location' field contains the
         /// URL that you must use for your Get Handwritten Text Operation
         /// Result operation.
         /// </summary>
@@ -484,8 +532,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// An image stream.
         /// </param>
         /// <param name='detectHandwriting'>
-        /// If “true” is specified, handwriting recognition is performed. If
-        /// this parameter is set to “false” or is not specified, printed text
+        /// If 'true' is specified, handwriting recognition is performed. If
+        /// this parameter is set to 'false' or is not specified, printed text
         /// recognition is performed.
         /// </param>
         /// <param name='customHeaders'>

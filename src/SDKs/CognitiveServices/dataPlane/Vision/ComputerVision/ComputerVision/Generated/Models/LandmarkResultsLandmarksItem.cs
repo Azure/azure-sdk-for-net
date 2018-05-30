@@ -14,28 +14,30 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// An object describing identified category.
+    /// A landmark recognized in the image
     /// </summary>
-    public partial class Category
+    public partial class LandmarkResultsLandmarksItem
     {
         /// <summary>
-        /// Initializes a new instance of the Category class.
+        /// Initializes a new instance of the LandmarkResultsLandmarksItem
+        /// class.
         /// </summary>
-        public Category()
+        public LandmarkResultsLandmarksItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Category class.
+        /// Initializes a new instance of the LandmarkResultsLandmarksItem
+        /// class.
         /// </summary>
-        /// <param name="name">Name of the category.</param>
-        /// <param name="score">Scoring of the category.</param>
-        public Category(string name = default(string), double? score = default(double?), CategoryDetail detail = default(CategoryDetail))
+        /// <param name="name">Name of the landmark.</param>
+        /// <param name="confidence">Confidence level for the landmark
+        /// recognition.</param>
+        public LandmarkResultsLandmarksItem(string name = default(string), double? confidence = default(double?))
         {
             Name = name;
-            Score = score;
-            Detail = detail;
+            Confidence = confidence;
             CustomInit();
         }
 
@@ -45,21 +47,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the category.
+        /// Gets or sets name of the landmark.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets scoring of the category.
+        /// Gets or sets confidence level for the landmark recognition.
         /// </summary>
-        [JsonProperty(PropertyName = "score")]
-        public double? Score { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "detail")]
-        public CategoryDetail Detail { get; set; }
+        [JsonProperty(PropertyName = "confidence")]
+        public double? Confidence { get; set; }
 
     }
 }

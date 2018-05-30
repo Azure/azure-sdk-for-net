@@ -19,9 +19,13 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public string RequestMethod { get; set; }
 
+        public bool IsRequestBodyBinary { get; set; }
+
         public string RequestBody { get; set; }
 
         public Dictionary<string, List<string>> RequestHeaders { get; set; }
+
+        public bool IsResponseBodyBinary { get; set; }
 
         public string ResponseBody { get; set; }
 
@@ -43,7 +47,10 @@ namespace Microsoft.Azure.Test.HttpRecorder
             RequestHeaders = new Dictionary<string, List<string>>();
             if (request.Content != null)
             {
-                RequestBody = Utilities.FormatString(request.Content.ReadAsStringAsync().Result);
+                IsRequestBodyBinary = Utilities.IsRequestBodyBinary(request.Content);
+                RequestBody = IsRequestBodyBinary
+                    ? Utilities.SerializeBinary(request.Content.ReadAsByteArrayAsync().Result)
+                    : Utilities.FormatString(request.Content.ReadAsStringAsync().Result);
                 request.Content.Headers.ForEach(h => RequestHeaders.Add(h.Key, h.Value.ToList()));
             }
             else
@@ -55,7 +62,10 @@ namespace Microsoft.Azure.Test.HttpRecorder
             ResponseHeaders = new Dictionary<string, List<string>>();
             if (response.Content != null)
             {
-                ResponseBody = Utilities.FormatString(response.Content.ReadAsStringAsync().Result);
+                IsResponseBodyBinary = Utilities.IsRequestBodyBinary(response.Content);
+                ResponseBody = IsResponseBodyBinary
+                    ? Utilities.SerializeBinary(response.Content.ReadAsByteArrayAsync().Result)
+                    : Utilities.FormatString(response.Content.ReadAsStringAsync().Result);
                 response.Content.Headers.ForEach(h => ResponseHeaders.Add(h.Key, h.Value.ToList()));
             }
             else
@@ -72,7 +82,9 @@ namespace Microsoft.Azure.Test.HttpRecorder
             HttpResponseMessage response = new HttpResponseMessage();
             response.StatusCode = StatusCode;
             ResponseHeaders.ForEach(h => response.Headers.TryAddWithoutValidation(h.Key, h.Value));
-            response.Content = new StringContent(ResponseBody);
+            response.Content = IsResponseBodyBinary
+                ? new ByteArrayContent(Utilities.DeserializeBinary(ResponseBody))
+                : new StringContent(ResponseBody);
 
             return response;
         }
