@@ -4,6 +4,11 @@ targets/common.NugetPackage.props
 targets/common.targets
 targets/ideCmd.targets
 targets/signing.targets
+targets/core/_AzSdk.props
+targets/core/_build.proj
+targets/core/_Directory.Build.props
+targets/core/_Directory.Build.targets
+targets/core/_test.props
 tasks/common.tasks
 tasks/net46/Microsoft.Build.dll
 tasks/net46/Microsoft.Build.Framework.dll
