@@ -19,3 +19,4 @@ tasks/net46/Microsoft.Azure.Sdk.Build.Common.dll
 tasks/net46/System.Threading.Thread.dll
 tasks/net46/Newtonsoft.Json.dll
 psModules/CodeGenerationModules/generateDotNetSdkCode.psm1
+psModules/CodeGenerationModules/AutoRestCodeGenerationModule/AutoRestCodeGenerationModule.psm1
