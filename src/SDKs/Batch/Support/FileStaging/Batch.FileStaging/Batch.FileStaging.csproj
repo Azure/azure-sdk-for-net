@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Azure.Batch.FileStaging</PackageId>
-    <Description>This package has been replaced by Microsoft.Azure.Batch.FileStaging.
-
-This library simplifies uploading resource files for use by tasks in the Microsoft Azure Batch service.
+    <PackageId>Microsoft.Azure.Batch.FileStaging</PackageId>
+    <Description>This library simplifies uploading resource files for use by tasks in the Microsoft Azure Batch service.
 
 Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
 

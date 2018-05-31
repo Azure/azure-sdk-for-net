@@ -89,9 +89,9 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IUsageOperations.
+        /// Gets the IUsagesOperations.
         /// </summary>
-        public virtual IUsageOperations Usage { get; private set; }
+        public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
         /// Gets the IBlobContainersOperations.
@@ -302,10 +302,10 @@ namespace Microsoft.Azure.Management.Storage
             Operations = new Operations(this);
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
-            Usage = new UsageOperations(this);
+            Usages = new UsagesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-02-01";
+            ApiVersion = "2018-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

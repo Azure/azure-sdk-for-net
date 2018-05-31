@@ -8,7 +8,7 @@
     <Description>Provides management capabilities for Microsoft Azure IoT Device Provisioning Service.</Description>
     <AssemblyTitle>Microsoft Azure Provisioning Service Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.DeviceProvisioningServices</AssemblyName>
-    <Version>0.9.0-preview</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Microsoft Azure IoT Provisioning Services;IoT Device Provisioning Service Management;IoT Provisioning Service;</PackageTags>
     <PackageReleaseNotes>This is a general availability release of the Azure Iot Device Provisioning Service SDK.</PackageReleaseNotes>
   </PropertyGroup>

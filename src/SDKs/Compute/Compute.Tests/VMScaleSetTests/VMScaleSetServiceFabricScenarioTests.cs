@@ -10,7 +10,7 @@ namespace Compute.Tests
         /// Covers manual UD walk operation. Or technically,
         /// ForceRecoveryServiceFabricPlatformUpdateDomainWalk
         /// </summary>
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void TestVMScaleSetServiceFabric()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
