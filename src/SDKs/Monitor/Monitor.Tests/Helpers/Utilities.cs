@@ -641,5 +641,69 @@ namespace Monitor.Tests.Helpers
             }
         }
         #endregion
+
+        #region MetricAlerts
+        public static void AreEqual(MetricAlertResource exp, MetricAlertResource act)
+        {
+            if(exp != null)
+            {
+                Assert.Equal(exp.Description, act.Description);
+                Assert.Equal(exp.Location, act.Location);
+                Assert.Equal(exp.Severity, act.Severity);
+                Assert.Equal(exp.Enabled, act.Enabled);
+                AreEqual(exp.Scopes, act.Scopes);
+                Assert.Equal(exp.EvaluationFrequency, act.EvaluationFrequency);
+                Assert.Equal(exp.WindowSize, act.WindowSize);
+                AreEqual(exp.Criteria, act.Criteria);
+                Assert.Equal(exp.AutoMitigate, act.AutoMitigate);
+                AreEqual(exp.Actions, act.Actions);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(IList<Microsoft.Azure.Management.Monitor.Models.Action> exp, IList<Microsoft.Azure.Management.Monitor.Models.Action> act)
+        {
+            for(int i = 0; i < exp.Count; i++)
+            {
+                AreEqual(exp[i], act[i]);
+            }
+        }
+
+        public static void AreEqual(Microsoft.Azure.Management.Monitor.Models.Action exp, Microsoft.Azure.Management.Monitor.Models.Action act)
+        {
+            Assert.Equal(exp.ActionGroupId, act.ActionGroupId);
+            AreEqual(exp.WebhookProperties, act.WebhookProperties);
+
+        }
+
+        public static void AreEqual(MetricAlertCriteria exp, MetricAlertCriteria act)
+        {
+            if(exp.GetType() == typeof(MetricAlertSingleResourceMultipleMetricCriteria))
+            {
+                Compare(exp as MetricAlertSingleResourceMultipleMetricCriteria, act as MetricAlertSingleResourceMultipleMetricCriteria);
+            }
+        }
+
+        public static void Compare(MetricAlertSingleResourceMultipleMetricCriteria exp, MetricAlertSingleResourceMultipleMetricCriteria act)
+        {
+            for(int i = 0; i < exp.AllOf.Count; i++)
+            {
+                AreEqual(exp.AllOf[i], act.AllOf[i]);
+            }
+        }
+
+        public static void AreEqual(MetricCriteria exp, MetricCriteria act)
+        {
+            Assert.Equal(exp.MetricName, act.MetricName);
+            Assert.Equal(exp.Name, act.Name);
+            Assert.Equal(exp.MetricNamespace, act.MetricNamespace);
+            Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
+            Assert.Equal(exp.TimeAggregation, act.TimeAggregation);
+            Assert.Equal(exp.Threshold, act.Threshold);
+        }
+        #endregion
     }
 }
