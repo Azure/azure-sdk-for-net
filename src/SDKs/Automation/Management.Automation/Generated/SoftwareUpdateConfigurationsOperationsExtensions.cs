@@ -28,15 +28,24 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
             /// <param name='softwareUpdateConfigurationName'>
             /// The name of the software update configuration to be created.
             /// </param>
             /// <param name='parameters'>
             /// Request body.
             /// </param>
-            public static SoftwareUpdateConfiguration Create(this ISoftwareUpdateConfigurationsOperations operations, string softwareUpdateConfigurationName, SoftwareUpdateConfiguration parameters)
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
+            /// </param>
+            public static SoftwareUpdateConfiguration Create(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName, SoftwareUpdateConfiguration parameters, string clientRequestId = default(string))
             {
-                return operations.CreateAsync(softwareUpdateConfigurationName, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, automationAccountName, softwareUpdateConfigurationName, parameters, clientRequestId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,18 +55,27 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
             /// <param name='softwareUpdateConfigurationName'>
             /// The name of the software update configuration to be created.
             /// </param>
             /// <param name='parameters'>
             /// Request body.
             /// </param>
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SoftwareUpdateConfiguration> CreateAsync(this ISoftwareUpdateConfigurationsOperations operations, string softwareUpdateConfigurationName, SoftwareUpdateConfiguration parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SoftwareUpdateConfiguration> CreateAsync(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName, SoftwareUpdateConfiguration parameters, string clientRequestId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(softwareUpdateConfigurationName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, automationAccountName, softwareUpdateConfigurationName, parameters, clientRequestId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -70,12 +88,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
             /// <param name='softwareUpdateConfigurationName'>
             /// The name of the software update configuration to be created.
             /// </param>
-            public static SoftwareUpdateConfiguration GetByName(this ISoftwareUpdateConfigurationsOperations operations, string softwareUpdateConfigurationName)
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
+            /// </param>
+            public static SoftwareUpdateConfiguration GetByName(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName, string clientRequestId = default(string))
             {
-                return operations.GetByNameAsync(softwareUpdateConfigurationName).GetAwaiter().GetResult();
+                return operations.GetByNameAsync(resourceGroupName, automationAccountName, softwareUpdateConfigurationName, clientRequestId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,15 +112,24 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
             /// <param name='softwareUpdateConfigurationName'>
             /// The name of the software update configuration to be created.
+            /// </param>
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SoftwareUpdateConfiguration> GetByNameAsync(this ISoftwareUpdateConfigurationsOperations operations, string softwareUpdateConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SoftwareUpdateConfiguration> GetByNameAsync(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName, string clientRequestId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByNameWithHttpMessagesAsync(softwareUpdateConfigurationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByNameWithHttpMessagesAsync(resourceGroupName, automationAccountName, softwareUpdateConfigurationName, clientRequestId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -106,12 +142,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
             /// <param name='softwareUpdateConfigurationName'>
             /// The name of the software update configuration to be created.
             /// </param>
-            public static void Delete(this ISoftwareUpdateConfigurationsOperations operations, string softwareUpdateConfigurationName)
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
+            /// </param>
+            public static void Delete(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName, string clientRequestId = default(string))
             {
-                operations.DeleteAsync(softwareUpdateConfigurationName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, automationAccountName, softwareUpdateConfigurationName, clientRequestId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,15 +166,24 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
             /// <param name='softwareUpdateConfigurationName'>
             /// The name of the software update configuration to be created.
             /// </param>
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISoftwareUpdateConfigurationsOperations operations, string softwareUpdateConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string softwareUpdateConfigurationName, string clientRequestId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(softwareUpdateConfigurationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, softwareUpdateConfigurationName, clientRequestId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -139,12 +193,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
+            /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
-            public static SoftwareUpdateConfigurationListResult List(this ISoftwareUpdateConfigurationsOperations operations, string filter = default(string))
+            public static SoftwareUpdateConfigurationListResult List(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string clientRequestId = default(string), string filter = default(string))
             {
-                return operations.ListAsync(filter).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, automationAccountName, clientRequestId, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,15 +217,24 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='clientRequestId'>
+            /// Identifies this specific client request.
+            /// </param>
             /// <param name='filter'>
             /// The filter to apply on the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SoftwareUpdateConfigurationListResult> ListAsync(this ISoftwareUpdateConfigurationsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SoftwareUpdateConfigurationListResult> ListAsync(this ISoftwareUpdateConfigurationsOperations operations, string resourceGroupName, string automationAccountName, string clientRequestId = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

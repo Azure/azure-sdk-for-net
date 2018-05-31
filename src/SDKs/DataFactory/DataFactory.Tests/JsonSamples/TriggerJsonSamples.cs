@@ -45,6 +45,41 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string BlobEventsTriggerSample = @"
+{
+  name: ""myDemoBlobEventsTrigger"",
+  properties: {
+    type: ""BlobEventsTrigger"",
+    typeProperties: {
+      blobPathBeginsWith: ""/containerName/blobs/folderName"",
+      events: [
+        ""Microsoft.Storage.BlobCreated""
+      ],
+      scope: ""/subscriptions/297556dc-ea2f-4d52-b390-084a6fc53194/resourceGroups/testresourcegroup/providers/Microsoft.Storage/storageAccounts/teststorageaccount"",
+    },
+    pipelines: [
+      {
+        pipelineReference: {
+          type: ""PipelineReference"",
+          referenceName: ""myCopyPipeline""
+        },
+        parameters: {
+          mySinkDatasetFolderPath: ""sinkcontainer"",
+          mySourceDatasetFolderPath: {
+            type: ""Expression"",
+            value: ""@triggerBody().folderPath""
+          },
+          mySourceDatasetFilePath: {
+            type: ""Expression"",
+            value: ""@triggerBody().fileName""
+          }
+        }
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
         public const string ScheduleTriggerSample = @"
 {
     name: ""myDemoScheduleTrigger"",

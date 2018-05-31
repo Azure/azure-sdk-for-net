@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -27,8 +28,11 @@ namespace Microsoft.Azure.Management.Automation
         /// Delete the dsc node identified by node id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// Automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// The node id.
@@ -48,13 +52,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DscNode>> DeleteWithHttpMessagesAsync(string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DscNode>> DeleteWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the dsc node identified by node id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// The node id.
@@ -74,18 +81,21 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DscNode>> GetWithHttpMessagesAsync(string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DscNode>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the dsc node.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// Parameters supplied to the update dsc node.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='dscNodeUpdateParameters'>
         /// Parameters supplied to the update dsc node.
         /// </param>
         /// <param name='customHeaders'>
@@ -103,16 +113,22 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DscNode>> UpdateWithHttpMessagesAsync(string automationAccountName, string nodeId, DscNodeUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DscNode>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, DscNodeUpdateParameters dscNodeUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of dsc nodes.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />
         /// </summary>
-        /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
         /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='inlinecount'>
+        /// Return total rows.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -129,7 +145,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DscNode>>> ListByAutomationAccountWithHttpMessagesAsync(string automationAccountName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DscNode>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, ODataQuery<DscNode> odataQuery = default(ODataQuery<DscNode>), string inlinecount = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of dsc nodes.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodeoperations" />

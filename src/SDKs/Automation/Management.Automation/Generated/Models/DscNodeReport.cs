@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// in the node report.</param>
         /// <param name="rawErrors">Gets or sets the unparsed errors for the
         /// node report.</param>
-        public DscNodeReport(System.DateTime? endTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), string type = default(string), string reportId = default(string), string status = default(string), string refreshMode = default(string), string rebootRequested = default(string), string reportFormatVersion = default(string), string configurationVersion = default(string), string id = default(string), IList<DscReportError> errors = default(IList<DscReportError>), IList<DscReportResource> resources = default(IList<DscReportResource>), DscMetaConfiguration metaConfiguration = default(DscMetaConfiguration), string hostName = default(string), IList<string> iPV4Addresses = default(IList<string>), IList<string> iPV6Addresses = default(IList<string>), int? numberOfResources = default(int?), string rawErrors = default(string))
+        public DscNodeReport(System.DateTimeOffset? endTime = default(System.DateTimeOffset?), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), string type = default(string), string reportId = default(string), string status = default(string), string refreshMode = default(string), string rebootRequested = default(string), string reportFormatVersion = default(string), string configurationVersion = default(string), string id = default(string), IList<DscReportError> errors = default(IList<DscReportError>), IList<DscReportResource> resources = default(IList<DscReportResource>), DscMetaConfiguration metaConfiguration = default(DscMetaConfiguration), string hostName = default(string), IList<string> iPV4Addresses = default(IList<string>), IList<string> iPV6Addresses = default(IList<string>), int? numberOfResources = default(int?), string rawErrors = default(string))
         {
             EndTime = endTime;
             LastModifiedTime = lastModifiedTime;
@@ -101,19 +101,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the end time of the node report.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
-        public System.DateTime? EndTime { get; set; }
+        public System.DateTimeOffset? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the lastModifiedTime of the node report.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the start time of the node report.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTimeOffset? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the node report.

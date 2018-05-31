@@ -17,7 +17,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var run = this.automationClient.SoftwareUpdateConfigurationRuns.GetById(runId);
+                var run = this.automationClient.SoftwareUpdateConfigurationRuns.GetById(ResourceGroupName, AutomationAccountName, runId);
                 Assert.NotNull(run);
                 Assert.Equal(runId.ToString(), run.Name);
             }
@@ -30,7 +30,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.List();
+                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(15, runs.Value.Count);
             }
@@ -44,7 +44,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByConfigurationName(configName);
+                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByConfigurationName(ResourceGroupName, AutomationAccountName, configName);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(6, runs.Value.Count);
             }
@@ -58,7 +58,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByOsType(os);
+                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByOsType(ResourceGroupName, AutomationAccountName, os);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(17, runs.Value.Count);
             }
@@ -72,7 +72,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByStatus(status);
+                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByStatus(ResourceGroupName, AutomationAccountName, status);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(2, runs.Value.Count);
             }
@@ -86,7 +86,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByStartTime(startTime);
+                var runs = this.automationClient.SoftwareUpdateConfigurationRuns.ListByStartTime(ResourceGroupName, AutomationAccountName, startTime);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(3, runs.Value.Count);
             }

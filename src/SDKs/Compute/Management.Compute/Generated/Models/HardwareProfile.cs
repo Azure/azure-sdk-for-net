@@ -37,16 +37,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// availability set. For a list of available sizes use these APIs:
         /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in
         /// an availability
-        /// set](virtualmachines-list-sizes-availability-set.md)
+        /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
         /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes in a
-        /// region](virtualmachines-list-sizes-region.md) &lt;br&gt;&lt;br&gt;
-        /// [List all available virtual machine sizes for
-        /// resizing](virtualmachines-list-sizes-for-resizing.md). Possible
-        /// values include: 'Basic_A0', 'Basic_A1', 'Basic_A2', 'Basic_A3',
-        /// 'Basic_A4', 'Standard_A0', 'Standard_A1', 'Standard_A2',
-        /// 'Standard_A3', 'Standard_A4', 'Standard_A5', 'Standard_A6',
-        /// 'Standard_A7', 'Standard_A8', 'Standard_A9', 'Standard_A10',
-        /// 'Standard_A11', 'Standard_A1_v2', 'Standard_A2_v2',
+        /// region](https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list)
+        /// &lt;br&gt;&lt;br&gt; [List all available virtual machine sizes for
+        /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
+        /// Possible values include: 'Basic_A0', 'Basic_A1', 'Basic_A2',
+        /// 'Basic_A3', 'Basic_A4', 'Standard_A0', 'Standard_A1',
+        /// 'Standard_A2', 'Standard_A3', 'Standard_A4', 'Standard_A5',
+        /// 'Standard_A6', 'Standard_A7', 'Standard_A8', 'Standard_A9',
+        /// 'Standard_A10', 'Standard_A11', 'Standard_A1_v2', 'Standard_A2_v2',
         /// 'Standard_A4_v2', 'Standard_A8_v2', 'Standard_A2m_v2',
         /// 'Standard_A4m_v2', 'Standard_A8m_v2', 'Standard_B1s',
         /// 'Standard_B1ms', 'Standard_B2s', 'Standard_B2ms', 'Standard_B4ms',
@@ -111,17 +111,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// on region and availability set. For a list of available sizes use
         /// these APIs:  &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all
         /// available virtual machine sizes in an availability
-        /// set](virtualmachines-list-sizes-availability-set.md)
+        /// set](https://docs.microsoft.com/rest/api/compute/availabilitysets/listavailablesizes)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
-        /// machine sizes in a region](virtualmachines-list-sizes-region.md)
+        /// machine sizes in a
+        /// region](https://docs.microsoft.com/rest/api/compute/virtualmachinesizes/list)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; [List all available virtual
         /// machine sizes for
-        /// resizing](virtualmachines-list-sizes-for-resizing.md). Possible
-        /// values include: 'Basic_A0', 'Basic_A1', 'Basic_A2', 'Basic_A3',
-        /// 'Basic_A4', 'Standard_A0', 'Standard_A1', 'Standard_A2',
-        /// 'Standard_A3', 'Standard_A4', 'Standard_A5', 'Standard_A6',
-        /// 'Standard_A7', 'Standard_A8', 'Standard_A9', 'Standard_A10',
-        /// 'Standard_A11', 'Standard_A1_v2', 'Standard_A2_v2',
+        /// resizing](https://docs.microsoft.com/rest/api/compute/virtualmachines/listavailablesizes).
+        /// Possible values include: 'Basic_A0', 'Basic_A1', 'Basic_A2',
+        /// 'Basic_A3', 'Basic_A4', 'Standard_A0', 'Standard_A1',
+        /// 'Standard_A2', 'Standard_A3', 'Standard_A4', 'Standard_A5',
+        /// 'Standard_A6', 'Standard_A7', 'Standard_A8', 'Standard_A9',
+        /// 'Standard_A10', 'Standard_A11', 'Standard_A1_v2', 'Standard_A2_v2',
         /// 'Standard_A4_v2', 'Standard_A8_v2', 'Standard_A2m_v2',
         /// 'Standard_A4m_v2', 'Standard_A8m_v2', 'Standard_B1s',
         /// 'Standard_B1ms', 'Standard_B2s', 'Standard_B2ms', 'Standard_B4ms',

@@ -15,7 +15,9 @@ namespace Consumption.Tests.ScenarioTests
     public class PricesheetTests : TestBase
     {
         protected const string subscriptionId = "a98d6dc5-eb8f-46cf-8938-f1fb08f03706";
+        protected const string subscriptionIdTest = "1caaa5a3-2b66-438e-8ab4-bce37d518c5d";
         protected const string billingPeriodName = "201712";
+        protected const int top = 3;
 
         [Fact]
         public void PriceSheetGetTest()
@@ -43,7 +45,20 @@ namespace Consumption.Tests.ScenarioTests
             }
         }
 
-        private static void ValidateProperties(PriceSheetResult item, bool checkMeterDetails = false)
+        [Fact]
+        public void PriceSheetGetTopTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var consumptionMgmtClient = ConsumptionTestUtilities.GetConsumptionManagementClient(
+                    context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                consumptionMgmtClient.SubscriptionId = subscriptionIdTest;
+                var priceSheet = consumptionMgmtClient.PriceSheet.Get(top: top);
+                ValidateProperties(priceSheet, true);
+            }
+        }
+
+        private static void ValidateProperties(PriceSheetResult item, bool checkTop = false, bool checkMeterDetails = false)
         {
             Assert.NotNull(item);
             Assert.NotNull(item.Id);
@@ -53,6 +68,11 @@ namespace Consumption.Tests.ScenarioTests
             Assert.NotNull(item.Pricesheets);
 
             Assert.True(item.Pricesheets.Any());
+
+            if (checkTop)
+            {
+                Assert.Equal(top, item.Pricesheets.Count);
+            }
 
             foreach (var p in item.Pricesheets)
             {

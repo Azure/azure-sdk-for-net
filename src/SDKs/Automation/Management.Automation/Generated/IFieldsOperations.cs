@@ -28,6 +28,9 @@ namespace Microsoft.Azure.Management.Automation
         /// name.
         /// <see href="http://aka.ms/azureautomationsdk/typefieldoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -52,6 +55,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<TypeField>>> ListByTypeWithHttpMessagesAsync(string automationAccountName, string moduleName, string typeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<TypeField>>> ListByTypeWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string moduleName, string typeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -73,7 +73,6 @@ namespace NotificationHubs.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", NotificationHubsManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
                 {
-                    Location = location,
                     Properties = new SharedAccessAuthorizationRuleProperties()
                     {
                         Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send },
@@ -112,7 +111,6 @@ namespace NotificationHubs.Tests.ScenarioTests
                 //Update notificationHub authorizationRule 
                 var updateNotificationHubAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
                 {
-                    Location = location,
                     Properties = new SharedAccessAuthorizationRuleProperties()
                     {
                         Rights = new List<AccessRights?>() { AccessRights.Listen },

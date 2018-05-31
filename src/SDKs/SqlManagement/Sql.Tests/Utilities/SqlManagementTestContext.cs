@@ -66,6 +66,12 @@ namespace Sql.Tests
             return resourceGroup;
         }
 
+        public void DeleteResourceGroup(string resourceGroupName)
+        {
+            ResourceManagementClient resourceClient = GetClient<ResourceManagementClient>();
+            resourceClient.ResourceGroups.BeginDelete(resourceGroupName);
+        }
+
         public Server CreateServer(ResourceGroup resourceGroup)
         {
             return CreateServer(resourceGroup, TestEnvironmentUtilities.DefaultLocation);

@@ -24,9 +24,12 @@
         /// <param name='virtualMachineId'>
         /// Azure resource manager Id of the virtual machine
         /// </param>
-        public static SoftwareUpdateConfigurationListResult ListByAzureVirtualMachine(this ISoftwareUpdateConfigurationsOperations operations, string virtualMachineId)
+        public static SoftwareUpdateConfigurationListResult ListByAzureVirtualMachine(
+            this ISoftwareUpdateConfigurationsOperations operations,
+            string resourceGroupName, string automationAccountName, string virtualMachineId,
+            string clientRequestId = default(string))
         {
-            return operations.ListByAzureVirtualMachineAsync(virtualMachineId).GetAwaiter().GetResult();
+            return operations.ListByAzureVirtualMachineAsync(resourceGroupName, automationAccountName, virtualMachineId, clientRequestId).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -48,10 +51,14 @@
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public static async Task<SoftwareUpdateConfigurationListResult> ListByAzureVirtualMachineAsync(this ISoftwareUpdateConfigurationsOperations operations, string virtualMachineId, string skip = default(string), string top = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<SoftwareUpdateConfigurationListResult> ListByAzureVirtualMachineAsync(
+            this ISoftwareUpdateConfigurationsOperations operations,
+            string resourceGroupName, string automationAccountName, string virtualMachineId,
+            string clientRequestId = default(string), string skip = default(string), string top = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var filter = string.Format(LambdaFilterFormat, AzureVirtualMachinesProperty, virtualMachineId);
-            using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, automationAccountName, clientRequestId, filter, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

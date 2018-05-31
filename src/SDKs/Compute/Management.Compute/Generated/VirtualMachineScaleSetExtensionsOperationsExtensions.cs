@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmssExtensionName'>
             /// The name of the VM scale set extension.
             /// </param>
-            public static OperationStatusResponse Delete(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName)
+            public static void Delete(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName)
             {
-                return operations.DeleteAsync(resourceGroupName, vmScaleSetName, vmssExtensionName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, vmScaleSetName, vmssExtensionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,12 +113,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmssExtensionName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmssExtensionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -282,9 +279,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmssExtensionName'>
             /// The name of the VM scale set extension.
             /// </param>
-            public static OperationStatusResponse BeginDelete(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName)
+            public static void BeginDelete(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName)
             {
-                return operations.BeginDeleteAsync(resourceGroupName, vmScaleSetName, vmssExtensionName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, vmScaleSetName, vmssExtensionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -305,12 +302,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginDeleteAsync(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVirtualMachineScaleSetExtensionsOperations operations, string resourceGroupName, string vmScaleSetName, string vmssExtensionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmssExtensionName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, vmssExtensionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

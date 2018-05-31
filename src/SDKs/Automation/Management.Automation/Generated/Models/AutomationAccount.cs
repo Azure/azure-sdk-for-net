@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the automation account type.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class AutomationAccount : Resource
+    public partial class AutomationAccount : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the AutomationAccount class.
@@ -34,11 +34,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the AutomationAccount class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">The Azure Region where the resource
+        /// lives</param>
         /// <param name="sku">Gets or sets the SKU of account.</param>
         /// <param name="lastModifiedBy">Gets or sets the last modified
         /// by.</param>
@@ -48,8 +50,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets the last modified time.</param>
         /// <param name="description">Gets or sets the description.</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
-        public AutomationAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string lastModifiedBy = default(string), string state = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string), string etag = default(string))
-            : base(location, id, name, type, tags)
+        public AutomationAccount(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Sku sku = default(Sku), string lastModifiedBy = default(string), string state = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string), string etag = default(string))
+            : base(id, name, type, tags, location)
         {
             Sku = sku;
             LastModifiedBy = lastModifiedBy;
@@ -89,13 +91,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the description.
@@ -115,9 +117,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (Sku != null)
             {
                 Sku.Validate();

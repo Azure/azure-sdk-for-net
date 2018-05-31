@@ -7,17 +7,17 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f7b004d4-4a7e-4ca0-8c05-3191284b324d"
+          "d67f9192-6918-44c4-a460-6da735e5f66c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/aaaaarg\",\r\n      \"name\": \"aaaaarg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaym-test-20170318-194608\",\r\n      \"name\": \"abhaym-test-20170318-194608\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703142040\",\r\n      \"name\": \"abhaymtest1703142040\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703152214\",\r\n      \"name\": \"abhaymtest1703152214\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703160653\",\r\n      \"name\": \"abhaymtest1703160653\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703162329\",\r\n      \"name\": \"abhaymtest1703162329\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703162340\",\r\n      \"name\": \"abhaymtest1703162340\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703170025\",\r\n      \"name\": \"abhaymtest1703170025\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703170037\",\r\n      \"name\": \"abhaymtest1703170037\",\r\n      \"location\": \"westcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703182049\",\r\n      \"name\": \"abhaymtest1703182049\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703182157\",\r\n      \"name\": \"abhaymtest1703182157\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703182207\",\r\n      \"name\": \"abhaymtest1703182207\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703201843\",\r\n      \"name\": \"abhaymtest1703201843\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703201944\",\r\n      \"name\": \"abhaymtest1703201944\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703202006\",\r\n      \"name\": \"abhaymtest1703202006\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703210414\",\r\n      \"name\": \"abhaymtest1703210414\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703210416\",\r\n      \"name\": \"abhaymtest1703210416\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703212351\",\r\n      \"name\": \"abhaymtest1703212351\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703220723\",\r\n      \"name\": \"abhaymtest1703220723\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703220724\",\r\n      \"name\": \"abhaymtest1703220724\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703230444\",\r\n      \"name\": \"abhaymtest1703230444\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703230456\",\r\n      \"name\": \"abhaymtest1703230456\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703230505\",\r\n      \"name\": \"abhaymtest1703230505\",\r\n      \"location\": \"canadacentral\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703230549\",\r\n      \"name\": \"abhaymtest1703230549\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703290002\",\r\n      \"name\": \"abhaymtest1703290002\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703290020\",\r\n      \"name\": \"abhaymtest1703290020\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703290021\",\r\n      \"name\": \"abhaymtest1703290021\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaymtest1703291956\",\r\n      \"name\": \"abhaymtest1703291956\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaytest06\",\r\n      \"name\": \"abhaytest06\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaytest07\",\r\n      \"name\": \"abhaytest07\",\r\n      \"location\": \"brazilsouth\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaytest10\",\r\n      \"name\": \"abhaytest10\",\r\n      \"location\": \"westeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/abhaytest11\",\r\n      \"name\": \"abhaytest11\",\r\n      \"location\": \"brazilsouth\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/Default-ServiceBus-9653\",\r\n      \"name\": \"Default-ServiceBus-9653\",\r\n      \"location\": \"australiaeast\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/deployertest\",\r\n      \"name\": \"deployertest\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/mykeyvaultrg1\",\r\n      \"name\": \"mykeyvaultrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/mykvrg1\",\r\n      \"name\": \"mykvrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/mykvvrg1\",\r\n      \"name\": \"mykvvrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/mykvvrg2\",\r\n      \"name\": \"mykvvrg2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/mykvvrgg2\",\r\n      \"name\": \"mykvvrgg2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/newkeyvaultrg1\",\r\n      \"name\": \"newkeyvaultrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/newkeyvaultrg3\",\r\n      \"name\": \"newkeyvaultrg3\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/newrecordclusterrg1\",\r\n      \"name\": \"newrecordclusterrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/newsftestrg1\",\r\n      \"name\": \"newsftestrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/newsftestrg3\",\r\n      \"name\": \"newsftestrg3\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/newtestresourcegroup1\",\r\n      \"name\": \"newtestresourcegroup1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/same1rg\",\r\n      \"name\": \"same1rg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/same2rg\",\r\n      \"name\": \"same2rg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/same2rgg\",\r\n      \"name\": \"same2rgg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sdklinuxtest01\",\r\n      \"name\": \"sdklinuxtest01\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sdklusterrg\",\r\n      \"name\": \"sdklusterrg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sdktestkeyvaultrg\",\r\n      \"name\": \"sdktestkeyvaultrg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sdktestrg2\",\r\n      \"name\": \"sdktestrg2\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/SecureBaseImage\",\r\n      \"name\": \"SecureBaseImage\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sfrpkeyvaultrg1\",\r\n      \"name\": \"sfrpkeyvaultrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sftestkeyvaultrg\",\r\n      \"name\": \"sftestkeyvaultrg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/sftestkkrg1\",\r\n      \"name\": \"sftestkkrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testCreaterg1\",\r\n      \"name\": \"testCreaterg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg\",\r\n      \"name\": \"testDeleterg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testpowershellclusterrg1\",\r\n      \"name\": \"testpowershellclusterrg1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/TestRG1\",\r\n      \"name\": \"TestRG1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testrg111\",\r\n      \"name\": \"testrg111\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testsdkdnetrestrg\",\r\n      \"name\": \"testsdkdnetrestrg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/VmExtnAppInsightTest\",\r\n      \"name\": \"VmExtnAppInsightTest\",\r\n      \"location\": \"westeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvc-mwh-20161203-012707281-v2\",\r\n      \"name\": \"wftsvc-mwh-20161203-012707281-v2\",\r\n      \"location\": \"westus2\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvcKeyVault1\",\r\n      \"name\": \"wftsvcKeyVault1\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvcKeyVault2\",\r\n      \"name\": \"wftsvcKeyVault2\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvcKeyVault3\",\r\n      \"name\": \"wftsvcKeyVault3\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvcKeyVault4\",\r\n      \"name\": \"wftsvcKeyVault4\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvcKeyVault5\",\r\n      \"name\": \"wftsvcKeyVault5\",\r\n      \"location\": \"southeastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvcKeyVault6\",\r\n      \"name\": \"wftsvcKeyVault6\",\r\n      \"location\": \"westus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/wftsvcKeyVaultAM\",\r\n      \"name\": \"wftsvcKeyVaultAM\",\r\n      \"location\": \"westeurope\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/xunlustore\",\r\n      \"name\": \"xunlustore\",\r\n      \"location\": \"eastasia\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/zikaiwtest10122016snrg\",\r\n      \"name\": \"zikaiwtest10122016snrg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice\",\r\n      \"name\": \"cleanupservice\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"77cd0469-e5c0-487f-873d-b6df74bdd7e9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/DefaultResourceGroup-EUS\",\r\n      \"name\": \"DefaultResourceGroup-EUS\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"bf2a7440-e70e-4c96-90a5-19e2923f6d75\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2\",\r\n      \"name\": \"demo-4657310011052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-6653292210052018-paasv2\",\r\n      \"name\": \"demo-6653292210052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"bf2a7440-e70e-4c96-90a5-19e2923f6d75\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-6921270011052018-paasv2\",\r\n      \"name\": \"demo-6921270011052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-8646340811052018-paasv2\",\r\n      \"name\": \"demo-8646340811052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"9a37bae7-98fa-4aa8-9089-d6b9fbcfa705\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/NewTestRG\",\r\n      \"name\": \"NewTestRG\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"b37f33c9-4882-4f7d-99e6-063175856fcc\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest06385\",\r\n      \"name\": \"RG-ADETest06385\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"eb8717b6-7347-4ea1-b3b7-9d96a4c56de9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest52113\",\r\n      \"name\": \"RG-ADETest52113\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"eb8717b6-7347-4ea1-b3b7-9d96a4c56de9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest76180\",\r\n      \"name\": \"RG-ADETest76180\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"fbb85567-9a42-4601-8dbe-61ea49afa392\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-Globalization-ARM-Keyvault\",\r\n      \"name\": \"RG-Globalization-ARM-Keyvault\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RGMigrateSKU6333323140518\",\r\n      \"name\": \"RGMigrateSKU6333323140518\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"71d96d77-9c34-4adf-81ce-f0b62460ccc4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testadm130306\",\r\n      \"name\": \"testadm130306\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"5a74891d-f21f-4e0c-b8fe-89bea53ad9ad\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testadm150433\",\r\n      \"name\": \"testadm150433\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"71d96d77-9c34-4adf-81ce-f0b62460ccc4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testDeleterg\",\r\n      \"name\": \"testDeleterg\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/TestRG1\",\r\n      \"name\": \"TestRG1\",\r\n      \"location\": \"southcentralus\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testwatchdog-15200052\",\r\n      \"name\": \"testwatchdog-15200052\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"4aaa939d-6c31-4b67-be1b-f950dd769df7\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 01 Apr 2017 14:22:06 GMT"
+          "Tue, 15 May 2018 20:32:45 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -38,41 +38,44 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14978"
+          "14999"
         ],
         "x-ms-request-id": [
-          "f80a85f6-614b-48c7-a5aa-332b5c061a82"
+          "6990bfb1-c245-4d88-a546-e4291995154b"
         ],
         "x-ms-correlation-request-id": [
-          "f80a85f6-614b-48c7-a5aa-332b5c061a82"
+          "6990bfb1-c245-4d88-a546-e4291995154b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170401T142207Z:f80a85f6-614b-48c7-a5aa-332b5c061a82"
+          "WESTUS2:20180515T203245Z:6990bfb1-c245-4d88-a546-e4291995154b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/aaaaarg/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2FhYWFhcmcvcmVzb3VyY2VzPyRmaWx0ZXI9cmVzb3VyY2VUeXBlJTIwZXElMjAnTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMlMkZjbHVzdGVycycmYXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2NsZWFudXBzZXJ2aWNlL3Jlc291cmNlcz8kZmlsdGVyPXJlc291cmNlVHlwZSUyMGVxJTIwJ01pY3Jvc29mdC5TZXJ2aWNlRmFicmljJTJGY2x1c3RlcnMnJmFwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2811b677-6489-4664-aa03-bc7d2c5066fd"
+          "4557342e-307e-4993-a493-2feec58c559a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/aaaaarg/providers/Microsoft.ServiceFabric/clusters/aaaaa\",\r\n      \"name\": \"aaaaa\",\r\n      \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"resourceType\": \"Service Fabric\",\r\n        \"clusterName\": \"aaaaa\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -84,7 +87,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 01 Apr 2017 14:22:09 GMT"
+          "Tue, 15 May 2018 20:32:46 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -93,41 +96,160 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
+          "14999"
         ],
         "x-ms-request-id": [
-          "256abb22-40f6-47de-9764-893f886022eb"
+          "8ca7ef27-941b-4a48-b4ab-8c55dc822d5e"
         ],
         "x-ms-correlation-request-id": [
-          "256abb22-40f6-47de-9764-893f886022eb"
+          "8ca7ef27-941b-4a48-b4ab-8c55dc822d5e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170401T142209Z:256abb22-40f6-47de-9764-893f886022eb"
+          "WESTUS2:20180515T203247Z:8ca7ef27-941b-4a48-b4ab-8c55dc822d5e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/aaaaarg/providers/Microsoft.ServiceFabric/clusters?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzL2FhYWFhcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2aWNlRmFicmljL2NsdXN0ZXJzP2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/DefaultResourceGroup-EUS/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRSZXNvdXJjZUdyb3VwLUVVUy9yZXNvdXJjZXM/JGZpbHRlcj1yZXNvdXJjZVR5cGUlMjBlcSUyMCdNaWNyb3NvZnQuU2VydmljZUZhYnJpYyUyRmNsdXN0ZXJzJyZhcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "41324347-0f3f-4ab5-b9fd-61d9a3b3abc0"
+          "d7cf0655-dae2-4aec-bd53-c09462930d32"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.24410.01",
-          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.0-preview"
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n      \"location\": \"southcentralus\",\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/aaaaarg/providers/Microsoft.ServiceFabric/clusters/aaaaa\",\r\n      \"name\": \"aaaaa\",\r\n      \"tags\": {\r\n        \"resourceType\": \"Service Fabric\",\r\n        \"clusterName\": \"aaaaa\"\r\n      },\r\n      \"etag\": \"W/\\\"636256214302176421\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"clusterId\": \"9a68d9c5-ddb7-4439-b657-03540135ff20\",\r\n        \"clusterCodeVersion\": \"5.5.216.0\",\r\n        \"clusterState\": \"Ready\",\r\n        \"managementEndpoint\": \"http://aaaaa.southcentralus.cloudapp.azure.com:19080\",\r\n        \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/9a68d9c5-ddb7-4439-b657-03540135ff20\",\r\n        \"clientCertificateThumbprints\": [],\r\n        \"clientCertificateCommonNames\": [],\r\n        \"fabricSettings\": [\r\n          {\r\n            \"name\": \"NamingService\",\r\n            \"parameters\": [\r\n              {\r\n                \"name\": \"MaxOperationTimeout\",\r\n                \"value\": \"1000\"\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"upgradeDescription\": {\r\n          \"overrideUserUpgradePolicy\": false,\r\n          \"forceRestart\": true,\r\n          \"upgradeReplicaSetCheckTimeout\": \"10675199.02:48:05.4775807\",\r\n          \"healthCheckWaitDuration\": \"00:00:01\",\r\n          \"healthCheckStableDuration\": \"00:00:01\",\r\n          \"healthCheckRetryTimeout\": \"00:00:01\",\r\n          \"upgradeTimeout\": \"12:00:00\",\r\n          \"upgradeDomainTimeout\": \"02:00:00\",\r\n          \"healthPolicy\": {\r\n            \"maxPercentUnhealthyNodes\": 100,\r\n            \"maxPercentUnhealthyApplications\": 100\r\n          },\r\n          \"deltaHealthPolicy\": {\r\n            \"maxPercentDeltaUnhealthyNodes\": 0,\r\n            \"maxPercentUpgradeDomainDeltaUnhealthyNodes\": 0,\r\n            \"maxPercentDeltaUnhealthyApplications\": 0\r\n          }\r\n        },\r\n        \"diagnosticsStorageAccountConfig\": {\r\n          \"storageAccountName\": \"sflogsaaaaa6039\",\r\n          \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n          \"blobEndpoint\": \"https://sflogsaaaaa6039.blob.core.windows.net/\",\r\n          \"queueEndpoint\": \"https://sflogsaaaaa6039.queue.core.windows.net/\",\r\n          \"tableEndpoint\": \"https://sflogsaaaaa6039.table.core.windows.net/\"\r\n        },\r\n        \"nodeTypes\": [\r\n          {\r\n            \"name\": \"n1\",\r\n            \"clientConnectionEndpointPort\": 19000,\r\n            \"httpGatewayEndpointPort\": 19080,\r\n            \"applicationPorts\": {\r\n              \"startPort\": 20000,\r\n              \"endPort\": 30000\r\n            },\r\n            \"ephemeralPorts\": {\r\n              \"startPort\": 49152,\r\n              \"endPort\": 65534\r\n            },\r\n            \"isPrimary\": true,\r\n            \"vmInstanceCount\": 5,\r\n            \"durabilityLevel\": \"Bronze\"\r\n          }\r\n        ],\r\n        \"vmImage\": \"Windows\",\r\n        \"reliabilityLevel\": \"Silver\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"availableClusterVersions\": [\r\n          {\r\n            \"codeVersion\": \"5.4.145.9494\",\r\n            \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n            \"environment\": \"Windows\"\r\n          },\r\n          {\r\n            \"codeVersion\": \"5.4.164.9494\",\r\n            \"supportExpiryUtc\": \"2017-05-10T00:00:00\",\r\n            \"environment\": \"Windows\"\r\n          },\r\n          {\r\n            \"codeVersion\": \"5.5.216.0\",\r\n            \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n            \"environment\": \"Windows\"\r\n          },\r\n          {\r\n            \"codeVersion\": \"5.5.219.0\",\r\n            \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n            \"environment\": \"Windows\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 May 2018 20:32:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "31fe273c-c62c-43a0-a399-1aa4f2d1858f"
+        ],
+        "x-ms-correlation-request-id": [
+          "31fe273c-c62c-43a0-a399-1aa4f2d1858f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180515T203248Z:31fe273c-c62c-43a0-a399-1aa4f2d1858f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2RlbW8tNDY1NzMxMDAxMTA1MjAxOC1wYWFzdjIvcmVzb3VyY2VzPyRmaWx0ZXI9cmVzb3VyY2VUeXBlJTIwZXElMjAnTWljcm9zb2Z0LlNlcnZpY2VGYWJyaWMlMkZjbHVzdGVycycmYXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "76db9af2-4df6-4476-a142-eadcc9851bd4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201\",\r\n      \"name\": \"demo465731001105201\",\r\n      \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"resourceType\": \"Service Fabric\",\r\n        \"clusterName\": \"demo465731001105201\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 May 2018 20:32:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "91eabbfd-110a-469b-b40e-1ea91094de1c"
+        ],
+        "x-ms-correlation-request-id": [
+          "91eabbfd-110a-469b-b40e-1ea91094de1c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180515T203250Z:91eabbfd-110a-469b-b40e-1ea91094de1c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters?api-version=2018-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzL2RlbW8tNDY1NzMxMDAxMTA1MjAxOC1wYWFzdjIvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2aWNlRmFicmljL2NsdXN0ZXJzP2FwaS12ZXJzaW9uPTIwMTgtMDItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e5a76e41-a2af-4895-9733-d526639bf577"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.ServiceFabric/clusters\",\r\n      \"location\": \"SouthCentralUs\",\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups/demo-4657310011052018-paasv2/providers/Microsoft.ServiceFabric/clusters/demo465731001105201\",\r\n      \"name\": \"demo465731001105201\",\r\n      \"tags\": {},\r\n      \"etag\": \"W/\\\"636616207780864998\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"clusterId\": \"0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n        \"clusterCodeVersion\": \"6.2.191.1\",\r\n        \"clusterState\": \"Ready\",\r\n        \"managementEndpoint\": \"https://demo4657310011052018.southcentralus.cloudapp.azure.com:19080\",\r\n        \"clusterEndpoint\": \"https://warp-test-winfabrp-southcentralus.trafficmanager.net/runtime/clusters/0094048a-f493-4130-89eb-5b81c1ce6ced\",\r\n        \"certificate\": {\r\n          \"thumbprint\": \"A18681648A06235860B773289191F13AB6AF6A94\",\r\n          \"x509StoreName\": \"My\"\r\n        },\r\n        \"clientCertificateThumbprints\": [],\r\n        \"clientCertificateCommonNames\": [],\r\n        \"fabricSettings\": [\r\n          {\r\n            \"name\": \"NamingService\",\r\n            \"parameters\": [\r\n              {\r\n                \"name\": \"MaxOperationTimeout\",\r\n                \"value\": \"1000\"\r\n              }\r\n            ]\r\n          }\r\n        ],\r\n        \"diagnosticsStorageAccountConfig\": {\r\n          \"storageAccountName\": \"supplog4657310011052018\",\r\n          \"protectedAccountKeyName\": \"StorageAccountKey1\",\r\n          \"blobEndpoint\": \"https://supplog4657310011052018.blob.core.windows.net/\",\r\n          \"queueEndpoint\": \"https://supplog4657310011052018.queue.core.windows.net/\",\r\n          \"tableEndpoint\": \"https://supplog4657310011052018.table.core.windows.net/\"\r\n        },\r\n        \"vmImage\": \"Linux\",\r\n        \"reliabilityLevel\": \"Silver\",\r\n        \"nodeTypes\": [\r\n          {\r\n            \"name\": \"NodeType0\",\r\n            \"vmInstanceCount\": 5,\r\n            \"clientConnectionEndpointPort\": 19000,\r\n            \"httpGatewayEndpointPort\": 19080,\r\n            \"applicationPorts\": {\r\n              \"startPort\": 20000,\r\n              \"endPort\": 30000\r\n            },\r\n            \"ephemeralPorts\": {\r\n              \"startPort\": 49152,\r\n              \"endPort\": 65534\r\n            },\r\n            \"isPrimary\": true,\r\n            \"durabilityLevel\": \"Silver\"\r\n          }\r\n        ],\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"addonFeatures\": [],\r\n        \"availableClusterVersions\": [\r\n          {\r\n            \"codeVersion\": \"6.2.191.1\",\r\n            \"supportExpiryUtc\": \"9999-12-31T23:59:59.9999999\",\r\n            \"environment\": \"Ubuntu\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -139,7 +261,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sat, 01 Apr 2017 14:22:10 GMT"
+          "Tue, 15 May 2018 20:32:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -148,8 +270,7 @@
           "chunked"
         ],
         "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Microsoft-HTTPAPI/2.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "Vary": [
           "Accept-Encoding"
@@ -161,16 +282,16 @@
           "nosniff"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14979"
+          "14998"
         ],
         "x-ms-request-id": [
-          "2728800d-d1cc-40af-bff8-e0af681dcd63"
+          "b1d44489-a2a7-497e-be17-b3aa90b0e572"
         ],
         "x-ms-correlation-request-id": [
-          "2728800d-d1cc-40af-bff8-e0af681dcd63"
+          "b1d44489-a2a7-497e-be17-b3aa90b0e572"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20170401T142210Z:2728800d-d1cc-40af-bff8-e0af681dcd63"
+          "WESTUS2:20180515T203250Z:b1d44489-a2a7-497e-be17-b3aa90b0e572"
         ]
       },
       "StatusCode": 200

@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// certificate.</param>
         /// <param name="isExportable">Gets or sets the is exportable flag of
         /// the certificate.</param>
-        public CertificateCreateOrUpdateParameters(string name, string base64Value, string description = default(string), string thumbprint = default(string), bool? isExportable = default(bool?))
+        public CertificateCreateOrUpdateParameters(string name, string base64Value, string description = default(string), string thumbprint = default(string), bool isExportable = default(bool))
         {
             Name = name;
             Base64Value = base64Value;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the is exportable flag of the certificate.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isExportable")]
-        public bool? IsExportable { get; set; }
+        public bool IsExportable { get; set; }
 
         /// <summary>
         /// Validate the object.
