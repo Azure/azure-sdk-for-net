@@ -77,6 +77,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     ts.Dispose();
                 }
 
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
                 var receivedMessage = await receiver.ReceiveAsync(ReceiveTimeout);
                 Assert.Null(receivedMessage);
             }
@@ -148,6 +152,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     ts.Dispose();
                 }
 
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
                 await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
             }
             finally
@@ -197,6 +205,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     ts.Complete();
                 }
 
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 await Assert.ThrowsAsync<SessionLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken));
@@ -240,11 +250,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     ts.Dispose();
                 }
 
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken);
                     ts.Complete();
                 }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
                 await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken));
             }
@@ -285,7 +303,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         async () => await sender.SendAsync(message2));
                     ts.Complete();
                 }
+
                 transaction.Rollback();
+                
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
                 // Two complete operations to different partitions.
                 await sender.SendAsync(message1);
@@ -307,6 +330,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
 
                 transaction.Rollback();
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
                 await receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
                 await receiver.CompleteAsync(receivedMessage2.SystemProperties.LockToken);
@@ -348,6 +375,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await sender.SendAsync(message2).ConfigureAwait(false);
                     ts.Complete();
                 }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
                 // Assert that complete did succeed
                 await Assert.ThrowsAsync<MessageLockLostException>(async () => await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken));
@@ -392,6 +423,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await sender.SendAsync(message2).ConfigureAwait(false);
                     ts.Dispose();
                 }
+
+                // Adding delay since transaction Commit/Rollback is an asynchronous operation.
+                // Operating on the same message should not be done.
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
                 // Following should succeed without exceptions
                 await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);

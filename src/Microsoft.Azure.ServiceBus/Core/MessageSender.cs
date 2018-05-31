@@ -153,6 +153,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.Path = entityPath;
+            this.TransferDestinationPath = transferDestinationPath;
             this.EntityType = entityType;
 
             if (cbsTokenProvider != null)
@@ -192,6 +193,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// Gets the entity path of the MessageSender.
         /// </summary>
         public override string Path { get; }
+
+        /// <summary>
+        /// Gets the transfer destination path (send-via) of the MessageSender.
+        /// </summary>
+        public string TransferDestinationPath { get; }
 
         /// <summary>
         /// Duration after which individual operations will timeout.
