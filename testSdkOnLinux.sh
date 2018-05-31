@@ -169,7 +169,7 @@ skip_Rps() {
 }
 
 getBuildTools() {
-    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/NetSdkBuild"
+    copyFromRootDir="https://raw.githubusercontent.com/Azure/azure-sdk-for-net/SdkBuildTools"
     printf "Updating Build tools .....\n"
     
     if [ ! -d ./tools/SdkBuildTools ]; then
@@ -177,6 +177,10 @@ getBuildTools() {
     fi
     if [ ! -d ./tools/SdkBuildTools/targets ]; then
         mkdir ./tools/SdkBuildTools/targets
+    fi
+
+    if [ ! -d ./tools/SdkBuildTools/targets/core ]; then
+        mkdir ./tools/SdkBuildTools/targets/core
     fi
 
     if [ ! -d ./tools/SdkBuildTools/tasks ]; then
