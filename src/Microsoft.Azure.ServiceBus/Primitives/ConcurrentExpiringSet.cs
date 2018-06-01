@@ -26,13 +26,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public bool Contains(TKey key)
         {
-            DateTime expiration;
-            if (this.dictionary.TryGetValue(key, out expiration) && expiration > DateTime.UtcNow)
-            {
-                return true;
-            }
-
-            return false;
+            return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTime.UtcNow;
         }
 
         void ScheduleCleanup()
@@ -45,7 +39,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 }
 
                 this.cleanupScheduled = true;
-                Task.Run(async () => await this.CollectExpiredEntries());
+                Task.Run(async () => await this.CollectExpiredEntries().ConfigureAwait(false));
             }
         }
 
@@ -62,8 +56,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             {
                 if (DateTime.UtcNow > this.dictionary[key])
                 {
-                    DateTime entry;
-                    this.dictionary.TryRemove(key, out entry);
+                    this.dictionary.TryRemove(key, out _);
                 }
             }
 
