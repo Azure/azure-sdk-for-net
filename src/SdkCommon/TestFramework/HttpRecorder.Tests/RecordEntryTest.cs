@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 
@@ -29,6 +30,28 @@ namespace HttpRecorder.Tests
             //Assert
             string actualHeaderValue = (response.Headers.GetValues(eTagHeaderName) as string[])[0];
             Assert.Equal(randomETagHeaderValue, actualHeaderValue);
+        }
+
+        [Fact]
+        public void BinaryPayloadSurvivesSerialization()
+        {
+            byte[] imageSegment = new byte[] { 255, 216, 255, 224, 0, 16, 74, 70, 73, 70 };
+
+            //Arrange
+            HttpResponseMessage inResponse = new HttpResponseMessage()
+            {
+                Content = new ByteArrayContent(imageSegment),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/test")
+            };
+            inResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+            //Act
+            RecordEntry entry = new RecordEntry(inResponse);
+            HttpResponseMessage outResponse = entry.GetResponse();
+
+            //Assert
+            byte[] bytes = outResponse.Content.ReadAsByteArrayAsync().Result;
+            Assert.Equal(imageSegment, bytes);
         }
     }
 }

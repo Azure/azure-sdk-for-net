@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Net.Http;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 
@@ -17,6 +17,24 @@ namespace Microsoft.Azure.Test.HttpRecorder
 {
     public static class Utilities
     {
+        static Regex binaryMimeRegex = new Regex("(image/*|audio/*|video/*|application/octet-stream)");
+
+        public static bool IsRequestBodyBinary(HttpContent content)
+        {
+            var contentType = content?.Headers?.ContentType?.MediaType;
+            return contentType != null && binaryMimeRegex.IsMatch(contentType);
+        }
+
+        public static string SerializeBinary(byte[] content)
+        {
+            return Convert.ToBase64String(content);
+        }
+
+        public static byte[] DeserializeBinary(string content)
+        {
+            return Convert.FromBase64String(content);
+        }
+
         public static string FormatString(string content)
         {
             if (IsXml(content))
