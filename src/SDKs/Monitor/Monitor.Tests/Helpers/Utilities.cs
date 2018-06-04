@@ -643,6 +643,17 @@ namespace Monitor.Tests.Helpers
         #endregion
 
         #region MetricAlerts
+        public static void AreEqual(IList<MetricAlertResource> exp, IList<MetricAlertResource> act)
+        {
+            if(exp != null)
+            {
+                for(int i=0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+        }
+
         public static void AreEqual(MetricAlertResource exp, MetricAlertResource act)
         {
             if(exp != null)
@@ -703,6 +714,25 @@ namespace Monitor.Tests.Helpers
             Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
             Assert.Equal(exp.TimeAggregation, act.TimeAggregation);
             Assert.Equal(exp.Threshold, act.Threshold);
+        }
+
+        public static void AreEqual(MetricAlertStatusCollection exp, MetricAlertStatusCollection act)
+        {
+            for(int i = 0; i< exp.Value.Count; i++)
+            {
+                AreEqual(exp.Value[i], act.Value[i]);
+            }
+        }
+
+        public static void AreEqual(MetricAlertStatus exp, MetricAlertStatus act)
+        {
+            AreEqual(exp.Properties, act.Properties);
+        }
+
+        public static void AreEqual(MetricAlertStatusProperties exp, MetricAlertStatusProperties act)
+        {
+            Assert.Equal(exp.Status, act.Status);
+            AreEqual(exp.Dimensions, act.Dimensions);
         }
         #endregion
     }
