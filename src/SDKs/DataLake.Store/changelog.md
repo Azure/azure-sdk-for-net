@@ -1,6 +1,6 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
-### Changes in 2.5.0-preview
+### Changes in 2.4.1-preview
 
 **Notes**
 
