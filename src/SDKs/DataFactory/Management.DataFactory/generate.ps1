@@ -1,1 +1,1 @@
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File "$(split-path $SCRIPT:MyInvocation.MyCommand.Path -parent)\..\..\..\..\tools\generateTool.ps1" -ResourceProvider "datafactory/resource-manager" -PowershellInvoker  -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "datafactory/resource-manager" -AutoRestVersion "latest"
