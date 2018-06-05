@@ -148,10 +148,5 @@ namespace Microsoft.Azure.Management.Monitor
         /// </summary>
         IMetricAlertsStatusOperations MetricAlertsStatus { get; }
 
-        /// <summary>
-        /// Gets the IScheduledQueryRulesOperations.
-        /// </summary>
-        IScheduledQueryRulesOperations ScheduledQueryRules { get; }
-
     }
 }

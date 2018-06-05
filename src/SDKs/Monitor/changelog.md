@@ -1,5 +1,12 @@
 ## Microsoft.Azure.Management.Monitor release notes
 
+##Changes in 0.20.0-preview
+**Notes**
+
+- Approx. date of publication(2018-06)
+- Adding MetricAlerts APIs and their unit tests
+- Adding scenario tests for MetricAlerts and recorded them
+
 ### Changes in 0.19.1-preview
 
 **Notes**

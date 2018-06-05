@@ -652,6 +652,10 @@ namespace Monitor.Tests.Helpers
                     AreEqual(exp[i], act[i]);
                 }
             }
+            else
+            {
+                Assert.Null(act);
+            }
         }
 
         public static void AreEqual(MetricAlertResource exp, MetricAlertResource act)
@@ -677,62 +681,148 @@ namespace Monitor.Tests.Helpers
 
         public static void AreEqual(IList<Microsoft.Azure.Management.Monitor.Models.Action> exp, IList<Microsoft.Azure.Management.Monitor.Models.Action> act)
         {
-            for(int i = 0; i < exp.Count; i++)
+            if(exp != null)
             {
-                AreEqual(exp[i], act[i]);
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
             }
         }
 
         public static void AreEqual(Microsoft.Azure.Management.Monitor.Models.Action exp, Microsoft.Azure.Management.Monitor.Models.Action act)
         {
-            Assert.Equal(exp.ActionGroupId, act.ActionGroupId);
-            AreEqual(exp.WebhookProperties, act.WebhookProperties);
+            if(exp != null)
+            {
+                Assert.Equal(exp.ActionGroupId, act.ActionGroupId);
+                AreEqual(exp.WebhookProperties, act.WebhookProperties);
 
+            }
+            else
+            {
+                Assert.Null(act);
+            }
         }
 
         public static void AreEqual(MetricAlertCriteria exp, MetricAlertCriteria act)
         {
-            if(exp.GetType() == typeof(MetricAlertSingleResourceMultipleMetricCriteria))
+            if(exp != null)
             {
-                Compare(exp as MetricAlertSingleResourceMultipleMetricCriteria, act as MetricAlertSingleResourceMultipleMetricCriteria);
+                if (exp.GetType() == typeof(MetricAlertSingleResourceMultipleMetricCriteria))
+                {
+                    Compare(exp as MetricAlertSingleResourceMultipleMetricCriteria, act as MetricAlertSingleResourceMultipleMetricCriteria);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
             }
         }
 
         public static void Compare(MetricAlertSingleResourceMultipleMetricCriteria exp, MetricAlertSingleResourceMultipleMetricCriteria act)
         {
-            for(int i = 0; i < exp.AllOf.Count; i++)
+            if(exp != null)
             {
-                AreEqual(exp.AllOf[i], act.AllOf[i]);
+                for (int i = 0; i < exp.AllOf.Count; i++)
+                {
+                    AreEqual(exp.AllOf[i], act.AllOf[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
             }
         }
 
         public static void AreEqual(MetricCriteria exp, MetricCriteria act)
         {
-            Assert.Equal(exp.MetricName, act.MetricName);
-            Assert.Equal(exp.Name, act.Name);
-            Assert.Equal(exp.MetricNamespace, act.MetricNamespace);
-            Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
-            Assert.Equal(exp.TimeAggregation, act.TimeAggregation);
-            Assert.Equal(exp.Threshold, act.Threshold);
+            if(exp != null)
+            {
+                Assert.Equal(exp.MetricName, act.MetricName);
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.MetricNamespace, act.MetricNamespace);
+                AreEqual(exp.Dimensions, act.Dimensions);
+                Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
+                Assert.Equal(exp.TimeAggregation, act.TimeAggregation);
+                Assert.Equal(exp.Threshold, act.Threshold);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(IList<MetricDimension> exp, IList<MetricDimension> act)
+        {   
+            if(exp != null)
+            {
+                for(int i = 0; i < exp.Count; i++ )
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricDimension exp, MetricDimension act)
+        {
+            if(exp != null)
+            {
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
+                AreEqual(exp.Values, act.Values);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
         }
 
         public static void AreEqual(MetricAlertStatusCollection exp, MetricAlertStatusCollection act)
         {
-            for(int i = 0; i< exp.Value.Count; i++)
+            if(exp != null)
             {
-                AreEqual(exp.Value[i], act.Value[i]);
+                for (int i = 0; i < exp.Value.Count; i++)
+                {
+                    AreEqual(exp.Value[i], act.Value[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
             }
         }
 
         public static void AreEqual(MetricAlertStatus exp, MetricAlertStatus act)
         {
-            AreEqual(exp.Properties, act.Properties);
+            if(exp != null)
+            {
+                AreEqual(exp.Properties, act.Properties);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
         }
 
         public static void AreEqual(MetricAlertStatusProperties exp, MetricAlertStatusProperties act)
         {
-            Assert.Equal(exp.Status, act.Status);
-            AreEqual(exp.Dimensions, act.Dimensions);
+            if(exp != null)
+            {
+                Assert.Equal(exp.Status, act.Status);
+                AreEqual(exp.Dimensions, act.Dimensions);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
         }
         #endregion
     }

@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2c20d826-749f-4159-b469-9abc51b40f33"
+          "c29d9fb2-7f4c-433d-8356-b91755c4f8f6"
         ],
         "accept-language": [
           "en-US"
@@ -29,22 +29,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 04 Jun 2018 09:01:20 GMT"
+          "Tue, 05 Jun 2018 06:41:54 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14999"
         ],
         "x-ms-request-id": [
-          "e28078a1-17cb-497d-869f-798532c70612"
+          "a9693c63-880a-4db1-bbda-2d245a78f35f"
         ],
         "x-ms-correlation-request-id": [
-          "e28078a1-17cb-497d-869f-798532c70612"
+          "a9693c63-880a-4db1-bbda-2d245a78f35f"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180604T090121Z:e28078a1-17cb-497d-869f-798532c70612"
+          "SOUTHINDIA:20180605T064154Z:a9693c63-880a-4db1-bbda-2d245a78f35f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -68,14 +68,14 @@
           "1103"
         ],
         "x-ms-client-request-id": [
-          "11467b51-3812-443d-8143-a52d38423221"
+          "521c4833-4830-4a13-b6c1-0825c00c4826"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.19.1.0"
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.20.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"location\": \"global\",\r\n  \"type\": \"Microsoft.Insights/metricAlerts\",\r\n  \"name\": \"MetricAlertSDKTestRule1\",\r\n  \"id\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Insights/metricAlerts/MetricAlertSDKTestRule1\",\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"templateType\": 8,\r\n    \"criteria\": {\r\n      \"allOf\": [\r\n        {\r\n          \"name\": \"metric1\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"metricName\": \"Transactions\",\r\n          \"dimensions\": [],\r\n          \"operator\": \"GreaterThan\",\r\n          \"threshold\": 100.0,\r\n          \"timeAggregation\": \"Total\"\r\n        }\r\n      ],\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\"\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 04 Jun 2018 09:01:32 GMT"
+          "Tue, 05 Jun 2018 06:42:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -105,7 +105,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "d64b646b-cccf-4cd0-b121-9beff9be546a"
+          "5f317981-dc22-46ee-a3d5-143bcaa5be5b"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -117,10 +117,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "d64b646b-cccf-4cd0-b121-9beff9be546a"
+          "5f317981-dc22-46ee-a3d5-143bcaa5be5b"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180604T090133Z:d64b646b-cccf-4cd0-b121-9beff9be546a"
+          "SOUTHINDIA:20180605T064217Z:5f317981-dc22-46ee-a3d5-143bcaa5be5b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -138,14 +138,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ff7152d1-4b6a-492d-ba12-ee4c047e5f53"
+          "7ae49bd2-2dc4-4fbe-9f93-bcf97600d24b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.19.1.0"
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.20.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"location\": \"global\",\r\n  \"type\": \"Microsoft.Insights/metricAlerts\",\r\n  \"name\": \"MetricAlertSDKTestRule1\",\r\n  \"id\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Insights/metricAlerts/MetricAlertSDKTestRule1\",\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"templateType\": 8,\r\n    \"criteria\": {\r\n      \"allOf\": [\r\n        {\r\n          \"name\": \"metric1\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"metricName\": \"Transactions\",\r\n          \"dimensions\": [],\r\n          \"operator\": \"GreaterThan\",\r\n          \"threshold\": 100.0,\r\n          \"timeAggregation\": \"Total\"\r\n        }\r\n      ],\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\"\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -160,7 +160,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 04 Jun 2018 09:01:42 GMT"
+          "Tue, 05 Jun 2018 06:42:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -175,7 +175,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "9b663c9d-1f56-4e0a-9668-a10d3c8f6c04"
+          "ff301bcd-03c0-486f-acc9-6ef79977d856"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -184,13 +184,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "9b663c9d-1f56-4e0a-9668-a10d3c8f6c04"
+          "ff301bcd-03c0-486f-acc9-6ef79977d856"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180604T090142Z:9b663c9d-1f56-4e0a-9668-a10d3c8f6c04"
+          "SOUTHINDIA:20180605T064238Z:ff301bcd-03c0-486f-acc9-6ef79977d856"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -208,14 +208,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ee3ab531-8bfe-4c34-8db2-2c17b9e39f8b"
+          "09afcd7e-a111-46ff-ad12-f246fb3ca0f4"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.19.1.0"
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.20.0.0"
         ]
       },
       "ResponseBody": "",
@@ -230,7 +230,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 04 Jun 2018 09:02:05 GMT"
+          "Tue, 05 Jun 2018 06:42:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -239,7 +239,7 @@
           "Microsoft-IIS/10.0"
         ],
         "x-ms-request-id": [
-          "8cb7a006-3fee-4038-9088-c32a3d61f450"
+          "f10cd352-9585-41a3-9f25-c241d7a4f4c0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -248,13 +248,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14998"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "8cb7a006-3fee-4038-9088-c32a3d61f450"
+          "f10cd352-9585-41a3-9f25-c241d7a4f4c0"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180604T090205Z:8cb7a006-3fee-4038-9088-c32a3d61f450"
+          "SOUTHINDIA:20180605T064244Z:f10cd352-9585-41a3-9f25-c241d7a4f4c0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

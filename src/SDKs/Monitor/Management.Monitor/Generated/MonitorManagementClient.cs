@@ -154,11 +154,6 @@ namespace Microsoft.Azure.Management.Monitor
         public virtual IMetricAlertsStatusOperations MetricAlertsStatus { get; private set; }
 
         /// <summary>
-        /// Gets the IScheduledQueryRulesOperations.
-        /// </summary>
-        public virtual IScheduledQueryRulesOperations ScheduledQueryRules { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the MonitorManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -376,7 +371,6 @@ namespace Microsoft.Azure.Management.Monitor
             MetricBaseline = new MetricBaselineOperations(this);
             MetricAlerts = new MetricAlertsOperations(this);
             MetricAlertsStatus = new MetricAlertsStatusOperations(this);
-            ScheduledQueryRules = new ScheduledQueryRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

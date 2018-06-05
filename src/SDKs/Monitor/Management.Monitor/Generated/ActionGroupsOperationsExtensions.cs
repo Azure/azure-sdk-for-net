@@ -258,8 +258,7 @@ namespace Microsoft.Azure.Management.Monitor
 
             /// <summary>
             /// Enable a receiver in an action group. This changes the receiver's status
-            /// from Disabled to Enabled. This operation is only supported for Email or SMS
-            /// receivers.
+            /// from Disabled to Enabled.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -280,8 +279,7 @@ namespace Microsoft.Azure.Management.Monitor
 
             /// <summary>
             /// Enable a receiver in an action group. This changes the receiver's status
-            /// from Disabled to Enabled. This operation is only supported for Email or SMS
-            /// receivers.
+            /// from Disabled to Enabled.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

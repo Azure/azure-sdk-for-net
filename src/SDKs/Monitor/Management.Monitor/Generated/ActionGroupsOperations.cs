@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-03-01";
+            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-03-01";
+            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-03-01";
+            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "actionGroupPatch");
             }
-            string apiVersion = "2018-03-01";
+            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -866,7 +866,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-03-01";
+            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1044,7 +1044,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-03-01";
+            string apiVersion = "2017-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1189,8 +1189,7 @@ namespace Microsoft.Azure.Management.Monitor
 
         /// <summary>
         /// Enable a receiver in an action group. This changes the receiver's status
-        /// from Disabled to Enabled. This operation is only supported for Email or SMS
-        /// receivers.
+        /// from Disabled to Enabled.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1237,7 +1236,7 @@ namespace Microsoft.Azure.Management.Monitor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "receiverName");
             }
-            string apiVersion = "2018-03-01";
+            string apiVersion = "2017-04-01";
             EnableRequest enableRequest = new EnableRequest();
             if (receiverName != null)
             {

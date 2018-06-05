@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,7 +19,7 @@ namespace Monitor.Tests.BasicTests
         [Trait("Category", "Mock")]
         public void CreateUpdateMetricAlertRuleTest()
         {
-            MetricAlertResource expectedParams = GetCreateOrUpdateRuleParameters();
+            MetricAlertResource expectedParams = GetSampleMetricRuleResourceParams();
             var handler = new RecordedDelegatingHandler();
             var insightClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParams, insightClient.SerializationSettings);
@@ -37,7 +40,7 @@ namespace Monitor.Tests.BasicTests
         [Trait("Category", "Mock")]
         public void ListMetricAlertRuleByResourceGroupTest()
         {
-            var expectedResponseValue = GetMetricAlertCollection();
+            var expectedResponseValue = GetSampleMetricAlertCollection();
             var handler = new RecordedDelegatingHandler();
             var insightClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedResponseValue, insightClient.SerializationSettings);
@@ -58,7 +61,7 @@ namespace Monitor.Tests.BasicTests
         [Trait("Category", "Mock")]
         public void ListMetricAlertsBySubscriptionTest()
         {
-            var expectedResponseValue = GetMetricAlertCollection();
+            var expectedResponseValue = GetSampleMetricAlertCollection();
             var handler = new RecordedDelegatingHandler();
             var insightClient = GetMonitorManagementClient(handler);
             var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedResponseValue, insightClient.SerializationSettings);
@@ -100,7 +103,21 @@ namespace Monitor.Tests.BasicTests
         [Trait("Category", "Mock")]
         public void GetMetricAlertTest()
         {
+            MetricAlertResource expectedParams = GetSampleMetricRuleResourceParams();
+            var handler = new RecordedDelegatingHandler();
+            var insightClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParams, insightClient.SerializationSettings);
 
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightClient = GetMonitorManagementClient(handler);
+
+            var result = insightClient.MetricAlerts.Get(resourceGroupName: "rg1", ruleName: "Rule1");
+            Utilities.AreEqual(expectedParams, result);
         }
 
         private MetricAlertStatusCollection GetMetricAlertStatus()
@@ -121,7 +138,7 @@ namespace Monitor.Tests.BasicTests
             };
         }
 
-        private List<MetricAlertResource> GetMetricAlertCollection()
+        private List<MetricAlertResource> GetSampleMetricAlertCollection()
         {
             return new List<MetricAlertResource>()
             {
@@ -136,7 +153,7 @@ namespace Monitor.Tests.BasicTests
                     },
                     evaluationFrequency: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
                     windowSize: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
-                    criteria: GetMetricCriteria(),
+                    criteria: GetSampleMetricCriteria(),
                     actions: new List<Microsoft.Azure.Management.Monitor.Models.Action>()
                     {
                         new Microsoft.Azure.Management.Monitor.Models.Action()
@@ -148,9 +165,9 @@ namespace Monitor.Tests.BasicTests
             };
         }
 
-        private MetricAlertResource GetCreateOrUpdateRuleParameters()
+        private MetricAlertResource GetSampleMetricRuleResourceParams()
         {
-            MetricAlertSingleResourceMultipleMetricCriteria metricCriteria = GetMetricCriteria();
+            MetricAlertSingleResourceMultipleMetricCriteria metricCriteria = GetSampleMetricCriteria();
 
             return new MetricAlertResource(
                     description: "alert description",
@@ -174,8 +191,20 @@ namespace Monitor.Tests.BasicTests
                 );
         }
 
-        private static MetricAlertSingleResourceMultipleMetricCriteria GetMetricCriteria()
+        private static MetricAlertSingleResourceMultipleMetricCriteria GetSampleMetricCriteria()
         {
+            MetricDimension metricDimension = new MetricDimension()
+            {
+                Name = "name1",
+                OperatorProperty = "Include",
+                Values = new List<string>()
+                {
+                    "Primary"
+                }
+            };
+
+            MetricDimension[] metricDimensions = new MetricDimension[1] { metricDimension };
+
             return new MetricAlertSingleResourceMultipleMetricCriteria(
                 allOf: new List<MetricCriteria>()
                 {
@@ -183,7 +212,7 @@ namespace Monitor.Tests.BasicTests
                     {
                         MetricName = "Metric Name",
                         Name = "metric1",
-                        Dimensions = new MetricDimension[0],
+                        Dimensions = metricDimensions,
                         Threshold = 100,
                         OperatorProperty = "GreaterThan",
                         TimeAggregation = "Avergage"
