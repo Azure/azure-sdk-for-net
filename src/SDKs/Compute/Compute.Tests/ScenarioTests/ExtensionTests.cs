@@ -84,7 +84,7 @@ namespace Compute.Tests
                     ValidateVMExtension(vmExtension, getVMExtResponse);
 
                     // Perform a GetExtensions on the VM
-                    var getVMExtsResponse = m_CrpClient.VirtualMachines.GetExtensions(rgName, vm.Name);
+                    var getVMExtsResponse = m_CrpClient.VirtualMachineExtensions.List(rgName, vm.Name);
                     Assert.Equal(1, getVMExtsResponse.Value.Count);
                     Assert.Equal("vmext01", getVMExtsResponse.Value[0].Name);
                     ValidateVMExtension(vmExtension, getVMExtsResponse.Value[0]);

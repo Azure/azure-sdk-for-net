@@ -223,6 +223,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to get all extensions of a Virtual Machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine containing the extension.
+            /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation.
+            /// </param>
+            public static VirtualMachineExtensionsListResult List(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string expand = default(string))
+            {
+                return operations.ListAsync(resourceGroupName, vmName, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to get all extensions of a Virtual Machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine containing the extension.
+            /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineExtensionsListResult> ListAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, vmName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to create or update the extension.
             /// </summary>
             /// <param name='operations'>

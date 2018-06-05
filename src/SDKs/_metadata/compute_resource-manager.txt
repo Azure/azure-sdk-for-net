@@ -1,10 +1,10 @@
 ﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\hylee-sdk-for-net\may\tools\..\src\SDKs\
-2018-05-22 02:27:40 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\hylee-sdk-for-net\june\tools\..\src\SDKs\
+2018-06-03 01:15:22 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      e76b99571744235eb7d16ff55581d6ad21ffd254
+Commit:      bce3a704b31a063ff799bb98dcf76dcc295084fe
 
 2) AutoRest information
 Requested version: latest
