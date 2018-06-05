@@ -10,37 +10,40 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The core properties of ARM resources
+    /// The resource model definition for a ARM tracked top level resource
     /// </summary>
-    public partial class Resource : IResource
+    public partial class TrackedResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        public Resource()
+        public TrackedResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the TrackedResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Network/trafficmanagerProfiles.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">The Azure Region where the resource
+        /// lives</param>
+        public TrackedResource(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Tags = tags;
+            Location = location;
             CustomInit();
         }
 
@@ -50,24 +53,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
+        /// Gets or sets resource tags.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource
+        /// Gets or sets the Azure Region where the resource lives
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
     }
 }
