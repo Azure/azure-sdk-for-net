@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to check Traffic Manager name operation.
+    /// Min and max value of a status code range.
     /// </summary>
-    public partial class CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+    public partial class MonitorConfigExpectedStatusCodeRangesItem
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// MonitorConfigExpectedStatusCodeRangesItem class.
         /// </summary>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters()
+        public MonitorConfigExpectedStatusCodeRangesItem()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// MonitorConfigExpectedStatusCodeRangesItem class.
         /// </summary>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters(string name = default(string), string type = default(string))
+        /// <param name="min">Min status code.</param>
+        /// <param name="max">Max status code.</param>
+        public MonitorConfigExpectedStatusCodeRangesItem(int? min = default(int?), int? max = default(int?))
         {
-            Name = name;
-            Type = type;
+            Min = min;
+            Max = max;
             CustomInit();
         }
 
@@ -46,16 +46,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the resource.
+        /// Gets or sets min status code.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "min")]
+        public int? Min { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the resource.
+        /// Gets or sets max status code.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "max")]
+        public int? Max { get; set; }
 
     }
 }

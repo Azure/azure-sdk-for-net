@@ -14,29 +14,29 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to check Traffic Manager name operation.
+    /// Custom header name and value.
     /// </summary>
-    public partial class CheckTrafficManagerRelativeDnsNameAvailabilityParameters
+    public partial class MonitorConfigCustomHeadersItem
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// Initializes a new instance of the MonitorConfigCustomHeadersItem
+        /// class.
         /// </summary>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters()
+        public MonitorConfigCustomHeadersItem()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// CheckTrafficManagerRelativeDnsNameAvailabilityParameters class.
+        /// Initializes a new instance of the MonitorConfigCustomHeadersItem
+        /// class.
         /// </summary>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        public CheckTrafficManagerRelativeDnsNameAvailabilityParameters(string name = default(string), string type = default(string))
+        /// <param name="name">Header name.</param>
+        /// <param name="value">Header value.</param>
+        public MonitorConfigCustomHeadersItem(string name = default(string), string value = default(string))
         {
             Name = name;
-            Type = type;
+            Value = value;
             CustomInit();
         }
 
@@ -46,16 +46,16 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the resource.
+        /// Gets or sets header name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the resource.
+        /// Gets or sets header value.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
     }
 }
