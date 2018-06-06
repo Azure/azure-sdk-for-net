@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='vmName'>
-            /// The name of the virtual machine where the extension should be create or
+            /// The name of the virtual machine where the extension should be created or
             /// updated.
             /// </param>
             /// <param name='vmExtensionName'>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='vmName'>
-            /// The name of the virtual machine where the extension should be create or
+            /// The name of the virtual machine where the extension should be created or
             /// updated.
             /// </param>
             /// <param name='vmExtensionName'>
@@ -76,6 +76,58 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to update the extension.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine where the extension should be updated.
+            /// </param>
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
+            /// </param>
+            /// <param name='extensionParameters'>
+            /// Parameters supplied to the Update Virtual Machine Extension operation.
+            /// </param>
+            public static VirtualMachineExtension Update(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters)
+            {
+                return operations.UpdateAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to update the extension.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine where the extension should be updated.
+            /// </param>
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
+            /// </param>
+            /// <param name='extensionParameters'>
+            /// Parameters supplied to the Update Virtual Machine Extension operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineExtension> UpdateAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to delete the extension.
             /// </summary>
             /// <param name='operations'>
@@ -90,9 +142,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmExtensionName'>
             /// The name of the virtual machine extension.
             /// </param>
-            public static OperationStatusResponse Delete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+            public static void Delete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
             {
-                return operations.DeleteAsync(resourceGroupName, vmName, vmExtensionName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, vmName, vmExtensionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,12 +165,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -174,6 +223,52 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to get all extensions of a Virtual Machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine containing the extension.
+            /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation.
+            /// </param>
+            public static VirtualMachineExtensionsListResult List(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string expand = default(string))
+            {
+                return operations.ListAsync(resourceGroupName, vmName, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to get all extensions of a Virtual Machine.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine containing the extension.
+            /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineExtensionsListResult> ListAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, vmName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to create or update the extension.
             /// </summary>
             /// <param name='operations'>
@@ -183,7 +278,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='vmName'>
-            /// The name of the virtual machine where the extension should be create or
+            /// The name of the virtual machine where the extension should be created or
             /// updated.
             /// </param>
             /// <param name='vmExtensionName'>
@@ -207,7 +302,7 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the resource group.
             /// </param>
             /// <param name='vmName'>
-            /// The name of the virtual machine where the extension should be create or
+            /// The name of the virtual machine where the extension should be created or
             /// updated.
             /// </param>
             /// <param name='vmExtensionName'>
@@ -228,6 +323,58 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to update the extension.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine where the extension should be updated.
+            /// </param>
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
+            /// </param>
+            /// <param name='extensionParameters'>
+            /// Parameters supplied to the Update Virtual Machine Extension operation.
+            /// </param>
+            public static VirtualMachineExtension BeginUpdate(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to update the extension.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine where the extension should be updated.
+            /// </param>
+            /// <param name='vmExtensionName'>
+            /// The name of the virtual machine extension.
+            /// </param>
+            /// <param name='extensionParameters'>
+            /// Parameters supplied to the Update Virtual Machine Extension operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VirtualMachineExtension> BeginUpdateAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, VirtualMachineExtensionUpdate extensionParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, extensionParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The operation to delete the extension.
             /// </summary>
             /// <param name='operations'>
@@ -242,9 +389,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmExtensionName'>
             /// The name of the virtual machine extension.
             /// </param>
-            public static OperationStatusResponse BeginDelete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
+            public static void BeginDelete(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName)
             {
-                return operations.BeginDeleteAsync(resourceGroupName, vmName, vmExtensionName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, vmName, vmExtensionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -265,12 +412,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatusResponse> BeginDeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IVirtualMachineExtensionsOperations operations, string resourceGroupName, string vmName, string vmExtensionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, vmName, vmExtensionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

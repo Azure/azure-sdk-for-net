@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobResource class.
         /// </summary>
-        /// <param name="name">the name of the resource.</param>
-        /// <param name="resourcePath">the path to the resource.</param>
-        /// <param name="type">the job resource type. Possible values include:
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="resourcePath">The path to the resource.</param>
+        /// <param name="type">The job resource type. Possible values include:
         /// 'VertexResource', 'JobManagerResource', 'StatisticsResource',
         /// 'VertexResourceInUserFolder', 'JobManagerResourceInUserFolder',
         /// 'StatisticsResourceInUserFolder'</param>

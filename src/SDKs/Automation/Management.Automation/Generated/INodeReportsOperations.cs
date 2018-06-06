@@ -12,10 +12,10 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
-    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -28,14 +28,17 @@ namespace Microsoft.Azure.Management.Automation
         /// Retrieve the Dsc node report list by node id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodereportoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// The parameters supplied to the list operation.
         /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,13 +55,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<DscNodeReport>>> ListByNodeWithHttpMessagesAsync(string automationAccountName, string nodeId, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DscNodeReport>>> ListByNodeWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, ODataQuery<DscNodeReport> odataQuery = default(ODataQuery<DscNodeReport>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the Dsc node report data by node id and report id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodereportoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// The Dsc node id.
@@ -81,13 +87,16 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DscNodeReport>> GetWithHttpMessagesAsync(string automationAccountName, string nodeId, string reportId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DscNodeReport>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, string reportId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the Dsc node reports by node id and report id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodereportoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='nodeId'>
         /// The Dsc node id.
@@ -110,7 +119,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Stream>> GetContentWithHttpMessagesAsync(string automationAccountName, string nodeId, string reportId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> GetContentWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string nodeId, string reportId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve the Dsc node report list by node id.
         /// <see href="http://aka.ms/azureautomationsdk/dscnodereportoperations" />

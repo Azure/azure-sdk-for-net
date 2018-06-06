@@ -33,7 +33,7 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 | Service Name | Nuget Package |
 | ------------ | ------------- |
 | Authorization | Microsoft.Azure.Management.Authorization |
-| Batch | Azure.Batch |
+| Batch | Microsoft.Azure.Batch |
 | Cdn | Microsoft.Azure.Management.Cdn |
 | Cognitive Services | Microsoft.Azure.Management.CognitiveServices |
 | Compute | Microsoft.Azure.Management.Compute |

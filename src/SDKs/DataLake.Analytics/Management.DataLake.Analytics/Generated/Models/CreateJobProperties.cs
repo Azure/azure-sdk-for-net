@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the CreateJobProperties class.
         /// </summary>
-        /// <param name="script">the script to run. Please note that the
+        /// <param name="script">The script to run. Please note that the
         /// maximum script size is 3 MB.</param>
-        /// <param name="runtimeVersion">the runtime version of the Data Lake
+        /// <param name="runtimeVersion">The runtime version of the Data Lake
         /// Analytics engine to use for the specific type of job being
         /// run.</param>
         public CreateJobProperties(string script, string runtimeVersion = default(string))

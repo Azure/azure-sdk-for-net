@@ -1,5 +1,4 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\common.targets')" Project="$(NetSdkBuildTargetsDir)\common.targets" />
-	<Import Condition="Exists('$(NetSdkBuildTargetsDir)\ideCmd.targets')" Project="$(NetSdkBuildTargetsDir)\ideCmd.targets" />
+	<Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.targets" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.targets') "/>
 	<Import Project="tools\bootstrapTools\bootstrap.targets" />
 </Project>

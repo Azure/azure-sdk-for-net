@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobStateAuditRecord class.
         /// </summary>
-        /// <param name="newState">the new state the job is in.</param>
-        /// <param name="timeStamp">the time stamp that the state change took
+        /// <param name="newState">The new state the job is in.</param>
+        /// <param name="timeStamp">The time stamp that the state change took
         /// place.</param>
-        /// <param name="requestedByUser">the user who requests the
+        /// <param name="requestedByUser">The user who requests the
         /// change.</param>
-        /// <param name="details">the details of the audit log.</param>
+        /// <param name="details">The details of the audit log.</param>
         public JobStateAuditRecord(string newState = default(string), System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), string requestedByUser = default(string), string details = default(string))
         {
             NewState = newState;

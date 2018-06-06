@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.Sql
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Sql", "BackupLongTermRetentionPolicies", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "BackupShortTermRetentionPolicies", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "Capabilities", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "DataMaskingPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingRules", "2014-04-01"),
@@ -43,6 +44,15 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "FirewallRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "GeoBackupPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "InstanceFailoverGroups", "2017-10-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobAgents", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobCredentials", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobExecutions", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobStepExecutions", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobSteps", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobTargetExecutions", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobTargetGroups", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "JobVersions", "2017-03-01-preview"),
+                new Tuple<string, string, string>("Sql", "Jobs", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "LongTermRetentionBackups", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedDatabases", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ManagedInstances", "2015-05-01-preview"),

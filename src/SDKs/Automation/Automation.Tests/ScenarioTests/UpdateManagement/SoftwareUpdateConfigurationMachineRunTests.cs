@@ -17,7 +17,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var run = this.automationClient.SoftwareUpdateConfigurationMachineRuns.GetById(runId);
+                var run = this.automationClient.SoftwareUpdateConfigurationMachineRuns.GetById(ResourceGroupName, AutomationAccountName, runId);
                 Assert.NotNull(run);
                 Assert.Equal(runId.ToString(), run.Name);
             }
@@ -30,7 +30,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.List();
+                var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(27, runs.Value.Count);
             }
@@ -44,7 +44,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.ListByCorrelationId(correlationId);
+                var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.ListByCorrelationId(ResourceGroupName, AutomationAccountName, correlationId);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(2, runs.Value.Count);
             }
@@ -58,7 +58,7 @@
             {
                 this.CreateAutomationClient(context);
 
-                var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.ListByStatus(status);
+                var runs = this.automationClient.SoftwareUpdateConfigurationMachineRuns.ListByStatus(ResourceGroupName, AutomationAccountName, status);
                 Assert.NotNull(runs.Value);
                 Assert.Equal(4, runs.Value.Count);
             }

@@ -14,13 +14,16 @@ namespace Microsoft.Azure.Management.ManagementGroups
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The Azure Management Groups API enables consolidation of multiple
     /// subscriptions/resources into an organizational hierarchy and centrally
     /// manage access control, policies, alerting and reporting for those
     /// resources.
-    ///
     /// </summary>
     public partial interface IManagementGroupsAPIClient : System.IDisposable
     {
@@ -46,7 +49,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2017-11-01-preview.
+        /// version is 2018-01-01-preview.
         /// </summary>
         string ApiVersion { get; }
 
@@ -82,6 +85,47 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IEntitiesOperations.
+        /// </summary>
+        IEntitiesOperations Entities { get; }
+
+        /// <summary>
+        /// Checks if the specified management group name is valid and unique
+        /// </summary>
+        /// <param name='checkNameAvailabilityRequest'>
+        /// Management group name availability check parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Starts backfilling subscriptions for the Tenant.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<TenantBackfillStatusResult>> StartTenantBackfillWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets tenant backfill status
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<TenantBackfillStatusResult>> TenantBackfillStatusWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

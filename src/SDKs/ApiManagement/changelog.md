@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.0.2-preview
+
+- Fixed Contract for ErrorResponse for Management Apis
+
 ### Changes in 4.0.1-preview
 
 *** Resource Management APIs ***

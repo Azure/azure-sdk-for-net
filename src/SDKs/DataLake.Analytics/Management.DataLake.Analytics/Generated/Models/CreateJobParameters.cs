@@ -32,21 +32,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the CreateJobParameters class.
         /// </summary>
-        /// <param name="type">the job type of the current job (Hive, USql, or
+        /// <param name="type">The job type of the current job (Hive, USql, or
         /// Scope (for internal use only)). Possible values include: 'USql',
         /// 'Hive', 'Scope'</param>
-        /// <param name="properties">the job specific properties.</param>
-        /// <param name="name">the friendly name of the job to submit.</param>
-        /// <param name="degreeOfParallelism">the degree of parallelism to use
+        /// <param name="properties">The job specific properties.</param>
+        /// <param name="name">The friendly name of the job to submit.</param>
+        /// <param name="degreeOfParallelism">The degree of parallelism to use
         /// for this job. This must be greater than 0, if set to less than 0 it
         /// will default to 1.</param>
-        /// <param name="priority">the priority value to use for the current
+        /// <param name="priority">The priority value to use for the current
         /// job. Lower numbers have a higher priority. By default, a job has a
         /// priority of 1000. This must be greater than 0.</param>
-        /// <param name="logFilePatterns">the list of log file name patterns to
+        /// <param name="logFilePatterns">The list of log file name patterns to
         /// find in the logFolder. '*' is the only matching character allowed.
         /// Example format: jobExecution*.log or *mylog*.txt</param>
-        /// <param name="related">the recurring job relationship information
+        /// <param name="related">The recurring job relationship information
         /// properties.</param>
         public CreateJobParameters(JobType type, CreateJobProperties properties, string name, int? degreeOfParallelism = default(int?), int? priority = default(int?), IList<string> logFilePatterns = default(IList<string>), JobRelationshipProperties related = default(JobRelationshipProperties))
             : base(type, properties)

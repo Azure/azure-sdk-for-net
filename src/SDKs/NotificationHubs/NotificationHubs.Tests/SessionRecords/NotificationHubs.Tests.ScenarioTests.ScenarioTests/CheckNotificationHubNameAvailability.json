@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"isAvailiable\": true,\r\n  \"id\": \"/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/providers/Microsoft.NotificationHubs/checkNamespaceAvailability\",\r\n  \"name\": \"HydraNH-Namespace8748\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/checkNamespaceAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": true\r\n}",
+      "ResponseBody": "{\r\n  \"IsAvailiable\": true,\r\n  \"id\": \"/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/providers/Microsoft.NotificationHubs/checkNamespaceAvailability\",\r\n  \"name\": \"HydraNH-Namespace8748\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/checkNamespaceAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": true\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -281,7 +281,7 @@
           "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"isAvailiable\": true,\r\n  \"id\": \"/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/resourceGroups/TestRg-NH4804/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8748/checkNotificationHubAvailability\",\r\n  \"name\": \"HydraNH-NotificationHub7090-validazsmnet5409\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/checkNotificationHubAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": true\r\n}",
+      "ResponseBody": "{\r\n  \"IsAvailiable\": true,\r\n  \"id\": \"/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/resourceGroups/TestRg-NH4804/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8748/checkNotificationHubAvailability\",\r\n  \"name\": \"HydraNH-NotificationHub7090-validazsmnet5409\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/checkNotificationHubAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": true\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -352,7 +352,7 @@
           "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"isAvailiable\": false,\r\n  \"id\": \"/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/resourceGroups/TestRg-NH4804/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8748/checkNotificationHubAvailability\",\r\n  \"name\": \"HydraNH-NotificationHub7090-validazsmnet5409\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/checkNotificationHubAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": false\r\n}",
+      "ResponseBody": "{\r\n  \"IsAvailiable\": false,\r\n  \"id\": \"/subscriptions/2cac2a14-ba6b-46a6-bce8-2d9781a41ba2/resourceGroups/TestRg-NH4804/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace8748/checkNotificationHubAvailability\",\r\n  \"name\": \"HydraNH-NotificationHub7090-validazsmnet5409\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/notificationHubs/checkNotificationHubAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": false\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"

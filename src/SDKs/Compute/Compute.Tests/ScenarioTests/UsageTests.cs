@@ -25,9 +25,7 @@ namespace Compute.Tests
     /// </summary>
     public class UsageTests : VMTestBase
     {
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
-        [Trait("Failure", "New Unable Match Http")]
+        [Fact]
         public void TestListUsages()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

@@ -39,9 +39,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
-            public static PriceSheetResult Get(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string))
+            /// <param name='top'>
+            /// May be used to limit the number of results to the top N results.
+            /// </param>
+            public static PriceSheetResult Get(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string), int? top = default(int?))
             {
-                return operations.GetAsync(expand, skiptoken).GetAwaiter().GetResult();
+                return operations.GetAsync(expand, skiptoken, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,12 +65,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the top N results.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PriceSheetResult> GetAsync(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PriceSheetResult> GetAsync(this IPriceSheetOperations operations, string expand = default(string), string skiptoken = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(expand, skiptoken, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -94,9 +100,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
-            public static PriceSheetResult GetByBillingPeriod(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string))
+            /// <param name='top'>
+            /// May be used to limit the number of results to the top N results.
+            /// </param>
+            public static PriceSheetResult GetByBillingPeriod(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string), int? top = default(int?))
             {
-                return operations.GetByBillingPeriodAsync(billingPeriodName, expand, skiptoken).GetAwaiter().GetResult();
+                return operations.GetByBillingPeriodAsync(billingPeriodName, expand, skiptoken, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -120,12 +129,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// nextLink element will include a skiptoken parameter that specifies a
             /// starting point to use for subsequent calls.
             /// </param>
+            /// <param name='top'>
+            /// May be used to limit the number of results to the top N results.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PriceSheetResult> GetByBillingPeriodAsync(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PriceSheetResult> GetByBillingPeriodAsync(this IPriceSheetOperations operations, string billingPeriodName, string expand = default(string), string skiptoken = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByBillingPeriodWithHttpMessagesAsync(billingPeriodName, expand, skiptoken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByBillingPeriodWithHttpMessagesAsync(billingPeriodName, expand, skiptoken, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -24,10 +24,13 @@ namespace Microsoft.Azure.Management.Automation
     public partial interface ITestJobStreamsOperations
     {
         /// <summary>
-        /// Retrieve a test job streams identified by runbook name and stream
-        /// id.
+        /// Retrieve a test job stream of the test job identified by runbook
+        /// name and stream id.
         /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -52,11 +55,14 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JobStream>> GetWithHttpMessagesAsync(string automationAccountName, string runbookName, string jobStreamId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JobStream>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, string jobStreamId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of test job streams identified by runbook name.
         /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -81,7 +87,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<JobStream>>> ListByTestJobWithHttpMessagesAsync(string automationAccountName, string runbookName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<JobStream>>> ListByTestJobWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of test job streams identified by runbook name.
         /// <see href="http://aka.ms/azureautomationsdk/jobstreamoperations" />

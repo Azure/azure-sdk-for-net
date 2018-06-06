@@ -28,12 +28,15 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            public static AgentRegistration Get(this IAgentRegistrationInformationOperations operations, string automationAccountName)
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            public static AgentRegistration Get(this IAgentRegistrationInformationOperations operations, string resourceGroupName, string automationAccountName)
             {
-                return operations.GetAsync(automationAccountName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,15 +46,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AgentRegistration> GetAsync(this IAgentRegistrationInformationOperations operations, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AgentRegistration> GetAsync(this IAgentRegistrationInformationOperations operations, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -64,15 +70,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='parameters'>
             /// The name of the agent registration key to be regenerated
             /// </param>
-            public static AgentRegistration RegenerateKey(this IAgentRegistrationInformationOperations operations, string automationAccountName, AgentRegistrationRegenerateKeyParameter parameters)
+            public static AgentRegistration RegenerateKey(this IAgentRegistrationInformationOperations operations, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyParameter parameters)
             {
-                return operations.RegenerateKeyAsync(automationAccountName, parameters).GetAwaiter().GetResult();
+                return operations.RegenerateKeyAsync(resourceGroupName, automationAccountName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -82,8 +91,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='parameters'>
             /// The name of the agent registration key to be regenerated
@@ -91,9 +103,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AgentRegistration> RegenerateKeyAsync(this IAgentRegistrationInformationOperations operations, string automationAccountName, AgentRegistrationRegenerateKeyParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AgentRegistration> RegenerateKeyAsync(this IAgentRegistrationInformationOperations operations, string resourceGroupName, string automationAccountName, AgentRegistrationRegenerateKeyParameter parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(automationAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, automationAccountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

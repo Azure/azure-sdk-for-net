@@ -54,6 +54,16 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void Factories_ConfigureRepo()
+        {
+            RunTest("Factories_ConfigureRepo", (example, client, responseCode) =>
+            {
+                Factory resource = client.Factories.ConfigureFactoryRepo(LN(example), GetTypedParameter<FactoryRepoUpdate>(example, client, "factoryRepoUpdate"));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
         public void Factories_List()
         {
             RunTest("Factories_List", (example, client, responseCode) =>
@@ -675,6 +685,10 @@ namespace DataFactory.Tests.UnitTests
         private string PN(Example example)
         {
             return (string)example.Parameters["pipelineName"];
+        }
+        private string LN(Example example)
+        {
+            return (string)example.Parameters["locationId"];
         }
 
         private T GetTypedObject<T>(IDataFactoryManagementClient client, object objectRaw)

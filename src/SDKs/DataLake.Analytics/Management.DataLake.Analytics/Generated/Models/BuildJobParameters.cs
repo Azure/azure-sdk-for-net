@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the BuildJobParameters class.
         /// </summary>
-        /// <param name="type">the job type of the current job (Hive, USql, or
+        /// <param name="type">The job type of the current job (Hive, USql, or
         /// Scope (for internal use only)). Possible values include: 'USql',
         /// 'Hive', 'Scope'</param>
-        /// <param name="properties">the job specific properties.</param>
-        /// <param name="name">the friendly name of the job to build.</param>
+        /// <param name="properties">The job specific properties.</param>
+        /// <param name="name">The friendly name of the job to build.</param>
         public BuildJobParameters(JobType type, CreateJobProperties properties, string name = default(string))
             : base(type, properties)
         {

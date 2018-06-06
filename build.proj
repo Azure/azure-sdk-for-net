@@ -1,16 +1,7 @@
-<Project DefaultTargets="Init" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Init" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">	
 	<Import Project="Directory.Build.props" />	
 	<Import Project="test.props" />
 	<Import Project="AzSdk.props" />
 	<Import Project="Directory.Build.targets" />
-  
-	<Target Name="Clean" DependsOnTargets="$(CleanTraversedProjectsDependsOn)" />
-	<Target Name="Restore" DependsOnTargets="$(RestoreTraversedProjectsDependsOn)" /> 
-	<Target Name="Build" DependsOnTargets="$(BuildTraversedProjectsDependsOn)" />
-	<Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-	<Target Name="PublishNuget" DependsOnTargets="$(PublishNugetDependsOn)" />
-	<Target Name="CreateNugetPackage" DependsOnTargets="$(PackageNugetDependsOn)" />
-	<Target Name="RunTests" DependsOnTargets="$(RunTestProjectsDependsOn)" />
-	<Target Name="SignNuget" DependsOnTargets="$(SignNugetDependsOn)" />
-	<Target Name="Help" DependsOnTargets="$(HelpDependsOn)" />  
+	<Import Project="$(NetSdkBuildTargetsDir)\core\_build.proj" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_build.proj') "/>
 </Project>

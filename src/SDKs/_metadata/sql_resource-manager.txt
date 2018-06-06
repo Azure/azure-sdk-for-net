@@ -1,4 +1,3 @@
-
 Type dsc to start/install the DS Consolidated Console
 
 2018-06-06 13:40:11 UTC
@@ -8,7 +7,13 @@ GitHub user: Azure
 Branch:      master
 Commit:      ac44797c70e148c2e7e3b08ad188840fb7071354
 
+
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\yaiyun\AppData\Roaming\npm `-- autorest@2.0.4262  
+Bootstrapper version:    C:\Users\jaredmoo\AppData\Roaming\npm  `-- autorest@2.0.4262
+
+
 Latest installed version:    
+.\tools\generate.ps1 was invoked by generate.ps1
+
+
