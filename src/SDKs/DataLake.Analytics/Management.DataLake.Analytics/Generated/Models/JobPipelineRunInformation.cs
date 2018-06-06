@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobPipelineRunInformation class.
         /// </summary>
-        /// <param name="runId">the run identifier of an instance of pipeline
+        /// <param name="runId">The run identifier of an instance of pipeline
         /// executions (a GUID).</param>
-        /// <param name="lastSubmitTime">the time this instance was last
+        /// <param name="lastSubmitTime">The time this instance was last
         /// submitted.</param>
         public JobPipelineRunInformation(System.Guid? runId = default(System.Guid?), System.DateTimeOffset? lastSubmitTime = default(System.DateTimeOffset?))
         {

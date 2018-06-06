@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// the statistics information for resource usage.
+    /// The statistics information for resource usage.
     /// </summary>
     public partial class ResourceUsageStatistics
     {
@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the ResourceUsageStatistics class.
         /// </summary>
-        /// <param name="average">the average value.</param>
-        /// <param name="minimum">the minimum value.</param>
-        /// <param name="maximum">the maximum value.</param>
+        /// <param name="average">The average value.</param>
+        /// <param name="minimum">The minimum value.</param>
+        /// <param name="maximum">The maximum value.</param>
         public ResourceUsageStatistics(double? average = default(double?), long? minimum = default(long?), long? maximum = default(long?))
         {
             Average = average;

@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SourceSiteOperations.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SourceSiteOperations
+    public static class SourceSiteOperations
     {
-        [EnumMember(Value = "Required")]
-        Required,
-        [EnumMember(Value = "NotRequired")]
-        NotRequired
-    }
-    internal static class SourceSiteOperationsEnumExtension
-    {
-        internal static string ToSerializedValue(this SourceSiteOperations? value)
-        {
-            return value == null ? null : ((SourceSiteOperations)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this SourceSiteOperations value)
-        {
-            switch( value )
-            {
-                case SourceSiteOperations.Required:
-                    return "Required";
-                case SourceSiteOperations.NotRequired:
-                    return "NotRequired";
-            }
-            return null;
-        }
-
-        internal static SourceSiteOperations? ParseSourceSiteOperations(this string value)
-        {
-            switch( value )
-            {
-                case "Required":
-                    return SourceSiteOperations.Required;
-                case "NotRequired":
-                    return SourceSiteOperations.NotRequired;
-            }
-            return null;
-        }
+        public const string Required = "Required";
+        public const string NotRequired = "NotRequired";
     }
 }

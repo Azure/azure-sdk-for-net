@@ -23,5 +23,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string VpnGw1 = "VpnGw1";
         public const string VpnGw2 = "VpnGw2";
         public const string VpnGw3 = "VpnGw3";
+        public const string VpnGw1AZ = "VpnGw1AZ";
+        public const string VpnGw2AZ = "VpnGw2AZ";
+        public const string VpnGw3AZ = "VpnGw3AZ";
+        public const string ErGw1AZ = "ErGw1AZ";
+        public const string ErGw2AZ = "ErGw2AZ";
+        public const string ErGw3AZ = "ErGw3AZ";
     }
 }

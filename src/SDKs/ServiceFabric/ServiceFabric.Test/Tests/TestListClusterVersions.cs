@@ -13,22 +13,21 @@ namespace ServiceFabric.Tests.Tests
         [Fact]
         public void TestList()
         {
+            var location = "southcentralus";
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var serviceFabricClient = GetServiceFabricClient(context);
-                var clusterVersions = serviceFabricClient.ClusterVersions.List("southcentralus","Windows");
+
+                var environment = "Windows";
+                var clusterVersions = serviceFabricClient.ClusterVersions.ListByEnvironment(location, environment);
 
                 Assert.NotNull(clusterVersions);
-                Assert.NotNull(clusterVersions);
-                var versions = clusterVersions.GroupBy(c => c.Id).Select(r => r.Key.Split('/')[2]).Distinct();
-                Assert.Equal(versions.Count(), 1);
-
-                clusterVersions = serviceFabricClient.ClusterVersions.List("southcentralus", "default");
-
-                Assert.NotNull(clusterVersions);
-                Assert.NotNull(clusterVersions);
-                versions = clusterVersions.GroupBy(c => c.Id).Select(r => r.Key.Split('/')[2]).Distinct();
-                Assert.Equal(versions.Count(), 1);
+                var versions = clusterVersions.Value
+                    .Select(c => new Tuple<string, string>(c.Id.Split('/')[5], c.Id.Split('/')[7]))
+                    .Distinct();
+                Assert.Single(versions);
+                Assert.Equal(location, versions.First().Item1, ignoreCase:true, ignoreWhiteSpaceDifferences:true);
+                Assert.Equal(environment, versions.First().Item2, ignoreCase: true, ignoreWhiteSpaceDifferences: true);
             }
         }
 

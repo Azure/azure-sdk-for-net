@@ -28,11 +28,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageFileCreateEntry class.
         /// </summary>
-        public ImageFileCreateEntry(string name = default(string), byte[] contents = default(byte[]), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public ImageFileCreateEntry(string name = default(string), byte[] contents = default(byte[]), IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
         {
             Name = name;
             Contents = contents;
             TagIds = tagIds;
+            Regions = regions;
             CustomInit();
         }
 
@@ -43,18 +44,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Contents")]
+        [JsonProperty(PropertyName = "contents")]
         public byte[] Contents { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "TagIds")]
+        [JsonProperty(PropertyName = "tagIds")]
         public IList<System.Guid> TagIds { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "regions")]
+        public IList<Region> Regions { get; set; }
 
     }
 }

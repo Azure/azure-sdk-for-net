@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// the test failover cleanup is to be skipped.</param>
         /// <param name="providerSpecificDetails">The provider specific
         /// properties.</param>
-        public RecoveryPlanTestFailoverInputProperties(PossibleOperationsDirections failoverDirection, string networkType, string networkId = default(string), string skipTestFailoverCleanup = default(string), IList<RecoveryPlanProviderSpecificFailoverInput> providerSpecificDetails = default(IList<RecoveryPlanProviderSpecificFailoverInput>))
+        public RecoveryPlanTestFailoverInputProperties(string failoverDirection, string networkType, string networkId = default(string), string skipTestFailoverCleanup = default(string), IList<RecoveryPlanProviderSpecificFailoverInput> providerSpecificDetails = default(IList<RecoveryPlanProviderSpecificFailoverInput>))
         {
             FailoverDirection = failoverDirection;
             NetworkType = networkType;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'PrimaryToRecovery', 'RecoveryToPrimary'
         /// </summary>
         [JsonProperty(PropertyName = "failoverDirection")]
-        public PossibleOperationsDirections FailoverDirection { get; set; }
+        public string FailoverDirection { get; set; }
 
         /// <summary>
         /// Gets or sets the network type to be used for test failover.
@@ -99,6 +99,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (FailoverDirection == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FailoverDirection");
+            }
             if (NetworkType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "NetworkType");

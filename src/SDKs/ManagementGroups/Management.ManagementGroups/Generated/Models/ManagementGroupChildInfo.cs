@@ -31,18 +31,23 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// <summary>
         /// Initializes a new instance of the ManagementGroupChildInfo class.
         /// </summary>
-        /// <param name="childType">The type of child resource.</param>
-        /// <param name="childId">The fully qualified ID for the child resource
+        /// <param name="type">The type of child resource.</param>
+        /// <param name="id">The fully qualified ID for the child resource
         /// (management group or subscription).  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
+        /// <param name="name">The name of the child entity.</param>
         /// <param name="displayName">The friendly name of the child
         /// resource.</param>
+        /// <param name="roles">The roles definitions associated with the
+        /// management group.</param>
         /// <param name="children">The list of children.</param>
-        public ManagementGroupChildInfo(string childType = default(string), string childId = default(string), string displayName = default(string), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
+        public ManagementGroupChildInfo(string type = default(string), string id = default(string), string name = default(string), string displayName = default(string), IList<string> roles = default(IList<string>), IList<ManagementGroupChildInfo> children = default(IList<ManagementGroupChildInfo>))
         {
-            ChildType = childType;
-            ChildId = childId;
+            Type = type;
+            Id = id;
+            Name = name;
             DisplayName = displayName;
+            Roles = roles;
             Children = children;
             CustomInit();
         }
@@ -56,24 +61,40 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// Gets or sets the type of child resource.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'ManagementGroup', 'Subscription'
+        /// The fully qualified resource type which includes provider namespace
+        /// (e.g. /providers/Microsoft.Management/managementGroups). Possible
+        /// values include: '/providers/Microsoft.Management/managementGroups',
+        /// '/subscriptions'
         /// </remarks>
-        [JsonProperty(PropertyName = "childType")]
-        public string ChildType { get; set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets or sets the fully qualified ID for the child resource
         /// (management group or subscription).  For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000
         /// </summary>
-        [JsonProperty(PropertyName = "childId")]
-        public string ChildId { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the child entity.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the friendly name of the child resource.
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the roles definitions associated with the management
+        /// group.
+        /// </summary>
+        [JsonProperty(PropertyName = "roles")]
+        public IList<string> Roles { get; set; }
 
         /// <summary>
         /// Gets or sets the list of children.

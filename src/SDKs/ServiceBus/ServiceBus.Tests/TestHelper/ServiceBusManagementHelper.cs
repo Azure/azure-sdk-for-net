@@ -21,6 +21,7 @@ namespace ServiceBus.Tests.TestHelper
     {
         internal const string ResourceGroupPrefix = "Default-ServiceBus-";
         internal const string NamespacePrefix = "sdk-Namespace-";
+        internal const string PostMigrationPrefix = "sdk-PostMigration-";
         internal const string AuthorizationRulesPrefix = "sdk-AuthRules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         internal const string QueuesPrefix = "sdk-Queues-";

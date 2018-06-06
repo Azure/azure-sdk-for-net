@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointSyncType">A value indicating whether the
         /// recovery point is multi VM consistent. Possible values include:
         /// 'MultiVmSyncRecoveryPoint', 'PerVmRecoveryPoint'</param>
-        public A2ARecoveryPointDetails(RecoveryPointSyncType? recoveryPointSyncType = default(RecoveryPointSyncType?))
+        public A2ARecoveryPointDetails(string recoveryPointSyncType = default(string))
         {
             RecoveryPointSyncType = recoveryPointSyncType;
             CustomInit();
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'PerVmRecoveryPoint'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointSyncType")]
-        public RecoveryPointSyncType? RecoveryPointSyncType { get; set; }
+        public string RecoveryPointSyncType { get; set; }
 
     }
 }

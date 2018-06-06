@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the ServiceNowLinkedService class.
         /// </summary>
         /// <param name="endpoint">The endpoint of the ServiceNow server. (i.e.
-        /// ServiceNowData.com)</param>
+        /// &lt;instance&gt;.service-now.com)</param>
         /// <param name="authenticationType">The authentication type to use.
         /// Possible values include: 'Basic', 'OAuth2'</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the endpoint of the ServiceNow server. (i.e.
-        /// ServiceNowData.com)
+        /// &amp;lt;instance&amp;gt;.service-now.com)
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.endpoint")]
         public object Endpoint { get; set; }

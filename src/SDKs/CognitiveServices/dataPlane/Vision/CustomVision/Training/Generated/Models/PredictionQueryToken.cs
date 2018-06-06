@@ -51,49 +51,49 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Session")]
+        [JsonProperty(PropertyName = "session")]
         public string Session { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Continuation")]
+        [JsonProperty(PropertyName = "continuation")]
         public string Continuation { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "MaxCount")]
+        [JsonProperty(PropertyName = "maxCount")]
         public int MaxCount { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Newest', 'Oldest',
         /// 'Suggested'
         /// </summary>
-        [JsonProperty(PropertyName = "OrderBy")]
+        [JsonProperty(PropertyName = "orderBy")]
         public string OrderBy { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Tags")]
+        [JsonProperty(PropertyName = "tags")]
         public IList<PredictionQueryTag> Tags { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "IterationId")]
+        [JsonProperty(PropertyName = "iterationId")]
         public System.Guid? IterationId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "StartTime")]
+        [JsonProperty(PropertyName = "startTime")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "EndTime")]
+        [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Application")]
+        [JsonProperty(PropertyName = "application")]
         public string Application { get; set; }
 
     }

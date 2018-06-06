@@ -52,25 +52,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Gets the Tag ID
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the tag
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the tag
         /// </summary>
-        [JsonProperty(PropertyName = "Description")]
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets the number of images with this tag
         /// </summary>
-        [JsonProperty(PropertyName = "ImageCount")]
+        [JsonProperty(PropertyName = "imageCount")]
         public int ImageCount { get; private set; }
 
     }

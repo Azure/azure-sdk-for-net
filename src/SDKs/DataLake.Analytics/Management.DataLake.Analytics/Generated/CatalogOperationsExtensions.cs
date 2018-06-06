@@ -870,6 +870,84 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table fragments.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the table fragments.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the table fragments.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTableFragment> ListTableFragments(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableFragment> odataQuery = default(ODataQuery<USqlTableFragment>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListTableFragmentsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table fragments.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the table fragments.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the table fragments.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableFragment>> ListTableFragmentsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableFragment> odataQuery = default(ODataQuery<USqlTableFragment>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableFragmentsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves the list of tables from the Data Lake Analytics catalog.
             /// </summary>
             /// <param name='operations'>
@@ -2920,6 +2998,40 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlProcedure>> ListProceduresNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListProceduresNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlTableFragment> ListTableFragmentsNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListTableFragmentsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableFragment>> ListTableFragmentsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableFragmentsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

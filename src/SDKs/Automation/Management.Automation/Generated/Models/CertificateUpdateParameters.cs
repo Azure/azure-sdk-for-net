@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// certificate.</param>
         /// <param name="description">Gets or sets the description of the
         /// certificate.</param>
-        public CertificateUpdateParameters(string name, string description = default(string))
+        public CertificateUpdateParameters(string name = default(string), string description = default(string))
         {
             Name = name;
             Description = description;
@@ -62,18 +62,5 @@ namespace Microsoft.Azure.Management.Automation.Models
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

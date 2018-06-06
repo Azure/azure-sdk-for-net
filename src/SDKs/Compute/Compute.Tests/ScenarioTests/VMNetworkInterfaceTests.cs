@@ -17,8 +17,7 @@ namespace Compute.Tests
 {
     public class VMNetworkInterfaceTests : VMTestBase
     {
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -81,8 +80,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestEffectiveRouteAndAcls()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -175,8 +173,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestMultiNicVirtualMachineReference()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -254,8 +251,7 @@ namespace Compute.Tests
             }
         }
 
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Password policy")]
+        [Fact]
         public void TestMultiIpConfigForMultiNICVM()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

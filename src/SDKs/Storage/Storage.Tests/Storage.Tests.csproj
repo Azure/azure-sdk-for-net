@@ -14,6 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.2.0-preview" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.6.0" />
   </ItemGroup>
 
   <ItemGroup>

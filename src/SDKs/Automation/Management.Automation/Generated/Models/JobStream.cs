@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="summary">Gets or sets the summary.</param>
         /// <param name="value">Gets or sets the values of the job
         /// stream.</param>
-        public JobStream(string id = default(string), string jobStreamId = default(string), System.DateTime? time = default(System.DateTime?), string streamType = default(string), string streamText = default(string), string summary = default(string), IDictionary<string, object> value = default(IDictionary<string, object>))
+        public JobStream(string id = default(string), string jobStreamId = default(string), System.DateTimeOffset time = default(System.DateTimeOffset), string streamType = default(string), string streamText = default(string), string summary = default(string), IDictionary<string, object> value = default(IDictionary<string, object>))
         {
             Id = id;
             JobStreamId = jobStreamId;
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time of the job.
         /// </summary>
         [JsonProperty(PropertyName = "properties.time")]
-        public System.DateTime? Time { get; set; }
+        public System.DateTimeOffset Time { get; set; }
 
         /// <summary>
         /// Gets or sets the stream type. Possible values include: 'Progress',

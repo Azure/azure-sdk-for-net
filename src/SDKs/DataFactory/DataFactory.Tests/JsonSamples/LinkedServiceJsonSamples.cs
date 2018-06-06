@@ -1307,13 +1307,18 @@ namespace DataFactory.Tests.JsonSamples
         typeProperties: {
             endpoint : ""quickbooks.api.intuit.com"",
             companyId : ""fakeCompanyId"",
+            consumerKey : ""fakeConsumerKey"",
+            consumerSecret : {
+                type : ""SecureString"",
+                value : ""some secret""
+            },
             accessToken : {
-                type: ""SecureString"",
-                value: ""some secret""
+                type : ""SecureString"",
+                value : ""some secret""
             },
             accessTokenSecret : {
-                type: ""SecureString"",
-                value: ""some secret""
+                type : ""SecureString"",
+                value : ""some secret""
             },
             useEncryptedEndpoints : true
         }
@@ -1327,12 +1332,12 @@ namespace DataFactory.Tests.JsonSamples
     properties: {
         type: ""ServiceNow"",
         typeProperties: {
-            endpoint : ""http://ServiceNowData.com"",
+            endpoint : ""http://instance.service-now.com"",
             authenticationType : ""Basic"",
             username : ""admin"",
             password : {
-                type: ""SecureString"",
-                value: ""some secret""
+                type : ""SecureString"",
+                value : ""some secret""
             }
         }
     }
@@ -1519,5 +1524,58 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string MySqlLinkedService = @"
+{
+    name: ""MySqlLinkedService"",
+    properties: {
+        type: ""MySql"",
+        typeProperties: {
+            connectionString: {
+                type : ""SecureString"",
+                value : ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PostgreSqlLinkedService = @"
+{
+    name: ""PostgreSqlLinkedService"",
+    properties: {
+        type: ""PostgreSql"",
+        typeProperties: {
+            connectionString: {
+                type : ""SecureString"",
+                value : ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string Db2LinkedService = @"
+{
+    name: ""Db2LinkedService"",
+    properties:
+    {
+        type: ""Db2"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            server : ""fakeServer"",
+            database : ""fakeDatabase"",
+            authenticationType : ""Basic"",
+            username : ""fakeUsername"",
+            password : {
+                type : ""SecureString"",
+                value : ""some password""
+            }
+        }
+    }
+}";
     }
 }

@@ -41,10 +41,9 @@ namespace NotificationHubs.Tests.ScenarioTests
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
-                var createResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, validNamespaceName,
-                    new NamespaceCreateOrUpdateParameters(
-                    location
-                   ));
+                var createResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup,
+                    validNamespaceName,
+                    new NamespaceCreateOrUpdateParameters {Location = location});
 
                 Assert.NotNull(createResponse);
 

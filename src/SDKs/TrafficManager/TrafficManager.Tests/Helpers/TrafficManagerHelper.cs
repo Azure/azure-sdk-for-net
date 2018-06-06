@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
 {
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.TrafficManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -79,23 +80,47 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.Helpers
                 endpoints: null);
         }
 
-        public static Endpoint GenerateDefaultEndpoint(string name = null)
-        {
-            return new Endpoint
-            {
-                Id = null,
-                Name = name ?? "My external endpoint",
-                Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                TargetResourceId = null,
-                Target = "foobar.contoso.com",
-                EndpointLocation = "North Europe",
-                EndpointStatus = "Enabled",
-            };
-        }
-
         public static string GenerateName()
         {
             return TestUtilities.GenerateName("azuresdkfornetautoresttrafficmanager");
+        }
+
+
+        public static string GetPersistentResourceGroupName()
+        {
+            return "azuresdkpersistentheatmapdata";
+
+        }
+
+
+        public static string GetPersistentTrafficViewProfile()
+        {
+            return "persistentHeatMap";
+        }
+
+        public static Profile GenerateDefaultProfileWithCustomHeadersAndStatusCodeRanges(string profileName, string trafficRoutingMethod = "Performance")
+        {
+            var defaultProfile = GenerateDefaultProfileWithExternalEndpoint(profileName, trafficRoutingMethod);
+            defaultProfile.MonitorConfig.CustomHeaders = new List<MonitorConfigCustomHeadersItem>
+            {
+                new MonitorConfigCustomHeadersItem("host", "www.contoso.com"),
+                new MonitorConfigCustomHeadersItem("custom-name", "custom-value")
+            };
+
+            defaultProfile.MonitorConfig.ExpectedStatusCodeRanges = new List<MonitorConfigExpectedStatusCodeRangesItem>
+            {
+                new MonitorConfigExpectedStatusCodeRangesItem(200, 499)
+            };
+
+            foreach (var endpoint in defaultProfile.Endpoints)
+            {
+                endpoint.CustomHeaders = new List<EndpointPropertiesCustomHeadersItem>
+                {
+                    new EndpointPropertiesCustomHeadersItem("custom-name", "custom-value-overriden")
+                };
+            }
+
+            return defaultProfile;
         }
     }
 }

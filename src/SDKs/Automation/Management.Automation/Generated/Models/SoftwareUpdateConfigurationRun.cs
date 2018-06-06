@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// which only appears in the response.</param>
         /// <param name="lastModifiedBy">lastModifiedBy property, which only
         /// appears in the response.</param>
-        public SoftwareUpdateConfigurationRun(string name = default(string), string id = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string configuredDuration = default(string), string osType = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? computerCount = default(int?), int? failedCount = default(int?), System.DateTime? creationTime = default(System.DateTime?), string createdBy = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), string lastModifiedBy = default(string))
+        public SoftwareUpdateConfigurationRun(string name = default(string), string id = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string configuredDuration = default(string), string osType = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), int? computerCount = default(int?), int? failedCount = default(int?), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string))
         {
             Name = name;
             Id = id;
@@ -127,13 +127,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets etart time of the software update configuration run.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
-        public System.DateTime? StartTime { get; private set; }
+        public System.DateTimeOffset StartTime { get; private set; }
 
         /// <summary>
         /// Gets end time of the software update configuration run.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endTime")]
-        public System.DateTime? EndTime { get; private set; }
+        public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
         /// Gets number of computers in the software update configuration run.
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets createdBy property, which only appears in the response.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets lastModifiedBy property, which only appears in the response.
