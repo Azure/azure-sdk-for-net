@@ -54,6 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// The operations group for this extension method.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='visualFeatures'>
             /// A string indicating what visual feature types to return. Multiple values
@@ -74,16 +75,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// include:Celebrities - identifies celebrities if detected in the image.
             /// </param>
             /// <param name='language'>
-            /// A string indicating which language to return. The service will return
-            /// recognition results in specified language. If this parameter is not
+            /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.zh - Simplified Chinese. Possible values
-            /// include: 'en', 'zh'
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionAPI operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), Language1 language = default(Language1), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionAPI operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -112,6 +112,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// of 50.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='smartCropping'>
             /// Boolean flag for enabling smart cropping.
@@ -144,6 +145,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// upside-down).
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='language'>
             /// The BCP-47 language code of the text to be detected in the image. The
@@ -178,16 +180,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// The operations group for this extension method.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='maxCandidates'>
             /// Maximum number of candidate descriptions to be returned.  The default is 1.
             /// </param>
+            /// <param name='language'>
+            /// The desired language for output generation. If this parameter is not
+            /// specified, the default value is &amp;quot;en&amp;quot;.Supported
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionAPI operations, string url, string maxCandidates = "1", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionAPI operations, string url, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -199,21 +208,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// based on objects, living beings, scenery or actions found in images. Unlike
             /// categories, tags are not organized according to a hierarchical
             /// classification system, but correspond to image content. Tags may contain
-            /// hints to avoid ambiguity or provide context, for example the tag “cello”
-            /// may be accompanied by the hint “musical instrument”. All tags are in
+            /// hints to avoid ambiguity or provide context, for example the tag 'cello'
+            /// may be accompanied by the hint 'musical instrument'. All tags are in
             /// English.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
+            /// </param>
+            /// <param name='language'>
+            /// The desired language for output generation. If this parameter is not
+            /// specified, the default value is &amp;quot;en&amp;quot;.Supported
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagResult> TagImageAsync(this IComputerVisionAPI operations, string url, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagResult> TagImageAsync(this IComputerVisionAPI operations, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TagImageWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TagImageWithHttpMessagesAsync(url, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -233,17 +249,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// The operations group for this extension method.
             /// </param>
             /// <param name='model'>
-            /// The domain-specific content to recognize. Possible values include:
-            /// 'Celebrities', 'Landmarks'
+            /// The domain-specific content to recognize.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
+            /// </param>
+            /// <param name='language'>
+            /// The desired language for output generation. If this parameter is not
+            /// specified, the default value is &amp;quot;en&amp;quot;.Supported
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainModelResults> AnalyzeImageByDomainAsync(this IComputerVisionAPI operations, DomainModels model, string url, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainModelResults> AnalyzeImageByDomainAsync(this IComputerVisionAPI operations, string model, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageByDomainWithHttpMessagesAsync(model, url, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageByDomainWithHttpMessagesAsync(model, url, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -251,18 +273,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
 
             /// <summary>
             /// Recognize Text operation. When you use the Recognize Text interface, the
-            /// response contains a field called “Operation-Location”. The
-            /// “Operation-Location” field contains the URL that you must use for your Get
+            /// response contains a field called 'Operation-Location'. The
+            /// 'Operation-Location' field contains the URL that you must use for your Get
             /// Handwritten Text Operation Result operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='detectHandwriting'>
-            /// If “true” is specified, handwriting recognition is performed. If this
-            /// parameter is set to “false” or is not specified, printed text recognition
+            /// If 'true' is specified, handwriting recognition is performed. If this
+            /// parameter is set to 'false' or is not specified, printed text recognition
             /// is performed.
             /// </param>
             /// <param name='cancellationToken'>
@@ -329,11 +352,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Possible values include: 'Celebrities', 'Landmarks'
             /// </param>
             /// <param name='language'>
-            /// A string indicating which language to return. The service will return
-            /// recognition results in specified language. If this parameter is not
+            /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.zh - Simplified Chinese. Possible values
-            /// include: 'en', 'zh'
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -440,12 +462,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='maxCandidates'>
             /// Maximum number of candidate descriptions to be returned.  The default is 1.
             /// </param>
+            /// <param name='language'>
+            /// The desired language for output generation. If this parameter is not
+            /// specified, the default value is &amp;quot;en&amp;quot;.Supported
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionAPI operations, Stream image, string maxCandidates = "1", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionAPI operations, Stream image, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -457,8 +485,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// based on objects, living beings, scenery or actions found in images. Unlike
             /// categories, tags are not organized according to a hierarchical
             /// classification system, but correspond to image content. Tags may contain
-            /// hints to avoid ambiguity or provide context, for example the tag “cello”
-            /// may be accompanied by the hint “musical instrument”. All tags are in
+            /// hints to avoid ambiguity or provide context, for example the tag 'cello'
+            /// may be accompanied by the hint 'musical instrument'. All tags are in
             /// English.
             /// </summary>
             /// <param name='operations'>
@@ -467,12 +495,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='image'>
             /// An image stream.
             /// </param>
+            /// <param name='language'>
+            /// The desired language for output generation. If this parameter is not
+            /// specified, the default value is &amp;quot;en&amp;quot;.Supported
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagResult> TagImageInStreamAsync(this IComputerVisionAPI operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagResult> TagImageInStreamAsync(this IComputerVisionAPI operations, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TagImageInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TagImageInStreamWithHttpMessagesAsync(image, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -497,12 +531,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='image'>
             /// An image stream.
             /// </param>
+            /// <param name='language'>
+            /// The desired language for output generation. If this parameter is not
+            /// specified, the default value is &amp;quot;en&amp;quot;.Supported
+            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
+            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainModelResults> AnalyzeImageByDomainInStreamAsync(this IComputerVisionAPI operations, string model, Stream image, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainModelResults> AnalyzeImageByDomainInStreamAsync(this IComputerVisionAPI operations, string model, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeImageByDomainInStreamWithHttpMessagesAsync(model, image, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeImageByDomainInStreamWithHttpMessagesAsync(model, image, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -510,8 +550,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
 
             /// <summary>
             /// Recognize Text operation. When you use the Recognize Text interface, the
-            /// response contains a field called “Operation-Location”. The
-            /// “Operation-Location” field contains the URL that you must use for your Get
+            /// response contains a field called 'Operation-Location'. The
+            /// 'Operation-Location' field contains the URL that you must use for your Get
             /// Handwritten Text Operation Result operation.
             /// </summary>
             /// <param name='operations'>
@@ -521,8 +561,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// An image stream.
             /// </param>
             /// <param name='detectHandwriting'>
-            /// If “true” is specified, handwriting recognition is performed. If this
-            /// parameter is set to “false” or is not specified, printed text recognition
+            /// If 'true' is specified, handwriting recognition is performed. If this
+            /// parameter is set to 'false' or is not specified, printed text recognition
             /// is performed.
             /// </param>
             /// <param name='cancellationToken'>

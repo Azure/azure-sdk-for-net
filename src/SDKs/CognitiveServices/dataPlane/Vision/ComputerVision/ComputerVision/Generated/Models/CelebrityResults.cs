@@ -16,30 +16,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// A collection of content tags, along with a list of captions sorted by
-    /// confidence level, and image metadata.
+    /// List of celebrities recognized in the image.
     /// </summary>
-    public partial class ImageDescriptionDetails
+    public partial class CelebrityResults
     {
         /// <summary>
-        /// Initializes a new instance of the ImageDescriptionDetails class.
+        /// Initializes a new instance of the CelebrityResults class.
         /// </summary>
-        public ImageDescriptionDetails()
+        public CelebrityResults()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ImageDescriptionDetails class.
+        /// Initializes a new instance of the CelebrityResults class.
         /// </summary>
-        /// <param name="tags">A collection of image tags.</param>
-        /// <param name="captions">A list of captions, sorted by confidence
-        /// level.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        public ImageDescriptionDetails(IList<string> tags = default(IList<string>), IList<ImageCaption> captions = default(IList<ImageCaption>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        public CelebrityResults(IList<CelebritiesModel> celebrities = default(IList<CelebritiesModel>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
-            Tags = tags;
-            Captions = captions;
+            Celebrities = celebrities;
             RequestId = requestId;
             Metadata = metadata;
             CustomInit();
@@ -51,16 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a collection of image tags.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IList<string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets a list of captions, sorted by confidence level.
-        /// </summary>
-        [JsonProperty(PropertyName = "captions")]
-        public IList<ImageCaption> Captions { get; set; }
+        [JsonProperty(PropertyName = "celebrities")]
+        public IList<CelebritiesModel> Celebrities { get; set; }
 
         /// <summary>
         /// Gets or sets id of the REST API request.

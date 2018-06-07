@@ -16,43 +16,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Language1.
+    /// Defines values for Gender.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Language1
+    public enum Gender
     {
-        [EnumMember(Value = "en")]
-        En,
-        [EnumMember(Value = "zh")]
-        Zh
+        [EnumMember(Value = "Male")]
+        Male,
+        [EnumMember(Value = "Female")]
+        Female
     }
-    internal static class Language1EnumExtension
+    internal static class GenderEnumExtension
     {
-        internal static string ToSerializedValue(this Language1? value)
+        internal static string ToSerializedValue(this Gender? value)
         {
-            return value == null ? null : ((Language1)value).ToSerializedValue();
+            return value == null ? null : ((Gender)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this Language1 value)
+        internal static string ToSerializedValue(this Gender value)
         {
             switch( value )
             {
-                case Language1.En:
-                    return "en";
-                case Language1.Zh:
-                    return "zh";
+                case Gender.Male:
+                    return "Male";
+                case Gender.Female:
+                    return "Female";
             }
             return null;
         }
 
-        internal static Language1? ParseLanguage1(this string value)
+        internal static Gender? ParseGender(this string value)
         {
             switch( value )
             {
-                case "en":
-                    return Language1.En;
-                case "zh":
-                    return Language1.Zh;
+                case "Male":
+                    return Gender.Male;
+                case "Female":
+                    return Gender.Female;
             }
             return null;
         }
