@@ -19,11 +19,13 @@ namespace Microsoft.Azure.Management.ManagementGroups
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Management", "CheckNameAvailability", "2018-01-01-preview"),
-                new Tuple<string, string, string>("Management", "Entities", "2018-01-01-preview"),
-                new Tuple<string, string, string>("Management", "ManagementGroupSubscriptions", "2018-01-01-preview"),
-                new Tuple<string, string, string>("Management", "ManagementGroups", "2018-01-01-preview"),
-                new Tuple<string, string, string>("Management", "Operations", "2018-01-01-preview"),
+                new Tuple<string, string, string>("Management", "CheckNameAvailability", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Management", "Entities", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Management", "ManagementGroupSubscriptions", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Management", "ManagementGroups", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Management", "Operations", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Management", "StartTenantBackfill", "2018-03-01-preview"),
+                new Tuple<string, string, string>("Management", "TenantBackfillStatus", "2018-03-01-preview"),
               }.AsEnumerable();
           }
       }

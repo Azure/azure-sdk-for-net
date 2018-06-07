@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/checkNameAvailability?api-version=2018-01-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.Management/checkNameAvailability?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOC0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"name\": \"TestGroup1\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\"\r\n}",
       "RequestHeaders": {
@@ -13,14 +13,14 @@
           "91"
         ],
         "x-ms-client-request-id": [
-          "d15110a7-c363-4493-9223-b692ba337587"
+          "f9bdfd4d-53c4-4927-bacf-fa2ae8005afe"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.0.0.0"
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.2.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"The group with the specified name already exists\"\r\n}",
@@ -35,7 +35,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 10 May 2018 00:25:23 GMT"
+          "Tue, 22 May 2018 02:37:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -51,16 +51,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
-          "1192"
+          "1197"
         ],
         "x-ms-request-id": [
-          "eastus:d55e7bda-8001-4aa6-9bb2-570d50d35287"
+          "eastus:c70edb6b-b2c7-4df2-8862-0ff8ad92f817"
         ],
         "x-ba-restapi": [
-          "1.0.3.758"
+          "1.0.3.787"
         ],
         "request-id": [
-          "2a99ac26-b2fd-4ff7-9a5e-00fe7a2666c1"
+          "57676c34-24af-4787-aabc-68cf58a19f9c"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -69,10 +69,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "689e8462-5543-45b2-8d66-cf17a6fb3c58"
+          "ae2b9b9a-4b95-446d-8e78-85f0ee55b37c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180510T002524Z:689e8462-5543-45b2-8d66-cf17a6fb3c58"
+          "NORTHEUROPE:20180522T023736Z:ae2b9b9a-4b95-446d-8e78-85f0ee55b37c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

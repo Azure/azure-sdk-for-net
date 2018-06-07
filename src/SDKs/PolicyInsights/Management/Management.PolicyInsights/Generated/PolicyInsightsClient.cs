@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             PolicyStates = new PolicyStatesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-12-12-preview";
+            ApiVersion = "2018-04-04";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

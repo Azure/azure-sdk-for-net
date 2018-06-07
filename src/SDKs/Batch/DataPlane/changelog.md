@@ -1,4 +1,12 @@
-# Azure.Batch release notes
+# Microsoft.Azure.Batch release notes
+
+## Change in 8.1.2
+Rename Nuget package name from Azure.Batch to Microsoft.Azure.Batch
+
+# Prior to version 8.1.2, this package was named "Azure.Batch" on Nuget. The release notes below are for that package.
+
+## Changes in 8.1.2
+Add deprecation announcement to nuget package.
 
 ## Changes in 8.1.1
 ### Bug fixes

@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
     {
             /// <summary>
             /// List management groups for the authenticated user.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -31,14 +30,19 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <param name='cacheControl'>
             /// Indicates that the request shouldn't utilize any caches.
             /// </param>
-            public static IPage<ManagementGroupInfo> List(this IManagementGroupsOperations operations, string cacheControl = "no-cache")
+            /// <param name='skiptoken'>
+            /// Page continuation token is only used if a previous operation returned a
+            /// partial result. If a previous response contains a nextLink element, the
+            /// value of the nextLink element will include a token parameter that specifies
+            /// a starting point to use for subsequent calls.
+            /// </param>
+            public static IPage<ManagementGroupInfo> List(this IManagementGroupsOperations operations, string cacheControl = "no-cache", string skiptoken = default(string))
             {
-                return operations.ListAsync(cacheControl).GetAwaiter().GetResult();
+                return operations.ListAsync(cacheControl, skiptoken).GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// List management groups for the authenticated user.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -46,12 +50,18 @@ namespace Microsoft.Azure.Management.ManagementGroups
             /// <param name='cacheControl'>
             /// Indicates that the request shouldn't utilize any caches.
             /// </param>
+            /// <param name='skiptoken'>
+            /// Page continuation token is only used if a previous operation returned a
+            /// partial result. If a previous response contains a nextLink element, the
+            /// value of the nextLink element will include a token parameter that specifies
+            /// a starting point to use for subsequent calls.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ManagementGroupInfo>> ListAsync(this IManagementGroupsOperations operations, string cacheControl = "no-cache", CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ManagementGroupInfo>> ListAsync(this IManagementGroupsOperations operations, string cacheControl = "no-cache", string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(cacheControl, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(cacheControl, skiptoken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -59,7 +69,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// Get the details of the management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,7 +100,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// Get the details of the management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -128,11 +136,9 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Create or update a management group.
-            /// If a management group is already created and a subsequent create request is
-            /// issued with different properties, the management group properties will be
-            /// updated.
-            ///
+            /// Create or update a management group. If a management group is already
+            /// created and a subsequent create request is issued with different
+            /// properties, the management group properties will be updated.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,11 +158,9 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Create or update a management group.
-            /// If a management group is already created and a subsequent create request is
-            /// issued with different properties, the management group properties will be
-            /// updated.
-            ///
+            /// Create or update a management group. If a management group is already
+            /// created and a subsequent create request is issued with different
+            /// properties, the management group properties will be updated.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -183,7 +187,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// Update a management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -204,7 +207,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// Update a management group.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -230,9 +232,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Delete management group.
-            /// If a management group contains child resources, the request will fail.
-            ///
+            /// Delete management group. If a management group contains child resources,
+            /// the request will fail.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -249,9 +250,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Delete management group.
-            /// If a management group contains child resources, the request will fail.
-            ///
+            /// Delete management group. If a management group contains child resources,
+            /// the request will fail.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -274,11 +274,9 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Create or update a management group.
-            /// If a management group is already created and a subsequent create request is
-            /// issued with different properties, the management group properties will be
-            /// updated.
-            ///
+            /// Create or update a management group. If a management group is already
+            /// created and a subsequent create request is issued with different
+            /// properties, the management group properties will be updated.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -298,11 +296,9 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Create or update a management group.
-            /// If a management group is already created and a subsequent create request is
-            /// issued with different properties, the management group properties will be
-            /// updated.
-            ///
+            /// Create or update a management group. If a management group is already
+            /// created and a subsequent create request is issued with different
+            /// properties, the management group properties will be updated.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -328,9 +324,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Delete management group.
-            /// If a management group contains child resources, the request will fail.
-            ///
+            /// Delete management group. If a management group contains child resources,
+            /// the request will fail.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -347,9 +342,8 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
 
             /// <summary>
-            /// Delete management group.
-            /// If a management group contains child resources, the request will fail.
-            ///
+            /// Delete management group. If a management group contains child resources,
+            /// the request will fail.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -373,7 +367,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// List management groups for the authenticated user.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -391,7 +384,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
 
             /// <summary>
             /// List management groups for the authenticated user.
-            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -14,9 +14,7 @@ namespace Compute.Tests
 {
     public class VMDataDiskTests : VMTestBase
     {
-        [Fact(Skip = "ReRecord due to CR change")]
-        [Trait("Failure", "Unable Match Http")]
-        [Trait("Failure", "New Unable Match Http")]
+        [Fact]
         public void TestVMDataDiskScenario()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

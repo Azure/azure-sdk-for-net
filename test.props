@@ -1,22 +1,3 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
-		<NugetCommonProfileTags/>
-		<PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
-		<AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
-		<AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
-		<SkipBuildingTestProject>false</SkipBuildingTestProject>
-		<SignAssembly>true</SignAssembly>
-		<DelaySign>true</DelaySign>
-		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-	</PropertyGroup>
-	<ItemGroup>  
-		<PackageReference Include="xunit" Version="2.3.1" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-	</ItemGroup>
-	<ItemGroup> 
-	   <Compile Include="$(LibraryToolsFolder)\DisableTestRunParallel.cs" Link="DisableTestRunParallel.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" /> 
-	</ItemGroup>
+	<Import Project="$(NetSdkBuildTargetsDir)\core\_test.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_test.props') "/>
 </Project>

@@ -23,9 +23,8 @@ namespace Compute.Tests
         /// Delete Image
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestImageOperations")]
-        [Trait("Failure", "Password policy")]
         public void TestImageOperations()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
@@ -94,7 +93,7 @@ namespace Compute.Tests
                     // Create the Image
                     var imageInput = new Image()
                     {
-                        Location = ComputeManagementTestUtilities.DefaultLocation,
+                        Location = m_location,
                         Tags = new Dictionary<string, string>()
                         {
                             {"RG", "rg"},
@@ -125,6 +124,18 @@ namespace Compute.Tests
 
                     ValidateImage(imageInput, getImage);
 
+                    ImageUpdate updateParams = new ImageUpdate()
+                    {
+                        Tags = getImage.Tags
+                    };
+
+                    string tagKey = "UpdateTag";
+                    updateParams.Tags.Add(tagKey, "TagValue");
+                    m_CrpClient.Images.Update(rgName, imageName, updateParams);
+
+                    getImage = m_CrpClient.Images.Get(rgName, imageName);
+                    Assert.True(getImage.Tags.ContainsKey(tagKey));
+
                     var listResponse = m_CrpClient.Images.ListByResourceGroup(rgName);
                     Assert.Single(listResponse);
 
@@ -132,13 +143,13 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     if (inputVM != null)
                     {
                         m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                     }
 
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                 }
             }
         }

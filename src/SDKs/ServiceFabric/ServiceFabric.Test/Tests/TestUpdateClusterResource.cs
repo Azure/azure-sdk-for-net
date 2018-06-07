@@ -30,6 +30,10 @@ namespace ServiceFabric.Tests.Tests
                     {
                         var res = resources.First();
                         var cluster = serviceFabricClient.Clusters.Get(rg.Name, res.Name);
+                        if (!cluster.ClusterState.Equals("ready", StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
 
                         serviceFabricClient.Clusters.Update(rg.Name, res.Name,
                             new ClusterUpdateParameters()

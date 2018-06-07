@@ -31,7 +31,7 @@ $repoRoot = "$PSScriptRoot\..\..\..\..\.."
 $generateFolder = "$PSScriptRoot\Generated"
 $sharedGenerateFolder = "$generateFolder\..\..\Microsoft.Azure.Search.Common\Generated"
 
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File "$repoRoot\tools\generateTool.ps1" -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Service" -PowershellInvoker  -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch
+Start-AutoRestCodeGeneration -ResourceProvider "search/data-plane/Microsoft.Azure.Search.Service" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch
 
 Write-Output "Deleting extra files and cleaning up..."
 
