@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.IotHub
         public IotHubClient Client { get; private set; }
 
         /// <summary>
-        /// Get the non-security related metadata of an IoT hub.
+        /// Get the non-security related metadata of an IoT hub
         /// </summary>
         /// <remarks>
         /// Get the non-security related metadata of an IoT hub.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Delete an IoT hub.
+        /// Delete an IoT hub
         /// </summary>
         /// <remarks>
         /// Delete an IoT hub.
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a subscription.
+        /// Get all the IoT hubs in a subscription
         /// </summary>
         /// <remarks>
         /// Get all the IoT hubs in a subscription.
@@ -510,7 +510,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a resource group.
+        /// Get all the IoT hubs in a resource group
         /// </summary>
         /// <remarks>
         /// Get all the IoT hubs in a resource group.
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get the statistics from an IoT hub.
+        /// Get the statistics from an IoT hub
         /// </summary>
         /// <remarks>
         /// Get the statistics from an IoT hub.
@@ -889,7 +889,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get the list of valid SKUs for an IoT hub.
+        /// Get the list of valid SKUs for an IoT hub
         /// </summary>
         /// <remarks>
         /// Get the list of valid SKUs for an IoT hub.
@@ -1084,7 +1084,7 @@ namespace Microsoft.Azure.Management.IotHub
 
         /// <summary>
         /// Get a list of the consumer groups in the Event Hub-compatible
-        /// device-to-cloud endpoint in an IoT hub.
+        /// device-to-cloud endpoint in an IoT hub
         /// </summary>
         /// <remarks>
         /// Get a list of the consumer groups in the Event Hub-compatible
@@ -1289,7 +1289,7 @@ namespace Microsoft.Azure.Management.IotHub
 
         /// <summary>
         /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
-        /// for an IoT hub.
+        /// for an IoT hub
         /// </summary>
         /// <remarks>
         /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
@@ -1502,7 +1502,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
+        /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub
         /// </summary>
         /// <remarks>
         /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
@@ -1714,8 +1714,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
-        /// hub.
+        /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT hub
         /// </summary>
         /// <remarks>
         /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
@@ -1908,7 +1907,7 @@ namespace Microsoft.Azure.Management.IotHub
 
         /// <summary>
         /// Get a list of all the jobs in an IoT hub. For more information, see:
-        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
         /// </summary>
         /// <remarks>
         /// Get a list of all the jobs in an IoT hub. For more information, see:
@@ -2104,7 +2103,7 @@ namespace Microsoft.Azure.Management.IotHub
 
         /// <summary>
         /// Get the details of a job from an IoT hub. For more information, see:
-        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
         /// </summary>
         /// <remarks>
         /// Get the details of a job from an IoT hub. For more information, see:
@@ -2308,7 +2307,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get the quota metrics for an IoT hub.
+        /// Get the quota metrics for an IoT hub
         /// </summary>
         /// <remarks>
         /// Get the quota metrics for an IoT hub.
@@ -2502,7 +2501,199 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Check if an IoT hub name is available.
+        /// Get the health for routing endpoints
+        /// </summary>
+        /// <remarks>
+        /// Get the health for routing endpoints.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='iotHubName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<EndpointHealthData>>> GetEndpointHealthWithHttpMessagesAsync(string resourceGroupName, string iotHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (iotHubName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "iotHubName");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("iotHubName", iotHubName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetEndpointHealth", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routingEndpointsHealth").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{iotHubName}", System.Uri.EscapeDataString(iotHubName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorDetailsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorDetails _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorDetails>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<EndpointHealthData>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EndpointHealthData>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Check if an IoT hub name is available
         /// </summary>
         /// <remarks>
         /// Check if an IoT hub name is available.
@@ -2697,8 +2888,428 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
+        /// Test all routes
+        /// </summary>
+        /// <remarks>
+        /// Test all routes configured in this Iot Hub
+        /// </remarks>
+        /// <param name='input'>
+        /// Input for testing all routes
+        /// </param>
+        /// <param name='iotHubName'>
+        /// IotHub to be tested
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// resource group which Iot Hub belongs to
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<TestAllRoutesResult>> TestAllRoutesWithHttpMessagesAsync(TestAllRoutesInput input, string iotHubName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (input == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "input");
+            }
+            if (iotHubName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "iotHubName");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("input", input);
+                tracingParameters.Add("iotHubName", iotHubName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "TestAllRoutes", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routing/routes/$testall").ToString();
+            _url = _url.Replace("{iotHubName}", System.Uri.EscapeDataString(iotHubName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(input != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(input, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorDetailsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorDetails _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorDetails>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<TestAllRoutesResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TestAllRoutesResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Test the new route
+        /// </summary>
+        /// <remarks>
+        /// Test the new route for this Iot Hub
+        /// </remarks>
+        /// <param name='input'>
+        /// Route that needs to be tested
+        /// </param>
+        /// <param name='iotHubName'>
+        /// IotHub to be tested
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// resource group which Iot Hub belongs to
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<TestRouteResult>> TestRouteWithHttpMessagesAsync(TestRouteInput input, string iotHubName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (input == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "input");
+            }
+            if (input != null)
+            {
+                input.Validate();
+            }
+            if (iotHubName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "iotHubName");
+            }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("input", input);
+                tracingParameters.Add("iotHubName", iotHubName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "TestRoute", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{iotHubName}/routing/routes/$testnew").ToString();
+            _url = _url.Replace("{iotHubName}", System.Uri.EscapeDataString(iotHubName));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(input != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(input, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorDetailsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorDetails _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorDetails>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<TestRouteResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<TestRouteResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Get the security metadata for an IoT hub. For more information, see:
-        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
         /// </summary>
         /// <remarks>
         /// Get the security metadata for an IoT hub. For more information, see:
@@ -2894,7 +3505,7 @@ namespace Microsoft.Azure.Management.IotHub
 
         /// <summary>
         /// Get a shared access policy by name from an IoT hub. For more information,
-        /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+        /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
         /// </summary>
         /// <remarks>
         /// Get a shared access policy by name from an IoT hub. For more information,
@@ -3100,7 +3711,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <summary>
         /// Exports all the device identities in the IoT hub identity registry to an
         /// Azure Storage blob container. For more information, see:
-        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
         /// </summary>
         /// <remarks>
         /// Exports all the device identities in the IoT hub identity registry to an
@@ -3316,7 +3927,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <summary>
         /// Import, update, or delete device identities in the IoT hub identity
         /// registry from a blob. For more information, see:
-        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
         /// </summary>
         /// <remarks>
         /// Import, update, or delete device identities in the IoT hub identity
@@ -3990,7 +4601,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Delete an IoT hub.
+        /// Delete an IoT hub
         /// </summary>
         /// <remarks>
         /// Delete an IoT hub.
@@ -4220,7 +4831,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a subscription.
+        /// Get all the IoT hubs in a subscription
         /// </summary>
         /// <remarks>
         /// Get all the IoT hubs in a subscription.
@@ -4391,7 +5002,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get all the IoT hubs in a resource group.
+        /// Get all the IoT hubs in a resource group
         /// </summary>
         /// <remarks>
         /// Get all the IoT hubs in a resource group.
@@ -4562,7 +5173,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get the list of valid SKUs for an IoT hub.
+        /// Get the list of valid SKUs for an IoT hub
         /// </summary>
         /// <remarks>
         /// Get the list of valid SKUs for an IoT hub.
@@ -4734,7 +5345,7 @@ namespace Microsoft.Azure.Management.IotHub
 
         /// <summary>
         /// Get a list of the consumer groups in the Event Hub-compatible
-        /// device-to-cloud endpoint in an IoT hub.
+        /// device-to-cloud endpoint in an IoT hub
         /// </summary>
         /// <remarks>
         /// Get a list of the consumer groups in the Event Hub-compatible
@@ -4907,7 +5518,7 @@ namespace Microsoft.Azure.Management.IotHub
 
         /// <summary>
         /// Get a list of all the jobs in an IoT hub. For more information, see:
-        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
         /// </summary>
         /// <remarks>
         /// Get a list of all the jobs in an IoT hub. For more information, see:
@@ -5079,7 +5690,7 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
-        /// Get the quota metrics for an IoT hub.
+        /// Get the quota metrics for an IoT hub
         /// </summary>
         /// <remarks>
         /// Get the quota metrics for an IoT hub.
@@ -5250,8 +5861,179 @@ namespace Microsoft.Azure.Management.IotHub
         }
 
         /// <summary>
+        /// Get the health for routing endpoints
+        /// </summary>
+        /// <remarks>
+        /// Get the health for routing endpoints.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<EndpointHealthData>>> GetEndpointHealthNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (nextPageLink == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextPageLink", nextPageLink);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetEndpointHealthNext", tracingParameters);
+            }
+            // Construct URL
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
+            List<string> _queryParameters = new List<string>();
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorDetailsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorDetails _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorDetails>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<EndpointHealthData>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EndpointHealthData>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Get the security metadata for an IoT hub. For more information, see:
-        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+        /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
         /// </summary>
         /// <remarks>
         /// Get the security metadata for an IoT hub. For more information, see:
