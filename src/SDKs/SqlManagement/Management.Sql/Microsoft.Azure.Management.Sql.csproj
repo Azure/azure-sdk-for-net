@@ -12,7 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for using sever level rule in vulnerability assessemtn baseline operations.
+- Added support for using sever level rule in vulnerability assessment baseline operations.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
