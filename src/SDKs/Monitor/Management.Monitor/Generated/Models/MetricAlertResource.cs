@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// resolved.</param>
         /// <param name="lastUpdatedTime">Last time the rule was updated in
         /// ISO8601 format.</param>
-        public MetricAlertResource(string location, string description, int severity, bool enabled, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, MetricAlertCriteria criteria, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> scopes = default(IList<string>), bool? autoMitigate = default(bool?), IList<Action> actions = default(IList<Action>), System.DateTime? lastUpdatedTime = default(System.DateTime?))
+        public MetricAlertResource(string location, string description, int severity, bool enabled, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, MetricAlertCriteria criteria, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> scopes = default(IList<string>), bool? autoMitigate = default(bool?), IList<MetricAlertAction> actions = default(IList<MetricAlertAction>), System.DateTime? lastUpdatedTime = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
             Description = description;
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// rule becomes active, and when an alert condition is resolved.
         /// </summary>
         [JsonProperty(PropertyName = "properties.actions")]
-        public IList<Action> Actions { get; set; }
+        public IList<MetricAlertAction> Actions { get; set; }
 
         /// <summary>
         /// Gets last time the rule was updated in ISO8601 format.

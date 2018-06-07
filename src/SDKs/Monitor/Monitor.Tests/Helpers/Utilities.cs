@@ -679,7 +679,7 @@ namespace Monitor.Tests.Helpers
             }
         }
 
-        public static void AreEqual(IList<Microsoft.Azure.Management.Monitor.Models.Action> exp, IList<Microsoft.Azure.Management.Monitor.Models.Action> act)
+        public static void AreEqual(IList<MetricAlertAction> exp, IList<MetricAlertAction> act)
         {
             if(exp != null)
             {
@@ -694,7 +694,7 @@ namespace Monitor.Tests.Helpers
             }
         }
 
-        public static void AreEqual(Microsoft.Azure.Management.Monitor.Models.Action exp, Microsoft.Azure.Management.Monitor.Models.Action act)
+        public static void AreEqual(MetricAlertAction exp, MetricAlertAction act)
         {
             if(exp != null)
             {

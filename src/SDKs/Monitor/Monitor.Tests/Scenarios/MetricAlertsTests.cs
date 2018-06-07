@@ -98,9 +98,9 @@ namespace Monitor.Tests.Scenarios
                     evaluationFrequency: new TimeSpan(hours: 0, minutes: 15, seconds: 0),
                     windowSize: new TimeSpan(hours: 0, minutes: 15, seconds: 0),
                     criteria: metricCriteria,
-                    actions: new List<Microsoft.Azure.Management.Monitor.Models.Action>()
+                    actions: new List<MetricAlertAction>()
                     {
-                        new Microsoft.Azure.Management.Monitor.Models.Action()
+                        new MetricAlertAction()
                         {
                             ActionGroupId = "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup"
                         }

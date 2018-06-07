@@ -154,9 +154,9 @@ namespace Monitor.Tests.BasicTests
                     evaluationFrequency: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
                     windowSize: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
                     criteria: GetSampleMetricCriteria(),
-                    actions: new List<Microsoft.Azure.Management.Monitor.Models.Action>()
+                    actions: new List<MetricAlertAction>()
                     {
-                        new Microsoft.Azure.Management.Monitor.Models.Action()
+                        new MetricAlertAction()
                         {
                             ActionGroupId = "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/custommetricdemo/providers/microsoft.insights/actiongroups/scactiongroup"
                         }
@@ -181,9 +181,9 @@ namespace Monitor.Tests.BasicTests
                     evaluationFrequency: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
                     windowSize: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
                     criteria: metricCriteria,
-                    actions: new List<Microsoft.Azure.Management.Monitor.Models.Action>()
+                    actions: new List<MetricAlertAction>()
                     {
-                        new Microsoft.Azure.Management.Monitor.Models.Action()
+                        new MetricAlertAction()
                         {
                             ActionGroupId = "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/custommetricdemo/providers/microsoft.insights/actiongroups/scactiongroup"
                         }
