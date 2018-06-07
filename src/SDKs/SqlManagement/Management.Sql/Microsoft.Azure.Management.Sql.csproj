@@ -7,14 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.16.0-preview</Version>
+		<Version>1.17.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for backup short term retention policies.
-- Added support for database Vulnerability Assessment.
-- Adding support for Elastic Jobs (JobAgent, JobCredential, JobTargetGroup, Job, JobStep, and JobExecution)
+- Added support for using sever level rule in vulnerability assessemtn baseline operations.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
