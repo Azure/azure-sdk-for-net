@@ -25,18 +25,16 @@ namespace Microsoft.Azure.Management.ManagementGroups
     {
         /// <summary>
         /// List management groups for the authenticated user.
-        ///
         /// </summary>
         /// <param name='cacheControl'>
         /// Indicates that the request shouldn't utilize any caches.
         /// </param>
         /// <param name='skiptoken'>
         /// Page continuation token is only used if a previous operation
-        /// returned a partial result.
-        /// If a previous response contains a nextLink element, the value of
-        /// the nextLink element will include a token parameter that specifies
-        /// a starting point to use for subsequent calls.
-        ///
+        /// returned a partial result. If a previous response contains a
+        /// nextLink element, the value of the nextLink element will include a
+        /// token parameter that specifies a starting point to use for
+        /// subsequent calls.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,7 +54,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
         Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListWithHttpMessagesAsync(string cacheControl = "no-cache", string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the details of the management group.
-        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -68,7 +65,12 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// </param>
         /// <param name='recurse'>
         /// The $recurse=true query string parameter allows clients to request
-        /// inclusion of entire hierarchy in the response payload.
+        /// inclusion of entire hierarchy in the response payload. Note that
+        /// $expand=children must be passed up if $recurse is set to true.
+        /// </param>
+        /// <param name='filter'>
+        /// A filter which allows the exclusion of subscriptions from results
+        /// (i.e. '$filter=children.childType ne Subscription')
         /// </param>
         /// <param name='cacheControl'>
         /// Indicates that the request shouldn't utilize any caches.
@@ -88,13 +90,12 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagementGroup>> GetWithHttpMessagesAsync(string groupId, string expand = default(string), bool? recurse = default(bool?), string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagementGroup>> GetWithHttpMessagesAsync(string groupId, string expand = default(string), bool? recurse = default(bool?), string filter = default(string), string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update a management group.
-        /// If a management group is already created and a subsequent create
-        /// request is issued with different properties, the management group
-        /// properties will be updated.
-        ///
+        /// Create or update a management group. If a management group is
+        /// already created and a subsequent create request is issued with
+        /// different properties, the management group properties will be
+        /// updated.
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -120,10 +121,66 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagementGroup>> CreateOrUpdateWithHttpMessagesAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> CreateOrUpdateWithHttpMessagesAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a management group.
-        ///
+        /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='patchGroupRequest'>
+        /// Management group patch parameters.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ManagementGroup>> UpdateWithHttpMessagesAsync(string groupId, PatchManagementGroupRequest patchGroupRequest, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete management group. If a management group contains child
+        /// resources, the request will fail.
+        /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='cacheControl'>
+        /// Indicates that the request shouldn't utilize any caches.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OperationResults>> DeleteWithHttpMessagesAsync(string groupId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create or update a management group. If a management group is
+        /// already created and a subsequent create request is issued with
+        /// different properties, the management group properties will be
+        /// updated.
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -149,12 +206,10 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ManagementGroup>> UpdateWithHttpMessagesAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> BeginCreateOrUpdateWithHttpMessagesAsync(string groupId, CreateManagementGroupRequest createManagementGroupRequest, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete management group.
-        /// If a management group contains child resources, the request will
-        /// fail.
-        ///
+        /// Delete management group. If a management group contains child
+        /// resources, the request will fail.
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -171,13 +226,15 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationResults>> BeginDeleteWithHttpMessagesAsync(string groupId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List management groups for the authenticated user.
-        ///
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

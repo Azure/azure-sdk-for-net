@@ -66,6 +66,11 @@ namespace Microsoft.Azure.Management.Compute
 
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        IOperations Operations { get; }
+
+        /// <summary>
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         IAvailabilitySetsOperations AvailabilitySets { get; }

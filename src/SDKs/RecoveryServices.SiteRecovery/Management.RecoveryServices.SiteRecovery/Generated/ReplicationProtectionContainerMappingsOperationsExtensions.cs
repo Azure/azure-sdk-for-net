@@ -227,6 +227,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Update protection container mapping.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update protection container mapping.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='mappingName'>
+            /// Protection container mapping name.
+            /// </param>
+            /// <param name='updateInput'>
+            /// Mapping update input.
+            /// </param>
+            public static ProtectionContainerMapping Update(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, UpdateProtectionContainerMappingInput updateInput)
+            {
+                return operations.UpdateAsync(fabricName, protectionContainerName, mappingName, updateInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update protection container mapping.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update protection container mapping.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='mappingName'>
+            /// Protection container mapping name.
+            /// </param>
+            /// <param name='updateInput'>
+            /// Mapping update input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProtectionContainerMapping> UpdateAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, UpdateProtectionContainerMappingInput updateInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, updateInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Remove protection container mapping.
             /// </summary>
             /// <remarks>
@@ -420,6 +478,64 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task BeginPurgeAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginPurgeWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Update protection container mapping.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update protection container mapping.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='mappingName'>
+            /// Protection container mapping name.
+            /// </param>
+            /// <param name='updateInput'>
+            /// Mapping update input.
+            /// </param>
+            public static ProtectionContainerMapping BeginUpdate(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, UpdateProtectionContainerMappingInput updateInput)
+            {
+                return operations.BeginUpdateAsync(fabricName, protectionContainerName, mappingName, updateInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update protection container mapping.
+            /// </summary>
+            /// <remarks>
+            /// The operation to update protection container mapping.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='mappingName'>
+            /// Protection container mapping name.
+            /// </param>
+            /// <param name='updateInput'>
+            /// Mapping update input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ProtectionContainerMapping> BeginUpdateAsync(this IReplicationProtectionContainerMappingsOperations operations, string fabricName, string protectionContainerName, string mappingName, UpdateProtectionContainerMappingInput updateInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(fabricName, protectionContainerName, mappingName, updateInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

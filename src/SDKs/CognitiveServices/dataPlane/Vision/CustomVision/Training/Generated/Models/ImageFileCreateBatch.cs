@@ -42,12 +42,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Images")]
+        [JsonProperty(PropertyName = "images")]
         public IList<ImageFileCreateEntry> Images { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "TagIds")]
+        [JsonProperty(PropertyName = "tagIds")]
         public IList<System.Guid> TagIds { get; set; }
 
     }

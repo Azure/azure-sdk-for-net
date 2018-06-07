@@ -28,10 +28,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageIdCreateEntry class.
         /// </summary>
-        public ImageIdCreateEntry(System.Guid id = default(System.Guid), IList<System.Guid> tagIds = default(IList<System.Guid>))
+        public ImageIdCreateEntry(System.Guid id = default(System.Guid), IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
         {
             Id = id;
             TagIds = tagIds;
+            Regions = regions;
             CustomInit();
         }
 
@@ -42,13 +43,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "Id")]
+        [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "TagIds")]
+        [JsonProperty(PropertyName = "tagIds")]
         public IList<System.Guid> TagIds { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "regions")]
+        public IList<Region> Regions { get; set; }
 
     }
 }

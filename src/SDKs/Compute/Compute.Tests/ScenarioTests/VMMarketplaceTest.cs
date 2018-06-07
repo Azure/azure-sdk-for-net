@@ -25,7 +25,6 @@ namespace Compute.Tests
         }
 
         [Fact]
-        [Trait("Failure", "New Unable Match Http")]
         public void TestVMMarketplace()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -95,8 +94,6 @@ namespace Compute.Tests
         }
 
         [Fact]
-        [Trait("Failure", "Password policy")]
-        [Trait("Failure", "New Unable Match Http")]
         public void TestVMBYOL()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

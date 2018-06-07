@@ -43,6 +43,31 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </exception>
         Task<AzureOperationResponse<IPage<Factory>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates a factory's repo information.
+        /// </summary>
+        /// <param name='locationId'>
+        /// The location identifier.
+        /// </param>
+        /// <param name='factoryRepoUpdate'>
+        /// Update factory repo request definition.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Factory>> ConfigureFactoryRepoWithHttpMessagesAsync(string locationId, FactoryRepoUpdate factoryRepoUpdate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists factories.
         /// </summary>
         /// <param name='resourceGroupName'>

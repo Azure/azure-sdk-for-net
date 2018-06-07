@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/text/analytics/v2.0/entities",
+      "EncodedRequestUri": "L3RleHQvYW5hbHl0aWNzL3YyLjAvZW50aXRpZXM=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"documents\": [\r\n    {\r\n      \"language\": \"en\",\r\n      \"id\": \"id\",\r\n      \"text\": \"Microsoft released Windows 10\"\r\n    }\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "123"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.CognitiveServices.Language.TextAnalytics.TextAnalyticsAPI/1.0.0"
+        ]
+      },
+      "ResponseBody": "{ \"documents\": [{\"id\": \"1\", \"entities\": [ { \"name\": \"Windows 10\", \"matches\": [ { \"text\": \"Windows 10\", \"offset\": 19, \"length\": 10 } ], \"wikipediaLanguage\": \"en\", \"wikipediaId\": \"Windows 10\", \"wikipediaUrl\": \"https://en.wikipedia.org/wiki/Windows_10\", \"bingId\": \"5f9fbd03-49c4-39ef-cc95-de83ab897b94\" }, { \"name\": \"Microsoft\", \"matches\": [ { \"text\": \"Microsoft\", \"offset\": 0, \"length\": 9 } ], \"wikipediaLanguage\": \"en\", \"wikipediaId\": \"Microsoft\", \"wikipediaUrl\": \"https://en.wikipedia.org/wiki/Microsoft\", \"bingId\": \"a093e9b9-90f5-a3d5-c4b8-5855e1b01f85\" } ] }\r\n  ],\r\n  \"errors\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Date": [
+          "Wed, 30 Aug 2017 02:11:17 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "x-ms-transaction-count": [
+          "1"
+        ],
+        "x-aml-ta-request-id": [
+          "460baaca-7f57-42c1-8cc7-8852957d05b9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "apim-request-id": [
+          "3f09b1c9-fe3b-46bb-badf-98108c599825"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

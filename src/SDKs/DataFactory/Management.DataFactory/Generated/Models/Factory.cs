@@ -48,7 +48,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="createTime">Time the factory was created in ISO8601
         /// format.</param>
         /// <param name="version">Version of the factory.</param>
-        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string))
+        /// <param name="vstsConfiguration">VSTS repo information of the
+        /// factory.</param>
+        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string), FactoryVSTSConfiguration vstsConfiguration = default(FactoryVSTSConfiguration))
             : base(id, name, type, location, tags)
         {
             AdditionalProperties = additionalProperties;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ProvisioningState = provisioningState;
             CreateTime = createTime;
             Version = version;
+            VstsConfiguration = vstsConfiguration;
             CustomInit();
         }
 
@@ -94,6 +97,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; private set; }
+
+        /// <summary>
+        /// Gets or sets VSTS repo information of the factory.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vstsConfiguration")]
+        public FactoryVSTSConfiguration VstsConfiguration { get; set; }
 
     }
 }

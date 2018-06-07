@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// which only appears in the response.</param>
         /// <param name="lastModifiedBy">lastModifiedBy property, which only
         /// appears in the response.</param>
-        public SoftwareUpdateConfigurationMachineRun(string name = default(string), string id = default(string), string targetComputer = default(string), string targetComputerType = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string osType = default(string), System.Guid? correlationId = default(System.Guid?), System.Guid? sourceComputerId = default(System.Guid?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string configuredDuration = default(string), JobNavigation job = default(JobNavigation), System.DateTime? creationTime = default(System.DateTime?), string createdBy = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), string lastModifiedBy = default(string))
+        public SoftwareUpdateConfigurationMachineRun(string name = default(string), string id = default(string), string targetComputer = default(string), string targetComputerType = default(string), UpdateConfigurationNavigation softwareUpdateConfiguration = default(UpdateConfigurationNavigation), string status = default(string), string osType = default(string), System.Guid? correlationId = default(System.Guid?), System.Guid? sourceComputerId = default(System.Guid?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string configuredDuration = default(string), JobNavigation job = default(JobNavigation), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string))
         {
             Name = name;
             Id = id;
@@ -155,13 +155,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets start time of the software update configuration machine run.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
-        public System.DateTime? StartTime { get; private set; }
+        public System.DateTimeOffset StartTime { get; private set; }
 
         /// <summary>
         /// Gets end time of the software update configuration machine run.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endTime")]
-        public System.DateTime? EndTime { get; private set; }
+        public System.DateTimeOffset? EndTime { get; private set; }
 
         /// <summary>
         /// Gets configured duration for the software update configuration run.
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets createdBy property, which only appears in the response.
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets lastModifiedBy property, which only appears in the response.

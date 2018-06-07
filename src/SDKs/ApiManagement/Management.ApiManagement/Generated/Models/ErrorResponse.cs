@@ -10,14 +10,17 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Error Body contract.
+    /// Error Response.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ErrorResponse
     {
         /// <summary>
@@ -55,20 +58,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets service-defined error code. This code serves as a
         /// sub-status for the HTTP error code specified in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [JsonProperty(PropertyName = "error.code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets human-readable representation of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [JsonProperty(PropertyName = "error.message")]
         public string Message { get; set; }
 
         /// <summary>
         /// Gets or sets the list of invalid fields send in request, in case of
         /// validation error.
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
+        [JsonProperty(PropertyName = "error.details")]
         public IList<ErrorFieldContract> Details { get; set; }
 
     }

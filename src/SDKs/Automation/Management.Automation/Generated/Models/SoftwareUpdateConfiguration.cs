@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// which only appears in the response.</param>
         /// <param name="lastModifiedBy">lastModifiedBy property, which only
         /// appears in the response.</param>
-        public SoftwareUpdateConfiguration(UpdateConfiguration updateConfiguration, ScheduleProperties scheduleInfo, string name = default(string), string id = default(string), string type = default(string), string provisioningState = default(string), ErrorResponse error = default(ErrorResponse), System.DateTime? creationTime = default(System.DateTime?), string createdBy = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), string lastModifiedBy = default(string))
+        public SoftwareUpdateConfiguration(UpdateConfiguration updateConfiguration, ScheduleProperties scheduleInfo, string name = default(string), string id = default(string), string type = default(string), string provisioningState = default(string), ErrorResponse error = default(ErrorResponse), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string createdBy = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string))
         {
             Name = name;
             Id = id;
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets createdBy property, which only appears in the response.
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets lastModifiedBy property, which only appears in the response.

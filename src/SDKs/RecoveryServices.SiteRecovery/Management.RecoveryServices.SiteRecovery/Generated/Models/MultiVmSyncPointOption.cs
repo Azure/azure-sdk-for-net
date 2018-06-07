@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for MultiVmSyncPointOption.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MultiVmSyncPointOption
+    public static class MultiVmSyncPointOption
     {
-        [EnumMember(Value = "UseMultiVmSyncRecoveryPoint")]
-        UseMultiVmSyncRecoveryPoint,
-        [EnumMember(Value = "UsePerVmRecoveryPoint")]
-        UsePerVmRecoveryPoint
-    }
-    internal static class MultiVmSyncPointOptionEnumExtension
-    {
-        internal static string ToSerializedValue(this MultiVmSyncPointOption? value)
-        {
-            return value == null ? null : ((MultiVmSyncPointOption)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this MultiVmSyncPointOption value)
-        {
-            switch( value )
-            {
-                case MultiVmSyncPointOption.UseMultiVmSyncRecoveryPoint:
-                    return "UseMultiVmSyncRecoveryPoint";
-                case MultiVmSyncPointOption.UsePerVmRecoveryPoint:
-                    return "UsePerVmRecoveryPoint";
-            }
-            return null;
-        }
-
-        internal static MultiVmSyncPointOption? ParseMultiVmSyncPointOption(this string value)
-        {
-            switch( value )
-            {
-                case "UseMultiVmSyncRecoveryPoint":
-                    return MultiVmSyncPointOption.UseMultiVmSyncRecoveryPoint;
-                case "UsePerVmRecoveryPoint":
-                    return MultiVmSyncPointOption.UsePerVmRecoveryPoint;
-            }
-            return null;
-        }
+        public const string UseMultiVmSyncRecoveryPoint = "UseMultiVmSyncRecoveryPoint";
+        public const string UsePerVmRecoveryPoint = "UsePerVmRecoveryPoint";
     }
 }

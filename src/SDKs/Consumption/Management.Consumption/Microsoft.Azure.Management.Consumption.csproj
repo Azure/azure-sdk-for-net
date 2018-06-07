@@ -6,7 +6,7 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Consumption</PackageId>
         <Description>Microsoft Azure Consumption Management Library</Description>
-        <VersionPrefix>3.0.0</VersionPrefix>    
+        <VersionPrefix>3.0.1</VersionPrefix>    
         <AssemblyName>Microsoft.Azure.Management.Consumption</AssemblyName>    
         <PackageTags>Consumptionmanagement;Consumption;</PackageTags>
       <PackageReleaseNotes>

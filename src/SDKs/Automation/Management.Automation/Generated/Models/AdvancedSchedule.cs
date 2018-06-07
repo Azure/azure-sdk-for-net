@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// execute on. Must be between 1 and 31.</param>
         /// <param name="monthlyOccurrences">Occurrences of days within a
         /// month.</param>
-        public AdvancedSchedule(IList<string> weekDays = default(IList<string>), IList<int?> monthDays = default(IList<int?>), IList<AdvancedScheduleMonthlyOccurrence> monthlyOccurrences = default(IList<AdvancedScheduleMonthlyOccurrence>))
+        public AdvancedSchedule(IList<string> weekDays = default(IList<string>), IList<int> monthDays = default(IList<int>), IList<AdvancedScheduleMonthlyOccurrence> monthlyOccurrences = default(IList<AdvancedScheduleMonthlyOccurrence>))
         {
             WeekDays = weekDays;
             MonthDays = monthDays;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// be between 1 and 31.
         /// </summary>
         [JsonProperty(PropertyName = "monthDays")]
-        public IList<int?> MonthDays { get; set; }
+        public IList<int> MonthDays { get; set; }
 
         /// <summary>
         /// Gets or sets occurrences of days within a month.

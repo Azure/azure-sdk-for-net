@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// AgentRegistrationRegenerateKeyParameter class.
         /// </summary>
         /// <param name="keyName">Gets or sets the agent registration key name
-        /// - Primary or Secondary. Possible values include: 'Primary',
-        /// 'Secondary'</param>
+        /// - primary or secondary. Possible values include: 'primary',
+        /// 'secondary'</param>
         /// <param name="name">Gets or sets the name of the resource.</param>
         /// <param name="location">Gets or sets the location of the
         /// resource.</param>
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the agent registration key name - Primary or
-        /// Secondary. Possible values include: 'Primary', 'Secondary'
+        /// Gets or sets the agent registration key name - primary or
+        /// secondary. Possible values include: 'primary', 'secondary'
         /// </summary>
         [JsonProperty(PropertyName = "keyName")]
         public string KeyName { get; set; }

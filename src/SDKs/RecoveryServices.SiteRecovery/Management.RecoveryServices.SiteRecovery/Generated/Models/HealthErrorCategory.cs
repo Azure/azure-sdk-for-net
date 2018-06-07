@@ -10,75 +10,18 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for HealthErrorCategory.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum HealthErrorCategory
+    public static class HealthErrorCategory
     {
-        [EnumMember(Value = "None")]
-        None,
-        [EnumMember(Value = "Replication")]
-        Replication,
-        [EnumMember(Value = "TestFailover")]
-        TestFailover,
-        [EnumMember(Value = "Configuration")]
-        Configuration,
-        [EnumMember(Value = "FabricInfrastructure")]
-        FabricInfrastructure,
-        [EnumMember(Value = "VersionExpiry")]
-        VersionExpiry
-    }
-    internal static class HealthErrorCategoryEnumExtension
-    {
-        internal static string ToSerializedValue(this HealthErrorCategory? value)
-        {
-            return value == null ? null : ((HealthErrorCategory)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this HealthErrorCategory value)
-        {
-            switch( value )
-            {
-                case HealthErrorCategory.None:
-                    return "None";
-                case HealthErrorCategory.Replication:
-                    return "Replication";
-                case HealthErrorCategory.TestFailover:
-                    return "TestFailover";
-                case HealthErrorCategory.Configuration:
-                    return "Configuration";
-                case HealthErrorCategory.FabricInfrastructure:
-                    return "FabricInfrastructure";
-                case HealthErrorCategory.VersionExpiry:
-                    return "VersionExpiry";
-            }
-            return null;
-        }
-
-        internal static HealthErrorCategory? ParseHealthErrorCategory(this string value)
-        {
-            switch( value )
-            {
-                case "None":
-                    return HealthErrorCategory.None;
-                case "Replication":
-                    return HealthErrorCategory.Replication;
-                case "TestFailover":
-                    return HealthErrorCategory.TestFailover;
-                case "Configuration":
-                    return HealthErrorCategory.Configuration;
-                case "FabricInfrastructure":
-                    return HealthErrorCategory.FabricInfrastructure;
-                case "VersionExpiry":
-                    return HealthErrorCategory.VersionExpiry;
-            }
-            return null;
-        }
+        public const string None = "None";
+        public const string Replication = "Replication";
+        public const string TestFailover = "TestFailover";
+        public const string Configuration = "Configuration";
+        public const string FabricInfrastructure = "FabricInfrastructure";
+        public const string VersionExpiry = "VersionExpiry";
+        public const string AgentAutoUpdate = "AgentAutoUpdate";
     }
 }

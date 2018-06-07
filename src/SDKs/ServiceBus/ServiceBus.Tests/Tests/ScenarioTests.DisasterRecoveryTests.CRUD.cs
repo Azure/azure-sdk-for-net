@@ -23,8 +23,8 @@ namespace ServiceBus.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = "South Central US";
-                var location2 = "North Central US";
+                var location = "West Central US";
+                var location2 = "West Central US";
 
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
@@ -55,7 +55,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
-                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                TestUtilities.Wait(TimeSpan.FromSeconds(30));
 
                 //var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
 

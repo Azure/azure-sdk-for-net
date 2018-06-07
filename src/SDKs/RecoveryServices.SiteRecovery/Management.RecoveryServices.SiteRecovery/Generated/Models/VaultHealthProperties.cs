@@ -36,11 +36,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// the protected items in the vault.</param>
         /// <param name="fabricsHealth">The list of the health detail of the
         /// fabrics in the vault.</param>
-        public VaultHealthProperties(IList<HealthError> vaultErrors = default(IList<HealthError>), ResourceHealthSummary protectedItemsHealth = default(ResourceHealthSummary), ResourceHealthSummary fabricsHealth = default(ResourceHealthSummary))
+        /// <param name="containersHealth">The list of the health detail of the
+        /// containers in the vault.</param>
+        public VaultHealthProperties(IList<HealthError> vaultErrors = default(IList<HealthError>), ResourceHealthSummary protectedItemsHealth = default(ResourceHealthSummary), ResourceHealthSummary fabricsHealth = default(ResourceHealthSummary), ResourceHealthSummary containersHealth = default(ResourceHealthSummary))
         {
             VaultErrors = vaultErrors;
             ProtectedItemsHealth = protectedItemsHealth;
             FabricsHealth = fabricsHealth;
+            ContainersHealth = containersHealth;
             CustomInit();
         }
 
@@ -68,6 +71,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "fabricsHealth")]
         public ResourceHealthSummary FabricsHealth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of the health detail of the containers in the
+        /// vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "containersHealth")]
+        public ResourceHealthSummary ContainersHealth { get; set; }
 
     }
 }

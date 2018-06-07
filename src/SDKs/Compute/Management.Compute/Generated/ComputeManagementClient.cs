@@ -71,6 +71,11 @@ namespace Microsoft.Azure.Management.Compute
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
@@ -361,6 +366,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
