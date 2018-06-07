@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
     {
         /// <summary>
         /// Associates existing subscription with the management group.
-        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.
@@ -51,7 +50,6 @@ namespace Microsoft.Azure.Management.ManagementGroups
         Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string groupId, string subscriptionId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// De-associates subscription from the management group.
-        ///
         /// </summary>
         /// <param name='groupId'>
         /// Management Group ID.

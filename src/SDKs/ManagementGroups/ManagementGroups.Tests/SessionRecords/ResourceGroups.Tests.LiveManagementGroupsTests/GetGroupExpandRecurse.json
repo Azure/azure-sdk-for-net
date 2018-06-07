@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/TestGroup1?api-version=2018-01-01-preview&$expand=children&$recurse=true",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL1Rlc3RHcm91cDE/YXBpLXZlcnNpb249MjAxOC0wMS0wMS1wcmV2aWV3JiRleHBhbmQ9Y2hpbGRyZW4mJHJlY3Vyc2U9dHJ1ZQ==",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/TestGroup1?api-version=2018-03-01-preview&$expand=children&$recurse=true",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL1Rlc3RHcm91cDE/YXBpLXZlcnNpb249MjAxOC0wMy0wMS1wcmV2aWV3JiRleHBhbmQ9Y2hpbGRyZW4mJHJlY3Vyc2U9dHJ1ZQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3d5cb3a0-a99a-47c3-b466-8d5d939122df"
+          "ffb52c33-1c83-4bba-ad32-a2a0f6ab4eac"
         ],
         "Cache-Control": [
           "no-cache"
@@ -17,7 +17,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.0.0.0"
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.2.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"TestGroup1\",\r\n  \"properties\": {\r\n    \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n    \"displayName\": \"TestGroup1\",\r\n    \"details\": {\r\n      \"version\": 1,\r\n      \"updatedTime\": \"2018-05-03T21:17:25.9866005Z\",\r\n      \"updatedBy\": \"823969e2-f8c1-4add-8526-62544e2f96b2\",\r\n      \"parent\": {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"name\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"b1af47f1-138c-4ed2-8bba-119041b95450\"\r\n      }\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1\",\r\n        \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n        \"name\": \"TestGroup1Child1\",\r\n        \"displayName\": \"TestGroup1->Child1\",\r\n        \"children\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1Child1\",\r\n            \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n            \"name\": \"TestGroup1Child1Child1\",\r\n            \"displayName\": \"TestGroup1->Child1->Child1\",\r\n            \"children\": [\r\n              {\r\n                \"id\": \"/subscriptions/7635efed-eeec-4c03-885d-fa004067132a\",\r\n                \"type\": \"/subscriptions\",\r\n                \"name\": \"7635efed-eeec-4c03-885d-fa004067132a\",\r\n                \"displayName\": \"Pay-As-You-Go\"\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
@@ -32,7 +32,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 10 May 2018 00:24:08 GMT"
+          "Tue, 22 May 2018 02:35:31 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -48,16 +48,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14988"
+          "14997"
         ],
         "x-ms-request-id": [
-          "eastus:66128490-8eba-4779-a35b-767d40860a89"
+          "eastus:c2ead1cf-af1d-419a-91e9-72d4657e9790"
         ],
         "x-ba-restapi": [
-          "1.0.3.758"
+          "1.0.3.787"
         ],
         "request-id": [
-          "2c8f804d-0fea-4721-8dee-57767a48c976"
+          "66a36e43-05b6-4e60-a2ca-e444a6ac9831"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -66,10 +66,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "a499aa09-050c-44a9-a0d7-6a5d5d2a4e07"
+          "25d6081b-fd68-4b2b-8c49-572bf3b12e0b"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180510T002409Z:a499aa09-050c-44a9-a0d7-6a5d5d2a4e07"
+          "NORTHEUROPE:20180522T023531Z:25d6081b-fd68-4b2b-8c49-572bf3b12e0b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

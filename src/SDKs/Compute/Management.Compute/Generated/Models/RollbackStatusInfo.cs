@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Information about rollback on failed VM instances after a OS Upgrade
-    /// operation
+    /// operation.
     /// </summary>
     public partial class RollbackStatusInfo
     {
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// instances which have been successfully rolled back.</param>
         /// <param name="failedRolledbackInstanceCount">The number of instances
         /// which failed to rollback.</param>
-        /// <param name="rollbackError">Error Details if OS rollback
+        /// <param name="rollbackError">Error details if OS rollback
         /// failed.</param>
         public RollbackStatusInfo(int? successfullyRolledbackInstanceCount = default(int?), int? failedRolledbackInstanceCount = default(int?), ApiError rollbackError = default(ApiError))
         {
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? FailedRolledbackInstanceCount { get; private set; }
 
         /// <summary>
-        /// Gets error Details if OS rollback failed.
+        /// Gets error details if OS rollback failed.
         /// </summary>
         [JsonProperty(PropertyName = "rollbackError")]
         public ApiError RollbackError { get; private set; }

@@ -7,9 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.TrafficManager</PackageId>
 		<Description>Microsoft Azure Management TrafficManager Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.TrafficManager</AssemblyName>
-		<Version>2.3.0-preview</Version>
+		<Version>2.4.0-preview</Version>
 		<PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management;</PackageTags>
-		<PackageReleaseNotes/>
+        <PackageReleaseNotes>
+            <![CDATA[
+                This is a preview release of the Azure Traffic Manager SDK.
+            ]]>
+        </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
