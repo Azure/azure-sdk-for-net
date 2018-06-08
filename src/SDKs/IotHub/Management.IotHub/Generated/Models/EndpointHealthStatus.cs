@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
 {
 
     /// <summary>
-    /// Defines values for RoutingSource.
+    /// Defines values for EndpointHealthStatus.
     /// </summary>
-    public static class RoutingSource
+    public static class EndpointHealthStatus
     {
-        public const string Invalid = "Invalid";
-        public const string DeviceMessages = "DeviceMessages";
-        public const string TwinChangeEvents = "TwinChangeEvents";
-        public const string DeviceLifecycleEvents = "DeviceLifecycleEvents";
-        public const string DeviceJobLifecycleEvents = "DeviceJobLifecycleEvents";
+        public const string Unknown = "unknown";
+        public const string Healthy = "healthy";
+        public const string Unhealthy = "unhealthy";
+        public const string Dead = "dead";
     }
 }
