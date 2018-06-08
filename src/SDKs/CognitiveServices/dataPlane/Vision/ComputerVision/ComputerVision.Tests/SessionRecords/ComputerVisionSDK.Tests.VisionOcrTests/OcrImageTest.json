@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v1.0/ocr?detectOrientation=true&language=de",
+      "EncodedRequestUri": "L3Zpc2lvbi92MS4wL29jcj9kZXRlY3RPcmllbnRhdGlvbj10cnVlJmxhbmd1YWdlPWRl",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/achtung.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "188"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"language\": \"de\",\r\n  \"orientation\": \"Up\",\r\n  \"textAngle\": 0.24434609527920675,\r\n  \"regions\": [\r\n    {\r\n      \"boundingBox\": \"115,223,562,131\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": \"115,223,562,131\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": \"115,223,562,131\",\r\n              \"text\": \"ACHTUNG\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "219"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Wed, 30 May 2018 20:53:45 GMT"
+        ],
+        "apim-request-id": [
+          "6da121dd-599d-4d16-9dd3-bf6117ce628b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
