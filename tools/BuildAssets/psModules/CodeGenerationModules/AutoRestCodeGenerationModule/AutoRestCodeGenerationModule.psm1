@@ -8,22 +8,6 @@
 $errorStream = New-Object -TypeName "System.Text.StringBuilder";
 $outputStream = New-Object -TypeName "System.Text.StringBuilder";
 
-
-function Get-SdkRepoRootDirectory {
-    param(
-        [string] $scriptPath
-    )
-    $currPath = $scriptPath
-    if($scriptPath.Contains("\src\SDKs\") -or $scriptPath.Contains("\src\AzureStack\"))
-    {
-        while(![string]::IsNullOrEmpty($currPath) -and !($currPath.EndsWith("\src\SDKs") -or $currPath.EndsWith("\src\AzureStack")))
-        {
-            $currPath = $(Split-Path $currPath -parent)
-        }
-    }
-    return $currPath
-}
-
 function Get-InvokingScriptPath {
     $arr =$($(Get-PSCallStack).InvocationInfo.PSCommandPath)
     foreach ($p in $arr) {
@@ -326,7 +310,7 @@ function Start-AutoRestCodeGeneration {
     }
     else {
         # default path which is the root directory of the RP in sdk repo
-        $SdkDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
+        $SdkDirectory = Get-LocalSdkRepoDirectory($(Get-InvokingScriptPath))
         if([string]::IsNullOrEmpty($SdkDirectory))
         {
             Write-Error "Could not find default output directory since script is not run from a sdk repo, please provide one!"
@@ -472,7 +456,6 @@ function Start-CodeGeneration {
         else {
             $logFile = "$localSdkRepoDirectory\src\SDKs\_metadata\$($ResourceProvider.Replace("/","_").Replace('\','_')).txt"    
         }
-        
         if(!$(Test-Path -Path $logFile))
         {
             Write-Warning "Creating new file log file: $logFile"
