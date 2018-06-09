@@ -204,3 +204,6 @@ Buildx86retail.dat
 /build/OpenCoverReport/*
 /build/coverage.xml
 test/Microsoft.Azure.ServiceBus.UnitTests/API/ApiApprovals.ApproveAzureServiceBus.received.txt
+
+#UsedForTestingPurposes
+nuget.config
