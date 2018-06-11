@@ -18,6 +18,26 @@ namespace Microsoft.Rest.Azure
     using Microsoft.Rest.ClientRuntime.Azure.LRO;
     using System.IO;
 
+    /// <summary>
+    /// Identifies the header to use to identify the final state of an LRO call.
+    /// </summary>
+    public enum FinalStateVia {
+        /// <summary>
+        /// Use the Azure-AsyncOperation header to get the final state of the call.
+        /// </summary>
+        AzureAsyncOperation = 0,
+
+        /// <summary>
+        /// Use the Location header to get the final state of the call.
+        /// </summary>
+        Location,
+
+        /// <summary>
+        /// Use the original URI (ie, do a GET). (not currently used.)
+        /// </summary>
+        OriginalUri,
+    }
+
     public static partial class AzureClientExtensions
     {
         #region Get LRO Result
@@ -35,7 +55,29 @@ namespace Microsoft.Rest.Azure
             this IAzureClient client,
             AzureOperationResponse<TBody> response,
             Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken) where TBody : class
+            CancellationToken cancellationToken
+            ) where TBody : class
+        {
+            return await GetLongRunningOperationResultAsync<TBody>(client,response,customHeaders,cancellationToken,FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for long running operations.
+        /// </summary>
+        /// <typeparam name="TBody">Type of the resource body</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Response with created resource</returns>
+        public static async Task<AzureOperationResponse<TBody>> GetLongRunningOperationResultAsync<TBody>(
+            this IAzureClient client,
+            AzureOperationResponse<TBody> response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia
+            ) where TBody : class
         {
             if (response == null)
             {
@@ -48,7 +90,7 @@ namespace Microsoft.Rest.Azure
                 RequestId = response.RequestId,
                 Response = response.Response
             };
-            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken);
+            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken, finalStateVia);
             return new AzureOperationResponse<TBody>
             {
                 Body = longRunningResponse.Body,
@@ -74,6 +116,30 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
+            return await GetLongRunningOperationResultAsync<TBody,THeader>( client, response, customHeaders, cancellationToken, finalStateVia);
+        }
+
+        /// <summary>
+        /// Gets operation result for long running operations.
+        /// </summary>
+        /// <typeparam name="TBody">Type of the resource body</typeparam>
+        /// <typeparam name="THeader">Type of the resource header</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Response with created resource</returns>
+        public static async Task<AzureOperationResponse<TBody, THeader>> GetLongRunningOperationResultAsync<TBody, THeader>(
+            this IAzureClient client,
+            AzureOperationResponse<TBody, THeader> response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia) where TBody : class where THeader : class
+        {
+            // TODO ABHIJEET:
+            // I've got the finalStateVia this far. You proabably want to change ScheduleLRO to use the value appropriately.
+
             IAzureLRO<TBody, THeader> lro = ScheduleLRO<TBody, THeader>(client, response, customHeaders, cancellationToken);
             await lro.BeginLROAsync();
             return await lro.GetLROResults();
@@ -122,11 +188,30 @@ namespace Microsoft.Rest.Azure
         /// <param name="customHeaders">Headers that will be added to request</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Operation response</returns>
-        public static async Task<AzureOperationResponse> GetLongRunningOperationResultAsync(
+        public static Task<AzureOperationResponse> GetLongRunningOperationResultAsync(
             this IAzureClient client,
             AzureOperationResponse response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
+        {
+            return GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken, FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for long running operations.
+        /// </summary>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationResponse> GetLongRunningOperationResultAsync(
+            this IAzureClient client,
+            AzureOperationResponse response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia)
         {
             var newResponse = new AzureOperationResponse<object>
             {
@@ -136,7 +221,7 @@ namespace Microsoft.Rest.Azure
             };
 
             var azureOperationResponse = await client.GetLongRunningOperationResultAsync(
-                newResponse, customHeaders, cancellationToken);
+                newResponse, customHeaders, cancellationToken, finalStateVia);
 
             return new AzureOperationResponse
             {
@@ -145,6 +230,7 @@ namespace Microsoft.Rest.Azure
                 RequestId = azureOperationResponse.RequestId
             };
         }
+
 
         /// <summary>
         /// Gets operation result for long running operations.
@@ -155,11 +241,31 @@ namespace Microsoft.Rest.Azure
         /// <param name="customHeaders">Headers that will be added to request</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Operation response</returns>
-        public static async Task<AzureOperationHeaderResponse<THeader>> GetLongRunningOperationResultAsync<THeader>(
+        public static Task<AzureOperationHeaderResponse<THeader>> GetLongRunningOperationResultAsync<THeader>(
             this IAzureClient client,
             AzureOperationHeaderResponse<THeader> response,
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where THeader : class
+        {
+            return GetLongRunningOperationResultAsync<THeader>( client, response, customHeaders, cancellationToken, FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for long running operations.
+        /// </summary>
+        /// <typeparam name="THeader">Type of the resource headers</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationHeaderResponse<THeader>> GetLongRunningOperationResultAsync<THeader>(
+            this IAzureClient client,
+            AzureOperationHeaderResponse<THeader> response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia) where THeader : class
         {
             if (response == null)
             {
@@ -172,7 +278,7 @@ namespace Microsoft.Rest.Azure
                 RequestId = response.RequestId,
                 Response = response.Response
             };
-            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken);
+            var longRunningResponse = await GetLongRunningOperationResultAsync(client, headerlessResponse, customHeaders, cancellationToken, finalStateVia);
             return new AzureOperationHeaderResponse<THeader>
             {
                 Headers = longRunningResponse.Headers,
@@ -199,10 +305,31 @@ namespace Microsoft.Rest.Azure
             this IAzureClient client,
             AzureOperationResponse<TBody> response,
             Dictionary<string, List<string>> customHeaders,
-            CancellationToken cancellationToken) where TBody : class
+            CancellationToken cancellationToken)
         {
             return await client.GetLongRunningOperationResultAsync(
-                response, customHeaders, cancellationToken);
+                response, customHeaders, cancellationToken,FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for PUT and PATCH operations. (Deprecated, please use GetLongRunningOperationResultAsync)
+        /// </summary>
+        /// <typeparam name="TBody">Type of the resource body</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Response with created resource</returns>
+        public static async Task<AzureOperationResponse<TBody>> GetPutOrPatchOperationResultAsync<TBody>(
+            this IAzureClient client,
+            AzureOperationResponse<TBody> response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken, 
+            FinalStateVia finalStateVia) where TBody : class
+        {
+            return await client.GetLongRunningOperationResultAsync(
+                response, customHeaders, cancellationToken, finalStateVia);
         }
 
         /// <summary>
@@ -221,7 +348,28 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
-            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken);
+            return await client.GetLongRunningOperationResultAsync(
+                response, customHeaders, cancellationToken, FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for PUT and PATCH operations. (Deprecated, please use GetLongRunningOperationResultAsync)
+        /// </summary>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationResponse> GetPutOrPatchOperationResultAsync(
+            this IAzureClient client,
+            AzureOperationResponse response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken, 
+            FinalStateVia finalStateVia)
+        {
+            return await client.GetLongRunningOperationResultAsync(
+                response, customHeaders, cancellationToken,finalStateVia);
         }
 
         /// <summary>
@@ -239,7 +387,7 @@ namespace Microsoft.Rest.Azure
             CancellationToken cancellationToken)
         {
             return await client.GetLongRunningOperationResultAsync(
-                response, customHeaders, cancellationToken);
+                response, customHeaders, cancellationToken, FinalStateVia.AzureAsyncOperation);
         }
 
         #endregion
@@ -261,7 +409,27 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class
         {
-            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken);
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken,FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for DELETE and POST operations. (Deprecated, please use GetLongRunningOperationResultAsync)
+        /// </summary>
+        /// <typeparam name="TBody">Type of the resource body</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationResponse<TBody>> GetPostOrDeleteOperationResultAsync<TBody>(
+            this IAzureClient client,
+            AzureOperationResponse<TBody> response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia) where TBody : class
+        {
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken,finalStateVia);
         }
 
         /// <summary>
@@ -279,7 +447,27 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where THeader : class
         {
-            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken);
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken,FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for DELETE and POST operations. (Deprecated, please use GetLongRunningOperationResultAsync)
+        /// </summary>
+        /// <typeparam name="THeader">Type of the resource headers</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationHeaderResponse<THeader>> GetPostOrDeleteOperationResultAsync<THeader>(
+            this IAzureClient client,
+            AzureOperationHeaderResponse<THeader> response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia) where THeader : class
+        {
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken,finalStateVia);
         }
 
         /// <summary>
@@ -298,7 +486,28 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken) where TBody : class where THeader : class
         {
-            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken);
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken,FinalStateVia.AzureAsyncOperation);
+        }
+
+        /// <summary>
+        /// Gets operation result for DELETE and POST operations. (Deprecated, please use GetLongRunningOperationResultAsync)
+        /// </summary>
+        /// <typeparam name="TBody">Type of the resource body</typeparam>
+        /// <typeparam name="THeader">Type of the resource header</typeparam>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationResponse<TBody, THeader>> GetPostOrDeleteOperationResultAsync<TBody, THeader>(
+            this IAzureClient client,
+            AzureOperationResponse<TBody, THeader> response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia) where TBody : class where THeader : class
+        {
+            return await GetLongRunningOperationResultAsync(client, response, customHeaders, cancellationToken,finalStateVia);
         }
 
         /// <summary>
@@ -315,9 +524,27 @@ namespace Microsoft.Rest.Azure
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
         {
-            return await client.GetLongRunningOperationResultAsync(response, customHeaders, cancellationToken);
+            return await client.GetLongRunningOperationResultAsync(response, customHeaders, cancellationToken, FinalStateVia.AzureAsyncOperation);
         }
 
+        /// <summary>
+        /// Gets operation result for DELETE and POST operations. (Deprecated, please use GetLongRunningOperationResultAsync)
+        /// </summary>
+        /// <param name="client">IAzureClient</param>
+        /// <param name="response">Response from the begin operation</param>
+        /// <param name="customHeaders">Headers that will be added to request</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <param name="finalStateVia">Which header to follow for the final state</param>
+        /// <returns>Operation response</returns>
+        public static async Task<AzureOperationResponse> GetPostOrDeleteOperationResultAsync(
+            this IAzureClient client,
+            AzureOperationResponse response,
+            Dictionary<string, List<string>> customHeaders,
+            CancellationToken cancellationToken,
+            FinalStateVia finalStateVia)
+        {
+            return await client.GetLongRunningOperationResultAsync(response, customHeaders, cancellationToken,finalStateVia);
+        }
         #endregion
 
         #region Get
