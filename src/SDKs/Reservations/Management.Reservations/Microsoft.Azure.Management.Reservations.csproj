@@ -11,7 +11,11 @@
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure Reservations SDK. Included with this release is all operation to get/modify existing reservations, but currently creating reservations is available only through portal.
+        This is a public preview release of the Azure Reservations SDK. Included with this release is 
+        - Updating the Catalogs and Patch API with additional parameters
+        - Removed Kind from ReservationsProperties
+        - Support for different ReservedResourceTypes (VirtualMachines, SqlDatabases, SuseLinux)
+        - Support for InstanceFlexibility
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
