@@ -17,13 +17,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for FirewallRulesOperations.
+    /// Extension methods for VirtualNetworkRulesOperations.
     /// </summary>
-    public static partial class FirewallRulesOperationsExtensions
+    public static partial class VirtualNetworkRulesOperationsExtensions
     {
             /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
+            /// Lists the Data Lake Store virtual network rules within the specified Data
+            /// Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,14 +34,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The name of the Data Lake Store account.
             /// </param>
-            public static IPage<FirewallRule> ListByAccount(this IFirewallRulesOperations operations, string resourceGroupName, string accountName)
+            public static IPage<VirtualNetworkRule> ListByAccount(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName)
             {
                 return operations.ListByAccountAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
+            /// Lists the Data Lake Store virtual network rules within the specified Data
+            /// Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FirewallRule>> ListByAccountAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualNetworkRule>> ListByAccountAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByAccountWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -64,8 +64,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
-            /// Creates or updates the specified firewall rule. During update, the firewall
-            /// rule with the specified name will be replaced with this new firewall rule.
+            /// Creates or updates the specified virtual network rule. During update, the
+            /// virtual network rule with the specified name will be replaced with this new
+            /// virtual network rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -76,20 +77,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The name of the Data Lake Store account.
             /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to create or update.
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to create or update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create or update the firewall rule.
+            /// Parameters supplied to create or update the virtual network rule.
             /// </param>
-            public static FirewallRule CreateOrUpdate(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters)
+            public static VirtualNetworkRule CreateOrUpdate(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName, CreateOrUpdateVirtualNetworkRuleParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, accountName, virtualNetworkRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates the specified firewall rule. During update, the firewall
-            /// rule with the specified name will be replaced with this new firewall rule.
+            /// Creates or updates the specified virtual network rule. During update, the
+            /// virtual network rule with the specified name will be replaced with this new
+            /// virtual network rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -100,25 +102,25 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The name of the Data Lake Store account.
             /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to create or update.
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to create or update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create or update the firewall rule.
+            /// Parameters supplied to create or update the virtual network rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> CreateOrUpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CreateOrUpdateFirewallRuleParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkRule> CreateOrUpdateAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName, CreateOrUpdateVirtualNetworkRuleParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, accountName, virtualNetworkRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
+            /// Gets the specified Data Lake Store virtual network rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -129,16 +131,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The name of the Data Lake Store account.
             /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to retrieve.
             /// </param>
-            public static FirewallRule Get(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
+            public static VirtualNetworkRule Get(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName)
             {
-                return operations.GetAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, virtualNetworkRuleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the specified Data Lake Store firewall rule.
+            /// Gets the specified Data Lake Store virtual network rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -149,22 +151,22 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The name of the Data Lake Store account.
             /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to retrieve.
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to retrieve.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> GetAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkRule> GetAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, virtualNetworkRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates the specified firewall rule.
+            /// Updates the specified virtual network rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -175,19 +177,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The name of the Data Lake Store account.
             /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to update.
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to update the firewall rule.
+            /// Parameters supplied to update the virtual network rule.
             /// </param>
-            public static FirewallRule Update(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters))
+            public static VirtualNetworkRule Update(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName, UpdateVirtualNetworkRuleParameters parameters = default(UpdateVirtualNetworkRuleParameters))
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, firewallRuleName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, virtualNetworkRuleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates the specified firewall rule.
+            /// Updates the specified virtual network rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -198,71 +200,71 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='accountName'>
             /// The name of the Data Lake Store account.
             /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to update.
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to update.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to update the firewall rule.
+            /// Parameters supplied to update the virtual network rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FirewallRule> UpdateAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkRule> UpdateAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName, UpdateVirtualNetworkRuleParameters parameters = default(UpdateVirtualNetworkRuleParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, virtualNetworkRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes the specified firewall rule from the specified Data Lake Store
-            /// account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to delete.
-            /// </param>
-            public static void Delete(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName)
-            {
-                operations.DeleteAsync(resourceGroupName, accountName, firewallRuleName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified firewall rule from the specified Data Lake Store
-            /// account.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the Azure resource group.
-            /// </param>
-            /// <param name='accountName'>
-            /// The name of the Data Lake Store account.
-            /// </param>
-            /// <param name='firewallRuleName'>
-            /// The name of the firewall rule to delete.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IFirewallRulesOperations operations, string resourceGroupName, string accountName, string firewallRuleName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, firewallRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
+            /// Deletes the specified virtual network rule from the specified Data Lake
             /// Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to delete.
+            /// </param>
+            public static void Delete(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName)
+            {
+                operations.DeleteAsync(resourceGroupName, accountName, virtualNetworkRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified virtual network rule from the specified Data Lake
+            /// Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account.
+            /// </param>
+            /// <param name='virtualNetworkRuleName'>
+            /// The name of the virtual network rule to delete.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IVirtualNetworkRulesOperations operations, string resourceGroupName, string accountName, string virtualNetworkRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, virtualNetworkRuleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists the Data Lake Store virtual network rules within the specified Data
+            /// Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -270,14 +272,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<FirewallRule> ListByAccountNext(this IFirewallRulesOperations operations, string nextPageLink)
+            public static IPage<VirtualNetworkRule> ListByAccountNext(this IVirtualNetworkRulesOperations operations, string nextPageLink)
             {
                 return operations.ListByAccountNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the Data Lake Store firewall rules within the specified Data Lake
-            /// Store account.
+            /// Lists the Data Lake Store virtual network rules within the specified Data
+            /// Lake Store account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -288,7 +290,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FirewallRule>> ListByAccountNextAsync(this IFirewallRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualNetworkRule>> ListByAccountNextAsync(this IVirtualNetworkRulesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -81,6 +81,11 @@ namespace Microsoft.Azure.Management.DataLake.Store
         IFirewallRulesOperations FirewallRules { get; }
 
         /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
+
+        /// <summary>
         /// Gets the ITrustedIdProvidersOperations.
         /// </summary>
         ITrustedIdProvidersOperations TrustedIdProviders { get; }

@@ -14,7 +14,7 @@ namespace DataLakeStore.Tests
         public string NoPermissionDataLakeStoreAccountName { get; set; }
         public string DataLakeStoreFileSystemAccountName { get; set; }
         public string HostUrl { get; set; }
-        public string Location = "East US 2";
+        public string Location = "eastus2";
         public string AclUserId = "027c28d5-c91d-49f0-98c5-d10134b169b3";
         public DataLakeStoreFileSystemManagementClient DataLakeStoreFileSystemClient { get; set; }
         private MockContext context;
