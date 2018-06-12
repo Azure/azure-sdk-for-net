@@ -5,7 +5,7 @@
 
 C:\Users\juhle\AppData\Roaming\npm\autorest -> C:\Users\juhle\AppData\Roaming\npm\node_modules\autorest\dist\app.js
 + autorest@2.0.4262
-updated 1 package in 1.885s
+updated 1 package in 2.255s
 
 AutoRest installed successfully.
 Commencing code generation
@@ -15,15 +15,17 @@ cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/maste
 AutoRest code generation utility [version: 2.0.4262; node: v8.11.1]
 (C) 2018 Microsoft Corporation.
 https://aka.ms/autorest
-   Loading AutoRest core      'C:\Users\juhle\.autorest\@microsoft.azure_autorest-core@2.0.4279\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4279)
+C:\Users\juhle\.autorest\@microsoft.azure_autorest-core@2.0.4280\autorest-core -> C:\Users\juhle\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist\app.js
+C:\Users\juhle\.autorest\@microsoft.azure_autorest-core@2.0.4280\autorest-language-service -> C:\Users\juhle\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist\language-service\language-service.js
+   Loading AutoRest core      'C:\Users\juhle\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
    Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
    Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
 
-2018-06-08 17:39:34 UTC
+2018-06-12 21:01:52 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      e02b7682d09d6600aca3a52744413af1c5e15787
+Commit:      4ea7c069abf83aa86a743218145c0eee8905459c
 
 2) AutoRest information
 Requested version: latest
