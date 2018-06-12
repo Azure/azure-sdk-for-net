@@ -221,11 +221,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
 
         private void CopyPowershellModules(string psModulesDir, string[] filesToCopy)
         {
-            string userProfilePSModulesPath = Environment.GetEnvironmentVariable("PSModulePath").Split(';').Where(p => p.StartsWith(Environment.GetEnvironmentVariable("USERPROFILE"))).DefaultIfEmpty().First();
-            if (string.IsNullOrEmpty(userProfilePSModulesPath))
-            {
-                throw new Exception(string.Format("Please add '{0}' to Environment variable '{1}' to import the powershell cmdlets.", new String[] { Environment.GetEnvironmentVariable("USERPROFILE") + "\\Documents\\WindowsPowerShell\\Modules", "PSModulePath" }));
-            }
+            string userProfilePSModulesPath = Path.Combine(Environment.GetEnvironmentVariable("USERPROFILE"), "\\Documents\\WindowsPowerShell\\Modules");
             IEnumerable<string> psModulesToCopy = filesToCopy.Where(p=>p.StartsWith("psModules"))
                                                              .Where(p=>p.EndsWith(".psm1")||p.EndsWith(".psd1")||p.EndsWith(".ps1"));
             foreach (var module in psModulesToCopy)
