@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Storage.Models
 
     /// <summary>
     /// The URIs that are used to perform a retrieval of a public blob, queue,
-    /// or table object.
+    /// table or web object.
     /// </summary>
     public partial class Endpoints
     {
@@ -34,12 +34,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="queue">Gets the queue endpoint.</param>
         /// <param name="table">Gets the table endpoint.</param>
         /// <param name="file">Gets the file endpoint.</param>
-        public Endpoints(string blob = default(string), string queue = default(string), string table = default(string), string file = default(string))
+        /// <param name="web">Gets the web endpoint.</param>
+        public Endpoints(string blob = default(string), string queue = default(string), string table = default(string), string file = default(string), string web = default(string))
         {
             Blob = blob;
             Queue = queue;
             Table = table;
             File = file;
+            Web = web;
             CustomInit();
         }
 
@@ -71,6 +73,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "file")]
         public string File { get; private set; }
+
+        /// <summary>
+        /// Gets the web endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "web")]
+        public string Web { get; private set; }
 
     }
 }

@@ -1577,6 +1577,7 @@ namespace Storage.Tests
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.PrimaryEndpoints.Web);
                 Assert.Equal(Kind.StorageV2, account.Kind);
             }
         }
@@ -1606,11 +1607,13 @@ namespace Storage.Tests
                 var account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameters);
                 Assert.Equal(account.Kind, Kind.StorageV2);
                 Assert.True(account.EnableHttpsTrafficOnly);
+                Assert.NotNull(account.PrimaryEndpoints.Web);
 
                 // Validate
                 account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
                 Assert.Equal(account.Kind, Kind.StorageV2);
                 Assert.True(account.EnableHttpsTrafficOnly);
+                Assert.NotNull(account.PrimaryEndpoints.Web);
             }
         }
 
