@@ -13,10 +13,11 @@ function Get-SdkRepoRootDirectory {
     param(
         [string] $scriptPath
     )
+    
     $currPath = $scriptPath
     if($scriptPath.Contains("\src\SDKs\") -or $scriptPath.Contains("\src\AzureStack\"))
     {
-        while(![string]::IsNullOrEmpty($currPath) -and !($currPath.EndsWith("\src\SDKs") -or $currPath.EndsWith("\src\AzureStack")))
+        while(![string]::IsNullOrEmpty($currPath) -and !(($currPath.EndsWith("\src\SDKs") -or $currPath.EndsWith("\src\AzureStack")) -and $(Test-Path "$currPath\..\..\.gitignore")))
         {
             $currPath = $(Split-Path $currPath -parent)
         }
@@ -411,23 +412,6 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
     }
 }
 
-function Get-LocalSdkRepoDirectory {
-    Param(
-        [string] $currPath
-    )
-
-    while(![string]::IsNullOrEmpty($(Split-Path $currPath -Parent)))
-    {
-        if(Test-Path -Path "$currPath\src\SDKs\_metadata")
-        {
-            return $currPath
-        }
-        
-        $currPath = $(Split-Path $currPath -Parent)
-    }
-    return $currPath
-}
-
 function Start-CodeGeneration {
     Param(
         [string] $ResourceProvider,
@@ -442,13 +426,14 @@ function Start-CodeGeneration {
         [string] $ConfigFileTag,
         [string] $LocalConfigFilePath
     )
-    $localSdkRepoDirectory = Get-LocalSdkRepoDirectory($(Get-InvokingScriptPath))
-
+    $localSdkRepoDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
+    $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
+    
     if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) {
         
         if($localSdkRepoDirectory -ne $null)
         {
-            Remove-Item "$localSdkRepoDirectory\src\SDKs\_metadata\$($ResourceProvider.Replace("/","_")).txt" -ErrorAction SilentlyContinue
+            Remove-Item "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_")).txt" -ErrorAction SilentlyContinue
         }
         
         $logFile = [System.IO.Path]::GetTempFileName()+".txt";
@@ -470,7 +455,11 @@ function Start-CodeGeneration {
             $logFile = [System.IO.Path]::GetTempFileName()+".txt";
         }
         else {
-            $logFile = "$localSdkRepoDirectory\src\SDKs\_metadata\$($ResourceProvider.Replace("/","_").Replace('\','_')).txt"    
+            if(!(Test-Path -Path "$localSdkRepoDirectory\_metadata"))
+            {
+                New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
+            }
+            $logFile = "$localSdkRepoDirectory\_metadata\$($ResourceProvider.Replace("/","_").Replace('\','_')).txt"    
         }
         
         if(!$(Test-Path -Path $logFile))
@@ -478,7 +467,7 @@ function Start-CodeGeneration {
             Write-Warning "Creating new file log file: $logFile"
             New-Item -Path $logFile -ItemType File
         }
-
+        
         $configFile="https://github.com/$SpecsRepoFork/$SpecsRepoName/blob/$SpecsRepoBranch/specification/$ResourceProvider/readme.md"
     }
 
