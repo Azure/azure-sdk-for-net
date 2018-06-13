@@ -20,7 +20,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         internal const string OID_OIWSEC_SHA384 = "2.16.840.1.101.3.4.2.2";
         internal const string OID_OIWSEC_SHA512 = "2.16.840.1.101.3.4.2.3";
 
-        internal const int SHA512_LENGTH = 64;
+        internal const int SHA512_DIGEST_LENGTH = 64;
 
         public Rs512()
             : base( AlgorithmName )
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 if ( digest == null || digest.Length == 0 )
                     throw new ArgumentNullException( "digest" );
 
-                if ( digest.Length != SHA512_LENGTH )
-                    throw new ArgumentOutOfRangeException( "digest", String.Format("The digest must be {0} bytes for SHA-512", SHA512_LENGTH));
+                if ( digest.Length != SHA512_DIGEST_LENGTH )
+                    throw new ArgumentOutOfRangeException( "digest", String.Format("The digest must be {0} bytes for SHA-512", SHA512_DIGEST_LENGTH));
 
 #if NET45
                 if ( _key is RSACryptoServiceProvider )
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 if ( digest == null || digest.Length == 0 )
                     throw new ArgumentNullException( "digest" );
 
-                if ( digest.Length != SHA512_LENGTH )
-                    throw new ArgumentOutOfRangeException( "digest", String.Format("The digest must be {0} bytes for SHA-512", SHA512_LENGTH) );
+                if ( digest.Length != SHA512_DIGEST_LENGTH )
+                    throw new ArgumentOutOfRangeException( "digest", String.Format("The digest must be {0} bytes for SHA-512", SHA512_DIGEST_LENGTH) );
 
                 if ( signature == null || signature.Length == 0 )
                     throw new ArgumentNullException( "signature" );
