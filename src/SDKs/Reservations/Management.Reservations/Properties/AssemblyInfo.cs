@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Reserved Instance Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Reserved Instance Resources.")]
 
-[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.1.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
