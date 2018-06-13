@@ -42,9 +42,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             string runAs = connectionSettings[RunAs];
 
-            // If RunAs=Developer
             if (string.Equals(runAs, Developer, StringComparison.OrdinalIgnoreCase))
             {
+                // If RunAs=Developer
                 ValidateAttribute(connectionSettings, DeveloperTool, connectionString);
 
                 // And Dev Tool equals AzureCLI or VisualStudio
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
             else if (string.Equals(runAs, App, StringComparison.OrdinalIgnoreCase))
             {
-                // If AuthenticateAs=App
+                // If RunAs=App
                 // If AppId key is present, use certificate or Client Secret based token provider
                 if (connectionSettings.ContainsKey(AppId))
                 {
