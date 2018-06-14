@@ -45,11 +45,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="originalQuantity">Total Quantity of the SKUs purchased
         /// in the Reservation.</param>
         /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
-        /// <param name="provisioningState">Possible values include:
-        /// 'Creating', 'PendingResourceHold', 'ConfirmedResourceHold',
-        /// 'PendingBilling', 'ConfirmedBilling', 'Created', 'Succeeded',
-        /// 'Cancelled', 'Expired', 'BillingFailed', 'Failed', 'Split',
-        /// 'Merged'</param>
+        /// <param name="provisioningState">Current state of the
+        /// reservation.</param>
         /// <param name="type">Type of resource.
         /// "Microsoft.Capacity/reservations"</param>
         public ReservationOrderResponse(int? etag = default(int?), string id = default(string), string name = default(string), string displayName = default(string), System.DateTime? requestDateTime = default(System.DateTime?), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), int? originalQuantity = default(int?), string term = default(string), string provisioningState = default(string), IList<ReservationResponse> reservationsProperty = default(IList<ReservationResponse>), string type = default(string))
@@ -132,10 +129,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Term { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Creating',
-        /// 'PendingResourceHold', 'ConfirmedResourceHold', 'PendingBilling',
-        /// 'ConfirmedBilling', 'Created', 'Succeeded', 'Cancelled', 'Expired',
-        /// 'BillingFailed', 'Failed', 'Split', 'Merged'
+        /// Gets or sets current state of the reservation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }

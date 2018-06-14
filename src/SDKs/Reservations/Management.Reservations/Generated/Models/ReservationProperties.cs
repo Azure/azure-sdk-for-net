@@ -40,11 +40,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// 'Shared'</param>
         /// <param name="quantity">Quantity of the SKUs that are part of the
         /// Reservation.</param>
-        /// <param name="provisioningState">Possible values include:
-        /// 'Creating', 'PendingResourceHold', 'ConfirmedResourceHold',
-        /// 'PendingBilling', 'ConfirmedBilling', 'Created', 'Succeeded',
-        /// 'Cancelled', 'Expired', 'BillingFailed', 'Failed', 'Split',
-        /// 'Merged'</param>
+        /// <param name="provisioningState">Current state of the
+        /// reservation.</param>
         /// <param name="effectiveDateTime">DateTime of the Reservation
         /// starting when this version is effective from.</param>
         /// <param name="lastUpdatedDateTime">DateTime of the last time the
@@ -115,10 +112,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public int? Quantity { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Creating',
-        /// 'PendingResourceHold', 'ConfirmedResourceHold', 'PendingBilling',
-        /// 'ConfirmedBilling', 'Created', 'Succeeded', 'Cancelled', 'Expired',
-        /// 'BillingFailed', 'Failed', 'Split', 'Merged'
+        /// Gets or sets current state of the reservation.
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }

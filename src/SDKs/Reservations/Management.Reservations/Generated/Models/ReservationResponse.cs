@@ -28,14 +28,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// Initializes a new instance of the ReservationResponse class.
         /// </summary>
-        /// <param name="location">Possible values include: 'westus', 'eastus',
-        /// 'eastus2', 'northcentralus', 'westus2', 'southcentralus',
-        /// 'centralus', 'westeurope', 'northeurope', 'eastasia',
-        /// 'southeastasia', 'japaneast', 'japanwest', 'brazilsouth',
-        /// 'australiaeast', 'australiasoutheast', 'southindia', 'westindia',
-        /// 'centralindia', 'canadacentral', 'canadaeast', 'uksouth',
-        /// 'westcentralus', 'ukwest', 'francecentral', 'francesouth',
-        /// 'australiac', 'australiac2'</param>
+        /// <param name="location">The Azure Region where the reserved resource
+        /// lives.</param>
         /// <param name="id">Identifier of the reservation</param>
         /// <param name="name">Name of the reservation</param>
         /// <param name="type">Type of resource.
@@ -58,17 +52,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'westus', 'eastus',
-        /// 'eastus2', 'northcentralus', 'westus2', 'southcentralus',
-        /// 'centralus', 'westeurope', 'northeurope', 'eastasia',
-        /// 'southeastasia', 'japaneast', 'japanwest', 'brazilsouth',
-        /// 'australiaeast', 'australiasoutheast', 'southindia', 'westindia',
-        /// 'centralindia', 'canadacentral', 'canadaeast', 'uksouth',
-        /// 'westcentralus', 'ukwest', 'francecentral', 'francesouth',
-        /// 'australiac', 'australiac2'
+        /// Gets the Azure Region where the reserved resource lives.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; private set; }
 
         /// <summary>
         /// </summary>
