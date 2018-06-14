@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// utterance.</param>
         /// <param name="compositeEntities">The composite entities extracted
         /// from the utterance.</param>
-        public LuisResult(string query = default(string), string alteredQuery = default(string), IntentModel topScoringIntent = default(IntentModel), IList<IntentModel> intents = default(IList<IntentModel>), IList<EntityModel> entities = default(IList<EntityModel>), IList<CompositeEntityModel> compositeEntities = default(IList<CompositeEntityModel>))
+        public LuisResult(string query = default(string), string alteredQuery = default(string), IntentModel topScoringIntent = default(IntentModel), IList<IntentModel> intents = default(IList<IntentModel>), IList<EntityModel> entities = default(IList<EntityModel>), IList<CompositeEntityModel> compositeEntities = default(IList<CompositeEntityModel>), Sentiment sentimentAnalysis = default(Sentiment))
         {
             Query = query;
             AlteredQuery = alteredQuery;
@@ -49,6 +49,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
             Intents = intents;
             Entities = entities;
             CompositeEntities = compositeEntities;
+            SentimentAnalysis = sentimentAnalysis;
             CustomInit();
         }
 
@@ -93,6 +94,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Models
         /// </summary>
         [JsonProperty(PropertyName = "compositeEntities")]
         public IList<CompositeEntityModel> CompositeEntities { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "sentimentAnalysis")]
+        public Sentiment SentimentAnalysis { get; set; }
 
         /// <summary>
         /// Validate the object.
