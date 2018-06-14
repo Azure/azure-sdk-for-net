@@ -78,8 +78,8 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
-                ReceivingAmqpLink receiveLink;
-                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
@@ -114,8 +114,8 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, this.OperationTimeout, null);
-                ReceivingAmqpLink receiveLink;
-                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
@@ -149,8 +149,8 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
-                ReceivingAmqpLink receiveLink;
-                if (this.ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
+
+                if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
