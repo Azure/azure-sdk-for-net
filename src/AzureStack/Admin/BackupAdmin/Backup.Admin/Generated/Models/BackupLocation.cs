@@ -54,7 +54,7 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// <param name="lastBackupTime">Time of backup.</param>
         /// <param name="backupRetentionPeriodInDays">The retention period, in
         /// days, for backs in the storage location.</param>
-        public BackupLocation(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string path = default(string), string userName = default(string), string password = default(string), string encryptionKeyBase64 = default(string), int? backupFrequencyInHours = default(int?), string availableCapacity = default(string), bool? isBackupSchedulerEnabled = default(bool?), string nextBackupTime = default(string), string lastBackupTime = default(string), int? backupRetentionPeriodInDays = default(int?))
+        public BackupLocation(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string path = default(string), string userName = default(string), string password = default(string), string encryptionKeyBase64 = default(string), int? backupFrequencyInHours = default(int?), string availableCapacity = default(string), bool? isBackupSchedulerEnabled = default(bool?), System.DateTime? nextBackupTime = default(System.DateTime?), System.DateTime? lastBackupTime = default(System.DateTime?), int? backupRetentionPeriodInDays = default(int?))
             : base(id, name, type, location, tags)
         {
             Path = path;
@@ -122,13 +122,13 @@ namespace Microsoft.AzureStack.Management.Backup.Admin.Models
         /// Gets or sets the scheduled time of the next backup.
         /// </summary>
         [JsonProperty(PropertyName = "properties.externalStoreDefault.nextBackupTime")]
-        public string NextBackupTime { get; set; }
+        public System.DateTime? NextBackupTime { get; set; }
 
         /// <summary>
         /// Gets or sets time of backup.
         /// </summary>
         [JsonProperty(PropertyName = "properties.externalStoreDefault.lastBackupTime")]
-        public string LastBackupTime { get; set; }
+        public System.DateTime? LastBackupTime { get; set; }
 
         /// <summary>
         /// Gets or sets the retention period, in days, for backs in the
