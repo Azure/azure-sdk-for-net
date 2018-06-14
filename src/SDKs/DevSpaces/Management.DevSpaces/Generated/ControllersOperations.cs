@@ -85,6 +85,10 @@ namespace Microsoft.Azure.Management.DevSpaces
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -134,7 +138,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/controllers/{name}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
@@ -358,6 +362,10 @@ namespace Microsoft.Azure.Management.DevSpaces
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -412,7 +420,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/controllers/{name}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
@@ -583,6 +591,10 @@ namespace Microsoft.Azure.Management.DevSpaces
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -612,7 +624,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/controllers").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -773,6 +785,10 @@ namespace Microsoft.Azure.Management.DevSpaces
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -786,7 +802,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DevSpaces/controllers").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -952,6 +968,10 @@ namespace Microsoft.Azure.Management.DevSpaces
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -1001,7 +1021,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/controllers/{name}/listConnectionDetails").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
@@ -1172,6 +1192,10 @@ namespace Microsoft.Azure.Management.DevSpaces
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -1230,7 +1254,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/controllers/{name}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
@@ -1418,6 +1442,10 @@ namespace Microsoft.Azure.Management.DevSpaces
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -1467,7 +1495,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevSpaces/controllers/{name}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(Client.SubscriptionId, Client.SerializationSettings).Trim('"')));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();

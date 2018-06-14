@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <summary>
         /// Azure subscription ID.
         /// </summary>
-        System.Guid SubscriptionId { get; set; }
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// Client API version.
