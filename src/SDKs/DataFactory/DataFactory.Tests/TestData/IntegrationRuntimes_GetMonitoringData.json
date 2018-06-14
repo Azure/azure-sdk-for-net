@@ -1,0 +1,34 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Mon, 28 Aug 2017 04:19:53 GMT",
+        "x-ms-request-id": "0116dbdb-c45c-43da-b92d-a6608aece008",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-correlation-request-id": "33dfa003-3467-4b84-ae9b-272902990453"
+      },
+      "body": {
+        "name": "exampleIntegrationRuntime",
+        "nodes": [
+          {
+            "nodeName": "YANZHANG-DT",
+            "availableMemory": 17337,
+            "cpuUtilization": 9,
+            "limitConcurrentJobs": 28,
+            "runningConcurrentJobs": 0,
+            "sendBytes": 1.8606163263320923,
+            "receiveBytes": 8.09395694732666
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "locationId": "eastus",
+    "factoryRepoUpdate": {
+      "resourceGroupName": "exampleResourceGroup",
+      "factoryId": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/examplefactoryname",
+      "vstsConfiguration": {
+        "accountName": "msdata",
+        "projectName": "datafactory",
+        "repositoryName": "exampleRepo",
+        "collaborationBranch": "master",
+        "rootFolder": "/",
+        "lastCommitId": "",
+        "tenantId": "12f988bf-86d1-41af-91ab-2d7cd011db49"
+      }
+    },
+    "api-version": "2017-09-01-preview"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Sep 2017 17:33:54 GMT",
+        "x-ms-request-id": "dc1954ed-a1d3-4437-bd73-480ffdf1ea5a",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-correlation-request-id": "8d66d31c-23f3-4ac1-bc8c-1b6464342ad1"
+      },
+      "body": {
+        "name": "exampleFactoryName",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded",
+          "createTime": "2017-09-13T17:33:54.0294655Z",
+          "version": "2017-09-01-preview",
+          "vstsConfiguration": {
+            "accountName": "msdata",
+            "projectName": "datafactory",
+            "repositoryName": "exampleRepo",
+            "collaborationBranch": "master",
+            "rootFolder": "/",
+            "lastCommitId": "",
+            "tenantId": "12f988bf-86d1-41af-91ab-2d7cd011db49"
+          }
+        },
+        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/examplefactoryname",
+        "type": "Microsoft.DataFactory/factories",
+        "location": "East US"
+      }
+    }
+  }
+}

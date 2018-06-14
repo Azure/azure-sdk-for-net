@@ -65,20 +65,21 @@
         }
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:55 GMT",
-        "x-ms-request-id": "593b4383-377c-4e4d-8141-c6e76d313b8f",
+        "Date": "Wed, 13 Jun 2018 22:20:55 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1181",
-        "x-ms-correlation-request-id": "0bdb8812-2d23-4619-9582-2f16c2434e68"
+        "x-ms-ratelimit-remaining-subscription-writes": "1191",
+        "x-ms-request-id": "486f17e9-72f2-4d56-ae11-65ae0d6525fd",
+        "x-ms-correlation-request-id": "486f17e9-72f2-4d56-ae11-65ae0d6525fd"
       },
       "body": {
         "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
         "name": "examplePipeline",
+        "type": "Microsoft.DataFactory/factories/pipelines",
         "properties": {
           "description": "Example description",
           "activities": [
@@ -137,7 +138,7 @@
             }
           }
         },
-        "etag": "280324a7-0000-0000-0000-59b9712b0000"
+        "etag": "000052c4-0000-0000-0000-5b2198c70000"
       }
     }
   }

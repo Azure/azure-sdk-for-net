@@ -6,28 +6,30 @@
     "factory": {
       "location": "East US"
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:33:54 GMT",
-        "x-ms-request-id": "dc1954ed-a1d3-4437-bd73-480ffdf1ea5a",
+        "Date": "Wed, 13 Jun 2018 22:20:42 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-correlation-request-id": "8d66d31c-23f3-4ac1-bc8c-1b6464342ad1"
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "3711480e-1628-4cac-9526-ea545d857942",
+        "x-ms-correlation-request-id": "3711480e-1628-4cac-9526-ea545d857942"
       },
       "body": {
         "name": "exampleFactoryName",
-        "tags": {},
+        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+        "type": "Microsoft.DataFactory/factories",
         "properties": {
           "provisioningState": "Succeeded",
-          "createTime": "2017-09-13T17:33:54.0294655Z",
-          "version": "2017-09-01-preview"
+          "createTime": "2018-06-13T22:20:42.433871Z",
+          "version": "2018-06-01",
+          "defaults": {}
         },
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/examplefactoryname",
-        "type": "Microsoft.DataFactory/factories",
-        "location": "East US"
+        "eTag": "\"0000e501-0000-0000-0000-5b2198ba0000\"",
+        "location": "East US",
+        "tags": {}
       }
     }
   }

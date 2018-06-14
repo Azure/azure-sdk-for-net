@@ -24,8 +24,8 @@ namespace DataFactory.Tests.UnitTests
     /// </summary>
     public class ExamplesUnitTest : BaseUnitTest
     {
-        //[Theory]
-        //[InlineData(@"secrets.json", @"exampleoutput", @"exampleoutputworkarounds")]
+        [Theory]
+        [InlineData(@"secrets.json", @"exampleoutput", @"exampleoutputworkarounds")]
         public void CaptureExamples(string secretsFile, string outputDirectory, string outputDirectoryWorkarounds = null)
         {
             // Uncomment the [Theory] and [InlineData(...)] above and run this method with your favorite locations for secrets and outputs to recapture examples.  It takes about 20-30 minutes.
@@ -117,7 +117,7 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("IntegrationRuntimes_Update", (example, client, responseCode) =>
             {
-                IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
+                IntegrationRuntimeResource response = client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
                     new UpdateIntegrationRuntimeRequest
                     {
                         AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
@@ -368,11 +368,12 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
-        public void Triggers_ListRuns()
+        public void TriggerRuns_QueryByFactory()
         {
-            RunTest("Triggers_ListRuns", (example, client, responseCode) =>
+            RunTest("TriggerRuns_QueryByFactory", (example, client, responseCode) =>
             {
-                IPage<TriggerRun> response = client.Triggers.ListRuns(RGN(example), FN(example), TN(example), GetTypedParameter<DateTime>(example, client, "startTime"), GetTypedParameter<DateTime>(example, client, "endTime"));
+                RunFilterParameters filterParams = GetTypedParameter<RunFilterParameters>(example, client, "filterParameters");
+                IPage<TriggerRun> response = client.TriggerRuns.QueryByFactory(RGN(example), FN(example), filterParams);
                 CheckResponseBody(example, client, responseCode, response);
             });
         }
@@ -498,18 +499,17 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("Pipelines_CreateRun", (example, client, responseCode) =>
             {
-                CreateRunResponse response = client.Pipelines.CreateRun(RGN(example), FN(example), PN(example), GetTypedParameter<Dictionary<string, object>>(example, client, "parameters"));
+                CreateRunResponse response = client.Pipelines.CreateRun(RGN(example), FN(example), PN(example), parameters: GetTypedParameter<Dictionary<string, object>>(example, client, "parameters"));
                 CheckResponseBody(example, client, responseCode, response);
-                // ISSUE: It always returns a 202 response with a runId and no Location header, regardless of whether a run was actually created
             });
         }
 
         [Fact]
-        public void Factories_CancelPipelineRun()
+        public void PipelineRuns_Cancel()
         {
-            RunTest("Factories_CancelPipelineRun", (example, client, responseCode) =>
+            RunTest("PipelineRuns_Cancel", (example, client, responseCode) =>
             {
-                client.Factories.CancelPipelineRun(RGN(example), FN(example), new Guid().ToString());
+                client.PipelineRuns.Cancel(RGN(example), FN(example), new Guid().ToString());
             });
         }
 
@@ -518,7 +518,7 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("PipelineRuns_ListByFactory", (example, client, responseCode) =>
             {
-                PipelineRunFilterParameters filterParams = GetTypedParameter<PipelineRunFilterParameters>(example, client, "filterParameters");
+                RunFilterParameters filterParams = GetTypedParameter<RunFilterParameters>(example, client, "filterParameters");
                 PipelineRunQueryResponse response = client.PipelineRuns.QueryByFactory(RGN(example), FN(example), filterParams);
                 CheckResponseBody(example, client, responseCode, response);
             });
@@ -535,11 +535,12 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
-        public void ActivityRuns_ListByPipelineRun()
+        public void ActivityRuns_QueryByPipelineRun()
         {
-            RunTest("ActivityRuns_ListByPipelineRun", (example, client, responseCode) =>
+            RunTest("ActivityRuns_QueryByPipelineRun", (example, client, responseCode) =>
             {
-                IPage<ActivityRun> response = client.ActivityRuns.ListByPipelineRun(RGN(example), FN(example), GetTypedParameter<string>(example, client, "runId"), GetTypedParameter<DateTime>(example, client, "startTime"), GetTypedParameter<DateTime>(example, client, "endTime"));
+                RunFilterParameters filterParams = GetTypedParameter<RunFilterParameters>(example, client, "filterParameters");
+                IPage<ActivityRun> response = client.ActivityRuns.QueryByPipelineRun(RGN(example), FN(example), GetTypedParameter<string>(example, client, "runId"), filterParams);
                 CheckResponseBody(example, client, responseCode, response);
             });
         }
@@ -549,7 +550,7 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("Operations_List", (example, client, responseCode) =>
             {
-                OperationListResponse response = client.Operations.List();
+                IPage<Operation> response = client.Operations.List();
                 CheckResponseBody(example, client, responseCode, response);
             });
         }

@@ -4,24 +4,25 @@
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "pipelineName": "examplePipeline",
+    "runId": null,
     "parameters": {
       "OutputBlobNameList": [
         "exampleoutput.csv"
       ]
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
-    "202": {
+    "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:58 GMT",
-        "x-ms-request-id": "a420e4fd-ebe9-4758-8db7-852b4d06245e",
+        "Date": "Wed, 13 Jun 2018 22:20:59 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1180",
-        "x-ms-correlation-request-id": "15d0c07a-603f-42c7-98ba-872b0eff2326"
+        "x-ms-ratelimit-remaining-subscription-writes": "1190",
+        "x-ms-request-id": "722d61fb-a71f-4374-a354-90664a4b3eb5",
+        "x-ms-correlation-request-id": "722d61fb-a71f-4374-a354-90664a4b3eb5"
       },
       "body": {
-        "runId": "a420e4fd-ebe9-4758-8db7-852b4d06245e"
+        "runId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f"
       }
     }
   }

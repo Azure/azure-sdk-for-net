@@ -4,31 +4,34 @@
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "linkedServiceName": "exampleLinkedService",
-    "api-version": "2017-09-01-preview"
+    "ifNoneMatch": null,
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:53 GMT",
-        "x-ms-request-id": "d0d69de8-5acc-4ef4-bf5b-340328408cb2",
+        "Date": "Wed, 13 Jun 2018 22:20:50 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14914",
-        "x-ms-correlation-request-id": "a9524daa-23b7-48ef-985c-9f5a0136acea"
+        "x-ms-ratelimit-remaining-subscription-reads": "14995",
+        "x-ms-request-id": "326b18f1-da81-4366-86ce-5d3a021609f4",
+        "x-ms-correlation-request-id": "326b18f1-da81-4366-86ce-5d3a021609f4"
       },
       "body": {
         "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/linkedservices/exampleLinkedService",
         "name": "exampleLinkedService",
+        "type": "Microsoft.DataFactory/factories/linkedservices",
         "properties": {
           "type": "AzureStorage",
           "typeProperties": {
             "connectionString": {
-              "value": "**********",
-              "type": "SecureString"
-            }
+              "type": "SecureString",
+              "value": "**********"
+            },
+            "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRGLURPR0ZPT0QtWUFOWkhBTkctV1VfY2QyMDY3OTgtYTQ2NC00YzYyLWI2NjAtODlmYTgwMThlODM4Ig0KfQ=="
           },
           "description": "Example description"
         },
-        "etag": "28031da7-0000-0000-0000-59b971290000"
+        "etag": "00004ac4-0000-0000-0000-5b2198c20000"
       }
     }
   }

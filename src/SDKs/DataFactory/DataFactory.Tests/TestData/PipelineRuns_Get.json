@@ -3,34 +3,35 @@
     "subscriptionId": "12345678-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
-    "runId": "a420e4fd-ebe9-4758-8db7-852b4d06245e",
-    "api-version": "2017-09-01-preview"
+    "runId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f",
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:58:09 GMT",
-        "x-ms-request-id": "751b997c-7971-4c8e-bf84-cc4ee24ba2b7",
+        "Date": "Wed, 13 Jun 2018 22:23:21 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14911",
-        "x-ms-correlation-request-id": "5ce2fefe-900d-41b6-a4df-6e15421b1d9d"
+        "x-ms-ratelimit-remaining-subscription-reads": "14943",
+        "x-ms-request-id": "e2837870-7f4e-4912-86ce-43d7558a4172",
+        "x-ms-correlation-request-id": "e2837870-7f4e-4912-86ce-43d7558a4172"
       },
       "body": {
-        "runId": "a420e4fd-ebe9-4758-8db7-852b4d06245e",
+        "runId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f",
         "pipelineName": "examplePipeline",
         "parameters": {
           "OutputBlobNameList": "[\"exampleoutput.csv\"]"
         },
         "invokedBy": {
-          "id": "be423891558d4c5294d4b49401a34620",
+          "id": "ff7897b9ff84483a8777e476b0ba1c19",
           "name": "Manual"
         },
-        "runStart": "2017-09-13T17:55:57.1202147Z",
-        "runEnd": "2017-09-13T17:56:25.2051416Z",
-        "durationInMs": 28084,
+        "runStart": "2018-06-13T22:20:56.7051379Z",
+        "runEnd": "2018-06-13T22:21:24.5757291Z",
+        "durationInMs": 27870,
         "status": "Succeeded",
         "message": "",
-        "lastUpdated": "2017-09-13T17:56:25.2051416Z"
+        "lastUpdated": "2018-06-13T22:21:24.5757291Z",
+        "annotations": []
       }
     }
   }

@@ -1,0 +1,51 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "filterParameters": {
+      "lastUpdatedAfter": "2018-06-13T22:19:56.5406897Z",
+      "lastUpdatedBefore": "2018-06-13T22:32:59.9920792Z",
+      "filters": [
+        {
+          "operand": "TriggerName",
+          "operator": "Equals",
+          "values": [
+            "exampleTrigger"
+          ]
+        }
+      ]
+    },
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Jun 2018 22:29:53 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "889a5252-6085-458d-b851-3dd242a5f74d",
+        "x-ms-correlation-request-id": "889a5252-6085-458d-b851-3dd242a5f74d"
+      },
+      "body": {
+        "value": [
+          {
+            "triggerName": "exampleTrigger",
+            "triggerRunId": "08586726780867710179470567194CU35",
+            "triggerType": "ScheduleTrigger",
+            "triggerRunTimestamp": "2018-06-13T22:26:38.6976401Z",
+            "status": "Succeeded",
+            "message": "",
+            "properties": {
+              "TriggerTime": "6/13/2018 10:26:38 PM",
+              "ScheduleTime": "6/13/2018 10:26:38 PM"
+            },
+            "triggeredPipelines": {
+              "examplePipeline": "a17b15bd-e6c7-40b4-9762-b1ea71be4e09"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

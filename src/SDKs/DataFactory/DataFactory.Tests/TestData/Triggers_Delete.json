@@ -4,26 +4,26 @@
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "triggerName": "exampleTrigger",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 18:04:26 GMT",
-        "x-ms-request-id": "797186e9-af57-4d6c-8b4b-c363df9e9bf1",
+        "Date": "Wed, 13 Jun 2018 22:29:57 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1187",
-        "x-ms-correlation-request-id": "19402448-85f2-4872-b998-9c6c1e17f04d"
+        "x-ms-ratelimit-remaining-subscription-deletes": "14987",
+        "x-ms-request-id": "ede1e1ed-4670-4a8a-9dff-7659932d5049",
+        "x-ms-correlation-request-id": "ede1e1ed-4670-4a8a-9dff-7659932d5049"
       },
       "body": null
     },
     "204": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 18:04:26 GMT",
-        "x-ms-request-id": "7d968b21-a030-4ba9-961b-7bbc799c0810",
+        "Date": "Wed, 13 Jun 2018 22:29:58 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1186",
-        "x-ms-correlation-request-id": "d66d750a-c28f-4be6-852a-30a67be744a1"
+        "x-ms-ratelimit-remaining-subscription-deletes": "14986",
+        "x-ms-request-id": "cc736ffe-e2ff-4c50-a61c-d34a90b9ae72",
+        "x-ms-correlation-request-id": "cc736ffe-e2ff-4c50-a61c-d34a90b9ae72"
       },
       "body": null
     }

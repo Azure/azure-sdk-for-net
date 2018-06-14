@@ -35,20 +35,21 @@
         }
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:54 GMT",
-        "x-ms-request-id": "a8bb197f-b00f-4add-a847-59f6aa0315ab",
+        "Date": "Wed, 13 Jun 2018 22:20:51 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1184",
-        "x-ms-correlation-request-id": "acdb3257-c6cb-44f1-8e14-afa3ebf471fa"
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "5a579f1a-34d0-4745-84e9-5ae58e614c89",
+        "x-ms-correlation-request-id": "5a579f1a-34d0-4745-84e9-5ae58e614c89"
       },
       "body": {
         "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/datasets/exampleDataset",
         "name": "exampleDataset",
+        "type": "Microsoft.DataFactory/factories/datasets",
         "properties": {
           "type": "AzureBlob",
           "typeProperties": {
@@ -77,7 +78,7 @@
             }
           }
         },
-        "etag": "28031ea7-0000-0000-0000-59b9712a0000"
+        "etag": "00004cc4-0000-0000-0000-5b2198c40000"
       }
     }
   }

@@ -2,46 +2,53 @@
   "parameters": {
     "subscriptionId": "12345678-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:33:56 GMT",
-        "x-ms-request-id": "85e53e59-e56e-4878-a1ff-aaa27f52b466",
+        "Date": "Wed, 13 Jun 2018 22:20:43 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14992",
-        "x-ms-correlation-request-id": "471c3c55-1293-47bf-9662-33bb20f4b75c"
+        "x-ms-ratelimit-remaining-subscription-reads": "14997",
+        "x-ms-request-id": "798fa674-50c0-4ee8-a11d-86c0aadf43f9",
+        "x-ms-correlation-request-id": "798fa674-50c0-4ee8-a11d-86c0aadf43f9"
       },
       "body": {
         "value": [
           {
-            "name": "exampleFactoryName",
-            "tags": {
-              "exampleTag": "exampleValue"
+            "name": "exampleFactoryName-linked",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "6a15dcc1-4ca0-494e-b6ca-e24e1e764145",
+              "tenantId": "12345678-1234-1234-123456789abc"
             },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName-linked",
+            "type": "Microsoft.DataFactory/factories",
             "properties": {
               "provisioningState": "Succeeded",
-              "createTime": "2017-09-13T17:33:54.0294655Z",
-              "version": "2017-09-01-preview"
+              "createTime": "2018-06-13T06:44:12.4381873Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
             },
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
-            "type": "Microsoft.DataFactory/factories",
-            "location": "East US"
+            "eTag": "\"00009201-0000-0000-0000-5b20bd3d0000\"",
+            "location": "East US",
+            "tags": {}
           },
           {
-            "name": "yitzhangFactoryV2",
-            "tags": {
-              "exampleTag": "exampleValue"
-            },
+            "name": "exampleFactoryName",
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+            "type": "Microsoft.DataFactory/factories",
             "properties": {
               "provisioningState": "Succeeded",
-              "createTime": "2017-05-08T21:03:32.7865115Z",
-              "version": "2017-03-01-preview"
+              "createTime": "2018-06-13T22:20:42.433871Z",
+              "version": "2018-06-01",
+              "defaults": {}
             },
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/yitzhangFactoryV2",
-            "type": "Microsoft.DataFactory/factories",
-            "location": "East US"
+            "eTag": "\"0000e601-0000-0000-0000-5b2198bb0000\"",
+            "location": "East US",
+            "tags": {
+              "exampleTag": "exampleValue"
+            }
           }
         ]
       }

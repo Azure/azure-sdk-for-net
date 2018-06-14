@@ -12,8 +12,8 @@
           "recurrence": {
             "frequency": "Minute",
             "interval": 4,
-            "startTime": "2017-09-13T17:57:20.7835924Z",
-            "endTime": "2017-09-13T18:13:20.7835924Z",
+            "startTime": "2018-06-13T22:22:37.6664124Z",
+            "endTime": "2018-06-13T22:38:37.6664124Z",
             "timeZone": "UTC"
           }
         },
@@ -32,28 +32,29 @@
         ]
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:58:21 GMT",
-        "x-ms-request-id": "3581e103-fcbc-43a1-a8c2-dc086040d0de",
+        "Date": "Wed, 13 Jun 2018 22:23:37 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-correlation-request-id": "8477d62a-5386-4c52-bf87-fc05a4f11b31"
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "4ab22e39-209c-43ed-8a98-db54ef7b5233",
+        "x-ms-correlation-request-id": "4ab22e39-209c-43ed-8a98-db54ef7b5233"
       },
       "body": {
         "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
         "name": "exampleTrigger",
+        "type": "Microsoft.DataFactory/factories/triggers",
         "properties": {
           "type": "ScheduleTrigger",
           "typeProperties": {
             "recurrence": {
               "frequency": "Minute",
               "interval": 4,
-              "startTime": "2017-09-13T17:57:20.7835924Z",
-              "endTime": "2017-09-13T18:13:20.7835924Z",
+              "startTime": "2018-06-13T22:22:37.6664124Z",
+              "endTime": "2018-06-13T22:38:37.6664124Z",
               "timeZone": "UTC"
             }
           },
@@ -72,7 +73,7 @@
           ],
           "runtimeState": "Stopped"
         },
-        "etag": "280327a7-0000-0000-0000-59b971bc0000"
+        "etag": "00008bc4-0000-0000-0000-5b21996a0000"
       }
     }
   }

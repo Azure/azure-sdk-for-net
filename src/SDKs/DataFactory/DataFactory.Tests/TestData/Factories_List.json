@@ -1,46 +1,202 @@
 {
   "parameters": {
     "subscriptionId": "12345678-1234-1234-12345678abc",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:33:56 GMT",
-        "x-ms-request-id": "85e53e59-e56e-4878-a1ff-aaa27f52b466",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14992",
-        "x-ms-correlation-request-id": "471c3c55-1293-47bf-9662-33bb20f4b75c"
+        "Date": "Wed, 13 Jun 2018 22:20:44 GMT",
+        "x-ms-ratelimit-remaining-subscription-reads": "14996",
+        "x-ms-request-id": "60a48f78-a1f9-41a0-ae6b-c48a8e2efebd",
+        "x-ms-correlation-request-id": "60a48f78-a1f9-41a0-ae6b-c48a8e2efebd",
+        "X-Content-Type-Options": "nosniff"
       },
       "body": {
         "value": [
           {
-            "name": "exampleFactoryName",
-            "tags": {
-              "exampleTag": "exampleValue"
+            "name": "rpV2OrigDF-72c7d3d4-5e17-4ec6-91de-9ab433f15e79",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "399c3de2-6072-4326-bfa9-4d0c116f1a7b",
+              "tenantId": "12345678-1234-1234-123456789abc"
             },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/rg-yanzhang-dfv2/providers/Microsoft.DataFactory/factories/rpv2origdf-72c7d3d4-5e17-4ec6-91de-9ab433f15e79",
+            "type": "Microsoft.DataFactory/factories",
             "properties": {
               "provisioningState": "Succeeded",
-              "createTime": "2017-09-13T17:33:54.0294655Z",
-              "version": "2017-09-01-preview"
+              "createTime": "2018-05-29T13:39:35.615921Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
             },
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
-            "type": "Microsoft.DataFactory/factories",
-            "location": "East US"
+            "eTag": "\"0000aa0d-0000-0000-0000-5b0d58170000\"",
+            "location": "East US",
+            "tags": {}
           },
           {
-            "name": "yitzhangFactoryV2",
-            "tags": {
-              "exampleTag": "exampleValue"
+            "name": "df-dogfood-yanzhang-we",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "1964579f-08aa-45f1-b0b1-24c3589b2d54",
+              "tenantId": "12345678-1234-1234-123456789abc"
             },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/rg-yanzhang-dfv2/providers/Microsoft.DataFactory/factories/df-dogfood-yanzhang-we",
+            "type": "Microsoft.DataFactory/factories",
             "properties": {
               "provisioningState": "Succeeded",
-              "createTime": "2017-05-08T21:03:32.7865115Z",
-              "version": "2017-03-01-preview"
+              "createTime": "2018-06-06T06:24:10.5565324Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
             },
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/yitzhangFactoryV2",
+            "eTag": "\"00007801-0000-0000-0000-5b177e0a0000\"",
+            "location": "West Europe",
+            "tags": {}
+          },
+          {
+            "name": "df-dogfood-yanzhang-we-linked",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "08513d46-f202-47d5-b7a8-d8a9b559ca3c",
+              "tenantId": "12345678-1234-1234-123456789abc"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/rg-yanzhang-dfv2/providers/Microsoft.DataFactory/factories/df-dogfood-yanzhang-we-linked",
             "type": "Microsoft.DataFactory/factories",
-            "location": "East US"
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-06T06:24:18.115823Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
+            },
+            "eTag": "\"00007901-0000-0000-0000-5b177e120000\"",
+            "location": "West Europe",
+            "tags": {}
+          },
+          {
+            "name": "exampleFactoryName-linked",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "6a15dcc1-4ca0-494e-b6ca-e24e1e764145",
+              "tenantId": "12345678-1234-1234-123456789abc"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName-linked",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-13T06:44:12.4381873Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
+            },
+            "eTag": "\"00009201-0000-0000-0000-5b20bd3d0000\"",
+            "location": "East US",
+            "tags": {}
+          },
+          {
+            "name": "exampleFactoryName",
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-13T22:20:42.433871Z",
+              "version": "2018-06-01",
+              "defaults": {}
+            },
+            "eTag": "\"0000e601-0000-0000-0000-5b2198bb0000\"",
+            "location": "East US",
+            "tags": {
+              "exampleTag": "exampleValue"
+            }
+          },
+          {
+            "name": "rpV2OrigDF-72c7d3d4-5e17-4ec6-91de-9ab433f15e79",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "399c3de2-6072-4326-bfa9-4d0c116f1a7b",
+              "tenantId": "12345678-1234-1234-123456789abc"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/rg-yanzhang-dfv2/providers/Microsoft.DataFactory/factories/rpv2origdf-72c7d3d4-5e17-4ec6-91de-9ab433f15e79",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-05-29T13:39:35.615921Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
+            },
+            "eTag": "\"0000aa0d-0000-0000-0000-5b0d58170000\"",
+            "location": "East US",
+            "tags": {}
+          },
+          {
+            "name": "df-dogfood-yanzhang-we",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "1964579f-08aa-45f1-b0b1-24c3589b2d54",
+              "tenantId": "12345678-1234-1234-123456789abc"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/rg-yanzhang-dfv2/providers/Microsoft.DataFactory/factories/df-dogfood-yanzhang-we",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-06T06:24:10.5565324Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
+            },
+            "eTag": "\"00007801-0000-0000-0000-5b177e0a0000\"",
+            "location": "West Europe",
+            "tags": {}
+          },
+          {
+            "name": "df-dogfood-yanzhang-we-linked",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "08513d46-f202-47d5-b7a8-d8a9b559ca3c",
+              "tenantId": "12345678-1234-1234-123456789abc"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/rg-yanzhang-dfv2/providers/Microsoft.DataFactory/factories/df-dogfood-yanzhang-we-linked",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-06T06:24:18.115823Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
+            },
+            "eTag": "\"00007901-0000-0000-0000-5b177e120000\"",
+            "location": "West Europe",
+            "tags": {}
+          },
+          {
+            "name": "exampleFactoryName-linked",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "6a15dcc1-4ca0-494e-b6ca-e24e1e764145",
+              "tenantId": "12345678-1234-1234-123456789abc"
+            },
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName-linked",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-13T06:44:12.4381873Z",
+              "version": "2017-09-01-preview",
+              "defaults": {}
+            },
+            "eTag": "\"00009201-0000-0000-0000-5b20bd3d0000\"",
+            "location": "East US",
+            "tags": {}
+          },
+          {
+            "name": "exampleFactoryName",
+            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-13T22:20:42.433871Z",
+              "version": "2018-06-01",
+              "defaults": {}
+            },
+            "eTag": "\"0000e601-0000-0000-0000-5b2198bb0000\"",
+            "location": "East US",
+            "tags": {
+              "exampleTag": "exampleValue"
+            }
           }
         ]
       }

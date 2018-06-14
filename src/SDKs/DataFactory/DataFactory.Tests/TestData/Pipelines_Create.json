@@ -25,7 +25,8 @@
                     },
                     "sink": {
                       "type": "BlobSink"
-                    }
+                    },
+                    "dataIntegrationUnits": 32
                   },
                   "inputs": [
                     {
@@ -64,20 +65,21 @@
         }
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:55 GMT",
-        "x-ms-request-id": "6cc3413e-9afa-487e-aeff-45bc6285470b",
+        "Date": "Thu, 14 Jun 2018 02:07:07 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1182",
-        "x-ms-correlation-request-id": "69c3f715-8fd9-4448-a8ee-becbde571aec"
+        "x-ms-ratelimit-remaining-subscription-writes": "1181",
+        "x-ms-request-id": "8dc3fa52-e9dd-468c-b922-05142bc2e0c6",
+        "x-ms-correlation-request-id": "8dc3fa52-e9dd-468c-b922-05142bc2e0c6"
       },
       "body": {
         "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
         "name": "examplePipeline",
+        "type": "Microsoft.DataFactory/factories/pipelines",
         "properties": {
           "activities": [
             {
@@ -97,7 +99,8 @@
                       },
                       "sink": {
                         "type": "BlobSink"
-                      }
+                      },
+                      "dataIntegrationUnits": 32
                     },
                     "inputs": [
                       {
@@ -135,7 +138,7 @@
             }
           }
         },
-        "etag": "280321a7-0000-0000-0000-59b9712b0000"
+        "etag": "0500f62d-0000-0000-0000-5b21cdcb0000"
       }
     }
   }

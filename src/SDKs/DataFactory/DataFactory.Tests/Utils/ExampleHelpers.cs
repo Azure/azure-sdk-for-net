@@ -27,7 +27,7 @@ namespace DataFactory.Tests.Utils
         /// <summary>
         /// Work around issue where apparently no version of client runtime fully supports .net standard
         /// </summary>
-        class CertificateCredentials: ServiceClientCredentials
+        class CertificateCredentials : ServiceClientCredentials
         {
             private X509Certificate2 cert;
             public CertificateCredentials(X509Certificate2 cert)
@@ -88,7 +88,7 @@ namespace DataFactory.Tests.Utils
             string json = File.ReadAllText(path);
             return SafeJsonConvert.DeserializeObject<ExampleSecrets>(json);
         }
-        
+
         public static Rm.IResourceManagementClient GetRealRmClient(ExampleSecrets secrets)
         {
             Rm.IResourceManagementClient client = null;
@@ -103,6 +103,20 @@ namespace DataFactory.Tests.Utils
                 store.Open(OpenFlags.ReadOnly);
                 X509Certificate2 cert = store.Certificates.Find(X509FindType.FindByThumbprint, Thumb, false)[0];
                 ClientAssertionCertificate cac = new ClientAssertionCertificate(ArmServicePrincipalIdentity, cert);
+                var context = new AuthenticationContext("https://login.windows-ppe.net/" + ArmTenant);
+                AuthenticationResult result = context.AcquireTokenAsync("https://management.core.windows.net/", cac).Result;
+                ServiceClientCredentials creds = new TokenCredentials(result.AccessToken);
+                client = new Rm.ResourceManagementClient(creds) { SubscriptionId = secrets.SubId };
+                client.BaseUri = new Uri("https://api-dogfood.resources.windows-int.net/");
+            }
+            else if (secrets.Environment == "dogfood")
+            {
+                string ArmTenant = secrets.TenantId;
+                string ArmServicePrincipalIdentity = secrets.ClientId;
+                string SubId = secrets.SubId;
+                // Use service principal with cert to authenticate against Azure
+                string secret = secrets.ClientSecret;
+                var cac = new ClientCredential(ArmServicePrincipalIdentity, secret);
                 var context = new AuthenticationContext("https://login.windows-ppe.net/" + ArmTenant);
                 AuthenticationResult result = context.AcquireTokenAsync("https://management.core.windows.net/", cac).Result;
                 ServiceClientCredentials creds = new TokenCredentials(result.AccessToken);
@@ -144,6 +158,20 @@ namespace DataFactory.Tests.Utils
                 store.Open(OpenFlags.ReadOnly);
                 X509Certificate2 cert = store.Certificates.Find(X509FindType.FindByThumbprint, Thumb, false)[0];
                 ClientAssertionCertificate cac = new ClientAssertionCertificate(ArmServicePrincipalIdentity, cert);
+                var context = new AuthenticationContext("https://login.windows-ppe.net/" + ArmTenant);
+                AuthenticationResult result = context.AcquireTokenAsync("https://management.core.windows.net/", cac).Result;
+                ServiceClientCredentials creds = new TokenCredentials(result.AccessToken);
+                client = new DataFactoryManagementClient(creds) { SubscriptionId = SubId };
+                client.BaseUri = new Uri("https://api-dogfood.resources.windows-int.net/");
+            }
+            else if (secrets.Environment == "dogfood")
+            {
+                string ArmTenant = secrets.TenantId;
+                string ArmServicePrincipalIdentity = secrets.ClientId;
+                string SubId = secrets.SubId;
+                // Use service principal with key to authenticate against Azure
+                string secret = secrets.ClientSecret;
+                var cac = new ClientCredential(ArmServicePrincipalIdentity, secret);
                 var context = new AuthenticationContext("https://login.windows-ppe.net/" + ArmTenant);
                 AuthenticationResult result = context.AcquireTokenAsync("https://management.core.windows.net/", cac).Result;
                 ServiceClientCredentials creds = new TokenCredentials(result.AccessToken);

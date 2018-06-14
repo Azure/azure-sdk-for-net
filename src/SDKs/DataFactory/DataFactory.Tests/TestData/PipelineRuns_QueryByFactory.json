@@ -1,0 +1,72 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "filterParameters": {
+      "lastUpdatedAfter": "2018-06-13T22:19:56.5406897Z",
+      "lastUpdatedBefore": "2018-06-13T22:32:59.9920792Z",
+      "filters": [
+        {
+          "operand": "PipelineName",
+          "operator": "Equals",
+          "values": [
+            "examplePipeline"
+          ]
+        }
+      ]
+    },
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Jun 2018 22:23:14 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14944",
+        "x-ms-request-id": "ebfd6134-7c0f-4316-a866-fd3542192edd",
+        "x-ms-correlation-request-id": "ebfd6134-7c0f-4316-a866-fd3542192edd"
+      },
+      "body": {
+        "value": [
+          {
+            "runId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f",
+            "pipelineName": "examplePipeline",
+            "parameters": {
+              "OutputBlobNameList": "[\"exampleoutput.csv\"]"
+            },
+            "invokedBy": {
+              "id": "ff7897b9ff84483a8777e476b0ba1c19",
+              "name": "Manual"
+            },
+            "runStart": "2018-06-13T22:20:56.7051379Z",
+            "runEnd": "2018-06-13T22:21:24.5757291Z",
+            "durationInMs": 27870,
+            "status": "Succeeded",
+            "message": "",
+            "lastUpdated": "2018-06-13T22:21:24.5757291Z",
+            "annotations": []
+          },
+          {
+            "runId": "8ae4df22-5392-45a5-9e94-c1a265f2fd8e",
+            "pipelineName": "examplePipeline",
+            "parameters": {
+              "OutputBlobNameList": "[\"exampleoutput.csv\"]"
+            },
+            "invokedBy": {
+              "id": "7d019192eea744bfa1a644a42f90a15d",
+              "name": "Manual"
+            },
+            "runStart": "2018-06-13T22:23:01.1891489Z",
+            "runEnd": null,
+            "durationInMs": null,
+            "status": "Cancelled",
+            "message": "",
+            "lastUpdated": "2018-06-13T22:23:03.305467Z",
+            "annotations": []
+          }
+        ]
+      }
+    }
+  }
+}
