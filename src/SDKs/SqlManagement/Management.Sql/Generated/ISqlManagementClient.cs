@@ -356,5 +356,15 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; }
 
+        /// <summary>
+        /// Gets the ITdeCertificatesOperations.
+        /// </summary>
+        ITdeCertificatesOperations TdeCertificates { get; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceTdeCertificatesOperations.
+        /// </summary>
+        IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; }
+
     }
 }
