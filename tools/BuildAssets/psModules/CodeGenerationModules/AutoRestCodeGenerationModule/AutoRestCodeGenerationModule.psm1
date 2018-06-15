@@ -427,7 +427,6 @@ function Start-CodeGeneration {
         [string] $LocalConfigFilePath
     )
     $localSdkRepoDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
-    $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
     
     if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) {
         
@@ -455,6 +454,7 @@ function Start-CodeGeneration {
             $logFile = [System.IO.Path]::GetTempFileName()+".txt";
         }
         else {
+            $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
             if(!(Test-Path -Path "$localSdkRepoDirectory\_metadata"))
             {
                 New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
