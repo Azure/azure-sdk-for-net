@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
 {
     using Microsoft.Rest;
     using Models;

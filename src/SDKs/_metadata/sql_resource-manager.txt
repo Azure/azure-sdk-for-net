@@ -8,4 +8,4 @@ Commit:      d1953e5c7f65c8ef39b58316601308977649a561
 2) AutoRest information
 Requested version: latest
 Bootstrapper version:    C:\Users\nivithla\AppData\Roaming\npm `-- autorest@2.0.4280  
-Latest installed version:    
+Latest installed version:   

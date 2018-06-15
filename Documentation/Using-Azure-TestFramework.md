@@ -35,7 +35,7 @@ In order to Record/Playback a test, you need to setup a connection string that c
 
 > TEST_CSM_ORGID_AUTHENTICATION
 
-This is the connection string that determined how to connect to Azure. This includes both your authentiation and the Azure environment to connect to.
+Value of the env. variable is the connection string that determines how to connect to Azure. This includes authentiation and the Azure environment to connect to.
 
 > AZURE_TEST_MODE
 
@@ -43,18 +43,15 @@ This specifies whether test framework will `Record` test sessions or `Playback` 
 
 #### 3.2 Playback Test
 
-The default mode is Playback mode, so no setting up of connection string is required. You can optionally set environment variables:
-
-	TEST_CSM_ORGID_AUTHENTICATION=
-	AZURE_TEST_MODE=Playback
+The default mode is Playback mode, so no setting up of connection string is required.
 
 #### 3.3 Record Test with Interactive login using OrgId
 
-This is no longer the preferred option because it only works when running on .NET Framework. When running on .NET Core you may get an error like `Interactive Login is supported only in NET45 projects`.
+This is no longer the preferred option because it only works when running on .NET Framework (Full Desktop version of .NET - 4.5.1+) When running on .NET Core you may get an error like `Interactive Login is supported only in NET45 projects`.
 
-To use this option, set the following environment variables before starting Visual Studio:
+To use interactive login, set the following environment variables before starting Visual Studio:
 
-	TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId={SubId};UserId={orgId};AADTenant={tenantId};Environment={env};HttpRecorderMode=Record;
+	TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId={SubId};AADTenant={tenantId};Environment={env};HttpRecorderMode=Record;
 	AZURE_TEST_MODE=Record
 
 #### 3.4 Record Test with ServicePrincipal
@@ -107,10 +104,6 @@ Changing the above properties at run-time has the potential to hard code few thi
 Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` environment variable is consistent with the value in `AZURE_TEST_MODE` environment variable.
 
 ##7. Connection string
-Connection string is provided to Test Framework using following environment variables.
-In order to debug test set the following environment variables before starting Visual Studio:
-
-	TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId={SubId};UserId={orgId};AADTenant={tenantId};Environment={env};HttpRecorderMode=Record;
 
 #### 7.1 Supported Key=Value pairs in Connectionstring
 	* ManagementCertificate
@@ -198,6 +191,6 @@ In order to debug test set the following environment variables before starting V
 When specified, test framework expect all Uri's to be provided by the user as part of the connection string.
 
 What is also supported is as below (connections string example)
->SubscriptionId=subId;Environment=Prod;AADAuthUri=customAuthUri;ResourceManagementUri=CustomR>esourceMgmtUri
+>SubscriptionId=subId;Environment=Prod;AADAuthUri=customAuthUri;ResourceManagementUri=CustomResourceMgmtUri
 
 Which translates to, all Uri from pre-defined Prod environment will be used, but AADAuthUri and ResourceManagementUri will be overridden by the one provided in the connection string

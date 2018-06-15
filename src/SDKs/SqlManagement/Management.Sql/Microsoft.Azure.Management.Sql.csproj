@@ -12,6 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
+- Added support for using sever level rule in vulnerability assessment baseline operations.
 - Enable customers to upload their TDE certificate to CMS
       ]]>
 		</PackageReleaseNotes>

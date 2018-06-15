@@ -112,6 +112,14 @@ namespace Microsoft.Rest
         /// <returns>Value for provided HKLM key</returns>
         private string ReadHKLMRegistry(string path, string key)
         {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:
+                case PlatformID.MacOSX:
+                case PlatformID.Xbox:
+                    return string.Empty;
+            }
+
             try
             {
                 using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))

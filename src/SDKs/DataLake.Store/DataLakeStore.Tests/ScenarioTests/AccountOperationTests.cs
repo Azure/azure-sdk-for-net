@@ -449,5 +449,115 @@ namespace DataLakeStore.Tests
                 }
             }
         }
+
+        [Fact]
+        public void VirtualNetworkRulesCRUDTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
+
+                // Create an account with virtual network rules.
+                var adlsAccountName = TestUtilities.GenerateName("adlsacct");
+                var vNetRuleName1 = TestUtilities.GenerateName("vnetrule1");
+                var subnetId = "/subscriptions/9e1f0ab2-2f85-49de-9677-9da6f829b914/resourceGroups/lewu-rg/providers/Microsoft.Network/virtualNetworks/lewuVNET/subnets/default";
+
+                var responseCreate =
+                    clientToUse.Accounts.Create(
+                        resourceGroupName: commonData.ResourceGroupName,
+                        accountName: adlsAccountName,
+                        parameters: new CreateDataLakeStoreAccountParameters
+                        {
+                            Location = commonData.Location,
+                            VirtualNetworkRules = new List<CreateVirtualNetworkRuleWithAccountParameters>
+                            {
+                                new CreateVirtualNetworkRuleWithAccountParameters
+                                {
+                                    Name = vNetRuleName1,
+                                    SubnetId = subnetId
+                                }
+                            },
+                            FirewallState = FirewallState.Enabled,
+                            FirewallAllowAzureIps = FirewallAllowAzureIpsState.Enabled
+                        }
+                    );
+
+                Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.ProvisioningState);
+
+                // Get the account and ensure that all the values are properly set.
+                var responseGet =
+                    clientToUse.Accounts.Get(
+                        commonData.ResourceGroupName,
+                        adlsAccountName
+                    );
+
+                // Validate the account creation process
+                Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseGet.ProvisioningState);
+                Assert.NotNull(responseCreate.Id);
+                Assert.NotNull(responseGet.Id);
+                Assert.Contains(adlsAccountName, responseGet.Id);
+                Assert.Contains(adlsAccountName, responseGet.Endpoint);
+                Assert.Equal(commonData.Location, responseGet.Location);
+                Assert.Equal(adlsAccountName, responseGet.Name);
+                Assert.Equal("Microsoft.DataLakeStore/accounts", responseGet.Type);
+
+                // Validate firewall state
+                Assert.Equal(FirewallState.Enabled, responseGet.FirewallState);
+                Assert.True(responseGet.FirewallRules.Count() == 0);
+                Assert.Equal(FirewallAllowAzureIpsState.Enabled, responseGet.FirewallAllowAzureIps);
+
+                // Validate virtual network state
+                Assert.True(responseGet.VirtualNetworkRules.Count() == 1);
+                Assert.Equal(vNetRuleName1, responseGet.VirtualNetworkRules[0].Name);
+                Assert.Equal(subnetId, responseGet.VirtualNetworkRules[0].SubnetId);
+
+                var vnetRule = clientToUse.VirtualNetworkRules.Get(
+                        commonData.ResourceGroupName,
+                        adlsAccountName,
+                        vNetRuleName1
+                    );
+
+                Assert.Equal(vNetRuleName1, vnetRule.Name);
+                Assert.Equal(subnetId, vnetRule.SubnetId);
+
+                var updatedSubnetId = "/subscriptions/9e1f0ab2-2f85-49de-9677-9da6f829b914/resourceGroups/lewu-rg/providers/Microsoft.Network/virtualNetworks/lewuVNET/subnets/updatedSubnetId";
+                //update the virtual network rule to change the subnetId
+                vnetRule = clientToUse.VirtualNetworkRules.CreateOrUpdate(
+                        commonData.ResourceGroupName,
+                        adlsAccountName,
+                        vNetRuleName1,
+                        new CreateOrUpdateVirtualNetworkRuleParameters
+                        {
+                            SubnetId = updatedSubnetId,
+                        }
+                    );
+
+                Assert.Equal(updatedSubnetId, vnetRule.SubnetId);
+
+                // Remove the virtual network rule and verify it is gone
+                clientToUse.VirtualNetworkRules.Delete(
+                    commonData.ResourceGroupName,
+                    adlsAccountName,
+                    vNetRuleName1
+                );
+
+                try
+                {
+                    vnetRule =
+                        clientToUse.VirtualNetworkRules.Get(
+                            commonData.ResourceGroupName,
+                            adlsAccountName,
+                            vNetRuleName1
+                        );
+
+                    Assert.True(false, "Attempting to retrieve a deleted vNet rule did not throw.");
+                }
+                catch (CloudException e)
+                {
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
+            }
+        }
     }
 }

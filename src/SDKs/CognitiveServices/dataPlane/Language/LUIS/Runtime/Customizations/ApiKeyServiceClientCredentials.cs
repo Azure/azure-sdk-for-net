@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.CognitiveServices.Language.LUIS
+namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
 {
     using System;
     using System.Net.Http;

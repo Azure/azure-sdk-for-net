@@ -91,11 +91,6 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineExtensionsOperations VirtualMachineExtensions { get; private set; }
 
         /// <summary>
-        /// Gets the IVirtualMachinesOperations.
-        /// </summary>
-        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
-
-        /// <summary>
         /// Gets the IVirtualMachineImagesOperations.
         /// </summary>
         public virtual IVirtualMachineImagesOperations VirtualMachineImages { get; private set; }
@@ -114,6 +109,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IImagesOperations.
         /// </summary>
         public virtual IImagesOperations Images { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachinesOperations.
+        /// </summary>
+        public virtual IVirtualMachinesOperations VirtualMachines { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetsOperations.
@@ -370,11 +370,11 @@ namespace Microsoft.Azure.Management.Compute
             AvailabilitySets = new AvailabilitySetsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
-            VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
             Usage = new UsageOperations(this);
             VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             Images = new ImagesOperations(this);
+            VirtualMachines = new VirtualMachinesOperations(this);
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);

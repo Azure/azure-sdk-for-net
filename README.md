@@ -17,7 +17,7 @@ For a full list of packages available for download in this repository, please se
 ### Prerequisites:
   Install VS 2017 (Professional or higher) + VS2017 Update 1
   (https://www.visualstudio.com/).
-  To know more about VS 2017 and it's project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
+  To know more about VS 2017 and its project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
 
 ### Directory Restructure
 Directory structure has been simplified and consolidated in fewer directories

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // List of potential token providers. 
         private readonly List<NonInteractiveAzureServiceTokenProviderBase> _potentialAccessTokenProviders;
 
-        // Ensures only one threads gets the token from the actual source. It is then cached, so other threads can get it from the cache. 
+        // Ensures only one thread gets the token from the actual source. It is then cached, so other threads can get it from the cache. 
         private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
             finally
             {
-                // Whichever way the try block exists, the semaphone must be released. 
+                // Whichever way the try block exits, the semaphore must be released. 
                 Semaphore.Release();
             }
             

@@ -34,7 +34,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="tags">A list of tags with confidence level.</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        /// <param name="metadata">Image metadata</param>
         public TagResult(IList<ImageTag> tags = default(IList<ImageTag>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             Tags = tags;
@@ -61,7 +60,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string RequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets image metadata
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
