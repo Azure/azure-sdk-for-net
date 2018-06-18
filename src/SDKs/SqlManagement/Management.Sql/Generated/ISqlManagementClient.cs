@@ -322,6 +322,11 @@ namespace Microsoft.Azure.Management.Sql
         IServerDnsAliasesOperations ServerDnsAliases { get; }
 
         /// <summary>
+        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// </summary>
+        IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
+
+        /// <summary>
         /// Gets the IRestorePointsOperations.
         /// </summary>
         IRestorePointsOperations RestorePoints { get; }

@@ -5,7 +5,7 @@
 
 C:\Users\yaiyun\AppData\Roaming\npm\autorest -> C:\Users\yaiyun\AppData\Roaming\npm\node_modules\autorest\dist\app.js
 + autorest@2.0.4280
-updated 1 package in 2.315s
+updated 1 package in 3.881s
 
 AutoRest installed successfully.
 Commencing code generation
@@ -19,11 +19,11 @@ https://aka.ms/autorest
    Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
    Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
 
-2018-06-14 07:14:29 UTC
+2018-06-17 13:11:23 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      69592a62dd01225f16a9b398664c3b9d6ddc8268
+Commit:      95681b629bc2b2a2f31bae1e94ce4eb81f6ee91c
 
 2) AutoRest information
 Requested version: latest
