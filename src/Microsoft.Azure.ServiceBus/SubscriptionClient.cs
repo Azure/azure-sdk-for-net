@@ -52,7 +52,6 @@ namespace Microsoft.Azure.ServiceBus
     {
         int prefetchCount;
         readonly object syncLock;
-        readonly bool ownsConnection;
         readonly ServiceBusDiagnosticSource diagnosticSource;
 
         IInnerSubscriptionClient innerSubscriptionClient;
@@ -86,7 +85,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -110,7 +109,7 @@ namespace Microsoft.Azure.ServiceBus
             RetryPolicy retryPolicy = null)
             : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, topicPath, subscriptionName, receiveMode, retryPolicy)
         {
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -142,7 +141,7 @@ namespace Microsoft.Azure.ServiceBus
             this.Path = EntityNameHelper.FormatSubscriptionPath(this.TopicPath, this.SubscriptionName);
             this.ReceiveMode = receiveMode;
             this.diagnosticSource = new ServiceBusDiagnosticSource(this.Path, serviceBusConnection.Endpoint);
-            this.ownsConnection = false;
+            this.OwnsConnection = false;
             if (this.ServiceBusConnection.TokenProvider != null)
             {
                 this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
@@ -637,7 +636,7 @@ namespace Microsoft.Azure.ServiceBus
                 await this.sessionClient.CloseAsync().ConfigureAwait(false);
             }
 
-            if (this.ownsConnection)
+            if (this.OwnsConnection)
             {
                 await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
             }

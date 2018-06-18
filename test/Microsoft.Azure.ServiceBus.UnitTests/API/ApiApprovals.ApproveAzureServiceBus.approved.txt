@@ -10,6 +10,7 @@ namespace Microsoft.Azure.ServiceBus
         public string ClientId { get; }
         public bool IsClosedOrClosing { get; }
         public abstract System.TimeSpan OperationTimeout { get; set; }
+        public bool OwnsConnection { get; }
         public abstract string Path { get; }
         public abstract System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public Microsoft.Azure.ServiceBus.RetryPolicy RetryPolicy { get; }

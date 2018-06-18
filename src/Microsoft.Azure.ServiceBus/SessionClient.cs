@@ -45,7 +45,6 @@ namespace Microsoft.Azure.ServiceBus
     public sealed class SessionClient : ClientEntity, ISessionClient
     {
         const int DefaultPrefetchCount = 0;
-        readonly bool ownsConnection;
         readonly ServiceBusDiagnosticSource diagnosticSource;
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -130,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus
                 retryPolicy,
                 null)
         {
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -158,7 +157,7 @@ namespace Microsoft.Azure.ServiceBus
                 retryPolicy,
                 null)
         {
-            this.ownsConnection = false;
+            this.OwnsConnection = false;
         }
 
         internal SessionClient(
@@ -397,7 +396,7 @@ namespace Microsoft.Azure.ServiceBus
 
         protected override async Task OnClosingAsync()
         {
-            if (this.ownsConnection)
+            if (this.OwnsConnection)
             {
                 await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
             }

@@ -55,6 +55,11 @@ namespace Microsoft.Azure.ServiceBus
         public abstract ServiceBusConnection ServiceBusConnection { get; }
 
         /// <summary>
+        /// Returns true if connection is owned and false if connection is shared.
+        /// </summary>
+        public bool OwnsConnection { get; internal set; }
+
+        /// <summary>
         /// Gets the name of the entity.
         /// </summary>
         public abstract string Path { get; }

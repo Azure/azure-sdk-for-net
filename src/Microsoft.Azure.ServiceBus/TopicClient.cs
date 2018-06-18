@@ -31,7 +31,6 @@ namespace Microsoft.Azure.ServiceBus
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
     public class TopicClient : ClientEntity, ITopicClient
     {
-        readonly bool ownsConnection;
         readonly object syncLock;
         MessageSender innerSender;
 
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace Microsoft.Azure.ServiceBus
             RetryPolicy retryPolicy = null)
             : this(new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, entityPath, retryPolicy)
         {
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace Microsoft.Azure.ServiceBus
             this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
             this.syncLock = new object();
             this.TopicName = entityPath;
-            this.ownsConnection = false;
+            this.OwnsConnection = false;
             if (this.ServiceBusConnection.TokenProvider != null)
             {
                 this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
@@ -236,7 +235,7 @@ namespace Microsoft.Azure.ServiceBus
                 await this.innerSender.CloseAsync().ConfigureAwait(false);
             }
 
-            if (this.ownsConnection)
+            if (this.OwnsConnection)
             {
                 await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
             }

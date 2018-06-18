@@ -37,7 +37,6 @@ namespace Microsoft.Azure.ServiceBus.Core
     public class MessageSender : ClientEntity, IMessageSender
     {
         int deliveryCount;
-        readonly bool ownsConnection;
         readonly ActiveClientLinkManager clientLinkManager;
         readonly ServiceBusDiagnosticSource diagnosticSource;
         readonly bool isViaSender;
@@ -74,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             RetryPolicy retryPolicy = null)
             : this(entityPath, null, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy)
         {
-            this.ownsConnection = true;
+            this.OwnsConnection = true;
         }
 
         /// <summary>
@@ -109,7 +108,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             RetryPolicy retryPolicy = null)
             : this(entityPath, null, null, serviceBusConnection, null, retryPolicy)
         {
-            this.ownsConnection = false;
+            this.OwnsConnection = false;
         }
 
         /// <summary>
@@ -132,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             RetryPolicy retryPolicy = null)
             :this(viaEntityPath, entityPath, null, serviceBusConnection, null, retryPolicy)
         {
-            this.ownsConnection = false;
+            this.OwnsConnection = false;
         }
 
         internal MessageSender(
@@ -444,7 +443,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             await this.SendLinkManager.CloseAsync().ConfigureAwait(false);
             await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
 
-            if (this.ownsConnection)
+            if (this.OwnsConnection)
             {
                 await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
             }
