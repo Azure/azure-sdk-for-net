@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Added support for using sever level rule in vulnerability assessment baseline operations.
+- Added support for using sever level Threat Detection.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
