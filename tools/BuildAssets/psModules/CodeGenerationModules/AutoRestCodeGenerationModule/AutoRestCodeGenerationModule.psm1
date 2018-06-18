@@ -86,7 +86,8 @@ function launchProcess {
     $p.WaitForExit()
     $stdout = $p.StandardOutput.ReadToEnd()
     $stderr = $p.StandardError.ReadToEnd()
-    Write-InfoLog $stdout 
+    # send std output to the console only
+    Write-Host $stdout 
     Write-ErrorLog $stderr
     if($p.ExitCode -ne 0)
     {
@@ -219,6 +220,11 @@ function Start-MetadataGeneration {
     Try
     {
         $op = $((npm list -g autorest) | Out-String).Replace("`n", " ").Replace("`r"," ").Trim()
+        $tokens = $op.Split(" ")
+        if($tokens.Length -gt 1)
+        {
+            $op = $tokens[$tokens.Length-1]
+        }
         Write-InfoLog "Bootstrapper version:    $op" 
         Write-InfoLog "`n" 
     }
