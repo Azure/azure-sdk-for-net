@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.Test
@@ -13,6 +14,42 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     {
         [Fact]
         public void TestCloudErrorDeserialization()
+        {
+            var expected = @"
+                {
+                    ""error"": {
+                        ""code"": ""BadArgument"",
+                        ""message"": ""The provided database ‘foo’ has an invalid username."",
+                        ""target"": ""query"",
+                        ""details"": [
+                        {
+                            ""code"": ""301"",
+                            ""target"": ""$search"",
+                            ""message"": ""$search query option not supported""
+                        }
+                        ]
+                    }
+                }";
+
+            var deserializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            deserializeSettings.Converters.Add(new CloudErrorJsonConverter());
+            var cloudError = JsonConvert.DeserializeObject<CloudError>(expected, deserializeSettings);
+
+            Assert.Equal("The provided database ‘foo’ has an invalid username.", cloudError.Message);
+            Assert.Equal("BadArgument", cloudError.Code);
+            Assert.Equal("query", cloudError.Target);
+            Assert.Equal(1, cloudError.Details.Count);
+            Assert.Equal("301", cloudError.Details[0].Code);
+        }
+
+        [Fact]
+        public void TestCloudErrorWithAdditionalInfoDeserialization()
         {
             var expected = @"
                 {
@@ -173,13 +210,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal("SomeErrorType", cloudError.AdditionalInfo[0].Type);
             Assert.Equal("SomeValue", cloudError.AdditionalInfo[0].Info.GetValue("SomeProperty"));
             Assert.Equal(1, cloudError.Details[0].AdditionalInfo.Count);
-            Assert.True(cloudError.Details[0].AdditionalInfo[0] is PolicyViolation);
 
-            var policyViolation = (PolicyViolation)cloudError.Details[0].AdditionalInfo[0];
+            var policyViolation = cloudError.Details[0].AdditionalInfo[0];
 
             Assert.Equal("PolicyViolation", policyViolation.Type);
-            Assert.Equal("Allowed locations", policyViolation.Info.PolicyDefinitionDisplayName);
-            Assert.Equal("westus", policyViolation.Info.PolicyAssignmentParameters["listOfAllowedLocations"].Value[0]);
+            Assert.Equal("Allowed locations", policyViolation.Info.GetValue("policyDefinitionDisplayName"));
+
+            var policyParameters = (JObject)policyViolation.Info.GetValue("policyAssignmentParameters");
+            Assert.Equal("westus", ((JObject)policyParameters.GetValue("listOfAllowedLocations")).GetValue("value")[0]);
         }
     }
 }

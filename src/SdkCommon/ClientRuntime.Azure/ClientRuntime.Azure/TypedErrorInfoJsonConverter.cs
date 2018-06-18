@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -53,18 +51,7 @@ namespace Microsoft.Rest.Azure
             }
 
             JObject jObject = JObject.Load(reader);
-            var typedErrorInfo = jObject.ToObject<TypedErrorInfo>(serializer.WithoutConverter(this));
-            Type errorInfoType = GetTypedErrorInfoType(jObject["type"]?.Value<string>());
-            if (errorInfoType != null)
-            {
-                // deserialize to the strongly typed error object
-                // and keep the original JObject info as well in case the strongly typed error is not up-to-date
-                var strongTypedErrorInfo = jObject.ToObject(errorInfoType, serializer.WithoutConverter(this));
-                ((TypedErrorInfo)strongTypedErrorInfo).Info = typedErrorInfo.Info;
-                return strongTypedErrorInfo;
-            }
-
-            return typedErrorInfo;
+            return jObject.ToObject<TypedErrorInfo>(serializer.WithoutConverter(this));
         }
 
         /// <summary>
@@ -77,17 +64,6 @@ namespace Microsoft.Rest.Azure
             object value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets the derived type of TypedErrorInfo that matches the specified name.
-        /// </summary>
-        /// <param name="typeName">The derived type name.</param>
-        /// <returns></returns>
-        private static Type GetTypedErrorInfoType(string typeName)
-        {
-            var baseType = typeof(TypedErrorInfo);
-            return baseType.GetTypeInfo().Assembly.DefinedTypes.FirstOrDefault(t => t.IsSubclassOf(baseType) && string.Equals(t.Name, typeName, StringComparison.OrdinalIgnoreCase))?.AsType();
         }
     }
 }
