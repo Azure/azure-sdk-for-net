@@ -130,7 +130,9 @@ param(
     [Parameter(Mandatory = $false)]
     [string] $ConfigFileTag,
     [Parameter(Mandatory = $true, HelpMessage ="Please provide a version for the AutoRest release")]
-    [string] $AutoRestVersion
+    [string] $AutoRestVersion,
+    [Parameter(Mandatory = $false)]
+    [string] $ApiType
     )
     
     Write-InfoLog "Generating CSharp code" 
@@ -145,6 +147,11 @@ param(
     if(-not [string]::IsNullOrWhiteSpace($ConfigFileTag))
     {
         $args = $args + " --tag=$ConfigFileTag"
+    }
+
+    if($ApiType -eq "multi-api")
+    {
+        $args = $args + " --multi-api"
     }
 
     if(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory))
@@ -313,17 +320,21 @@ function Start-AutoRestCodeGeneration {
         [string] $Namespace,
 
         [Parameter(Mandatory = $false)]
-        [string] $ConfigFileTag
+        [string] $ConfigFileTag,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("single-api", "multi-api")]
+        [string] $ApiType
     )
 
     if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -ApiType $ApiType
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -ApiType $ApiType
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)){
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -ApiType $ApiType
     }
     else {
         # default path which is the root directory of the RP in sdk repo
@@ -394,14 +405,15 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [string] $Namespace,
 
         [Parameter(Mandatory = $false)]
-        [string] $ConfigFileTag
+        [ValidateSet("single-api", "multi-api")]
+        [string] $ApiType
     )
 
     if (-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
         $SdkRootDirectory = $SdkDirectory
     }
     if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag 
     }
     elseif(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)) {
         Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag
@@ -424,10 +436,10 @@ function Start-CodeGeneration {
         [string] $SdkGenerationDirectory,
         [string] $Namespace,
         [string] $ConfigFileTag,
-        [string] $LocalConfigFilePath
+        [string] $LocalConfigFilePath,
+        [string] $ApiType
     )
     $localSdkRepoDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
-    $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
     
     if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) {
         
@@ -455,6 +467,7 @@ function Start-CodeGeneration {
             $logFile = [System.IO.Path]::GetTempFileName()+".txt";
         }
         else {
+            $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
             if(!(Test-Path -Path "$localSdkRepoDirectory\_metadata"))
             {
                 New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
@@ -480,10 +493,10 @@ function Start-CodeGeneration {
         Write-InfoLog "Commencing code generation"  
         
         if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkRootDirectory $SdkRootDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkRootDirectory $SdkRootDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag -ApiType $ApiType
         }
         elseif(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)) {
-            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkGenerationDirectory $SdkGenerationDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkGenerationDirectory $SdkGenerationDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag -ApiType $ApiType
         }
         else {
             Write-ErrorLog "Could not find an output directory to generate code, aborting."
