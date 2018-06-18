@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
+### Changes in 2.4.1-preview
+
+**Notes**
+
+- Added virtual network CRUD operations for account management.
+
 ### Changes in 2.4.0-preview
 
 **Breaking changes**

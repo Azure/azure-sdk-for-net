@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             /// <summary>
             /// Deletes the specified firewall rule from the specified Data Lake Store
-            /// account
+            /// account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             /// <summary>
             /// Deletes the specified firewall rule from the specified Data Lake Store
-            /// account
+            /// account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
