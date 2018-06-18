@@ -7,13 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.17.0-preview</Version>
+		<Version>1.18.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for using sever level rule in vulnerability assessment baseline operations.
-- Added support for using sever level Threat Detection.
+- Enable customers to upload their TDE certificate to CMS
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "sql/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "sql/resource-manager" -AutoRestVersion "latest" -SpecsRepoFork "nivimsft" -SpecsRepoBranch "uploadCustomerTdeCertificate"
