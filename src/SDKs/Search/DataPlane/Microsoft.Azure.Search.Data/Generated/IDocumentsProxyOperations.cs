@@ -50,11 +50,7 @@ namespace Microsoft.Azure.Search
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.
         /// </summary>
-        /// <param name='autocompleteMode'>
-        /// Autocomplete mode. Possible values include: 'oneTerm', 'twoTerms',
-        /// 'oneTermWithContext'
-        /// </param>
-        /// <param name='search'>
+        /// <param name='searchText'>
         /// The incomplete term which should be auto-completed.
         /// </param>
         /// <param name='suggesterName'>
@@ -82,7 +78,7 @@ namespace Microsoft.Azure.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(AutocompleteMode autocompleteMode, string search = default(string), string suggesterName = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(string searchText, string suggesterName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Autocompletes incomplete query terms based on input text and
         /// matching terms in the Azure Search index.

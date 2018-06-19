@@ -39,6 +39,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanAutocompleteDefaultsToOneTermMode()
+        {
+            Run(TestAutocompleteDefaultsToOneTermMode);
+        }
+
+        [Fact]
         public void CanAutocompleteTwoTerms()
         {
             Run(TestAutocompleteTwoTerms);                     

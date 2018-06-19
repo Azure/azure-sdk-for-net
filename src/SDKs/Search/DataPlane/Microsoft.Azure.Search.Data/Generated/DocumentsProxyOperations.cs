@@ -260,11 +260,7 @@ namespace Microsoft.Azure.Search
         /// Autocompletes incomplete query terms based on input text and matching terms
         /// in the Azure Search index.
         /// </summary>
-        /// <param name='autocompleteMode'>
-        /// Autocomplete mode. Possible values include: 'oneTerm', 'twoTerms',
-        /// 'oneTermWithContext'
-        /// </param>
-        /// <param name='search'>
+        /// <param name='searchText'>
         /// The incomplete term which should be auto-completed.
         /// </param>
         /// <param name='suggesterName'>
@@ -298,7 +294,7 @@ namespace Microsoft.Azure.Search
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(AutocompleteMode autocompleteMode, string search = default(string), string suggesterName = default(string), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteGetWithHttpMessagesAsync(string searchText, string suggesterName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AutocompleteParameters autocompleteParameters = default(AutocompleteParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SearchServiceName == null)
             {
@@ -316,15 +312,28 @@ namespace Microsoft.Azure.Search
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (searchText == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "searchText");
+            }
+            if (suggesterName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "suggesterName");
+            }
             System.Guid? clientRequestId = default(System.Guid?);
             if (searchRequestOptions != null)
             {
                 clientRequestId = searchRequestOptions.ClientRequestId;
             }
-            bool? fuzzy = default(bool?);
+            AutocompleteMode? autocompleteMode = default(AutocompleteMode?);
             if (autocompleteParameters != null)
             {
-                fuzzy = autocompleteParameters.Fuzzy;
+                autocompleteMode = autocompleteParameters.AutocompleteMode;
+            }
+            bool? useFuzzyMatching = default(bool?);
+            if (autocompleteParameters != null)
+            {
+                useFuzzyMatching = autocompleteParameters.UseFuzzyMatching;
             }
             string highlightPostTag = default(string);
             if (autocompleteParameters != null)
@@ -358,11 +367,11 @@ namespace Microsoft.Azure.Search
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("autocompleteMode", autocompleteMode);
-                tracingParameters.Add("search", search);
+                tracingParameters.Add("searchText", searchText);
                 tracingParameters.Add("suggesterName", suggesterName);
                 tracingParameters.Add("clientRequestId", clientRequestId);
-                tracingParameters.Add("fuzzy", fuzzy);
+                tracingParameters.Add("autocompleteMode", autocompleteMode);
+                tracingParameters.Add("useFuzzyMatching", useFuzzyMatching);
                 tracingParameters.Add("highlightPostTag", highlightPostTag);
                 tracingParameters.Add("highlightPreTag", highlightPreTag);
                 tracingParameters.Add("minimumCoverage", minimumCoverage);
@@ -382,18 +391,21 @@ namespace Microsoft.Azure.Search
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            _queryParameters.Add(string.Format("autocompleteMode={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(autocompleteMode, Client.SerializationSettings).Trim('"'))));
-            if (search != null)
+            if (searchText != null)
             {
-                _queryParameters.Add(string.Format("search={0}", System.Uri.EscapeDataString(search)));
+                _queryParameters.Add(string.Format("search={0}", System.Uri.EscapeDataString(searchText)));
             }
             if (suggesterName != null)
             {
                 _queryParameters.Add(string.Format("suggesterName={0}", System.Uri.EscapeDataString(suggesterName)));
             }
-            if (fuzzy != null)
+            if (autocompleteMode != null)
             {
-                _queryParameters.Add(string.Format("fuzzy={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(fuzzy, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("autocompleteMode={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(autocompleteMode, Client.SerializationSettings).Trim('"'))));
+            }
+            if (useFuzzyMatching != null)
+            {
+                _queryParameters.Add(string.Format("fuzzy={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(useFuzzyMatching, Client.SerializationSettings).Trim('"'))));
             }
             if (highlightPostTag != null)
             {

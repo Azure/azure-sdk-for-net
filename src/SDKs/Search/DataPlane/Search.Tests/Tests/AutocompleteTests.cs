@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Search.Tests
 
             SearchIndexClient client = GetClientForQuery();
 
-            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = false };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "very po", "sg", autocompleteParameters: autocompleteParameters);
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTerm, UseFuzzyMatching = false };
+            AutocompleteResult response = client.Documents.Autocomplete("very po", "sg", autocompleteParameters);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
@@ -31,9 +31,8 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchIndexClient client = GetClientForQuery();
 
-            var autocompleteRequest = new AutocompleteRequest() { Fuzzy = false, AutocompleteMode = AutocompleteMode.OneTerm, Search = "very po" };
             SearchAssert.ThrowsCloudException(
-                () => client.Documents.Autocomplete(AutocompleteMode.OneTerm, "very po", String.Empty),
+                () => client.Documents.Autocomplete("very po", String.Empty),
                 HttpStatusCode.BadRequest,
                 "Cannot find fields enabled for suggestions. Please provide a value for 'suggesterName' in the query.\r\nParameter name: suggestions");
         }
@@ -41,8 +40,10 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestAutcompleteThrowsWhenGivenBadSuggesterName()
         {
             SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTerm };
+
             SearchAssert.ThrowsCloudException(
-                () => client.Documents.Autocomplete(AutocompleteMode.OneTerm, "very po", "Invalid suggester"),
+                () => client.Documents.Autocomplete("very po", "Invalid suggester", autocompleteParameters),
                 HttpStatusCode.BadRequest,
                 "The specified suggester name 'Invalid suggester' does not exist in this index definition.\r\nParameter name: name");
         }
@@ -50,7 +51,9 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestAutocompleteFuzzyIsOffByDefault()
         {
             SearchIndexClient client = GetClientForQuery();
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "pi", "sg");
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTerm };
+
+            AutocompleteResult response = client.Documents.Autocomplete("pi", "sg", autocompleteParameters);
 
             Assert.NotNull(response.Results);
             Assert.Equal(0, response.Results.Count);
@@ -62,7 +65,22 @@ namespace Microsoft.Azure.Search.Tests
             var expectedQueryPlusText = new List<String>() { "police", "polite", "pool", "popular" };
 
             SearchIndexClient client = GetClientForQuery();
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "po", "sg");
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTerm };
+
+            AutocompleteResult response = client.Documents.Autocomplete("po", "sg", autocompleteParameters);
+
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
+        }
+
+        protected void TestAutocompleteDefaultsToOneTermMode()
+        {
+            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
+            var expectedQueryPlusText = new List<String>() { "police", "polite", "pool", "popular" };
+
+            SearchIndexClient client = GetClientForQuery();
+
+            AutocompleteResult response = client.Documents.Autocomplete("po", "sg");
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -74,7 +92,9 @@ namespace Microsoft.Azure.Search.Tests
             var expectedQueryPlusText = new List<String>() { "police station", "polite staff", "pool a", "popular hotel" };
 
             SearchIndexClient client = GetClientForQuery();
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.TwoTerms, "po", "sg");
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.TwoTerms };
+
+            AutocompleteResult response = client.Documents.Autocomplete("po", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -86,7 +106,9 @@ namespace Microsoft.Azure.Search.Tests
             var expectedQueryPlusText = new List<String>() { "looking for very police", "looking for very polite", "looking for very popular" };
 
             SearchIndexClient client = GetClientForQuery();
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTermWithContext, "looking for very po", "sg");
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTermWithContext };
+
+            AutocompleteResult response = client.Documents.Autocomplete("looking for very po", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -98,8 +120,9 @@ namespace Microsoft.Azure.Search.Tests
             var expectedQueryPlusText = new List<String>() { "model", "modern", "morel", "motel" };
 
             SearchIndexClient client = GetClientForQuery();
-            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = true };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTerm, UseFuzzyMatching = true };
+
+            AutocompleteResult response = client.Documents.Autocomplete("mod", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -111,8 +134,8 @@ namespace Microsoft.Azure.Search.Tests
             var expectedQueryPlusText = new List<String>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
 
             SearchIndexClient client = GetClientForQuery();
-            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = true };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.TwoTerms, "mod", "sg", autocompleteParameters: autocompleteParameters);
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.TwoTerms, UseFuzzyMatching = true };
+            AutocompleteResult response = client.Documents.Autocomplete("mod", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -124,8 +147,8 @@ namespace Microsoft.Azure.Search.Tests
             var expectedQueryPlusText = new List<String>() { "very polite", "very police" };
 
             SearchIndexClient client = GetClientForQuery();
-            var autocompleteParameters = new AutocompleteParameters() { Fuzzy = true };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTermWithContext, "very polit", "sg", autocompleteParameters: autocompleteParameters);
+            var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTermWithContext, UseFuzzyMatching = true };
+            AutocompleteResult response = client.Documents.Autocomplete("very polit", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -139,10 +162,11 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
+                AutocompleteMode = AutocompleteMode.OneTerm,
                 HighlightPreTag = "<b>",
                 HighlightPostTag = "</b>",
             };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "po", "sg", autocompleteParameters: autocompleteParameters);
+            AutocompleteResult response = client.Documents.Autocomplete("po", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -156,9 +180,10 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
+                AutocompleteMode = AutocompleteMode.OneTerm,
                 Top = 2
             };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "po", "sg", autocompleteParameters: autocompleteParameters);
+            AutocompleteResult response = client.Documents.Autocomplete("po", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -172,9 +197,10 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
+                AutocompleteMode = AutocompleteMode.OneTerm,
                 SearchFields = new[] { "hotelName" }
             };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
+            AutocompleteResult response = client.Documents.Autocomplete("mod", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -188,9 +214,10 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
+                AutocompleteMode = AutocompleteMode.OneTerm,
                 SearchFields = new[] { "hotelName", "description" }
             };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "mod", "sg", autocompleteParameters: autocompleteParameters);
+            AutocompleteResult response = client.Documents.Autocomplete("mod", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
@@ -201,9 +228,10 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
+                AutocompleteMode = AutocompleteMode.OneTerm,
                 SearchFields = new[] { "hotelName" }
             };
-            AutocompleteResult response = client.Documents.Autocomplete(AutocompleteMode.OneTerm, "luxu", "sg", autocompleteParameters: autocompleteParameters);
+            AutocompleteResult response = client.Documents.Autocomplete("luxu", "sg", autocompleteParameters);
 
             Assert.NotNull(response);
             Assert.NotNull(response.Results);

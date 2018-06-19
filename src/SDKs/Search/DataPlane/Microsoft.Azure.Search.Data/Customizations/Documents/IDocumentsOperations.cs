@@ -46,11 +46,10 @@ namespace Microsoft.Azure.Search
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<AutocompleteResult>> AutocompleteWithHttpMessagesAsync(
-            AutocompleteMode autocompleteMode,
-            string search,
+            string searchText,
             string suggesterName,
+            AutocompleteParameters autocompleteParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            AutocompleteParameters autocompleteParametersPaylaod = null,
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken));
         
