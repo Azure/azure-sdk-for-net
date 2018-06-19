@@ -261,8 +261,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the policy definitions in a management group.
+        /// Retrieve policy definitions in a management group
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the policy definitions in a
+        /// given management group.
+        /// </remarks>
         /// <param name='managementGroupId'>
         /// The ID of the management group.
         /// </param>
@@ -335,8 +339,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the policy definitions in a management group.
+        /// Retrieve policy definitions in a management group
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the policy definitions in a
+        /// given management group.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

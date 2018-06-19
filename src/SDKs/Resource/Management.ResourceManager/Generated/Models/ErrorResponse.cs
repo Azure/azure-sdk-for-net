@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates ARM is not able to process the incoming
-    /// request. The reason is provided in the error message.
+    /// Error reponse indicates Azure Resource Manager is not able to process
+    /// the incoming request. The reason is provided in the error message.
     /// </summary>
     public partial class ErrorResponse
     {

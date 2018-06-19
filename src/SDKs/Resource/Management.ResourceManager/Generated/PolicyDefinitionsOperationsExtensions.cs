@@ -410,8 +410,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions in a management group.
+            /// Retrieve policy definitions in a management group
             /// </summary>
+            /// <remarks>
+            /// This operation retrieves a list of all the policy definitions in a given
+            /// management group.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -424,8 +428,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions in a management group.
+            /// Retrieve policy definitions in a management group
             /// </summary>
+            /// <remarks>
+            /// This operation retrieves a list of all the policy definitions in a given
+            /// management group.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -526,8 +534,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions in a management group.
+            /// Retrieve policy definitions in a management group
             /// </summary>
+            /// <remarks>
+            /// This operation retrieves a list of all the policy definitions in a given
+            /// management group.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -540,8 +552,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Gets all the policy definitions in a management group.
+            /// Retrieve policy definitions in a management group
             /// </summary>
+            /// <remarks>
+            /// This operation retrieves a list of all the policy definitions in a given
+            /// management group.
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
