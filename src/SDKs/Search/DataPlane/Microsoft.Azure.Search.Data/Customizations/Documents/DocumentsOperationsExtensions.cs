@@ -69,10 +69,9 @@ namespace Microsoft.Azure.Search
             string searchText,
             string suggesterName = null,
             AutocompleteParameters autocompleteParameters = null,
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            Dictionary<string, List<string>> customHeaders = null)
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
-            return operations.AutocompleteAsync(searchText, suggesterName, autocompleteParameters, searchRequestOptions, customHeaders).GetAwaiter().GetResult();
+            return operations.AutocompleteAsync(searchText, suggesterName, autocompleteParameters, searchRequestOptions).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -93,10 +92,9 @@ namespace Microsoft.Azure.Search
             string suggesterName,
             AutocompleteParameters autocompleteParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            using (var _result = await operations.AutocompleteWithHttpMessagesAsync(searchText, suggesterName, autocompleteParameters, searchRequestOptions, customHeaders, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.AutocompleteWithHttpMessagesAsync(searchText, suggesterName, autocompleteParameters, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
