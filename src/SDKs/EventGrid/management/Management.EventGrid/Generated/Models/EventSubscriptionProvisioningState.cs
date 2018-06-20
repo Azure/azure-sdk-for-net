@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public const string Succeeded = "Succeeded";
         public const string Canceled = "Canceled";
         public const string Failed = "Failed";
+        public const string AwaitingManualAction = "AwaitingManualAction";
     }
 }

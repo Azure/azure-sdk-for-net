@@ -5,10 +5,10 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.Search.Models;
-    using Microsoft.Spatial;
+    using Common;
+    using Models;
+    using Spatial;
 
     [SerializePropertyNamesAsCamelCase]
     public class Hotel
@@ -47,67 +47,45 @@ namespace Microsoft.Azure.Search.Tests
             }
 
             return
-                this.HotelId == other.HotelId &&
-                DoublesEqual(this.BaseRate, other.BaseRate) &&
-                this.Description == other.Description &&
-                this.DescriptionFr == other.DescriptionFr &&
-                this.HotelName == other.HotelName &&
-                this.Category == other.Category &&
-                ((this.Tags == null) ? (other.Tags == null || other.Tags.Length == 0) : this.Tags.SequenceEqual(other.Tags ?? new string[0])) &&
-                this.ParkingIncluded == other.ParkingIncluded &&
-                this.SmokingAllowed == other.SmokingAllowed &&
-                DateTimeOffsetsEqual(this.LastRenovationDate, other.LastRenovationDate) &&
-                this.Rating == other.Rating &&
-                ((this.Location == null) ? other.Location == null : this.Location.Equals(other.Location));
+                HotelId == other.HotelId &&
+                DoublesEqual(BaseRate, other.BaseRate) &&
+                Description == other.Description &&
+                DescriptionFr == other.DescriptionFr &&
+                HotelName == other.HotelName &&
+                Category == other.Category &&
+                ((Tags == null) ? (other.Tags == null || other.Tags.Length == 0) : Tags.SequenceEqual(other.Tags ?? new string[0])) &&
+                ParkingIncluded == other.ParkingIncluded &&
+                SmokingAllowed == other.SmokingAllowed &&
+                DateTimeOffsetsEqual(LastRenovationDate, other.LastRenovationDate) &&
+                Rating == other.Rating &&
+                ((Location == null) ? other.Location == null : Location.Equals(other.Location));
         }
 
-        public override int GetHashCode()
-        {
-            return (this.HotelId != null) ? this.HotelId.GetHashCode() : 0;
-        }
+        public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
 
-        public override string ToString()
-        {
-            const string Format =
-                "ID: {0}; BaseRate: {1}; Description: {2}; Description (French): {3}; Name: {4}; Category: {5}; " +
-                "Tags: {6}; Parking: {7}; Smoking: {8}; LastRenovationDate: {9}; Rating: {10}; " +
-                "Location: [{11}, {12}]";
+        public override string ToString() =>
+            $"ID: {HotelId}; BaseRate: {BaseRate}; Description: {Description}; " +
+            $"Description (French): {DescriptionFr}; Name: {HotelName}; Category: {Category}; " +
+            $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
+            $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
+            $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]";
 
-            return String.Format(
-                Format,
-                this.HotelId,
-                this.BaseRate,
-                this.Description,
-                this.DescriptionFr,
-                this.HotelName,
-                this.Category,
-                (this.Tags != null) ? this.Tags.ToCommaSeparatedString() : "null",
-                this.ParkingIncluded,
-                this.SmokingAllowed,
-                this.LastRenovationDate,
-                this.Rating,
-                this.Location != null ? this.Location.Longitude : 0,
-                this.Location != null ? this.Location.Latitude : 0);
-        }
-
-        public Document AsDocument()
-        {
-            return new Document()
+        public Document AsDocument() =>
+            new Document()
             {
-                { "baseRate", this.BaseRate },
-                { "category", this.Category },
-                { "description", this.Description },
-                { "descriptionFr", this.DescriptionFr },
-                { "hotelId", this.HotelId },
-                { "hotelName", this.HotelName },
-                { "lastRenovationDate", this.LastRenovationDate },
-                { "location", this.Location },
-                { "parkingIncluded", this.ParkingIncluded },
-                { "rating", this.Rating.HasValue ? (long?)this.Rating.Value : null }, // JSON.NET always deserializes to int64
-                { "smokingAllowed", this.SmokingAllowed },
-                { "tags", this.Tags ?? new string[0] }   // OData always gives [] instead of null for collections.
+                ["baseRate"] = BaseRate,
+                ["category"] = Category,
+                ["description"] = Description,
+                ["descriptionFr"] = DescriptionFr,
+                ["hotelId"] = HotelId,
+                ["hotelName"] = HotelName,
+                ["lastRenovationDate"] = LastRenovationDate,
+                ["location"] = Location,
+                ["parkingIncluded"] = ParkingIncluded,
+                ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
+                ["smokingAllowed"] = SmokingAllowed,
+                ["tags"] = Tags ?? new string[0]   // OData always gives [] instead of null for collections.
             };
-        }
 
         private static bool DoublesEqual(double? x, double? y)
         {

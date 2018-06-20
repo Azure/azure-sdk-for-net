@@ -1,0 +1,50 @@
+{
+  "Entries": [
+    {
+        "RequestUri": "/bing/v7.0/Suggestions?mkt=en-us&q=tom%20cruise",
+        "RequestMethod": "GET",
+        "RequestHeaders": {
+            "User-Agent": [
+                "FxVersion/4.6.25211.01",
+                "Microsoft.CognitiveServices.Vision.Face.FaceAPI/1.0.0"
+            ]
+        },
+        "ResponseBody": "{\"_type\": \"Suggestions\", \"queryContext\": {\"_type\": \"QueryContext\", \"originalQuery\": \"a\"}, \"suggestionGroups\": [{\"_type\": \"Suggestions/SuggestionGroup\", \"name\": \"Web\", \"searchSuggestions\": [{\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=amazon&FORM=USBAPI\", \"displayText\": \"amazon\", \"query\": \"amazon\", \"searchKind\": \"WebSearch\"}, {\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=alaska+airlines&FORM=USBAPI\", \"displayText\": \"alaska airlines\", \"query\": \"alaska airlines\", \"searchKind\": \"WebSearch\"}, {\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=aol&FORM=USBAPI\", \"displayText\": \"aol\", \"query\": \"aol\", \"searchKind\": \"WebSearch\"}, {\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=amazon+prime&FORM=USBAPI\", \"displayText\": \"amazon prime\", \"query\": \"amazon prime\", \"searchKind\": \"WebSearch\"}, {\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=airbnb&FORM=USBAPI\", \"displayText\": \"airbnb\", \"query\": \"airbnb\", \"searchKind\": \"WebSearch\"},{\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=american+express&FORM=USBAPI\", \"displayText\": \"american express\", \"query\": \"american express\", \"searchKind\": \"WebSearch\"}, {\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=autotrader&FORM=USBAPI\", \"displayText\": \"autotrader\", \"query\": \"autotrader\", \"searchKind\": \"WebSearch\"}, {\"_type\": \"SearchAction\", \"url\": \"https://www.bing.com/search?q=autozone&FORM=USBAPI\", \"displayText\": \"autozone\", \"query\": \"autozone\", \"searchKind\": \"WebSearch\"}]}]}",
+        "ResponseHeaders": {
+            "Content-Type": [
+                "application/json; charset=utf-8"
+            ],
+            "Expires": [
+                "-1"
+            ],
+            "Cache-Control": [
+                "no-cache"
+            ],
+            "Date": [
+                "Wed, 30 Aug 2017 02:34:12 GMT"
+            ],
+            "Pragma": [
+                "no-cache"
+            ],
+            "X-AspNet-Version": [
+                "4.0.30319"
+            ],
+            "X-Powered-By": [
+                "ASP.NET"
+            ],
+            "apim-request-id": [
+                "2c1699ea-16ef-4ab2-a3ba-05c35aa3c1a6"
+            ],
+            "Strict-Transport-Security": [
+                "max-age=31536000; includeSubDomains; preload"
+            ],
+            "x-content-type-options": [
+                "nosniff"
+            ]
+        },
+        "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

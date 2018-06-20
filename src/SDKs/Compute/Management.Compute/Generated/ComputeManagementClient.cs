@@ -71,6 +71,11 @@ namespace Microsoft.Azure.Management.Compute
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
@@ -129,6 +134,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
+
+        /// <summary>
+        /// Gets the ILogAnalyticsOperations.
+        /// </summary>
+        public virtual ILogAnalyticsOperations LogAnalytics { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineRunCommandsOperations.
@@ -356,6 +366,7 @@ namespace Microsoft.Azure.Management.Compute
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
@@ -368,6 +379,7 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
+            LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
             ResourceSkus = new ResourceSkusOperations(this);
             Disks = new DisksOperations(this);

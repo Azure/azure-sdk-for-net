@@ -22,6 +22,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationvCentersOperationsExtensions
     {
             /// <summary>
+            /// Gets the list of vCenter registered under a fabric.
+            /// </summary>
+            /// <remarks>
+            /// Lists the vCenter servers registered in a fabric.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            public static IPage<VCenter> ListByReplicationFabrics(this IReplicationvCentersOperations operations, string fabricName)
+            {
+                return operations.ListByReplicationFabricsAsync(fabricName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of vCenter registered under a fabric.
+            /// </summary>
+            /// <remarks>
+            /// Lists the vCenter servers registered in a fabric.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<VCenter>> ListByReplicationFabricsAsync(this IReplicationvCentersOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReplicationFabricsWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the details of a vCenter.
             /// </summary>
             /// <remarks>
@@ -211,46 +251,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<VCenter> UpdateAsync(this IReplicationvCentersOperations operations, string fabricName, string vCenterName, UpdateVCenterRequest updateVCenterRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(fabricName, vCenterName, updateVCenterRequest, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the list of vCenter registered under a fabric.
-            /// </summary>
-            /// <remarks>
-            /// Lists the vCenter servers registered in a fabric.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            public static IPage<VCenter> ListByReplicationFabrics(this IReplicationvCentersOperations operations, string fabricName)
-            {
-                return operations.ListByReplicationFabricsAsync(fabricName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of vCenter registered under a fabric.
-            /// </summary>
-            /// <remarks>
-            /// Lists the vCenter servers registered in a fabric.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<VCenter>> ListByReplicationFabricsAsync(this IReplicationvCentersOperations operations, string fabricName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByReplicationFabricsWithHttpMessagesAsync(fabricName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

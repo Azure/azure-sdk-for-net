@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -21,6 +22,58 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     /// </summary>
     public static partial class ReplicationProtectableItemsOperationsExtensions
     {
+            /// <summary>
+            /// Gets the list of protectable items.
+            /// </summary>
+            /// <remarks>
+            /// Lists the protectable items in a protection container.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<ProtectableItem> ListByReplicationProtectionContainers(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<ProtectableItemQueryParameter> odataQuery = default(ODataQuery<ProtectableItemQueryParameter>))
+            {
+                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName, odataQuery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of protectable items.
+            /// </summary>
+            /// <remarks>
+            /// Lists the protectable items in a protection container.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// Protection container name.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ProtectableItem>> ListByReplicationProtectionContainersAsync(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, ODataQuery<ProtectableItemQueryParameter> odataQuery = default(ODataQuery<ProtectableItemQueryParameter>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Gets the details of a protectable item.
             /// </summary>
@@ -68,52 +121,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<ProtectableItem> GetAsync(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, string protectableItemName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(fabricName, protectionContainerName, protectableItemName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the list of protectable items.
-            /// </summary>
-            /// <remarks>
-            /// Lists the protectable items in a protection container.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            public static IPage<ProtectableItem> ListByReplicationProtectionContainers(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName)
-            {
-                return operations.ListByReplicationProtectionContainersAsync(fabricName, protectionContainerName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the list of protectable items.
-            /// </summary>
-            /// <remarks>
-            /// Lists the protectable items in a protection container.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// Fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// Protection container name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ProtectableItem>> ListByReplicationProtectionContainersAsync(this IReplicationProtectableItemsOperations operations, string fabricName, string protectionContainerName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByReplicationProtectionContainersWithHttpMessagesAsync(fabricName, protectionContainerName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

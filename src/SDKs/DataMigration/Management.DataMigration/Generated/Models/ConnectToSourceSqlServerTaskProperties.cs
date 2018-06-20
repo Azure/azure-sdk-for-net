@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public ConnectToSourceSqlServerTaskProperties(IList<ODataError> errors = default(IList<ODataError>), TaskState? state = default(TaskState?), ConnectToSourceSqlServerTaskInput input = default(ConnectToSourceSqlServerTaskInput), IList<ConnectToSourceSqlServerTaskOutput> output = default(IList<ConnectToSourceSqlServerTaskOutput>))
+        public ConnectToSourceSqlServerTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), ConnectToSourceSqlServerTaskInput input = default(ConnectToSourceSqlServerTaskInput), IList<ConnectToSourceSqlServerTaskOutput> output = default(IList<ConnectToSourceSqlServerTaskOutput>))
             : base(errors, state)
         {
             Input = input;

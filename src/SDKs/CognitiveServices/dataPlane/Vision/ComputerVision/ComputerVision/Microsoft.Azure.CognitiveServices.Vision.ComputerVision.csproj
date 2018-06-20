@@ -10,6 +10,10 @@
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Computer Vision SDK.</PackageReleaseNotes>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
+    <PackageReleaseNotes>The Cognitive Services Computer Vision Client SDK lets users analyze images via Azure-hosted image classifiers. Classify images, generate image captions, recognize text, create smart thumbnails, and more.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -19,4 +23,5 @@
   <!-- Please do not move/edit code below this line -->
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
   <!-- Please do not move/edit code above this line -->
+</Project>
 </Project>

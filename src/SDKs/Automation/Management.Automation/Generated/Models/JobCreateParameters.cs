@@ -39,19 +39,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// job.</param>
         /// <param name="runOn">Gets or sets the runOn which specifies the
         /// group name where the job is to be executed.</param>
-        /// <param name="name">Gets or sets name of the resource.</param>
-        /// <param name="location">Gets or sets the location of the
-        /// resource.</param>
-        /// <param name="tags">Gets or sets the tags attached to the
-        /// resource.</param>
-        public JobCreateParameters(RunbookAssociationProperty runbook, IDictionary<string, string> parameters = default(IDictionary<string, string>), string runOn = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public JobCreateParameters(RunbookAssociationProperty runbook, IDictionary<string, string> parameters = default(IDictionary<string, string>), string runOn = default(string))
         {
             Runbook = runbook;
             Parameters = parameters;
             RunOn = runOn;
-            Name = name;
-            Location = location;
-            Tags = tags;
             CustomInit();
         }
 
@@ -78,24 +70,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.runOn")]
         public string RunOn { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.

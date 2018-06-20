@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class BackupLongTermRetentionPoliciesOperationsExtensions
     {
             /// <summary>
-            /// Returns a database backup long term retention policy
+            /// Gets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a database backup long term retention policy
+            /// Gets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a database backup long term retention policy
+            /// Sets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,10 +85,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database
+            /// The name of the database.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
+            /// The long term retention policy info.
             /// </param>
             public static BackupLongTermRetentionPolicy CreateOrUpdate(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a database backup long term retention policy
+            /// Sets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -109,10 +109,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database
+            /// The name of the database.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
+            /// The long term retention policy info.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Returns a database backup long term retention policy
+            /// Gets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -141,13 +141,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database.
             /// </param>
-            public static IEnumerable<BackupLongTermRetentionPolicy> ListByDatabase(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static BackupLongTermRetentionPolicy ListByDatabase(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.ListByDatabaseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns a database backup long term retention policy
+            /// Gets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<BackupLongTermRetentionPolicy>> ListByDatabaseAsync(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupLongTermRetentionPolicy> ListByDatabaseAsync(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a database backup long term retention policy
+            /// Sets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,10 +187,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database
+            /// The name of the database.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
+            /// The long term retention policy info.
             /// </param>
             public static BackupLongTermRetentionPolicy BeginCreateOrUpdate(this IBackupLongTermRetentionPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, BackupLongTermRetentionPolicy parameters)
             {
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a database backup long term retention policy
+            /// Sets a database's long term retention policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -211,10 +211,10 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the server.
             /// </param>
             /// <param name='databaseName'>
-            /// The name of the database
+            /// The name of the database.
             /// </param>
             /// <param name='parameters'>
-            /// The required parameters to update a backup long term retention policy
+            /// The long term retention policy info.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

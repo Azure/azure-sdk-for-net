@@ -31,8 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="identityProviderType">The identity provider type.
         /// Value is the ToString() of a IdentityProviderType value. Possible
-        /// values include: 'RecoveryServicesActiveDirectory',
-        /// 'CustomerActiveDirectory'</param>
+        /// values include: 'RecoveryServicesActiveDirectory'</param>
         /// <param name="tenantId">The tenant Id for the service principal with
         /// which the on-premise management/data plane components would
         /// communicate with our Azure services.</param>
@@ -50,7 +49,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="certificateThumbprint">The certificate thumbprint.
         /// Applicable only if IdentityProviderType is
         /// RecoveryServicesActiveDirectory.</param>
-        public IdentityInformation(IdentityProviderType? identityProviderType = default(IdentityProviderType?), string tenantId = default(string), string applicationId = default(string), string objectId = default(string), string audience = default(string), string aadAuthority = default(string), string certificateThumbprint = default(string))
+        public IdentityInformation(string identityProviderType = default(string), string tenantId = default(string), string applicationId = default(string), string objectId = default(string), string audience = default(string), string aadAuthority = default(string), string certificateThumbprint = default(string))
         {
             IdentityProviderType = identityProviderType;
             TenantId = tenantId;
@@ -70,10 +69,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets the identity provider type. Value is the ToString() of
         /// a IdentityProviderType value. Possible values include:
-        /// 'RecoveryServicesActiveDirectory', 'CustomerActiveDirectory'
+        /// 'RecoveryServicesActiveDirectory'
         /// </summary>
         [JsonProperty(PropertyName = "identityProviderType")]
-        public IdentityProviderType? IdentityProviderType { get; set; }
+        public string IdentityProviderType { get; set; }
 
         /// <summary>
         /// Gets or sets the tenant Id for the service principal with which the

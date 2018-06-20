@@ -119,8 +119,13 @@ namespace Compute.Tests
                     Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings);
                     Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers);
                     Assert.Equal(2, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers.Count);
+#if NET46
+                    Assert.True(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers.Any(ip => string.Equals("10.0.0.5", ip)));
+                    Assert.True(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers.Any(ip => string.Equals("10.0.0.6", ip)));
+#else
                     Assert.Contains(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers, ip => string.Equals("10.0.0.5", ip));
                     Assert.Contains(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].DnsSettings.DnsServers, ip => string.Equals("10.0.0.6", ip));
+#endif
                     passed = true;
                 }
                 finally
@@ -140,15 +145,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                // Hard code the location to "westcentralus".
-                // This is because NRP is still deploying to other regions and is not available worldwide.
-                // Before changing the default location, we have to save it to be reset it at the end of the test.
-                // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
-                var originallocation = ComputeManagementTestUtilities.DefaultLocation;
-                ComputeManagementTestUtilities.DefaultLocation = "westcentralus";
-                EnsureClientsInitialized(context);
-
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
                 // Create resource group
                 string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
@@ -160,6 +157,14 @@ namespace Compute.Tests
                 bool passed = false;
                 try
                 {
+                    // Hard code the location to "westcentralus".
+                    // This is because NRP is still deploying to other regions and is not available worldwide.
+                    // Before changing the default location, we have to save it to be reset it at the end of the test.
+                    // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
                     var vnetResponse = CreateVNETWithSubnets(rgName, 2);
                     var vmssSubnet = vnetResponse.Subnets[1];
@@ -193,8 +198,87 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
-                    ComputeManagementTestUtilities.DefaultLocation = originallocation;
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Associates a VMScaleSet with PublicIp with Ip tags
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetWithPublicIPAndIPTags()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                var vmssName = TestUtilities.GenerateName("vmss");
+                var dnsname = TestUtilities.GenerateName("dnsname");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+                try
+                {
+                    // Hard code the location to "westcentralus".
+                    // This is because NRP is still deploying to other regions and is not available worldwide.
+                    // Before changing the default location, we have to save it to be reset it at the end of the test.
+                    // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    var vnetResponse = CreateVNETWithSubnets(rgName, 2);
+                    var vmssSubnet = vnetResponse.Subnets[1];
+
+                    var publicipConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration();
+                    publicipConfiguration.Name = "pip1";
+                    publicipConfiguration.IdleTimeoutInMinutes = 10;
+                    publicipConfiguration.DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings();
+                    publicipConfiguration.DnsSettings.DomainNameLabel = dnsname;
+
+                    publicipConfiguration.IpTags = new List<VirtualMachineScaleSetIpTag>
+                    {
+                        new VirtualMachineScaleSetIpTag("FirstPartyUsage", "/Sql")
+                    };
+
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName: rgName,
+                        vmssName: vmssName,
+                        storageAccount: storageAccountOutput,
+                        imageRef: imageRef,
+                        inputVMScaleSet: out inputVMScaleSet,
+                        vmScaleSetCustomizer:
+                            (virtualMachineScaleSet) =>
+                                virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile
+                                    .NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration = publicipConfiguration,
+                        createWithPublicIpAddress: false,
+                        subnet: vmssSubnet);
+
+                    var vmss = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
+                    Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration);
+                    Assert.Equal("pip1", vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.Name);
+                    Assert.Equal(10, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.IdleTimeoutInMinutes);
+                    Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.DnsSettings);
+                    Assert.Equal(dnsname, vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.DnsSettings.DomainNameLabel);
+                    Assert.NotNull(vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.IpTags);
+                    Assert.Equal("FirstPartyUsage", vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.IpTags[0].IpTagType);
+                    Assert.Equal("/Sql", vmss.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].IpConfigurations[0].PublicIPAddressConfiguration.IpTags[0].Tag);
+
+                    passed = true;
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
                 }
 
                 Assert.True(passed);

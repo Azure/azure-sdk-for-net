@@ -10,20 +10,17 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Network" Version="14.0.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
   </ItemGroup>
-
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.Azure.Management.Dns" Version="1.8.0-preview" />-->
     <ProjectReference Include="..\Management.Dns\Microsoft.Azure.Management.Dns.csproj" />
   </ItemGroup>
-  
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

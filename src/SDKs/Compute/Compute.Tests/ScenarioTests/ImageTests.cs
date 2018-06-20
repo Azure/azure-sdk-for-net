@@ -27,8 +27,10 @@ namespace Compute.Tests
         [Trait("Name", "TestImageOperations")]
         public void TestImageOperations()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "FranceCentral");
                 EnsureClientsInitialized(context);
 
                 // Create resource group
@@ -91,7 +93,7 @@ namespace Compute.Tests
                     // Create the Image
                     var imageInput = new Image()
                     {
-                        Location = ComputeManagementTestUtilities.DefaultLocation,
+                        Location = m_location,
                         Tags = new Dictionary<string, string>()
                         {
                             {"RG", "rg"},
@@ -104,7 +106,6 @@ namespace Compute.Tests
                                 BlobUri = createdVM.StorageProfile.OsDisk.Vhd.Uri,
                                 OsState = OperatingSystemStateTypes.Generalized,
                                 OsType = OperatingSystemTypes.Windows,
-                                DiskSizeGB = createdVM.StorageProfile.OsDisk.DiskSizeGB
                             },
                             DataDisks = new List<ImageDataDisk>()
                             {
@@ -112,9 +113,9 @@ namespace Compute.Tests
                                 {
                                     BlobUri = createdVM.StorageProfile.DataDisks[0].Vhd.Uri,
                                     Lun = createdVM.StorageProfile.DataDisks[0].Lun,
-                                    DiskSizeGB = createdVM.StorageProfile.DataDisks[0].DiskSizeGB
                                 }
-                            }
+                            },
+                            ZoneResilient = true
                         }
                     };
 
@@ -123,6 +124,18 @@ namespace Compute.Tests
 
                     ValidateImage(imageInput, getImage);
 
+                    ImageUpdate updateParams = new ImageUpdate()
+                    {
+                        Tags = getImage.Tags
+                    };
+
+                    string tagKey = "UpdateTag";
+                    updateParams.Tags.Add(tagKey, "TagValue");
+                    m_CrpClient.Images.Update(rgName, imageName, updateParams);
+
+                    getImage = m_CrpClient.Images.Get(rgName, imageName);
+                    Assert.True(getImage.Tags.ContainsKey(tagKey));
+
                     var listResponse = m_CrpClient.Images.ListByResourceGroup(rgName);
                     Assert.Single(listResponse);
 
@@ -130,6 +143,7 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     if (inputVM != null)
                     {
                         m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
@@ -178,6 +192,8 @@ namespace Compute.Tests
                     Assert.NotNull(dataDiskOut.DiskSizeGB);
                 }
             }
+
+            Assert.Equal(imageIn.StorageProfile.ZoneResilient, imageOut.StorageProfile.ZoneResilient);
         }
     }
 }

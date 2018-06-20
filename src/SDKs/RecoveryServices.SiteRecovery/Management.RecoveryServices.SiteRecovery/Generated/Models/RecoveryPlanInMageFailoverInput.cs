@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="recoveryPointType">The recovery point type. Possible
         /// values include: 'LatestTime', 'LatestTag', 'Custom'</param>
-        public RecoveryPlanInMageFailoverInput(RpInMageRecoveryPointType recoveryPointType)
+        public RecoveryPlanInMageFailoverInput(string recoveryPointType)
         {
             RecoveryPointType = recoveryPointType;
             CustomInit();
@@ -50,16 +51,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'LatestTime', 'LatestTag', 'Custom'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
-        public RpInMageRecoveryPointType RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (RecoveryPointType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryPointType");
+            }
         }
     }
 }

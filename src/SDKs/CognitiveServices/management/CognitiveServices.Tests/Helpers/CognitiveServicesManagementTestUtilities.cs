@@ -111,7 +111,7 @@ namespace CognitiveServices.Tests.Helpers
             return accountName;
         }
 
-        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = Kind.Recommendations, string location = null)
+        public static CognitiveServicesAccount CreateAndValidateAccountWithOnlyRequiredParameters(CognitiveServicesManagementClient cognitiveServicesMgmtClient, string rgName, string skuName, string accountType = Kind.TextAnalytics, string location = null)
         {
             // Create account with only required params
             var accountName = TestUtilities.GenerateName("csa");

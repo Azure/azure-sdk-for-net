@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// aggregated here. Possible values include: 'Default', 'NotStarted',
         /// 'Initialized', 'InProgress', 'Completed', 'CompletedWithIssues',
         /// 'Failed', 'Stopped'</param>
-        public MigrationValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default(IDictionary<string, MigrationValidationDatabaseSummaryResult>), ValidationStatus? status = default(ValidationStatus?))
+        public MigrationValidationResult(string id = default(string), string migrationId = default(string), IDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default(IDictionary<string, MigrationValidationDatabaseSummaryResult>), string status = default(string))
         {
             Id = id;
             MigrationId = migrationId;
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "status")]
-        public ValidationStatus? Status { get; private set; }
+        public string Status { get; private set; }
 
     }
 }

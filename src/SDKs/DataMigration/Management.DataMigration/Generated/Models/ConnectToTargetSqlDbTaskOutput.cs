@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     /// Output for the task that validates connection to SQL DB and target
     /// server requirements
     /// </summary>
-    public partial class ConnectToTargetSqlDbTaskOutput : TaskOutput
+    public partial class ConnectToTargetSqlDbTaskOutput
     {
         /// <summary>
         /// Initializes a new instance of the ConnectToTargetSqlDbTaskOutput
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="targetServerBrandVersion">Target server brand
         /// version</param>
         public ConnectToTargetSqlDbTaskOutput(string id = default(string), IDictionary<string, string> databases = default(IDictionary<string, string>), string targetServerVersion = default(string), string targetServerBrandVersion = default(string))
-            : base(id)
         {
+            Id = id;
             Databases = databases;
             TargetServerVersion = targetServerVersion;
             TargetServerBrandVersion = targetServerBrandVersion;
@@ -54,6 +54,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets result identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets source databases as a map from database name to database id

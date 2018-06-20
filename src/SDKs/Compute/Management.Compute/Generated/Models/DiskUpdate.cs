@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Disk update resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DiskUpdate : ResourceUpdate
+    public partial class DiskUpdate
     {
         /// <summary>
         /// Initializes a new instance of the DiskUpdate class.
@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the DiskUpdate class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
         /// <param name="osType">the Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
@@ -45,12 +44,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk's size.</param>
         /// <param name="encryptionSettings">Encryption settings for disk or
         /// snapshot</param>
-        public DiskUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings))
-            : base(tags, sku)
+        /// <param name="tags">Resource tags</param>
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
             EncryptionSettings = encryptionSettings;
+            Tags = tags;
+            Sku = sku;
             CustomInit();
         }
 
@@ -81,6 +82,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionSettings")]
         public EncryptionSettings EncryptionSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public DiskSku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.

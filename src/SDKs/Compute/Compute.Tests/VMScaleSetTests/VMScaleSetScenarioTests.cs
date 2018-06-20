@@ -61,7 +61,29 @@ namespace Compute.Tests
         }
 
         /// <summary>
-        /// To record this test case, you need to run it again zone supported regions like eastus2.
+        /// To record this test case, you need to run it again zone supported regions like eastus2euap.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone")]
+        public void TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_SingleZone()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
+                {
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        /// <summary>
+        /// To record this test case, you need to run it again zone supported regions like eastus2euap.
         /// </summary>
         [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_ManagedDisks_PirImage_Zones")]
@@ -70,11 +92,10 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centralus");
                 using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
-
-                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1" });
+                    TestScaleSetOperationsInternal(context, hasManagedDisks: true, useVmssExtension: false, zones: new List<string> { "1", "3" });
                 }
             }
             finally

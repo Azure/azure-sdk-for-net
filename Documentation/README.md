@@ -33,7 +33,7 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 | Service Name | Nuget Package |
 | ------------ | ------------- |
 | Authorization | Microsoft.Azure.Management.Authorization |
-| Batch | Azure.Batch |
+| Batch | Microsoft.Azure.Batch |
 | Cdn | Microsoft.Azure.Management.Cdn |
 | Cognitive Services | Microsoft.Azure.Management.CognitiveServices |
 | Compute | Microsoft.Azure.Management.Compute |
@@ -47,6 +47,7 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 | Machine Learning Compute | Microsoft.Azure.Management.MachineLearningCompute |
 | Network | Microsoft.Azure.Management.Network |
 | NotificationHubs | Microsoft.Azure.Management.NotificationHubs |
+| Policy Insights | Microsoft.Azure.Management.PolicyInsights |
 | PowerBI | Microsoft.Azure.Management.PowerBIEmbedded |
 | Redis Cache | Microsoft.Azure.Management.Redis |
 | Resource Manager (ARM) | Microsoft.Azure.Management.ResourceManager |

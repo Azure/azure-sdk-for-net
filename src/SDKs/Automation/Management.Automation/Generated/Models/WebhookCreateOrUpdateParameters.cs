@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="runbook">Gets or sets the runbook.</param>
         /// <param name="runOn">Gets or sets the name of the hybrid worker
         /// group the webhook job will run on.</param>
-        public WebhookCreateOrUpdateParameters(string name, bool? isEnabled = default(bool?), string uri = default(string), System.DateTime? expiryTime = default(System.DateTime?), IDictionary<string, string> parameters = default(IDictionary<string, string>), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string runOn = default(string))
+        public WebhookCreateOrUpdateParameters(string name, bool? isEnabled = default(bool?), string uri = default(string), System.DateTimeOffset expiryTime = default(System.DateTimeOffset), IDictionary<string, string> parameters = default(IDictionary<string, string>), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string runOn = default(string))
         {
             Name = name;
             IsEnabled = isEnabled;
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the expiry time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expiryTime")]
-        public System.DateTime? ExpiryTime { get; set; }
+        public System.DateTimeOffset ExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters of the job.

@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for HyperVReplicaAzureRpRecoveryPointType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum HyperVReplicaAzureRpRecoveryPointType
+    public static class HyperVReplicaAzureRpRecoveryPointType
     {
-        [EnumMember(Value = "Latest")]
-        Latest,
-        [EnumMember(Value = "LatestApplicationConsistent")]
-        LatestApplicationConsistent,
-        [EnumMember(Value = "LatestProcessed")]
-        LatestProcessed
-    }
-    internal static class HyperVReplicaAzureRpRecoveryPointTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this HyperVReplicaAzureRpRecoveryPointType? value)
-        {
-            return value == null ? null : ((HyperVReplicaAzureRpRecoveryPointType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this HyperVReplicaAzureRpRecoveryPointType value)
-        {
-            switch( value )
-            {
-                case HyperVReplicaAzureRpRecoveryPointType.Latest:
-                    return "Latest";
-                case HyperVReplicaAzureRpRecoveryPointType.LatestApplicationConsistent:
-                    return "LatestApplicationConsistent";
-                case HyperVReplicaAzureRpRecoveryPointType.LatestProcessed:
-                    return "LatestProcessed";
-            }
-            return null;
-        }
-
-        internal static HyperVReplicaAzureRpRecoveryPointType? ParseHyperVReplicaAzureRpRecoveryPointType(this string value)
-        {
-            switch( value )
-            {
-                case "Latest":
-                    return HyperVReplicaAzureRpRecoveryPointType.Latest;
-                case "LatestApplicationConsistent":
-                    return HyperVReplicaAzureRpRecoveryPointType.LatestApplicationConsistent;
-                case "LatestProcessed":
-                    return HyperVReplicaAzureRpRecoveryPointType.LatestProcessed;
-            }
-            return null;
-        }
+        public const string Latest = "Latest";
+        public const string LatestApplicationConsistent = "LatestApplicationConsistent";
+        public const string LatestProcessed = "LatestProcessed";
     }
 }

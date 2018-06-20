@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.SpellCheck.Models
+namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;

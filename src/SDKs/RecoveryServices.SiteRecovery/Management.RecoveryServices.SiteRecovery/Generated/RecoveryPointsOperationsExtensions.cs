@@ -22,6 +22,58 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class RecoveryPointsOperationsExtensions
     {
             /// <summary>
+            /// Get recovery points for a replication protected item.
+            /// </summary>
+            /// <remarks>
+            /// Lists the available recovery points for a replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// The fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// The protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// The replication protected item's name.
+            /// </param>
+            public static IPage<RecoveryPoint> ListByReplicationProtectedItems(this IRecoveryPointsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName)
+            {
+                return operations.ListByReplicationProtectedItemsAsync(fabricName, protectionContainerName, replicatedProtectedItemName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get recovery points for a replication protected item.
+            /// </summary>
+            /// <remarks>
+            /// Lists the available recovery points for a replication protected item.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// The fabric name.
+            /// </param>
+            /// <param name='protectionContainerName'>
+            /// The protection container name.
+            /// </param>
+            /// <param name='replicatedProtectedItemName'>
+            /// The replication protected item's name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<RecoveryPoint>> ListByReplicationProtectedItemsAsync(this IRecoveryPointsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByReplicationProtectedItemsWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get a recovery point.
             /// </summary>
             /// <remarks>
@@ -74,58 +126,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<RecoveryPoint> GetAsync(this IRecoveryPointsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, string recoveryPointName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, recoveryPointName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get recovery points for a replication protected item.
-            /// </summary>
-            /// <remarks>
-            /// Lists the available recovery points for a replication protected item.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// The fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// The protection container name.
-            /// </param>
-            /// <param name='replicatedProtectedItemName'>
-            /// The replication protected item's name.
-            /// </param>
-            public static IPage<RecoveryPoint> ListByReplicationProtectedItems(this IRecoveryPointsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName)
-            {
-                return operations.ListByReplicationProtectedItemsAsync(fabricName, protectionContainerName, replicatedProtectedItemName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get recovery points for a replication protected item.
-            /// </summary>
-            /// <remarks>
-            /// Lists the available recovery points for a replication protected item.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fabricName'>
-            /// The fabric name.
-            /// </param>
-            /// <param name='protectionContainerName'>
-            /// The protection container name.
-            /// </param>
-            /// <param name='replicatedProtectedItemName'>
-            /// The replication protected item's name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<RecoveryPoint>> ListByReplicationProtectedItemsAsync(this IRecoveryPointsOperations operations, string fabricName, string protectionContainerName, string replicatedProtectedItemName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByReplicationProtectedItemsWithHttpMessagesAsync(fabricName, protectionContainerName, replicatedProtectedItemName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

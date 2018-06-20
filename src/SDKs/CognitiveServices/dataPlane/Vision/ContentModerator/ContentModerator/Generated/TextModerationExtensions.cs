@@ -7,6 +7,7 @@
 namespace Microsoft.CognitiveServices.ContentModerator
 {
     using Models;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -25,15 +26,15 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='language'>
-            /// Language of the terms.
-            /// </param>
             /// <param name='textContentType'>
             /// The content type. Possible values include: 'text/plain', 'text/html',
             /// 'text/xml', 'text/markdown'
             /// </param>
             /// <param name='textContent'>
             /// Content to screen.
+            /// </param>
+            /// <param name='language'>
+            /// Language of the text.
             /// </param>
             /// <param name='autocorrect'>
             /// Autocorrect text.
@@ -47,9 +48,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='classify'>
             /// Classify input.
             /// </param>
-            public static Screen ScreenText(this ITextModeration operations, string language, string textContentType, string textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false)
+            public static Screen ScreenText(this ITextModeration operations, string textContentType, Stream textContent, string language = default(string), bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false)
             {
-                return operations.ScreenTextAsync(language, textContentType, textContent, autocorrect, pII, listId, classify).GetAwaiter().GetResult();
+                return operations.ScreenTextAsync(textContentType, textContent, language, autocorrect, pII, listId, classify).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,15 +63,15 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='language'>
-            /// Language of the terms.
-            /// </param>
             /// <param name='textContentType'>
             /// The content type. Possible values include: 'text/plain', 'text/html',
             /// 'text/xml', 'text/markdown'
             /// </param>
             /// <param name='textContent'>
             /// Content to screen.
+            /// </param>
+            /// <param name='language'>
+            /// Language of the text.
             /// </param>
             /// <param name='autocorrect'>
             /// Autocorrect text.
@@ -87,9 +88,9 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Screen> ScreenTextAsync(this ITextModeration operations, string language, string textContentType, string textContent, bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Screen> ScreenTextAsync(this ITextModeration operations, string textContentType, Stream textContent, string language = default(string), bool? autocorrect = false, bool? pII = false, string listId = default(string), bool? classify = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ScreenTextWithHttpMessagesAsync(language, textContentType, textContent, autocorrect, pII, listId, classify, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ScreenTextWithHttpMessagesAsync(textContentType, textContent, language, autocorrect, pII, listId, classify, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -111,7 +112,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='textContent'>
             /// Content to screen.
             /// </param>
-            public static DetectedLanguage DetectLanguage(this ITextModeration operations, string textContentType, string textContent)
+            public static DetectedLanguage DetectLanguage(this ITextModeration operations, string textContentType, Stream textContent)
             {
                 return operations.DetectLanguageAsync(textContentType, textContent).GetAwaiter().GetResult();
             }
@@ -135,7 +136,7 @@ namespace Microsoft.CognitiveServices.ContentModerator
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DetectedLanguage> DetectLanguageAsync(this ITextModeration operations, string textContentType, string textContent, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DetectedLanguage> DetectLanguageAsync(this ITextModeration operations, string textContentType, Stream textContent, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectLanguageWithHttpMessagesAsync(textContentType, textContent, null, cancellationToken).ConfigureAwait(false))
                 {

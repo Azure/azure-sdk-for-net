@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Subscription-level properties and limits for Data Lake Analytics
+    /// Subscription-level properties and limits for Data Lake Analytics.
     /// </summary>
     public partial class CapabilityInformation
     {
@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the CapabilityInformation class.
         /// </summary>
-        /// <param name="subscriptionId">the subscription credentials that
+        /// <param name="subscriptionId">The subscription credentials that
         /// uniquely identifies the subscription.</param>
-        /// <param name="state">the subscription state. Possible values
+        /// <param name="state">The subscription state. Possible values
         /// include: 'Registered', 'Suspended', 'Deleted', 'Unregistered',
         /// 'Warned'</param>
-        /// <param name="maxAccountCount">the maximum supported number of
+        /// <param name="maxAccountCount">The maximum supported number of
         /// accounts under this subscription.</param>
-        /// <param name="accountCount">the current number of accounts under
+        /// <param name="accountCount">The current number of accounts under
         /// this subscription.</param>
-        /// <param name="migrationState">the Boolean value of true or false to
+        /// <param name="migrationState">The Boolean value of true or false to
         /// indicate the maintenance state.</param>
         public CapabilityInformation(System.Guid? subscriptionId = default(System.Guid?), string state = default(string), int? maxAccountCount = default(int?), int? accountCount = default(int?), bool? migrationState = default(bool?))
         {

@@ -6,6 +6,7 @@
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>LocationBasedServices.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <Version>1.0.0-preview</Version>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>

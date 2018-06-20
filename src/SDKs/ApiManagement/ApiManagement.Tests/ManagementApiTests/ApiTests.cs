@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using System.Net;
-using System.IO;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -33,7 +32,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName,
                     null);
                 Assert.NotNull(listResponse);                                
-                Assert.Equal(1, listResponse.Count());
+                Assert.Single(listResponse);
                 Assert.NotNull(listResponse.NextPageLink);
 
                 var echoApi = listResponse.First();
@@ -78,9 +77,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                         AuthorizationEndpoint = "https://contoso.com/auth",
                         TokenEndpoint = "https://contoso.com/token",
                         ClientRegistrationEndpoint = "https://contoso.com/clients/reg",
-                        GrantTypes = new List<GrantType?> { GrantType.AuthorizationCode, GrantType.Implicit },
+                        GrantTypes = new List<string> { GrantType.AuthorizationCode, GrantType.Implicit },
                         AuthorizationMethods = new List<AuthorizationMethod?> { AuthorizationMethod.POST, AuthorizationMethod.GET },
-                        BearerTokenSendingMethods = new List<BearerTokenSendingMethod?> { BearerTokenSendingMethod.AuthorizationHeader, BearerTokenSendingMethod.Query },
+                        BearerTokenSendingMethods = new List<string> { BearerTokenSendingMethod.AuthorizationHeader, BearerTokenSendingMethod.Query },
                         ClientId = TestUtilities.GenerateName("clientid")
                     };
 
@@ -143,6 +142,15 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiGetResponse.AuthenticationSettings.OAuth2);
                     Assert.Equal(newApiAuthorizationServerId, apiGetResponse.AuthenticationSettings.OAuth2.AuthorizationServerId);
 
+                    // get the API Entity Tag
+                    ApiGetEntityTagHeaders apiTag = testBase.client.Api.GetEntityTag(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId);
+
+                    Assert.NotNull(apiTag);
+                    Assert.NotNull(apiTag.ETag);
+
                     // patch added api
                     string patchedName = TestUtilities.GenerateName("patchedname");
                     string patchedDescription = TestUtilities.GenerateName("patchedDescription");
@@ -162,7 +170,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                                 OAuth2 = null
                             }
                         },
-                        "*");
+                        apiTag.ETag);
 
                     // get patched api to check it was patched
                     apiGetResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, newApiId);
@@ -186,13 +194,13 @@ namespace ApiManagement.Tests.ManagementApiTests
                         new Microsoft.Rest.Azure.OData.ODataQuery<ApiContract> { Top = 1 });
 
                     Assert.NotNull(listResponse);
-                    Assert.Equal(1, listResponse.Count());
+                    Assert.Single(listResponse);
                     Assert.NotNull(listResponse.NextPageLink);
 
                     listResponse = testBase.client.Api.ListByServiceNext(listResponse.NextPageLink);
 
                     Assert.NotNull(listResponse);
-                    Assert.Equal(1, listResponse.Count());
+                    Assert.Single(listResponse);
                     Assert.Empty(listResponse.NextPageLink);
 
                     // delete the api
@@ -227,118 +235,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         newApiAuthorizationServerId,
                         "*");
-                }
-            }
-        }
-
-        [Fact]
-        public async Task ImportFromSwaggerDocument()
-        {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var testBase = new ApiManagementTestBase(context);
-                testBase.TryCreateApiManagementService();
-
-                const string swaggerPath = "./Resources/SwaggerPetStoreV2.json";                
-                const string path = "swaggerApi";
-                string swaggerApi = TestUtilities.GenerateName("aid");
-
-                try
-                {
-                    // import API
-                    string swaggerApiContent;
-                    using (StreamReader reader = File.OpenText(swaggerPath))
-                    {
-                        swaggerApiContent = reader.ReadToEnd();
-                    }
-
-                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
-                    {
-                        Path = path,
-                        ContentFormat = ContentFormat.SwaggerJson,
-                        ContentValue = swaggerApiContent
-                    };
-
-                    var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
-                            testBase.rgName,
-                            testBase.serviceName,
-                            swaggerApi,
-                            apiCreateOrUpdate);
-
-                    Assert.NotNull(swaggerApiResponse);
-
-                    // get the api to check it was created
-                    var getResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, swaggerApi);
-
-                    Assert.NotNull(getResponse);                    
-                    Assert.Equal(swaggerApi, getResponse.Name);
-                    Assert.Equal(path, getResponse.Path);
-                    Assert.Equal("Swagger Petstore Extensive", getResponse.DisplayName);
-                    Assert.Equal("http://petstore.swagger.wordnik.com/api", getResponse.ServiceUrl);
-                }
-                finally
-                {
-                    // remove the API
-                    testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, swaggerApi, "*");
-                }
-
-            }
-        }
-
-        [Fact]
-        public async Task ImportFromWadlDocument()
-        {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var testBase = new ApiManagementTestBase(context);
-                testBase.TryCreateApiManagementService();
-
-                const string wadlPath = "./Resources/WADLYahoo.xml";
-                const string path = "yahooWadl";
-                string wadlApi = TestUtilities.GenerateName("aid");
-
-                try
-                {
-                    // import API
-                    string wadlApiContent;
-                    using (StreamReader reader = File.OpenText(wadlPath))
-                    {
-                        wadlApiContent = reader.ReadToEnd();
-                    }
-
-                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
-                    {
-                        Path = path,
-                        ContentFormat = ContentFormat.WadlXml,
-                        ContentValue = wadlApiContent
-                    };
-
-                    var wadlApiResponse = testBase.client.Api.CreateOrUpdate(
-                            testBase.rgName,
-                            testBase.serviceName,
-                            wadlApi,
-                            apiCreateOrUpdate);
-
-                    Assert.NotNull(wadlApiResponse);
-
-                    // get the api to check it was created
-                    var getResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, wadlApi);
-
-                    Assert.NotNull(getResponse);
-                    Assert.Equal(wadlApi, getResponse.Name);
-                    Assert.Equal(path, getResponse.Path);
-                    Assert.Equal("Yahoo News Search", getResponse.DisplayName);
-                    Assert.Equal("http://api.search.yahoo.com/NewsSearchService/V1/", getResponse.ServiceUrl);
-                    Assert.True(getResponse.IsCurrent);
-                    Assert.True(getResponse.Protocols.Contains(Protocol.Https));
-                    Assert.Equal("1", getResponse.ApiRevision);
-                }
-                finally
-                {
-                    // remove the API
-                    testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, wadlApi, "*");
                 }
             }
         }

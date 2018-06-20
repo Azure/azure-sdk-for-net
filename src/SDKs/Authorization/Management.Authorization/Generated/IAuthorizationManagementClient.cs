@@ -74,14 +74,14 @@ namespace Microsoft.Azure.Management.Authorization
         IClassicAdministratorsOperations ClassicAdministrators { get; }
 
         /// <summary>
-        /// Gets the IPermissionsOperations.
-        /// </summary>
-        IPermissionsOperations Permissions { get; }
-
-        /// <summary>
         /// Gets the IProviderOperationsMetadataOperations.
         /// </summary>
         IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; }
+
+        /// <summary>
+        /// Gets the IPermissionsOperations.
+        /// </summary>
+        IPermissionsOperations Permissions { get; }
 
         /// <summary>
         /// Gets the IRoleDefinitionsOperations.

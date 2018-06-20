@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="providerVersion">The provider version.</param>
         /// <param name="serverVersion">The fabric provider.</param>
         /// <param name="providerVersionState">DRA version status.</param>
-        /// <param name="providerVersionExpiryDate">Expiry date if the version
-        /// is deprecated.</param>
+        /// <param name="providerVersionExpiryDate">Expiry date of the
+        /// version.</param>
         /// <param name="fabricFriendlyName">The fabric friendly name.</param>
         /// <param name="lastHeartBeat">Time when last heartbeat was sent by
         /// the DRA.</param>
@@ -53,7 +53,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// health error details.</param>
         /// <param name="draIdentifier">The DRA Id.</param>
         /// <param name="identityDetails">The identity details.</param>
-        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>), string draIdentifier = default(string), IdentityInformation identityDetails = default(IdentityInformation))
+        /// <param name="providerVersionDetails">The provider version
+        /// details.</param>
+        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>), string draIdentifier = default(string), IdentityInformation identityDetails = default(IdentityInformation), VersionDetails providerVersionDetails = default(VersionDetails))
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
@@ -69,6 +71,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             HealthErrorDetails = healthErrorDetails;
             DraIdentifier = draIdentifier;
             IdentityDetails = identityDetails;
+            ProviderVersionDetails = providerVersionDetails;
             CustomInit();
         }
 
@@ -108,7 +111,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string ProviderVersionState { get; set; }
 
         /// <summary>
-        /// Gets or sets expiry date if the version is deprecated.
+        /// Gets or sets expiry date of the version.
         /// </summary>
         [JsonProperty(PropertyName = "providerVersionExpiryDate")]
         public System.DateTime? ProviderVersionExpiryDate { get; set; }
@@ -160,6 +163,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "identityDetails")]
         public IdentityInformation IdentityDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provider version details.
+        /// </summary>
+        [JsonProperty(PropertyName = "providerVersionDetails")]
+        public VersionDetails ProviderVersionDetails { get; set; }
 
     }
 }

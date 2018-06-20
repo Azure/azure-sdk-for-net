@@ -79,14 +79,14 @@ namespace Microsoft.Azure.Management.Authorization
         public virtual IClassicAdministratorsOperations ClassicAdministrators { get; private set; }
 
         /// <summary>
-        /// Gets the IPermissionsOperations.
-        /// </summary>
-        public virtual IPermissionsOperations Permissions { get; private set; }
-
-        /// <summary>
         /// Gets the IProviderOperationsMetadataOperations.
         /// </summary>
         public virtual IProviderOperationsMetadataOperations ProviderOperationsMetadata { get; private set; }
+
+        /// <summary>
+        /// Gets the IPermissionsOperations.
+        /// </summary>
+        public virtual IPermissionsOperations Permissions { get; private set; }
 
         /// <summary>
         /// Gets the IRoleDefinitionsOperations.
@@ -300,10 +300,10 @@ namespace Microsoft.Azure.Management.Authorization
         private void Initialize()
         {
             ClassicAdministrators = new ClassicAdministratorsOperations(this);
-            Permissions = new PermissionsOperations(this);
             ProviderOperationsMetadata = new ProviderOperationsMetadataOperations(this);
-            RoleDefinitions = new RoleDefinitionsOperations(this);
+            Permissions = new PermissionsOperations(this);
             RoleAssignments = new RoleAssignmentsOperations(this);
+            RoleDefinitions = new RoleDefinitionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

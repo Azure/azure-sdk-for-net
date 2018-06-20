@@ -31,8 +31,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="name">Name of the category.</param>
         /// <param name="score">Scoring of the category.</param>
-        /// <param name="detail">Additional category detail if
-        /// available.</param>
         public Category(string name = default(string), double? score = default(double?), CategoryDetail detail = default(CategoryDetail))
         {
             Name = name;
@@ -59,7 +57,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public double? Score { get; set; }
 
         /// <summary>
-        /// Gets or sets additional category detail if available.
         /// </summary>
         [JsonProperty(PropertyName = "detail")]
         public CategoryDetail Detail { get; set; }

@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// address.</param>
         /// <param name="registrationTime">Gets or sets the registration time
         /// of the worker machine.</param>
-        public HybridRunbookWorker(string name = default(string), string ip = default(string), System.DateTime? registrationTime = default(System.DateTime?))
+        /// <param name="lastSeenDateTime">Last Heartbeat from the
+        /// Worker</param>
+        public HybridRunbookWorker(string name = default(string), string ip = default(string), System.DateTimeOffset registrationTime = default(System.DateTimeOffset), System.DateTimeOffset lastSeenDateTime = default(System.DateTimeOffset))
         {
             Name = name;
             Ip = ip;
             RegistrationTime = registrationTime;
+            LastSeenDateTime = lastSeenDateTime;
             CustomInit();
         }
 
@@ -63,7 +66,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the registration time of the worker machine.
         /// </summary>
         [JsonProperty(PropertyName = "registrationTime")]
-        public System.DateTime? RegistrationTime { get; set; }
+        public System.DateTimeOffset RegistrationTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets last Heartbeat from the Worker
+        /// </summary>
+        [JsonProperty(PropertyName = "lastSeenDateTime")]
+        public System.DateTimeOffset LastSeenDateTime { get; set; }
 
     }
 }

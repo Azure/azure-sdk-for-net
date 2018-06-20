@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/resourceGroups/BVTToolRG1/providers/Microsoft.DataBox/jobs/sdktest5497/downloadShippingLabel?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M2NmRhMjEtNjA3ZS00OWI0LThiZGYtZjI1ZmJiOGY3MDVmL3Jlc291cmNlR3JvdXBzL0JWVFRvb2xSRzEvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhQm94L2pvYnMvYWJiaGF0OU5vdlNtb2tlVGVzdDIvZG93bmxvYWRTaGlwcGluZ0xhYmVsP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3a711f77-5f40-431c-8875-db18ef03758e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"shippingLabelSasUri\": \"https://wusintd2cis2secx0fo9.blob.core.windows.net/dummycontainer/1Z12345E8791315509.PDF?sv=2016-05-31&sr=b&sig=ijNPoWPcbt0BNxTCK9p6nta4jsOr2hzJpgWyyE7AU0k%3D&st=2018-04-16T04%3A42%3A31Z&se=2018-04-16T05%3A12%3A31Z&sp=r\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 16 Apr 2018 04:52:30 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "d2830fb9-fd5c-495d-a29e-43c24e3a53bd"
+        ],
+        "x-ms-client-request-id": [
+          "3a711f77-5f40-431c-8875-db18ef03758e"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1159"
+        ],
+        "x-ms-correlation-request-id": [
+          "e052c488-7261-42a8-902e-0f5c30149afa"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20180416T045231Z:e052c488-7261-42a8-902e-0f5c30149afa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
+    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+  }
+}

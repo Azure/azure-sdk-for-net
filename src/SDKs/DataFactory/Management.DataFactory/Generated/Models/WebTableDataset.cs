@@ -47,11 +47,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="path">The relative URL to the web page from the linked
         /// service URL. Type: string (or Expression with resultType
         /// string).</param>
-        public WebTableDataset(LinkedServiceReference linkedServiceName, object index, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object path = default(object))
-            : base(linkedServiceName, additionalProperties, description, structure, parameters)
+        public WebTableDataset(LinkedServiceReference linkedServiceName, object index, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object path = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
         {
             Index = index;
             Path = path;

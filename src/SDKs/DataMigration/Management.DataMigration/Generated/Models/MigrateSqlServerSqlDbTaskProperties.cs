@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public MigrateSqlServerSqlDbTaskProperties(IList<ODataError> errors = default(IList<ODataError>), TaskState? state = default(TaskState?), MigrateSqlServerSqlDbTaskInput input = default(MigrateSqlServerSqlDbTaskInput), IList<MigrateSqlServerSqlDbTaskOutput> output = default(IList<MigrateSqlServerSqlDbTaskOutput>))
+        public MigrateSqlServerSqlDbTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), MigrateSqlServerSqlDbTaskInput input = default(MigrateSqlServerSqlDbTaskInput), IList<MigrateSqlServerSqlDbTaskOutput> output = default(IList<MigrateSqlServerSqlDbTaskOutput>))
             : base(errors, state)
         {
             Input = input;

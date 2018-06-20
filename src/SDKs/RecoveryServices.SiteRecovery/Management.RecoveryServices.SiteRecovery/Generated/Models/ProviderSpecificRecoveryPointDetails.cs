@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -27,27 +26,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ProviderSpecificRecoveryPointDetails class.
-        /// </summary>
-        /// <param name="type">Gets the provider type.</param>
-        public ProviderSpecificRecoveryPointDetails(string type = default(string))
-        {
-            Type = type;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the provider type.
-        /// </summary>
-        [JsonProperty(PropertyName = "Type")]
-        public string Type { get; private set; }
 
     }
 }

@@ -71,6 +71,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
 
         /// <summary>
+        /// Gets the IAccountsOperations.
+        /// </summary>
+        IAccountsOperations Accounts { get; }
+
+        /// <summary>
+        /// Gets the IDataLakeStoreAccountsOperations.
+        /// </summary>
+        IDataLakeStoreAccountsOperations DataLakeStoreAccounts { get; }
+
+        /// <summary>
+        /// Gets the IStorageAccountsOperations.
+        /// </summary>
+        IStorageAccountsOperations StorageAccounts { get; }
+
+        /// <summary>
         /// Gets the IComputePoliciesOperations.
         /// </summary>
         IComputePoliciesOperations ComputePolicies { get; }
@@ -81,19 +96,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         IFirewallRulesOperations FirewallRules { get; }
 
         /// <summary>
-        /// Gets the IStorageAccountsOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IStorageAccountsOperations StorageAccounts { get; }
+        IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IDataLakeStoreAccountsOperations.
+        /// Gets the ILocationsOperations.
         /// </summary>
-        IDataLakeStoreAccountsOperations DataLakeStoreAccounts { get; }
-
-        /// <summary>
-        /// Gets the IAccountOperations.
-        /// </summary>
-        IAccountOperations Account { get; }
+        ILocationsOperations Locations { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.

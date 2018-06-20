@@ -1,7 +1,7 @@
     {
       "Name": "EnvironmentSetting",
       "ProtocolName": "Models.EnvironmentSetting",
-      "Comment": "An environment variable to be set on a task process, such as a job task, start task, job manager task, or job preparation or release task.",
+      "SummaryComment": "An environment variable to be set on a task process, such as a job task, start task, job manager task, or job preparation or release task.",
       "IsUsedInCollections": true,
       "Properties": [
         {

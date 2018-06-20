@@ -120,6 +120,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             var ints = new[] { 1, 2, 3 };
             var otherInts = new[] { 4, 5, 6 };
+            var longerInts = new[] { 1, 2, 3, 4 };
             var strings = new[] { "hello", "bonjour", "guten tag", "你好", "aloha" };
             var otherStrings = new[] { "good bye", "au revoir", "auf wiedersehen", "再見", "aloha" };
 
@@ -139,6 +140,10 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.False(intComparer.Equals(ints, new[] { 7 }));
             Assert.False(stringComparer.Equals(new[] { "who?" }, strings));
+
+            // Test collections of varying lengths.
+            Assert.False(intComparer.Equals(ints, longerInts));
+            Assert.False(intComparer.Equals(longerInts, ints));
         }
 
         [Fact]

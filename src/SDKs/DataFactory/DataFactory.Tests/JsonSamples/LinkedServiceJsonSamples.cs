@@ -889,7 +889,9 @@ namespace DataFactory.Tests.JsonSamples
             tenant: ""72f988bf-86f1-41af-91ab-2d7cd011db47"",
             clusterNamePrefix: ""OnDemandHdiResource"",
             clusterResourceGroup: ""ADF"",
-            version: ""3.5""
+            version: ""3.5"",
+            headNodeSize: ""standard_v3"",
+            dataNodeSize: ""standard_D12_v2""
         }
     }
 }";
@@ -1035,6 +1037,14 @@ namespace DataFactory.Tests.JsonSamples
             requestGoogleDriveScope : true,
             authenticationType : ""ServiceAuthentication"",
             refreshToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            clientId : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            clientSecret : {
                 type: ""SecureString"",
                 value: ""some secret""
             },
@@ -1297,13 +1307,18 @@ namespace DataFactory.Tests.JsonSamples
         typeProperties: {
             endpoint : ""quickbooks.api.intuit.com"",
             companyId : ""fakeCompanyId"",
+            consumerKey : ""fakeConsumerKey"",
+            consumerSecret : {
+                type : ""SecureString"",
+                value : ""some secret""
+            },
             accessToken : {
-                type: ""SecureString"",
-                value: ""some secret""
+                type : ""SecureString"",
+                value : ""some secret""
             },
             accessTokenSecret : {
-                type: ""SecureString"",
-                value: ""some secret""
+                type : ""SecureString"",
+                value : ""some secret""
             },
             useEncryptedEndpoints : true
         }
@@ -1317,12 +1332,12 @@ namespace DataFactory.Tests.JsonSamples
     properties: {
         type: ""ServiceNow"",
         typeProperties: {
-            endpoint : ""http://ServiceNowData.com"",
+            endpoint : ""http://instance.service-now.com"",
             authenticationType : ""Basic"",
             username : ""admin"",
             password : {
-                type: ""SecureString"",
-                value: ""some secret""
+                type : ""SecureString"",
+                value : ""some secret""
             }
         }
     }
@@ -1440,5 +1455,127 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string NetezzaLinkedService = @"
+{
+    name: ""NetezzaLinkedService"",
+    properties: {
+        type: ""Netezza"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string VerticaLinkedService = @"
+{
+    name: ""VerticaLinkedService"",
+    properties: {
+        type: ""Vertica"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string DatabricksLinkedService = @"
+{
+    name: ""DatabricksLinkedService"",
+    properties: {
+        type: ""AzureDatabricks"",
+        typeProperties: {
+            domain: ""https://westeurope.azuredatabricks.net/"",
+            accessToken:  {
+                type: ""SecureString"",
+                value: ""someKey""
+            },
+            existingClusterId: ""1215-091927-stems91""
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string DatabricksLinkedServiceWithNewCluster = @"
+{
+    name: ""DatabricksLinkedService"",
+    properties: {
+        type: ""AzureDatabricks"",
+        typeProperties: {
+            domain: ""https://westeurope.azuredatabricks.net/"",
+            accessToken: {
+                type: ""SecureString"",
+                value: ""someKey""
+            },
+            newClusterVersion: ""3.4.x-scala2.11"",
+            newClusterNumOfWorker: ""1"",
+            newClusterNodeType: ""Standard_DS3_v2"",
+            newClusterSparkConf: {
+                ""spark.speculation"": true
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MySqlLinkedService = @"
+{
+    name: ""MySqlLinkedService"",
+    properties: {
+        type: ""MySql"",
+        typeProperties: {
+            connectionString: {
+                type : ""SecureString"",
+                value : ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PostgreSqlLinkedService = @"
+{
+    name: ""PostgreSqlLinkedService"",
+    properties: {
+        type: ""PostgreSql"",
+        typeProperties: {
+            connectionString: {
+                type : ""SecureString"",
+                value : ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string Db2LinkedService = @"
+{
+    name: ""Db2LinkedService"",
+    properties:
+    {
+        type: ""Db2"",
+        connectVia: {
+            referenceName : ""MSourceDemoIR"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            server : ""fakeServer"",
+            database : ""fakeDatabase"",
+            authenticationType : ""Basic"",
+            username : ""fakeUsername"",
+            password : {
+                type : ""SecureString"",
+                value : ""some password""
+            }
+        }
+    }
+}";
     }
 }

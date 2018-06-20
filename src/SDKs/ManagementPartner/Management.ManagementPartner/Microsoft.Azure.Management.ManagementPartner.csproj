@@ -11,6 +11,12 @@
     <PackageTags>ManagementPartner;;;;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[This is a public preview release of the Azure Gsm SDK. Included with this release is all operation to get/modify partner id for tenant]]>
+    <Description>Microsoft.Azure.Management.ManagementPartner Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.ManagementPartner</AssemblyName>
+    <Version>1.1.0-preview</Version>
+    <PackageTags>ManagementPartner;;;;</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[Add partner name for management partner operations response]]>
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store firewall rule update parameters
+    /// The parameters used to update a firewall rule.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class UpdateFirewallRuleParameters
@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Initializes a new instance of the UpdateFirewallRuleParameters
         /// class.
         /// </summary>
-        /// <param name="startIpAddress">the start IP address for the firewall
+        /// <param name="startIpAddress">The start IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
-        /// <param name="endIpAddress">the end IP address for the firewall
+        /// <param name="endIpAddress">The end IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
         public UpdateFirewallRuleParameters(string startIpAddress = default(string), string endIpAddress = default(string))

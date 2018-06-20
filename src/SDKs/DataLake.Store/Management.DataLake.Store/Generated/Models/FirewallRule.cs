@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Store firewall rule information
+    /// Data Lake Store firewall rule information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class FirewallRule : SubResource
@@ -32,16 +32,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FirewallRule class.
         /// </summary>
-        /// <param name="startIpAddress">the start IP address for the firewall
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">The resource name.</param>
+        /// <param name="type">The resource type.</param>
+        /// <param name="startIpAddress">The start IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
-        /// <param name="endIpAddress">the end IP address for the firewall
+        /// <param name="endIpAddress">The end IP address for the firewall
         /// rule. This can be either ipv4 or ipv6. Start and End should be in
         /// the same protocol.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        public FirewallRule(string startIpAddress, string endIpAddress, string id = default(string), string name = default(string), string type = default(string))
+        public FirewallRule(string id = default(string), string name = default(string), string type = default(string), string startIpAddress = default(string), string endIpAddress = default(string))
             : base(id, name, type)
         {
             StartIpAddress = startIpAddress;
@@ -55,36 +55,18 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the start IP address for the firewall rule. This can
-        /// be either ipv4 or ipv6. Start and End should be in the same
-        /// protocol.
+        /// Gets the start IP address for the firewall rule. This can be either
+        /// ipv4 or ipv6. Start and End should be in the same protocol.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startIpAddress")]
-        public string StartIpAddress { get; set; }
+        public string StartIpAddress { get; private set; }
 
         /// <summary>
-        /// Gets or sets the end IP address for the firewall rule. This can be
-        /// either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Gets the end IP address for the firewall rule. This can be either
+        /// ipv4 or ipv6. Start and End should be in the same protocol.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endIpAddress")]
-        public string EndIpAddress { get; set; }
+        public string EndIpAddress { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (StartIpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StartIpAddress");
-            }
-            if (EndIpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EndIpAddress");
-            }
-        }
     }
 }

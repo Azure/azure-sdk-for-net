@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the operation.
+        /// Gets the name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or sets the display information of the operation.
@@ -60,11 +60,11 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         public OperationDisplay Display { get; set; }
 
         /// <summary>
-        /// Gets or sets the intended executor of the operation. Possible
-        /// values include: 'User', 'System'
+        /// Gets the intended executor of the operation. Possible values
+        /// include: 'User', 'System'
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
-        public string Origin { get; set; }
+        public string Origin { get; private set; }
 
     }
 }

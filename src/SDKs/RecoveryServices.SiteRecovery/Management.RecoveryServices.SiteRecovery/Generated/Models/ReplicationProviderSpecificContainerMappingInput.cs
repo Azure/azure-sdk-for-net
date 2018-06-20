@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -27,27 +26,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             CustomInit();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ReplicationProviderSpecificContainerMappingInput class.
-        /// </summary>
-        /// <param name="instanceType">The class type.</param>
-        public ReplicationProviderSpecificContainerMappingInput(string instanceType = default(string))
-        {
-            InstanceType = instanceType;
-            CustomInit();
-        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the class type.
-        /// </summary>
-        [JsonProperty(PropertyName = "instanceType")]
-        public string InstanceType { get; set; }
 
     }
 }

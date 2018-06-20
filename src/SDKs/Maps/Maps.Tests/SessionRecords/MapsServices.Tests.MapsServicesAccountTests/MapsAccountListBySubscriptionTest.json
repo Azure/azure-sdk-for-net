@@ -1,0 +1,343 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourcegroups/res6897?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Jlc291cmNlZ3JvdXBzL3JlczY4OTc/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "38b8773b-2c21-41db-967e-bc38bd17f553"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res6897\",\r\n  \"name\": \"res6897\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "167"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:37 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1191"
+        ],
+        "x-ms-request-id": [
+          "1c0d2bc9-a8fa-4cf5-9654-3ca3625ca162"
+        ],
+        "x-ms-correlation-request-id": [
+          "1c0d2bc9-a8fa-4cf5-9654-3ca3625ca162"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002138Z:1c0d2bc9-a8fa-4cf5-9654-3ca3625ca162"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res6897/providers/Microsoft.Maps/accounts/maps3299?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Jlc291cmNlR3JvdXBzL3JlczY4OTcvcHJvdmlkZXJzL01pY3Jvc29mdC5NYXBzL2FjY291bnRzL21hcHMzMjk5P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "128"
+        ],
+        "x-ms-client-request-id": [
+          "6e813285-d59c-437e-bdc6-0e4662ed9ae5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Maps.MapsManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res6897/providers/Microsoft.Maps/accounts/maps3299\",\r\n  \"name\": \"maps3299\",\r\n  \"type\": \"Microsoft.Maps/accounts\",\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "344"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1190"
+        ],
+        "x-ms-request-id": [
+          "e1c9f38a-9001-433e-8df2-f8864c25794b"
+        ],
+        "x-ms-correlation-request-id": [
+          "e1c9f38a-9001-433e-8df2-f8864c25794b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002140Z:e1c9f38a-9001-433e-8df2-f8864c25794b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourcegroups/res1273?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Jlc291cmNlZ3JvdXBzL3JlczEyNzM/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ],
+        "x-ms-client-request-id": [
+          "c0b28015-bdd5-4d22-8b4d-f08df314e4d4"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res1273\",\r\n  \"name\": \"res1273\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "167"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:41 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1189"
+        ],
+        "x-ms-request-id": [
+          "05571650-095c-4d76-baee-799bdab522e7"
+        ],
+        "x-ms-correlation-request-id": [
+          "05571650-095c-4d76-baee-799bdab522e7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002141Z:05571650-095c-4d76-baee-799bdab522e7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res1273/providers/Microsoft.Maps/accounts/maps9309?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Jlc291cmNlR3JvdXBzL3JlczEyNzMvcHJvdmlkZXJzL01pY3Jvc29mdC5NYXBzL2FjY291bnRzL21hcHM5MzA5P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "128"
+        ],
+        "x-ms-client-request-id": [
+          "0a6c884b-ed51-4aab-9cb1-56c00a496455"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Maps.MapsManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res1273/providers/Microsoft.Maps/accounts/maps9309\",\r\n  \"name\": \"maps9309\",\r\n  \"type\": \"Microsoft.Maps/accounts\",\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S0\",\r\n    \"tier\": \"Standard\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "344"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:43 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1188"
+        ],
+        "x-ms-request-id": [
+          "02286f19-9368-4a66-8715-dca7449ca205"
+        ],
+        "x-ms-correlation-request-id": [
+          "02286f19-9368-4a66-8715-dca7449ca205"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002143Z:02286f19-9368-4a66-8715-dca7449ca205"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/providers/Microsoft.Maps/accounts?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjFhOTk2N2EtZThhOS00NjU2LWE3MGItOTZmZjFjNGQwNWEwL3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFwcy9hY2NvdW50cz9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c8e3ecdb-cfca-4e91-b501-066f9d0ba387"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Maps.MapsManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/jeffcoutestrg/providers/Microsoft.Maps/accounts/jeffcoutest4\",\r\n      \"name\": \"jeffcoutest4\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/brendanc-test/providers/Microsoft.Maps/accounts/perfeastus\",\r\n      \"name\": \"perfeastus\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/chgennar-test/providers/Microsoft.Maps/accounts/Dynatrace_Temp_Account\",\r\n      \"name\": \"Dynatrace_Temp_Account\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/Test/providers/Microsoft.Maps/accounts/test-jinzhkey\",\r\n      \"name\": \"test-jinzhkey\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/PerfTest/providers/Microsoft.Maps/accounts/SK_LBS_PerfTestWestUS\",\r\n      \"name\": \"SK_LBS_PerfTestWestUS\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/RaySam-IOT/providers/Microsoft.Maps/accounts/RaySamDev\",\r\n      \"name\": \"RaySamDev\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/OldManLogan/providers/Microsoft.Maps/accounts/Usability_TEST\",\r\n      \"name\": \"Usability_TEST\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/chgennar_bug_bash/providers/Microsoft.Maps/accounts/chgennar_bug_bash\",\r\n      \"name\": \"chgennar_bug_bash\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/james-test/providers/Microsoft.Maps/accounts/james-arm\",\r\n      \"name\": \"james-arm\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/james-test/providers/Microsoft.Maps/accounts/james-put\",\r\n      \"name\": \"james-put\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/Test/providers/Microsoft.Maps/accounts/testjinzh2\",\r\n      \"name\": \"testjinzh2\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/ihvoitka_lbs/providers/Microsoft.Maps/accounts/ihvoitka_lbs\",\r\n      \"name\": \"ihvoitka_lbs\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/JulieTest/providers/Microsoft.Maps/accounts/JulieTest\",\r\n      \"name\": \"JulieTest\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/JeffCouTestRG/providers/Microsoft.Maps/accounts/JeffCouTest1\",\r\n      \"name\": \"JeffCouTest1\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"owner\": \"jeffcou\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res1273/providers/Microsoft.Maps/accounts/maps9309\",\r\n      \"name\": \"maps9309\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/OldManLogan/providers/Microsoft.Maps/accounts/ResourceNameSample\",\r\n      \"name\": \"ResourceNameSample\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/james-test/providers/Microsoft.Maps/accounts/revert_test\",\r\n      \"name\": \"revert_test\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/ChadraTestALBS/providers/Microsoft.Maps/accounts/chadra4\",\r\n      \"name\": \"chadra4\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/Test/providers/Microsoft.Maps/accounts/test123\",\r\n      \"name\": \"test123\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/skamma_First/providers/Microsoft.Maps/accounts/LbsForTest\",\r\n      \"name\": \"LbsForTest\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res9484/providers/Microsoft.Maps/accounts/maps1932\",\r\n      \"name\": \"maps1932\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/OldManLogan/providers/Microsoft.Maps/accounts/TestAcct\",\r\n      \"name\": \"TestAcct\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res6897/providers/Microsoft.Maps/accounts/maps3299\",\r\n      \"name\": \"maps3299\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/brendanc-test/providers/Microsoft.Maps/accounts/bpwesteu\",\r\n      \"name\": \"bpwesteu\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/webscout/providers/Microsoft.Maps/accounts/webscout\",\r\n      \"name\": \"webscout\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/OldManLogan/providers/Microsoft.Maps/accounts/Wolverine_2\",\r\n      \"name\": \"Wolverine_2\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res9484/providers/Microsoft.Maps/accounts/maps7724\",\r\n      \"name\": \"maps7724\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/JeffCouTestRG2/providers/Microsoft.Maps/accounts/JeffCouTest4\",\r\n      \"name\": \"JeffCouTest4\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/bretm1/providers/Microsoft.Maps/accounts/bretm-lbs\",\r\n      \"name\": \"bretm-lbs\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/OldManLogan/providers/Microsoft.Maps/accounts/DELETE_ME\",\r\n      \"name\": \"DELETE_ME\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/brendanc-test/providers/Microsoft.Maps/accounts/perfwestus\",\r\n      \"name\": \"perfwestus\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/RaySam-Test/providers/Microsoft.Maps/accounts/RaySam P- Test\",\r\n      \"name\": \"RaySam P- Test\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/Aikman2/providers/Microsoft.Maps/accounts/chadratest1\",\r\n      \"name\": \"chadratest1\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"owner\": \"chadra\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/WebScoutRG/providers/Microsoft.Maps/accounts/WebScout\",\r\n      \"name\": \"WebScout\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/Aikman2/providers/Microsoft.Maps/accounts/test_chadra4\",\r\n      \"name\": \"test_chadra4\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/BrendanBilling/providers/Microsoft.Maps/accounts/BrendanBilling\",\r\n      \"name\": \"BrendanBilling\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/james-test/providers/Microsoft.Maps/accounts/james-test2\",\r\n      \"name\": \"james-test2\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/PerfTest/providers/Microsoft.Maps/accounts/SK_LBS_PerfTestWestUS_2\",\r\n      \"name\": \"SK_LBS_PerfTestWestUS_2\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/Aikman2/providers/Microsoft.Maps/accounts/chadtest8\",\r\n      \"name\": \"chadtest8\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/OldManLogan/providers/Microsoft.Maps/accounts/Bug_Bash_Key\",\r\n      \"name\": \"Bug_Bash_Key\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/clitest.rgpdkdefborqcj7riq2mzcvah4kryxvrgziwxfhbmgkvn6dl26tauayuwaqsmsx6twg/providers/Microsoft.Maps/accounts/cli-lbstm6f2qwhzvqbr\",\r\n      \"name\": \"cli-lbstm6f2qwhzvqbr\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/ChadTestLBS/providers/Microsoft.Maps/accounts/chad_test5\",\r\n      \"name\": \"chad_test5\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/JeffCouTest/providers/Microsoft.Maps/accounts/foofoo\",\r\n      \"name\": \"foofoo\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/DocumentationAssets/providers/Microsoft.Maps/accounts/TestAccount\",\r\n      \"name\": \"TestAccount\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/OldManLogan/providers/Microsoft.Maps/accounts/Wolverine\",\r\n      \"name\": \"Wolverine\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/PerfTest/providers/Microsoft.Maps/accounts/SK_LBS_PerfTestWestUS_3\",\r\n      \"name\": \"SK_LBS_PerfTestWestUS_3\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/JeffCouTestRG/providers/Microsoft.Maps/accounts/JeffCouTest2\",\r\n      \"name\": \"JeffCouTest2\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"owner\": \"jeffcou\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/james-test/providers/Microsoft.Maps/accounts/template-name\",\r\n      \"name\": \"template-name\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/brendanc-test/providers/Microsoft.Maps/accounts/bpeastus\",\r\n      \"name\": \"bpeastus\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/kevinslbs/providers/Microsoft.Maps/accounts/kevinslbs\",\r\n      \"name\": \"kevinslbs\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/pRunner/providers/Microsoft.Maps/accounts/pApiRunner\",\r\n      \"name\": \"pApiRunner\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/albs-global/providers/Microsoft.Maps/accounts/ApiRunner\",\r\n      \"name\": \"ApiRunner\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/brendanc-test/providers/Microsoft.Maps/accounts/bperfwesteu\",\r\n      \"name\": \"bperfwesteu\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/lbs-runners/providers/Microsoft.Maps/accounts/lbs-runners\",\r\n      \"name\": \"lbs-runners\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/RaySam-IOT/providers/Microsoft.Maps/accounts/Connected Balls\",\r\n      \"name\": \"Connected Balls\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/res6302/providers/Microsoft.Maps/accounts/maps4364\",\r\n      \"name\": \"maps4364\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"key1\": \"value1\",\r\n        \"key2\": \"value2\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/InternalPreview/providers/Microsoft.Maps/accounts/InternalPreview\",\r\n      \"name\": \"InternalPreview\",\r\n      \"type\": \"Microsoft.Maps/accounts\",\r\n      \"location\": \"global\",\r\n      \"tags\": {\r\n        \"internal\": \"true\"\r\n      },\r\n      \"sku\": {\r\n        \"name\": \"S0\",\r\n        \"tier\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 03 May 2018 00:21:43 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14941"
+        ],
+        "x-ms-request-id": [
+          "e8512be4-c4b7-4a2f-8cdd-021d412bc514"
+        ],
+        "x-ms-correlation-request-id": [
+          "e8512be4-c4b7-4a2f-8cdd-021d412bc514"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180503T002143Z:e8512be4-c4b7-4a2f-8cdd-021d412bc514"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "res6897",
+      "res1273"
+    ],
+    "CreateDefaultMapsAccount": [
+      "maps3299",
+      "maps9309"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "21a9967a-e8a9-4656-a70b-96ff1c4d05a0"
+  }
+}

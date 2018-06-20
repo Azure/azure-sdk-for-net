@@ -10,6 +10,13 @@
 		<Version>2.3.0-preview</Version>
 		<PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management;</PackageTags>
 		<PackageReleaseNotes/>
+		<Version>2.4.0-preview</Version>
+		<PackageTags>Microsoft Azure TrafficManager management;TrafficManager;TrafficManager management;</PackageTags>
+        <PackageReleaseNotes>
+            <![CDATA[
+                This is a preview release of the Azure Traffic Manager SDK.
+            ]]>
+        </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

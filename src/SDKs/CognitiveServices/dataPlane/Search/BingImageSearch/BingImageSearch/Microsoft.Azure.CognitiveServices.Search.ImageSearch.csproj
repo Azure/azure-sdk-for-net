@@ -10,6 +10,10 @@
     <AssemblyName>Microsoft.Azure.CognitiveServices.Search.ImageSearch</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;ImageSearch API;BingImageSearch API;REST HTTPclient;ImageSearchSDK;BingImageSearchSDK;netcore451511</PackageTags>
     <PackageReleaseNotes>This is a preview release of the Cognitive Services Search SDK. Included with this release is support for Image Search API.</PackageReleaseNotes>
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Search.ImageSearch</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;ImageSearch API;BingImageSearch API;REST HTTPclient;ImageSearchSDK;BingImageSearchSDK;netcore451511</PackageTags>
+    <PackageReleaseNotes>This is a public release of the Cognitive Services Search SDK. Included with this release is support for Image Search API.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

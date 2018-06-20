@@ -1,7 +1,7 @@
 {
   "Name": "ImageReference",
   "ProtocolName": "Models.ImageReference",
-  "Comment": "Azure Virtual Machine image. To get the list of all Azure Marketplace image references verified by Azure Batch, see <see cref=\"PoolOperations.ListNodeAgentSkus\"/> and <see cref=\"NodeAgentSku.VerifiedImageReferences\"/>.",
+  "SummaryComment": "Azure Virtual Machine image. To get the list of all Azure Marketplace image references verified by Azure Batch, see <see cref=\"PoolOperations.ListNodeAgentSkus\"/> and <see cref=\"NodeAgentSku.VerifiedImageReferences\"/>.",
   "IsUsedInCollections": true,
   "IsConstructorPublic": false,
   "Properties": [

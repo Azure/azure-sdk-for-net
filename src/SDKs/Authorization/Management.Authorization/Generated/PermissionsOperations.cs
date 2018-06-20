@@ -54,8 +54,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Gets all permissions the caller has for a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get the permissions for. The name is case
-        /// insensitive.
+        /// The name of the resource group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -88,7 +87,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-07-01";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -240,8 +239,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// Gets all permissions the caller has for a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the resource. The name is case
-        /// insensitive.
+        /// The name of the resource group.
         /// </param>
         /// <param name='resourceProviderNamespace'>
         /// The namespace of the resource provider.
@@ -302,7 +300,7 @@ namespace Microsoft.Azure.Management.Authorization
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2015-07-01";
+            string apiVersion = "2018-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

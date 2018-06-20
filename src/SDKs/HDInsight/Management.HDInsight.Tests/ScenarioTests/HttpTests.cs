@@ -24,7 +24,7 @@ namespace Management.HDInsight.Tests
 
     public class HttpTests
     {
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void TestDisableEnableDisableHttpCustom()
         {
             string clusterName = "hdisdk-httpcustom";
@@ -47,7 +47,7 @@ namespace Management.HDInsight.Tests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void TestDisableEnableDisableHttpExtended()
         {
             string clusterName = "hdisdk-http";

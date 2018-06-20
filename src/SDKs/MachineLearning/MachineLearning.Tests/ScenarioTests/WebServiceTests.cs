@@ -21,6 +21,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using StorageAccount = Microsoft.Azure.Management.MachineLearning.WebServices.Models.StorageAccount;
+using Microsoft.Azure.Test.HttpRecorder;
 
 namespace MachineLearning.Tests.ScenarioTests
 {
@@ -44,7 +45,13 @@ namespace MachineLearning.Tests.ScenarioTests
         private readonly string TestServiceDefinitionFile;
         private readonly string TestServiceDefinitionFileWithLargePayload;
 
-        private const int AsyncOperationPollingIntervalSeconds = 5;
+        // If you set client timeout exlusively, it affects tests during playback.
+        // Ideally you don't have to do anything, because the test framework takes care of this, but if you still feel strongly, please set it to zero during playback
+        // Use if(HttpMockServer.Mode == HttpRecorderMode.Playback)
+        // setting this to 5 seconds affects two of your tests during playback that now takes 15 adn 25 seconds to complete. Not setting anything will execute those two tests in 1 sec
+        // Any such added delay causes CI build/test performance.
+
+        // private int AsyncOperationPollingIntervalSeconds = 5;
 
         private delegate void AMLWebServiceTestDelegate(
             string webServiceName, 
@@ -58,6 +65,11 @@ namespace MachineLearning.Tests.ScenarioTests
         {
             TestServiceDefinitionFile = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "GraphWebServiceDefinition_Prod.json");
             TestServiceDefinitionFileWithLargePayload = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "GraphWebServiceDefinition_LargePayload_Prod.json");
+           
+            //if(HttpMockServer.Mode == HttpRecorderMode.Playback)
+            //{
+            //    AsyncOperationPollingIntervalSeconds = 0;
+            //}
         }
 
         [Fact]
@@ -387,7 +399,6 @@ namespace MachineLearning.Tests.ScenarioTests
 
                     // Create a client for the AML RP and run the actual test
                     var webServicesClient = context.GetServiceClient<AzureMLWebServicesManagementClient>();
-                    webServicesClient.LongRunningOperationRetryTimeout = WebServiceTests.AsyncOperationPollingIntervalSeconds;
 
                     // Run the actual test
                     actualTest(amlServiceName, resourceGroupName, resourcesClient, webServicesClient, cpResource.Id, storageAccountInfo);

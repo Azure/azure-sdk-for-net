@@ -10,6 +10,10 @@
 		<AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
 		<PackageReleaseNotes>EventSubscriptions.Create() is renamed to EventSubscriptions.CreateOrUpdate(). Also, the SDK is now based on API version 2018-01-01.</PackageReleaseNotes>
+		<Version>2.0.0-preview</Version>
+		<AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
+		<PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
+		<PackageReleaseNotes>This is a preview SDK for the new features introduced in 2018-05-01-preview API version. The stable version of the SDK targeting the 2018-01-01 API version continues to exist as version 1.3.0</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointType">The recovery point type. Possible
         /// values include: 'Latest', 'LatestApplicationConsistent',
         /// 'LatestProcessed'</param>
-        public RecoveryPlanHyperVReplicaAzureFailoverInput(string vaultLocation, string primaryKekCertificatePfx = default(string), string secondaryKekCertificatePfx = default(string), HyperVReplicaAzureRpRecoveryPointType? recoveryPointType = default(HyperVReplicaAzureRpRecoveryPointType?))
+        public RecoveryPlanHyperVReplicaAzureFailoverInput(string vaultLocation, string primaryKekCertificatePfx = default(string), string secondaryKekCertificatePfx = default(string), string recoveryPointType = default(string))
         {
             VaultLocation = vaultLocation;
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Latest', 'LatestApplicationConsistent', 'LatestProcessed'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
-        public HyperVReplicaAzureRpRecoveryPointType? RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; set; }
 
         /// <summary>
         /// Validate the object.

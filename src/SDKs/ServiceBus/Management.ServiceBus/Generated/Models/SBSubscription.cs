@@ -51,6 +51,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// message expires, starting from when the message is sent to Service
         /// Bus. This is the default value used when TimeToLive is not set on a
         /// message itself.</param>
+        /// <param name="deadLetteringOnFilterEvaluationExceptions">Value that
+        /// indicates whether a subscription has dead letter support on filter
+        /// evaluation exceptions.</param>
         /// <param name="deadLetteringOnMessageExpiration">Value that indicates
         /// whether a subscription has dead letter support when a message
         /// expires.</param>
@@ -72,7 +75,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// messages</param>
         /// <param name="forwardDeadLetteredMessagesTo">Queue/Topic name to
         /// forward the Dead Letter message</param>
-        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string))
+        public SBSubscription(string id = default(string), string name = default(string), string type = default(string), long? messageCount = default(long?), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string))
             : base(id, name, type)
         {
             MessageCount = messageCount;
@@ -83,6 +86,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             LockDuration = lockDuration;
             RequiresSession = requiresSession;
             DefaultMessageTimeToLive = defaultMessageTimeToLive;
+            DeadLetteringOnFilterEvaluationExceptions = deadLetteringOnFilterEvaluationExceptions;
             DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration;
             DuplicateDetectionHistoryTimeWindow = duplicateDetectionHistoryTimeWindow;
             MaxDeliveryCount = maxDeliveryCount;
@@ -151,6 +155,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultMessageTimeToLive")]
         public System.TimeSpan? DefaultMessageTimeToLive { get; set; }
+
+        /// <summary>
+        /// Gets or sets value that indicates whether a subscription has dead
+        /// letter support on filter evaluation exceptions.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deadLetteringOnFilterEvaluationExceptions")]
+        public bool? DeadLetteringOnFilterEvaluationExceptions { get; set; }
 
         /// <summary>
         /// Gets or sets value that indicates whether a subscription has dead

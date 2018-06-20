@@ -8,17 +8,16 @@ namespace IotHub.Tests.ScenarioTests
     using System;
     using System.Collections.Generic;
     using System.Net;
+    using IotHub.Tests.Helpers;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.EventHub.Models;
-    using Microsoft.Azure.Management.ServiceBus;
-    using Microsoft.Azure.Management.ServiceBus.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Azure.Management.IotHub;
     using Microsoft.Azure.Management.IotHub.Models;
     using Microsoft.Azure.Management.ResourceManager;
     using Microsoft.Azure.Management.ResourceManager.Models;
-    using IotHub.Tests.Helpers;
-
+    using Microsoft.Azure.Management.ServiceBus;
+    using Microsoft.Azure.Management.ServiceBus.Models;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
     using EHModel = Microsoft.Azure.Management.EventHub.Models;
     using SBModel = Microsoft.Azure.Management.ServiceBus.Models;
@@ -166,8 +165,6 @@ namespace IotHub.Tests.ScenarioTests
             var createIotHubDescription = new IotHubDescription()
             {
                 Location = location,
-                Subscriptionid = testEnv.SubscriptionId,
-                Resourcegroup = resourceGroup.Name,
                 Sku = new IotHubSkuInfo()
                 {
                     Name = "S1",
@@ -200,6 +197,11 @@ namespace IotHub.Tests.ScenarioTests
                 });
         }
 
+        protected void DeleteResourceGroup(string resourceGroupName)
+        {
+            this.resourcesClient.ResourceGroups.Delete(resourceGroupName);
+        }
+
         protected CertificateDescription CreateCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string certificateBodyDescriptionContent)
         {
             var createCertificateBodyDescription = new CertificateBodyDescription(certificateBodyDescriptionContent);
@@ -219,6 +221,11 @@ namespace IotHub.Tests.ScenarioTests
         protected CertificateDescription GetCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName)
         {
             return this.iotHubClient.Certificates.Get(resourceGroup.Name, iotHubName, certificateName);
+        }
+
+        protected CertificateWithNonceDescription GenerateVerificationCode(ResourceGroup resourceGroup, string iotHubName, string certificateName, string etag)
+        {
+            return this.iotHubClient.Certificates.GenerateVerificationCode(resourceGroup.Name, iotHubName, certificateName, etag);
         }
 
         protected void DeleteCertificate(ResourceGroup resourceGroup, string iotHubName, string certificateName, string Etag)

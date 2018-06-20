@@ -21,7 +21,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
             string expectedLocation,
             string expectedPublisherEmail,
             string expectedPublisherName,
-            SkuType expectedSku,
+            string expectedSkuName,
             Dictionary<string, string> expectedTags)
         {
             Assert.NotNull(service);
@@ -31,14 +31,14 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
             Assert.Equal(expectedResourceId, service.Id);
             Assert.Equal(expectedLocation, service.Location);
-            Assert.Equal(expectedSku, service.Sku.Name);
+            Assert.Equal(expectedSkuName, service.Sku.Name, true);
             Assert.Equal(expectedServiceName, service.Name);
             Assert.True(expectedTags.DictionaryEqual(service.Tags));
             Assert.NotNull(service.PortalUrl);
             Assert.NotNull(service.GatewayUrl);
             Assert.NotNull(service.ManagementApiUrl);
             Assert.NotNull(service.ScmUrl);
-            Assert.NotNull(service.StaticIps);
+            Assert.NotNull(service.PublicIPAddresses);
             Assert.Equal(expectedPublisherName, service.PublisherName);
             Assert.Equal(expectedPublisherEmail, service.PublisherEmail);
         }

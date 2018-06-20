@@ -28,8 +28,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get the permissions for. The name is case
-            /// insensitive.
+            /// The name of the resource group.
             /// </param>
             public static IPage<Permission> ListForResourceGroup(this IPermissionsOperations operations, string resourceGroupName)
             {
@@ -43,8 +42,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get the permissions for. The name is case
-            /// insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -64,8 +62,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the resource. The name is case
-            /// insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
@@ -91,8 +88,7 @@ namespace Microsoft.Azure.Management.Authorization
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the resource. The name is case
-            /// insensitive.
+            /// The name of the resource group.
             /// </param>
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
