@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search.Models
         /// auto-completed terms. Possible values include: 'oneTerm',
         /// 'twoTerms', 'oneTermWithContext'</param>
         /// <param name="useFuzzyMatching">A value indicating whether to use
-        /// fuzzy matching for the autocomplete query. Default is false. when
+        /// fuzzy matching for the autocomplete query. Default is false. When
         /// set to true, the query will autocomplete terms even if there's a
         /// substituted or missing character in the search text. While this
         /// provides a better experience in some scenarios it comes at a
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to use fuzzy matching for
-        /// the autocomplete query. Default is false. when set to true, the
+        /// the autocomplete query. Default is false. When set to true, the
         /// query will autocomplete terms even if there's a substituted or
         /// missing character in the search text. While this provides a better
         /// experience in some scenarios it comes at a performance cost as
