@@ -115,7 +115,7 @@ The **master** branch contains the code generated from Hydra/Hyak.
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
 
 - Prior to issuing the pull request:
-  - All code must have completed any necessary legal signoff for being publically viewable (Patent review, JSR review, etc.)
+  - All code must have completed any necessary legal signoff for being publicly viewable (Patent review, JSR review, etc.)
   - The changes cannot break any existing functional/unit tests that are part of the central repository.
     - This includes all tests, even those not associated with the given feature area.
   - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team
