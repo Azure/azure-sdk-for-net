@@ -9,7 +9,11 @@
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
 		<Version>1.8.0-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
-		<PackageReleaseNotes/>
+		<PackageReleaseNotes>
+      <![CDATA[
+        This is a public release of the Azure Resource Manager SDK. Included with this release is adding the support for deployment at subscription scope. 
+      ]]>
+    </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
