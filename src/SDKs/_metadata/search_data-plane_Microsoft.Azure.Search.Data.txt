@@ -20,11 +20,11 @@ https://aka.ms/autorest
    Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
    Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
 
-2018-06-19 22:02:21 UTC
+2018-06-20 17:34:38 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: mhko
 Branch:      ac-polish
-Commit:      aea1b9cc01a141aaad59984f5d0527917f6ecc79
+Commit:      03ef0feb931b3a128590af9148602af0a3a00bd4
 
 2) AutoRest information
 Requested version: latest
