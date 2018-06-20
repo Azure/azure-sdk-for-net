@@ -48,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// (see textAngle property).</param>
         /// <param name="regions">An array of objects, where each object
         /// represents a region of recognized text.</param>
-        public OcrResult(string language = default(string), double? textAngle = default(double?), string orientation = default(string), IList<OcrRegion> regions = default(IList<OcrRegion>))
+        public OcrResult(string language = default(string), double textAngle = default(double), string orientation = default(string), IList<OcrRegion> regions = default(IList<OcrRegion>))
         {
             Language = language;
             TextAngle = textAngle;
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// correctly.
         /// </summary>
         [JsonProperty(PropertyName = "textAngle")]
-        public double? TextAngle { get; set; }
+        public double TextAngle { get; set; }
 
         /// <summary>
         /// Gets or sets orientation of the text recognized in the image. The

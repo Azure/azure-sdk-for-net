@@ -16,25 +16,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     /// <summary>
     /// A landmark recognized in the image
     /// </summary>
-    public partial class LandmarkResultsLandmarksItem
+    public partial class LandmarksModel
     {
         /// <summary>
-        /// Initializes a new instance of the LandmarkResultsLandmarksItem
-        /// class.
+        /// Initializes a new instance of the LandmarksModel class.
         /// </summary>
-        public LandmarkResultsLandmarksItem()
+        public LandmarksModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LandmarkResultsLandmarksItem
-        /// class.
+        /// Initializes a new instance of the LandmarksModel class.
         /// </summary>
         /// <param name="name">Name of the landmark.</param>
         /// <param name="confidence">Confidence level for the landmark
         /// recognition.</param>
-        public LandmarkResultsLandmarksItem(string name = default(string), double? confidence = default(double?))
+        public LandmarksModel(string name = default(string), double confidence = default(double))
         {
             Name = name;
             Confidence = confidence;
@@ -56,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets confidence level for the landmark recognition.
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
-        public double? Confidence { get; set; }
+        public double Confidence { get; set; }
 
     }
 }

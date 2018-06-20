@@ -68,12 +68,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Gets or sets id of the REST API request.
         /// </summary>
-        [JsonProperty(PropertyName = "description.requestId")]
+        [JsonProperty(PropertyName = "requestId")]
         public string RequestId { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "description.metadata")]
+        [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }
 
     }
