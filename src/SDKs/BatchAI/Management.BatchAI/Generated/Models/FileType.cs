@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
 {
 
     /// <summary>
-    /// Defines values for FileServerType.
+    /// Defines values for FileType.
     /// </summary>
-    public static class FileServerType
+    public static class FileType
     {
-        public const string Nfs = "nfs";
-        public const string Glusterfs = "glusterfs";
+        public const string File = "file";
+        public const string Directory = "directory";
     }
 }

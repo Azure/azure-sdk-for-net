@@ -12,13 +12,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
 {
 
     /// <summary>
-    /// Defines values for OutputType.
+    /// Defines values for UsageUnit.
     /// </summary>
-    public static class OutputType
+    public static class UsageUnit
     {
-        public const string Model = "model";
-        public const string Logs = "logs";
-        public const string Summary = "summary";
-        public const string Custom = "custom";
+        public const string Count = "Count";
     }
 }

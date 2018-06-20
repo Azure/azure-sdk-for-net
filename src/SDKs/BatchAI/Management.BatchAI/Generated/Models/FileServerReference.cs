@@ -15,8 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Provides required information, for the service to be able to mount
-    /// Azure FileShare on the cluster nodes.
+    /// File Server mounting configuration.
     /// </summary>
     public partial class FileServerReference
     {
@@ -31,14 +30,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the FileServerReference class.
         /// </summary>
-        /// <param name="fileServer">Reference to the file server
-        /// resource.</param>
-        /// <param name="relativeMountPath">Specifies the relative path on the
-        /// compute node where the File Server will be mounted.</param>
-        /// <param name="sourceDirectory">Specifies the source directory in
-        /// File Server that needs to be mounted.</param>
-        /// <param name="mountOptions">Specifies the mount options for File
-        /// Server.</param>
+        /// <param name="fileServer">File server.</param>
+        /// <param name="relativeMountPath">Relative mount path.</param>
+        /// <param name="sourceDirectory">Source directory.</param>
+        /// <param name="mountOptions">Mount options.</param>
         public FileServerReference(ResourceId fileServer, string relativeMountPath, string sourceDirectory = default(string), string mountOptions = default(string))
         {
             FileServer = fileServer;
@@ -54,37 +49,42 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reference to the file server resource.
+        /// Gets or sets file server.
         /// </summary>
+        /// <remarks>
+        /// Resource ID of the existing File Server to be mounted.
+        /// </remarks>
         [JsonProperty(PropertyName = "fileServer")]
         public ResourceId FileServer { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the source directory in File Server that
-        /// needs to be mounted.
+        /// Gets or sets source directory.
         /// </summary>
         /// <remarks>
-        /// If this property is not specified, the entire File Server will be
-        /// mounted.
+        /// File Server directory that needs to be mounted. If this property is
+        /// not specified, the entire File Server will be mounted.
         /// </remarks>
         [JsonProperty(PropertyName = "sourceDirectory")]
         public string SourceDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the relative path on the compute node where
-        /// the File Server will be mounted.
+        /// Gets or sets relative mount path.
         /// </summary>
         /// <remarks>
-        /// Note that all cluster level file servers will be mounted under
-        /// $AZ_BATCHAI_MOUNT_ROOT location and job level file servers will be
-        /// mouted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
+        /// The relative path on the compute node where the File Server will be
+        /// mounted. Note that all cluster level file servers will be mounted
+        /// under $AZ_BATCHAI_MOUNT_ROOT location and all job level file
+        /// servers will be mounted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the mount options for File Server.
+        /// Gets or sets mount options.
         /// </summary>
+        /// <remarks>
+        /// Mount options to be passed to mount command.
+        /// </remarks>
         [JsonProperty(PropertyName = "mountOptions")]
         public string MountOptions { get; set; }
 

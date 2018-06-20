@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the File Server.
+    /// File Server mount Information.
     /// </summary>
     public partial class MountSettings
     {
@@ -29,20 +29,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the MountSettings class.
         /// </summary>
-        /// <param name="mountPoint">Path where the NFS is mounted on the
-        /// Server.</param>
-        /// <param name="fileServerPublicIP">Public IP of the File Server
-        /// VM.</param>
-        /// <param name="fileServerInternalIP">Internal subnet IP which can be
-        /// used to access the file Server from within the subnet.</param>
-        /// <param name="fileServerType">Type of the fileserver e.g. nfs,
-        /// glusterfs etc.</param>
-        public MountSettings(string mountPoint = default(string), string fileServerPublicIP = default(string), string fileServerInternalIP = default(string), string fileServerType = default(string))
+        /// <param name="mountPoint">Mount Point.</param>
+        /// <param name="fileServerPublicIP">Public IP.</param>
+        /// <param name="fileServerInternalIP">Internal IP.</param>
+        public MountSettings(string mountPoint = default(string), string fileServerPublicIP = default(string), string fileServerInternalIP = default(string))
         {
             MountPoint = mountPoint;
             FileServerPublicIP = fileServerPublicIP;
             FileServerInternalIP = fileServerInternalIP;
-            FileServerType = fileServerType;
             CustomInit();
         }
 
@@ -52,32 +46,33 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets path where the NFS is mounted on the Server.
+        /// Gets or sets mount Point.
         /// </summary>
+        /// <remarks>
+        /// Path where the data disks are mounted on the File Server.
+        /// </remarks>
         [JsonProperty(PropertyName = "mountPoint")]
         public string MountPoint { get; set; }
 
         /// <summary>
-        /// Gets or sets public IP of the File Server VM.
+        /// Gets or sets public IP.
         /// </summary>
+        /// <remarks>
+        /// Public IP address of the File Server which can be used to SSH to
+        /// the node from outside of the subnet.
+        /// </remarks>
         [JsonProperty(PropertyName = "fileServerPublicIP")]
         public string FileServerPublicIP { get; set; }
 
         /// <summary>
-        /// Gets or sets internal subnet IP which can be used to access the
-        /// file Server from within the subnet.
-        /// </summary>
-        [JsonProperty(PropertyName = "fileServerInternalIP")]
-        public string FileServerInternalIP { get; set; }
-
-        /// <summary>
-        /// Gets or sets type of the fileserver e.g. nfs, glusterfs etc.
+        /// Gets or sets internal IP.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'nfs', 'glusterfs'
+        /// Internal IP address of the File Server which can be used to access
+        /// the File Server from within the subnet.
         /// </remarks>
-        [JsonProperty(PropertyName = "fileServerType")]
-        public string FileServerType { get; set; }
+        [JsonProperty(PropertyName = "fileServerInternalIP")]
+        public string FileServerInternalIP { get; set; }
 
     }
 }

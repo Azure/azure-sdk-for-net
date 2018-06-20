@@ -14,7 +14,9 @@ namespace BatchAI.Tests
         [Fact]
         public void TestJobCreationAndDeletion()
         {
+            string workspaceName = "testjobcreationanddeletion_workspace";
             string clusterName = "testjobcreationanddeletion_cluster";
+            string expName = "testjobcreationanddeletion_experiment";
             string jobName = "testjobcreationanddeletion_testjob";
 
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -43,12 +45,20 @@ namespace BatchAI.Tests
                         AdminUserName = Helpers.ADMIN_USER_NAME,
                         AdminUserPassword = Helpers.ADMIN_USER_PASSWORD,
                     },
+                };
+
+                var workspaceCreateParams = new WorkspaceCreateParameters()
+                {
                     Location = Helpers.LOCATION,
                 };
-                
-                Cluster cluster = client.Clusters.Create(rgName, clusterName, clusterCreateParams);
 
-                Helpers.WaitAllNodesToBeIdle(client, rgName, clusterName);
+                Workspace workspace = client.Workspaces.Create(rgName, workspaceName, workspaceCreateParams);
+
+                Cluster cluster = client.Clusters.Create(rgName, workspaceName, clusterName, clusterCreateParams);
+
+                Helpers.WaitAllNodesToBeIdle(client, rgName, workspaceName, clusterName);
+
+                Experiment experiment = client.Experiments.Create(rgName, workspaceName, expName);
 
                 var jobCreateParams = new JobCreateParameters()
                 {
@@ -60,13 +70,12 @@ namespace BatchAI.Tests
                     },
 
                     StdOutErrPathPrefix = "$AZ_BATCHAI_JOB_TEMP",
-                    Location = Helpers.LOCATION,
                 };
 
-                client.Jobs.Create(rgName, jobName, jobCreateParams);
-                Helpers.WaitJobSucceeded(client, rgName, jobName);
-                client.Clusters.Delete(rgName, clusterName);
-                client.Jobs.Delete(rgName, jobName);
+                client.Jobs.Create(rgName, workspaceName, expName, jobName, jobCreateParams);
+                Helpers.WaitJobSucceeded(client, rgName, workspaceName, expName, jobName);
+                client.Clusters.Delete(rgName, workspaceName, clusterName);
+                client.Jobs.Delete(rgName, workspaceName, expName, jobName);
             }
         }
     }
