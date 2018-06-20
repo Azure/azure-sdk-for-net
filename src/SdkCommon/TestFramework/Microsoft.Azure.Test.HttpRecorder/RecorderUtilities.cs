@@ -1,22 +1,41 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Xml.Linq;
-using Newtonsoft.Json;
-
 namespace Microsoft.Azure.Test.HttpRecorder
 {
-    public static class Utilities
+    using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Runtime.Serialization.Formatters;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Xml.Linq;
+
+    public static class RecorderUtilities
     {
+        static Regex binaryMimeRegex = new Regex("(image/*|audio/*|video/*|application/octet-stream|multipart/form-data)");
+
+        public static bool IsHttpContentBinary(HttpContent content)
+        {
+            var contentType = content?.Headers?.ContentType?.MediaType;
+            return ((content != null) && binaryMimeRegex.IsMatch(contentType));
+        }
+
+        public static string SerializeBinary(byte[] content)
+        {
+            return Convert.ToBase64String(content);
+        }
+
+        public static byte[] DeserializeBinary(string content)
+        {
+            return Convert.FromBase64String(content);
+        }
+
         public static string FormatString(string content)
         {
             if (IsXml(content))
@@ -31,6 +50,52 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 return content;
             }
+        }
+
+        public static string FormatHttpContent(HttpContent httpContent)
+        {
+            string formattedContent = string.Empty;
+            if (IsHttpContentBinary(httpContent))
+            {
+                formattedContent = Convert.ToBase64String(httpContent.ReadAsByteArrayAsync().Result);
+            }
+            else
+            {
+                formattedContent = FormatString(httpContent.ReadAsStringAsync().Result);
+            }
+
+            return formattedContent;
+        }
+
+        public static HttpContent CreateHttpContent(string contentData)
+        {
+            HttpContent createdContent = null;
+            byte[] hashBytes = null;
+            bool isContentDataBinary = true;
+            
+            if (contentData != null)
+            {
+                try
+                {
+                    hashBytes = Convert.FromBase64String(contentData);
+                    if (hashBytes != null)
+                    {
+                        createdContent = new ByteArrayContent(hashBytes);
+                    }
+                }
+                catch { isContentDataBinary = false; }
+
+                if (isContentDataBinary == false)
+                {
+                    createdContent = new StringContent(contentData);
+                }
+            }
+            else
+            {
+                createdContent = new StringContent(string.Empty);
+            }
+
+            return createdContent;
         }
 
         /// <summary>
@@ -153,7 +218,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
         
         public static string EncodeUriAsBase64(Uri requestUri)
         {
-            return Utilities.EncodeUriAsBase64(requestUri.PathAndQuery);
+            return RecorderUtilities.EncodeUriAsBase64(requestUri.PathAndQuery);
         }
         public static string EncodeUriAsBase64(string uriToEncode)
         {

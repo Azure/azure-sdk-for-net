@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     {
                         throw new InvalidOperationException(string.Format(
                             "Queue empty for request {0}",
-                            Utilities.DecodeBase64AsUri(key)));
+                            RecorderUtilities.DecodeBase64AsUri(key)));
                     }
 
                     var result = queue.Dequeue().GetResponse();
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
                 fileDirectory = Path.Combine(fileDirectory, CallerIdentity);
 
-                Utilities.EnsureDirectoryExists(fileDirectory);
+                RecorderUtilities.EnsureDirectoryExists(fileDirectory);
                 
                 pack.Names = names.Names;
 
