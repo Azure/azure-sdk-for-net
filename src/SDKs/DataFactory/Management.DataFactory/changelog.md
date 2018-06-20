@@ -8,7 +8,7 @@
 
 ### Feature Additions
 
-* Added Configure factory repository operation
+* Remove maxParallelExecutionsPerNode limitation
 
 ## Version 0.8.0-preview
 
