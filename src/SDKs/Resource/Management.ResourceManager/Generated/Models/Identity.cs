@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// identity.</param>
         /// <param name="tenantId">The tenant ID of resource.</param>
         /// <param name="type">The identity type. Possible values include:
-        /// 'SystemAssigned'</param>
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
+        /// 'None'</param>
         public Identity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
         {
             PrincipalId = principalId;
@@ -61,7 +62,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets or sets the identity type. Possible values include:
-        /// 'SystemAssigned'
+        /// 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
+        /// 'None'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }
