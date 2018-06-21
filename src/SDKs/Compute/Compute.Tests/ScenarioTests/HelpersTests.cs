@@ -11,8 +11,8 @@ namespace Compute.Tests
         [Fact]
         public void TestUtilityFunctions()
         {
-            Assert.Equal("Compute.Tests.HelpersTests", this.GetType().FullName);
-            Assert.Equal("TestUtilityFunctions", TestUtilities.GetCurrentMethodName());
+            Assert.True(string.Equals("Compute.Tests.HelpersTests", this.GetType().FullName));
+            Assert.True(string.Equals("TestUtilityFunctions", TestUtilities.GetCurrentMethodName()));
         }
     }
 }

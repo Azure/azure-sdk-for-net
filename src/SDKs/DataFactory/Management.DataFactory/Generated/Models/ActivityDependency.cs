@@ -35,11 +35,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="activity">Activity name.</param>
         /// <param name="dependencyConditions">Match-Condition for the
         /// dependency.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        public ActivityDependency(string activity, IList<string> dependencyConditions, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        public ActivityDependency(string activity, IList<string> dependencyConditions)
         {
-            AdditionalProperties = additionalProperties;
             Activity = activity;
             DependencyConditions = dependencyConditions;
             CustomInit();
@@ -49,13 +46,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets activity name.

@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Null(result.IfMatch);
         }
 
-        internal static void CreateOrUpdateIfNotExistsFailsOnExistingResource<T>(
+        public static void CreateOrUpdateIfNotExistsFailsOnExistingResource<T>(
             Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition,
             Func<T, T> mutateResourceDefinition)
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Search.Tests
                 e => e.IsAccessConditionFailed());
         }
 
-        internal static void CreateOrUpdateIfNotExistsSucceedsOnNoResource<T>(
+        public static void CreateOrUpdateIfNotExistsSucceedsOnNoResource<T>(
             Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition)
             where T : IResourceWithETag
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEmpty(updatedResource.ETag);
         }
 
-        internal static void UpdateIfExistsSucceedsOnExistingResource<T>(
+        public static void UpdateIfExistsSucceedsOnExistingResource<T>(
             Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition,
             Func<T, T> mutateResourceDefinition)
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEqual(createdResource.ETag, updatedResource.ETag);
         }
 
-        internal static void UpdateIfExistsFailsOnNoResource<T>(
+        public static void UpdateIfExistsFailsOnNoResource<T>(
             Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition)
             where T : IResourceWithETag
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Null(resource.ETag);
         }
 
-        internal static void UpdateIfNotChangedSucceedsWhenResourceUnchanged<T>(
+        public static void UpdateIfNotChangedSucceedsWhenResourceUnchanged<T>(
             Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition,
             Func<T, T> mutateResourceDefinition)
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEqual(createdResource.ETag, updatedResource.ETag);
         }
 
-        internal static void UpdateIfNotChangedFailsWhenResourceChanged<T>(
+        public static void UpdateIfNotChangedFailsWhenResourceChanged<T>(
             Func<T, SearchRequestOptions, AccessCondition, T> createOrUpdateFunc,
             Func<T> newResourceDefinition,
             Func<T, T> mutateResourceDefinition)
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEqual(createdResource.ETag, updatedResource.ETag);
         }
 
-        internal static void DeleteIfNotChangedWorksOnlyOnCurrentResource<T>(
+        public static void DeleteIfNotChangedWorksOnlyOnCurrentResource<T>(
             Action<string, SearchRequestOptions, AccessCondition> deleteAction,
             Func<T> createResource,
             Func<T, T> updateResource,
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Search.Tests
             delete(resourceName, AccessCondition.IfNotChanged(currentResource));
         }
 
-        internal static void DeleteIfExistsWorksOnlyWhenResourceExists<T>(
+        public static void DeleteIfExistsWorksOnlyWhenResourceExists<T>(
             Action<string, SearchRequestOptions, AccessCondition> deleteAction,
             Func<T> createResource,
             string resourceName)

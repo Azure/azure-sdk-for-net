@@ -10,10 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,8 +31,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the IntegrationRuntimeSsisCatalogInfo
         /// class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="catalogServerEndpoint">The catalog database server
         /// URL.</param>
         /// <param name="catalogAdminUserName">The administrator user name of
@@ -47,9 +42,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// https://azure.microsoft.com/en-us/pricing/details/sql-database/.
         /// Possible values include: 'Basic', 'Standard', 'Premium',
         /// 'PremiumRS'</param>
-        public IntegrationRuntimeSsisCatalogInfo(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string catalogServerEndpoint = default(string), string catalogAdminUserName = default(string), SecureString catalogAdminPassword = default(SecureString), string catalogPricingTier = default(string))
+        public IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint = default(string), string catalogAdminUserName = default(string), SecureString catalogAdminPassword = default(SecureString), string catalogPricingTier = default(string))
         {
-            AdditionalProperties = additionalProperties;
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
             CatalogAdminPassword = catalogAdminPassword;
@@ -61,13 +55,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the catalog database server URL.
@@ -101,22 +88,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (CatalogAdminUserName != null)
-            {
-                if (CatalogAdminUserName.Length > 128)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "CatalogAdminUserName", 128);
-                }
-                if (CatalogAdminUserName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "CatalogAdminUserName", 1);
-                }
-            }
             if (CatalogAdminPassword != null)
             {
                 CatalogAdminPassword.Validate();

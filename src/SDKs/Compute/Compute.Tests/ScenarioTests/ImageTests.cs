@@ -86,7 +86,7 @@ namespace Compute.Tests
                     };
 
                     // Create the VM, whose OS disk will be used in creating the image
-                    var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, addDataDiskToVM);
+                    var createdVM = CreateVM_NoAsyncTracking(rgName, asName, storageAccountOutput, imageRef, out inputVM, addDataDiskToVM);
 
                     // Create the Image
                     var imageInput = new Image()
@@ -124,7 +124,7 @@ namespace Compute.Tests
                     ValidateImage(imageInput, getImage);
 
                     var listResponse = m_CrpClient.Images.ListByResourceGroup(rgName);
-                    Assert.Single(listResponse);
+                    Assert.Equal<int>(1, listResponse.Count());
 
                     m_CrpClient.Images.Delete(rgName, image.Name);
                 }
@@ -175,6 +175,7 @@ namespace Compute.Tests
 
                     Assert.NotNull(dataDiskOut);
                     Assert.NotNull(dataDiskOut.BlobUri);
+                    Assert.NotNull(dataDiskOut.Lun);
                     Assert.NotNull(dataDiskOut.DiskSizeGB);
                 }
             }

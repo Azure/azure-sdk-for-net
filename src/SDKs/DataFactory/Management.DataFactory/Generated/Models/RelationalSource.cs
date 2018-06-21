@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,8 +29,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the RelationalSource class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -40,8 +36,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="query">Database query. Type: string (or Expression
         /// with resultType string).</param>
-        public RelationalSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        public RelationalSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object query = default(object))
+            : base(sourceRetryCount, sourceRetryWait)
         {
             Query = query;
             CustomInit();

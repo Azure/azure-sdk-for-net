@@ -21,18 +21,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OnTaskFailure
     {
-        /// <summary>
-        /// Do nothing. The job remains active unless terminated or disabled by
-        /// some other means.
-        /// </summary>
-        [EnumMember(Value = "noaction")]
+        [EnumMember(Value = "noAction")]
         NoAction,
-        /// <summary>
-        /// Take the action associated with the task exit condition in the
-        /// task's exitConditions collection. (This may still result in no
-        /// action being taken, if that is what the task specifies.)
-        /// </summary>
-        [EnumMember(Value = "performexitoptionsjobaction")]
+        [EnumMember(Value = "performExitOptionsJobAction")]
         PerformExitOptionsJobAction
     }
     internal static class OnTaskFailureEnumExtension
@@ -47,9 +38,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case OnTaskFailure.NoAction:
-                    return "noaction";
+                    return "noAction";
                 case OnTaskFailure.PerformExitOptionsJobAction:
-                    return "performexitoptionsjobaction";
+                    return "performExitOptionsJobAction";
             }
             return null;
         }
@@ -58,9 +49,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "noaction":
+                case "noAction":
                     return OnTaskFailure.NoAction;
-                case "performexitoptionsjobaction":
+                case "performExitOptionsJobAction":
                     return OnTaskFailure.PerformExitOptionsJobAction;
             }
             return null;

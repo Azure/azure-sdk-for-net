@@ -1,19 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Automation.Tests.Helpers
+namespace Microsoft.Azure.Management.Automation.Testing
 {
     public class RunbookDefinition
     {
+        private readonly string psScript;
+        private readonly string runbookName;
+
         public RunbookDefinition(string runbookName, string psScript)
         {
-            RunbookName = runbookName;
-            PsScript = psScript;
+            this.runbookName = runbookName;
+            this.psScript = psScript;
         }
 
-        public string PsScript { get; }
+        public string PsScript
+        {
+            get { return psScript; }
+        }
 
-        public string RunbookName { get; }
+        public string RunbookName
+        {
+            get { return runbookName; }
+        }
 
         public static RunbookDefinition TestLongRunningWorkflow = new RunbookDefinition(
             "TestLongRunningWorkflow", @"Workflow TestLongRunningWorkflow {  
@@ -33,7 +42,7 @@ namespace Automation.Tests.Helpers
                 get-date
             }");
 
-        public static RunbookDefinition TestFasterWorkflowV2 = new RunbookDefinition(
+        public static RunbookDefinition TestFasterWorkflow_V2 = new RunbookDefinition(
             "TestFasterWorkflow", @"Workflow TestFasterWorkflow {
                 get-date
                 start-sleep -s 10

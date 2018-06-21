@@ -21,15 +21,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ElevationLevel
     {
-        /// <summary>
-        /// The user is a standard user without elevated access.
-        /// </summary>
-        [EnumMember(Value = "nonadmin")]
+        [EnumMember(Value = "nonAdmin")]
         NonAdmin,
-        /// <summary>
-        /// The user is a user with elevated access and operates with full
-        /// Administrator permissions.
-        /// </summary>
         [EnumMember(Value = "admin")]
         Admin
     }
@@ -45,7 +38,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case ElevationLevel.NonAdmin:
-                    return "nonadmin";
+                    return "nonAdmin";
                 case ElevationLevel.Admin:
                     return "admin";
             }
@@ -56,7 +49,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "nonadmin":
+                case "nonAdmin":
                     return ElevationLevel.NonAdmin;
                 case "admin":
                     return ElevationLevel.Admin;

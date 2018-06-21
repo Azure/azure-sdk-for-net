@@ -21,17 +21,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CertificateStoreLocation
     {
-        /// <summary>
-        /// Certificates should be installed to the CurrentUser certificate
-        /// store.
-        /// </summary>
-        [EnumMember(Value = "currentuser")]
+        [EnumMember(Value = "currentUser")]
         CurrentUser,
-        /// <summary>
-        /// Certificates should be installed to the LocalMachine certificate
-        /// store.
-        /// </summary>
-        [EnumMember(Value = "localmachine")]
+        [EnumMember(Value = "localMachine")]
         LocalMachine
     }
     internal static class CertificateStoreLocationEnumExtension
@@ -46,9 +38,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case CertificateStoreLocation.CurrentUser:
-                    return "currentuser";
+                    return "currentUser";
                 case CertificateStoreLocation.LocalMachine:
-                    return "localmachine";
+                    return "localMachine";
             }
             return null;
         }
@@ -57,9 +49,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "currentuser":
+                case "currentUser":
                     return CertificateStoreLocation.CurrentUser;
-                case "localmachine":
+                case "localMachine":
                     return CertificateStoreLocation.LocalMachine;
             }
             return null;

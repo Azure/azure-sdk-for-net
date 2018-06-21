@@ -21,33 +21,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ComputeNodeReimageOption
     {
-        /// <summary>
-        /// Terminate running task processes and requeue the tasks. The tasks
-        /// will run again when a node is available. Reimage the node as soon
-        /// as tasks have been terminated.
-        /// </summary>
         [EnumMember(Value = "requeue")]
         Requeue,
-        /// <summary>
-        /// Terminate running tasks. The tasks will be completed with
-        /// failureInfo indicating that they were terminated, and will not run
-        /// again. Reimage the node as soon as tasks have been terminated.
-        /// </summary>
         [EnumMember(Value = "terminate")]
         Terminate,
-        /// <summary>
-        /// Allow currently running tasks to complete. Schedule no new tasks
-        /// while waiting. Reimage the node when all tasks have completed.
-        /// </summary>
-        [EnumMember(Value = "taskcompletion")]
+        [EnumMember(Value = "taskCompletion")]
         TaskCompletion,
-        /// <summary>
-        /// Allow currently running tasks to complete, then wait for all task
-        /// data retention periods to expire. Schedule no new tasks while
-        /// waiting. Reimage the node when all task retention periods have
-        /// expired.
-        /// </summary>
-        [EnumMember(Value = "retaineddata")]
+        [EnumMember(Value = "retainedData")]
         RetainedData
     }
     internal static class ComputeNodeReimageOptionEnumExtension
@@ -66,9 +46,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                 case ComputeNodeReimageOption.Terminate:
                     return "terminate";
                 case ComputeNodeReimageOption.TaskCompletion:
-                    return "taskcompletion";
+                    return "taskCompletion";
                 case ComputeNodeReimageOption.RetainedData:
-                    return "retaineddata";
+                    return "retainedData";
             }
             return null;
         }
@@ -81,9 +61,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
                     return ComputeNodeReimageOption.Requeue;
                 case "terminate":
                     return ComputeNodeReimageOption.Terminate;
-                case "taskcompletion":
+                case "taskCompletion":
                     return ComputeNodeReimageOption.TaskCompletion;
-                case "retaineddata":
+                case "retainedData":
                     return ComputeNodeReimageOption.RetainedData;
             }
             return null;

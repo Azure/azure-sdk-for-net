@@ -212,11 +212,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IDatabaseAutomaticTuningOperations.
-        /// </summary>
-        public virtual IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; private set; }
-
-        /// <summary>
         /// Gets the IEncryptionProtectorsOperations.
         /// </summary>
         public virtual IEncryptionProtectorsOperations EncryptionProtectors { get; private set; }
@@ -252,11 +247,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ISyncMembersOperations SyncMembers { get; private set; }
 
         /// <summary>
-        /// Gets the ISubscriptionUsagesOperations.
-        /// </summary>
-        public virtual ISubscriptionUsagesOperations SubscriptionUsages { get; private set; }
-
-        /// <summary>
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
@@ -265,11 +255,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IDatabaseOperations.
         /// </summary>
         public virtual IDatabaseOperations DatabaseOperations { get; private set; }
-
-        /// <summary>
-        /// Gets the IServerAutomaticTuningOperations.
-        /// </summary>
-        public virtual IServerAutomaticTuningOperations ServerAutomaticTuning { get; private set; }
 
         /// <summary>
         /// Gets the IServerDnsAliasesOperations.
@@ -505,7 +490,6 @@ namespace Microsoft.Azure.Management.Sql
             ServerUsages = new ServerUsagesOperations(this);
             DatabaseUsages = new DatabaseUsagesOperations(this);
             DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
-            DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             EncryptionProtectors = new EncryptionProtectorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
             Operations = new Operations(this);
@@ -513,10 +497,8 @@ namespace Microsoft.Azure.Management.Sql
             SyncAgents = new SyncAgentsOperations(this);
             SyncGroups = new SyncGroupsOperations(this);
             SyncMembers = new SyncMembersOperations(this);
-            SubscriptionUsages = new SubscriptionUsagesOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
-            ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";

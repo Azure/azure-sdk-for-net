@@ -37,10 +37,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// SelfHostedIntegrationRuntimeStatus class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        /// <param name="dataFactoryName">The data factory name which the
-        /// integration runtime belong to.</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
         /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
@@ -70,12 +66,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="autoUpdate">Whether Self-hosted integration runtime
         /// auto update has been turned on. Possible values include: 'On',
         /// 'Off'</param>
-        /// <param name="versionStatus">Status of the integration runtime
-        /// version.</param>
-        /// <param name="links">The list of linked integration runtimes that
-        /// are created to share with this integration runtime.</param>
-        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>))
-            : base(additionalProperties, dataFactoryName, state)
+        public SelfHostedIntegrationRuntimeStatus(string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string))
+            : base(state)
         {
             CreateTime = createTime;
             TaskQueueId = taskQueueId;
@@ -88,8 +80,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Capabilities = capabilities;
             ServiceUrls = serviceUrls;
             AutoUpdate = autoUpdate;
-            VersionStatus = versionStatus;
-            Links = links;
             CustomInit();
         }
 
@@ -172,19 +162,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.autoUpdate")]
         public string AutoUpdate { get; private set; }
-
-        /// <summary>
-        /// Gets status of the integration runtime version.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.versionStatus")]
-        public string VersionStatus { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the list of linked integration runtimes that are
-        /// created to share with this integration runtime.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.links")]
-        public IList<LinkedIntegrationRuntime> Links { get; set; }
 
     }
 }

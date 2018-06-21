@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,8 +29,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the OracleSource class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -43,8 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="queryTimeout">Query timeout. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public OracleSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        public OracleSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object))
+            : base(sourceRetryCount, sourceRetryWait)
         {
             OracleReaderQuery = oracleReaderQuery;
             QueryTimeout = queryTimeout;

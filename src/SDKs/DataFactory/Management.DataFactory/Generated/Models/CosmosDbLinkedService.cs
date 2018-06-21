@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,16 +34,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the CosmosDbLinkedService class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public CosmosDbLinkedService(SecretBase connectionString, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
-            : base(additionalProperties, connectVia, description)
+        public CosmosDbLinkedService(SecureString connectionString, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object encryptedCredential = default(object))
+            : base(connectVia, description)
         {
             ConnectionString = connectionString;
             EncryptedCredential = encryptedCredential;
@@ -61,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the connection string.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.connectionString")]
-        public SecretBase ConnectionString { get; set; }
+        public SecureString ConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -83,6 +79,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ConnectionString == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
+            }
+            if (ConnectionString != null)
+            {
+                ConnectionString.Validate();
             }
         }
     }

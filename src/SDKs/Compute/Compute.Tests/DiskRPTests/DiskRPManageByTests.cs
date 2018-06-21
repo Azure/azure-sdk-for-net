@@ -35,7 +35,7 @@ namespace Compute.Tests.DiskRPTests
                 var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                 // Create the VM, whose OS disk will be used in creating the image
-                var createdVM = CreateVM(rgName, avSet, storageAccountOutput, imageRef, out inputVM, hasManagedDisks: true);
+                var createdVM = CreateVM_NoAsyncTracking(rgName, avSet, storageAccountOutput, imageRef, out inputVM, hasManagedDisks: true);
                 var listResponse = m_CrpClient.VirtualMachines.ListAll();
                 Assert.True(listResponse.Count() >= 1);
                 var vmName = createdVM.Name;
@@ -45,7 +45,7 @@ namespace Compute.Tests.DiskRPTests
                 Disk diskFromVM = m_CrpClient.Disks.Get(rgName, vmDiskName);
 
                 //managedby should have format: "/subscriptions/{subId}/resourceGroups/{rg}/Microsoft.Compute/virtualMachines/vm1"
-                Assert.Contains(vmName, diskFromVM.ManagedBy);
+                Assert.True(diskFromVM.ManagedBy.Contains(vmName));
 
                 m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 m_CrpClient.VirtualMachines.Delete(rgName, createdVM.Name);

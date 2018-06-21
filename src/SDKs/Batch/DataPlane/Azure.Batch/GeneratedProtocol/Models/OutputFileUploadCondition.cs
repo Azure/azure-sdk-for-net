@@ -21,23 +21,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OutputFileUploadCondition
     {
-        /// <summary>
-        /// Upload the file(s) only after the task process exits with an exit
-        /// code of 0.
-        /// </summary>
-        [EnumMember(Value = "tasksuccess")]
+        [EnumMember(Value = "taskSuccess")]
         TaskSuccess,
-        /// <summary>
-        /// Upload the file(s) only after the task process exits with a nonzero
-        /// exit code.
-        /// </summary>
-        [EnumMember(Value = "taskfailure")]
+        [EnumMember(Value = "taskFailure")]
         TaskFailure,
-        /// <summary>
-        /// Upload the file(s) after the task process exits, no matter what the
-        /// exit code was.
-        /// </summary>
-        [EnumMember(Value = "taskcompletion")]
+        [EnumMember(Value = "taskCompletion")]
         TaskCompletion
     }
     internal static class OutputFileUploadConditionEnumExtension
@@ -52,11 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case OutputFileUploadCondition.TaskSuccess:
-                    return "tasksuccess";
+                    return "taskSuccess";
                 case OutputFileUploadCondition.TaskFailure:
-                    return "taskfailure";
+                    return "taskFailure";
                 case OutputFileUploadCondition.TaskCompletion:
-                    return "taskcompletion";
+                    return "taskCompletion";
             }
             return null;
         }
@@ -65,11 +53,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "tasksuccess":
+                case "taskSuccess":
                     return OutputFileUploadCondition.TaskSuccess;
-                case "taskfailure":
+                case "taskFailure":
                     return OutputFileUploadCondition.TaskFailure;
-                case "taskcompletion":
+                case "taskCompletion":
                     return OutputFileUploadCondition.TaskCompletion;
             }
             return null;

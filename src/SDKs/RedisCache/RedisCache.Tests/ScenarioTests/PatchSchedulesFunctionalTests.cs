@@ -22,16 +22,15 @@ namespace AzureRedisCache.Tests
             {
                 var _redisCacheManagementHelper = new RedisCacheManagementHelper(this, context);
                 _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
-
-                var resourceGroupName = TestUtilities.GenerateName("RedisSchedules");
-                var redisCacheName = TestUtilities.GenerateName("RedisSchedules");
-
+                var resourceGroupName = TestUtilities.GenerateName("redisCacheRGsunnyjapan");
+                var redisCacheName = TestUtilities.GenerateName("sunny-scheduling-dv2");
+                var location = "Japan West";
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
-                _redisCacheManagementHelper.TryCreateResourceGroup(resourceGroupName, RedisCacheManagementHelper.Location);
+                _redisCacheManagementHelper.TryCreateResourceGroup(resourceGroupName, location);
                 _client.Redis.Create(resourceGroupName, redisCacheName,
                                         parameters: new RedisCreateParameters
                                         {
-                                            Location = RedisCacheManagementHelper.Location,
+                                            Location = location,
                                             Sku = new Sku()
                                             {
                                                 Name = SkuName.Premium,
@@ -76,9 +75,8 @@ namespace AzureRedisCache.Tests
                     redisCacheName);
 
                 _client.PatchSchedules.Delete(resourceGroupName, redisCacheName);
-
-                var ex = Assert.Throws<CloudException>(() => _client.PatchSchedules.Get(resourceGroupName, redisCacheName));
-                Assert.Contains("There are no patch schedules found for redis cache", ex.Message);
+                var schedules = _client.PatchSchedules.Get(resourceGroupName, redisCacheName);
+                Assert.Null(schedules);
             }
         }
 

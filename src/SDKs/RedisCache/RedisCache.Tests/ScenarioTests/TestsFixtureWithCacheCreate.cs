@@ -19,10 +19,10 @@ namespace AzureRedisCache.Tests
     public class TestsFixtureWithCacheCreate : TestBase, IDisposable
     {
         public string ResourceGroupName { set; get; }
-        public string RedisCacheName { set; get; }
-        
+        public string RedisCacheName = "hydracache1";
+        public string Location = "North Central US";
         private RedisCacheManagementHelper _redisCacheManagementHelper;
-        private MockContext _context=null;
+        private MockContext _context;
         
         public TestsFixtureWithCacheCreate()
         {
@@ -34,11 +34,9 @@ namespace AzureRedisCache.Tests
                 _redisCacheManagementHelper = new RedisCacheManagementHelper(this, _context);
                 _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
 
-                ResourceGroupName = TestUtilities.GenerateName("RedisGetList");
-                RedisCacheName = TestUtilities.GenerateName("RedisGetList");
-
-                _redisCacheManagementHelper.TryCreateResourceGroup(ResourceGroupName, RedisCacheManagementHelper.Location);
-                _redisCacheManagementHelper.TryCreatingCache(ResourceGroupName, RedisCacheName, RedisCacheManagementHelper.Location);
+                ResourceGroupName = TestUtilities.GenerateName("hydra1");
+                _redisCacheManagementHelper.TryCreateResourceGroup(ResourceGroupName, Location);
+                _redisCacheManagementHelper.TryCreatingCache(ResourceGroupName, RedisCacheName, Location);
             }
             catch (Exception)
             {
@@ -58,16 +56,9 @@ namespace AzureRedisCache.Tests
 
         private void Cleanup()
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
-            {
-                HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-                HttpMockServer.Initialize(this.GetType().FullName, ".cleanup");
-            }
-            if (_context != null)
-            {
-                _context.Dispose();
-                _context = null;
-            }
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            HttpMockServer.Initialize(this.GetType().FullName, ".cleanup");
+            _context.Dispose();
         }
 
         private static string GetSessionsDirectoryPath()

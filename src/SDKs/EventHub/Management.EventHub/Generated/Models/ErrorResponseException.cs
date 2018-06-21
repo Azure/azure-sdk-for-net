@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     /// Exception thrown for an invalid response with ErrorResponse
     /// information.
     /// </summary>
-    public partial class ErrorResponseException : RestException
+    public class ErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.

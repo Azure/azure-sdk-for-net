@@ -10,8 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,14 +28,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the AvroFormat class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="serializer">Serializer. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="deserializer">Deserializer. Type: string (or
         /// Expression with resultType string).</param>
-        public AvroFormat(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object serializer = default(object), object deserializer = default(object))
-            : base(additionalProperties, serializer, deserializer)
+        public AvroFormat(object serializer = default(object), object deserializer = default(object))
+            : base(serializer, deserializer)
         {
             CustomInit();
         }

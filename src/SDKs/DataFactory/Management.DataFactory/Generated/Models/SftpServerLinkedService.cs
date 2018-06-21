@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,8 +35,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="host">The SFTP server host name. Type: string (or
         /// Expression with resultType string).</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="port">The TCP port number that the SFTP server uses to
@@ -76,8 +72,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// SFTP server. When SkipHostKeyValidation is false,
         /// HostKeyFingerprint should be specified. Type: string (or Expression
         /// with resultType string).</param>
-        public SftpServerLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object), object privateKeyPath = default(object), SecretBase privateKeyContent = default(SecretBase), SecretBase passPhrase = default(SecretBase), object skipHostKeyValidation = default(object), object hostKeyFingerprint = default(object))
-            : base(additionalProperties, connectVia, description)
+        public SftpServerLinkedService(object host, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object port = default(object), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object), object privateKeyPath = default(object), SecureString privateKeyContent = default(SecureString), SecureString passPhrase = default(SecureString), object skipHostKeyValidation = default(object), object hostKeyFingerprint = default(object))
+            : base(connectVia, description)
         {
             Host = host;
             Port = port;
@@ -132,7 +128,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecretBase Password { get; set; }
+        public SecureString Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -160,14 +156,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// be specified. SSH private key should be OpenSSH format.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.privateKeyContent")]
-        public SecretBase PrivateKeyContent { get; set; }
+        public SecureString PrivateKeyContent { get; set; }
 
         /// <summary>
         /// Gets or sets the password to decrypt the SSH private key if the SSH
         /// private key is encrypted.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.passPhrase")]
-        public SecretBase PassPhrase { get; set; }
+        public SecureString PassPhrase { get; set; }
 
         /// <summary>
         /// Gets or sets if true, skip the SSH host key validation. Default
@@ -197,6 +193,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Host == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Host");
+            }
+            if (Password != null)
+            {
+                Password.Validate();
+            }
+            if (PrivateKeyContent != null)
+            {
+                PrivateKeyContent.Validate();
+            }
+            if (PassPhrase != null)
+            {
+                PassPhrase.Validate();
             }
         }
     }

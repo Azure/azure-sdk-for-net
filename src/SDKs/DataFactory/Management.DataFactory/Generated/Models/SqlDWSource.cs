@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,8 +29,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the SqlDWSource class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -48,8 +44,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// stored procedure parameters. Example: "{Parameter1: {value: "1",
         /// type: "int"}}". Type: object (or Expression with resultType
         /// object), itemType: StoredProcedureParameter.</param>
-        public SqlDWSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), object storedProcedureParameters = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        public SqlDWSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), object storedProcedureParameters = default(object))
+            : base(sourceRetryCount, sourceRetryWait)
         {
             SqlReaderQuery = sqlReaderQuery;
             SqlReaderStoredProcedureName = sqlReaderStoredProcedureName;

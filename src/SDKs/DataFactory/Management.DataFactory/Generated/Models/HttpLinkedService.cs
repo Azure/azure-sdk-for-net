@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,8 +36,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="url">The base URL of the HTTP endpoint, e.g.
         /// http://www.microsoft.com. Type: string (or Expression with
         /// resultType string).</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
         /// <param name="authenticationType">The authentication type to be used
@@ -67,8 +63,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="enableServerCertificateValidation">If true, validate
         /// the HTTPS server SSL certificate. Default value is true. Type:
         /// boolean (or Expression with resultType boolean).</param>
-        public HttpLinkedService(object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string authenticationType = default(string), object userName = default(object), SecretBase password = default(SecretBase), object embeddedCertData = default(object), object certThumbprint = default(object), object encryptedCredential = default(object), object enableServerCertificateValidation = default(object))
-            : base(additionalProperties, connectVia, description)
+        public HttpLinkedService(object url, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), string authenticationType = default(string), object userName = default(object), SecureString password = default(SecureString), object embeddedCertData = default(object), object certThumbprint = default(object), object encryptedCredential = default(object), object enableServerCertificateValidation = default(object))
+            : base(connectVia, description)
         {
             Url = url;
             AuthenticationType = authenticationType;
@@ -115,7 +111,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ClientCertificate with EmbeddedCertData authentication.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecretBase Password { get; set; }
+        public SecureString Password { get; set; }
 
         /// <summary>
         /// Gets or sets base64 encoded certificate data for ClientCertificate
@@ -165,6 +161,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Url");
+            }
+            if (Password != null)
+            {
+                Password.Validate();
             }
         }
     }

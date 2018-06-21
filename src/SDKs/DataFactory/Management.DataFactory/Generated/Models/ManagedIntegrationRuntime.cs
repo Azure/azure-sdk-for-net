@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,8 +34,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the ManagedIntegrationRuntime class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="description">Integration runtime description.</param>
         /// <param name="state">Integration runtime state, only valid for
         /// managed dedicated integration runtime. Possible values include:
@@ -47,8 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime.</param>
         /// <param name="ssisProperties">SSIS properties for managed
         /// integration runtime.</param>
-        public ManagedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string state = default(string), IntegrationRuntimeComputeProperties computeProperties = default(IntegrationRuntimeComputeProperties), IntegrationRuntimeSsisProperties ssisProperties = default(IntegrationRuntimeSsisProperties))
-            : base(additionalProperties, description)
+        public ManagedIntegrationRuntime(string description = default(string), string state = default(string), IntegrationRuntimeComputeProperties computeProperties = default(IntegrationRuntimeComputeProperties), IntegrationRuntimeSsisProperties ssisProperties = default(IntegrationRuntimeSsisProperties))
+            : base(description)
         {
             State = state;
             ComputeProperties = computeProperties;

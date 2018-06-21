@@ -85,11 +85,6 @@ namespace Microsoft.Azure.Management.DataFactory
         IIntegrationRuntimesOperations IntegrationRuntimes { get; }
 
         /// <summary>
-        /// Gets the IIntegrationRuntimeNodesOperations.
-        /// </summary>
-        IIntegrationRuntimeNodesOperations IntegrationRuntimeNodes { get; }
-
-        /// <summary>
         /// Gets the ILinkedServicesOperations.
         /// </summary>
         ILinkedServicesOperations LinkedServices { get; }

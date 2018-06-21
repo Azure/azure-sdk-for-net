@@ -21,15 +21,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum StorageAccountType
     {
-        /// <summary>
-        /// The data disk should use standard locally redundant storage.
-        /// </summary>
-        [EnumMember(Value = "standard_lrs")]
+        [EnumMember(Value = "Standard_LRS")]
         StandardLRS,
-        /// <summary>
-        /// The data disk should use premium locally redundant storage.
-        /// </summary>
-        [EnumMember(Value = "premium_lrs")]
+        [EnumMember(Value = "Premium_LRS")]
         PremiumLRS
     }
     internal static class StorageAccountTypeEnumExtension
@@ -44,9 +38,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case StorageAccountType.StandardLRS:
-                    return "standard_lrs";
+                    return "Standard_LRS";
                 case StorageAccountType.PremiumLRS:
-                    return "premium_lrs";
+                    return "Premium_LRS";
             }
             return null;
         }
@@ -55,9 +49,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "standard_lrs":
+                case "Standard_LRS":
                     return StorageAccountType.StandardLRS;
-                case "premium_lrs":
+                case "Premium_LRS":
                     return StorageAccountType.PremiumLRS;
             }
             return null;

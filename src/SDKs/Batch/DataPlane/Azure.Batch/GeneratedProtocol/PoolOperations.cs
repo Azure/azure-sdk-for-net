@@ -623,6 +623,10 @@ namespace Microsoft.Azure.Batch.Protocol
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (pool == null)
+            {
+                pool = new PoolAddParameter();
+            }
             int? timeout = default(int?);
             if (poolAddOptions != null)
             {

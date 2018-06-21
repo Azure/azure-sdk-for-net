@@ -117,9 +117,6 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
-        /// <param name='deleteAll'>
-        /// If true, deletes all resources associated with this cluster.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -132,7 +129,7 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<OperationalizationClustersDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, bool? deleteAll = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<OperationalizationClustersDeleteHeaders>> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the credentials for the specified cluster such as Storage, ACR
         /// and ACS credentials. This is a long running operation because it
@@ -295,9 +292,6 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
         /// <param name='clusterName'>
         /// The name of the cluster.
         /// </param>
-        /// <param name='deleteAll'>
-        /// If true, deletes all resources associated with this cluster.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -310,7 +304,7 @@ namespace Microsoft.Azure.Management.MachineLearningCompute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<OperationalizationClustersDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, bool? deleteAll = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<OperationalizationClustersDeleteHeaders>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates system services in a cluster.
         /// </summary>

@@ -21,16 +21,32 @@ namespace DataFactory.Tests.ScenarioTests
         public async Task LinkedServiceCrud()
         {
             string linkedServiceName = "TestDataLakeStore";
-            var expectedLinkedService = GetLinkedServiceResource(null);
+            var expectedLinkedService = new LinkedServiceResource()
+            {
+                Properties = new AzureDataLakeStoreLinkedService()
+                {
+                    DataLakeStoreUri = "adl://test.azuredatalakestore.net/"
+                }
+            };
 
             Func<DataFactoryManagementClient, Task> action = async (client) =>
             {
-                await DataFactoryScenarioTests.Create(client, this.ResourceGroupName, this.DataFactoryName, new Factory(location: FactoryLocation));
+                client.Factories.CreateOrUpdate(this.ResourceGroupName, this.DataFactoryName, new Factory(location: FactoryLocation));
 
-                await Create(client, this.ResourceGroupName, this.DataFactoryName, linkedServiceName, expectedLinkedService);
-                await GetList(client, this.ResourceGroupName, this.DataFactoryName, linkedServiceName, expectedLinkedService);
+                AzureOperationResponse<LinkedServiceResource> createResponse = await client.LinkedServices.CreateOrUpdateWithHttpMessagesAsync(this.ResourceGroupName, this.DataFactoryName, linkedServiceName, expectedLinkedService);
+                this.ValidateLinkedService(expectedLinkedService, createResponse.Body, linkedServiceName);
+                Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
 
-                await Delete(client, this.ResourceGroupName, this.DataFactoryName, linkedServiceName);
+                AzureOperationResponse<LinkedServiceResource> getResponse = await client.LinkedServices.GetWithHttpMessagesAsync(this.ResourceGroupName, this.DataFactoryName, linkedServiceName);
+                this.ValidateLinkedService(expectedLinkedService, getResponse.Body, linkedServiceName);
+                Assert.Equal(HttpStatusCode.OK, getResponse.Response.StatusCode);
+
+                AzureOperationResponse<IPage<LinkedServiceResource>> listResponse = await client.LinkedServices.ListByFactoryWithHttpMessagesAsync(this.ResourceGroupName, this.DataFactoryName);
+                this.ValidateLinkedService(expectedLinkedService, listResponse.Body.First(), linkedServiceName);
+                Assert.Equal(HttpStatusCode.OK, listResponse.Response.StatusCode);
+
+                AzureOperationResponse deleteResponse = await client.LinkedServices.DeleteWithHttpMessagesAsync(this.ResourceGroupName, this.DataFactoryName, linkedServiceName);
+                Assert.Equal(HttpStatusCode.OK, deleteResponse.Response.StatusCode);
             };
 
             Func<DataFactoryManagementClient, Task> finallyAction = async (client) =>
@@ -41,54 +57,9 @@ namespace DataFactory.Tests.ScenarioTests
             await this.RunTest(action, finallyAction);
         }
 
-        internal static LinkedServiceResource GetLinkedServiceResource(string description)
+        private void ValidateLinkedService(LinkedServiceResource expected, LinkedServiceResource actual, string expectedName)
         {
-            LinkedServiceResource resource = new LinkedServiceResource
-            {
-                Properties = new AzureDataLakeStoreLinkedService()
-                {
-                    Description = description,
-                    DataLakeStoreUri = "adl://test.azuredatalakestore.net/"
-                }
-            };
-            return resource;
-        }
-
-        internal static async Task Create(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, string linkedServiceName, LinkedServiceResource expectedLinkedService)
-        {
-            AzureOperationResponse<LinkedServiceResource> createResponse = await client.LinkedServices.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, linkedServiceName, expectedLinkedService);
-            ValidateLinkedService(client, resourceGroupName, dataFactoryName, expectedLinkedService, createResponse.Body, linkedServiceName);
-            Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
-
-        }
-
-        internal static async Task Update(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, string linkedServiceName, LinkedServiceResource expectedLinkedService)
-        {
-            AzureOperationResponse<LinkedServiceResource> createResponse = await client.LinkedServices.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, linkedServiceName, expectedLinkedService);
-            ValidateLinkedService(client, resourceGroupName, dataFactoryName, expectedLinkedService, createResponse.Body, linkedServiceName);
-            Assert.Equal(HttpStatusCode.OK, createResponse.Response.StatusCode);
-
-        }
-
-        internal static async Task Delete(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, string linkedServiceName)
-        {
-            AzureOperationResponse deleteResponse = await client.LinkedServices.DeleteWithHttpMessagesAsync(resourceGroupName, dataFactoryName, linkedServiceName);
-            Assert.Equal(HttpStatusCode.OK, deleteResponse.Response.StatusCode);
-        }
-
-        internal static async Task GetList(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, string linkedServiceName, LinkedServiceResource expectedLinkedService)
-        {
-            AzureOperationResponse<LinkedServiceResource> getResponse = await client.LinkedServices.GetWithHttpMessagesAsync(resourceGroupName, dataFactoryName, linkedServiceName);
-            ValidateLinkedService(client, resourceGroupName, dataFactoryName, expectedLinkedService, getResponse.Body, linkedServiceName);
-            Assert.Equal(HttpStatusCode.OK, getResponse.Response.StatusCode);
-
-            AzureOperationResponse<IPage<LinkedServiceResource>> listResponse = await client.LinkedServices.ListByFactoryWithHttpMessagesAsync(resourceGroupName, dataFactoryName);
-            ValidateLinkedService(client, resourceGroupName, dataFactoryName, expectedLinkedService, listResponse.Body.First(), linkedServiceName);
-            Assert.Equal(HttpStatusCode.OK, listResponse.Response.StatusCode);
-        }
-        private static void ValidateLinkedService(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, LinkedServiceResource expected, LinkedServiceResource actual, string expectedName)
-        {
-            ValidateSubResource(client, resourceGroupName, actual, dataFactoryName, expectedName, "linkedservices");
+            this.ValidateSubResource(actual, this.DataFactoryName, expectedName, "linkedservices");
             Assert.IsType<AzureDataLakeStoreLinkedService>(actual.Properties);
             Assert.Equal(((AzureDataLakeStoreLinkedService)expected.Properties).DataLakeStoreUri, ((AzureDataLakeStoreLinkedService)actual.Properties).DataLakeStoreUri);
         }

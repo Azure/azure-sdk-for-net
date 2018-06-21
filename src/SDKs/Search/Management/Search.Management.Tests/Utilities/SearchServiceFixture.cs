@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             var queryKeys = client.QueryKeys.ListBySearchService(ResourceGroupName, SearchServiceName);
             Assert.NotNull(queryKeys);
-            Assert.Single(queryKeys);
+            Assert.Equal(1, queryKeys.Count());
 
             QueryApiKey = queryKeys.First().Key;
         }

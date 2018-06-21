@@ -21,23 +21,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CertificateVisibility
     {
-        /// <summary>
-        /// The certificate should be visible to the user account under which
-        /// the start task is run.
-        /// </summary>
-        [EnumMember(Value = "starttask")]
+        [EnumMember(Value = "startTask")]
         StartTask,
-        /// <summary>
-        /// The certificate should be visibile to the user accounts under which
-        /// job tasks are run.
-        /// </summary>
         [EnumMember(Value = "task")]
         Task,
-        /// <summary>
-        /// The certificate should be visibile to the user accounts under which
-        /// users remotely access the node.
-        /// </summary>
-        [EnumMember(Value = "remoteuser")]
+        [EnumMember(Value = "remoteUser")]
         RemoteUser
     }
     internal static class CertificateVisibilityEnumExtension
@@ -52,11 +40,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case CertificateVisibility.StartTask:
-                    return "starttask";
+                    return "startTask";
                 case CertificateVisibility.Task:
                     return "task";
                 case CertificateVisibility.RemoteUser:
-                    return "remoteuser";
+                    return "remoteUser";
             }
             return null;
         }
@@ -65,11 +53,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "starttask":
+                case "startTask":
                     return CertificateVisibility.StartTask;
                 case "task":
                     return CertificateVisibility.Task;
-                case "remoteuser":
+                case "remoteUser":
                     return CertificateVisibility.RemoteUser;
             }
             return null;

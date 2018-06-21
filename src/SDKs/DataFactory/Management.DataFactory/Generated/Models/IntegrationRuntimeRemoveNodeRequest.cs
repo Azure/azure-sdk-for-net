@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,12 +31,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// IntegrationRuntimeRemoveNodeRequest class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="nodeName">The name of the node to be removed.</param>
-        public IntegrationRuntimeRemoveNodeRequest(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string nodeName = default(string))
+        public IntegrationRuntimeRemoveNodeRequest(string nodeName = default(string))
         {
-            AdditionalProperties = additionalProperties;
             NodeName = nodeName;
             CustomInit();
         }
@@ -47,13 +42,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the node to be removed.

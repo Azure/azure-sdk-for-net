@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,8 +29,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the PolybaseSettings class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="rejectType">Reject type. Possible values include:
         /// 'value', 'percentage'</param>
         /// <param name="rejectValue">Specifies the value or the percentage of
@@ -46,9 +42,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// in delimited text files when PolyBase retrieves data from the text
         /// file. Type: boolean (or Expression with resultType
         /// boolean).</param>
-        public PolybaseSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string rejectType = default(string), object rejectValue = default(object), object rejectSampleValue = default(object), object useTypeDefault = default(object))
+        public PolybaseSettings(string rejectType = default(string), object rejectValue = default(object), object rejectSampleValue = default(object), object useTypeDefault = default(object))
         {
-            AdditionalProperties = additionalProperties;
             RejectType = rejectType;
             RejectValue = rejectValue;
             RejectSampleValue = rejectSampleValue;
@@ -60,13 +55,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets or sets reject type. Possible values include: 'value',

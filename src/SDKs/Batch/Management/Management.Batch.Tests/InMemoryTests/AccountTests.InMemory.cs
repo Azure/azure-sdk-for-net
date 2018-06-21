@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Batch.Tests
             // Validate result
             Assert.Equal("South Central US", result.Location);
             Assert.NotEmpty(result.AccountEndpoint);
-            Assert.Equal(ProvisioningState.Succeeded, result.ProvisioningState);
+            Assert.Equal(result.ProvisioningState, ProvisioningState.Succeeded);
             Assert.Equal(2, result.Tags.Count);
         }
 
@@ -295,6 +295,7 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Throws<ValidationException>(() => client.BatchAccount.Update(null, null, new BatchAccountUpdateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Update("foo", null, new BatchAccountUpdateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Update("foo", "bar", null));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Update("invalid+", "account", new BatchAccountUpdateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Update("rg", "invalid%", new BatchAccountUpdateParameters()));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Update("rg", "/invalid", new BatchAccountUpdateParameters()));
 
@@ -382,6 +383,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("foo", null));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Delete(null, "bar"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("invalid+", "account"));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("rg", "invalid%"));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Delete("rg", "/invalid"));
         }
@@ -442,6 +444,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             Assert.Throws<ValidationException>(() => client.BatchAccount.Get("foo", null));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Get(null, "bar"));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.Get("invalid+", "account"));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Get("rg", "invalid%"));
             Assert.Throws<ValidationException>(() => client.BatchAccount.Get("rg", "/invalid"));
         }
@@ -832,6 +835,7 @@ namespace Microsoft.Azure.Batch.Tests
 
             Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey(null, "bar", AccountKeyType.Primary));
             Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("foo", null, AccountKeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("invalid+", "account", AccountKeyType.Primary));
             Assert.Throws<ValidationException>(() => client.BatchAccount.RegenerateKey("rg", "invalid%", AccountKeyType.Primary));
         }
     }

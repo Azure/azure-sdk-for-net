@@ -1,21 +1,5 @@
 ## Microsoft.Azure.Management.DataLake.Store release notes
 
-### Changes in 2.3.3-preview
-
-**Breaking changes**
-
-- Changed the `ODataQuery` parameter type from `DataLakeStoreAccount` to `DataLakeStoreAccountBasic` for these APIs:
-    - Account_List
-    - Account_ListByResourceGroup
-
-**Notes**
-
-- Added two more states to `DataLakeStoreAccountStatus` enum: `Undeleting` and `Canceled`
-- Added new Account APIs:
-    - Account_CheckNameAvailability
-    - Location_GetCapability
-    - Operation_List
-
 ### Changes in 2.3.0-preview
 
 **Breaking change**
@@ -41,7 +25,7 @@
 **Notes**
 
 - This is a hotfix release; therefore, the changes addressed here do not carry over to the versions above.
-- Add two more states to `DataLakeStoreAccountStatus` enum: `Undeleting` and `Canceled` (this is addressed in version 2.3.3-preview)
+- Add two more states to `DataLakeStoreAccountStatus` enum: `Undeleting` and `Canceled` (this will be addressed in an upcoming preview release)
 
 ### Changes in 2.2.0
 - Marking the 2.*.*-preview changes as stable for the second official release of the Data Lake Store SDK.

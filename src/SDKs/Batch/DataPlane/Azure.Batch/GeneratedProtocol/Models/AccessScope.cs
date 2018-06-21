@@ -21,10 +21,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum AccessScope
     {
-        /// <summary>
-        /// Grants access to perform all operations on the job containing the
-        /// task.
-        /// </summary>
         [EnumMember(Value = "job")]
         Job
     }

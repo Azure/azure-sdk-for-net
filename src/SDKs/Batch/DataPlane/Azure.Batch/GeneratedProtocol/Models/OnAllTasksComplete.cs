@@ -21,17 +21,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum OnAllTasksComplete
     {
-        /// <summary>
-        /// Do nothing. The job remains active unless terminated or disabled by
-        /// some other means.
-        /// </summary>
-        [EnumMember(Value = "noaction")]
+        [EnumMember(Value = "noAction")]
         NoAction,
-        /// <summary>
-        /// Terminate the job. The job's terminateReason is set to
-        /// 'AllTasksComplete'.
-        /// </summary>
-        [EnumMember(Value = "terminatejob")]
+        [EnumMember(Value = "terminateJob")]
         TerminateJob
     }
     internal static class OnAllTasksCompleteEnumExtension
@@ -46,9 +38,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case OnAllTasksComplete.NoAction:
-                    return "noaction";
+                    return "noAction";
                 case OnAllTasksComplete.TerminateJob:
-                    return "terminatejob";
+                    return "terminateJob";
             }
             return null;
         }
@@ -57,9 +49,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "noaction":
+                case "noAction":
                     return OnAllTasksComplete.NoAction;
-                case "terminatejob":
+                case "terminateJob":
                     return OnAllTasksComplete.TerminateJob;
             }
             return null;

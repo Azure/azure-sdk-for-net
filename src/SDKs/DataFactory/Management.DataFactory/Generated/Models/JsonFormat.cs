@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,8 +29,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the JsonFormat class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="serializer">Serializer. Type: string (or Expression
         /// with resultType string).</param>
         /// <param name="deserializer">Deserializer. Type: string (or
@@ -61,8 +57,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// the array element. Example: {"Column1": "$.Column1Path", "Column2":
         /// "Column2PathInArray"}. Type: object (or Expression with resultType
         /// object).</param>
-        public JsonFormat(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object serializer = default(object), object deserializer = default(object), string filePattern = default(string), object nestingSeparator = default(object), object encodingName = default(object), object jsonNodeReference = default(object), object jsonPathDefinition = default(object))
-            : base(additionalProperties, serializer, deserializer)
+        public JsonFormat(object serializer = default(object), object deserializer = default(object), string filePattern = default(string), object nestingSeparator = default(object), object encodingName = default(object), object jsonNodeReference = default(object), object jsonPathDefinition = default(object))
+            : base(serializer, deserializer)
         {
             FilePattern = filePattern;
             NestingSeparator = nestingSeparator;

@@ -21,35 +21,32 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// Trigger that runs everytime the selected Blob container changes.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BlobTrigger : MultiplePipelineTrigger
+    public partial class BlobTrigger : Trigger
     {
         /// <summary>
         /// Initializes a new instance of the BlobTrigger class.
         /// </summary>
         public BlobTrigger()
         {
-            LinkedService = new LinkedServiceReference();
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the BlobTrigger class.
         /// </summary>
+        /// <param name="description">Trigger description.</param>
+        /// <param name="pipelines">Pipelines that need to be started.</param>
+        /// <param name="runtimeState">Indicates if trigger is running or not.
+        /// Updated when Start/Stop APIs are called on the Trigger. Possible
+        /// values include: 'Started', 'Stopped', 'Disabled'</param>
         /// <param name="folderPath">The path of the container/folder that will
         /// trigger the pipeline.</param>
         /// <param name="maxConcurrency">The max number of parallel files to
         /// handle when it is triggered.</param>
         /// <param name="linkedService">The Azure Storage linked service
         /// reference.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        /// <param name="description">Trigger description.</param>
-        /// <param name="runtimeState">Indicates if trigger is running or not.
-        /// Updated when Start/Stop APIs are called on the Trigger. Possible
-        /// values include: 'Started', 'Stopped', 'Disabled'</param>
-        /// <param name="pipelines">Pipelines that need to be started.</param>
-        public BlobTrigger(string folderPath, int maxConcurrency, LinkedServiceReference linkedService, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>))
-            : base(additionalProperties, description, runtimeState, pipelines)
+        public BlobTrigger(string description = default(string), IList<TriggerPipelineReference> pipelines = default(IList<TriggerPipelineReference>), string runtimeState = default(string), string folderPath = default(string), int? maxConcurrency = default(int?), LinkedServiceReference linkedService = default(LinkedServiceReference))
+            : base(description, pipelines, runtimeState)
         {
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;
@@ -74,7 +71,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// triggered.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.maxConcurrency")]
-        public int MaxConcurrency { get; set; }
+        public int? MaxConcurrency { get; set; }
 
         /// <summary>
         /// Gets or sets the Azure Storage linked service reference.
@@ -90,14 +87,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FolderPath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FolderPath");
-            }
-            if (LinkedService == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "LinkedService");
-            }
             if (LinkedService != null)
             {
                 LinkedService.Validate();

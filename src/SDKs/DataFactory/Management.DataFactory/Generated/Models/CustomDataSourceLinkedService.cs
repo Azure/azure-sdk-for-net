@@ -12,8 +12,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,12 +35,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="typeProperties">Custom linked service
         /// properties.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
-        public CustomDataSourceLinkedService(object typeProperties, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
-            : base(additionalProperties, connectVia, description)
+        public CustomDataSourceLinkedService(object typeProperties, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string))
+            : base(connectVia, description)
         {
             TypeProperties = typeProperties;
             CustomInit();
