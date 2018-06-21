@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet2840?api-version=2016-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0Mjg0MD9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5712?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NTcxMj9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Test Policy Definition\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "303"
         ],
         "x-ms-client-request-id": [
-          "ee47a34f-99b3-41d5-837e-d54a8f19175b"
+          "d6a3df88-2c5c-4ded-9929-20ec2d77646f"
         ],
         "accept-language": [
           "en-US"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Test Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet2840\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet2840\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Test Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5712\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet5712\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "422"
@@ -38,34 +38,37 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:13 GMT"
+          "Thu, 07 Jun 2018 00:59:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:a080a9df-8fef-4e1c-8e17-54e5852babba"
+          "westus2:ca225d19-1ad2-4ef4-889d-32f355ebebac"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1186"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "0dc137f9-5194-4373-9081-bb1555bd0024"
+          "c69b1483-f8a0-4555-b9f8-03cb228a41ed"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200414Z:0dc137f9-5194-4373-9081-bb1555bd0024"
+          "WESTUS2:20180607T005936Z:c69b1483-f8a0-4555-b9f8-03cb228a41ed"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet5671?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0NTY3MT9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7414?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0NzQxND9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Set Definition\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3773\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Set Definition\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5074\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -74,7 +77,7 @@
           "276"
         ],
         "x-ms-client-request-id": [
-          "9e6378a6-e07b-403f-a7d0-3ee95ca32614"
+          "4427fca6-b24d-4bb0-8769-bc36a14d5b8d"
         ],
         "accept-language": [
           "en-US"
@@ -84,7 +87,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicyDefinitionNotFound\",\r\n    \"message\": \"The policy set definition 'azsmnet5671' request is invalid. The following policy definitions could not be found: '/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3773'.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicyDefinitionNotFound\",\r\n    \"message\": \"The policy set definition 'azsmnet7414' request is invalid. The following policy definitions could not be found: '/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5074'.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "289"
@@ -99,34 +102,37 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:18 GMT"
+          "Thu, 07 Jun 2018 00:59:41 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:f133d34f-3f6e-4c93-93ed-ad77fd88c2a7"
+          "westus2:f8796904-fd17-4ac7-9f22-50ccb367fe8b"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "3e204ca2-dbbe-403d-ac2c-23ea177fe98f"
+          "22263d4c-c124-4b0d-a9ab-8986c088a0b3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200418Z:3e204ca2-dbbe-403d-ac2c-23ea177fe98f"
+          "WESTUS2:20180607T005941Z:22263d4c-c124-4b0d-a9ab-8986c088a0b3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet5671?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0NTY3MT9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7414?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0NzQxND9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Set Definition\",\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet2840\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Set Definition\",\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5712\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -135,7 +141,7 @@
           "356"
         ],
         "x-ms-client-request-id": [
-          "6f011b4c-e541-4cc1-8e02-a92567316b35"
+          "4deb9222-4ef1-49ec-8da2-455f56c988ed"
         ],
         "accept-language": [
           "en-US"
@@ -145,7 +151,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"UnusedPolicyParameters\",\r\n    \"message\": \"The policy set 'azsmnet5671' has defined parameters 'foo' which are not used in referenced policy definitions. Please either remove these parameters from the definition or ensure that they are used.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"UnusedPolicyParameters\",\r\n    \"message\": \"The policy set 'azsmnet7414' has defined parameters 'foo' which are not used in referenced policy definitions. Please either remove these parameters from the definition or ensure that they are used.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "254"
@@ -160,34 +166,37 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:18 GMT"
+          "Thu, 07 Jun 2018 00:59:41 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:e65fea69-3616-449d-b805-94c40bf94c66"
+          "westus2:273a3c67-d79b-4a08-86ab-15c7299b4a85"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1184"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "30f66102-6200-4fa4-a215-355e0998de48"
+          "fe8a2d87-2911-4549-ac4e-a981fe00e902"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200418Z:30f66102-6200-4fa4-a215-355e0998de48"
+          "WESTUS2:20180607T005941Z:fe8a2d87-2911-4549-ac4e-a981fe00e902"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet5671?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0NTY3MT9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7414?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0NzQxND9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Set Definition\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet2840\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"abc\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Invalid Set Definition\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5712\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"abc\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -196,7 +205,7 @@
           "374"
         ],
         "x-ms-client-request-id": [
-          "e34d3f6a-d4ea-433e-9c83-b61b83b59be6"
+          "2bebe0e5-0def-4420-b962-8d4d647a5874"
         ],
         "accept-language": [
           "en-US"
@@ -206,7 +215,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"UndefinedPolicyParameter\",\r\n    \"message\": \"The policy set definition 'azsmnet5671' is attempting to assign the parameter(s) 'foo' which are not defined in the policy definition 'azsmnet2840'.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"UndefinedPolicyParameter\",\r\n    \"message\": \"The policy set definition 'azsmnet7414' is attempting to assign the parameter(s) 'foo' which are not defined in the policy definition 'azsmnet5712'.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "206"
@@ -221,37 +230,40 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:21 GMT"
+          "Thu, 07 Jun 2018 00:59:41 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:e5e4d994-0a89-4b9a-9734-c18e0b89a72e"
+          "westus2:781d6e05-54b7-488e-84e1-b5ba3c565768"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1183"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
-          "c949f8f2-69df-4bd0-b24c-05246f514af6"
+          "2572efd5-806b-4a49-9df3-345b1ea9c45d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200421Z:c949f8f2-69df-4bd0-b24c-05246f514af6"
+          "WESTUS2:20180607T005942Z:2572efd5-806b-4a49-9df3-345b1ea9c45d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet2840?api-version=2016-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0Mjg0MD9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5712?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0NTcxMj9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b1678088-2a41-41d9-99d8-30e43aba6013"
+          "86a0cc16-411e-4ec4-baa2-dba1bf198d6f"
         ],
         "accept-language": [
           "en-US"
@@ -261,7 +273,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Test Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet2840\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet2840\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Test Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet5712\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet5712\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -273,7 +285,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:21 GMT"
+          "Thu, 07 Jun 2018 00:59:42 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -286,19 +298,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:20284a11-1be1-4c04-95ee-37ec97bbc163"
+          "westus2:6926f6a6-6e43-4936-9a3a-ab9875bceff0"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1182"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "8ed37f6f-a942-41f6-89c4-81c6e577927f"
+          "70783b23-d4cd-4ef1-bb05-e529ec150f56"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200421Z:8ed37f6f-a942-41f6-89c4-81c6e577927f"
+          "WESTUS2:20180607T005942Z:70783b23-d4cd-4ef1-bb05-e529ec150f56"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -306,12 +321,12 @@
   ],
   "Names": {
     "ValidatePolicySetDefinitionErrorHandling": [
-      "azsmnet2840",
-      "azsmnet5671",
-      "azsmnet3773"
+      "azsmnet5712",
+      "azsmnet7414",
+      "azsmnet5074"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0c82cadf-f711-4825-bcaf-44189e8baa9f"
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
   }
 }

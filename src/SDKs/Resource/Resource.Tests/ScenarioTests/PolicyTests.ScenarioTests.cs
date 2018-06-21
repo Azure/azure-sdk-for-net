@@ -177,7 +177,6 @@ namespace Policy.Tests
                 policySet.PolicyDefinitions = new[]
                 {
                     new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id),
-                    new PolicyDefinitionReference(policyDefinitionId: definitionResult.Id)
                 };
 
                 result = client.PolicySetDefinitions.CreateOrUpdate(setName, policySet);
@@ -186,7 +185,7 @@ namespace Policy.Tests
                 getResult = client.PolicySetDefinitions.Get(setName);
                 Assert.Equal(setName, getResult.Name);
                 Assert.Equal(policySet.DisplayName, getResult.DisplayName);
-                Assert.Equal(2, getResult.PolicyDefinitions.Count);
+                Assert.Equal(1, getResult.PolicyDefinitions.Count);
                 Assert.True(getResult.PolicyDefinitions.All(policyRef => policyRef.PolicyDefinitionId.Equals(definitionResult.Id)));
                 Assert.Equal(policySet.Description, getResult.Description);
                 Assert.Equal(policySet.Metadata, getResult.Metadata);

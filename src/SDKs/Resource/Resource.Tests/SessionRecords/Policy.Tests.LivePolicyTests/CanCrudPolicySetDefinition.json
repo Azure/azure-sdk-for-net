@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet3906?api-version=2016-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0MzkwNj9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzQwOD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "325"
         ],
         "x-ms-client-request-id": [
-          "f28862af-12c2-4155-93a0-29c1e54b7ee1"
+          "d6a7c859-94aa-41fa-b5b0-de6a2ffa7afc"
         ],
         "accept-language": [
           "en-US"
@@ -23,7 +23,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3906\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3408\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "444"
@@ -38,32 +38,35 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:04 GMT"
+          "Thu, 07 Jun 2018 06:28:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:8ccbec8d-04a7-4fc9-a0bc-c34dbe3acafb"
+          "westus2:16bb233b-30fc-4511-b527-ec70b42e87c3"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "22d684a5-1bfb-4330-90a0-2fd8f9692faa"
+          "d630184d-1304-4da8-9f69-4607aec15a5f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200404Z:22d684a5-1bfb-4330-90a0-2fd8f9692faa"
+          "WESTUS2:20180607T062830Z:d630184d-1304-4da8-9f69-4607aec15a5f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet3906?api-version=2016-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0MzkwNj9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzQwOD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"[parameters('foo')]\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    },\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -74,7 +77,7 @@
           "351"
         ],
         "x-ms-client-request-id": [
-          "ca969891-9f0c-42e1-a786-9fb0e99f737d"
+          "d78d899e-b137-4ce9-8978-5da898cb7f60"
         ],
         "accept-language": [
           "en-US"
@@ -84,7 +87,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"[parameters('foo')]\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3906\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"[parameters('foo')]\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3408\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "429"
@@ -99,34 +102,37 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:4e63f9c0-21a3-42e9-bab8-d6426c55f5d5"
+          "westus2:f62ab803-6619-4350-823e-7020c4ec64b0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1187"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "34f49d4f-fa43-4c52-b274-81a936806bdf"
+          "456c9595-1bd2-4a06-b88b-fb02070f1361"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:34f49d4f-fa43-4c52-b274-81a936806bdf"
+          "WESTUS2:20180607T062838Z:456c9595-1bd2-4a06-b88b-fb02070f1361"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -135,7 +141,7 @@
           "302"
         ],
         "x-ms-client-request-id": [
-          "df17579f-4f4c-41eb-8c74-d0603a7a6bca"
+          "3e8cc118-d222-4fa7-b99e-98a341b76f9c"
         ],
         "accept-language": [
           "en-US"
@@ -145,10 +151,10 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"10945845703396721059\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "465"
+          "520"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -160,43 +166,46 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:04 GMT"
+          "Thu, 07 Jun 2018 06:28:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:66750be1-23bd-4859-a5c4-99b220277387"
+          "westus2:bc5c048d-fd73-4c18-bc2c-5335c2163679"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "4350e682-f5b4-487b-874f-be1d8c81fbf9"
+          "03adf577-48f1-424f-9cd4-4dd82e112249"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200404Z:4350e682-f5b4-487b-874f-be1d8c81fbf9"
+          "WESTUS2:20180607T062835Z:03adf577-48f1-424f-9cd4-4dd82e112249"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      },\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "575"
+          "407"
         ],
         "x-ms-client-request-id": [
-          "e2a78bf5-ae3d-4ae4-9528-74fec31014bb"
+          "084990c1-6098-461a-b2a1-4dafe392cf5f"
         ],
         "accept-language": [
           "en-US"
@@ -206,7 +215,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      },\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"10945845703396721059\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -218,7 +227,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:04 GMT"
+          "Thu, 07 Jun 2018 06:28:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -231,28 +240,31 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:819560b2-d71b-4939-b519-30b939ebfdb1"
+          "westus2:46a3f32b-3b5d-46ad-b8f7-7dca932dbbc1"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1190"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
-          "fa4bd941-89e7-4184-80be-544d086950db"
+          "ad4991c5-1f31-48c1-a3e0-8d4b599a2588"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200404Z:fa4bd941-89e7-4184-80be-544d086950db"
+          "WESTUS2:20180607T062836Z:ad4991c5-1f31-48c1-a3e0-8d4b599a2588"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -261,7 +273,7 @@
           "502"
         ],
         "x-ms-client-request-id": [
-          "4bd463eb-8a84-441b-8ec7-ec456f4f5cc1"
+          "3d3ca4a8-838c-4072-a740-d9d03bf50bcc"
         ],
         "accept-language": [
           "en-US"
@@ -271,10 +283,10 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"2246381386474426611\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "563"
+          "617"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -286,37 +298,40 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:ad18602b-1cf9-4b6b-8b46-0475fe342f53"
+          "westus2:997beb6b-47eb-4169-bca7-f5ffa53adcc6"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1186"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "22e7510f-338f-4585-a3cf-d4c44f200c4f"
+          "8d1f6e2b-5162-40d0-ada4-58f35f1ebdc3"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:22e7510f-338f-4585-a3cf-d4c44f200c4f"
+          "WESTUS2:20180607T062838Z:8d1f6e2b-5162-40d0-ada4-58f35f1ebdc3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ed0cd5e7-2dc4-4fa4-90c8-cd2c78a88804"
+          "adc62ce2-d679-4f75-8e2c-81778e860956"
         ],
         "accept-language": [
           "en-US"
@@ -326,7 +341,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"10945845703396721059\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -338,7 +353,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:04 GMT"
+          "Thu, 07 Jun 2018 06:28:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -351,31 +366,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:a1b82707-6d15-4fe5-bcc3-68811e5b974b"
+          "westus2:d08d7199-3b29-4d9c-85c0-e49ebbc29768"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14991"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "354d4a4e-217f-4c70-ba64-b0ff29b07b87"
+          "21d1805b-b8e9-4dfa-9bc0-e61599cce03e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200404Z:354d4a4e-217f-4c70-ba64-b0ff29b07b87"
+          "WESTUS2:20180607T062835Z:21d1805b-b8e9-4dfa-9bc0-e61599cce03e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a0abc05a-57d6-46f2-987a-89c1caed5a0f"
+          "3bbf6106-fc9c-47fb-8bb0-ebbe3ffa0ea4"
         ],
         "accept-language": [
           "en-US"
@@ -385,7 +403,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      },\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"10945845703396721059\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -397,7 +415,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:04 GMT"
+          "Thu, 07 Jun 2018 06:28:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -410,31 +428,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:6c5bec1f-8168-4c97-a52e-b90725f1ea20"
+          "westus2:deb1f798-2101-4dae-b30c-c8fef7f98c0a"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "2b35eb0a-d309-4cba-915f-773772d6b8d8"
+          "0fbe9286-ad06-429b-a313-aa333d50db64"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200404Z:2b35eb0a-d309-4cba-915f-773772d6b8d8"
+          "WESTUS2:20180607T062837Z:0fbe9286-ad06-429b-a313-aa333d50db64"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d2c2f4d2-40a9-4178-a487-d7437cec5055"
+          "6f0b62d8-cb33-4d31-abce-c8f028ac5934"
         ],
         "accept-language": [
           "en-US"
@@ -444,10 +465,10 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicySetDefinitionNotFound\",\r\n    \"message\": \"The policy set definition 'azsmnet973' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicySetDefinitionNotFound\",\r\n    \"message\": \"The policy set definition 'azsmnet3933' could not be found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "119"
+          "120"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -459,37 +480,40 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:37 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:cfd4f998-06b4-44c4-9232-ea21955f4189"
+          "westus2:a3ba0be4-b7c6-4e22-b15a-d80f7e6067f2"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "8dd05b50-2110-469b-b4df-b1493c427858"
+          "94995604-cd8a-456e-8008-8401a2f53ce5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:8dd05b50-2110-469b-b4df-b1493c427858"
+          "WESTUS2:20180607T062837Z:94995604-cd8a-456e-8008-8401a2f53ce5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e2b9d30c-4d3b-4a0c-9e32-4d8411185f2f"
+          "d8d93a2f-1ab6-4045-ac25-d5a50595366a"
         ],
         "accept-language": [
           "en-US"
@@ -499,7 +523,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"2246381386474426611\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -511,7 +535,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -524,31 +548,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:b3ad9c0d-9230-44fe-b340-f7429a03eff7"
+          "westus2:1d6e4f56-eea2-4db3-b700-5f6e6ac2c9e5"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14986"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "7f0cc793-8521-4831-aa6c-8808345e689c"
+          "a0d2be67-e6c6-4dc7-bd06-3524ed01d2d5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:7f0cc793-8521-4831-aa6c-8808345e689c"
+          "WESTUS2:20180607T062838Z:a0d2be67-e6c6-4dc7-bd06-3524ed01d2d5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "543c2c5d-6482-45a5-82cf-0cd656d24b59"
+          "22056f28-a2be-4c9b-be43-08eaa9194e3d"
         ],
         "accept-language": [
           "en-US"
@@ -558,10 +585,10 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicySetDefinitionNotFound\",\r\n    \"message\": \"The policy set definition 'azsmnet973' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PolicySetDefinitionNotFound\",\r\n    \"message\": \"The policy set definition 'azsmnet3933' could not be found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "119"
+          "120"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -573,37 +600,40 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "centralus:a14781d5-f445-4335-8e21-56048c110b50"
+          "westus2:f343498d-1274-4cb5-aa95-696808be4145"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14985"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "1cdff72b-4cf4-4853-8f01-f69c4ca7b621"
+          "bd9e24eb-9394-42f1-b523-b38295a0d9cb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200406Z:1cdff72b-4cf4-4853-8f01-f69c4ca7b621"
+          "WESTUS2:20180607T062839Z:bd9e24eb-9394-42f1-b523-b38295a0d9cb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f22319b2-c245-476d-ae85-5204431a9d1e"
+          "d1b4996f-c91b-4f8a-85c9-009baa9d15e7"
         ],
         "accept-language": [
           "en-US"
@@ -613,7 +643,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag exists\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy ensures that a specific tag is set, providing a default value if it is not.\",\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"description\": \"Name of the tag, such as costCenter\",\r\n              \"strongType\": \"tagName\"\r\n            }\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"description\": \"Value of the tag, such as headquarter\",\r\n              \"strongType\": \"tagValue\"\r\n            }\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              },\r\n              \"tagValue\": {\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/686b65fa-af26-4f41-8bd2-4cc9824a7339\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"686b65fa-af26-4f41-8bd2-4cc9824a7339\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Restrict sku choices\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Restricts sku choices for popular resource types\",\r\n        \"metadata\": {\r\n          \"category\": \"Cost Management\"\r\n        },\r\n        \"parameters\": {\r\n          \"allowedVMSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"An array of permitted SKUs for virtual machines.\",\r\n              \"displayName\": \"Permitted VM SKUs\",\r\n              \"strongType\": \"VMSKUs\"\r\n            }\r\n          },\r\n          \"allowedStorageSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"An array of permitted SKUs for storage accounts.\",\r\n              \"displayName\": \"Permitted Storage SKUs\",\r\n              \"strongType\": \"StorageSKUs\"\r\n            }\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/builtinpolicy2\",\r\n            \"parameters\": {\r\n              \"listOfAllowedSKUs\": {\r\n                \"value\": \"[parameters('allowedVMSKUs')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/builtinpolicy3\",\r\n            \"parameters\": {\r\n              \"listOfAllowedSKUs\": {\r\n                \"value\": \"[parameters('allowedStorageSKUs')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/e3edee14-9e91-424f-bd6e-6600c84759a3\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"e3edee14-9e91-424f-bd6e-6600c84759a3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet9375\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet1259\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet1259\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet2991\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3760\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet3760\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet5584\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet5820\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet5820\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet973\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (carolynz)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {\r\n          \"tagKey\": {\r\n            \"type\": \"String\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"[parameters('tagKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/carolynPolicyDefinition\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"carolynPolicyDefinition\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (cheggert)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {},\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"cheggTag\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/cheggTag\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"cheggTag\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (Fer)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {\r\n          \"tagKey\": {\r\n            \"type\": \"String\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"[parameters('tagKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/Ensure tag value (t-feruil)\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"Ensure tag value (t-feruil)\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Security for Express Route Subscriptions\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"Ensures Express Route subscriptions meet security requirements.\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/AppServiceWebSockets\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/expressRouteRGSecurity\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"expressRouteRGSecurity\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed locations initiative\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This initiative enables you to restrict the locations of deploying resources .\",\r\n        \"parameters\": {\r\n          \"locationsListKey\": {\r\n            \"type\": \"Array\",\r\n            \"allowedValues\": [\r\n              \"East Asia\",\r\n              \"Southeast Asia\",\r\n              \"Central US\",\r\n              \"East US\",\r\n              \"East US 2\",\r\n              \"West US\",\r\n              \"North Central US\",\r\n              \"South Central US\",\r\n              \"North Europe\",\r\n              \"West Europe\",\r\n              \"Japan West\",\r\n              \"Japan East\",\r\n              \"Brazil South\",\r\n              \"Australia East\",\r\n              \"Australia Southeast\"\r\n            ]\r\n          },\r\n          \"tagName\": {\r\n            \"type\": \"String\"\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\"\r\n          },\r\n          \"listOfAuditLocations\": {\r\n            \"type\": \"Array\",\r\n            \"allowedValues\": [\r\n              \"East Asia\",\r\n              \"Southeast Asia\",\r\n              \"Central US\",\r\n              \"East US\",\r\n              \"East US 2\",\r\n              \"West US\",\r\n              \"North Central US\",\r\n              \"South Central US\",\r\n              \"North Europe\",\r\n              \"West Europe\",\r\n              \"Japan West\",\r\n              \"Japan East\",\r\n              \"Brazil South\",\r\n              \"Australia East\",\r\n              \"Australia Southeast\"\r\n            ]\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/regionPolicyDefinition\",\r\n            \"parameters\": {\r\n              \"allowedLocations\": {\r\n                \"value\": \"[parameters('locationsListKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              },\r\n              \"tagValue\": {\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/LocationAudit\",\r\n            \"parameters\": {\r\n              \"listOfAllowedLocations\": {\r\n                \"value\": \"[parameters('listOfAuditLocations')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/LocationInitiative\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"LocationInitiative\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Enable Monitoring in Azure Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Monitor all the available security recommendations in Azure Security Center. This is the default policy for Azure Security Center.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\"\r\n        },\r\n        \"parameters\": {\r\n          \"systemUpdatesMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor system updates \",\r\n              \"description\": \"Enable or disable system updates monitoring\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"systemConfigurationsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor OS vulnerabilities\",\r\n              \"description\": \"Enable or disable OS vulnerabilities monitoring (based on a configured baseline)\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"endpointProtectionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor endpoint protection\",\r\n              \"description\": \"Enable or disable endpoint protection monitoring\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"diskEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor disk encryption\",\r\n              \"description\": \"Enable or disable Enable or disable the monitoring of unencrypted VM disks\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"networkSecurityGroupsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor network security groups\",\r\n              \"description\": \"Enable or disable monitoring of Network Security Groups with too permissive rules\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"webApplicationFirewallMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor web application firewall\",\r\n              \"description\": \"Enable or disable the monitoring of unprotected web application\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"nextGenerationFirewallMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Enable next generation firewall monitoring\",\r\n              \"description\": \"Enable or disable monitoring network endpoints without a Next Generation Firewall\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"vulnerabilityAssesmentMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor vulnerability assesment\",\r\n              \"description\": \"Enable or disable the detection of VM Vulnerabilities by a Vulnerability Assessment solution\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"storageEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor storage encryption\",\r\n              \"description\": \"Enable or disable the monitoring of blob encryption for storage accounts\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"Audit\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"Audit\"\r\n          },\r\n          \"jitNetworkAccessMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor JIT network access\",\r\n              \"description\": \"Enable or disable the monitoring of network Just In Time access\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"adaptiveApplicationControlsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor application whitelisting\",\r\n              \"description\": \"Enable or disable the monitoring of a possible application whitelist in Security Center\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"sqlAuditingMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor SQL auditing\",\r\n              \"description\": \"Enable or disable the monitoring of unaudited SQL database\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"sqlEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor SQL encryption\",\r\n              \"description\": \"Enable or disable the monitoring of unencrypted SQL database\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/a8bef009-a5c9-4d0f-90d7-6018734e8a16\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('sqlEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/af8051bf-258b-44e2-a2bf-165330459f9d\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('sqlAuditingMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/86b3d65f-7626-441e-b690-81a8b71cff60\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('systemUpdatesMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/655cb504-bcee-4362-bd4c-402e6aa38759\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('storageEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/b0f33259-77d7-4c9e-aac6-3aabcfae693c\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('jitNetworkAccessMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/47a6b606-51aa-4496-8bb7-64b11cf66adc\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('adaptiveApplicationControlsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/44452482-524f-4bf4-b852-0bff7cc4a3ed\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('networkSecurityGroupsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/e1e5fd5d-3e4c-4ce1-8661-7d1873ae6b15\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('systemConfigurationsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/af6cd1bd-1635-48cb-bde7-5b15693900b9\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('endpointProtectionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/0961003e-5a0a-4549-abde-af6a37f2724d\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('diskEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/760a85ff-6162-42b3-8d70-698e268f648c\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('vulnerabilityAssesmentMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/201ea587-7c90-41c3-910f-c280ae01cfd6\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('webApplicationFirewallMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('nextGenerationFirewallMonitoringEffect')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"1f3afdf9-d0c9-4c3d-847f-89da613e70a8\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"3131385893109476841\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet6983\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3028\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet3028\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"10945845703396721059\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet3933\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"4972882052009549591\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet9016\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7189\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet7189\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"Description text\",\r\n        \"metadata\": {\r\n          \"category\": \"sdk test\"\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"7261621694023214244\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet2366\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7821\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet7821\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -625,7 +655,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:04 GMT"
+          "Thu, 07 Jun 2018 06:28:35 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -638,31 +668,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:c2169b9e-79fa-49e2-a2d0-8255cc68c560"
+          "westus2:6ceb1b78-a474-451b-b966-4ec502d1a936"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "ae6ceb06-2ae7-4108-b155-6f59f234c0e6"
+          "14e703b0-dd98-4149-8291-01a51b8418fb"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200404Z:ae6ceb06-2ae7-4108-b155-6f59f234c0e6"
+          "WESTUS2:20180607T062835Z:14e703b0-dd98-4149-8291-01a51b8418fb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "46c746ac-4226-4359-8c70-492b879c56d8"
+          "5b9a596a-adbb-4f24-8a23-02aaad023fef"
         ],
         "accept-language": [
           "en-US"
@@ -672,7 +705,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag exists\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy ensures that a specific tag is set, providing a default value if it is not.\",\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"description\": \"Name of the tag, such as costCenter\",\r\n              \"strongType\": \"tagName\"\r\n            }\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"description\": \"Value of the tag, such as headquarter\",\r\n              \"strongType\": \"tagValue\"\r\n            }\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              },\r\n              \"tagValue\": {\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/686b65fa-af26-4f41-8bd2-4cc9824a7339\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"686b65fa-af26-4f41-8bd2-4cc9824a7339\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Restrict sku choices\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Restricts sku choices for popular resource types\",\r\n        \"metadata\": {\r\n          \"category\": \"Cost Management\"\r\n        },\r\n        \"parameters\": {\r\n          \"allowedVMSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"An array of permitted SKUs for virtual machines.\",\r\n              \"displayName\": \"Permitted VM SKUs\",\r\n              \"strongType\": \"VMSKUs\"\r\n            }\r\n          },\r\n          \"allowedStorageSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"An array of permitted SKUs for storage accounts.\",\r\n              \"displayName\": \"Permitted Storage SKUs\",\r\n              \"strongType\": \"StorageSKUs\"\r\n            }\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/builtinpolicy2\",\r\n            \"parameters\": {\r\n              \"listOfAllowedSKUs\": {\r\n                \"value\": \"[parameters('allowedVMSKUs')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/builtinpolicy3\",\r\n            \"parameters\": {\r\n              \"listOfAllowedSKUs\": {\r\n                \"value\": \"[parameters('allowedStorageSKUs')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/e3edee14-9e91-424f-bd6e-6600c84759a3\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"e3edee14-9e91-424f-bd6e-6600c84759a3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet9375\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet1259\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet1259\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet2991\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3760\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet3760\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet5584\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet5820\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet5820\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (carolynz)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {\r\n          \"tagKey\": {\r\n            \"type\": \"String\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"[parameters('tagKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/carolynPolicyDefinition\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"carolynPolicyDefinition\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (cheggert)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {},\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"cheggTag\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/cheggTag\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"cheggTag\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (Fer)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {\r\n          \"tagKey\": {\r\n            \"type\": \"String\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"[parameters('tagKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/Ensure tag value (t-feruil)\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"Ensure tag value (t-feruil)\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Security for Express Route Subscriptions\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"Ensures Express Route subscriptions meet security requirements.\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/AppServiceWebSockets\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/expressRouteRGSecurity\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"expressRouteRGSecurity\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed locations initiative\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This initiative enables you to restrict the locations of deploying resources .\",\r\n        \"parameters\": {\r\n          \"locationsListKey\": {\r\n            \"type\": \"Array\",\r\n            \"allowedValues\": [\r\n              \"East Asia\",\r\n              \"Southeast Asia\",\r\n              \"Central US\",\r\n              \"East US\",\r\n              \"East US 2\",\r\n              \"West US\",\r\n              \"North Central US\",\r\n              \"South Central US\",\r\n              \"North Europe\",\r\n              \"West Europe\",\r\n              \"Japan West\",\r\n              \"Japan East\",\r\n              \"Brazil South\",\r\n              \"Australia East\",\r\n              \"Australia Southeast\"\r\n            ]\r\n          },\r\n          \"tagName\": {\r\n            \"type\": \"String\"\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\"\r\n          },\r\n          \"listOfAuditLocations\": {\r\n            \"type\": \"Array\",\r\n            \"allowedValues\": [\r\n              \"East Asia\",\r\n              \"Southeast Asia\",\r\n              \"Central US\",\r\n              \"East US\",\r\n              \"East US 2\",\r\n              \"West US\",\r\n              \"North Central US\",\r\n              \"South Central US\",\r\n              \"North Europe\",\r\n              \"West Europe\",\r\n              \"Japan West\",\r\n              \"Japan East\",\r\n              \"Brazil South\",\r\n              \"Australia East\",\r\n              \"Australia Southeast\"\r\n            ]\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/regionPolicyDefinition\",\r\n            \"parameters\": {\r\n              \"allowedLocations\": {\r\n                \"value\": \"[parameters('locationsListKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              },\r\n              \"tagValue\": {\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/LocationAudit\",\r\n            \"parameters\": {\r\n              \"listOfAllowedLocations\": {\r\n                \"value\": \"[parameters('listOfAuditLocations')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/LocationInitiative\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"LocationInitiative\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Enable Monitoring in Azure Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Monitor all the available security recommendations in Azure Security Center. This is the default policy for Azure Security Center.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\"\r\n        },\r\n        \"parameters\": {\r\n          \"systemUpdatesMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor system updates \",\r\n              \"description\": \"Enable or disable system updates monitoring\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"systemConfigurationsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor OS vulnerabilities\",\r\n              \"description\": \"Enable or disable OS vulnerabilities monitoring (based on a configured baseline)\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"endpointProtectionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor endpoint protection\",\r\n              \"description\": \"Enable or disable endpoint protection monitoring\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"diskEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor disk encryption\",\r\n              \"description\": \"Enable or disable Enable or disable the monitoring of unencrypted VM disks\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"networkSecurityGroupsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor network security groups\",\r\n              \"description\": \"Enable or disable monitoring of Network Security Groups with too permissive rules\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"webApplicationFirewallMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor web application firewall\",\r\n              \"description\": \"Enable or disable the monitoring of unprotected web application\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"nextGenerationFirewallMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Enable next generation firewall monitoring\",\r\n              \"description\": \"Enable or disable monitoring network endpoints without a Next Generation Firewall\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"vulnerabilityAssesmentMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor vulnerability assesment\",\r\n              \"description\": \"Enable or disable the detection of VM Vulnerabilities by a Vulnerability Assessment solution\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"storageEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor storage encryption\",\r\n              \"description\": \"Enable or disable the monitoring of blob encryption for storage accounts\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"Audit\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"Audit\"\r\n          },\r\n          \"jitNetworkAccessMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor JIT network access\",\r\n              \"description\": \"Enable or disable the monitoring of network Just In Time access\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"adaptiveApplicationControlsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor application whitelisting\",\r\n              \"description\": \"Enable or disable the monitoring of a possible application whitelist in Security Center\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"sqlAuditingMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor SQL auditing\",\r\n              \"description\": \"Enable or disable the monitoring of unaudited SQL database\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"sqlEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor SQL encryption\",\r\n              \"description\": \"Enable or disable the monitoring of unencrypted SQL database\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/a8bef009-a5c9-4d0f-90d7-6018734e8a16\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('sqlEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/af8051bf-258b-44e2-a2bf-165330459f9d\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('sqlAuditingMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/86b3d65f-7626-441e-b690-81a8b71cff60\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('systemUpdatesMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/655cb504-bcee-4362-bd4c-402e6aa38759\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('storageEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/b0f33259-77d7-4c9e-aac6-3aabcfae693c\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('jitNetworkAccessMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/47a6b606-51aa-4496-8bb7-64b11cf66adc\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('adaptiveApplicationControlsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/44452482-524f-4bf4-b852-0bff7cc4a3ed\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('networkSecurityGroupsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/e1e5fd5d-3e4c-4ce1-8661-7d1873ae6b15\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('systemConfigurationsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/af6cd1bd-1635-48cb-bde7-5b15693900b9\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('endpointProtectionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/0961003e-5a0a-4549-abde-af6a37f2724d\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('diskEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/760a85ff-6162-42b3-8d70-698e268f648c\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('vulnerabilityAssesmentMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/201ea587-7c90-41c3-910f-c280ae01cfd6\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('webApplicationFirewallMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('nextGenerationFirewallMonitoringEffect')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"1f3afdf9-d0c9-4c3d-847f-89da613e70a8\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"3131385893109476841\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet6983\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3028\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet3028\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"4972882052009549591\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet9016\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7189\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet7189\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"Description text\",\r\n        \"metadata\": {\r\n          \"category\": \"sdk test\"\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"7261621694023214244\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet2366\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7821\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet7821\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -684,7 +717,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -697,31 +730,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:7bafdb18-90da-4c0b-a55b-30efd9f5b0e6"
+          "westus2:90d5c493-95f0-4e01-b148-cc706abc0c7e"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14987"
+          "14995"
         ],
         "x-ms-correlation-request-id": [
-          "68e3d6c7-9e89-4c67-af29-ef2077daa32e"
+          "9d73ec1b-d0bb-413a-8adb-a3a44c647474"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:68e3d6c7-9e89-4c67-af29-ef2077daa32e"
+          "WESTUS2:20180607T062837Z:9d73ec1b-d0bb-413a-8adb-a3a44c647474"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE3LTA2LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "35111c28-a1f8-476d-818e-5ad322383022"
+          "31951e91-49c2-4595-8b60-a49a5b53684a"
         ],
         "accept-language": [
           "en-US"
@@ -731,7 +767,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag exists\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy ensures that a specific tag is set, providing a default value if it is not.\",\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"description\": \"Name of the tag, such as costCenter\",\r\n              \"strongType\": \"tagName\"\r\n            }\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"description\": \"Value of the tag, such as headquarter\",\r\n              \"strongType\": \"tagValue\"\r\n            }\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              },\r\n              \"tagValue\": {\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/686b65fa-af26-4f41-8bd2-4cc9824a7339\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"686b65fa-af26-4f41-8bd2-4cc9824a7339\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Restrict sku choices\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Restricts sku choices for popular resource types\",\r\n        \"metadata\": {\r\n          \"category\": \"Cost Management\"\r\n        },\r\n        \"parameters\": {\r\n          \"allowedVMSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"An array of permitted SKUs for virtual machines.\",\r\n              \"displayName\": \"Permitted VM SKUs\",\r\n              \"strongType\": \"VMSKUs\"\r\n            }\r\n          },\r\n          \"allowedStorageSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"An array of permitted SKUs for storage accounts.\",\r\n              \"displayName\": \"Permitted Storage SKUs\",\r\n              \"strongType\": \"StorageSKUs\"\r\n            }\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/builtinpolicy2\",\r\n            \"parameters\": {\r\n              \"listOfAllowedSKUs\": {\r\n                \"value\": \"[parameters('allowedVMSKUs')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/builtinpolicy3\",\r\n            \"parameters\": {\r\n              \"listOfAllowedSKUs\": {\r\n                \"value\": \"[parameters('allowedStorageSKUs')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/e3edee14-9e91-424f-bd6e-6600c84759a3\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"e3edee14-9e91-424f-bd6e-6600c84759a3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet9375\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet1259\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet1259\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet2991\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3760\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet3760\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet5584\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet5820\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet5820\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (carolynz)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {\r\n          \"tagKey\": {\r\n            \"type\": \"String\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"[parameters('tagKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/carolynPolicyDefinition\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"carolynPolicyDefinition\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (cheggert)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {},\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"cheggTag\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/cheggTag\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"cheggTag\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Ensure tag value (Fer)\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This policy ensures that a specific tag is set with a set of pre-defined values.\",\r\n        \"parameters\": {\r\n          \"tagKey\": {\r\n            \"type\": \"String\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagExists\",\r\n            \"parameters\": {\r\n              \"tagKey\": {\r\n                \"value\": \"[parameters('tagKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/cheggTagDefault\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/Ensure tag value (t-feruil)\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"Ensure tag value (t-feruil)\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Security for Express Route Subscriptions\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"Ensures Express Route subscriptions meet security requirements.\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/AppServiceWebSockets\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/expressRouteRGSecurity\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"expressRouteRGSecurity\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed locations initiative\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"This initiative enables you to restrict the locations of deploying resources .\",\r\n        \"parameters\": {\r\n          \"locationsListKey\": {\r\n            \"type\": \"Array\",\r\n            \"allowedValues\": [\r\n              \"East Asia\",\r\n              \"Southeast Asia\",\r\n              \"Central US\",\r\n              \"East US\",\r\n              \"East US 2\",\r\n              \"West US\",\r\n              \"North Central US\",\r\n              \"South Central US\",\r\n              \"North Europe\",\r\n              \"West Europe\",\r\n              \"Japan West\",\r\n              \"Japan East\",\r\n              \"Brazil South\",\r\n              \"Australia East\",\r\n              \"Australia Southeast\"\r\n            ]\r\n          },\r\n          \"tagName\": {\r\n            \"type\": \"String\"\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\"\r\n          },\r\n          \"listOfAuditLocations\": {\r\n            \"type\": \"Array\",\r\n            \"allowedValues\": [\r\n              \"East Asia\",\r\n              \"Southeast Asia\",\r\n              \"Central US\",\r\n              \"East US\",\r\n              \"East US 2\",\r\n              \"West US\",\r\n              \"North Central US\",\r\n              \"South Central US\",\r\n              \"North Europe\",\r\n              \"West Europe\",\r\n              \"Japan West\",\r\n              \"Japan East\",\r\n              \"Brazil South\",\r\n              \"Australia East\",\r\n              \"Australia Southeast\"\r\n            ]\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/regionPolicyDefinition\",\r\n            \"parameters\": {\r\n              \"allowedLocations\": {\r\n                \"value\": \"[parameters('locationsListKey')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n            \"parameters\": {\r\n              \"tagName\": {\r\n                \"value\": \"[parameters('tagName')]\"\r\n              },\r\n              \"tagValue\": {\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/LocationAudit\",\r\n            \"parameters\": {\r\n              \"listOfAllowedLocations\": {\r\n                \"value\": \"[parameters('listOfAuditLocations')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/LocationInitiative\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"LocationInitiative\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Enable Monitoring in Azure Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Monitor all the available security recommendations in Azure Security Center. This is the default policy for Azure Security Center.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\"\r\n        },\r\n        \"parameters\": {\r\n          \"systemUpdatesMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor system updates \",\r\n              \"description\": \"Enable or disable system updates monitoring\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"systemConfigurationsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor OS vulnerabilities\",\r\n              \"description\": \"Enable or disable OS vulnerabilities monitoring (based on a configured baseline)\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"endpointProtectionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor endpoint protection\",\r\n              \"description\": \"Enable or disable endpoint protection monitoring\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"diskEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor disk encryption\",\r\n              \"description\": \"Enable or disable Enable or disable the monitoring of unencrypted VM disks\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"networkSecurityGroupsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor network security groups\",\r\n              \"description\": \"Enable or disable monitoring of Network Security Groups with too permissive rules\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"webApplicationFirewallMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor web application firewall\",\r\n              \"description\": \"Enable or disable the monitoring of unprotected web application\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"nextGenerationFirewallMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Enable next generation firewall monitoring\",\r\n              \"description\": \"Enable or disable monitoring network endpoints without a Next Generation Firewall\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"vulnerabilityAssesmentMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor vulnerability assesment\",\r\n              \"description\": \"Enable or disable the detection of VM Vulnerabilities by a Vulnerability Assessment solution\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"storageEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor storage encryption\",\r\n              \"description\": \"Enable or disable the monitoring of blob encryption for storage accounts\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"Audit\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"Audit\"\r\n          },\r\n          \"jitNetworkAccessMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor JIT network access\",\r\n              \"description\": \"Enable or disable the monitoring of network Just In Time access\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"adaptiveApplicationControlsMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor application whitelisting\",\r\n              \"description\": \"Enable or disable the monitoring of a possible application whitelist in Security Center\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"sqlAuditingMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor SQL auditing\",\r\n              \"description\": \"Enable or disable the monitoring of unaudited SQL database\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          },\r\n          \"sqlEncryptionMonitoringEffect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Monitor SQL encryption\",\r\n              \"description\": \"Enable or disable the monitoring of unencrypted SQL database\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/a8bef009-a5c9-4d0f-90d7-6018734e8a16\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('sqlEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/af8051bf-258b-44e2-a2bf-165330459f9d\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('sqlAuditingMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/86b3d65f-7626-441e-b690-81a8b71cff60\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('systemUpdatesMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/655cb504-bcee-4362-bd4c-402e6aa38759\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('storageEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/b0f33259-77d7-4c9e-aac6-3aabcfae693c\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('jitNetworkAccessMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/47a6b606-51aa-4496-8bb7-64b11cf66adc\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('adaptiveApplicationControlsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/44452482-524f-4bf4-b852-0bff7cc4a3ed\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('networkSecurityGroupsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/e1e5fd5d-3e4c-4ce1-8661-7d1873ae6b15\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('systemConfigurationsMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/af6cd1bd-1635-48cb-bde7-5b15693900b9\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('endpointProtectionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/0961003e-5a0a-4549-abde-af6a37f2724d\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('diskEncryptionMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/760a85ff-6162-42b3-8d70-698e268f648c\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('vulnerabilityAssesmentMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/201ea587-7c90-41c3-910f-c280ae01cfd6\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('webApplicationFirewallMonitoringEffect')]\"\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6\",\r\n            \"parameters\": {\r\n              \"effect\": {\r\n                \"value\": \"[parameters('nextGenerationFirewallMonitoringEffect')]\"\r\n              }\r\n            }\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"1f3afdf9-d0c9-4c3d-847f-89da613e70a8\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"3131385893109476841\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet6983\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3028\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet3028\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"4972882052009549591\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet9016\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7189\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet7189\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n        \"policyType\": \"Custom\",\r\n        \"description\": \"Description text\",\r\n        \"metadata\": {\r\n          \"category\": \"sdk test\"\r\n        },\r\n        \"policyDefinitions\": [\r\n          {\r\n            \"policyDefinitionReferenceId\": \"7261621694023214244\",\r\n            \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet2366\"\r\n          }\r\n        ]\r\n      },\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet7821\",\r\n      \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n      \"name\": \"azsmnet7821\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -743,7 +779,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -756,31 +792,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:0cc70b15-fe5e-429f-9bf9-c983809c3fb4"
+          "westus2:40a160e5-5efa-4fab-b9b0-b87bc00d25b6"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14984"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "427cad1c-5c28-403d-9bc2-d4babfd1e84c"
+          "4093c2d3-7149-4215-ab4f-bc35e0bb3a71"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200406Z:427cad1c-5c28-403d-9bc2-d4babfd1e84c"
+          "WESTUS2:20180607T062839Z:4093c2d3-7149-4215-ab4f-bc35e0bb3a71"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "24ad6b93-26f0-437a-8822-f6e2a2ee489c"
+          "3b9823dd-3c24-4004-94ba-6cc8af15f076"
         ],
         "accept-language": [
           "en-US"
@@ -790,7 +829,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      },\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Updated CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"description\": \"Description text\",\r\n    \"metadata\": {\r\n      \"category\": \"sdk test\"\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"10945845703396721059\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\"\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -802,7 +841,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:04 GMT"
+          "Thu, 07 Jun 2018 06:28:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -815,31 +854,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:c8b79930-8a6d-4c82-b7d3-a5257754e8b6"
+          "westus2:019babb3-11bd-4053-84d7-ec3904ace4c4"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "52f58ef0-ce3f-458d-8a54-92eefdce9886"
+          "358577e2-3618-446f-b3df-2d124c211bb5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:52f58ef0-ce3f-458d-8a54-92eefdce9886"
+          "WESTUS2:20180607T062837Z:358577e2-3618-446f-b3df-2d124c211bb5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policysetdefinitions/azsmnet973?api-version=2017-06-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lzZXRkZWZpbml0aW9ucy9henNtbmV0OTczP2FwaS12ZXJzaW9uPTIwMTctMDYtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lTZXREZWZpbml0aW9ucy9henNtbmV0MzkzMz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0bbb535c-8b75-4ac1-ae19-c4d2015e0878"
+          "b1555d6f-a1e7-4245-bab9-f04ea2fbbedf"
         ],
         "accept-language": [
           "en-US"
@@ -849,7 +891,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionId\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policySetDefinitions/azsmnet973\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet973\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Set Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"fooSet\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyDefinitions\": [\r\n      {\r\n        \"policyDefinitionReferenceId\": \"2246381386474426611\",\r\n        \"policyDefinitionId\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n        \"parameters\": {\r\n          \"foo\": {\r\n            \"value\": \"[parameters('fooSet')]\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policySetDefinitions/azsmnet3933\",\r\n  \"type\": \"Microsoft.Authorization/policySetDefinitions\",\r\n  \"name\": \"azsmnet3933\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -861,7 +903,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -874,31 +916,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:1e7ea80b-e614-4dfe-9f3b-687ca74ac7d0"
+          "westus2:02d2f8f2-e3ee-40be-93ae-a9fef97057f7"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1185"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "a4160cb9-94e9-4631-969d-32ce14bd310e"
+          "092419ef-93dd-49fe-b92c-5bc7b0d0d2f2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:a4160cb9-94e9-4631-969d-32ce14bd310e"
+          "WESTUS2:20180607T062839Z:092419ef-93dd-49fe-b92c-5bc7b0d0d2f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet3906?api-version=2016-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0MzkwNj9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzQwOD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "857bd4bc-2e30-4893-8ce8-f3acc1a6199f"
+          "a7be3dfa-1425-4e07-9da5-805cc1313c61"
         ],
         "accept-language": [
           "en-US"
@@ -908,7 +953,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3906\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3408\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -920,7 +965,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:05 GMT"
+          "Thu, 07 Jun 2018 06:28:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -933,31 +978,34 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:782f4927-c47d-4f8e-b59a-9d050362fc00"
+          "westus2:98d0c4c7-1f85-4bec-bb26-2d3713cb79ce"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1188"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "d747b192-f377-4ff2-97de-2fe6c57bc8a9"
+          "4e5da766-8165-4eec-a914-29a8960361fd"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200405Z:d747b192-f377-4ff2-97de-2fe6c57bc8a9"
+          "WESTUS2:20180607T062838Z:4e5da766-8165-4eec-a914-29a8960361fd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policydefinitions/azsmnet3906?api-version=2016-12-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGM4MmNhZGYtZjcxMS00ODI1LWJjYWYtNDQxODllOGJhYTlmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lkZWZpbml0aW9ucy9henNtbmV0MzkwNj9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0MzQwOD9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ad012531-3dc0-457f-8dc4-1dd8857a619f"
+          "71721270-6cff-4d04-94ac-4f12e5e8b0c6"
         ],
         "accept-language": [
           "en-US"
@@ -967,7 +1015,7 @@
           "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"[parameters('foo')]\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/0c82cadf-f711-4825-bcaf-44189e8baa9f/providers/Microsoft.Authorization/policyDefinitions/azsmnet3906\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3906\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicySetDefinition Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"parameters\": {\r\n      \"foo\": {\r\n        \"type\": \"String\"\r\n      }\r\n    },\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"[parameters('foo')]\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Authorization/policyDefinitions/azsmnet3408\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet3408\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -979,7 +1027,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 05 Oct 2017 20:04:06 GMT"
+          "Thu, 07 Jun 2018 06:28:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -992,19 +1040,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "centralus:0e40c03a-0085-400a-b8f1-f2134656c70a"
+          "westus2:bdf3254e-9c6b-4fe1-bf42-39bf7297d51a"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1184"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "83916e39-9fa5-4a21-b830-613c932c3033"
+          "f8c26039-9bd3-4179-94d8-06964b0defd5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20171005T200406Z:83916e39-9fa5-4a21-b830-613c932c3033"
+          "WESTUS2:20180607T062839Z:f8c26039-9bd3-4179-94d8-06964b0defd5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -1012,11 +1063,11 @@
   ],
   "Names": {
     "CanCrudPolicySetDefinition": [
-      "azsmnet3906",
-      "azsmnet973"
+      "azsmnet3408",
+      "azsmnet3933"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0c82cadf-f711-4825-bcaf-44189e8baa9f"
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
   }
 }
