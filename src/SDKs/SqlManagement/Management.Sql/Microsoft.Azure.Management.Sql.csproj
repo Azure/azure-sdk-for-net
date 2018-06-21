@@ -13,7 +13,7 @@
 			<![CDATA[
 New features:
 - Added support for using sever level Threat Detection.
-- Enable customers to upload their TDE certificate to CMS
+- Added support for uploading TDE certificate into servers and managed instances.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
