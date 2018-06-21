@@ -1706,5 +1706,38 @@ namespace Storage.Tests
                 storageMgmtClient.StorageAccounts.DeleteManagementPolicies(rgname, accountName);
             }
         }
+
+        [Fact]
+        public void StorageAccountCreateGetdfs()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.StorageV2,
+                    IsHnsEnabled = true,
+                    Location = "centraluseuap"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                Assert.True(account.IsHnsEnabled = true);
+                Assert.NotNull(account.PrimaryEndpoints.Dfs);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.True(account.IsHnsEnabled = true);
+                Assert.NotNull(account.PrimaryEndpoints.Dfs);
+            }
+        }
     }
 }
