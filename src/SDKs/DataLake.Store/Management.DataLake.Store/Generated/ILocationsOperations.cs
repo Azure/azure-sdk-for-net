@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
     {
         /// <summary>
         /// Gets subscription-level properties and limits for Data Lake Store
-        /// specified by Resource location.
+        /// specified by resource location.
         /// </summary>
         /// <param name='location'>
-        /// The Resource location without whitespace.
+        /// The resource location without whitespace.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -23,5 +23,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string ECP256 = "ECP256";
         public const string ECP384 = "ECP384";
         public const string PFS24 = "PFS24";
+        public const string PFS14 = "PFS14";
+        public const string PFSMM = "PFSMM";
     }
 }

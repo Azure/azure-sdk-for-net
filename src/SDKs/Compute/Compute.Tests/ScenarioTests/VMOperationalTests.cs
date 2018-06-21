@@ -107,7 +107,9 @@ namespace Compute.Tests
                             new RunCommandInputParameter("arg2","value2"),
                         }
                     };
-                    m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
+                    var result = m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
+                    //BUG: RunCommand does not return the result.
+                    //Assert.NotNull(result);
 
                     m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
@@ -122,15 +124,14 @@ namespace Compute.Tests
 
                     var captureResponse = m_CrpClient.VirtualMachines.Capture(rg1Name, vm1.Name, captureParams);
 
-                    Assert.NotNull(captureResponse.Output);
-                    string outputAsString = captureResponse.Output.ToString();
-                    Assert.Equal('{', outputAsString[0]);
-                    Assert.Contains(captureParams.DestinationContainerName.ToLowerInvariant(), outputAsString.ToLowerInvariant());
-                    Assert.Contains(captureParams.VhdPrefix.ToLowerInvariant(), outputAsString.ToLowerInvariant());
+                    Assert.NotNull(captureResponse);
+                    Assert.True(captureResponse.Resources.Count > 0);
+                    string resource = captureResponse.Resources[0].ToString();
+                    Assert.Contains(captureParams.DestinationContainerName.ToLowerInvariant(), resource.ToLowerInvariant());
+                    Assert.Contains(captureParams.VhdPrefix.ToLowerInvariant(), resource.ToLowerInvariant());
 
-                    Template template = JsonConvert.DeserializeObject<Template>(outputAsString);
-                    Assert.True(template.Resources.Count > 0);
-                    string imageUri = template.Resources[0].Properties.StorageProfile.OSDisk.Image.Uri;
+                    Resource template = JsonConvert.DeserializeObject<Resource>(resource);
+                    string imageUri = template.Properties.StorageProfile.OSDisk.Image.Uri;
                     Assert.False(string.IsNullOrEmpty(imageUri));
 
                     // Create 2nd VM from the captured image

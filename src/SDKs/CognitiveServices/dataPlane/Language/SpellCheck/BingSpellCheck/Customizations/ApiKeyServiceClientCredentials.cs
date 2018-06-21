@@ -1,4 +1,4 @@
-namespace Microsoft.Azure.CognitiveServices.SpellCheck
+namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
 {
     using System;
     using System.Net.Http;

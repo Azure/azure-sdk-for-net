@@ -35,11 +35,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// filter.</param>
         /// <param name="recoveryPlanName">The recovery plan filter.</param>
         /// <param name="vCenterName">The vCenter name filter.</param>
-        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string))
+        /// <param name="instanceType">The replication provider type.</param>
+        /// <param name="multiVmGroupCreateOption">Whether Multi VM group is
+        /// auto created or specified by user. Possible values include:
+        /// 'AutoCreated', 'UserSpecified'</param>
+        public ProtectedItemsQueryParameter(string sourceFabricName = default(string), string recoveryPlanName = default(string), string vCenterName = default(string), string instanceType = default(string), string multiVmGroupCreateOption = default(string))
         {
             SourceFabricName = sourceFabricName;
             RecoveryPlanName = recoveryPlanName;
             VCenterName = vCenterName;
+            InstanceType = instanceType;
+            MultiVmGroupCreateOption = multiVmGroupCreateOption;
             CustomInit();
         }
 
@@ -65,6 +71,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vCenterName")]
         public string VCenterName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the replication provider type.
+        /// </summary>
+        [JsonProperty(PropertyName = "instanceType")]
+        public string InstanceType { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether Multi VM group is auto created or specified by
+        /// user. Possible values include: 'AutoCreated', 'UserSpecified'
+        /// </summary>
+        [JsonProperty(PropertyName = "multiVmGroupCreateOption")]
+        public string MultiVmGroupCreateOption { get; set; }
 
     }
 }

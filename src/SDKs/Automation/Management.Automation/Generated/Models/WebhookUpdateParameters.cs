@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// job.</param>
         /// <param name="description">Gets or sets the description of the
         /// webhook.</param>
-        public WebhookUpdateParameters(string name, bool? isEnabled = default(bool?), string runOn = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), string description = default(string))
+        public WebhookUpdateParameters(string name = default(string), bool? isEnabled = default(bool?), string runOn = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), string description = default(string))
         {
             Name = name;
             IsEnabled = isEnabled;
@@ -89,18 +89,5 @@ namespace Microsoft.Azure.Management.Automation.Models
         [JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

@@ -1,7 +1,7 @@
     {
       "Name": "PoolSpecification",
       "ProtocolName": "Models.PoolSpecification",
-      "Comment": "The specification for a pool.",
+      "SummaryComment": "The specification for a pool.",
       "Properties": [
         {
           "Key": {

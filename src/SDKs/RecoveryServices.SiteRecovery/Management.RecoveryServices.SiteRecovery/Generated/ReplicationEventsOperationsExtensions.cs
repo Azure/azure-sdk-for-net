@@ -23,46 +23,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationEventsOperationsExtensions
     {
             /// <summary>
-            /// Get the details of an Azure Site recovery event.
-            /// </summary>
-            /// <remarks>
-            /// The operation to get the details of an Azure Site recovery event.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='eventName'>
-            /// The name of the Azure Site Recovery event.
-            /// </param>
-            public static EventModel Get(this IReplicationEventsOperations operations, string eventName)
-            {
-                return operations.GetAsync(eventName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the details of an Azure Site recovery event.
-            /// </summary>
-            /// <remarks>
-            /// The operation to get the details of an Azure Site recovery event.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='eventName'>
-            /// The name of the Azure Site Recovery event.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<EventModel> GetAsync(this IReplicationEventsOperations operations, string eventName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(eventName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets the list of Azure Site Recovery events.
             /// </summary>
             /// <remarks>
@@ -97,6 +57,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<IPage<EventModel>> ListAsync(this IReplicationEventsOperations operations, ODataQuery<EventQueryParameter> odataQuery = default(ODataQuery<EventQueryParameter>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the details of an Azure Site recovery event.
+            /// </summary>
+            /// <remarks>
+            /// The operation to get the details of an Azure Site recovery event.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='eventName'>
+            /// The name of the Azure Site Recovery event.
+            /// </param>
+            public static EventModel Get(this IReplicationEventsOperations operations, string eventName)
+            {
+                return operations.GetAsync(eventName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the details of an Azure Site recovery event.
+            /// </summary>
+            /// <remarks>
+            /// The operation to get the details of an Azure Site recovery event.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='eventName'>
+            /// The name of the Azure Site Recovery event.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EventModel> GetAsync(this IReplicationEventsOperations operations, string eventName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(eventName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

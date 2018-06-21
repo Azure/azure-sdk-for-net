@@ -29,7 +29,7 @@ namespace Monitor.Tests.BasicTests
             };
 
             RecordedDelegatingHandler handler = new RecordedDelegatingHandler(response);
-            var insightsClient = GetMonitorClient(handler);
+            var insightsClient = GetMonitorManagementClient(handler);
 
             var actualMetricDefinitions = insightsClient.MetricDefinitions.ListAsync(resourceUri: ResourceUri, cancellationToken: new CancellationToken()).Result;
 
@@ -47,7 +47,7 @@ namespace Monitor.Tests.BasicTests
             };
 
             RecordedDelegatingHandler handler = new RecordedDelegatingHandler(response);
-            var insightsClient = GetMonitorClient(handler);
+            var insightsClient = GetMonitorManagementClient(handler);
 
             var actualMetrics = insightsClient.Metrics.ListAsync(
                 resourceUri: ResourceUri,

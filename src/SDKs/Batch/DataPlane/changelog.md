@@ -1,4 +1,32 @@
-# Azure.Batch release notes
+# Microsoft.Azure.Batch release notes
+
+## Change in 8.1.2
+Rename Nuget package name from Azure.Batch to Microsoft.Azure.Batch
+
+# Prior to version 8.1.2, this package was named "Azure.Batch" on Nuget. The release notes below are for that package.
+
+## Changes in 8.1.2
+Add deprecation announcement to nuget package.
+
+## Changes in 8.1.1
+### Bug fixes
+ - Fixed bug where LeavingPool state was not correctly returned via the `ListPoolNodeCounts` method on `PoolOperations`.
+ - Clarified various confusing documentation.
+
+### REST API version
+This version of the Batch .NET client library targets version 2018-02-01.6.1 of the Azure Batch REST API.
+
+## Changes in 8.1.0
+### Features
+ - Added the ability to query pool node counts by state, via the new `ListPoolNodeCounts` method on `PoolOperations`.
+ - Added the ability to upload Azure Batch node agent logs from a particular node, via the `UploadComputeNodeBatchServiceLogs` method on `PoolOperations` and `ComputeNode`.
+   - This is intended for use in debugging by Microsoft support when there are problems on a node.
+
+### REST API version
+This version of the Batch .NET client library targets version 2018-02-01.6.1 of the Azure Batch REST API.
+
+### Import Note
+The package will be renamed to Microsoft.Azure.Batch in a future release.
 
 ## Changes in 8.0.1
 ### Bug fixes

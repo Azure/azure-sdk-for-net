@@ -11,6 +11,8 @@ using ContentModeratorTests.Helpers;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Test.HttpRecorder;
+using System.IO;
+using System.Text;
 
 namespace ContentModeratorTests
 {
@@ -65,10 +67,11 @@ namespace ContentModeratorTests
                     HttpMockServer.Initialize("TextModerator", "DetectLanguage");
                     wait(2);
                     TermListId = "";
-                    string textContent = "Ciao buongiorno stronzo";
+                    byte[] byteArray = Encoding.UTF8.GetBytes("Ciao buongiorno stronzo");
+                    MemoryStream stream = new MemoryStream(byteArray);
                     api = ContentModeratorAPI.DETECT_LANGUAGE;
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                    results = Constants.GetTextResponse(client, api, TermListId, textContent);
+                    results = Constants.GetTextResponse(client, api, TermListId, stream);
 
                     var detectLanguage = results.DetectLanguage;
                     Assert.NotNull(detectLanguage);
@@ -92,11 +95,11 @@ namespace ContentModeratorTests
                 using (MockContext context = MockContext.Start("TextModerator"))
                 {
                     HttpMockServer.Initialize("TextModerator", "ScreenText");
-                    TermListId = "";
-                    string textContent = "Ciao buongiorno stronzo sucks!";
+                    byte[] byteArray = Encoding.UTF8.GetBytes("crap 764-87-9887");
+                    MemoryStream stream = new MemoryStream(byteArray);
                     api = ContentModeratorAPI.SCREEN_TEXT;
                     client = Constants.GenerateClient(api, HttpMockServer.CreateInstance());
-                    results = Constants.GetTextResponse(client, api, TermListId, textContent);
+                    results = Constants.GetTextResponse(client, api, "", stream);
                     var screenText = results.ScreenText;
                     Assert.NotNull(screenText);
                     Assert.Equal(HttpStatusCode.OK, screenText.Response.StatusCode);

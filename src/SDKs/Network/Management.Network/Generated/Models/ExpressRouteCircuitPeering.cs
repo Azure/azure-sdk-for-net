@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,13 +35,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitPeering class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="peeringType">The PeeringType. Possible values are:
-        /// 'AzurePublicPeering', 'AzurePrivatePeering', and
-        /// 'MicrosoftPeering'. Possible values include: 'AzurePublicPeering',
-        /// 'AzurePrivatePeering', 'MicrosoftPeering'</param>
-        /// <param name="state">The state of peering. Possible values are:
-        /// 'Disabled' and 'Enabled'. Possible values include: 'Disabled',
-        /// 'Enabled'</param>
+        /// <param name="peeringType">The peering type. Possible values
+        /// include: 'AzurePublicPeering', 'AzurePrivatePeering',
+        /// 'MicrosoftPeering'</param>
+        /// <param name="state">The peering state. Possible values include:
+        /// 'Disabled', 'Enabled'</param>
         /// <param name="azureASN">The Azure ASN.</param>
         /// <param name="peerASN">The peer ASN.</param>
         /// <param name="primaryPeerAddressPrefix">The primary address
@@ -63,12 +63,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="ipv6PeeringConfig">The IPv6 peering
         /// configuration.</param>
+        /// <param name="connections">The list of circuit connections
+        /// associated with Azure Private Peering for this circuit.</param>
         /// <param name="name">Gets name of the resource that is unique within
         /// a resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), long? peerASN = default(long?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), RouteFilter routeFilter = default(RouteFilter), Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default(Ipv6ExpressRouteCircuitPeeringConfig), string name = default(string), string etag = default(string))
+        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), long? peerASN = default(long?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), RouteFilter routeFilter = default(RouteFilter), Ipv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default(Ipv6ExpressRouteCircuitPeeringConfig), IList<ExpressRouteCircuitConnection> connections = default(IList<ExpressRouteCircuitConnection>), string name = default(string), string etag = default(string))
             : base(id)
         {
             PeeringType = peeringType;
@@ -88,6 +90,7 @@ namespace Microsoft.Azure.Management.Network.Models
             LastModifiedBy = lastModifiedBy;
             RouteFilter = routeFilter;
             Ipv6PeeringConfig = ipv6PeeringConfig;
+            Connections = connections;
             Name = name;
             Etag = etag;
             CustomInit();
@@ -99,17 +102,15 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the PeeringType. Possible values are:
-        /// 'AzurePublicPeering', 'AzurePrivatePeering', and
-        /// 'MicrosoftPeering'. Possible values include: 'AzurePublicPeering',
-        /// 'AzurePrivatePeering', 'MicrosoftPeering'
+        /// Gets or sets the peering type. Possible values include:
+        /// 'AzurePublicPeering', 'AzurePrivatePeering', 'MicrosoftPeering'
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringType")]
         public string PeeringType { get; set; }
 
         /// <summary>
-        /// Gets or sets the state of peering. Possible values are: 'Disabled'
-        /// and 'Enabled'. Possible values include: 'Disabled', 'Enabled'
+        /// Gets or sets the peering state. Possible values include:
+        /// 'Disabled', 'Enabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public string State { get; set; }
@@ -205,6 +206,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipv6PeeringConfig")]
         public Ipv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of circuit connections associated with Azure
+        /// Private Peering for this circuit.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.connections")]
+        public IList<ExpressRouteCircuitConnection> Connections { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.

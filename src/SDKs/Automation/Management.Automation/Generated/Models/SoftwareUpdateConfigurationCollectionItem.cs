@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="provisioningState">Provisioning state for the software
         /// update configuration, which only appears in the response.</param>
         /// <param name="nextRun">ext run time of the update.</param>
-        public SoftwareUpdateConfigurationCollectionItem(string name = default(string), string id = default(string), CollectionItemUpdateConfiguration updateConfiguration = default(CollectionItemUpdateConfiguration), string frequency = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string provisioningState = default(string), System.DateTime? nextRun = default(System.DateTime?))
+        public SoftwareUpdateConfigurationCollectionItem(string name = default(string), string id = default(string), CollectionItemUpdateConfiguration updateConfiguration = default(CollectionItemUpdateConfiguration), string frequency = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string provisioningState = default(string), System.DateTimeOffset? nextRun = default(System.DateTimeOffset?))
         {
             Name = name;
             Id = id;
@@ -102,21 +102,21 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the start time of the update.
         /// </summary>
         [JsonProperty(PropertyName = "properties.startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTimeOffset StartTime { get; set; }
 
         /// <summary>
         /// Gets creation time of the software update configuration, which only
         /// appears in the response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets last time software update configuration was modified, which
         /// only appears in the response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets provisioning state for the software update configuration,
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets ext run time of the update.
         /// </summary>
         [JsonProperty(PropertyName = "properties.nextRun")]
-        public System.DateTime? NextRun { get; set; }
+        public System.DateTimeOffset? NextRun { get; set; }
 
     }
 }

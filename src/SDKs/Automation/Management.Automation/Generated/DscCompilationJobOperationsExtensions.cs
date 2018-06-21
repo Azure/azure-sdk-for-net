@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -28,18 +29,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            /// <param name='compilationJobId'>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='compilationJobName'>
             /// The the DSC configuration Id.
             /// </param>
             /// <param name='parameters'>
             /// The parameters supplied to the create compilation job operation.
             /// </param>
-            public static DscCompilationJob Create(this IDscCompilationJobOperations operations, string automationAccountName, System.Guid compilationJobId, DscCompilationJobCreateParameters parameters)
+            public static DscCompilationJob Create(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, string compilationJobName, DscCompilationJobCreateParameters parameters)
             {
-                return operations.CreateAsync(automationAccountName, compilationJobId, parameters).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, automationAccountName, compilationJobName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,10 +53,13 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            /// <param name='compilationJobId'>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='compilationJobName'>
             /// The the DSC configuration Id.
             /// </param>
             /// <param name='parameters'>
@@ -61,9 +68,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DscCompilationJob> CreateAsync(this IDscCompilationJobOperations operations, string automationAccountName, System.Guid compilationJobId, DscCompilationJobCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DscCompilationJob> CreateAsync(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, string compilationJobName, DscCompilationJobCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(automationAccountName, compilationJobId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, automationAccountName, compilationJobName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -76,15 +83,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
-            /// <param name='compilationJobId'>
-            /// The Dsc configuration compilation job id.
+            /// <param name='compilationJobName'>
+            /// The the DSC configuration Id.
             /// </param>
-            public static DscCompilationJob Get(this IDscCompilationJobOperations operations, string automationAccountName, System.Guid compilationJobId)
+            public static DscCompilationJob Get(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, string compilationJobName)
             {
-                return operations.GetAsync(automationAccountName, compilationJobId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, compilationJobName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -94,18 +104,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            /// <param name='compilationJobId'>
-            /// The Dsc configuration compilation job id.
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='compilationJobName'>
+            /// The the DSC configuration Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DscCompilationJob> GetAsync(this IDscCompilationJobOperations operations, string automationAccountName, System.Guid compilationJobId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DscCompilationJob> GetAsync(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, string compilationJobName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, compilationJobId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, compilationJobName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -118,15 +131,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<DscCompilationJob> ListByAutomationAccount(this IDscCompilationJobOperations operations, string automationAccountName, string filter = default(string))
+            public static IPage<DscCompilationJob> ListByAutomationAccount(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, ODataQuery<DscCompilationJob> odataQuery = default(ODataQuery<DscCompilationJob>))
             {
-                return operations.ListByAutomationAccountAsync(automationAccountName, filter).GetAwaiter().GetResult();
+                return operations.ListByAutomationAccountAsync(resourceGroupName, automationAccountName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -136,18 +152,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DscCompilationJob>> ListByAutomationAccountAsync(this IDscCompilationJobOperations operations, string automationAccountName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DscCompilationJob>> ListByAutomationAccountAsync(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, ODataQuery<DscCompilationJob> odataQuery = default(ODataQuery<DscCompilationJob>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(automationAccountName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(resourceGroupName, automationAccountName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -160,8 +179,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobId'>
             /// The job id.
@@ -169,9 +191,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='jobStreamId'>
             /// The job stream id.
             /// </param>
-            public static JobStream GetStream(this IDscCompilationJobOperations operations, string automationAccountName, System.Guid jobId, string jobStreamId)
+            public static JobStream GetStream(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobId, string jobStreamId)
             {
-                return operations.GetStreamAsync(automationAccountName, jobId, jobStreamId).GetAwaiter().GetResult();
+                return operations.GetStreamAsync(resourceGroupName, automationAccountName, jobId, jobStreamId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -181,8 +203,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='jobId'>
             /// The job id.
@@ -193,9 +218,63 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobStream> GetStreamAsync(this IDscCompilationJobOperations operations, string automationAccountName, System.Guid jobId, string jobStreamId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobStream> GetStreamAsync(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, System.Guid jobId, string jobStreamId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetStreamWithHttpMessagesAsync(automationAccountName, jobId, jobStreamId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetStreamWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobId, jobStreamId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates the Dsc compilation job of the configuration.
+            /// <see href="http://aka.ms/azureautomationsdk/dscconfigurationcompilejoboperations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='compilationJobName'>
+            /// The the DSC configuration Id.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters supplied to the create compilation job operation.
+            /// </param>
+            public static DscCompilationJob BeginCreate(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, string compilationJobName, DscCompilationJobCreateParameters parameters)
+            {
+                return operations.BeginCreateAsync(resourceGroupName, automationAccountName, compilationJobName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates the Dsc compilation job of the configuration.
+            /// <see href="http://aka.ms/azureautomationsdk/dscconfigurationcompilejoboperations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='compilationJobName'>
+            /// The the DSC configuration Id.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters supplied to the create compilation job operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DscCompilationJob> BeginCreateAsync(this IDscCompilationJobOperations operations, string resourceGroupName, string automationAccountName, string compilationJobName, DscCompilationJobCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, automationAccountName, compilationJobName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
 
 namespace Monitor.Tests.Scenarios
 {

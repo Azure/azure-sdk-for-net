@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public static class AgentRegistrationKeyName
     {
-        public const string Primary = "Primary";
-        public const string Secondary = "Secondary";
+        public const string Primary = "primary";
+        public const string Secondary = "secondary";
     }
 }

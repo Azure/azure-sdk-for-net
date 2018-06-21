@@ -84,8 +84,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// the Azure Blob file system will be mounted.
         /// </summary>
         /// <remarks>
-        /// Note that all blob file systems will be mounted under
-        /// $AZ_BATCHAI_MOUNT_ROOT location.
+        /// Note that all cluster level blob file systems will be mounted under
+        /// $AZ_BATCHAI_MOUNT_ROOT location and all job level blob file systems
+        /// will be mounted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }

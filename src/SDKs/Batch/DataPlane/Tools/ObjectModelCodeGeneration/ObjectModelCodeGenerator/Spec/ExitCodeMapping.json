@@ -1,7 +1,7 @@
     {
       "Name": "ExitCodeMapping",
       "ProtocolName": "Models.ExitCodeMapping",
-      "Comment": "A process exit code and how the Batch service should respond if a task exits with that exit code.",
+      "SummaryComment": "A process exit code and how the Batch service should respond if a task exits with that exit code.",
       "IsUsedInCollections": true,
       "Properties": [
         {

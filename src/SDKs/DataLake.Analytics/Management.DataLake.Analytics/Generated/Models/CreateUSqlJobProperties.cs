@@ -30,12 +30,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the CreateUSqlJobProperties class.
         /// </summary>
-        /// <param name="script">the script to run. Please note that the
+        /// <param name="script">The script to run. Please note that the
         /// maximum script size is 3 MB.</param>
-        /// <param name="runtimeVersion">the runtime version of the Data Lake
+        /// <param name="runtimeVersion">The runtime version of the Data Lake
         /// Analytics engine to use for the specific type of job being
         /// run.</param>
-        /// <param name="compileMode">the specific compilation mode for the job
+        /// <param name="compileMode">The specific compilation mode for the job
         /// used during execution. If this is not specified during submission,
         /// the server will determine the optimal compilation mode. Possible
         /// values include: 'Semantic', 'Full', 'SingleBox'</param>

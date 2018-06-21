@@ -1,7 +1,7 @@
     {
       "Name": "AutoPoolSpecification",
       "ProtocolName": "Models.AutoPoolSpecification",
-      "Comment": "Specifies characteristics for a temporary 'auto pool'. The Batch service will create this auto pool, run all the tasks for the job on it, and by default delete the pool once the job has completed.",
+      "SummaryComment": "Specifies characteristics for a temporary 'auto pool'. The Batch service will create this auto pool, run all the tasks for the job on it, and by default delete the pool once the job has completed.",
       "Properties": [
         {
           "Key": {

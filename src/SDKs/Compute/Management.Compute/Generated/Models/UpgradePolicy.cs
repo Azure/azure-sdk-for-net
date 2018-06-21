@@ -43,11 +43,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// automatically be applied to scale set instances in a rolling
         /// fashion when a newer version of the image becomes
         /// available.</param>
-        public UpgradePolicy(UpgradeMode? mode = default(UpgradeMode?), RollingUpgradePolicy rollingUpgradePolicy = default(RollingUpgradePolicy), bool? automaticOSUpgrade = default(bool?))
+        /// <param name="autoOSUpgradePolicy">Configuration parameters used for
+        /// performing automatic OS Upgrade.</param>
+        public UpgradePolicy(UpgradeMode? mode = default(UpgradeMode?), RollingUpgradePolicy rollingUpgradePolicy = default(RollingUpgradePolicy), bool? automaticOSUpgrade = default(bool?), AutoOSUpgradePolicy autoOSUpgradePolicy = default(AutoOSUpgradePolicy))
         {
             Mode = mode;
             RollingUpgradePolicy = rollingUpgradePolicy;
             AutomaticOSUpgrade = automaticOSUpgrade;
+            AutoOSUpgradePolicy = autoOSUpgradePolicy;
             CustomInit();
         }
 
@@ -83,6 +86,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "automaticOSUpgrade")]
         public bool? AutomaticOSUpgrade { get; set; }
+
+        /// <summary>
+        /// Gets or sets configuration parameters used for performing automatic
+        /// OS Upgrade.
+        /// </summary>
+        [JsonProperty(PropertyName = "autoOSUpgradePolicy")]
+        public AutoOSUpgradePolicy AutoOSUpgradePolicy { get; set; }
 
         /// <summary>
         /// Validate the object.

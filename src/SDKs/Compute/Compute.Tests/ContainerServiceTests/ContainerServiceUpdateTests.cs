@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+using System.Linq;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Linq;
 using Xunit;
 
 namespace Compute.Tests
@@ -25,11 +26,9 @@ namespace Compute.Tests
         [Fact]
         public void TestContainerServiceUpdateOperations()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                EnsureClientsInitialized(context);
-                m_location = "australiasoutheast"; // TODO: For now, APIs nly work in this region under BU endpoint
-                
                 // Create resource group
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var csName = TestUtilities.GenerateName(ContainerServiceNamePrefix);
@@ -37,6 +36,9 @@ namespace Compute.Tests
                 var agentPoolDnsPrefixName = TestUtilities.GenerateName(AgentPoolProfileDnsPrefix);
                 try
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "australiasoutheast");
+                    EnsureClientsInitialized(context);
+
                     ContainerService inputContainerService;
                     var containerService = CreateContainerService_NoAsyncTracking(
                         rgName,
@@ -57,13 +59,18 @@ namespace Compute.Tests
                     ValidateContainerService(inputContainerService, containerService);
 
                     var listResult = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
+#if NET46
+                    Assert.True(listResult.Any(a => a.Name == containerService.Name));
+#else
                     Assert.Contains(listResult, a => a.Name == containerService.Name);
+#endif
                     m_CrpClient.ContainerServices.Delete(rgName, containerService.Name);
                     var listResultAfterDeletion = m_CrpClient.ContainerServices.ListByResourceGroup(rgName);
                     Assert.True(!listResultAfterDeletion.Any());
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     //of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rgName);

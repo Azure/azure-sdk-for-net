@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// the detailed information for a vertex.
+    /// The detailed information for a vertex.
     /// </summary>
     public partial class JobStatisticsVertex
     {
@@ -29,13 +29,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobStatisticsVertex class.
         /// </summary>
-        /// <param name="name">the name of the vertex.</param>
-        /// <param name="vertexId">the id of the vertex.</param>
-        /// <param name="executionTime">the amount of execution time of the
+        /// <param name="name">The name of the vertex.</param>
+        /// <param name="vertexId">The id of the vertex.</param>
+        /// <param name="executionTime">The amount of execution time of the
         /// vertex.</param>
-        /// <param name="dataRead">the amount of data read of the vertex, in
+        /// <param name="dataRead">The amount of data read of the vertex, in
         /// bytes.</param>
-        /// <param name="peakMemUsage">the amount of peak memory usage of the
+        /// <param name="peakMemUsage">The amount of peak memory usage of the
         /// vertex, in bytes.</param>
         public JobStatisticsVertex(string name = default(string), System.Guid? vertexId = default(System.Guid?), System.TimeSpan? executionTime = default(System.TimeSpan?), long? dataRead = default(long?), long? peakMemUsage = default(long?))
         {

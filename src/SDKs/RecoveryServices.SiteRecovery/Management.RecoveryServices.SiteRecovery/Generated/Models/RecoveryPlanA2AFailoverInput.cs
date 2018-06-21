@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -37,10 +38,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'LatestCrashConsistent', 'LatestProcessed'</param>
         /// <param name="cloudServiceCreationOption">A value indicating whether
         /// to use recovery cloud service for TFO or not.</param>
-        public RecoveryPlanA2AFailoverInput(A2ARpRecoveryPointType recoveryPointType, string cloudServiceCreationOption = default(string))
+        /// <param name="multiVmSyncPointOption">A value indicating whether
+        /// multi VM sync enabled VMs should use multi VM sync points for
+        /// failover. Possible values include: 'UseMultiVmSyncRecoveryPoint',
+        /// 'UsePerVmRecoveryPoint'</param>
+        public RecoveryPlanA2AFailoverInput(string recoveryPointType, string cloudServiceCreationOption = default(string), string multiVmSyncPointOption = default(string))
         {
             RecoveryPointType = recoveryPointType;
             CloudServiceCreationOption = cloudServiceCreationOption;
+            MultiVmSyncPointOption = multiVmSyncPointOption;
             CustomInit();
         }
 
@@ -55,7 +61,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'LatestProcessed'
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointType")]
-        public A2ARpRecoveryPointType RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use recovery cloud
@@ -65,13 +71,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string CloudServiceCreationOption { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether multi VM sync enabled VMs
+        /// should use multi VM sync points for failover. Possible values
+        /// include: 'UseMultiVmSyncRecoveryPoint', 'UsePerVmRecoveryPoint'
+        /// </summary>
+        [JsonProperty(PropertyName = "multiVmSyncPointOption")]
+        public string MultiVmSyncPointOption { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (RecoveryPointType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RecoveryPointType");
+            }
         }
     }
 }

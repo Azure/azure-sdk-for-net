@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <summary>
         /// Deletes a role assignment.
         /// </summary>
-        /// <param name='roleAssignmentId'>
+        /// <param name='roleId'>
         /// The ID of the role assignment to delete.
         /// </param>
         /// <param name='customHeaders'>
@@ -192,11 +192,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RoleAssignment>> DeleteByIdWithHttpMessagesAsync(string roleAssignmentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RoleAssignment>> DeleteByIdWithHttpMessagesAsync(string roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a role assignment by ID.
         /// </summary>
-        /// <param name='roleAssignmentId'>
+        /// <param name='roleId'>
         /// The ID of the role assignment to create.
         /// </param>
         /// <param name='parameters'>
@@ -217,11 +217,11 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RoleAssignment>> CreateByIdWithHttpMessagesAsync(string roleAssignmentId, RoleAssignmentCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RoleAssignment>> CreateByIdWithHttpMessagesAsync(string roleId, RoleAssignmentCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a role assignment by ID.
         /// </summary>
-        /// <param name='roleAssignmentId'>
+        /// <param name='roleId'>
         /// The ID of the role assignment to get.
         /// </param>
         /// <param name='customHeaders'>
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Authorization
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RoleAssignment>> GetByIdWithHttpMessagesAsync(string roleAssignmentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RoleAssignment>> GetByIdWithHttpMessagesAsync(string roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all role assignments for the subscription.
         /// </summary>

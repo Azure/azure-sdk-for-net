@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// An available operation for Data Lake Analytics
+    /// An available operation for Data Lake Analytics.
     /// </summary>
     public partial class Operation
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">the name of the operation.</param>
-        /// <param name="display">the display information for the
+        /// <param name="name">The name of the operation.</param>
+        /// <param name="display">The display information for the
         /// operation.</param>
-        /// <param name="origin">the intended executor of the operation.
+        /// <param name="origin">The intended executor of the operation.
         /// Possible values include: 'user', 'system', 'user,system'</param>
         public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), string origin = default(string))
         {
@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the display information for the operation.
+        /// Gets the display information for the operation.
         /// </summary>
         [JsonProperty(PropertyName = "display")]
-        public OperationDisplay Display { get; set; }
+        public OperationDisplay Display { get; private set; }
 
         /// <summary>
         /// Gets the intended executor of the operation. Possible values

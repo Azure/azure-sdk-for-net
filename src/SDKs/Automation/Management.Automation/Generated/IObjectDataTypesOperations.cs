@@ -28,6 +28,9 @@ namespace Microsoft.Azure.Management.Automation
         /// name.
         /// <see href="http://aka.ms/azureautomationsdk/objectdatatypeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -52,12 +55,15 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<TypeField>>> ListFieldsByModuleAndTypeWithHttpMessagesAsync(string automationAccountName, string moduleName, string typeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<TypeField>>> ListFieldsByModuleAndTypeWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string moduleName, string typeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of fields of a given type across all accessible
         /// modules.
         /// <see href="http://aka.ms/azureautomationsdk/objectdatatypeoperations" />
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
         /// <param name='automationAccountName'>
         /// The automation account name.
         /// </param>
@@ -79,6 +85,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<TypeField>>> ListFieldsByTypeWithHttpMessagesAsync(string automationAccountName, string typeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<TypeField>>> ListFieldsByTypeWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string typeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
     /// </summary>
     public static class RoutingSource
     {
+        public const string Invalid = "Invalid";
         public const string DeviceMessages = "DeviceMessages";
         public const string TwinChangeEvents = "TwinChangeEvents";
         public const string DeviceLifecycleEvents = "DeviceLifecycleEvents";

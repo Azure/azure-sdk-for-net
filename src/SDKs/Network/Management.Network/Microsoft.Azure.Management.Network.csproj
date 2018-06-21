@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
 	<!-- Please do not move/edit code below this line -->
@@ -14,6 +15,14 @@
 			1) Added IPTags for Public IP;Updated LB InboundNatPool API
 			2) Removed extraneous tags field from RouteFilterRule
         ]]></PackageReleaseNotes>
+		<Version>19.0.2-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<PackageReleaseNotes>
+		<![CDATA[
+			- Expose new SKUs for VMSS VPN and ER gateways
+			- Add optional traffic analytics config fields to network watcher
+			- Remove two VirtualNetworkGateways' methods that are not in production
+		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

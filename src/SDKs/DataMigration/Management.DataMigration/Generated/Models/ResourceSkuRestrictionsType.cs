@@ -10,45 +10,12 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ResourceSkuRestrictionsType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResourceSkuRestrictionsType
+    public static class ResourceSkuRestrictionsType
     {
-        [EnumMember(Value = "location")]
-        Location
-    }
-    internal static class ResourceSkuRestrictionsTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ResourceSkuRestrictionsType? value)
-        {
-            return value == null ? null : ((ResourceSkuRestrictionsType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ResourceSkuRestrictionsType value)
-        {
-            switch( value )
-            {
-                case ResourceSkuRestrictionsType.Location:
-                    return "location";
-            }
-            return null;
-        }
-
-        internal static ResourceSkuRestrictionsType? ParseResourceSkuRestrictionsType(this string value)
-        {
-            switch( value )
-            {
-                case "location":
-                    return ResourceSkuRestrictionsType.Location;
-            }
-            return null;
-        }
+        public const string Location = "location";
     }
 }

@@ -10,18 +10,13 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Result of image analysis using a specific domain model including
     /// additional metadata.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class DomainModelResults
     {
         /// <summary>
@@ -35,13 +30,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the DomainModelResults class.
         /// </summary>
-        /// <param name="celebrities">An array of possible celebritied
-        /// identified in the image.</param>
+        /// <param name="result">Model-specific response</param>
         /// <param name="requestId">Id of the REST API request.</param>
-        /// <param name="metadata">Additional image metadata</param>
-        public DomainModelResults(IList<CelebritiesModel> celebrities = default(IList<CelebritiesModel>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        public DomainModelResults(object result = default(object), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
-            Celebrities = celebrities;
+            Result = result;
             RequestId = requestId;
             Metadata = metadata;
             CustomInit();
@@ -53,11 +46,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an array of possible celebritied identified in the
-        /// image.
+        /// Gets or sets model-specific response
         /// </summary>
-        [JsonProperty(PropertyName = "result.celebrities")]
-        public IList<CelebritiesModel> Celebrities { get; set; }
+        [JsonProperty(PropertyName = "result")]
+        public object Result { get; set; }
 
         /// <summary>
         /// Gets or sets id of the REST API request.
@@ -66,7 +58,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string RequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets additional image metadata
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public ImageMetadata Metadata { get; set; }

@@ -59,7 +59,7 @@ namespace Compute.Tests
                         }
                         else
                         {
-                            m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "").ToLower();
+                            m_location = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION").Replace(" ", "");
                         }
                     }
                 }
@@ -100,7 +100,7 @@ namespace Compute.Tests
                 Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
-                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.04");
+                m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "17.10");
             }
             return m_linuxImageReference;
         }
@@ -210,7 +210,7 @@ namespace Compute.Tests
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
             string vmSize = VirtualMachineSizeTypes.StandardA0,
-            StorageAccountTypes storageAccountType = StorageAccountTypes.StandardLRS,
+            string storageAccountType = StorageAccountTypes.StandardLRS,
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null)
         {
@@ -731,7 +731,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0, StorageAccountTypes storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
+            string vmSize = VirtualMachineSizeTypes.StandardA0, string storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
@@ -984,7 +984,11 @@ namespace Compute.Tests
         private void ValidateVMInstanceView(VirtualMachineInstanceView vmInstanceView, bool hasManagedDisks = false, string osDiskName = null,
             string expectedComputerName = null, string expectedOSName = null, string expectedOSVersion = null)
         {
+#if NET46
+            Assert.True(vmInstanceView.Statuses.Any(s => !string.IsNullOrEmpty(s.Code)));
+#else
             Assert.Contains(vmInstanceView.Statuses, s => !string.IsNullOrEmpty(s.Code));
+#endif
 
             if (!hasManagedDisks)
             {
@@ -993,7 +997,11 @@ namespace Compute.Tests
 
                 if (osDiskName != null)
                 {
+#if NET46
+                    Assert.True(vmInstanceView.Disks.Any(x => x.Name == osDiskName));
+#else
                     Assert.Contains(vmInstanceView.Disks, x => x.Name == osDiskName);
+#endif
                 }
 
                 DiskInstanceView diskInstanceView = vmInstanceView.Disks.First();

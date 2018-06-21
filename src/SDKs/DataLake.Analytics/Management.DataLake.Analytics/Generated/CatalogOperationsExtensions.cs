@@ -80,6 +80,58 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Gets the specified secret in the specified database. This is deprecated and
+            /// will be removed in the next release. Please use GetCredential instead.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the secret.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret to get
+            /// </param>
+            [System.Obsolete()]
+            public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
+            {
+                return operations.GetSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified secret in the specified database. This is deprecated and
+            /// will be removed in the next release. Please use GetCredential instead.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the secret.
+            /// </param>
+            /// <param name='secretName'>
+            /// The name of the secret to get
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            [System.Obsolete()]
+            public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Modifies the specified secret for use with external data sources in the
             /// specified database. This is deprecated and will be removed in the next
             /// release. Please use UpdateCredential instead.
@@ -188,58 +240,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
-            /// Gets the specified secret in the specified database. This is deprecated and
-            /// will be removed in the next release. Please use GetCredential instead.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the secret.
-            /// </param>
-            /// <param name='secretName'>
-            /// The name of the secret to get
-            /// </param>
-            [System.Obsolete()]
-            public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
-            {
-                return operations.GetSecretAsync(accountName, databaseName, secretName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the specified secret in the specified database. This is deprecated and
-            /// will be removed in the next release. Please use GetCredential instead.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the secret.
-            /// </param>
-            /// <param name='secretName'>
-            /// The name of the secret to get
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            [System.Obsolete()]
-            public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes all secrets in the specified database. This is deprecated and will
             /// be removed in the next release. In the future, please only drop individual
             /// credentials using DeleteCredential
@@ -339,6 +339,54 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task CreateCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CreateCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Retrieves the specified credential from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the schema.
+            /// </param>
+            /// <param name='credentialName'>
+            /// The name of the credential.
+            /// </param>
+            public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName)
+            {
+                return operations.GetCredentialAsync(accountName, databaseName, credentialName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the specified credential from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the schema.
+            /// </param>
+            /// <param name='credentialName'>
+            /// The name of the credential.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -455,54 +503,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task DeleteCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, DataLakeAnalyticsCatalogCredentialDeleteParameters parameters = default(DataLakeAnalyticsCatalogCredentialDeleteParameters), bool? cascade = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, parameters, cascade, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Retrieves the specified credential from the Data Lake Analytics catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the schema.
-            /// </param>
-            /// <param name='credentialName'>
-            /// The name of the credential.
-            /// </param>
-            public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName)
-            {
-                return operations.GetCredentialAsync(accountName, databaseName, credentialName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves the specified credential from the Data Lake Analytics catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database containing the schema.
-            /// </param>
-            /// <param name='credentialName'>
-            /// The name of the credential.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>
@@ -864,6 +864,84 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<USqlTable> GetTableAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTableWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table fragments.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the table fragments.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the table fragments.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            public static IPage<USqlTableFragment> ListTableFragments(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableFragment> odataQuery = default(ODataQuery<USqlTableFragment>), string select = default(string), bool? count = default(bool?))
+            {
+                return operations.ListTableFragmentsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table fragments.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the table fragments.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the table fragments.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='select'>
+            /// OData Select statement. Limits the properties on each entry to just those
+            /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
+            /// </param>
+            /// <param name='count'>
+            /// The Boolean value of true or false to request a count of the matching
+            /// resources included with the resources in the response, e.g.
+            /// Categories?$count=true. Optional.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableFragment>> ListTableFragmentsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableFragment> odataQuery = default(ODataQuery<USqlTableFragment>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableFragmentsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1548,6 +1626,82 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Retrieves a preview set of rows in given partition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the partition.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the partition.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the partition.
+            /// </param>
+            /// <param name='partitionName'>
+            /// The name of the table partition.
+            /// </param>
+            /// <param name='maxRows'>
+            /// The maximum number of preview rows to be retrieved.Rows returned may be
+            /// less than or equal to this number depending on row sizes and number of rows
+            /// in the partition.
+            /// </param>
+            /// <param name='maxColumns'>
+            /// The maximum number of columns to be retrieved.
+            /// </param>
+            public static USqlTablePreview PreviewTablePartition(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName, long? maxRows = default(long?), long? maxColumns = default(long?))
+            {
+                return operations.PreviewTablePartitionAsync(accountName, databaseName, schemaName, tableName, partitionName, maxRows, maxColumns).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a preview set of rows in given partition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the partition.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the partition.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table containing the partition.
+            /// </param>
+            /// <param name='partitionName'>
+            /// The name of the table partition.
+            /// </param>
+            /// <param name='maxRows'>
+            /// The maximum number of preview rows to be retrieved.Rows returned may be
+            /// less than or equal to this number depending on row sizes and number of rows
+            /// in the partition.
+            /// </param>
+            /// <param name='maxColumns'>
+            /// The maximum number of columns to be retrieved.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<USqlTablePreview> PreviewTablePartitionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName, long? maxRows = default(long?), long? maxColumns = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PreviewTablePartitionWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, partitionName, maxRows, maxColumns, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves the specified table partition from the Data Lake Analytics
             /// catalog.
             /// </summary>
@@ -1604,6 +1758,76 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<USqlTablePartition> GetTablePartitionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTablePartitionWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, partitionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves a preview set of rows in given table.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the table.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='maxRows'>
+            /// The maximum number of preview rows to be retrieved. Rows returned may be
+            /// less than or equal to this number depending on row sizes and number of rows
+            /// in the table.
+            /// </param>
+            /// <param name='maxColumns'>
+            /// The maximum number of columns to be retrieved.
+            /// </param>
+            public static USqlTablePreview PreviewTable(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, long? maxRows = default(long?), long? maxColumns = default(long?))
+            {
+                return operations.PreviewTableAsync(accountName, databaseName, schemaName, tableName, maxRows, maxColumns).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a preview set of rows in given table.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database containing the table.
+            /// </param>
+            /// <param name='schemaName'>
+            /// The name of the schema containing the table.
+            /// </param>
+            /// <param name='tableName'>
+            /// The name of the table.
+            /// </param>
+            /// <param name='maxRows'>
+            /// The maximum number of preview rows to be retrieved. Rows returned may be
+            /// less than or equal to this number depending on row sizes and number of rows
+            /// in the table.
+            /// </param>
+            /// <param name='maxColumns'>
+            /// The maximum number of columns to be retrieved.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<USqlTablePreview> PreviewTableAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, long? maxRows = default(long?), long? maxColumns = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PreviewTableWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, maxRows, maxColumns, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -2431,7 +2655,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static AclList ListAclsByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
+            public static IPage<Acl> ListAclsByDatabase(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
             {
                 return operations.ListAclsByDatabaseAsync(accountName, databaseName, odataQuery, select, count).GetAwaiter().GetResult();
             }
@@ -2465,7 +2689,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AclList> ListAclsByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Acl>> ListAclsByDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAclsByDatabaseWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2496,7 +2720,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static AclList ListAcls(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
+            public static IPage<Acl> ListAcls(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?))
             {
                 return operations.ListAclsAsync(accountName, odataQuery, select, count).GetAwaiter().GetResult();
             }
@@ -2527,7 +2751,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AclList> ListAclsAsync(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Acl>> ListAclsAsync(this ICatalogOperations operations, string accountName, ODataQuery<Acl> odataQuery = default(ODataQuery<Acl>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAclsWithHttpMessagesAsync(accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2638,6 +2862,49 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Grants an access control list (ACL) entry to the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create or update an access control list (ACL) entry
+            /// for a Data Lake Analytics catalog.
+            /// </param>
+            public static void GrantAcl(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters)
+            {
+                operations.GrantAclAsync(accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Grants an access control list (ACL) entry to the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create or update an access control list (ACL) entry
+            /// for a Data Lake Analytics catalog.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task GrantAclAsync(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.GrantAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Grants an access control list (ACL) entry to the database from the Data
             /// Lake Analytics catalog.
             /// </summary>
@@ -2687,6 +2954,49 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             }
 
             /// <summary>
+            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to delete an access control list (ACL) entry from a
+            /// Data Lake Analytics catalog.
+            /// </param>
+            public static void RevokeAcl(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters)
+            {
+                operations.RevokeAclAsync(accountName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
+            /// catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Analytics account upon which to execute catalog
+            /// operations.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to delete an access control list (ACL) entry from a
+            /// Data Lake Analytics catalog.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RevokeAclAsync(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RevokeAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Revokes an access control list (ACL) entry for the database from the Data
             /// Lake Analytics catalog.
             /// </summary>
@@ -2733,92 +3043,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task RevokeAclFromDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, AclDeleteParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RevokeAclFromDatabaseWithHttpMessagesAsync(accountName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Grants an access control list (ACL) entry to the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update an access control list (ACL) entry
-            /// for a Data Lake Analytics catalog.
-            /// </param>
-            public static void GrantAcl(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters)
-            {
-                operations.GrantAclAsync(accountName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Grants an access control list (ACL) entry to the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create or update an access control list (ACL) entry
-            /// for a Data Lake Analytics catalog.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task GrantAclAsync(this ICatalogOperations operations, string accountName, AclCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.GrantAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to delete an access control list (ACL) entry from a
-            /// Data Lake Analytics catalog.
-            /// </param>
-            public static void RevokeAcl(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters)
-            {
-                operations.RevokeAclAsync(accountName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Revokes an access control list (ACL) entry from the Data Lake Analytics
-            /// catalog.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account upon which to execute catalog
-            /// operations.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to delete an access control list (ACL) entry from a
-            /// Data Lake Analytics catalog.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RevokeAclAsync(this ICatalogOperations operations, string accountName, AclDeleteParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RevokeAclWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -2920,6 +3144,40 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlProcedure>> ListProceduresNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListProceduresNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<USqlTableFragment> ListTableFragmentsNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListTableFragmentsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of table fragments from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<USqlTableFragment>> ListTableFragmentsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTableFragmentsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -3448,6 +3706,78 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task<IPage<USqlView>> ListViewsByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListViewsByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the database
+            /// from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Acl> ListAclsByDatabaseNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListAclsByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the database
+            /// from the Data Lake Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Acl>> ListAclsByDatabaseNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAclsByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Acl> ListAclsNext(this ICatalogOperations operations, string nextPageLink)
+            {
+                return operations.ListAclsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves the list of access control list (ACL) entries for the Data Lake
+            /// Analytics catalog.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Acl>> ListAclsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAclsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

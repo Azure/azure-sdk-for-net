@@ -1,0 +1,76 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.DataBox/operations?api-version=2018-01-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTgtMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e6f5d4d4-7c1a-405b-941a-1801c5374491"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/listSecrets/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"List Secrets\",\r\n        \"description\": \"Lists the unencrypted secrets related to the order.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/cancel/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"Cancel\",\r\n        \"description\": \"Cancels an order in progress.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/reportIssue/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"Report Issue\",\r\n        \"description\": \"Reports an issue in the order.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/copyLogsUri/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"Copy Log URL\",\r\n        \"description\": \"Get URL for the copy logs of each destination account.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/downloadShippingLabel/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"Download Shipping Label\",\r\n        \"description\": \"Get shipping label for the return shipment.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/bookShipmentPickUp/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"Book Shipment Pick Up\",\r\n        \"description\": \"Allows to book a pick up for return shipments.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/read\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"List Orders\",\r\n        \"description\": \"List or get the Orders\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"Delete Orders\",\r\n        \"description\": \"Delete the Orders\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/jobs/write\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Orders\",\r\n        \"operation\": \"Create or Update Orders\",\r\n        \"description\": \"Create or update the Orders\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/locations/validateAddress/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Validate Address\",\r\n        \"operation\": \"Validate Address\",\r\n        \"description\": \"Validates the shipping address and provides alternate addresses if any.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/locations/regionAvailability/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"Region Availability\",\r\n        \"operation\": \"Region Availability\",\r\n        \"description\": \"This method returns the list of supported regions for the service and for destination storage accounts.\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.DataBox/locations/availableSkus/action\",\r\n      \"display\": {\r\n        \"provider\": \"Azure Data Box\",\r\n        \"resource\": \"ArmApiRes_availableSkus\"\r\n      },\r\n      \"properties\": {},\r\n      \"origin\": \"user\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 13 Apr 2018 10:39:18 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "510467aa-3d49-47f4-ad20-73d591386e0f"
+        ],
+        "x-ms-client-request-id": [
+          "e6f5d4d4-7c1a-405b-941a-1801c5374491"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "57631489-fdf4-4359-9e37-2940a6cd9008"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20180413T103919Z:57631489-fdf4-4359-9e37-2940a6cd9008"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
+    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+  }
+}

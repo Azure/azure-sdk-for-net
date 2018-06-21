@@ -1,7 +1,7 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "/bingcustomsearch/v7.0/search?mkt=en-us&q=tom%20cruise",
+      "RequestUri": "/bingcustomsearch/v7.0/search?customConfig=0&mkt=en-us&q=tom%20cruise",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "User-Agent": [

@@ -22,40 +22,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
     public static partial class ReplicationNetworkMappingsOperationsExtensions
     {
             /// <summary>
-            /// Gets all the network mappings under a vault.
-            /// </summary>
-            /// <remarks>
-            /// Lists all ASR network mappings in the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static IPage<NetworkMapping> List(this IReplicationNetworkMappingsOperations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the network mappings under a vault.
-            /// </summary>
-            /// <remarks>
-            /// Lists all ASR network mappings in the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<NetworkMapping>> ListAsync(this IReplicationNetworkMappingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all the network mappings under a network.
             /// </summary>
             /// <remarks>
@@ -319,6 +285,40 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Gets all the network mappings under a vault.
+            /// </summary>
+            /// <remarks>
+            /// Lists all ASR network mappings in the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<NetworkMapping> List(this IReplicationNetworkMappingsOperations operations)
+            {
+                return operations.ListAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the network mappings under a vault.
+            /// </summary>
+            /// <remarks>
+            /// Lists all ASR network mappings in the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkMapping>> ListAsync(this IReplicationNetworkMappingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates network mapping.
             /// </summary>
             /// <remarks>
@@ -484,46 +484,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
-            /// Gets all the network mappings under a vault.
-            /// </summary>
-            /// <remarks>
-            /// Lists all ASR network mappings in the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NetworkMapping> ListNext(this IReplicationNetworkMappingsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets all the network mappings under a vault.
-            /// </summary>
-            /// <remarks>
-            /// Lists all ASR network mappings in the vault.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<NetworkMapping>> ListNextAsync(this IReplicationNetworkMappingsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all the network mappings under a network.
             /// </summary>
             /// <remarks>
@@ -558,6 +518,46 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<IPage<NetworkMapping>> ListByReplicationNetworksNextAsync(this IReplicationNetworkMappingsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByReplicationNetworksNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the network mappings under a vault.
+            /// </summary>
+            /// <remarks>
+            /// Lists all ASR network mappings in the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<NetworkMapping> ListNext(this IReplicationNetworkMappingsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the network mappings under a vault.
+            /// </summary>
+            /// <remarks>
+            /// Lists all ASR network mappings in the vault.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NetworkMapping>> ListNextAsync(this IReplicationNetworkMappingsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

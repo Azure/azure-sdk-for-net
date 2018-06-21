@@ -34,15 +34,18 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <summary>
         /// Initializes a new instance of the ContainerGroup class.
         /// </summary>
-        /// <param name="location">The resource location.</param>
+        /// <param name="containers">The containers within the container
+        /// group.</param>
+        /// <param name="osType">The operating system type required by the
+        /// containers in the container group. Possible values include:
+        /// 'Windows', 'Linux'</param>
         /// <param name="id">The resource id.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
+        /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// container group. This only appears in the response.</param>
-        /// <param name="containers">The containers within the container
-        /// group.</param>
         /// <param name="imageRegistryCredentials">The image registry
         /// credentials by which the container group is created from.</param>
         /// <param name="restartPolicy">Restart policy for all containers
@@ -53,15 +56,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// . Possible values include: 'Always', 'OnFailure', 'Never'</param>
         /// <param name="ipAddress">The IP address type of the container
         /// group.</param>
-        /// <param name="osType">The operating system type required by the
-        /// containers in the container group. Possible values include:
-        /// 'Windows', 'Linux'</param>
         /// <param name="volumes">The list of volumes that can be mounted by
         /// containers in this container group.</param>
         /// <param name="instanceView">The instance view of the container
         /// group. Only valid in response.</param>
-        public ContainerGroup(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<Container> containers = default(IList<Container>), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), string osType = default(string), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView))
-            : base(location, id, name, type, tags)
+        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView))
+            : base(id, name, type, location, tags)
         {
             ProvisioningState = provisioningState;
             Containers = containers;
@@ -143,9 +143,16 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Containers == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Containers");
+            }
+            if (OsType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OsType");
+            }
             if (Containers != null)
             {
                 foreach (var element in Containers)

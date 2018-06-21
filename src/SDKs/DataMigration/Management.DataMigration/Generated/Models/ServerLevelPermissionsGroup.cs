@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataMigration.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ServerLevelPermissionsGroup.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ServerLevelPermissionsGroup
+    public static class ServerLevelPermissionsGroup
     {
-        [EnumMember(Value = "Default")]
-        Default,
-        [EnumMember(Value = "MigrationFromSqlServerToAzureDB")]
-        MigrationFromSqlServerToAzureDB
-    }
-    internal static class ServerLevelPermissionsGroupEnumExtension
-    {
-        internal static string ToSerializedValue(this ServerLevelPermissionsGroup? value)
-        {
-            return value == null ? null : ((ServerLevelPermissionsGroup)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ServerLevelPermissionsGroup value)
-        {
-            switch( value )
-            {
-                case ServerLevelPermissionsGroup.Default:
-                    return "Default";
-                case ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB:
-                    return "MigrationFromSqlServerToAzureDB";
-            }
-            return null;
-        }
-
-        internal static ServerLevelPermissionsGroup? ParseServerLevelPermissionsGroup(this string value)
-        {
-            switch( value )
-            {
-                case "Default":
-                    return ServerLevelPermissionsGroup.Default;
-                case "MigrationFromSqlServerToAzureDB":
-                    return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB;
-            }
-            return null;
-        }
+        public const string Default = "Default";
+        public const string MigrationFromSqlServerToAzureDB = "MigrationFromSqlServerToAzureDB";
     }
 }

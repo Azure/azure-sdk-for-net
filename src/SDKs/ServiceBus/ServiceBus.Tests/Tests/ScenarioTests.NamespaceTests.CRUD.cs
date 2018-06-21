@@ -11,7 +11,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using Xunit;
-    public partial class ScenarioTests 
+    public partial class ScenarioTests
     {
         [Fact]
         public void NamespaceCreateGetUpdateDelete()
@@ -105,9 +105,9 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
                 }
-                                
+
                 // Delete namespace
-                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);                
+                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
             }
         }
     }

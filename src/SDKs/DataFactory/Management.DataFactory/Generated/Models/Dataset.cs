@@ -42,13 +42,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
-        public Dataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>))
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
+        public Dataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>))
         {
             AdditionalProperties = additionalProperties;
             Description = description;
             Structure = structure;
             LinkedServiceName = linkedServiceName;
             Parameters = parameters;
+            Annotations = annotations;
             CustomInit();
         }
 
@@ -89,6 +92,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IDictionary<string, ParameterSpecification> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of tags that can be used for describing the
+        /// Dataset.
+        /// </summary>
+        [JsonProperty(PropertyName = "annotations")]
+        public IList<object> Annotations { get; set; }
 
         /// <summary>
         /// Validate the object.

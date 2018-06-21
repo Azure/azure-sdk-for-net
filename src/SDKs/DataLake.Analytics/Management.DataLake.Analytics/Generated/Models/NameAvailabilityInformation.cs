@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
     using System.Linq;
 
     /// <summary>
-    /// Data Lake Analytics account name availability result information
+    /// Data Lake Analytics account name availability result information.
     /// </summary>
     public partial class NameAvailabilityInformation
     {
@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the NameAvailabilityInformation
         /// class.
         /// </summary>
-        /// <param name="nameAvailable">the Boolean value of true or false to
+        /// <param name="nameAvailable">The Boolean value of true or false to
         /// indicate whether the Data Lake Analytics account name is available
         /// or not.</param>
-        /// <param name="reason">the reason why the Data Lake Analytics account
+        /// <param name="reason">The reason why the Data Lake Analytics account
         /// name is not available, if nameAvailable is false.</param>
-        /// <param name="message">the message describing why the Data Lake
+        /// <param name="message">The message describing why the Data Lake
         /// Analytics account name is not available, if nameAvailable is
         /// false.</param>
         public NameAvailabilityInformation(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))

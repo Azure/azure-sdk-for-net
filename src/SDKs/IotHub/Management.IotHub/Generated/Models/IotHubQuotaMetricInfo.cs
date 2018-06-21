@@ -50,19 +50,19 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets the name of the quota metric.
         /// </summary>
-        [JsonProperty(PropertyName = "Name")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets the current value for the quota metric.
         /// </summary>
-        [JsonProperty(PropertyName = "CurrentValue")]
+        [JsonProperty(PropertyName = "currentValue")]
         public long? CurrentValue { get; private set; }
 
         /// <summary>
         /// Gets the maximum value of the quota metric.
         /// </summary>
-        [JsonProperty(PropertyName = "MaxValue")]
+        [JsonProperty(PropertyName = "maxValue")]
         public long? MaxValue { get; private set; }
 
     }

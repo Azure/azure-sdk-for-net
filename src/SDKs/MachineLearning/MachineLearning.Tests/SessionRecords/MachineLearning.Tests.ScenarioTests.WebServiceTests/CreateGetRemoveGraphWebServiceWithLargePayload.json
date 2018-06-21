@@ -889,6 +889,64 @@
       "StatusCode": 200
     },
     {
+      "RequestUri": "/subscriptions/d128f140-94e6-4175-87a7-954b9d27db16/providers/Microsoft.MachineLearning/locations/westcentralus/operationresults/32fb7933-1995-4936-89dd-6dfe3006c3a6?api-version=2017-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDEyOGYxNDAtOTRlNi00MTc1LTg3YTctOTU0YjlkMjdkYjE2L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFjaGluZUxlYXJuaW5nL2xvY2F0aW9ucy93ZXN0Y2VudHJhbHVzL29wZXJhdGlvbnJlc3VsdHMvMzJmYjc5MzMtMTk5NS00OTM2LTg5ZGQtNmRmZTMwMDZjM2E2P2FwaS12ZXJzaW9uPTIwMTctMDEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.MachineLearning.WebServices.AzureMLWebServicesManagementClient/1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d128f140-94e6-4175-87a7-954b9d27db16/providers/Microsoft.MachineLearning/locations/westcentralus/operationsStatus/cf038dd4-7f07-4a88-9ae8-9954f510c3e8\",\r\n  \"name\": \"cf038dd4-7f07-4a88-9ae8-9954f510c3e8\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2017-03-09T20:00:06.2131485Z\",\r\n  \"endTime\": \"2017-03-09T20:00:17.2944292Z\",\r\n  \"percentComplete\": 1.0\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 09 Mar 2017 20:00:21 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-duration": [
+          "8"
+        ],
+        "x-ms-correlation-request-id": [
+          "913a162a-e810-490c-a436-1da226425a17"
+        ],
+        "x-ms-request-id": [
+          "d2b59d2f-fdda-4481-be95-848c1162da2d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14996"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20170309T200022Z:913a162a-e810-490c-a436-1da226425a17"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/d128f140-94e6-4175-87a7-954b9d27db16/resourceGroups/amlrg2691/providers/Microsoft.MachineLearning/webServices/amlws2463?api-version=2017-01-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDEyOGYxNDAtOTRlNi00MTc1LTg3YTctOTU0YjlkMjdkYjE2L3Jlc291cmNlR3JvdXBzL2FtbHJnMjY5MS9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hY2hpbmVMZWFybmluZy93ZWJTZXJ2aWNlcy9hbWx3czI0NjM/YXBpLXZlcnNpb249MjAxNy0wMS0wMQ==",
       "RequestMethod": "GET",
@@ -1460,6 +1518,49 @@
       "StatusCode": 204
     },
     {
+      "RequestUri": "/subscriptions/d128f140-94e6-4175-87a7-954b9d27db16/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnREZWxldGlvbkpvYi1HTlMtQU1MUkcyNjkxLURFUExBTUxDUDE1MTQtIiwiam9iTG9jYXRpb24iOiJ3ZXN0Y2VudHJhbHVzIn0?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDEyOGYxNDAtOTRlNi00MTc1LTg3YTctOTU0YjlkMjdkYjE2L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWtSbGNHeHZlVzFsYm5SRVpXeGxkR2x2YmtwdllpMUhUbE10UVUxTVVrY3lOamt4TFVSRlVFeEJUVXhEVURFMU1UUXRJaXdpYW05aVRHOWpZWFJwYjI0aU9pSjNaWE4wWTJWdWRISmhiSFZ6SW4wP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 09 Mar 2017 20:01:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "4b219bc7-59a0-4fc7-945e-3b2dda688025"
+        ],
+        "x-ms-correlation-request-id": [
+          "4b219bc7-59a0-4fc7-945e-3b2dda688025"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20170309T200134Z:4b219bc7-59a0-4fc7-945e-3b2dda688025"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
       "RequestUri": "/subscriptions/d128f140-94e6-4175-87a7-954b9d27db16/resourceGroups/amlrg2691/providers/Microsoft.Storage/storageAccounts/amlstor2329?api-version=2015-06-15",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDEyOGYxNDAtOTRlNi00MTc1LTg3YTctOTU0YjlkMjdkYjE2L3Jlc291cmNlR3JvdXBzL2FtbHJnMjY5MS9wcm92aWRlcnMvTWljcm9zb2Z0LlN0b3JhZ2Uvc3RvcmFnZUFjY291bnRzL2FtbHN0b3IyMzI5P2FwaS12ZXJzaW9uPTIwMTUtMDYtMTU=",
       "RequestMethod": "DELETE",
@@ -1624,6 +1725,52 @@
         ]
       },
       "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d128f140-94e6-4175-87a7-954b9d27db16/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BTUxSRzI2OTEtV0VTVENFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoid2VzdGNlbnRyYWx1cyJ9?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDEyOGYxNDAtOTRlNi00MTc1LTg3YTctOTU0YjlkMjdkYjE2L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCVFV4U1J6STJPVEV0VjBWVFZFTkZUbFJTUVV4VlV5SXNJbXB2WWt4dlkyRjBhVzl1SWpvaWQyVnpkR05sYm5SeVlXeDFjeUo5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.24410.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 09 Mar 2017 20:02:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "e0b7373c-9eff-4e04-a73e-ff2d911d75bd"
+        ],
+        "x-ms-correlation-request-id": [
+          "e0b7373c-9eff-4e04-a73e-ff2d911d75bd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20170309T200235Z:e0b7373c-9eff-4e04-a73e-ff2d911d75bd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/d128f140-94e6-4175-87a7-954b9d27db16/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BTUxSRzI2OTEtV0VTVENFTlRSQUxVUyIsImpvYkxvY2F0aW9uIjoid2VzdGNlbnRyYWx1cyJ9?api-version=2015-11-01",

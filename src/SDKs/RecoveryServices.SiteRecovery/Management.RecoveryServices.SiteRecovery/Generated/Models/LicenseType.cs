@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for LicenseType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LicenseType
+    public static class LicenseType
     {
-        [EnumMember(Value = "NotSpecified")]
-        NotSpecified,
-        [EnumMember(Value = "NoLicenseType")]
-        NoLicenseType,
-        [EnumMember(Value = "WindowsServer")]
-        WindowsServer
-    }
-    internal static class LicenseTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this LicenseType? value)
-        {
-            return value == null ? null : ((LicenseType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this LicenseType value)
-        {
-            switch( value )
-            {
-                case LicenseType.NotSpecified:
-                    return "NotSpecified";
-                case LicenseType.NoLicenseType:
-                    return "NoLicenseType";
-                case LicenseType.WindowsServer:
-                    return "WindowsServer";
-            }
-            return null;
-        }
-
-        internal static LicenseType? ParseLicenseType(this string value)
-        {
-            switch( value )
-            {
-                case "NotSpecified":
-                    return LicenseType.NotSpecified;
-                case "NoLicenseType":
-                    return LicenseType.NoLicenseType;
-                case "WindowsServer":
-                    return LicenseType.WindowsServer;
-            }
-            return null;
-        }
+        public const string NotSpecified = "NotSpecified";
+        public const string NoLicenseType = "NoLicenseType";
+        public const string WindowsServer = "WindowsServer";
     }
 }

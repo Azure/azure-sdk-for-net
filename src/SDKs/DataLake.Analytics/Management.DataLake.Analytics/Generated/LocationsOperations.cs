@@ -52,10 +52,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
         /// <summary>
         /// Gets subscription-level properties and limits for Data Lake Analytics
-        /// specified by Resource location.
+        /// specified by resource location.
         /// </summary>
         /// <param name='location'>
-        /// The Resource location without whitespace.
+        /// The resource location without whitespace.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,6 +80,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </return>
         public async Task<AzureOperationResponse<CapabilityInformation>> GetCapabilityWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (location == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
@@ -87,10 +91,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -106,8 +106,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DataLakeAnalytics/locations/{location}/capability").ToString();
-            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

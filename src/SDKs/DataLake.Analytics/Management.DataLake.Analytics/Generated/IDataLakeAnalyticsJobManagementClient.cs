@@ -40,15 +40,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The DNS suffix used as the base for all Azure Data Lake Analytics
         /// Job service requests.
         /// </summary>
         string AdlaJobDnsSuffix { get; set; }
+
+        /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -69,6 +69,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
 
 
         /// <summary>
+        /// Gets the IJobOperations.
+        /// </summary>
+        IJobOperations Job { get; }
+
+        /// <summary>
         /// Gets the IPipelineOperations.
         /// </summary>
         IPipelineOperations Pipeline { get; }
@@ -77,11 +82,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Gets the IRecurrenceOperations.
         /// </summary>
         IRecurrenceOperations Recurrence { get; }
-
-        /// <summary>
-        /// Gets the IJobOperations.
-        /// </summary>
-        IJobOperations Job { get; }
 
     }
 }

@@ -119,6 +119,39 @@ namespace Cdn.Tests.ScenarioTests
                                 "AT"
                             }
                         }
+                    },
+                    DeliveryPolicy = new EndpointPropertiesUpdateParametersDeliveryPolicy
+                    {
+                        Description = "Test description for a policy.",
+                        Rules = new List<DeliveryRule>
+                        {
+                            new DeliveryRule
+                            {
+                                Order = 1,
+                                Actions = new List<DeliveryRuleAction>
+                                {
+                                    new DeliveryRuleCacheExpirationAction
+                                    {
+                                       Parameters = new CacheExpirationActionParameters
+                                       {
+                                           CacheBehavior = "Override",
+                                           CacheDuration = "10:10:09"
+                                       }
+                                    }
+                                },
+                                Conditions = new List<DeliveryRuleCondition>
+                                {
+                                    new DeliveryRuleUrlPathCondition
+                                    {
+                                        Parameters = new UrlPathConditionParameters
+                                        {
+                                            Path = "/folder",
+                                            MatchType = "Literal"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 };
 
@@ -196,6 +229,113 @@ namespace Cdn.Tests.ScenarioTests
 
                 endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
                 Assert.NotNull(endpoint);
+
+                // Create a cdn endpoint with Delivery Policy should succeed
+                endpointName = TestUtilities.GenerateName("endpoint");
+                endpointCreateParameters = new Endpoint
+                {
+                    Location = "WestUs",
+                    IsHttpAllowed = true,
+                    IsHttpsAllowed = true,
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    },
+                    DeliveryPolicy = new EndpointPropertiesUpdateParametersDeliveryPolicy
+                    {
+                        Description = "Test description for a policy.",
+                        Rules = new List<DeliveryRule>
+                        {
+                            new DeliveryRule
+                            {
+                                Order = 1,
+                                Actions = new List<DeliveryRuleAction>
+                                {
+                                    new DeliveryRuleCacheExpirationAction
+                                    {
+                                       Parameters = new CacheExpirationActionParameters
+                                       {
+                                           CacheBehavior = "BypassCache",
+                                           CacheDuration = null
+                                       }
+                                    }
+                                },
+                                Conditions = new List<DeliveryRuleCondition>
+                                {
+                                    new DeliveryRuleUrlPathCondition
+                                    {
+                                        Parameters = new UrlPathConditionParameters
+                                        {
+                                            Path = "/folder",
+                                            MatchType = "Literal"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                Assert.NotNull(endpoint);
+
+                // Create a cdn endpoint with an invalid Delivery Policy should fail
+                endpointName = TestUtilities.GenerateName("endpoint");
+                endpointCreateParameters = new Endpoint
+                {
+                    Location = "WestUs",
+                    IsHttpAllowed = true,
+                    IsHttpsAllowed = true,
+                    Origins = new List<DeepCreatedOrigin>
+                    {
+                        new DeepCreatedOrigin
+                        {
+                            Name = "origin1",
+                            HostName = "host1.hello.com"
+                        }
+                    },
+                    DeliveryPolicy = new EndpointPropertiesUpdateParametersDeliveryPolicy
+                    {
+                        Description = "Test description for a policy.",
+                        Rules = new List<DeliveryRule>
+                        {
+                            new DeliveryRule
+                            {
+                                Order = 1,
+                                Actions = new List<DeliveryRuleAction>
+                                {
+                                    new DeliveryRuleCacheExpirationAction
+                                    {
+                                       Parameters = new CacheExpirationActionParameters
+                                       {
+                                           CacheBehavior = "BypassCache",
+                                           CacheDuration = "10:10:09"
+                                       }
+                                    }
+                                },
+                                Conditions = new List<DeliveryRuleCondition>
+                                {
+                                    new DeliveryRuleUrlPathCondition
+                                    {
+                                        Parameters = new UrlPathConditionParameters
+                                        {
+                                            Path = "/folder",
+                                            MatchType = "Literal"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                Assert.ThrowsAny<ErrorResponseException>(() => {
+                    cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
+                });
 
                 // Create a cdn endpoint with no origins should fail
                 endpointName = TestUtilities.GenerateName("endpoint");
@@ -348,6 +488,48 @@ namespace Cdn.Tests.ScenarioTests
                     cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
                 });
 
+                // Update endpoint with an invalid cache duration in a delivery policy should fail
+                endpointUpdateParameters = new EndpointUpdateParameters
+                {
+                    DeliveryPolicy = new EndpointPropertiesUpdateParametersDeliveryPolicy
+                    {
+                        Description = "Test description for a policy.",
+                        Rules = new List<DeliveryRule>
+                        {
+                            new DeliveryRule
+                            {
+                                Order = 1,
+                                Actions = new List<DeliveryRuleAction>
+                                {
+                                    new DeliveryRuleCacheExpirationAction
+                                    {
+                                       Parameters = new CacheExpirationActionParameters
+                                       {
+                                           CacheBehavior = "BypassCache",
+                                           CacheDuration = "10:10:09"
+                                       }
+                                    }
+                                },
+                                Conditions = new List<DeliveryRuleCondition>
+                                {
+                                    new DeliveryRuleUrlPathCondition
+                                    {
+                                        Parameters = new UrlPathConditionParameters
+                                        {
+                                            Path = "/folder",
+                                            MatchType = "Literal"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                Assert.ThrowsAny<ErrorResponseException>(() => {
+                    cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);
+                });
+
                 // Update endpoint with DSA and no probe path should fail
                 endpointUpdateParameters = new EndpointUpdateParameters
                 {
@@ -391,7 +573,40 @@ namespace Cdn.Tests.ScenarioTests
                                 "AU"
                             }
                         }
-                    }
+                    },
+                    DeliveryPolicy = new EndpointPropertiesUpdateParametersDeliveryPolicy
+                    {
+                        Description = "Test description for a policy.",
+                        Rules = new List<DeliveryRule>
+                        {
+                            new DeliveryRule
+                            {
+                                Order = 1,
+                                Actions = new List<DeliveryRuleAction>
+                                {
+                                    new DeliveryRuleCacheExpirationAction
+                                    {
+                                       Parameters = new CacheExpirationActionParameters
+                                       {
+                                           CacheBehavior = "BypassCache",
+                                           CacheDuration = null
+                                       }
+                                    }
+                                },
+                                Conditions = new List<DeliveryRuleCondition>
+                                {
+                                    new DeliveryRuleUrlPathCondition
+                                    {
+                                        Parameters = new UrlPathConditionParameters
+                                        {
+                                            Path = "/folder",
+                                            MatchType = "Literal"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }   
                 };
 
                 var endpoint = cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);

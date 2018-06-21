@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Topic regenerate share access key key request
+    /// Topic regenerate share access key request
     /// </summary>
     public partial class TopicRegenerateKeyRequest
     {

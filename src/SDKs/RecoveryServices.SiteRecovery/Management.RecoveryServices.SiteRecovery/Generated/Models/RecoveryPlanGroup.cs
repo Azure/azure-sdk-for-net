@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// items.</param>
         /// <param name="startGroupActions">The start group actions.</param>
         /// <param name="endGroupActions">The end group actions.</param>
-        public RecoveryPlanGroup(RecoveryPlanGroupType groupType, IList<RecoveryPlanProtectedItem> replicationProtectedItems = default(IList<RecoveryPlanProtectedItem>), IList<RecoveryPlanAction> startGroupActions = default(IList<RecoveryPlanAction>), IList<RecoveryPlanAction> endGroupActions = default(IList<RecoveryPlanAction>))
+        public RecoveryPlanGroup(string groupType, IList<RecoveryPlanProtectedItem> replicationProtectedItems = default(IList<RecoveryPlanProtectedItem>), IList<RecoveryPlanAction> startGroupActions = default(IList<RecoveryPlanAction>), IList<RecoveryPlanAction> endGroupActions = default(IList<RecoveryPlanAction>))
         {
             GroupType = groupType;
             ReplicationProtectedItems = replicationProtectedItems;
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'Boot', 'Failover'
         /// </summary>
         [JsonProperty(PropertyName = "groupType")]
-        public RecoveryPlanGroupType GroupType { get; set; }
+        public string GroupType { get; set; }
 
         /// <summary>
         /// Gets or sets the list of protected items.
@@ -79,11 +80,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (GroupType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GroupType");
+            }
             if (StartGroupActions != null)
             {
                 foreach (var element in StartGroupActions)

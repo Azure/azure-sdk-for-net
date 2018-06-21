@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// VM is being protected from Azure, this field will take values from
         /// { Azure, OnPrem }. If the VM is being protected between two
         /// data-centers, this field will be OnPrem always.</param>
-        /// <param name="sourceVmCPUCount">The CPU count of the VM on the
+        /// <param name="sourceVmCpuCount">The CPU count of the VM on the
         /// primary side.</param>
-        /// <param name="sourceVmRAMSizeInMB">The RAM size of the VM on the
+        /// <param name="sourceVmRamSizeInMB">The RAM size of the VM on the
         /// primary side.</param>
         /// <param name="osDetails">The OS details.</param>
         /// <param name="protectionStage">The protection stage.</param>
@@ -97,11 +97,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// item.</param>
         /// <param name="osVersion">The OS Version of the protected
         /// item.</param>
-        public InMageReplicationDetails(string activeSiteType = default(string), int? sourceVmCPUCount = default(int?), int? sourceVmRAMSizeInMB = default(int?), OSDiskDetails osDetails = default(OSDiskDetails), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails resyncDetails = default(InitialReplicationDetails), System.DateTime? retentionWindowStart = default(System.DateTime?), System.DateTime? retentionWindowEnd = default(System.DateTime?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), long? rpoInSeconds = default(long?), IList<InMageProtectedDiskDetails> protectedDisks = default(IList<InMageProtectedDiskDetails>), string ipAddress = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string masterTargetId = default(string), IDictionary<string, System.DateTime?> consistencyPoints = default(IDictionary<string, System.DateTime?>), string diskResized = default(string), string rebootAfterUpdateStatus = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), InMageAgentDetails agentDetails = default(InMageAgentDetails), string vCenterInfrastructureId = default(string), string infrastructureVmId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string discoveryType = default(string), string azureStorageAccountId = default(string), IList<string> datastores = default(IList<string>), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string))
+        public InMageReplicationDetails(string activeSiteType = default(string), int? sourceVmCpuCount = default(int?), int? sourceVmRamSizeInMB = default(int?), OSDiskDetails osDetails = default(OSDiskDetails), string protectionStage = default(string), string vmId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), InitialReplicationDetails resyncDetails = default(InitialReplicationDetails), System.DateTime? retentionWindowStart = default(System.DateTime?), System.DateTime? retentionWindowEnd = default(System.DateTime?), double? compressedDataRateInMB = default(double?), double? uncompressedDataRateInMB = default(double?), long? rpoInSeconds = default(long?), IList<InMageProtectedDiskDetails> protectedDisks = default(IList<InMageProtectedDiskDetails>), string ipAddress = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string processServerId = default(string), string masterTargetId = default(string), IDictionary<string, System.DateTime?> consistencyPoints = default(IDictionary<string, System.DateTime?>), string diskResized = default(string), string rebootAfterUpdateStatus = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmSyncStatus = default(string), InMageAgentDetails agentDetails = default(InMageAgentDetails), string vCenterInfrastructureId = default(string), string infrastructureVmId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), string discoveryType = default(string), string azureStorageAccountId = default(string), IList<string> datastores = default(IList<string>), IList<HealthError> validationErrors = default(IList<HealthError>), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), System.DateTime? lastUpdateReceivedTime = default(System.DateTime?), string replicaId = default(string), string osVersion = default(string))
         {
             ActiveSiteType = activeSiteType;
-            SourceVmCPUCount = sourceVmCPUCount;
-            SourceVmRAMSizeInMB = sourceVmRAMSizeInMB;
+            SourceVmCpuCount = sourceVmCpuCount;
+            SourceVmRamSizeInMB = sourceVmRamSizeInMB;
             OsDetails = osDetails;
             ProtectionStage = protectionStage;
             VmId = vmId;
@@ -156,14 +156,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Gets or sets the CPU count of the VM on the primary side.
         /// </summary>
-        [JsonProperty(PropertyName = "sourceVmCPUCount")]
-        public int? SourceVmCPUCount { get; set; }
+        [JsonProperty(PropertyName = "sourceVmCpuCount")]
+        public int? SourceVmCpuCount { get; set; }
 
         /// <summary>
         /// Gets or sets the RAM size of the VM on the primary side.
         /// </summary>
-        [JsonProperty(PropertyName = "sourceVmRAMSizeInMB")]
-        public int? SourceVmRAMSizeInMB { get; set; }
+        [JsonProperty(PropertyName = "sourceVmRamSizeInMB")]
+        public int? SourceVmRamSizeInMB { get; set; }
 
         /// <summary>
         /// Gets or sets the OS details.

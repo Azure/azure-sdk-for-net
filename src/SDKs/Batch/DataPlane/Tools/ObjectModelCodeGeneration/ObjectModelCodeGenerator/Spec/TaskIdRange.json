@@ -1,7 +1,7 @@
     {
       "Name": "TaskIdRange",
       "ProtocolName": "Models.TaskIdRange",
-      "Comment": "A range of task ids that a <see cref=\"CloudTask\"/> depends on. All tasks with ids in the range must complete successfully before the dependent task can be scheduled.",
+      "SummaryComment": "A range of task ids that a <see cref=\"CloudTask\"/> depends on. All tasks with ids in the range must complete successfully before the dependent task can be scheduled.",
       "IsConstructorPublic": false,
       "IsUsedInCollections": true,
       "Properties": [

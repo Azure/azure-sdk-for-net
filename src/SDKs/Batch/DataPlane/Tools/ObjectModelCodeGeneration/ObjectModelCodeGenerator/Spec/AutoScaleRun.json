@@ -1,7 +1,7 @@
     {
       "Name": "AutoScaleRun",
       "ProtocolName": "Models.AutoScaleRun",
-      "Comment": "The results and errors from an evaluation or execution of a pool autoscale formula.",
+      "SummaryComment": "The results and errors from an evaluation or execution of a pool autoscale formula.",
       "IsConstructorPublic": false,
       "Properties": [
         {

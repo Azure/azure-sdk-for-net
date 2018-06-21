@@ -97,7 +97,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         {
             if (!string.IsNullOrEmpty(CurrentPollingState.LastSerializationExceptionMessage))
             {
-                throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
+                // Let empty/null body return back to the client.
+                // throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
             }
         }
 
@@ -268,10 +269,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     throw new CloudException(Resources.NoBody);
                 }
 
-                if (!string.IsNullOrEmpty(CurrentPollingState.LastSerializationExceptionMessage))
-                {
-                    throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
-                }
+                //if (!string.IsNullOrEmpty(CurrentPollingState.LastSerializationExceptionMessage))
+                //{
+                //    throw new CloudException(string.Format(Resources.BodyDeserializationError, CurrentPollingState.LastSerializationExceptionMessage));
+                //}
             }
         }
 

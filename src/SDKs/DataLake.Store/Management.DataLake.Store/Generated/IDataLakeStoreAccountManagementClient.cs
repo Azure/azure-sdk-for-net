@@ -71,9 +71,19 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
 
         /// <summary>
+        /// Gets the IAccountsOperations.
+        /// </summary>
+        IAccountsOperations Accounts { get; }
+
+        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         IFirewallRulesOperations FirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
         /// <summary>
         /// Gets the ITrustedIdProvidersOperations.
@@ -81,19 +91,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         ITrustedIdProvidersOperations TrustedIdProviders { get; }
 
         /// <summary>
-        /// Gets the IAccountOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IAccountOperations Account { get; }
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
 
     }
 }

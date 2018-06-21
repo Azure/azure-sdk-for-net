@@ -120,7 +120,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// take advantage of shell features such as environment variable
         /// expansion. If you want to take advantage of such features, you
         /// should invoke the shell in the command line, for example using "cmd
-        /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
+        /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the
+        /// command line refers to file paths, it should use a relative path
+        /// (relative to the task working directory), or use the Batch provided
+        /// environment variable
+        /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }

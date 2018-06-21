@@ -24,7 +24,44 @@ namespace Microsoft.Azure.Management.IotHub.Models
         [EnumMember(Value = "Free")]
         Free,
         [EnumMember(Value = "Standard")]
-        Standard
+        Standard,
+        [EnumMember(Value = "Basic")]
+        Basic
+    }
+    internal static class IotHubSkuTierEnumExtension
+    {
+        internal static string ToSerializedValue(this IotHubSkuTier? value)
+        {
+            return value == null ? null : ((IotHubSkuTier)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this IotHubSkuTier value)
+        {
+            switch( value )
+            {
+                case IotHubSkuTier.Free:
+                    return "Free";
+                case IotHubSkuTier.Standard:
+                    return "Standard";
+                case IotHubSkuTier.Basic:
+                    return "Basic";
+            }
+            return null;
+        }
+
+        internal static IotHubSkuTier? ParseIotHubSkuTier(this string value)
+        {
+            switch( value )
+            {
+                case "Free":
+                    return IotHubSkuTier.Free;
+                case "Standard":
+                    return IotHubSkuTier.Standard;
+                case "Basic":
+                    return IotHubSkuTier.Basic;
+            }
+            return null;
+        }
     }
     internal static class IotHubSkuTierEnumExtension
     {

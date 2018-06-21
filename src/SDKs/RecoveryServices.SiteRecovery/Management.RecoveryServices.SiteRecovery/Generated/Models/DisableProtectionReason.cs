@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DisableProtectionReason.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DisableProtectionReason
+    public static class DisableProtectionReason
     {
-        [EnumMember(Value = "NotSpecified")]
-        NotSpecified,
-        [EnumMember(Value = "MigrationComplete")]
-        MigrationComplete
-    }
-    internal static class DisableProtectionReasonEnumExtension
-    {
-        internal static string ToSerializedValue(this DisableProtectionReason? value)
-        {
-            return value == null ? null : ((DisableProtectionReason)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DisableProtectionReason value)
-        {
-            switch( value )
-            {
-                case DisableProtectionReason.NotSpecified:
-                    return "NotSpecified";
-                case DisableProtectionReason.MigrationComplete:
-                    return "MigrationComplete";
-            }
-            return null;
-        }
-
-        internal static DisableProtectionReason? ParseDisableProtectionReason(this string value)
-        {
-            switch( value )
-            {
-                case "NotSpecified":
-                    return DisableProtectionReason.NotSpecified;
-                case "MigrationComplete":
-                    return DisableProtectionReason.MigrationComplete;
-            }
-            return null;
-        }
+        public const string NotSpecified = "NotSpecified";
+        public const string MigrationComplete = "MigrationComplete";
     }
 }
