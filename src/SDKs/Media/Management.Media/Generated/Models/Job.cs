@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// processed. Higher priority jobs are processed before lower priority
         /// jobs. If not set, the default is normal. Possible values include:
         /// 'Low', 'Normal', 'High'</param>
-        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?))
+        /// <param name="correlationData">Customer provided correlation data
+        /// that will be returned in Job completed events.</param>
+        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?), IDictionary<string, string> correlationData = default(IDictionary<string, string>))
             : base(id, name, type)
         {
             Created = created;
@@ -64,6 +66,7 @@ namespace Microsoft.Azure.Management.Media.Models
             LastModified = lastModified;
             Outputs = outputs;
             Priority = priority;
+            CorrelationData = correlationData;
             CustomInit();
         }
 
@@ -120,6 +123,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
         public Priority? Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets customer provided correlation data that will be
+        /// returned in Job completed events.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.correlationData")]
+        public IDictionary<string, string> CorrelationData { get; set; }
 
         /// <summary>
         /// Validate the object.

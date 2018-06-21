@@ -37,12 +37,19 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="previewLocator">The preview locator Guid.</param>
         /// <param name="streamingPolicyName">The name of streaming policy used
         /// for LiveEvent preview</param>
-        public LiveEventPreview(IList<LiveEventEndpoint> endpoints = default(IList<LiveEventEndpoint>), LiveEventPreviewAccessControl accessControl = default(LiveEventPreviewAccessControl), string previewLocator = default(string), string streamingPolicyName = default(string))
+        /// <param name="alternativeMediaId">An Alternative Media Identifier
+        /// associated with the preview url.  This identifier can be used to
+        /// distinguish the preview of different live events for authorization
+        /// purposes in the CustomLicenseAcquisitionUrlTemplate or the
+        /// CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in
+        /// the StreamingPolicyName field.</param>
+        public LiveEventPreview(IList<LiveEventEndpoint> endpoints = default(IList<LiveEventEndpoint>), LiveEventPreviewAccessControl accessControl = default(LiveEventPreviewAccessControl), string previewLocator = default(string), string streamingPolicyName = default(string), string alternativeMediaId = default(string))
         {
             Endpoints = endpoints;
             AccessControl = accessControl;
             PreviewLocator = previewLocator;
             StreamingPolicyName = streamingPolicyName;
+            AlternativeMediaId = alternativeMediaId;
             CustomInit();
         }
 
@@ -75,6 +82,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "streamingPolicyName")]
         public string StreamingPolicyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets an Alternative Media Identifier associated with the
+        /// preview url.  This identifier can be used to distinguish the
+        /// preview of different live events for authorization purposes in the
+        /// CustomLicenseAcquisitionUrlTemplate or the
+        /// CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in
+        /// the StreamingPolicyName field.
+        /// </summary>
+        [JsonProperty(PropertyName = "alternativeMediaId")]
+        public string AlternativeMediaId { get; set; }
 
     }
 }

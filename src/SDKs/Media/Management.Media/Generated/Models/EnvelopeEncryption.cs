@@ -39,15 +39,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// encryption scheme and separate content keys for specific
         /// tracks</param>
         /// <param
-        /// name="customLicenseAcquisitionUrlTemplate">LicenseAcquistionUrlTemplate
-        /// is used to point to user speicified service to delivery content
+        /// name="customKeyAcquisitionUrlTemplate">KeyAcquistionUrlTemplate is
+        /// used to point to user specified service to delivery content
         /// keys</param>
-        public EnvelopeEncryption(EnabledProtocols enabledProtocols = default(EnabledProtocols), IList<TrackSelection> clearTracks = default(IList<TrackSelection>), StreamingPolicyContentKeys contentKeys = default(StreamingPolicyContentKeys), string customLicenseAcquisitionUrlTemplate = default(string))
+        public EnvelopeEncryption(EnabledProtocols enabledProtocols = default(EnabledProtocols), IList<TrackSelection> clearTracks = default(IList<TrackSelection>), StreamingPolicyContentKeys contentKeys = default(StreamingPolicyContentKeys), string customKeyAcquisitionUrlTemplate = default(string))
         {
             EnabledProtocols = enabledProtocols;
             ClearTracks = clearTracks;
             ContentKeys = contentKeys;
-            CustomLicenseAcquisitionUrlTemplate = customLicenseAcquisitionUrlTemplate;
+            CustomKeyAcquisitionUrlTemplate = customKeyAcquisitionUrlTemplate;
             CustomInit();
         }
 
@@ -76,11 +76,11 @@ namespace Microsoft.Azure.Management.Media.Models
         public StreamingPolicyContentKeys ContentKeys { get; set; }
 
         /// <summary>
-        /// Gets or sets licenseAcquistionUrlTemplate is used to point to user
-        /// speicified service to delivery content keys
+        /// Gets or sets keyAcquistionUrlTemplate is used to point to user
+        /// specified service to delivery content keys
         /// </summary>
-        [JsonProperty(PropertyName = "customLicenseAcquisitionUrlTemplate")]
-        public string CustomLicenseAcquisitionUrlTemplate { get; set; }
+        [JsonProperty(PropertyName = "customKeyAcquisitionUrlTemplate")]
+        public string CustomKeyAcquisitionUrlTemplate { get; set; }
 
         /// <summary>
         /// Validate the object.

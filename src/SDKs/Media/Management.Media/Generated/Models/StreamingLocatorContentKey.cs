@@ -31,20 +31,20 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the StreamingLocatorContentKey class.
         /// </summary>
+        /// <param name="id">ID of Content Key</param>
         /// <param name="type">Encryption type of Content Key. Possible values
         /// include: 'CommonEncryptionCenc', 'CommonEncryptionCbcs',
         /// 'EnvelopeEncryption'</param>
-        /// <param name="id">ID of Content Key</param>
         /// <param name="label">Label of Content Key</param>
         /// <param name="value">Value of  of Content Key</param>
         /// <param name="policyName">ContentKeyPolicy used by Content
         /// Key</param>
         /// <param name="tracks">Tracks which use this Content Key</param>
-        public StreamingLocatorContentKey(StreamingLocatorContentKeyType type, System.Guid id, string label = default(string), string value = default(string), string policyName = default(string), IList<TrackSelection> tracks = default(IList<TrackSelection>))
+        public StreamingLocatorContentKey(System.Guid id, StreamingLocatorContentKeyType type = default(StreamingLocatorContentKeyType), string label = default(string), string value = default(string), string policyName = default(string), IList<TrackSelection> tracks = default(IList<TrackSelection>))
         {
-            Label = label;
-            Type = type;
             Id = id;
+            Type = type;
+            Label = label;
             Value = value;
             PolicyName = policyName;
             Tracks = tracks;
@@ -57,24 +57,24 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets label of Content Key
-        /// </summary>
-        [JsonProperty(PropertyName = "label")]
-        public string Label { get; set; }
-
-        /// <summary>
-        /// Gets or sets encryption type of Content Key. Possible values
-        /// include: 'CommonEncryptionCenc', 'CommonEncryptionCbcs',
-        /// 'EnvelopeEncryption'
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public StreamingLocatorContentKeyType Type { get; set; }
-
-        /// <summary>
         /// Gets or sets ID of Content Key
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets encryption type of Content Key. Possible values include:
+        /// 'CommonEncryptionCenc', 'CommonEncryptionCbcs',
+        /// 'EnvelopeEncryption'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public StreamingLocatorContentKeyType Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets label of Content Key
+        /// </summary>
+        [JsonProperty(PropertyName = "label")]
+        public string Label { get; set; }
 
         /// <summary>
         /// Gets or sets value of  of Content Key
@@ -83,10 +83,10 @@ namespace Microsoft.Azure.Management.Media.Models
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets or sets contentKeyPolicy used by Content Key
+        /// Gets contentKeyPolicy used by Content Key
         /// </summary>
         [JsonProperty(PropertyName = "policyName")]
-        public string PolicyName { get; set; }
+        public string PolicyName { get; private set; }
 
         /// <summary>
         /// Gets or sets tracks which use this Content Key

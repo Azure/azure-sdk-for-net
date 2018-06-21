@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the EnabledProtocols class.
         /// </summary>
         /// <param name="download">Enable Download protocol or not</param>
-        /// <param name="dash">Enable Dash protocol or not</param>
-        /// <param name="hls">Enable Hls protocol or not</param>
+        /// <param name="dash">Enable DASH protocol or not</param>
+        /// <param name="hls">Enable HLS protocol or not</param>
         /// <param name="smoothStreaming">Enable SmoothStreaming protocol or
         /// not</param>
         public EnabledProtocols(bool download, bool dash, bool hls, bool smoothStreaming)
@@ -55,13 +55,13 @@ namespace Microsoft.Azure.Management.Media.Models
         public bool Download { get; set; }
 
         /// <summary>
-        /// Gets or sets enable Dash protocol or not
+        /// Gets or sets enable DASH protocol or not
         /// </summary>
         [JsonProperty(PropertyName = "dash")]
         public bool Dash { get; set; }
 
         /// <summary>
-        /// Gets or sets enable Hls protocol or not
+        /// Gets or sets enable HLS protocol or not
         /// </summary>
         [JsonProperty(PropertyName = "hls")]
         public bool Hls { get; set; }

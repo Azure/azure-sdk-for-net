@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// Class to specify drm configurations of CommonEncryptionCbcs scheme in
+    /// Class to specify DRM configurations of CommonEncryptionCbcs scheme in
     /// Streaming Policy
     /// </summary>
     public partial class CbcsDrmConfiguration
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the CbcsDrmConfiguration class.
         /// </summary>
-        /// <param name="fairPlay">Fairplay configurations</param>
+        /// <param name="fairPlay">FairPlay configurations</param>
         /// <param name="playReady">PlayReady configurations</param>
         /// <param name="widevine">Widevine configurations</param>
         public CbcsDrmConfiguration(StreamingPolicyFairPlayConfiguration fairPlay = default(StreamingPolicyFairPlayConfiguration), StreamingPolicyPlayReadyConfiguration playReady = default(StreamingPolicyPlayReadyConfiguration), StreamingPolicyWidevineConfiguration widevine = default(StreamingPolicyWidevineConfiguration))
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets fairplay configurations
+        /// Gets or sets fairPlay configurations
         /// </summary>
         [JsonProperty(PropertyName = "fairPlay")]
         public StreamingPolicyFairPlayConfiguration FairPlay { get; set; }
