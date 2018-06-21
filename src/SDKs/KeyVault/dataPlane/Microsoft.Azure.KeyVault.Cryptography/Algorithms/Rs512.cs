@@ -10,32 +10,33 @@ using System.Security.Cryptography;
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
     /// <summary>
-    /// RSA SHA-256 Signature algorithim.
+    /// RSA SHA-512 Signature algorithim.
     /// </summary>
-    public class Rs256 : RsaSignature
+    public class Rs512 : RsaSignature
     {
-        public const string AlgorithmName = "RS256";
+        public const string AlgorithmName = "RS512";
 
         internal const string OID_OIWSEC_SHA256 = "2.16.840.1.101.3.4.2.1";
         internal const string OID_OIWSEC_SHA384 = "2.16.840.1.101.3.4.2.2";
         internal const string OID_OIWSEC_SHA512 = "2.16.840.1.101.3.4.2.3";
 
-        internal const int SHA256_DIGEST_LENGTH = 32;
-        public Rs256()
+        internal const int SHA512_DIGEST_LENGTH = 64;
+
+        public Rs512()
             : base( AlgorithmName )
         {
         }
 
         public override ISignatureTransform CreateSignatureTransform( AsymmetricAlgorithm key )
         {
-            return new Rs256SignatureTransform( key );
+            return new Rs512SignatureTransform( key );
         }
 
-        class Rs256SignatureTransform : ISignatureTransform
+        class Rs512SignatureTransform : ISignatureTransform
         {
             private RSA _key;
 
-            public Rs256SignatureTransform( AsymmetricAlgorithm key )
+            public Rs512SignatureTransform( AsymmetricAlgorithm key )
             {
                 if ( key == null )
                     throw new ArgumentNullException( "key" );
@@ -51,20 +52,18 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 if ( digest == null || digest.Length == 0 )
                     throw new ArgumentNullException( "digest" );
 
-                if ( digest.Length != SHA256_DIGEST_LENGTH
-     )
-                    throw new ArgumentOutOfRangeException( "digest", String.Format( "The digest must be {0} bytes for SHA-256", SHA256_DIGEST_LENGTH
-         ));
+                if ( digest.Length != SHA512_DIGEST_LENGTH )
+                    throw new ArgumentOutOfRangeException( "digest", String.Format("The digest must be {0} bytes for SHA-512", SHA512_DIGEST_LENGTH));
 
 #if NET45
                 if ( _key is RSACryptoServiceProvider )
                 {
-                    return ((RSACryptoServiceProvider)_key).SignHash( digest, OID_OIWSEC_SHA256 );
+                    return ((RSACryptoServiceProvider)_key).SignHash( digest, OID_OIWSEC_SHA512 );
                 }
 
                 throw new CryptographicException( string.Format( "{0} is not supported", _key.GetType().FullName ) );
 #elif NETSTANDARD
-                return _key.SignHash( digest, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1 );
+                return _key.SignHash( digest, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1 );
 #else
                 #error Unknown Framework
 #endif
@@ -75,10 +74,8 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 if ( digest == null || digest.Length == 0 )
                     throw new ArgumentNullException( "digest" );
 
-                if ( digest.Length != SHA256_DIGEST_LENGTH
-     )
-                    throw new ArgumentOutOfRangeException( "digest", String.Format( "The digest must be {0} bytes for SHA-256", SHA256_DIGEST_LENGTH
-         ));
+                if ( digest.Length != SHA512_DIGEST_LENGTH )
+                    throw new ArgumentOutOfRangeException( "digest", String.Format("The digest must be {0} bytes for SHA-512", SHA512_DIGEST_LENGTH) );
 
                 if ( signature == null || signature.Length == 0 )
                     throw new ArgumentNullException( "signature" );
@@ -87,12 +84,12 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 #if NET45
                 if ( _key is RSACryptoServiceProvider )
                 {
-                    return ((RSACryptoServiceProvider)_key).VerifyHash( digest, OID_OIWSEC_SHA256, signature );
+                    return ((RSACryptoServiceProvider)_key).VerifyHash( digest, OID_OIWSEC_SHA512, signature );
                 }
 
                 throw new CryptographicException( string.Format( "{0} is not supported", _key.GetType().FullName ) );
 #elif NETSTANDARD
-                return _key.VerifyHash( digest, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1 );
+                return _key.VerifyHash( digest, signature, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1 );
 #else
                 #error Unknown Framework
 #endif
