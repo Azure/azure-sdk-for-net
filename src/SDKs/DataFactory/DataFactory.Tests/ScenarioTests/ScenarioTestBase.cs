@@ -27,6 +27,7 @@ namespace DataFactory.Tests.ScenarioTests
 
         protected async Task RunTest(Func<DataFactoryManagementClient, Task> initialAction, Func<DataFactoryManagementClient, Task> finallyAction, [CallerMemberName] string methodName = "")
         {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
                 this.ResourceGroupName = TestUtilities.GenerateName(ResourceGroupNamePrefix);
@@ -51,9 +52,9 @@ namespace DataFactory.Tests.ScenarioTests
             }
         }
 
-        protected void ValidateSubResource(Microsoft.Azure.Management.DataFactory.Models.SubResource actual, string expectedDataFactoryName, string expectedName, string expectedSubResourceType)
+        protected static void ValidateSubResource(DataFactoryManagementClient client, string resourceGroupName, Microsoft.Azure.Management.DataFactory.Models.SubResource actual, string expectedDataFactoryName, string expectedName, string expectedSubResourceType)
         {
-            string expectedResourceID = $"/subscriptions/{this.Client.SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.DataFactory/factories/{expectedDataFactoryName}/{expectedSubResourceType}/{expectedName}";
+            string expectedResourceID = $"/subscriptions/{client.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{expectedDataFactoryName}/{expectedSubResourceType}/{expectedName}";
             Assert.Equal(expectedResourceID, actual.Id);
             Assert.Equal(expectedName, actual.Name);
             Assert.NotNull(actual.Etag);

@@ -21,9 +21,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ErrorCategory
     {
-        [EnumMember(Value = "userError")]
+        /// <summary>
+        /// The error is due to a user issue, such as misconfiguration.
+        /// </summary>
+        [EnumMember(Value = "usererror")]
         UserError,
-        [EnumMember(Value = "serverError")]
+        /// <summary>
+        /// The error is due to an internal server issue.
+        /// </summary>
+        [EnumMember(Value = "servererror")]
         ServerError
     }
     internal static class ErrorCategoryEnumExtension
@@ -38,9 +44,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             switch( value )
             {
                 case ErrorCategory.UserError:
-                    return "userError";
+                    return "usererror";
                 case ErrorCategory.ServerError:
-                    return "serverError";
+                    return "servererror";
             }
             return null;
         }
@@ -49,9 +55,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         {
             switch( value )
             {
-                case "userError":
+                case "usererror":
                     return ErrorCategory.UserError;
-                case "serverError":
+                case "servererror":
                     return ErrorCategory.ServerError;
             }
             return null;

@@ -14,6 +14,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using Xunit;
+    using System.Threading;
     public partial class ScenarioTests 
     {
         [Fact]
@@ -54,10 +55,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create Queue
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
                 var createQueueResponse = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName,
-                new SBQueue() { EnableExpress = true});
+                new SBQueue() { EnableExpress = true, EnableBatchedOperations = true});
 
                 Assert.NotNull(createQueueResponse);
                 Assert.Equal(createQueueResponse.Name, queueName);
+                Assert.True(createQueueResponse.EnableExpress);
                 
                 // Get the created Queue
                 var getQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
@@ -70,24 +72,36 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(getQueueListAllResponse);
                 Assert.True(getQueueListAllResponse.Count() >= 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
-                
+
+
+                // Create Queue1
+                var queueName1 = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
+                var createQueueResponse1 = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName1,
+                new SBQueue() { EnableExpress = true });
+
+
                 // Update Queue. 
                 var updateQueuesParameter = new SBQueue()
                 {
                     EnableExpress = true,
                     MaxDeliveryCount = 5,
-                    MaxSizeInMegabytes = 1024
-            };
+                    MaxSizeInMegabytes = 1024,
+                    ForwardTo = queueName1,
+                    ForwardDeadLetteredMessagesTo = queueName1
+                    
+                };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
                 Assert.NotNull(updateQueueResponse);
                 Assert.True(updateQueueResponse.EnableExpress);
+                Assert.Equal(updateQueueResponse.ForwardTo, queueName1);
+                Assert.Equal(updateQueueResponse.ForwardDeadLetteredMessagesTo, queueName1);
 
                 // Delete Created Queue 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);
 
-                //Delete Namespace
-                ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
+                //Delete Namespace Async
+                ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
             }
         }
     }

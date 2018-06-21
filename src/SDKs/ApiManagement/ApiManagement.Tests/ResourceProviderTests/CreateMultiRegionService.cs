@@ -54,7 +54,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.tags);
 
                 Assert.NotNull(createdService.AdditionalLocations);
-                Assert.Equal(1, createdService.AdditionalLocations.Count());
+                Assert.Single(createdService.AdditionalLocations);
                 Assert.Equal(additionalLocation.Location.ToLowerInvariant().Replace(" ", string.Empty),
                     createdService.AdditionalLocations.First().Location.ToLowerInvariant().Replace(" ", string.Empty));
 

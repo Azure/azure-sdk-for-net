@@ -1,0 +1,73 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/3c66da21-607e-49b4-8bdf-f25fbb8f705f/resourceGroups/BVTToolRG1/providers/Microsoft.DataBox/jobs/sdktest5497/reportIssue?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M2NmRhMjEtNjA3ZS00OWI0LThiZGYtZjI1ZmJiOGY3MDVmL3Jlc291cmNlR3JvdXBzL0JWVFRvb2xSRzEvcHJvdmlkZXJzL01pY3Jvc29mdC5EYXRhQm94L2pvYnMvYWJiaGF0OU5vdlNtb2tlVGVzdDIvcmVwb3J0SXNzdWU/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"issueType\": \"DeviceFailure\",\r\n  \"deviceIssueType\": \"DeviceNotBootingUp\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "80"
+        ],
+        "x-ms-client-request-id": [
+          "52ef3bc4-d665-4d44-be7d-40f023794d82"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 16 Apr 2018 04:59:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "d68136ce-3ffd-434a-b12d-e862be06c3a2"
+        ],
+        "x-ms-client-request-id": [
+          "52ef3bc4-d665-4d44-be7d-40f023794d82"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "f471ba16-3761-44b9-81f6-c713a7004d64"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20180416T045959Z:f471ba16-3761-44b9-81f6-c713a7004d64"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f",
+    "SubId": "3c66da21-607e-49b4-8bdf-f25fbb8f705f"
+  }
+}

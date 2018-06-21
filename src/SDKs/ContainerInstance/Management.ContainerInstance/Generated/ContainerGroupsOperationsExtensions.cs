@@ -214,6 +214,58 @@ namespace Microsoft.Azure.Management.ContainerInstance
             }
 
             /// <summary>
+            /// Update container groups.
+            /// </summary>
+            /// <remarks>
+            /// Updates container group tags with specified values.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='resource'>
+            /// The container group resource with just the tags to be updated.
+            /// </param>
+            public static ContainerGroup Update(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, Resource resource)
+            {
+                return operations.UpdateAsync(resourceGroupName, containerGroupName, resource).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update container groups.
+            /// </summary>
+            /// <remarks>
+            /// Updates container group tags with specified values.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='resource'>
+            /// The container group resource with just the tags to be updated.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ContainerGroup> UpdateAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, Resource resource, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, containerGroupName, resource, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Delete the specified container group.
             /// </summary>
             /// <remarks>
@@ -258,6 +310,58 @@ namespace Microsoft.Azure.Management.ContainerInstance
             public static async Task<ContainerGroup> DeleteAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, containerGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or update container groups.
+            /// </summary>
+            /// <remarks>
+            /// Create or update container groups with specified configurations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='containerGroup'>
+            /// The properties of the container group to be created or updated.
+            /// </param>
+            public static ContainerGroup BeginCreateOrUpdate(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, ContainerGroup containerGroup)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, containerGroupName, containerGroup).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update container groups.
+            /// </summary>
+            /// <remarks>
+            /// Create or update container groups with specified configurations.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='containerGroupName'>
+            /// The name of the container group.
+            /// </param>
+            /// <param name='containerGroup'>
+            /// The properties of the container group to be created or updated.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ContainerGroup> BeginCreateOrUpdateAsync(this IContainerGroupsOperations operations, string resourceGroupName, string containerGroupName, ContainerGroup containerGroup, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, containerGroupName, containerGroup, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -86,7 +86,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, as1Name, storageAccountOutput, imageRef, out inputVM1);
+                    VirtualMachine vm1 = CreateVM(rg1Name, as1Name, storageAccountOutput, imageRef, out inputVM1);
 
                     m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Redeploy(rg1Name, vm1.Name);
@@ -107,7 +107,9 @@ namespace Compute.Tests
                             new RunCommandInputParameter("arg2","value2"),
                         }
                     };
-                    m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
+                    var result = m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
+                    //BUG: RunCommand does not return the result.
+                    //Assert.NotNull(result);
 
                     m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
@@ -122,22 +124,21 @@ namespace Compute.Tests
 
                     var captureResponse = m_CrpClient.VirtualMachines.Capture(rg1Name, vm1.Name, captureParams);
 
-                    Assert.NotNull(captureResponse.Output);
-                    string outputAsString = captureResponse.Output.ToString();
-                    Assert.Equal('{', outputAsString[0]);
-                    Assert.True(outputAsString.Contains(captureParams.DestinationContainerName.ToLowerInvariant()));
-                    Assert.True(outputAsString.ToLowerInvariant().Contains(captureParams.VhdPrefix.ToLowerInvariant()));
+                    Assert.NotNull(captureResponse);
+                    Assert.True(captureResponse.Resources.Count > 0);
+                    string resource = captureResponse.Resources[0].ToString();
+                    Assert.Contains(captureParams.DestinationContainerName.ToLowerInvariant(), resource.ToLowerInvariant());
+                    Assert.Contains(captureParams.VhdPrefix.ToLowerInvariant(), resource.ToLowerInvariant());
 
-                    Template template = JsonConvert.DeserializeObject<Template>(outputAsString);
-                    Assert.True(template.Resources.Count > 0);
-                    string imageUri = template.Resources[0].Properties.StorageProfile.OSDisk.Image.Uri;
+                    Resource template = JsonConvert.DeserializeObject<Resource>(resource);
+                    string imageUri = template.Properties.StorageProfile.OSDisk.Image.Uri;
                     Assert.False(string.IsNullOrEmpty(imageUri));
 
                     // Create 2nd VM from the captured image
                     // TODO : Provisioning Time-out Issues
                     VirtualMachine inputVM2;
                     string as2Name = as1Name + "b";
-                    VirtualMachine vm2 = CreateVM_NoAsyncTracking(rg1Name, as2Name, storageAccountOutput, imageRef, out inputVM2,
+                    VirtualMachine vm2 = CreateVM(rg1Name, as2Name, storageAccountOutput, imageRef, out inputVM2,
                         vm =>
                         {
                             vm.StorageProfile.ImageReference = null;
@@ -187,7 +188,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef,
+                    VirtualMachine vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imageRef,
                         out inputVM1);
 
                     var redeployOperationResponse = m_CrpClient.VirtualMachines.BeginRedeployWithHttpMessagesAsync(rg1Name, vm1.Name);
@@ -242,7 +243,7 @@ namespace Compute.Tests
                     // Create Storage Account, so that both the VMs can share it
                     var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
 
-                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef,
+                    VirtualMachine vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imageRef,
                         out inputVM1);
 
                     m_CrpClient.VirtualMachines.PerformMaintenance(rg1Name, vm1.Name);

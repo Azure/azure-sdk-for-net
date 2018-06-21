@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,12 +31,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the IntegrationRuntimeStatus class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        /// <param name="dataFactoryName">The data factory name which the
+        /// integration runtime belong to.</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
         /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
         /// 'Offline'</param>
-        public IntegrationRuntimeStatus(string state = default(string))
+        public IntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string))
         {
+            AdditionalProperties = additionalProperties;
+            DataFactoryName = dataFactoryName;
             State = state;
             CustomInit();
         }
@@ -43,6 +51,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        /// <summary>
+        /// Gets the data factory name which the integration runtime belong to.
+        /// </summary>
+        [JsonProperty(PropertyName = "dataFactoryName")]
+        public string DataFactoryName { get; private set; }
 
         /// <summary>
         /// Gets the state of integration runtime. Possible values include:

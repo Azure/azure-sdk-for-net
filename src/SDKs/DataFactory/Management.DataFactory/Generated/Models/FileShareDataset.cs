@@ -37,11 +37,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the FileShareDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="folderPath">The path of the on-premises file system.
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="fileName">The name of the on-premises file system.
@@ -52,8 +56,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="compression">The data compression method used for the
         /// file system.</param>
-        public FileShareDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object folderPath = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), object fileFilter = default(object), DatasetCompression compression = default(DatasetCompression))
-            : base(linkedServiceName, description, structure, parameters)
+        public FileShareDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object folderPath = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), object fileFilter = default(object), DatasetCompression compression = default(DatasetCompression))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
         {
             FolderPath = folderPath;
             FileName = fileName;

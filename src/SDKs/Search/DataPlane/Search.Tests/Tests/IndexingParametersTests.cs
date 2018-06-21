@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
     using Microsoft.Azure.Search.Models;
     using Xunit;
 
@@ -73,10 +74,23 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void DoNotFailOnUnsupportedContentTypeSetCorrectly()
+        public void ParseTextSetCorrectly()
         {
-            var parameters = new IndexingParameters().DoNotFailOnUnsupportedContentType();
-            AssertHasConfigItem(parameters, "failOnUnsupportedContentType", false);
+            const int ExpectedCount = 2;
+
+            var parameters = new IndexingParameters().ParseText();
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "text", ExpectedCount);
+            AssertHasConfigItem(parameters, "encoding", "utf-8", ExpectedCount);
+        }
+
+        [Fact]
+        public void ParseTextWithEncodingSetCorrectly()
+        {
+            const int ExpectedCount = 2;
+
+            var parameters = new IndexingParameters().ParseText(Encoding.ASCII);
+            AssertHasConfigItem(parameters, ExpectedParsingModeKey, "text", ExpectedCount);
+            AssertHasConfigItem(parameters, "encoding", "us-ascii", ExpectedCount);
         }
 
         private static void AssertHasConfigItem(

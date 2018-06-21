@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,8 +40,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// resultType string).</param>
         /// <param name="apiKey">The API key for accessing the Azure ML model
         /// endpoint.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="updateResourceEndpoint">The Update Resource REST URL
         /// for an Azure ML Web Service endpoint. Type: string (or Expression
         /// with resultType string).</param>
@@ -57,8 +64,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureMLLinkedService(object mlEndpoint, SecureString apiKey, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object tenant = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public AzureMLLinkedService(object mlEndpoint, SecretBase apiKey, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object updateResourceEndpoint = default(object), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object tenant = default(object), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             MlEndpoint = mlEndpoint;
             ApiKey = apiKey;
@@ -87,7 +94,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the API key for accessing the Azure ML model endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.apiKey")]
-        public SecureString ApiKey { get; set; }
+        public SecretBase ApiKey { get; set; }
 
         /// <summary>
         /// Gets or sets the Update Resource REST URL for an Azure ML Web
@@ -111,7 +118,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// service.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
-        public SecureString ServicePrincipalKey { get; set; }
+        public SecretBase ServicePrincipalKey { get; set; }
 
         /// <summary>
         /// Gets or sets the name or ID of the tenant to which the service
@@ -145,14 +152,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ApiKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ApiKey");
-            }
-            if (ApiKey != null)
-            {
-                ApiKey.Validate();
-            }
-            if (ServicePrincipalKey != null)
-            {
-                ServicePrincipalKey.Validate();
             }
         }
     }

@@ -38,20 +38,45 @@ namespace DataLakeAnalytics.Tests
         public void TryRegisterSubscriptionForResource(string providerName = "Microsoft.DataLakeAnalytics")
         {
             var reg = resourceManagementClient.Providers.Register(providerName);
-            ThrowIfTrue(reg == null, "resourceManagementClient.Providers.Register returned null.");
+            ThrowIfTrue(
+                reg == null, 
+                "resourceManagementClient.Providers.Register returned null."
+            );
+
             var resultAfterRegister = resourceManagementClient.Providers.Get(providerName);
-            ThrowIfTrue(resultAfterRegister == null, "resourceManagementClient.Providers.Get returned null.");
-            ThrowIfTrue(string.IsNullOrEmpty(resultAfterRegister.Id), "Provider.Id is null or empty.");
-            ThrowIfTrue(!providerName.Equals(resultAfterRegister.NamespaceProperty), string.Format("Provider name: {0} is not equal to {1}.", resultAfterRegister.NamespaceProperty, providerName));
-            ThrowIfTrue(!resultAfterRegister.RegistrationState.Equals("Registered") &&
-                        !resultAfterRegister.RegistrationState.Equals("Registering"),
-                string.Format("Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", resultAfterRegister.RegistrationState));
-            ThrowIfTrue(resultAfterRegister.ResourceTypes == null || resultAfterRegister.ResourceTypes.Count == 0, "Provider.ResourceTypes is empty.");
+            ThrowIfTrue(
+                resultAfterRegister == null, 
+                "resourceManagementClient.Providers.Get returned null."
+            );
+            ThrowIfTrue(
+                string.IsNullOrEmpty(resultAfterRegister.Id), 
+                "Provider.Id is null or empty."
+            );
+            ThrowIfTrue(
+                !providerName.Equals(resultAfterRegister.NamespaceProperty), 
+                string.Format(
+                    "Provider name: {0} is not equal to {1}.", 
+                    resultAfterRegister.NamespaceProperty, 
+                    providerName
+                )
+            );
+            ThrowIfTrue(
+                !resultAfterRegister.RegistrationState.Equals("Registered") &&
+                !resultAfterRegister.RegistrationState.Equals("Registering"),
+                string.Format(
+                    "Provider registration state was not 'Registered' or 'Registering', instead it was '{0}'", 
+                    resultAfterRegister.RegistrationState
+                )
+            );
+            ThrowIfTrue(
+                resultAfterRegister.ResourceTypes == null || resultAfterRegister.ResourceTypes.Count == 0, 
+                "Provider.ResourceTypes is empty."
+            );
         }
 
         public void TryCreateResourceGroup(string resourceGroupName, string location)
         {
-            // get the resource group first
+            // Get the resource group first
             bool exists = false;
             ResourceGroup newlyCreatedGroup = null;
             try
@@ -61,20 +86,34 @@ namespace DataLakeAnalytics.Tests
             }
             catch
             {
-                // do nothing because it means it doesn't exist
+                // Do nothing because it means it doesn't exist
             }
 
             if (!exists)
             {
                 var result =
-                    resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
-                        new ResourceGroup { Location = location });
-                newlyCreatedGroup = resourceManagementClient.ResourceGroups.Get(resourceGroupName);
+                    resourceManagementClient.ResourceGroups.CreateOrUpdate(
+                        resourceGroupName,
+                        new ResourceGroup { Location = location }
+                    );
+
+                newlyCreatedGroup = 
+                    resourceManagementClient.ResourceGroups.Get(
+                        resourceGroupName
+                    );
             }
 
-            ThrowIfTrue(newlyCreatedGroup == null, "resourceManagementClient.ResourceGroups.Get returned null.");
-            ThrowIfTrue(!resourceGroupName.Equals(newlyCreatedGroup.Name),
-                string.Format("resourceGroupName is not equal to {0}", resourceGroupName));
+            ThrowIfTrue(
+                newlyCreatedGroup == null, 
+                "resourceManagementClient.ResourceGroups.Get returned null."
+            );
+            ThrowIfTrue(
+                !resourceGroupName.Equals(newlyCreatedGroup.Name),
+                string.Format(
+                    "resourceGroupName is not equal to {0}", 
+                    resourceGroupName
+                )
+            );
         }
 
         private void ThrowIfTrue(bool condition, string message)
@@ -89,52 +128,70 @@ namespace DataLakeAnalytics.Tests
         {
             bool exists = false;
             Microsoft.Azure.Management.DataLake.Store.Models.DataLakeStoreAccount accountGetResponse = null;
+
             try
             {
-                accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName, accountName);
+                accountGetResponse = 
+                    dataLakeStoreManagementClient.Account.Get(
+                        resourceGroupName, 
+                        accountName
+                    );
                 exists = true;
             }
             catch
             {
-                // do nothing because it doesn't exist
+                // Do nothing because it doesn't exist
             }
-
 
             if (!exists)
             {
-                dataLakeStoreManagementClient.Account.Create(resourceGroupName, accountName,
-                    new Microsoft.Azure.Management.DataLake.Store.Models.DataLakeStoreAccount { Location = location});
+                dataLakeStoreManagementClient.Account.Create(
+                    resourceGroupName, 
+                    accountName,
+                    new Microsoft.Azure.Management.DataLake.Store.Models.DataLakeStoreAccount { Location = location }
+                );
 
-                accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
-                    accountName);
+                accountGetResponse = 
+                    dataLakeStoreManagementClient.Account.Get(
+                        resourceGroupName,
+                        accountName
+                    );
 
-                // wait for provisioning state to be Succeeded
-                // we will wait a maximum of 15 minutes for this to happen and then report failures
+                // Wait for provisioning state to be Succeeded
+                // We will wait a maximum of 15 minutes for this to happen and then report failures
                 int minutesWaited = 0;
                 int timeToWaitInMinutes = 15;
-                while (accountGetResponse.ProvisioningState !=
-                       DataLakeStoreAccountStatus.Succeeded &&
-                       accountGetResponse.ProvisioningState !=
-                       DataLakeStoreAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
+                while (accountGetResponse.ProvisioningState != DataLakeStoreAccountStatus.Succeeded &&
+                       accountGetResponse.ProvisioningState != DataLakeStoreAccountStatus.Failed && 
+                       minutesWaited <= timeToWaitInMinutes)
                 {
                     TestUtilities.Wait(60000); // Wait for one minute and then go again.
                     minutesWaited++;
-                    accountGetResponse = dataLakeStoreManagementClient.Account.Get(resourceGroupName,
-                        accountName);
+                    accountGetResponse = 
+                        dataLakeStoreManagementClient.Account.Get(
+                            resourceGroupName,
+                            accountName
+                        );
                 }
             }
 
             // Confirm that the account creation did succeed
             ThrowIfTrue(
-                accountGetResponse.ProvisioningState !=
-                DataLakeStoreAccountStatus.Succeeded,
-                "Account failed to be provisioned into the success state. Actual State: " +
-                accountGetResponse.ProvisioningState);
+                accountGetResponse.ProvisioningState != DataLakeStoreAccountStatus.Succeeded,
+                "Account failed to be provisioned into the success state. Actual State: " + accountGetResponse.ProvisioningState
+            );
 
-            return accountGetResponse.Endpoint.Replace(string.Format("{0}.",accountName), "");
+            return accountGetResponse.Endpoint.Replace(string.Format("{0}.", accountName), "");
         }
 
-        public string TryCreateStorageAccount(string resourceGroupName, string storageAccountName, string label, string description, string location, out string storageAccountSuffix)
+        public string TryCreateStorageAccount(
+            string resourceGroupName, 
+            string storageAccountName, 
+            string label, 
+            string description, 
+            string location, 
+            out string storageAccountSuffix
+        )
         {
             var stoInput = new StorageAccountCreateParameters
             {
@@ -146,79 +203,117 @@ namespace DataLakeAnalytics.Tests
                 }
             };
 
+            // Retrieve the storage account
+            storageManagementClient.StorageAccounts.Create(
+                resourceGroupName, 
+                storageAccountName, 
+                stoInput
+            );
 
-            // retrieve the storage account
-            storageManagementClient.StorageAccounts.Create(resourceGroupName, storageAccountName, stoInput);
+            // Retrieve the storage account primary access key
+            var accessKey = 
+                storageManagementClient.StorageAccounts.ListKeys(
+                    resourceGroupName, 
+                    storageAccountName
+                ).Keys[0].Value;
 
-            // retrieve the storage account primary access key
-            var accessKey = storageManagementClient.StorageAccounts.ListKeys(resourceGroupName, storageAccountName).Keys[0].Value;
-            ThrowIfTrue(string.IsNullOrEmpty(accessKey), "storageManagementClient.StorageAccounts.ListKeys returned null.");
+            ThrowIfTrue(
+                string.IsNullOrEmpty(accessKey), 
+                "storageManagementClient.StorageAccounts.ListKeys returned null."
+            );
 
-            // set the storage account suffix
-            var getResponse = storageManagementClient.StorageAccounts.GetProperties(resourceGroupName, storageAccountName);
+            // Set the storage account suffix
+            var getResponse = 
+                storageManagementClient.StorageAccounts.GetProperties(
+                    resourceGroupName, 
+                    storageAccountName
+                );
             storageAccountSuffix = getResponse.PrimaryEndpoints.Blob.ToString();
             storageAccountSuffix = storageAccountSuffix.Replace("https://", "").TrimEnd('/');
             storageAccountSuffix = storageAccountSuffix.Replace(storageAccountName, "").TrimStart('.');
-            storageAccountSuffix = storageAccountSuffix.Replace("blob.",""); // remove the opening "blob." if it exists.
+            // Remove the opening "blob." if it exists.
+            storageAccountSuffix = storageAccountSuffix.Replace("blob.",""); 
 
             return accessKey;
         }
 
-        public string TryCreateDataLakeAnalyticsAccount(string resourceGroupName, string location,
-            string dataLakeStoreAccountName, string accountName)
+        public string TryCreateDataLakeAnalyticsAccount(
+            string resourceGroupName, 
+            string location,
+            string dataLakeStoreAccountName, 
+            string accountName
+        )
         {
-            var datalakeStoreEndpoint = TryCreateDataLakeStoreAccount(resourceGroupName, location,
-                dataLakeStoreAccountName);
+            var datalakeStoreEndpoint = 
+                TryCreateDataLakeStoreAccount(
+                    resourceGroupName, 
+                    location,
+                    dataLakeStoreAccountName
+                );
 
-            var accountCreateResponse = dataLakeAnalyticsManagementClient.Account.Create(
-                resourceGroupName, 
-                accountName,
-                new DataLakeAnalyticsAccount
-                {
-                    Location = location,
-                     
-                    DataLakeStoreAccounts = new List<DataLakeStoreAccountInfo>
+            var accountCreateResponse = 
+                dataLakeAnalyticsManagementClient.Accounts.Create(
+                    resourceGroupName, 
+                    accountName,
+                    new CreateDataLakeAnalyticsAccountParameters
                     {
-                        new DataLakeStoreAccountInfo
+                        Location = location,
+                        DefaultDataLakeStoreAccount = dataLakeStoreAccountName,
+                        DataLakeStoreAccounts = new List<AddDataLakeStoreWithAccountParameters>
                         {
-                            Name = dataLakeStoreAccountName,
-                            Suffix = datalakeStoreEndpoint.Replace(string.Format("{0}.", dataLakeStoreAccountName), "")
+                            new AddDataLakeStoreWithAccountParameters
+                            {
+                                Name = dataLakeStoreAccountName,
+                                Suffix = datalakeStoreEndpoint.Replace(string.Format("{0}.", dataLakeStoreAccountName), "")
+                            }
                         }
-                    },
-                    DefaultDataLakeStoreAccount = dataLakeStoreAccountName      
-                });
+                    }
+                );
 
-            var accountGetResponse = dataLakeAnalyticsManagementClient.Account.Get(resourceGroupName,
-                accountName);
+            var accountGetResponse = 
+                dataLakeAnalyticsManagementClient.Accounts.Get(
+                    resourceGroupName,
+                    accountName
+                );
 
-            // wait for provisioning state to be Succeeded
-            // we will wait a maximum of 15 minutes for this to happen and then report failures
+            // Wait for provisioning state to be Succeeded
+            // We will wait a maximum of 15 minutes for this to happen and then report failures
             int timeToWaitInMinutes = 15;
             int minutesWaited = 0;
-            while (accountGetResponse.ProvisioningState !=
-                   DataLakeAnalyticsAccountStatus.Succeeded &&
-                   accountGetResponse.ProvisioningState !=
-                   DataLakeAnalyticsAccountStatus.Failed && minutesWaited <= timeToWaitInMinutes)
+            while (accountGetResponse.ProvisioningState != DataLakeAnalyticsAccountStatus.Succeeded &&
+                   accountGetResponse.ProvisioningState != DataLakeAnalyticsAccountStatus.Failed && 
+                   minutesWaited <= timeToWaitInMinutes)
             {
-                TestUtilities.Wait(60000); // Wait for one minute and then go again.
+                // Wait for one minute and then go again.
+                TestUtilities.Wait(60000); 
                 minutesWaited++;
-                accountGetResponse = dataLakeAnalyticsManagementClient.Account.Get(resourceGroupName,
-                    accountName);
+                accountGetResponse = 
+                    dataLakeAnalyticsManagementClient.Accounts.Get(
+                        resourceGroupName,
+                        accountName
+                    );
             }
 
             // Confirm that the account creation did succeed
             ThrowIfTrue(
-                accountGetResponse.ProvisioningState !=
-                DataLakeAnalyticsAccountStatus.Succeeded,
-                "Account failed to be provisioned into the success state after " + timeToWaitInMinutes + " minutes.");
+                accountGetResponse.ProvisioningState != DataLakeAnalyticsAccountStatus.Succeeded,
+                "Account failed to be provisioned into the success state after " + timeToWaitInMinutes + " minutes."
+            );
 
             return datalakeStoreEndpoint;
         }
 
-        public Guid CreateCatalog(string resourceGroupName, string dataLakeAnalyticsAccountName, string dbName,
-            string tableName, string tvfName, string viewName, string procName)
+        public Guid CreateCatalog(
+            string resourceGroupName, 
+            string dataLakeAnalyticsAccountName, 
+            string dbName,
+            string tableName, 
+            string tvfName, 
+            string viewName, 
+            string procName
+        )
         {
-            // build a simple catalog that can be used to retrieve items.
+            // Build a simple catalog that can be used to retrieve items.
             var scriptToRun = string.Format(@"
 DROP DATABASE IF EXISTS {0}; CREATE DATABASE {0}; 
 //Create Table
@@ -238,6 +333,13 @@ CREATE TABLE {0}.dbo.{1}
 );
 
 ALTER TABLE {0}.dbo.{1} ADD IF NOT EXISTS PARTITION (1);
+
+INSERT INTO {0}.dbo.{1}
+(UserId, Start, Region, Query, Duration, Urls, ClickedUrls)
+ON INTEGRITY VIOLATION MOVE TO PARTITION (1)
+VALUES
+(1, new DateTime(2018, 04, 25), ""US"", @""fake query"", 34, ""http://url1.fake.com"", ""http://clickedUrl1.fake.com""),
+(1, new DateTime(2018, 04, 26), ""EN"", @""fake query"", 23, ""http://url2.fake.com"", ""http://clickedUrl2.fake.com"");
 
 DROP FUNCTION IF EXISTS {0}.dbo.{2};
 
@@ -316,7 +418,12 @@ END;", dbName, tableName, tvfName, viewName, procName);
             return RunJobToCompletion(dataLakeAnalyticsJobManagementClient, dataLakeAnalyticsAccountName, TestUtilities.GenerateGuid(), scriptToRun);
         }
 
-        internal Guid RunJobToCompletion(DataLakeAnalyticsJobManagementClient jobClient, string dataLakeAnalyticsAccountName, Guid jobIdToUse, string scriptToRun)
+        internal Guid RunJobToCompletion(
+            DataLakeAnalyticsJobManagementClient jobClient, 
+            string dataLakeAnalyticsAccountName, 
+            Guid jobIdToUse, 
+            string scriptToRun
+        )
         { 
             var createOrBuildParams = new CreateJobParameters
             {
@@ -329,22 +436,36 @@ END;", dbName, tableName, tvfName, viewName, procName);
                     Script = scriptToRun
                 }
             };
-            var jobCreateResponse = jobClient.Job.Create(dataLakeAnalyticsAccountName, jobIdToUse, createOrBuildParams);
+            var jobCreateResponse = 
+                jobClient.Job.Create(
+                    dataLakeAnalyticsAccountName, 
+                    jobIdToUse, 
+                    createOrBuildParams
+                );
 
             Assert.NotNull(jobCreateResponse);
 
             // Poll the job until it finishes
-            var getJobResponse = jobClient.Job.Get(dataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
+            var getJobResponse = 
+                jobClient.Job.Get(
+                    dataLakeAnalyticsAccountName, 
+                    jobCreateResponse.JobId.GetValueOrDefault()
+                );
             Assert.NotNull(getJobResponse);
 
             int maxWaitInSeconds = 180; // 3 minutes should be long enough
             int curWaitInSeconds = 0;
             while (getJobResponse.State != JobState.Ended && curWaitInSeconds < maxWaitInSeconds)
             {
-                // wait 5 seconds before polling again
+                // Wait 5 seconds before polling again
                 TestUtilities.Wait(5000);
                 curWaitInSeconds += 5;
-                getJobResponse = jobClient.Job.Get(dataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
+                getJobResponse = 
+                    jobClient.Job.Get(
+                        dataLakeAnalyticsAccountName, 
+                        jobCreateResponse.JobId.GetValueOrDefault()
+                    );
+
                 Assert.NotNull(getJobResponse);
             }
 
@@ -355,8 +476,13 @@ END;", dbName, tableName, tvfName, viewName, procName);
                 getJobResponse.State == JobState.Ended && getJobResponse.Result == JobResult.Succeeded,
                 string.Format(
                     "Job: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
-                    getJobResponse.JobId, getJobResponse.State, getJobResponse.Result,
-                    getJobResponse.ErrorMessage != null && getJobResponse.ErrorMessage.Count > 0 ? getJobResponse.ErrorMessage[0].Details : "no error information returned"));
+                    getJobResponse.JobId, 
+                    getJobResponse.State, 
+                    getJobResponse.Result,
+                    getJobResponse.ErrorMessage != null && getJobResponse.ErrorMessage.Count > 0 ? getJobResponse.ErrorMessage[0].Details : "no error information returned"
+                )
+            );
+
             return getJobResponse.JobId.GetValueOrDefault();
         }
     }

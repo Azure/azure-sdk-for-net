@@ -1,7 +1,7 @@
     {
       "Name": "ExitConditions",
       "ProtocolName": "Models.ExitConditions",
-      "Comment": "How the Batch service should respond when a task completes.",
+      "SummaryComment": "How the Batch service should respond when a task completes.",
       "IsUsedInCollections": true,
       "Properties": [
         {

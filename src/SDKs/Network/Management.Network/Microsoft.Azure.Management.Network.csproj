@@ -1,16 +1,26 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
-  <PropertyGroup>
-    <PackageId>Microsoft.Azure.Management.Network</PackageId>
-    <Description>Provides management capabilities for Network services.</Description>
-    <AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-    <Version>15.1.0-preview</Version>
-    <PackageTags>Microsoft Azure Network management;Network;Network management;windowsazureofficial</PackageTags>    
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-  </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Customizations\" />
-  </ItemGroup>  
+<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.Network</PackageId>
+		<Description>Provides management capabilities for Network services.</Description>
+		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
+		<Version>19.0.2-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<PackageReleaseNotes>
+		<![CDATA[
+			- Expose new SKUs for VMSS VPN and ER gateways
+			- Add optional traffic analytics config fields to network watcher
+			- Remove two VirtualNetworkGateways' methods that are not in production
+		]]></PackageReleaseNotes>
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

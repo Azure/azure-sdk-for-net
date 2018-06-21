@@ -15,5 +15,24 @@ namespace Sql.Tests
 
         // Default elastic pool edition
         public const string DefaultElasticPoolEdition = ElasticPoolEdition.Basic;
+
+        public static Sku DefaultDatabaseSku()
+        {
+            return new Sku(ServiceObjectiveName.Basic);
+        }
+
+        public static Sku DefaultDataWarehouseSku()
+        {
+            return new Sku(ServiceObjectiveName.DW100);
+        }
+
+        public static Sku DefaultElasticPoolSku()
+        {
+            return new Sku(DefaultElasticPoolEdition + "Pool")
+            {
+                Tier = DefaultElasticPoolEdition, // todo: should be optional
+                Capacity = 100
+            };
+        }
     }
 }

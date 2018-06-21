@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,6 +31,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the AzureTableSource class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
         /// (or Expression with resultType integer).</param>
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
@@ -39,8 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="azureTableSourceIgnoreTableNotFound">Azure Table
         /// source ignore table not found. Type: boolean (or Expression with
         /// resultType boolean).</param>
-        public AzureTableSource(object sourceRetryCount = default(object), object sourceRetryWait = default(object), object azureTableSourceQuery = default(object), object azureTableSourceIgnoreTableNotFound = default(object))
-            : base(sourceRetryCount, sourceRetryWait)
+        public AzureTableSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object azureTableSourceQuery = default(object), object azureTableSourceIgnoreTableNotFound = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
         {
             AzureTableSourceQuery = azureTableSourceQuery;
             AzureTableSourceIgnoreTableNotFound = azureTableSourceIgnoreTableNotFound;

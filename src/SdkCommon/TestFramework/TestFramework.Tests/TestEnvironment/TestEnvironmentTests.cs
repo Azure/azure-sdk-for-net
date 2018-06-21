@@ -17,10 +17,10 @@ namespace TestFramework.Tests.TestEnvironment
             Assert.Equal<int>(5, env.EnvEndpoints.Count);
         }
 
-        [Fact]
+        [Fact(Skip ="Live Test")]
         public void DefaultTenantInTestEnvironment()
         {
-            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=d513e2e9-97db-40f6-8d1a-ab3b340cc81a;ServicePrincipal=f79345c9-c413-4e57-bf9a-baf86827b8f9;Password=+Ckw8FxrNYBjjlwPJpo7q0ouAe05Ei0u7Dz2ghVNL4w=;AADTenant=72f988bf-86f1-41af-91ab-2d7cd011db47;Environment=Prod;HttpRecorderMode=Record");
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "<connstr>");
             HttpMockServer.Mode = HttpRecorderMode.Record;
             TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
             string tenantId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.AADTenantKey];

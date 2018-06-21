@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,6 +33,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// IntegrationRuntimeNodeMonitoringData class.
         /// </summary>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="nodeName">Name of the integration runtime
         /// node.</param>
         /// <param name="availableMemoryInMB">Available memory (MB) on the
@@ -47,8 +51,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// node.</param>
         /// <param name="receivedBytes">Received bytes on the integration
         /// runtime node.</param>
-        public IntegrationRuntimeNodeMonitoringData(string nodeName = default(string), int? availableMemoryInMB = default(int?), double? cpuUtilization = default(double?), int? concurrentJobsLimit = default(int?), int? concurrentJobsRunning = default(int?), int? maxConcurrentJobs = default(int?), double? sentBytes = default(double?), double? receivedBytes = default(double?))
+        public IntegrationRuntimeNodeMonitoringData(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string nodeName = default(string), int? availableMemoryInMB = default(int?), double? cpuUtilization = default(double?), int? concurrentJobsLimit = default(int?), int? concurrentJobsRunning = default(int?), int? maxConcurrentJobs = default(int?), double? sentBytes = default(double?), double? receivedBytes = default(double?))
         {
+            AdditionalProperties = additionalProperties;
             NodeName = nodeName;
             AvailableMemoryInMB = availableMemoryInMB;
             CpuUtilization = cpuUtilization;
@@ -64,6 +69,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// Gets name of the integration runtime node.

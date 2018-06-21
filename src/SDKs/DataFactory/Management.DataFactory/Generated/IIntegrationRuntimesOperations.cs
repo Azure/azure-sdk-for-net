@@ -113,6 +113,37 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </exception>
         Task<AzureOperationResponse<IntegrationRuntimeResource>> GetWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates an integration runtime.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='factoryName'>
+        /// The factory name.
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// The integration runtime name.
+        /// </param>
+        /// <param name='updateIntegrationRuntimeRequest'>
+        /// The parameters for updating an integration runtime.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IntegrationRuntimeStatusResponse>> UpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes an integration runtime.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -336,8 +367,12 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </exception>
         Task<AzureOperationResponse> RemoveNodeWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimeRemoveNodeRequest removeNodeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Force the integration runtime to synchronize credentials among
-        /// integration runtime nodes.
+        /// Force the integration runtime to synchronize credentials across
+        /// integration runtime nodes, and this will override the credentials
+        /// across all worker nodes with those available on the dispatcher
+        /// node. If you already have the latest credential backup file, you
+        /// should manually import it (preferred) on any self-hosted
+        /// integration runtime node than using this API directly.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -390,6 +425,32 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IntegrationRuntimeMonitoringData>> GetMonitoringDataWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Upgrade self-hosted integration runtime to latest version if
+        /// availably.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='factoryName'>
+        /// The factory name.
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// The integration runtime name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpgradeWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Starts a ManagedReserved type integration runtime.
         /// </summary>

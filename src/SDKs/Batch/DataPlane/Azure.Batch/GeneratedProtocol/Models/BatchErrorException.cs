@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// <summary>
     /// Exception thrown for an invalid response with BatchError information.
     /// </summary>
-    public class BatchErrorException : RestException
+    public partial class BatchErrorException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.

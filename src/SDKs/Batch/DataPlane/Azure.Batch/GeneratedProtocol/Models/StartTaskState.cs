@@ -21,8 +21,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum StartTaskState
     {
+        /// <summary>
+        /// The start task is currently running.
+        /// </summary>
         [EnumMember(Value = "running")]
         Running,
+        /// <summary>
+        /// The start task has exited with exit code 0, or the start task has
+        /// failed and the retry limit has reached, or the start task process
+        /// did not run due to task preparation errors (such as resource file
+        /// download failures).
+        /// </summary>
         [EnumMember(Value = "completed")]
         Completed
     }

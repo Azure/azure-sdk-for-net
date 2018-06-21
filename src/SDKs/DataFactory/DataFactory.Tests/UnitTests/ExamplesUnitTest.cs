@@ -54,6 +54,16 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void Factories_ConfigureRepo()
+        {
+            RunTest("Factories_ConfigureRepo", (example, client, responseCode) =>
+            {
+                Factory resource = client.Factories.ConfigureFactoryRepo(LN(example), GetTypedParameter<FactoryRepoUpdate>(example, client, "factoryRepoUpdate"));
+                CheckResponseBody(example, client, responseCode, resource);
+            });
+        }
+
+        [Fact]
         public void Factories_List()
         {
             RunTest("Factories_List", (example, client, responseCode) =>
@@ -107,8 +117,13 @@ namespace DataFactory.Tests.UnitTests
         {
             RunTest("IntegrationRuntimes_Update", (example, client, responseCode) =>
             {
-                IntegrationRuntimeResource resource = client.IntegrationRuntimes.CreateOrUpdate(RGN(example), FN(example), IRN(example), IRR(example, client, "integrationRuntime"));
-                CheckResponseBody(example, client, responseCode, resource);
+                IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.Update(RGN(example), FN(example), IRN(example),
+                    new UpdateIntegrationRuntimeRequest
+                    {
+                        AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
+                        UpdateDelayOffset = SafeJsonConvert.SerializeObject(TimeSpan.FromHours(3), client.SerializationSettings)
+                    });
+                CheckResponseBody(example, client, responseCode, response);
             });
         }
 
@@ -181,23 +196,76 @@ namespace DataFactory.Tests.UnitTests
             });
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void IntegrationRuntimes_Start()
         {
             RunAyncApiTest("IntegrationRuntimes_Start", (example, client, responseCode) =>
             {
-                client.LongRunningOperationRetryTimeout = 1;
+                client.LongRunningOperationRetryTimeout = 0;
                 client.IntegrationRuntimes.Start(RGN(example), FN(example), IRN(example));
             });
         }
 
-        [Fact]
+        [Fact(Skip = "ReRecord due to CR change")]
         public void IntegrationRuntimes_Stop()
         {
             RunAyncApiTest("IntegrationRuntimes_Stop", (example, client, responseCode) =>
             {
-                client.LongRunningOperationRetryTimeout = 1;
+                client.LongRunningOperationRetryTimeout = 0;
                 client.IntegrationRuntimes.Stop(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimes_Upgrade()
+        {
+            RunAyncApiTest("IntegrationRuntimes_Upgrade", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.Upgrade(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Update()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Update", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Update(RGN(example), FN(example), IRN(example), "Node_1",
+                new UpdateIntegrationRuntimeNodeRequest
+                {
+                    ConcurrentJobsLimit = 2
+                });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimes_RemoveNode()
+        {
+            RunAyncApiTest("IntegrationRuntimes_RemoveNode", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.RemoveNode(RGN(example), FN(example), IRN(example),
+                    new IntegrationRuntimeRemoveNodeRequest
+                    {
+                        NodeName = "Node_1"
+                    });
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_Delete()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_Delete", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
+            });
+        }
+
+        [Fact]
+        public void IntegrationRuntimeNodes_GetIpAddress()
+        {
+            RunAyncApiTest("IntegrationRuntimeNodes_GetIpAddress", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimeNodes.Delete(RGN(example), FN(example), IRN(example), "Node_1");
             });
         }
 
@@ -617,6 +685,10 @@ namespace DataFactory.Tests.UnitTests
         private string PN(Example example)
         {
             return (string)example.Parameters["pipelineName"];
+        }
+        private string LN(Example example)
+        {
+            return (string)example.Parameters["locationId"];
         }
 
         private T GetTypedObject<T>(IDataFactoryManagementClient client, object objectRaw)

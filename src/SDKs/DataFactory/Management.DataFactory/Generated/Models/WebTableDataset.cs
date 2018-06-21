@@ -40,16 +40,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="index">The zero-based index of the table in the web
         /// page. Type: integer (or Expression with resultType integer),
         /// minimum: 0.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="path">The relative URL to the web page from the linked
         /// service URL. Type: string (or Expression with resultType
         /// string).</param>
-        public WebTableDataset(LinkedServiceReference linkedServiceName, object index, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object path = default(object))
-            : base(linkedServiceName, description, structure, parameters)
+        public WebTableDataset(LinkedServiceReference linkedServiceName, object index, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object path = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
         {
             Index = index;
             Path = path;

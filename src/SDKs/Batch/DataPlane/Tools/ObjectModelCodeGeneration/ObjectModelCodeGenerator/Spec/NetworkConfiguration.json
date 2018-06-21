@@ -1,7 +1,7 @@
     {
       "Name": "NetworkConfiguration",
       "ProtocolName": "Models.NetworkConfiguration",
-      "Comment": "The network configuration for a pool.",
+      "SummaryComment": "The network configuration for a pool.",
       "Properties": [
         {
           "Key": {

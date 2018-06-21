@@ -60,8 +60,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="clusterResourceGroup">The resource group where the
         /// cluster belongs. Type: string (or Expression with resultType
         /// string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="servicePrincipalId">The service principal id for the
         /// hostSubscriptionId. Type: string (or Expression with resultType
         /// string).</param>
@@ -113,8 +118,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object servicePrincipalId = default(object), SecureString servicePrincipalKey = default(SecureString), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecureString clusterPassword = default(SecureString), object clusterSshUserName = default(object), SecureString clusterSshPassword = default(SecureString), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        /// <param name="headNodeSize">Specifies the size of the head node for
+        /// the HDInsight cluster.</param>
+        /// <param name="dataNodeSize">Specifies the size of the data node for
+        /// the HDInsight cluster.</param>
+        /// <param name="zookeeperNodeSize">Specifies the size of the Zoo
+        /// Keeper node for the HDInsight cluster.</param>
+        public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object servicePrincipalId = default(object), SecretBase servicePrincipalKey = default(SecretBase), object clusterNamePrefix = default(object), object clusterUserName = default(object), SecretBase clusterPassword = default(SecretBase), object clusterSshUserName = default(object), SecretBase clusterSshPassword = default(SecretBase), IList<LinkedServiceReference> additionalLinkedServiceNames = default(IList<LinkedServiceReference>), LinkedServiceReference hcatalogLinkedServiceName = default(LinkedServiceReference), object clusterType = default(object), object sparkVersion = default(object), object coreConfiguration = default(object), object hBaseConfiguration = default(object), object hdfsConfiguration = default(object), object hiveConfiguration = default(object), object mapReduceConfiguration = default(object), object oozieConfiguration = default(object), object stormConfiguration = default(object), object yarnConfiguration = default(object), object encryptedCredential = default(object), object headNodeSize = default(object), object dataNodeSize = default(object), object zookeeperNodeSize = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
@@ -143,6 +154,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             StormConfiguration = stormConfiguration;
             YarnConfiguration = yarnConfiguration;
             EncryptedCredential = encryptedCredential;
+            HeadNodeSize = headNodeSize;
+            DataNodeSize = dataNodeSize;
+            ZookeeperNodeSize = zookeeperNodeSize;
             CustomInit();
         }
 
@@ -200,7 +214,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the key for the service principal id.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.servicePrincipalKey")]
-        public SecureString ServicePrincipalKey { get; set; }
+        public SecretBase ServicePrincipalKey { get; set; }
 
         /// <summary>
         /// Gets or sets the Tenant id/name to which the service principal
@@ -235,7 +249,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets the password to access the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.clusterPassword")]
-        public SecureString ClusterPassword { get; set; }
+        public SecretBase ClusterPassword { get; set; }
 
         /// <summary>
         /// Gets or sets the username to SSH remotely connect to cluster’s node
@@ -249,7 +263,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// (for Linux).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.clusterSshPassword")]
-        public SecureString ClusterSshPassword { get; set; }
+        public SecretBase ClusterSshPassword { get; set; }
 
         /// <summary>
         /// Gets or sets specifies additional storage accounts for the
@@ -346,6 +360,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object EncryptedCredential { get; set; }
 
         /// <summary>
+        /// Gets or sets specifies the size of the head node for the HDInsight
+        /// cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.headNodeSize")]
+        public object HeadNodeSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the size of the data node for the HDInsight
+        /// cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.dataNodeSize")]
+        public object DataNodeSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the size of the Zoo Keeper node for the
+        /// HDInsight cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.zookeeperNodeSize")]
+        public object ZookeeperNodeSize { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -385,18 +420,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (LinkedServiceName != null)
             {
                 LinkedServiceName.Validate();
-            }
-            if (ServicePrincipalKey != null)
-            {
-                ServicePrincipalKey.Validate();
-            }
-            if (ClusterPassword != null)
-            {
-                ClusterPassword.Validate();
-            }
-            if (ClusterSshPassword != null)
-            {
-                ClusterSshPassword.Validate();
             }
             if (AdditionalLinkedServiceNames != null)
             {

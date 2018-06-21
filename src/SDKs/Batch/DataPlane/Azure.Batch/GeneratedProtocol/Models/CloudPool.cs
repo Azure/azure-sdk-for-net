@@ -94,7 +94,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="metadata">A list of name-value pairs associated with
         /// the pool as metadata.</param>
         /// <param name="stats">Utilization and resource usage statistics for
-        /// the entire lifetime of the pool.</param>
+        /// the entire lifetime of the pool. The statistics may not be
+        /// immediately available. The Batch service performs periodic roll-up
+        /// of statistics. The typical delay is about 30 minutes.</param>
         public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics))
         {
             Id = id;
@@ -203,18 +205,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the current state of the pool.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// active - The pool is available to run tasks subject to the
-        /// availability of compute nodes.
-        /// deleting - The user has requested that the pool be deleted, but the
-        /// delete operation has not yet completed.
-        /// upgrading - The user has requested that the operating system of the
-        /// pool's nodes be upgraded, but the upgrade operation has not yet
-        /// completed (that is, some nodes in the pool have not yet been
-        /// upgraded). While upgrading, the pool may be able to run tasks (with
-        /// reduced capacity) but this is not guaranteed. Possible values
-        /// include: 'active', 'deleting', 'upgrading'
+        /// Possible values include: 'active', 'deleting', 'upgrading'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public PoolState? State { get; set; }
@@ -229,18 +220,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets whether the pool is resizing.
         /// </summary>
         /// <remarks>
-        /// Values are:
-        ///
-        /// steady - The pool is not resizing. There are no changes to the
-        /// number of nodes in the pool in progress. A pool enters this state
-        /// when it is created and when no operations are being performed on
-        /// the pool to change the number of dedicated nodes.
-        /// resizing - The pool is resizing; that is, compute nodes are being
-        /// added to or removed from the pool.
-        /// stopping - The pool was resizing, but the user has requested that
-        /// the resize be stopped, but the stop request has not yet been
-        /// completed. Possible values include: 'steady', 'resizing',
-        /// 'stopping'
+        /// Possible values include: 'steady', 'resizing', 'stopping'
         /// </remarks>
         [JsonProperty(PropertyName = "allocationState")]
         public AllocationState? AllocationState { get; set; }
@@ -260,7 +240,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// For information about available sizes of virtual machines for Cloud
         /// Services pools (pools created with cloudServiceConfiguration), see
         /// Sizes for Cloud Services
-        /// (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
+        /// (https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/).
         /// Batch supports all Cloud Services VM sizes except ExtraSmall, A1V2
         /// and A2V2. For information about available VM sizes for pools using
         /// images from the Virtual Machines Marketplace (pools created with
@@ -490,7 +470,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets utilization and resource usage statistics for the
-        /// entire lifetime of the pool.
+        /// entire lifetime of the pool. The statistics may not be immediately
+        /// available. The Batch service performs periodic roll-up of
+        /// statistics. The typical delay is about 30 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "stats")]
         public PoolStatistics Stats { get; set; }

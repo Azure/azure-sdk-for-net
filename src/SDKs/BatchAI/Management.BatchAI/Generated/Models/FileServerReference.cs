@@ -75,8 +75,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// the File Server will be mounted.
         /// </summary>
         /// <remarks>
-        /// Note that all file shares will be mounted under
-        /// $AZ_BATCHAI_MOUNT_ROOT location.
+        /// Note that all cluster level file servers will be mounted under
+        /// $AZ_BATCHAI_MOUNT_ROOT location and job level file servers will be
+        /// mouted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }

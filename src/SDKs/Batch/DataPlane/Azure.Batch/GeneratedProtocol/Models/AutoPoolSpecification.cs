@@ -71,15 +71,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// multiple jobs on a schedule are assigned to pools.
         /// </summary>
         /// <remarks>
-        /// When the pool lifetime is jobSchedule the pool exists for the
-        /// lifetime of the job schedule. The Batch Service creates the pool
-        /// when it creates the first job on the schedule. You may apply this
-        /// option only to job schedules, not to jobs. When the pool lifetime
-        /// is job the pool exists for the lifetime of the job to which it is
-        /// dedicated. The Batch service creates the pool when it creates the
-        /// job. If the 'job' option is applied to a job schedule, the Batch
-        /// service creates a new auto pool for every job created on the
-        /// schedule. Possible values include: 'jobSchedule', 'job'
+        /// Possible values include: 'jobSchedule', 'job'
         /// </remarks>
         [JsonProperty(PropertyName = "poolLifetimeOption")]
         public PoolLifetimeOption PoolLifetimeOption { get; set; }

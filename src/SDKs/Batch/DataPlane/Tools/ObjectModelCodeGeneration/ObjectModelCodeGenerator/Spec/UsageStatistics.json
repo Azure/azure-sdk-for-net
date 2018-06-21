@@ -1,7 +1,7 @@
     {
       "Name": "UsageStatistics",
       "ProtocolName": "Models.UsageStatistics",
-      "Comment": "Statistics related to pool usage data.",
+      "SummaryComment": "Statistics related to pool usage data.",
       "IsConstructorPublic": false,
       "Properties": [
         {

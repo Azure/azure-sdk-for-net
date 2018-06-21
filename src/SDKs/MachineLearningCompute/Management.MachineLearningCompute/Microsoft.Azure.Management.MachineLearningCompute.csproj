@@ -1,14 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+	
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.MachineLearningCompute</PackageId>
         <Description>Provides developers with a library to create and manage machine learning compute resources.</Description>
         <AssemblyName>Microsoft.Azure.Management.MachineLearningCompute</AssemblyName>
-        <Version>0.2.0</Version>
-        <PackageTags>Microsoft Azure Machine Learning Compute management;REST HTTP client;azureofficial;windowsazureofficial;netcore451511</PackageTags>
-        <PackageReleaseNotes>Orchestrator properties and orchestrator service principal are optional since the resource provider will create one if not provided.</PackageReleaseNotes>
+        <Version>0.3.0</Version>
+        <PackageTags>Microsoft Azure Machine Learning Compute management;</PackageTags>
+        <PackageReleaseNotes>Added optional 'deleteAll' parameter to delete all resources associated with the cluster.</PackageReleaseNotes>
     </PropertyGroup>
     <PropertyGroup>
         <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
     </PropertyGroup>
+	
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
 </Project>

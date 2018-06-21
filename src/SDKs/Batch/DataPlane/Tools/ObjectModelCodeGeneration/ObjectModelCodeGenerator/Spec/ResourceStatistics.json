@@ -1,7 +1,7 @@
     {
       "Name": "ResourceStatistics",
       "ProtocolName": "Models.ResourceStatistics",
-      "Comment": "The resource statistics data for the pool.",
+      "SummaryComment": "The resource statistics data for the pool.",
       "IsConstructorPublic": false,
       "Properties": [
         {

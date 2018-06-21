@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,8 +37,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         /// <param name="host">Host name of the server. Type: string (or
         /// Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="connectVia">The integration runtime reference.</param>
         /// <param name="description">Linked service description.</param>
+        /// <param name="parameters">Parameters for linked service.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="userId">User ID to logon the server. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="password">Password to logon the server.</param>
@@ -44,8 +51,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public FileServerLinkedService(object host, IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), object userId = default(object), SecureString password = default(SecureString), object encryptedCredential = default(object))
-            : base(connectVia, description)
+        public FileServerLinkedService(object host, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object userId = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+            : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Host = host;
             UserId = userId;
@@ -77,7 +84,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password to logon the server.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
-        public SecureString Password { get; set; }
+        public SecretBase Password { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
@@ -99,10 +106,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (Host == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Host");
-            }
-            if (Password != null)
-            {
-                Password.Validate();
             }
         }
     }

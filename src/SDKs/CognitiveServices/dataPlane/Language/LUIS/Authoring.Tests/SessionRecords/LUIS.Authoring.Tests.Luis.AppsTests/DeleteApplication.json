@@ -1,0 +1,183 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/api/v2.0/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App to be deleted\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "147"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "\"99daaa48-7e7e-49ec-93ab-73ffd5808218\"",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 21:53:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://api.luis.ai/api/v2.0/apps/99daaa48-7e7e-49ec-93ab-73ffd5808218"
+        ],
+        "Apim-Request-Id": [
+          "fb42c49a-91a4-4e26-aa4c-e9201d2a6356"
+        ],
+        "Request-Id": [
+          "fb42c49a-91a4-4e26-aa4c-e9201d2a6356"
+        ],
+        "Operation-Location": [
+          "https://api.luis.ai/api/v2.0/apps/99daaa48-7e7e-49ec-93ab-73ffd5808218"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/99daaa48-7e7e-49ec-93ab-73ffd5808218",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy85OWRhYWE0OC03ZTdlLTQ5ZWMtOTNhYi03M2ZmZDU4MDgyMTg=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 21:53:38 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "c1baf463-cc66-47d0-a34a-05c087d1aa2e"
+        ],
+        "Request-Id": [
+          "c1baf463-cc66-47d0-a34a-05c087d1aa2e"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/api/v2.0/apps/?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8/c2tpcD0wJnRha2U9MTAw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "00000000000000000000000000000000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"591ecf5e-7932-4a40-8804-0b765d4916b7\",\r\n    \"name\": \"AdaptiveCards App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 4,\r\n    \"createdDateTime\": \"2017-06-26T14:24:53Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.4.745\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/591ecf5e-7932-4a40-8804-0b765d4916b7\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-15T03:35:28Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 2,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"d0cecf92-96d8-476a-bc3c-9a899d89dec3\",\r\n    \"name\": \"AttachmentsSandbox App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-06-27T15:03:52Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/d0cecf92-96d8-476a-bc3c-9a899d89dec3\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-15T03:46:10Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 0,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"ecbb37c0-afe4-4fe9-a141-8b1865e4baaa\",\r\n    \"name\": \"BotBuilder-Samples-LUIS\",\r\n    \"description\": \"\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-05-16T18:14:36Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/ecbb37c0-afe4-4fe9-a141-8b1865e4baaa\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"08890aa0c33a46788d5e85de465aba35\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-15T18:20:45Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 63,\r\n    \"activeVersion\": null\r\n  },\r\n  {\r\n    \"id\": \"4d1ac8a1-af7d-4458-aa8e-ed94e8e4b96f\",\r\n    \"name\": \"ImportExportSandbox App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-06-27T17:31:47Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/4d1ac8a1-af7d-4458-aa8e-ed94e8e4b96f\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-07-07T21:23:22Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 210,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n    \"name\": \"LUIS BOT\",\r\n    \"description\": \"LUIS BOT\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"Iot\",\r\n    \"domain\": \"Travel & Local\",\r\n    \"versionsCount\": 2,\r\n    \"createdDateTime\": \"2017-02-09T14:01:44Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"00000000000000000000000000000000\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-11-30T04:08:13Z\"\r\n      },\r\n      \"STAGING\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": true,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/86226c53-b7a6-416f-876b-226b2b5ab07b\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"00000000000000000000000000000000\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-11-28T19:42:18Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 1049,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"2370fb9d-7dbc-4898-a361-a742cf290766\",\r\n    \"name\": \"LuisActionBinding\",\r\n    \"description\": \"\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 5,\r\n    \"createdDateTime\": \"2017-03-27T17:46:12Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/2370fb9d-7dbc-4898-a361-a742cf290766\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-15T18:20:47Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 566,\r\n    \"activeVersion\": \"0.2\"\r\n  },\r\n  {\r\n    \"id\": \"537cb4f2-669c-4eaf-9c7d-79360d480ecb\",\r\n    \"name\": \"LuisBot\",\r\n    \"description\": \"\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 2,\r\n    \"createdDateTime\": \"2017-06-23T14:28:36Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/537cb4f2-669c-4eaf-9c7d-79360d480ecb\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"e98f962fb491460a93b23c0126255038\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-07-21T20:23:28Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 1,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"0dcfade4-3c07-4afb-a775-f0e8a4bcd395\",\r\n    \"name\": \"LuisitoHaceIso\",\r\n    \"description\": \"\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"Bot\",\r\n    \"domain\": \"Entertainment,Gaming,Music & Audio,Weather\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-02-06T19:08:39Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/0dcfade4-3c07-4afb-a775-f0e8a4bcd395\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"08890aa0c33a46788d5e85de465aba35\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-03-02T14:56:47Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 840,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"4300a35a-0ecc-45f7-83aa-84be8f0f6fd0\",\r\n    \"name\": \"LuisRuntimeSimpleConsoleSample\",\r\n    \"description\": \"\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-12-01T20:37:38Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/4300a35a-0ecc-45f7-83aa-84be8f0f6fd0\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-12-01T20:53:48Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 0,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"9f324cb7-10be-4e72-92fd-db9afbaf0c55\",\r\n    \"name\": \"PcSandbox App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 5,\r\n    \"createdDateTime\": \"2017-09-15T14:34:43Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.5.61\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/9f324cb7-10be-4e72-92fd-db9afbaf0c55\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-22T04:53:17Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 0,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"fe9c1906-e357-4811-8fb6-6f4d97377ec7\",\r\n    \"name\": \"PcSandbox2 App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 4,\r\n    \"createdDateTime\": \"2017-07-14T19:04:55Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.4.1178\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/fe9c1906-e357-4811-8fb6-6f4d97377ec7\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-13T20:23:46Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 59,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"8b7a80b4-cc77-4cff-91d1-270f46dfe5cb\",\r\n    \"name\": \"PcSandboxBot App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 9,\r\n    \"createdDateTime\": \"2017-06-21T16:39:09Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.9.138\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/8b7a80b4-cc77-4cff-91d1-270f46dfe5cb\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-18T19:09:14Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 23,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"eca0e87f-9fe6-43fe-8605-29fee4f179f2\",\r\n    \"name\": \"PcSandboxBot2 App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-06-22T16:44:48Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/eca0e87f-9fe6-43fe-8605-29fee4f179f2\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-15T01:49:38Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 143,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"df8048f3-e10d-4d3b-af86-856bcddf5459\",\r\n    \"name\": \"Ramona2 App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 3,\r\n    \"createdDateTime\": \"2017-09-13T15:09:14Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.3.566\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/df8048f3-e10d-4d3b-af86-856bcddf5459\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-13T15:40:11Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 0,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"19d97549-b0ea-4a06-8dfb-1681c79616bb\",\r\n    \"name\": \"Ramona3 App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-09-13T17:49:22Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/19d97549-b0ea-4a06-8dfb-1681c79616bb\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-13T17:49:29Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 0,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"6f7f5d65-cd16-4d35-983d-a66cd63f1b68\",\r\n    \"name\": \"Ramona4 App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 3,\r\n    \"createdDateTime\": \"2017-09-13T17:55:08Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.3.1854\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/6f7f5d65-cd16-4d35-983d-a66cd63f1b68\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-13T19:25:03Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 0,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"1f670f54-53d7-48d2-bc5b-4effdfcaaaca\",\r\n    \"name\": \"Sandbox App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-07-10T13:59:07Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/1f670f54-53d7-48d2-bc5b-4effdfcaaaca\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-07-10T17:53:47Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 4,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"e247616c-0e5b-4b35-9805-ecba484d140d\",\r\n    \"name\": \"testez3 App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-06-22T14:24:35Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/e247616c-0e5b-4b35-9805-ecba484d140d\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-06-26T13:41:56Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 28,\r\n    \"activeVersion\": \"0.1\"\r\n  },\r\n  {\r\n    \"id\": \"79bc0eeb-d62f-4a8b-8e83-4692535ee403\",\r\n    \"name\": \"testez4 App\",\r\n    \"description\": \"Default Intents for Azure Bot Service V2\",\r\n    \"culture\": \"en-us\",\r\n    \"usageScenario\": \"\",\r\n    \"domain\": \"\",\r\n    \"versionsCount\": 1,\r\n    \"createdDateTime\": \"2017-06-23T14:16:42Z\",\r\n    \"endpoints\": {\r\n      \"PRODUCTION\": {\r\n        \"versionId\": \"0.1\",\r\n        \"isStaging\": false,\r\n        \"endpointUrl\": \"https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/79bc0eeb-d62f-4a8b-8e83-4692535ee403\",\r\n        \"region\": null,\r\n        \"assignedEndpointKey\": \"\",\r\n        \"endpointRegion\": \"westus\",\r\n        \"publishedDateTime\": \"2017-09-15T17:22:44Z\"\r\n      }\r\n    },\r\n    \"endpointHitsCount\": 51,\r\n    \"activeVersion\": \"0.1\"\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "11015"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Tue, 12 Dec 2017 21:53:38 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "99047843-1044-4cfb-bde1-cf5d2ab375af"
+        ],
+        "Request-Id": [
+          "99047843-1044-4cfb-bde1-cf5d2ab375af"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

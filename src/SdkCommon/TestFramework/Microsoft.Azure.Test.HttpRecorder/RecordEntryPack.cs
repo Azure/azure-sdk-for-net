@@ -18,12 +18,12 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static RecordEntryPack Deserialize(string path)
         {
-            return Utilities.DeserializeJson<RecordEntryPack>(path);
+            return RecorderUtilities.DeserializeJson<RecordEntryPack>(path);
         }
 
         public void Serialize(string path)
         {
-            Utilities.SerializeJson(this, path);
+            RecorderUtilities.SerializeJson(this, path);
         }
     }
 }

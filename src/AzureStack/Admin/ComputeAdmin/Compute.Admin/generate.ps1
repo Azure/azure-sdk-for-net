@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/compute" -AutoRestVersion "latest" -SdkRootDirectory "$PSScriptRoot"

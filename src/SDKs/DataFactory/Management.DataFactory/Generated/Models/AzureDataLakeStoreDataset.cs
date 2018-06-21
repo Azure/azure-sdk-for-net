@@ -39,26 +39,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="folderPath">Path to the folder in the Azure Data Lake
         /// Store. Type: string (or Expression with resultType string).</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="fileName">The name of the file in the Azure Data Lake
         /// Store. Type: string (or Expression with resultType string).</param>
         /// <param name="format">The format of the Data Lake Store.</param>
         /// <param name="compression">The data compression method used for the
         /// item(s) in the Azure Data Lake Store.</param>
-        /// <param name="partitionedBy">Specify a dynamic path and filename for
-        /// time series data.</param>
-        public AzureDataLakeStoreDataset(LinkedServiceReference linkedServiceName, object folderPath, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression), IList<DatasetPartition> partitionedBy = default(IList<DatasetPartition>))
-            : base(linkedServiceName, description, structure, parameters)
+        public AzureDataLakeStoreDataset(LinkedServiceReference linkedServiceName, object folderPath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
         {
             FolderPath = folderPath;
             FileName = fileName;
             Format = format;
             Compression = compression;
-            PartitionedBy = partitionedBy;
             CustomInit();
         }
 
@@ -93,13 +94,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.compression")]
         public DatasetCompression Compression { get; set; }
-
-        /// <summary>
-        /// Gets or sets specify a dynamic path and filename for time series
-        /// data.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.partitionedBy")]
-        public IList<DatasetPartition> PartitionedBy { get; set; }
 
         /// <summary>
         /// Validate the object.

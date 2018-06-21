@@ -37,15 +37,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the DynamicsEntityDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
         /// <param name="structure">Columns that define the structure of the
         /// dataset. Type: array (or Expression with resultType array),
         /// itemType: DatasetDataElement.</param>
         /// <param name="parameters">Parameters for dataset.</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the Dataset.</param>
         /// <param name="entityName">The logical name of the entity. Type:
         /// string (or Expression with resultType string).</param>
-        public DynamicsEntityDataset(LinkedServiceReference linkedServiceName, string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), object entityName = default(object))
-            : base(linkedServiceName, description, structure, parameters)
+        public DynamicsEntityDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object entityName = default(object))
+            : base(linkedServiceName, additionalProperties, description, structure, parameters, annotations)
         {
             EntityName = entityName;
             CustomInit();

@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Monitor.Tests.Helpers;
-using Microsoft.Azure.Management.Monitor.Management;
-using Microsoft.Azure.Management.Monitor.Management.Models;
+using Microsoft.Azure.Management.Monitor;
+using Microsoft.Azure.Management.Monitor.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Globalization;
@@ -85,8 +85,7 @@ namespace Monitor.Tests.Scenarios
                 );
 
                 AutoscaleSettingResource updatedSetting = null;
-                Assert.Throws(
-                    typeof(ErrorResponseException), 
+                Assert.Throws<ErrorResponseException>( 
                     () => updatedSetting = insightsClient.AutoscaleSettings.Update(
                         resourceGroupName: ResourceGroup,
                         autoscaleSettingName: SettingName,
@@ -127,8 +126,7 @@ namespace Monitor.Tests.Scenarios
                     autoscaleSettingName: SettingName);
 
                 // Retrieve again the setting created above (must fail)
-                Assert.Throws(
-                    typeof(ErrorResponseException),
+                Assert.Throws<ErrorResponseException>(
                     () => insightsClient.AutoscaleSettings.Get(
                         resourceGroupName: ResourceGroup,
                         autoscaleSettingName: SettingName));

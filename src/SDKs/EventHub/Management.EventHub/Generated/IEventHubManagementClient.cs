@@ -95,5 +95,10 @@ namespace Microsoft.Azure.Management.EventHub
         /// </summary>
         IConsumerGroupsOperations ConsumerGroups { get; }
 
+        /// <summary>
+        /// Gets the IRegionsOperations.
+        /// </summary>
+        IRegionsOperations Regions { get; }
+
     }
 }

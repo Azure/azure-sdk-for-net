@@ -343,6 +343,8 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <remarks>
         /// Statistics are aggregated across all pools that have ever existed in the
         /// account, from account creation to the last update time of the statistics.
+        /// The statistics may not be immediately available. The Batch service performs
+        /// periodic roll-up of statistics. The typical delay is about 30 minutes.
         /// </remarks>
         /// <param name='poolGetAllLifetimeStatisticsOptions'>
         /// Additional parameters for the operation
@@ -622,10 +624,6 @@ namespace Microsoft.Azure.Batch.Protocol
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (pool == null)
-            {
-                pool = new PoolAddParameter();
             }
             int? timeout = default(int?);
             if (poolAddOptions != null)

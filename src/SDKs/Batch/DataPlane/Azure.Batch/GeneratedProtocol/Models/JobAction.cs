@@ -21,10 +21,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum JobAction
     {
+        /// <summary>
+        /// Take no action.
+        /// </summary>
         [EnumMember(Value = "none")]
         None,
+        /// <summary>
+        /// Disable the job. This is equivalent to calling the disable job API,
+        /// with a disableTasks value of requeue.
+        /// </summary>
         [EnumMember(Value = "disable")]
         Disable,
+        /// <summary>
+        /// Terminate the job. The terminateReason in the job's executionInfo
+        /// is set to "TaskFailed".
+        /// </summary>
         [EnumMember(Value = "terminate")]
         Terminate
     }
