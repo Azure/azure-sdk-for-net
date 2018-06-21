@@ -17,14 +17,14 @@
         2. Jobs must be created under an experiment;
         3. Clusters, FileServers and Jobs do not accept location during creation and belong to the same location as the parent workspace;
         4. Clusters, FileServers and Jobs do not support tags;
-        5. BatchAIManagementClient.usage renamed to BatchAIManagementClient.usages;
+        5. BatchAIManagementClient.Usage renamed to BatchAIManagementClient.Usages;
         6. Job priority changed a type from int to an enum;
-        7. File.is_directory is replaced with File.file_type;
-        8. Job.priority and JobCreateParameters.priority is replaced with scheduling_priority;
-        9. Removed unsupported MountSettings.file_server_type attribute;
-        10. OutputDirectory.type unsupported attribute removed;
-        11. OutputDirectory.create_new attributes removed, BatchAI will always create output directories if they not exist;
-        12. SetupTask.run_elevated attribute removed, the setup task is always executed under root.
+        7. File.IsDirectory is replaced with File.FileType;
+        8. Job.Priority and JobCreateParameters.Priority is replaced with SchedulingPriority;
+        9. Removed unsupported MountSettings.FileServerType attribute;
+        10. OutputDirectory.Type unsupported attribute removed;
+        11. OutputDirectory.CreateNew attributes removed, BatchAI will always create output directories if they not exist;
+        12. SetupTask.RunElevated attribute removed, the setup task is always executed under root.
 
         Features:
         1. Added support to workspaces to group Clusters, FileServers and Experiments and remove limit on number of allocated resources;
