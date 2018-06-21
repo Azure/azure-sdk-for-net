@@ -85,7 +85,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Manual test due to long setup time required")]
         public void TestCreateManagedInstanceTdeCertificate()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -102,7 +102,7 @@ namespace Sql.Tests
         }
 
 
-        [Fact]
+        [Fact(Skip = "Manual test due to long setup time required")]
         public void TestCreateManagedInstanceTdeCertificate_InvalidBlob()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
@@ -121,7 +121,7 @@ namespace Sql.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Manual test due to long setup time required")]
         public void TestCreateManagedInstanceTdeCertificate_InvalidPassword()
         {
             using (SqlManagementTestContext context = new SqlManagementTestContext(this))
