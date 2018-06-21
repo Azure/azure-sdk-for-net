@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Search
         public static AutocompleteResult Autocomplete(
             this IDocumentsOperations operations, 
             string searchText,
-            string suggesterName = null,
+            string suggesterName,
             AutocompleteParameters autocompleteParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
