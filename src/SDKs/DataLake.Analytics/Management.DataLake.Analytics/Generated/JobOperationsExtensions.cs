@@ -140,8 +140,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
             /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
+            /// JobInfo ID.
             /// </param>
             public static JobInformation Get(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
@@ -158,8 +157,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
             /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
+            /// JobInfo ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -558,138 +556,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             public static async Task BeginYieldOperationAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginYieldOperationWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Cancels the running job specified by the job ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
-            /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
-            /// </param>
-            public static void BeginCancel(this IJobOperations operations, string accountName, System.Guid jobIdentity)
-            {
-                operations.BeginCancelAsync(accountName, jobIdentity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Cancels the running job specified by the job ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
-            /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginCancelAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginCancelWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Pauses the specified job and places it back in the job queue, behind other
-            /// jobs of equal or higher importance, based on priority. (Only for use
-            /// internally with Scope job type.)
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
-            /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
-            /// </param>
-            public static void BeginYieldOperation(this IJobOperations operations, string accountName, System.Guid jobIdentity)
-            {
-                operations.BeginYieldOperationAsync(accountName, jobIdentity).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Pauses the specified job and places it back in the job queue, behind other
-            /// jobs of equal or higher importance, based on priority. (Only for use
-            /// internally with Scope job type.)
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
-            /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginYieldOperationAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginYieldOperationWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Updates the job information for the specified job ID. (Only for use
-            /// internally with Scope job type.)
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
-            /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters to update a job.
-            /// </param>
-            public static JobInformation BeginUpdate(this IJobOperations operations, string accountName, System.Guid jobIdentity, UpdateJobParameters parameters = default(UpdateJobParameters))
-            {
-                return operations.BeginUpdateAsync(accountName, jobIdentity, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the job information for the specified job ID. (Only for use
-            /// internally with Scope job type.)
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='accountName'>
-            /// The Azure Data Lake Analytics account to execute job operations on.
-            /// </param>
-            /// <param name='jobIdentity'>
-            /// Job identifier. Uniquely identifies the job across all jobs submitted to
-            /// the service.
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters to update a job.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<JobInformation> BeginUpdateAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, UpdateJobParameters parameters = default(UpdateJobParameters), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(accountName, jobIdentity, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
             }
 
             /// <summary>

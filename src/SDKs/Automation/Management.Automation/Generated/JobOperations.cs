@@ -227,7 +227,6 @@ namespace Microsoft.Azure.Management.Automation
                         ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
                 catch (JsonException)
                 {
@@ -275,7 +274,6 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-                throw ex;
             }
             if (_shouldTrace)
             {
@@ -1387,19 +1385,6 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
             }
             if (_shouldTrace)
             {
@@ -1629,7 +1614,6 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-                throw ex;
             }
             if (_shouldTrace)
             {

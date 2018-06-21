@@ -37,9 +37,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='compilationJobName'>
         /// The the DSC configuration Id.
         /// </param>
-        /// <param name='compilationJobId'>
-        /// The the DSC configuration Id.
-        /// </param>
         /// <param name='parameters'>
         /// The parameters supplied to the create compilation job operation.
         /// </param>
@@ -128,11 +125,11 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccountName'>
         /// The name of the automation account.
         /// </param>
-        /// <param name='filter'>
-        /// The filter to apply on the operation.
+        /// <param name='jobId'>
+        /// The job id.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
+        /// <param name='jobStreamId'>
+        /// The job stream id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

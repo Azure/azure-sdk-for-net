@@ -200,12 +200,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters supplied to the create job operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
@@ -266,9 +260,6 @@ namespace Microsoft.Azure.Management.Automation
         /// </param>
         /// <param name='clientRequestId'>
         /// Identifies this specific client request.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

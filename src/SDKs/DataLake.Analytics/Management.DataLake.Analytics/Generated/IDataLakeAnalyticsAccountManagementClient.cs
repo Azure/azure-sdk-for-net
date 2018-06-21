@@ -105,15 +105,5 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </summary>
         ILocationsOperations Locations { get; }
 
-        /// <summary>
-        /// Gets the ILocationsOperations.
-        /// </summary>
-        ILocationsOperations Locations { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
     }
 }

@@ -89,14 +89,14 @@ namespace Microsoft.Azure.Management.Authorization
         public virtual IPermissionsOperations Permissions { get; private set; }
 
         /// <summary>
-        /// Gets the IRoleDefinitionsOperations.
-        /// </summary>
-        public virtual IRoleDefinitionsOperations RoleDefinitions { get; private set; }
-
-        /// <summary>
         /// Gets the IRoleAssignmentsOperations.
         /// </summary>
         public virtual IRoleAssignmentsOperations RoleAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IRoleDefinitionsOperations.
+        /// </summary>
+        public virtual IRoleDefinitionsOperations RoleDefinitions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AuthorizationManagementClient class.

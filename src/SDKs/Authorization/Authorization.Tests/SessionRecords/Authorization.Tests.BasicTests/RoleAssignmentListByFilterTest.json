@@ -62,7 +62,7 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
           "61171b1d-7cb7-4fde-b3f3-69c0a3b6649b"
@@ -255,9 +255,6 @@
         ],
         "Pragma": [
           "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
         ],
         "Transfer-Encoding": [
           "chunked"

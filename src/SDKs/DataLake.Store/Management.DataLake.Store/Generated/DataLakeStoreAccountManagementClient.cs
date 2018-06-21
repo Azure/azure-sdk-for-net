@@ -106,16 +106,6 @@ namespace Microsoft.Azure.Management.DataLake.Store
         public virtual ILocationsOperations Locations { get; private set; }
 
         /// <summary>
-        /// Gets the ILocationsOperations.
-        /// </summary>
-        public virtual ILocationsOperations Locations { get; private set; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccountManagementClient class.
         /// </summary>
         /// <param name='handlers'>

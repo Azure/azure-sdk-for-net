@@ -258,7 +258,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
           "2226d35f-3c2a-4c81-b451-79179f41ad89"
@@ -518,7 +518,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
           "f6f71581-6019-4082-bcb8-3ea80f5b6638"
@@ -781,7 +781,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
           "dfb4a62e-8af2-41ac-b405-005b31b42813"
@@ -1103,7 +1103,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
           "f948c613-003a-4b9a-9a05-fe4b7931f854"
@@ -2571,12 +2571,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "9fb2d1e6-2fdf-485c-8210-9611283c69e1"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -2642,18 +2636,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "247"
-        ],
-        "x-ms-client-request-id": [
-          "9104b592-e55e-4ee7-affe-153dd6b45af4"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -2661,9 +2643,6 @@
       },
       "ResponseBody": "{\r\n  \"startTime\": \"2018-05-03T02:21:19.7611873-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"5ed3a540-bb84-45a1-8e9c-0dc56f0e35c5\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "320"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
@@ -2679,12 +2658,15 @@
         "Pragma": [
           "no-cache"
         ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/1de40794-1ae6-459b-822b-d6fa9dce3e54?api-version=2017-12-01"
+        "Vary": [
+          "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperation3Min;14977,Microsoft.Compute/GetOperation30Min;29951"
@@ -2711,7 +2693,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 201
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/5ed3a540-bb84-45a1-8e9c-0dc56f0e35c5?api-version=2018-04-01",
@@ -2719,18 +2701,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "245"
-        ],
-        "x-ms-client-request-id": [
-          "6d11191d-14eb-429d-ab24-06cc72df32a7"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -2738,9 +2708,6 @@
       },
       "ResponseBody": "{\r\n  \"startTime\": \"2018-05-03T02:21:19.7611873-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"5ed3a540-bb84-45a1-8e9c-0dc56f0e35c5\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "318"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
@@ -2756,12 +2723,15 @@
         "Pragma": [
           "no-cache"
         ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/5b6ceb00-c654-46d4-baf7-3d184f884ee0?api-version=2017-12-01"
+        "Vary": [
+          "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperation3Min;14980,Microsoft.Compute/GetOperation30Min;29949"
@@ -2788,7 +2758,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 201
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/5ed3a540-bb84-45a1-8e9c-0dc56f0e35c5?api-version=2018-04-01",
@@ -3881,12 +3851,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "e2455db9-e5a6-486a-9391-f7bb29e0337f"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -4017,12 +3981,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "bb60c9d2-9b65-4d2a-877d-ea2148d6e219"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -4283,12 +4241,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "4b334d76-218c-48a2-bbae-3d8cb9c330d6"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -4354,12 +4306,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "999aac41-70cc-4114-91d5-2d132ff64b4f"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -4367,8 +4313,8 @@
       },
       "ResponseBody": "{\r\n  \"startTime\": \"2018-05-03T02:28:01.7768244-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"3d64796a-7934-43fd-8459-3cd69f2dbee8\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
@@ -4382,15 +4328,15 @@
         "Pragma": [
           "no-cache"
         ],
-        "Location": [
-          "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/fb0a6118-de20-4407-81d6-3983b7beabc1?monitor=true&api-version=2017-12-01"
+        "Transfer-Encoding": [
+          "chunked"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/fb0a6118-de20-4407-81d6-3983b7beabc1?api-version=2017-12-01"
+        "Vary": [
+          "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperation3Min;14986,Microsoft.Compute/GetOperation30Min;29906"
@@ -4417,7 +4363,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 202
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/3d64796a-7934-43fd-8459-3cd69f2dbee8?api-version=2018-04-01",
@@ -4620,12 +4566,6 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "dec5ddb2-70bd-40f0-94a8-3f8a2d6e7ec6"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.6.25714.03",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/18.0.0.0"
@@ -4633,8 +4573,8 @@
       },
       "ResponseBody": "{\r\n  \"startTime\": \"2018-05-03T02:28:01.7768244-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"3d64796a-7934-43fd-8459-3cd69f2dbee8\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
@@ -4648,8 +4588,15 @@
         "Pragma": [
           "no-cache"
         ],
-        "Location": [
-          "https://management.azure.com/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1DUlBURVNUQVIyNjc5MS1TT1VUSEVBU1RBU0lBIiwiam9iTG9jYXRpb24iOiJzb3V0aGVhc3Rhc2lhIn0?api-version=2017-05-10"
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-resource": [
           "Microsoft.Compute/GetOperation3Min;14987,Microsoft.Compute/GetOperation30Min;29892"
@@ -4676,7 +4623,7 @@
           "nosniff"
         ]
       },
-      "StatusCode": 202
+      "StatusCode": 200
     },
     {
       "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/southeastasia/operations/3d64796a-7934-43fd-8459-3cd69f2dbee8?api-version=2018-04-01",
@@ -4691,8 +4638,8 @@
       },
       "ResponseBody": "{\r\n  \"startTime\": \"2018-05-03T02:28:01.7768244-07:00\",\r\n  \"status\": \"InProgress\",\r\n  \"name\": \"3d64796a-7934-43fd-8459-3cd69f2dbee8\"\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"

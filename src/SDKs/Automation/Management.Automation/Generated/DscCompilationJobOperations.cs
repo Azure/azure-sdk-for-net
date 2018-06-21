@@ -573,7 +573,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "automationAccountName");
             }
-            if (automationAccountName == null)
+            if (jobStreamId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jobStreamId");
             }

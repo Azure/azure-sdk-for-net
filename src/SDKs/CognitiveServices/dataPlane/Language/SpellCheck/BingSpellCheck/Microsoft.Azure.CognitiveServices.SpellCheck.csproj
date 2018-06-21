@@ -1,12 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.CognitiveServices.SpellCheck</PackageId>
-    <Description>This client library provides access to the Microsoft Cognitive Services SpellCheck API.</Description>
-    <VersionPrefix>0.18.0-preview</VersionPrefix>
-    <AssemblyName>Microsoft.Azure.CognitiveServices.SpellCheck</AssemblyName>
-    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;SpellCheck API;REST HTTPclient;SpellCheckSDK;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Cognitive Services SpellCheck SDK. Included with this release is support for SpellCheck API.</PackageReleaseNotes>
     <PackageId>Microsoft.Azure.CognitiveServices.Language.SpellCheck</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services SpellCheck API.</Description>
     <VersionPrefix>2.0.0</VersionPrefix>
@@ -17,5 +11,4 @@
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
-</Project>
 </Project>

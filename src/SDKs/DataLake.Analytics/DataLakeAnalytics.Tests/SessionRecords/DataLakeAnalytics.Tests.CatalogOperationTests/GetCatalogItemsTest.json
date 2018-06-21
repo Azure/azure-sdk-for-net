@@ -99,7 +99,7 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14999"
         ],
         "x-ms-request-id": [
           "fa9f919b-c139-4e26-9b8d-43f429558f27"
@@ -218,7 +218,7 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14998"
         ],
         "x-ms-request-id": [
           "00aefb73-c19e-4cb1-917c-cc63d1db8f20"
@@ -337,7 +337,7 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14997"
         ],
         "x-ms-request-id": [
           "24d93bd4-78b2-4586-9270-7a303fae6b05"
@@ -398,7 +398,7 @@
           "gateway"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14993"
+          "14996"
         ],
         "x-ms-request-id": [
           "b31f6461-c01c-416f-8f52-165b581c232f"
@@ -456,7 +456,7 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14992"
+          "14995"
         ],
         "x-ms-request-id": [
           "d12ab30a-c6df-4403-903e-09e98c9fcfb4"
@@ -969,9 +969,6 @@
         ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Connection": [
-          "close"
         ],
         "Date": [
           "Wed, 06 Jun 2018 06:24:44 GMT"
@@ -2692,26 +2689,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "5afdf00f-6b86-4538-8e94-f21964ee1c67"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171222T222845Z:5afdf00f-6b86-4538-8e94-f21964ee1c67"
-        ],
         "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
+          "max-age=15724800; includeSubDomains"
         ]
       },
-      "StatusCode": 201
+      "StatusCode": 200
     },
     {
       "RequestUri": "/catalog/usql/databases/testdb15955?api-version=2016-11-01",
@@ -2739,22 +2721,13 @@
           "-1"
         ],
         "Cache-Control": [
-          "no-cache"
-        ],
-        "Connection": [
-          "close"
+          "no-store, no-cache, max-age=0, private"
         ],
         "Date": [
           "Wed, 06 Jun 2018 06:29:34 GMT"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
+        "Transfer-Encoding": [
+          "chunked"
         ],
         "x-ms-request-id": [
           "5d11ffb0-a1d7-4403-9055-5ff5fd87c218"
@@ -2765,23 +2738,8 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
-        ],
-        "x-ms-correlation-request-id": [
-          "1f48e337-cc49-41ca-bba2-a70ea2cbb8f9"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171222T222856Z:1f48e337-cc49-41ca-bba2-a70ea2cbb8f9"
-        ],
         "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
+          "max-age=15724800; includeSubDomains"
         ]
       },
       "StatusCode": 200
@@ -2812,22 +2770,13 @@
           "-1"
         ],
         "Cache-Control": [
-          "no-cache"
-        ],
-        "Connection": [
-          "close"
+          "no-store, no-cache, max-age=0, private"
         ],
         "Date": [
           "Wed, 06 Jun 2018 06:29:34 GMT"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "Vary": [
-          "Accept-Encoding"
+        "Transfer-Encoding": [
+          "chunked"
         ],
         "x-ms-request-id": [
           "066da680-fe8e-4021-920c-6044db16c615"
@@ -3014,7 +2963,7 @@
           "679"
         ],
         "Content-Type": [
-          "application/json; odata.metadata=minimal; odata.streaming=true"
+          "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"

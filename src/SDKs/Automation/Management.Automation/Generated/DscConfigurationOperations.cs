@@ -407,7 +407,6 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         ex.Body = _errorBody;
                     }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
                 catch (JsonException)
                 {
@@ -882,7 +881,6 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         ex.Body = _errorBody;
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
                 catch (JsonException)
                 {

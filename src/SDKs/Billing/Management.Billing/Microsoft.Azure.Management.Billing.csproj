@@ -5,16 +5,6 @@
 
 	<PropertyGroup>
 		<Description>Microsoft Azure Billing Management Library</Description>
-		<Version>2.0.0-preview</Version>
-		<AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
-		<PackageId>Microsoft.Azure.Management.Billing</PackageId>
-		<PackageTags>Microsoft Azure Billing management;Billing;Billing management;</PackageTags>
-		<PackageReleaseNotes/>
-	</PropertyGroup>
-	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
-	</PropertyGroup>
-
 		<Version>2.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Billing</AssemblyName>
 		<PackageId>Microsoft.Azure.Management.Billing</PackageId>

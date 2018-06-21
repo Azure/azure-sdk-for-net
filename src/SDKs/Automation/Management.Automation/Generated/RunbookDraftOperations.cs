@@ -178,25 +178,6 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
                 }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Stream>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _result.Body = await _httpResponse.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
 
             // Serialize Request
@@ -280,12 +261,6 @@ namespace Microsoft.Azure.Management.Automation
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
             }
             if (_shouldTrace)
             {

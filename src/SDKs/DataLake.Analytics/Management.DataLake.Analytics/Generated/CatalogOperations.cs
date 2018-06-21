@@ -8742,18 +8742,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// resources included with the resources in the response, e.g.
         /// Categories?$count=true. Optional.
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
-        /// </param>
-        /// <param name='select'>
-        /// OData Select statement. Limits the properties on each entry to just those
-        /// requested, e.g. Categories?$select=CategoryName,Description. Optional.
-        /// </param>
-        /// <param name='count'>
-        /// The Boolean value of true or false to request a count of the matching
-        /// resources included with the resources in the response, e.g.
-        /// Categories?$count=true. Optional.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>

@@ -84,14 +84,14 @@ namespace Microsoft.Azure.Management.Authorization
         IPermissionsOperations Permissions { get; }
 
         /// <summary>
-        /// Gets the IRoleDefinitionsOperations.
-        /// </summary>
-        IRoleDefinitionsOperations RoleDefinitions { get; }
-
-        /// <summary>
         /// Gets the IRoleAssignmentsOperations.
         /// </summary>
         IRoleAssignmentsOperations RoleAssignments { get; }
+
+        /// <summary>
+        /// Gets the IRoleDefinitionsOperations.
+        /// </summary>
+        IRoleDefinitionsOperations RoleDefinitions { get; }
 
     }
 }

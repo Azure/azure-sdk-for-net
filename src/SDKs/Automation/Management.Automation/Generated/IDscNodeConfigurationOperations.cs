@@ -93,9 +93,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='nodeConfigurationName'>
         /// The Dsc node configuration name.
         /// </param>
-        /// <param name='nodeConfigurationName'>
-        /// The create or update parameters for configuration.
-        /// </param>
         /// <param name='parameters'>
         /// The create or update parameters for configuration.
         /// </param>
