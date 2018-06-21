@@ -12,11 +12,7 @@
         <PackageTags>Microsoft Azure Stack;Backup;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-                Preview release of the Backup administrator SDK that allows administrators to
-                1) Configure where backups are stored
-                2) Perform backups 
-                3) List and restore completed backup. 
-                
+                Preview release of the Backup administrator SDK.
                 0.2.0-preview breaking change:
                 Return type of BackupLocation.NextBackupTime and BackupLocation.LastBackupTime changed to System.DateTime?.
             ]]>
