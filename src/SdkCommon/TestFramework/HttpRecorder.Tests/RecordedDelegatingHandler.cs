@@ -12,8 +12,6 @@ namespace HttpRecorder.Tests
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {
-        //private HttpResponseMessage _response;
-
         public RecordedDelegatingHandler()
         {
             StatusCodeToReturn = HttpStatusCode.Created;

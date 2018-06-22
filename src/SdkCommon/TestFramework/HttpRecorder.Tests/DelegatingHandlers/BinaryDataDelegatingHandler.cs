@@ -1,20 +1,19 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace HttpRecorder.Tests.DelegatingHandlers
 {
+    using Microsoft.Azure.Test.HttpRecorder;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class BinaryDataDelegatingHandler : RecordedDelegatingHandler
     {
-
         public ContentMimeType ContentType { get; private set; }
 
         public BinaryDataDelegatingHandler() : base() { }
