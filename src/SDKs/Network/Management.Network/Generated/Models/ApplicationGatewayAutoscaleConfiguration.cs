@@ -15,28 +15,27 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Response for GetConnectionSharedKey API service call
+    /// Application Gateway autoscale configuration.
     /// </summary>
-    public partial class ConnectionSharedKey : SubResource
+    public partial class ApplicationGatewayAutoscaleConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the ConnectionSharedKey class.
+        /// Initializes a new instance of the
+        /// ApplicationGatewayAutoscaleConfiguration class.
         /// </summary>
-        public ConnectionSharedKey()
+        public ApplicationGatewayAutoscaleConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ConnectionSharedKey class.
+        /// Initializes a new instance of the
+        /// ApplicationGatewayAutoscaleConfiguration class.
         /// </summary>
-        /// <param name="value">The virtual network connection shared key
-        /// value.</param>
-        /// <param name="id">Resource ID.</param>
-        public ConnectionSharedKey(string value, string id = default(string))
-            : base(id)
+        /// <param name="bounds">Autoscale bounds</param>
+        public ApplicationGatewayAutoscaleConfiguration(ApplicationGatewayAutoscaleBounds bounds)
         {
-            Value = value;
+            Bounds = bounds;
             CustomInit();
         }
 
@@ -46,10 +45,10 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the virtual network connection shared key value.
+        /// Gets or sets autoscale bounds
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "bounds")]
+        public ApplicationGatewayAutoscaleBounds Bounds { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -59,9 +58,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Value == null)
+            if (Bounds == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Bounds");
+            }
+            if (Bounds != null)
+            {
+                Bounds.Validate();
             }
         }
     }

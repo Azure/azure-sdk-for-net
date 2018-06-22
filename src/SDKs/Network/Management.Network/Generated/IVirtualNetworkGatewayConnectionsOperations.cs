@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualNetworkGatewayConnectionListEntity>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetworkGatewayConnection>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
         /// virtual network gateway connection shared key for passed virtual
@@ -324,7 +324,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<VirtualNetworkGatewayConnectionListEntity>> BeginUpdateTagsWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetworkGatewayConnection>> BeginUpdateTagsWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put VirtualNetworkGatewayConnectionSharedKey operation sets the
         /// virtual network gateway connection shared key for passed virtual

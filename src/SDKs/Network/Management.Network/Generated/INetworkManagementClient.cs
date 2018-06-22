@@ -275,6 +275,41 @@ namespace Microsoft.Azure.Management.Network
         ILocalNetworkGatewaysOperations LocalNetworkGateways { get; }
 
         /// <summary>
+        /// Gets the IVirtualWANsOperations.
+        /// </summary>
+        IVirtualWANsOperations VirtualWANs { get; }
+
+        /// <summary>
+        /// Gets the IVpnSitesOperations.
+        /// </summary>
+        IVpnSitesOperations VpnSites { get; }
+
+        /// <summary>
+        /// Gets the IVpnSitesConfigurationOperations.
+        /// </summary>
+        IVpnSitesConfigurationOperations VpnSitesConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubsOperations.
+        /// </summary>
+        IVirtualHubsOperations VirtualHubs { get; }
+
+        /// <summary>
+        /// Gets the IHubVirtualNetworkConnectionsOperations.
+        /// </summary>
+        IHubVirtualNetworkConnectionsOperations HubVirtualNetworkConnections { get; }
+
+        /// <summary>
+        /// Gets the IVpnGatewaysOperations.
+        /// </summary>
+        IVpnGatewaysOperations VpnGateways { get; }
+
+        /// <summary>
+        /// Gets the IVpnConnectionsOperations.
+        /// </summary>
+        IVpnConnectionsOperations VpnConnections { get; }
+
+        /// <summary>
         /// Checks whether a domain name in the cloudapp.azure.com zone is
         /// available for use.
         /// </summary>

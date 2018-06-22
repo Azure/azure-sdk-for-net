@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for VpnClientProtocol.
+    /// Defines values for TunnelConnectionStatus.
     /// </summary>
-    public static class VpnClientProtocol
+    public static class TunnelConnectionStatus
     {
-        public const string IkeV2 = "IkeV2";
-        public const string SSTP = "SSTP";
-        public const string OpenVPN = "OpenVPN";
+        public const string Unknown = "Unknown";
+        public const string Connecting = "Connecting";
+        public const string Connected = "Connected";
+        public const string NotConnected = "NotConnected";
     }
 }
