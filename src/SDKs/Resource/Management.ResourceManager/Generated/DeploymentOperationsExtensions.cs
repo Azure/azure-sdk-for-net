@@ -27,6 +27,86 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='operationId'>
+            /// The ID of the operation to get.
+            /// </param>
+            public static DeploymentOperation GetAtSubscriptionScope(this IDeploymentOperations operations, string deploymentName, string operationId)
+            {
+                return operations.GetAtSubscriptionScopeAsync(deploymentName, operationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a deployments operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment.
+            /// </param>
+            /// <param name='operationId'>
+            /// The ID of the operation to get.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentOperation> GetAtSubscriptionScopeAsync(this IDeploymentOperations operations, string deploymentName, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment with the operation to get.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            public static IPage<DeploymentOperation> ListAtSubscriptionScope(this IDeploymentOperations operations, string deploymentName, int? top = default(int?))
+            {
+                return operations.ListAtSubscriptionScopeAsync(deploymentName, top).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='deploymentName'>
+            /// The name of the deployment with the operation to get.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeploymentOperation>> ListAtSubscriptionScopeAsync(this IDeploymentOperations operations, string deploymentName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAtSubscriptionScopeWithHttpMessagesAsync(deploymentName, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a deployments operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
@@ -108,6 +188,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<DeploymentOperation>> ListAsync(this IDeploymentOperations operations, string resourceGroupName, string deploymentName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, deploymentName, top, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DeploymentOperation> ListAtSubscriptionScopeNext(this IDeploymentOperations operations, string nextPageLink)
+            {
+                return operations.ListAtSubscriptionScopeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all deployments operations for a deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DeploymentOperation>> ListAtSubscriptionScopeNextAsync(this IDeploymentOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAtSubscriptionScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
