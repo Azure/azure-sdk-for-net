@@ -15,19 +15,12 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/Azure/azure-service-bus-dotnet/master/LICENSE</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludePDBsInPackage</TargetsForTfmSpecificContentInPackage>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>CS1591;CS1573</NoWarn>
   </PropertyGroup>
-
-  <Target Name="IncludePDBsInPackage">
-    <ItemGroup>
-      <TfmSpecificPackageFile Include="$(OutputPath)\$(AssemblyName).pdb" PackagePath="lib\$(TargetFramework)" />
-    </ItemGroup>
-  </Target>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" Version="[2.3.0, 3.0.0)" />
@@ -39,8 +32,9 @@
   </ItemGroup>
 
   <ItemGroup Label="SourceLink to embed PDBs with the assembly">
-    <PackageReference Include="SourceLink.Create.GitHub" Version="2.1.2" PrivateAssets="All" />
-    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.1.2" />
+    <PackageReference Include="SourceLink.Create.GitHub" Version="2.8.3" PrivateAssets="All" />
+    <PackageReference Include="SourceLink.Copy.PdbFiles" Version="2.8.3" PrivateAssets="All" />
+    <DotNetCliToolReference Include="dotnet-sourcelink-git" Version="2.8.3" />
   </ItemGroup>
 
   <ItemGroup>
