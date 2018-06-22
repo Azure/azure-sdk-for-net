@@ -4,12 +4,13 @@
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Sql.Tests
 {
     /// <summary>
-    /// Contains tests for the lifecycle of a Server security alert policy
+    /// Contains tests for the lifecycle of a Server and database security alert policy
     /// </summary>
     public class ThreatDetectionTest
     {
@@ -28,35 +29,50 @@ namespace Sql.Tests
                 Database[] databases = SqlManagementTestUtilities.CreateDatabasesAsync(
                         sqlClient, resourceGroup.Name, server, testPrefix, 2).Result;
 
-#if false // Commented out due to issues with async operation response
+                // ******* Server threat detection *******
+                ServerSecurityAlertPolicy defaultServerPolicyResponse = sqlClient.ServerSecurityAlertPolicies.Get(resourceGroup.Name, server.Name);
 
-                     // ******* Server threat detection *******
-                     ServerSecurityAlertPolicy defaultServerPolicyResponse = sqlClient.Servers.GetThreatDetectionPolicy(resourceGroup.Name, server.Name);
+                // Verify that the initial Get request contains the default policy.
+                VerifyServerSecurityAlertPolicyInformation(GetDefaultServerSecurityAlertProperties(), defaultServerPolicyResponse);
 
-                     // Verify that the initial Get request contains the default policy.
-                     VerifyServerSecurityAlertPolicyInformation(GetDefaultServerSecurityAlertProperties(), defaultServerPolicyResponse);
+                // Modify the policy properties, send and receive and see it its still ok
+                ServerSecurityAlertPolicy updatedServerPolicy = new ServerSecurityAlertPolicy
+                {
+                    State = SecurityAlertPolicyState.Enabled,
+                    EmailAccountAdmins = true
+                };
 
-                     // Modify the policy properties, send and receive and see it its still ok
-                     ServerSecurityAlertPolicy updatedServerPolicy = new ServerSecurityAlertPolicy
-                     {
-                         State = SecurityAlertPolicyState.Enabled,
-                         EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
-                         EmailAddresses = "testSecurityAlert@microsoft.com;testServerPolicy@microsoft.com",
-                         DisabledAlerts = "Sql_Injection",
-                         RetentionDays = 3,
-                         StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                         StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
-                     };
+                //Set security alert policy for server
+                sqlClient.ServerSecurityAlertPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
 
-                     //Set security alert policy for server
-                     sqlClient.Servers.CreateOrUpdateThreatDetectionPolicy(resourceGroup.Name, server.Name, updatedServerPolicy);
+                //Get security alert server policy
+                var getUpdatedServerPolicyResponse = sqlClient.ServerSecurityAlertPolicies.Get(resourceGroup.Name, server.Name);
 
-                     //Get security alert server policy
-                     var getUpdatedServerPolicyResponse = sqlClient.Servers.GetThreatDetectionPolicy(resourceGroup.Name, server.Name);
-                     // Verify that the Get request contains the updated policy.
-                     VerifyServerSecurityAlertPolicyInformation(updatedServerPolicy, getUpdatedServerPolicyResponse);
+                // Verify that the Get request contains the updated policy.
+                Assert.Equal(updatedServerPolicy.State, getUpdatedServerPolicyResponse.State);
+                Assert.Equal(updatedServerPolicy.EmailAccountAdmins, getUpdatedServerPolicyResponse.EmailAccountAdmins);
 
-#endif
+                // Modify the policy properties again, send and receive and see it its still ok
+                updatedServerPolicy = new ServerSecurityAlertPolicy
+                {
+                    State = SecurityAlertPolicyState.Disabled,
+                    EmailAccountAdmins = true,
+                    EmailAddresses = new List<string>() { "testSecurityAlert@microsoft.com", "testServerPolicy@microsoft.com" },
+                    DisabledAlerts = new List<string>() { "Sql_Injection" },
+                    RetentionDays = 3,
+                    StorageAccountAccessKey = "fake_key_sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                    StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
+                };
+
+                //Set security alert policy for server
+                sqlClient.ServerSecurityAlertPolicies.CreateOrUpdate(resourceGroup.Name, server.Name, updatedServerPolicy);
+
+                //Get security alert server policy
+                getUpdatedServerPolicyResponse = sqlClient.ServerSecurityAlertPolicies.Get(resourceGroup.Name, server.Name);
+
+                // Verify that the Get request contains the updated policy.
+                VerifyServerSecurityAlertPolicyInformation(updatedServerPolicy, getUpdatedServerPolicyResponse);
+
 
                 // ******* Database threat detection *******
 
@@ -74,7 +90,7 @@ namespace Sql.Tests
                     EmailAddresses = "testSecurityAlert@microsoft.com",
                     DisabledAlerts = "Access_Anomaly; Usage_Anomaly",
                     RetentionDays = 5,
-                    StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                    StorageAccountAccessKey = "fake_key_sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                     StorageEndpoint = "https://MyAccount.blob.core.windows.net/",
                     UseServerDefault = SecurityAlertPolicyUseServerDefault.Disabled,
                 };
@@ -86,8 +102,6 @@ namespace Sql.Tests
                 VerifyDatabaseSecurityAlertPolicyInformation(updatedDatabasePolicy, getUpdatedDatabasePolicyResponse);
             }
         }
-
-#if false // Commented out due to issues with async operation response
 
         /// <summary>
         /// Verify that the received properties match their expected values
@@ -113,10 +127,10 @@ namespace Sql.Tests
         {
             ServerSecurityAlertPolicy properties = new ServerSecurityAlertPolicy
             {
-                State = SecurityAlertPolicyState.New,
-                EmailAccountAdmins = SecurityAlertPolicyEmailAccountAdmins.Enabled,
-                DisabledAlerts = SecurityAlert.Preview,
-                EmailAddresses = string.Empty,
+                State = SecurityAlertPolicyState.Disabled,
+                EmailAccountAdmins = false,
+                DisabledAlerts = new List<string>() { string.Empty },
+                EmailAddresses = new List<string>() { string.Empty },
                 StorageEndpoint = string.Empty,
                 StorageAccountAccessKey = string.Empty,
                 RetentionDays = 0,
@@ -124,8 +138,6 @@ namespace Sql.Tests
 
             return properties;
         }
-
-#endif
 
         /// <summary>
         /// Verify that the received properties match their expected values

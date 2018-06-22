@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Initializes a new instance of the IotHubSkuDescription class.
         /// </summary>
         /// <param name="sku">The type of the resource.</param>
+        /// <param name="capacity">IotHub capacity</param>
         /// <param name="resourceType">The type of the resource.</param>
         public IotHubSkuDescription(IotHubSkuInfo sku, IotHubCapacity capacity, string resourceType = default(string))
         {
@@ -58,6 +59,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public IotHubSkuInfo Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets iotHub capacity
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public IotHubCapacity Capacity { get; set; }
