@@ -1,10 +1,31 @@
-﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/backup/readme.md --csharp --csharp-sdks-folder=E:\github\azure-sdk-for-net\src\AzureStack\BackupAdmin\Backup.Admin --version=latest --reflect-api-versions
-2018-04-13 20:17:12 UTC
+﻿Installing AutoRest version: latest
+
+> autorest@2.0.4262 preinstall C:\Users\jerobins.REDMOND\AppData\Roaming\npm\node_modules\autorest
+> node ./preinstall-check
+
+C:\Users\jerobins.REDMOND\AppData\Roaming\npm\autorest -> C:\Users\jerobins.REDMOND\AppData\Roaming\npm\node_modules\autorest\dist\app.js
++ autorest@2.0.4262
+updated 1 package in 1.64s
+
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/azsadmin/resource-manager/backup/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\github\azure-sdk-for-net\src\AzureStack\Admin\BackupAdmin\Backup.Admin
+AutoRest code generation utility [version: 2.0.4262; node: v8.1.4]
+(C) 2018 Microsoft Corporation.
+https://aka.ms/autorest
+C:\Users\jerobins.REDMOND\.autorest\@microsoft.azure_autorest-core@2.0.4280\autorest-language-service -> C:\Users\jerobins.REDMOND\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist\language-service\language-service.js
+C:\Users\jerobins.REDMOND\.autorest\@microsoft.azure_autorest-core@2.0.4280\autorest-core -> C:\Users\jerobins.REDMOND\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist\app.js
+   Loading AutoRest core      'C:\Users\jerobins.REDMOND\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
+   Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
+   Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
+
+2018-06-13 15:35:22 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      a5881f23bab1b9c36a83b25d7feffe8714488d79
+Commit:      ffb011f8e34cda629b6212806ca7772ef407dc6e
 
 2) AutoRest information
 Requested version: latest
@@ -12,6 +33,5 @@ Bootstrapper version:    C:\Users\jerobins.REDMOND\AppData\Roaming\npm  `-- auto
 
 
 Latest installed version:    
-.\tools\generate.ps1 was invoked by generate.ps1
 
 

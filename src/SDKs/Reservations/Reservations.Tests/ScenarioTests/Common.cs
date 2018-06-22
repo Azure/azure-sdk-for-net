@@ -8,11 +8,8 @@ namespace Reservations.Tests.ScenarioTests
 {
     public class Common
     {
-        public const string ReservationOrderId = "55793bc2-e5c2-4a98-9d5c-0a0bce6cf998";
-        public const string ReservationId = "3fe33797-691c-4114-a369-8a8bc17f93e4";
-        public const string SubscriptionId = "98df3792-7962-4f18-8be2-d5576f122de3";
-        //public const string SplitReservationId1 = "a1c5acec-c516-43a1-b8b4-baf8f48f99b1";
-        //public const string SplitReservationId2 = "18923add-7bc3-4824-9fdd-3337da67e1da";
-        //public const string TestPrefix = "reservationstest";
+        public const string ReservationOrderId = "ffa7538a-2251-489d-82bf-7efcb8b346d7";
+        public const string ReservationId = "a110e78d-1ca6-4f88-a7c5-35076cda6c86";
+        public const string SubscriptionId = "caadc3f2-e83e-487c-9a14-41f74366467f";
     }
 }

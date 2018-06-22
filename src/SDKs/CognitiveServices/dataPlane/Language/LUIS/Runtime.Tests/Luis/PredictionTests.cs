@@ -1,8 +1,8 @@
-﻿namespace LUIS.Tests
+﻿namespace LUIS.Runtime.Tests
 {
     using System.Collections.Generic;
-    using Microsoft.Azure.CognitiveServices.Language.LUIS;
-    using Microsoft.Azure.CognitiveServices.Language.LUIS.Models;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime;
+    using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
     using Microsoft.Rest;
     using Xunit;
 

@@ -68,6 +68,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "ServerConnectionPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "ServerDnsAliases", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerKeys", "2015-05-01-preview"),
+                new Tuple<string, string, string>("Sql", "ServerSecurityAlertPolicies", "2017-03-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerUsages", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "Servers", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "Servers", "2015-05-01-preview"),

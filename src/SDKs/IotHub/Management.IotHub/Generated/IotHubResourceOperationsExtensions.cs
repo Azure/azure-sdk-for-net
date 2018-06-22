@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.IotHub
     public static partial class IotHubResourceOperationsExtensions
     {
             /// <summary>
-            /// Get the non-security related metadata of an IoT hub.
+            /// Get the non-security related metadata of an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the non-security related metadata of an IoT hub.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the non-security related metadata of an IoT hub.
+            /// Get the non-security related metadata of an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the non-security related metadata of an IoT hub.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Delete an IoT hub.
+            /// Delete an IoT hub
             /// </summary>
             /// <remarks>
             /// Delete an IoT hub.
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Delete an IoT hub.
+            /// Delete an IoT hub
             /// </summary>
             /// <remarks>
             /// Delete an IoT hub.
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a subscription.
+            /// Get all the IoT hubs in a subscription
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a subscription.
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a subscription.
+            /// Get all the IoT hubs in a subscription
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a subscription.
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a resource group.
+            /// Get all the IoT hubs in a resource group
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a resource group.
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a resource group.
+            /// Get all the IoT hubs in a resource group
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a resource group.
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the statistics from an IoT hub.
+            /// Get the statistics from an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the statistics from an IoT hub.
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the statistics from an IoT hub.
+            /// Get the statistics from an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the statistics from an IoT hub.
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the list of valid SKUs for an IoT hub.
+            /// Get the list of valid SKUs for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the list of valid SKUs for an IoT hub.
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the list of valid SKUs for an IoT hub.
+            /// Get the list of valid SKUs for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the list of valid SKUs for an IoT hub.
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
+            /// device-to-cloud endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Get a list of the consumer groups in the Event Hub-compatible
@@ -426,7 +426,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
+            /// device-to-cloud endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Get a list of the consumer groups in the Event Hub-compatible
@@ -457,7 +457,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
-            /// for an IoT hub.
+            /// for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
@@ -485,7 +485,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
-            /// for an IoT hub.
+            /// for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get a consumer group from the Event Hub-compatible device-to-cloud endpoint
@@ -518,7 +518,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
+            /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
@@ -544,7 +544,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
+            /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Add a consumer group to an Event Hub-compatible endpoint in an IoT hub.
@@ -576,8 +576,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
-            /// hub.
+            /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
@@ -604,8 +603,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
-            /// hub.
+            /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Delete a consumer group from an Event Hub-compatible endpoint in an IoT
@@ -636,7 +634,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
             /// </summary>
             /// <remarks>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
@@ -658,7 +656,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
             /// </summary>
             /// <remarks>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
@@ -686,7 +684,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get the details of a job from an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
             /// </summary>
             /// <remarks>
             /// Get the details of a job from an IoT hub. For more information, see:
@@ -711,7 +709,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get the details of a job from an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
             /// </summary>
             /// <remarks>
             /// Get the details of a job from an IoT hub. For more information, see:
@@ -741,7 +739,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the quota metrics for an IoT hub.
+            /// Get the quota metrics for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the quota metrics for an IoT hub.
@@ -761,7 +759,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the quota metrics for an IoT hub.
+            /// Get the quota metrics for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the quota metrics for an IoT hub.
@@ -787,7 +785,49 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Check if an IoT hub name is available.
+            /// Get the health for routing endpoints
+            /// </summary>
+            /// <remarks>
+            /// Get the health for routing endpoints.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='iotHubName'>
+            /// </param>
+            public static IPage<EndpointHealthData> GetEndpointHealth(this IIotHubResourceOperations operations, string resourceGroupName, string iotHubName)
+            {
+                return operations.GetEndpointHealthAsync(resourceGroupName, iotHubName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the health for routing endpoints
+            /// </summary>
+            /// <remarks>
+            /// Get the health for routing endpoints.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='iotHubName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EndpointHealthData>> GetEndpointHealthAsync(this IIotHubResourceOperations operations, string resourceGroupName, string iotHubName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEndpointHealthWithHttpMessagesAsync(resourceGroupName, iotHubName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Check if an IoT hub name is available
             /// </summary>
             /// <remarks>
             /// Check if an IoT hub name is available.
@@ -805,7 +845,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Check if an IoT hub name is available.
+            /// Check if an IoT hub name is available
             /// </summary>
             /// <remarks>
             /// Check if an IoT hub name is available.
@@ -829,8 +869,112 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
+            /// Test all routes
+            /// </summary>
+            /// <remarks>
+            /// Test all routes configured in this Iot Hub
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='input'>
+            /// Input for testing all routes
+            /// </param>
+            /// <param name='iotHubName'>
+            /// IotHub to be tested
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// resource group which Iot Hub belongs to
+            /// </param>
+            public static TestAllRoutesResult TestAllRoutes(this IIotHubResourceOperations operations, TestAllRoutesInput input, string iotHubName, string resourceGroupName)
+            {
+                return operations.TestAllRoutesAsync(input, iotHubName, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Test all routes
+            /// </summary>
+            /// <remarks>
+            /// Test all routes configured in this Iot Hub
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='input'>
+            /// Input for testing all routes
+            /// </param>
+            /// <param name='iotHubName'>
+            /// IotHub to be tested
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// resource group which Iot Hub belongs to
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TestAllRoutesResult> TestAllRoutesAsync(this IIotHubResourceOperations operations, TestAllRoutesInput input, string iotHubName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TestAllRoutesWithHttpMessagesAsync(input, iotHubName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Test the new route
+            /// </summary>
+            /// <remarks>
+            /// Test the new route for this Iot Hub
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='input'>
+            /// Route that needs to be tested
+            /// </param>
+            /// <param name='iotHubName'>
+            /// IotHub to be tested
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// resource group which Iot Hub belongs to
+            /// </param>
+            public static TestRouteResult TestRoute(this IIotHubResourceOperations operations, TestRouteInput input, string iotHubName, string resourceGroupName)
+            {
+                return operations.TestRouteAsync(input, iotHubName, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Test the new route
+            /// </summary>
+            /// <remarks>
+            /// Test the new route for this Iot Hub
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='input'>
+            /// Route that needs to be tested
+            /// </param>
+            /// <param name='iotHubName'>
+            /// IotHub to be tested
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// resource group which Iot Hub belongs to
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TestRouteResult> TestRouteAsync(this IIotHubResourceOperations operations, TestRouteInput input, string iotHubName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TestRouteWithHttpMessagesAsync(input, iotHubName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
             /// </summary>
             /// <remarks>
             /// Get the security metadata for an IoT hub. For more information, see:
@@ -852,7 +996,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
             /// </summary>
             /// <remarks>
             /// Get the security metadata for an IoT hub. For more information, see:
@@ -880,7 +1024,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a shared access policy by name from an IoT hub. For more information,
-            /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+            /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
             /// </summary>
             /// <remarks>
             /// Get a shared access policy by name from an IoT hub. For more information,
@@ -905,7 +1049,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a shared access policy by name from an IoT hub. For more information,
-            /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+            /// see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
             /// </summary>
             /// <remarks>
             /// Get a shared access policy by name from an IoT hub. For more information,
@@ -937,7 +1081,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// <summary>
             /// Exports all the device identities in the IoT hub identity registry to an
             /// Azure Storage blob container. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
             /// </summary>
             /// <remarks>
             /// Exports all the device identities in the IoT hub identity registry to an
@@ -964,7 +1108,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// <summary>
             /// Exports all the device identities in the IoT hub identity registry to an
             /// Azure Storage blob container. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
             /// </summary>
             /// <remarks>
             /// Exports all the device identities in the IoT hub identity registry to an
@@ -997,7 +1141,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// <summary>
             /// Import, update, or delete device identities in the IoT hub identity
             /// registry from a blob. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
             /// </summary>
             /// <remarks>
             /// Import, update, or delete device identities in the IoT hub identity
@@ -1024,7 +1168,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// <summary>
             /// Import, update, or delete device identities in the IoT hub identity
             /// registry from a blob. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities
             /// </summary>
             /// <remarks>
             /// Import, update, or delete device identities in the IoT hub identity
@@ -1175,7 +1319,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Delete an IoT hub.
+            /// Delete an IoT hub
             /// </summary>
             /// <remarks>
             /// Delete an IoT hub.
@@ -1195,7 +1339,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Delete an IoT hub.
+            /// Delete an IoT hub
             /// </summary>
             /// <remarks>
             /// Delete an IoT hub.
@@ -1221,7 +1365,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a subscription.
+            /// Get all the IoT hubs in a subscription
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a subscription.
@@ -1238,7 +1382,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a subscription.
+            /// Get all the IoT hubs in a subscription
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a subscription.
@@ -1261,7 +1405,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a resource group.
+            /// Get all the IoT hubs in a resource group
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a resource group.
@@ -1278,7 +1422,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get all the IoT hubs in a resource group.
+            /// Get all the IoT hubs in a resource group
             /// </summary>
             /// <remarks>
             /// Get all the IoT hubs in a resource group.
@@ -1301,7 +1445,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the list of valid SKUs for an IoT hub.
+            /// Get the list of valid SKUs for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the list of valid SKUs for an IoT hub.
@@ -1318,7 +1462,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the list of valid SKUs for an IoT hub.
+            /// Get the list of valid SKUs for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the list of valid SKUs for an IoT hub.
@@ -1342,7 +1486,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
+            /// device-to-cloud endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Get a list of the consumer groups in the Event Hub-compatible
@@ -1361,7 +1505,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of the consumer groups in the Event Hub-compatible
-            /// device-to-cloud endpoint in an IoT hub.
+            /// device-to-cloud endpoint in an IoT hub
             /// </summary>
             /// <remarks>
             /// Get a list of the consumer groups in the Event Hub-compatible
@@ -1386,7 +1530,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
             /// </summary>
             /// <remarks>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
@@ -1405,7 +1549,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry
             /// </summary>
             /// <remarks>
             /// Get a list of all the jobs in an IoT hub. For more information, see:
@@ -1429,7 +1573,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the quota metrics for an IoT hub.
+            /// Get the quota metrics for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the quota metrics for an IoT hub.
@@ -1446,7 +1590,7 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
-            /// Get the quota metrics for an IoT hub.
+            /// Get the quota metrics for an IoT hub
             /// </summary>
             /// <remarks>
             /// Get the quota metrics for an IoT hub.
@@ -1469,8 +1613,48 @@ namespace Microsoft.Azure.Management.IotHub
             }
 
             /// <summary>
+            /// Get the health for routing endpoints
+            /// </summary>
+            /// <remarks>
+            /// Get the health for routing endpoints.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<EndpointHealthData> GetEndpointHealthNext(this IIotHubResourceOperations operations, string nextPageLink)
+            {
+                return operations.GetEndpointHealthNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the health for routing endpoints
+            /// </summary>
+            /// <remarks>
+            /// Get the health for routing endpoints.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<EndpointHealthData>> GetEndpointHealthNextAsync(this IIotHubResourceOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEndpointHealthNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
             /// </summary>
             /// <remarks>
             /// Get the security metadata for an IoT hub. For more information, see:
@@ -1489,7 +1673,7 @@ namespace Microsoft.Azure.Management.IotHub
 
             /// <summary>
             /// Get the security metadata for an IoT hub. For more information, see:
-            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security.
+            /// https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-security
             /// </summary>
             /// <remarks>
             /// Get the security metadata for an IoT hub. For more information, see:
