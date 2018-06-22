@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "pipelineName": "examplePipeline",
@@ -26,7 +26,8 @@
                     },
                     "sink": {
                       "type": "BlobSink"
-                    }
+                    },
+                    "dataIntegrationUnits": 32
                   },
                   "inputs": [
                     {
@@ -70,14 +71,14 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:20:55 GMT",
+        "Date": "Sat, 16 Jun 2018 00:37:43 GMT",
         "X-Content-Type-Options": "nosniff",
         "x-ms-ratelimit-remaining-subscription-writes": "1191",
-        "x-ms-request-id": "486f17e9-72f2-4d56-ae11-65ae0d6525fd",
-        "x-ms-correlation-request-id": "486f17e9-72f2-4d56-ae11-65ae0d6525fd"
+        "x-ms-request-id": "91a763b0-d944-493f-83fc-e989c8b6e122",
+        "x-ms-correlation-request-id": "91a763b0-d944-493f-83fc-e989c8b6e122"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
         "name": "examplePipeline",
         "type": "Microsoft.DataFactory/factories/pipelines",
         "properties": {
@@ -100,7 +101,8 @@
                       },
                       "sink": {
                         "type": "BlobSink"
-                      }
+                      },
+                      "dataIntegrationUnits": 32
                     },
                     "inputs": [
                       {
@@ -138,7 +140,7 @@
             }
           }
         },
-        "etag": "000052c4-0000-0000-0000-5b2198c70000"
+        "etag": "0a006cd4-0000-0000-0000-5b245bd60000"
       }
     }
   }

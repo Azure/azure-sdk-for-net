@@ -1,10 +1,10 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "pipelineName": "examplePipeline",
-    "runId": null,
+    "referencePipelineRunId": null,
     "parameters": {
       "OutputBlobNameList": [
         "exampleoutput.csv"
@@ -15,14 +15,14 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:20:59 GMT",
+        "Date": "Sat, 16 Jun 2018 00:37:48 GMT",
         "X-Content-Type-Options": "nosniff",
         "x-ms-ratelimit-remaining-subscription-writes": "1190",
-        "x-ms-request-id": "722d61fb-a71f-4374-a354-90664a4b3eb5",
-        "x-ms-correlation-request-id": "722d61fb-a71f-4374-a354-90664a4b3eb5"
+        "x-ms-request-id": "5c2b442b-d360-43ec-9268-f923f88f31fd",
+        "x-ms-correlation-request-id": "5c2b442b-d360-43ec-9268-f923f88f31fd"
       },
       "body": {
-        "runId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f"
+        "runId": "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b"
       }
     }
   }

@@ -32,11 +32,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='factoryName'>
         /// The factory name.
         /// </param>
-        /// <param name='ifNoneMatch'>
-        /// ETag of the integration runtime entity. Should only be specified
-        /// for get. If the ETag matches the existing entity tag, or if * was
-        /// provided, then no content will be returned.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -52,7 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IntegrationRuntimeResource>>> ListByFactoryWithHttpMessagesAsync(string resourceGroupName, string factoryName, string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationRuntimeResource>>> ListByFactoryWithHttpMessagesAsync(string resourceGroupName, string factoryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates an integration runtime.
         /// </summary>
@@ -101,6 +96,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='integrationRuntimeName'>
         /// The integration runtime name.
         /// </param>
+        /// <param name='ifNoneMatch'>
+        /// ETag of the integration runtime entity. Should only be specified
+        /// for get. If the ETag matches the existing entity tag, or if * was
+        /// provided, then no content will be returned.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IntegrationRuntimeResource>> GetWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IntegrationRuntimeResource>> GetWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an integration runtime.
         /// </summary>
@@ -344,34 +344,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </exception>
         Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Remove a node from integration runtime.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='factoryName'>
-        /// The factory name.
-        /// </param>
-        /// <param name='integrationRuntimeName'>
-        /// The integration runtime name.
-        /// </param>
-        /// <param name='removeNodeParameters'>
-        /// The name of the node to be removed from an integration runtime.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> RemoveNodeWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimeRemoveNodeRequest removeNodeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Force the integration runtime to synchronize credentials across
         /// integration runtime nodes, and this will override the credentials
         /// across all worker nodes with those available on the dispatcher
@@ -515,11 +487,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
-        /// <param name='ifNoneMatch'>
-        /// ETag of the integration runtime entity. Should only be specified
-        /// for get. If the ETag matches the existing entity tag, or if * was
-        /// provided, then no content will be returned.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -535,6 +502,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IntegrationRuntimeResource>>> ListByFactoryNextWithHttpMessagesAsync(string nextPageLink, string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationRuntimeResource>>> ListByFactoryNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

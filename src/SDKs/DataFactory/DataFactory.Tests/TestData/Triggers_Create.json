@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "triggerName": "exampleTrigger",
@@ -12,8 +12,8 @@
           "recurrence": {
             "frequency": "Minute",
             "interval": 4,
-            "startTime": "2018-06-13T22:22:37.6664124Z",
-            "endTime": "2018-06-13T22:38:37.6664124Z",
+            "startTime": "2018-06-16T00:39:13.8441801Z",
+            "endTime": "2018-06-16T00:55:13.8441801Z",
             "timeZone": "UTC"
           }
         },
@@ -37,14 +37,14 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:23:37 GMT",
+        "Date": "Sat, 16 Jun 2018 00:40:14 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1193",
-        "x-ms-request-id": "4ab22e39-209c-43ed-8a98-db54ef7b5233",
-        "x-ms-correlation-request-id": "4ab22e39-209c-43ed-8a98-db54ef7b5233"
+        "x-ms-ratelimit-remaining-subscription-writes": "1186",
+        "x-ms-request-id": "373f1a49-685d-4c07-8857-0fcf1bcaffcb",
+        "x-ms-correlation-request-id": "373f1a49-685d-4c07-8857-0fcf1bcaffcb"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
         "name": "exampleTrigger",
         "type": "Microsoft.DataFactory/factories/triggers",
         "properties": {
@@ -53,8 +53,8 @@
             "recurrence": {
               "frequency": "Minute",
               "interval": 4,
-              "startTime": "2018-06-13T22:22:37.6664124Z",
-              "endTime": "2018-06-13T22:38:37.6664124Z",
+              "startTime": "2018-06-16T00:39:13.8441801Z",
+              "endTime": "2018-06-16T00:55:13.8441801Z",
               "timeZone": "UTC"
             }
           },
@@ -73,7 +73,7 @@
           ],
           "runtimeState": "Stopped"
         },
-        "etag": "00008bc4-0000-0000-0000-5b21996a0000"
+        "etag": "0a008ad4-0000-0000-0000-5b245c6e0000"
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "triggerName": "exampleTrigger",
@@ -10,14 +10,14 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:23:41 GMT",
+        "Date": "Sat, 16 Jun 2018 00:40:17 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14942",
-        "x-ms-request-id": "7438ad95-27d3-47ed-bfae-d019167c542d",
-        "x-ms-correlation-request-id": "7438ad95-27d3-47ed-bfae-d019167c542d"
+        "x-ms-ratelimit-remaining-subscription-reads": "14987",
+        "x-ms-request-id": "060364d7-7980-4def-8bc1-800552a9b53d",
+        "x-ms-correlation-request-id": "060364d7-7980-4def-8bc1-800552a9b53d"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
         "name": "exampleTrigger",
         "type": "Microsoft.DataFactory/factories/triggers",
         "properties": {
@@ -26,8 +26,8 @@
             "recurrence": {
               "frequency": "Minute",
               "interval": 4,
-              "startTime": "2018-06-13T22:22:38.7835341Z",
-              "endTime": "2018-06-13T22:38:38.7835341Z",
+              "startTime": "2018-06-16T00:39:14.905167Z",
+              "endTime": "2018-06-16T00:55:14.905167Z",
               "timeZone": "UTC"
             }
           },
@@ -47,7 +47,7 @@
           "description": "Example description",
           "runtimeState": "Stopped"
         },
-        "etag": "00008ec4-0000-0000-0000-5b21996b0000"
+        "etag": "0a008dd4-0000-0000-0000-5b245c6f0000"
       }
     }
   }

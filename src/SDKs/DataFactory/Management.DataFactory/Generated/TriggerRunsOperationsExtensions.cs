@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='filterParameters'>
             /// Parameters to filter the pipeline run.
             /// </param>
-            public static IPage<TriggerRun> QueryByFactory(this ITriggerRunsOperations operations, string resourceGroupName, string factoryName, RunFilterParameters filterParameters)
+            public static TriggerRunsQueryResponse QueryByFactory(this ITriggerRunsOperations operations, string resourceGroupName, string factoryName, RunFilterParameters filterParameters)
             {
                 return operations.QueryByFactoryAsync(resourceGroupName, factoryName, filterParameters).GetAwaiter().GetResult();
             }
@@ -59,43 +59,9 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TriggerRun>> QueryByFactoryAsync(this ITriggerRunsOperations operations, string resourceGroupName, string factoryName, RunFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TriggerRunsQueryResponse> QueryByFactoryAsync(this ITriggerRunsOperations operations, string resourceGroupName, string factoryName, RunFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.QueryByFactoryWithHttpMessagesAsync(resourceGroupName, factoryName, filterParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Query trigger runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TriggerRun> QueryByFactoryNext(this ITriggerRunsOperations operations, string nextPageLink)
-            {
-                return operations.QueryByFactoryNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Query trigger runs.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TriggerRun>> QueryByFactoryNextAsync(this ITriggerRunsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.QueryByFactoryNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -101,6 +101,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='factory'>
         /// Factory resource definition.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the factory entity. Should only be specified for update,
+        /// for which it should match existing entity or can be * for
+        /// unconditional update.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -116,7 +121,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Factory>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, Factory factory, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Factory>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string factoryName, Factory factory, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a factory.
         /// </summary>
@@ -154,6 +159,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='factoryName'>
         /// The factory name.
         /// </param>
+        /// <param name='ifNoneMatch'>
+        /// ETag of the factory entity. Should only be specified for get. If
+        /// the ETag matches the existing entity tag, or if * was provided,
+        /// then no content will be returned.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -169,7 +179,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Factory>> GetWithHttpMessagesAsync(string resourceGroupName, string factoryName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Factory>> GetWithHttpMessagesAsync(string resourceGroupName, string factoryName, string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a factory.
         /// </summary>

@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "factoryUpdateParameters": {
@@ -13,23 +13,22 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:20:43 GMT",
+        "Date": "Tue, 19 Jun 2018 05:41:50 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "402c516f-e22f-49d2-aea1-ab6fe8209cb3",
-        "x-ms-correlation-request-id": "402c516f-e22f-49d2-aea1-ab6fe8209cb3"
+        "x-ms-ratelimit-remaining-subscription-writes": "1192",
+        "x-ms-request-id": "699c67a6-fef5-40c9-bc73-d571d09783c3",
+        "x-ms-correlation-request-id": "699c67a6-fef5-40c9-bc73-d571d09783c3"
       },
       "body": {
         "name": "exampleFactoryName",
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
         "type": "Microsoft.DataFactory/factories",
         "properties": {
           "provisioningState": "Succeeded",
-          "createTime": "2018-06-13T22:20:42.433871Z",
-          "version": "2018-06-01",
-          "defaults": {}
+          "createTime": "2018-06-19T05:41:50.0041314Z",
+          "version": "2018-06-01"
         },
-        "eTag": "\"0000e601-0000-0000-0000-5b2198bb0000\"",
+        "eTag": "\"00003f04-0000-0000-0000-5b28979e0000\"",
         "location": "East US",
         "tags": {
           "exampleTag": "exampleValue"

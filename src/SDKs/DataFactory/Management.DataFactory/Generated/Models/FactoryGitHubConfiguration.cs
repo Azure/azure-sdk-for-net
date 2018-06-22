@@ -10,38 +10,36 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Factory's VSTS repo information.
+    /// Factory's GitHub repo information.
     /// </summary>
-    public partial class FactoryVSTSConfiguration : FactoryRepoConfiguration
+    [Newtonsoft.Json.JsonObject("FactoryGithubConfiguration")]
+    public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the FactoryVSTSConfiguration class.
+        /// Initializes a new instance of the FactoryGitHubConfiguration class.
         /// </summary>
-        public FactoryVSTSConfiguration()
+        public FactoryGitHubConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FactoryVSTSConfiguration class.
+        /// Initializes a new instance of the FactoryGitHubConfiguration class.
         /// </summary>
         /// <param name="accountName">Account name.</param>
         /// <param name="repositoryName">Rrepository name.</param>
         /// <param name="collaborationBranch">Collaboration branch.</param>
         /// <param name="rootFolder">Root folder.</param>
-        /// <param name="projectName">VSTS project name.</param>
         /// <param name="lastCommitId">Last commit id.</param>
-        /// <param name="tenantId">VSTS tenant id.</param>
-        public FactoryVSTSConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName, string lastCommitId = default(string), string tenantId = default(string))
+        /// <param name="hostName">GitHub repo host name.</param>
+        public FactoryGitHubConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string), string hostName = default(string))
             : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
         {
-            ProjectName = projectName;
-            TenantId = tenantId;
+            HostName = hostName;
             CustomInit();
         }
 
@@ -51,30 +49,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets VSTS project name.
+        /// Gets gitHub repo host name.
         /// </summary>
-        [JsonProperty(PropertyName = "projectName")]
-        public string ProjectName { get; set; }
-
-        /// <summary>
-        /// Gets or sets VSTS tenant id.
-        /// </summary>
-        [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; set; }
+        [JsonProperty(PropertyName = "hostName")]
+        public string HostName { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
-            if (ProjectName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ProjectName");
-            }
         }
     }
 }

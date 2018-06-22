@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleIntegrationRuntime",
@@ -8,213 +8,38 @@
     "updateIntegrationRuntimeNodeRequest": {
       "concurrentJobsLimit": 2
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Tue, 28 Nov 2017 06:51:38 GMT",
-        "x-ms-request-id": "eee2dbec-ee3b-4c5c-a040-d39c88f0f82b",
-        "X-Content-Type-Options": "nosniff"
+        "Date": "Thu, 14 Jun 2018 15:01:00 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "cf0d05fa-afbe-4fac-aa10-227885658c83",
+        "x-ms-correlation-request-id": "cf0d05fa-afbe-4fac-aa10-227885658c83"
       },
       "body": {
-        "body": {
-          "nodeName": "Node_1",
-          "machineName": "YANZHANG-02",
-          "hostServiceUri": "https://yanzhang-02.redmond.corp.microsoft.com:8050/HostServiceRemote.svc/",
-          "status": "Online",
-          "capabilities": {
-            "serviceBusConnected": "True",
-            "httpsPortEnabled": "True",
-            "credentialInSync": "True",
-            "connectedToResourceManager": "True",
-            "nodeEnabled": "True"
-          },
-          "versionStatus": "UpToDate",
-          "version": "3.2.6519.3",
-          "registerTime": "2017-11-28T06:50:38.0809958Z",
-          "lastConnectTime": "2017-11-28T06:51:20.7868013Z",
-          "lastStartTime": "2017-11-28T06:51:20.7868013Z",
-          "lastUpdateResult": "None",
-          "isActiveDispatcher": true,
-          "concurrentJobsLimit": 2,
-          "maxConcurrentJobs": 48
+        "nodeName": "Node_1",
+        "machineName": "YANZHANG-DT",
+        "hostServiceUri": "https://yanzhang-dt.fareast.corp.microsoft.com:8050/HostServiceRemote.svc/",
+        "status": "Online",
+        "capabilities": {
+          "serviceBusConnected": "True",
+          "httpsPortEnabled": "True",
+          "credentialInSync": "True",
+          "connectedToResourceManager": "True",
+          "nodeEnabled": "True"
         },
-        "request": {
-          "version": {
-            "major": 1,
-            "minor": 1,
-            "build": -1,
-            "revision": -1,
-            "majorRevision": -1,
-            "minorRevision": -1
-          },
-          "content": {
-            "headers": [
-              {
-                "key": "Content-Type",
-                "value": [
-                  "application/json; charset=utf-8"
-                ]
-              },
-              {
-                "key": "Content-Length",
-                "value": [
-                  "32"
-                ]
-              }
-            ]
-          },
-          "method": {
-            "method": "PATCH"
-          },
-          "requestUri": "https://wu.frontend.int.clouddatahub-int.net/subscriptions/12345678-1234-1234-12345678abc/datafactories/exampleFactoryName/IntegrationRuntimes/exampleIntegrationRuntime/nodes/Node_1?api-version=1.0",
-          "headers": [
-            {
-              "key": "x-ms-client-request-id",
-              "value": [
-                "eee2dbec-ee3b-4c5c-a040-d39c88f0f82b"
-              ]
-            },
-            {
-              "key": "accept-language",
-              "value": [
-                "en-US"
-              ]
-            },
-            {
-              "key": "User-Agent",
-              "value": [
-                "Microsoft.DataTransfer.IntegrationRuntimeService.Client.IntegrationRuntimeServiceClient/0.9.0.0"
-              ]
-            }
-          ],
-          "properties": {}
-        },
-        "response": {
-          "version": {
-            "major": 1,
-            "minor": 1,
-            "build": -1,
-            "revision": -1,
-            "majorRevision": -1,
-            "minorRevision": -1
-          },
-          "content": {
-            "headers": [
-              {
-                "key": "Content-Length",
-                "value": [
-                  "607"
-                ]
-              },
-              {
-                "key": "Content-Type",
-                "value": [
-                  "application/json; charset=utf-8"
-                ]
-              },
-              {
-                "key": "Expires",
-                "value": [
-                  "-1"
-                ]
-              }
-            ]
-          },
-          "statusCode": 200,
-          "reasonPhrase": "OK",
-          "headers": [
-            {
-              "key": "Pragma",
-              "value": [
-                "no-cache"
-              ]
-            },
-            {
-              "key": "X-Content-Type-Options",
-              "value": [
-                "nosniff"
-              ]
-            },
-            {
-              "key": "Cache-Control",
-              "value": [
-                "no-cache"
-              ]
-            },
-            {
-              "key": "Date",
-              "value": [
-                "Tue, 28 Nov 2017 06:51:37 GMT"
-              ]
-            },
-            {
-              "key": "Server",
-              "value": [
-                "Microsoft-IIS/8.5"
-              ]
-            },
-            {
-              "key": "X-AspNet-Version",
-              "value": [
-                "4.0.30319"
-              ]
-            }
-          ],
-          "requestMessage": {
-            "version": {
-              "major": 1,
-              "minor": 1,
-              "build": -1,
-              "revision": -1,
-              "majorRevision": -1,
-              "minorRevision": -1
-            },
-            "content": {
-              "headers": [
-                {
-                  "key": "Content-Type",
-                  "value": [
-                    "application/json; charset=utf-8"
-                  ]
-                },
-                {
-                  "key": "Content-Length",
-                  "value": [
-                    "32"
-                  ]
-                }
-              ]
-            },
-            "method": {
-              "method": "PATCH"
-            },
-            "requestUri": "https://wu.frontend.int.clouddatahub-int.net/subscriptions/12345678-1234-1234-12345678abc/datafactories/exampleFactoryName/IntegrationRuntimes/exampleIntegrationRuntime/nodes/Node_1?api-version=1.0",
-            "headers": [
-              {
-                "key": "x-ms-client-request-id",
-                "value": [
-                  "eee2dbec-ee3b-4c5c-a040-d39c88f0f82b"
-                ]
-              },
-              {
-                "key": "accept-language",
-                "value": [
-                  "en-US"
-                ]
-              },
-              {
-                "key": "User-Agent",
-                "value": [
-                  "Microsoft.DataTransfer.IntegrationRuntimeService.Client.IntegrationRuntimeServiceClient/0.9.0.0"
-                ]
-              }
-            ],
-            "properties": {}
-          },
-          "isSuccessStatusCode": true
-        }
+        "versionStatus": "UpToDate",
+        "version": "3.8.6730.2",
+        "registerTime": "2018-06-14T14:51:44.9237069Z",
+        "lastConnectTime": "2018-06-14T15:00:35.7544322Z",
+        "lastStartTime": "2018-06-14T14:52:59.8933313Z",
+        "lastUpdateResult": "None",
+        "isActiveDispatcher": true,
+        "concurrentJobsLimit": 2,
+        "maxConcurrentJobs": 56
       }
     }
   }

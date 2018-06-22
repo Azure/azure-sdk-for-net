@@ -1,17 +1,17 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:20:43 GMT",
+        "Date": "Tue, 19 Jun 2018 05:41:51 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14997",
-        "x-ms-request-id": "798fa674-50c0-4ee8-a11d-86c0aadf43f9",
-        "x-ms-correlation-request-id": "798fa674-50c0-4ee8-a11d-86c0aadf43f9"
+        "x-ms-ratelimit-remaining-subscription-reads": "14993",
+        "x-ms-request-id": "f9c976e7-4205-4cfc-833e-e5d50565fcef",
+        "x-ms-correlation-request-id": "f9c976e7-4205-4cfc-833e-e5d50565fcef"
       },
       "body": {
         "value": [
@@ -19,32 +19,53 @@
             "name": "exampleFactoryName-linked",
             "identity": {
               "type": "SystemAssigned",
-              "principalId": "6a15dcc1-4ca0-494e-b6ca-e24e1e764145",
-              "tenantId": "12345678-1234-1234-123456789abc"
+              "principalId": "10743799-44d2-42fe-8c4d-5bc5c51c0684",
+              "tenantId": "12345678-1234-1234-1234-123456789abc"
             },
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName-linked",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName-linked",
             "type": "Microsoft.DataFactory/factories",
             "properties": {
               "provisioningState": "Succeeded",
-              "createTime": "2018-06-13T06:44:12.4381873Z",
-              "version": "2017-09-01-preview",
-              "defaults": {}
+              "createTime": "2018-06-15T08:56:07.1828318Z",
+              "version": "2017-09-01-preview"
             },
-            "eTag": "\"00009201-0000-0000-0000-5b20bd3d0000\"",
+            "eTag": "\"00008a02-0000-0000-0000-5b237f270000\"",
+            "location": "East US",
+            "tags": {}
+          },
+          {
+            "name": "FactoryToUpgrade",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/factorytoupgrade",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-19T05:35:35.7133828Z",
+              "version": "2018-06-01"
+            },
+            "eTag": "\"00003d04-0000-0000-0000-5b28962f0000\"",
             "location": "East US",
             "tags": {}
           },
           {
             "name": "exampleFactoryName",
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
             "type": "Microsoft.DataFactory/factories",
             "properties": {
               "provisioningState": "Succeeded",
-              "createTime": "2018-06-13T22:20:42.433871Z",
+              "createTime": "2018-06-19T05:41:50.0041314Z",
               "version": "2018-06-01",
-              "defaults": {}
+              "repoConfiguration": {
+                "type": "FactoryVSTSConfiguration",
+                "projectName": "project",
+                "tenantId": "",
+                "accountName": "ADF",
+                "repositoryName": "repo",
+                "collaborationBranch": "master",
+                "rootFolder": "/",
+                "lastCommitId": ""
+              }
             },
-            "eTag": "\"0000e601-0000-0000-0000-5b2198bb0000\"",
+            "eTag": "\"00004004-0000-0000-0000-5b28979e0000\"",
             "location": "East US",
             "tags": {
               "exampleTag": "exampleValue"

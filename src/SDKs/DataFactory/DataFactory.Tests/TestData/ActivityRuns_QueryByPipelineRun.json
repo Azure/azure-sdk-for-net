@@ -1,32 +1,32 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
-    "runId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f",
+    "runId": "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b",
     "filterParameters": {
-      "lastUpdatedAfter": "2018-06-13T22:19:56.5406897Z",
-      "lastUpdatedBefore": "2018-06-13T22:32:59.9920792Z"
+      "lastUpdatedAfter": "2018-06-16T00:36:44.3345758Z",
+      "lastUpdatedBefore": "2018-06-16T00:49:48.3686473Z"
     },
     "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:23:32 GMT",
+        "Date": "Sat, 16 Jun 2018 00:40:13 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1194",
-        "x-ms-request-id": "a384210a-88ca-492c-ae6a-c06f1a0660f2",
-        "x-ms-correlation-request-id": "a384210a-88ca-492c-ae6a-c06f1a0660f2"
+        "x-ms-ratelimit-remaining-subscription-writes": "1187",
+        "x-ms-request-id": "5465cf41-2e71-4ce6-8db4-9de1b92ffda9",
+        "x-ms-correlation-request-id": "5465cf41-2e71-4ce6-8db4-9de1b92ffda9"
       },
       "body": {
         "value": [
           {
-            "activityRunEnd": "2018-06-13T22:21:23.653816Z",
+            "activityRunEnd": "2018-06-16T00:38:11.5445431Z",
             "activityName": "ExampleForeachActivity",
-            "activityRunStart": "2018-06-13T22:21:00.6686991Z",
+            "activityRunStart": "2018-06-16T00:37:49.4804925Z",
             "activityType": "ForEach",
-            "durationInMs": 22985,
+            "durationInMs": 22064,
             "retryAttempt": null,
             "error": {
               "errorCode": "",
@@ -34,21 +34,21 @@
               "failureType": "",
               "target": "ExampleForeachActivity"
             },
-            "activityRunId": "fb90e59d-fb2e-45e5-8685-354f3009c484",
+            "activityRunId": "f30c5514-fb85-43ed-9fa4-768d42e58680",
             "input": {},
             "linkedServiceName": "",
             "output": {},
             "userProperties": {},
             "pipelineName": "examplePipeline",
-            "pipelineRunId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f",
+            "pipelineRunId": "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b",
             "status": "Succeeded"
           },
           {
-            "activityRunEnd": "2018-06-13T22:21:19.1849274Z",
+            "activityRunEnd": "2018-06-16T00:38:07.4188923Z",
             "activityName": "ExampleCopyActivity",
-            "activityRunStart": "2018-06-13T22:21:01.6218567Z",
+            "activityRunStart": "2018-06-16T00:37:50.2460952Z",
             "activityType": "Copy",
-            "durationInMs": 17563,
+            "durationInMs": 17172,
             "retryAttempt": null,
             "error": {
               "errorCode": "",
@@ -56,14 +56,15 @@
               "failureType": "",
               "target": "ExampleCopyActivity"
             },
-            "activityRunId": "be498aa9-34fd-4ffa-9aa9-5f92142244f1",
+            "activityRunId": "a96678c8-7167-4f00-b629-afccfbad4e51",
             "input": {
               "source": {
                 "type": "BlobSource"
               },
               "sink": {
                 "type": "BlobSink"
-              }
+              },
+              "dataIntegrationUnits": 32
             },
             "linkedServiceName": "",
             "output": {
@@ -71,8 +72,8 @@
               "dataWritten": 142000,
               "filesRead": 1,
               "filesWritten": 1,
-              "copyDuration": 11,
-              "throughput": 12.607,
+              "copyDuration": 6,
+              "throughput": 23.112,
               "errors": [],
               "effectiveIntegrationRuntime": "DefaultIntegrationRuntime (East US)",
               "usedCloudDataMovementUnits": 4,
@@ -86,12 +87,12 @@
                     "type": "AzureBlob"
                   },
                   "status": "Succeeded",
-                  "start": "2018-06-13T22:21:02.2255766Z",
-                  "duration": 11,
+                  "start": "2018-06-16T00:37:50.68834Z",
+                  "duration": 6,
                   "usedCloudDataMovementUnits": 4,
                   "usedParallelCopies": 1,
                   "detailedDurations": {
-                    "queuingDuration": 8,
+                    "queuingDuration": 4,
                     "transferDuration": 2
                   }
                 }
@@ -99,7 +100,7 @@
             },
             "userProperties": {},
             "pipelineName": "examplePipeline",
-            "pipelineRunId": "ea8c09dd-8b59-49c8-9749-b13ba4d2a49f",
+            "pipelineRunId": "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b",
             "status": "Succeeded"
           }
         ]

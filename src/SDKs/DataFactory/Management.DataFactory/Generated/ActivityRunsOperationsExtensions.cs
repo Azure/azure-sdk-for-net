@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='filterParameters'>
             /// Parameters to filter the activity runs.
             /// </param>
-            public static IPage<ActivityRun> QueryByPipelineRun(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, RunFilterParameters filterParameters)
+            public static ActivityRunsQueryResponse QueryByPipelineRun(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, RunFilterParameters filterParameters)
             {
                 return operations.QueryByPipelineRunAsync(resourceGroupName, factoryName, runId, filterParameters).GetAwaiter().GetResult();
             }
@@ -65,43 +65,9 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ActivityRun>> QueryByPipelineRunAsync(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActivityRunsQueryResponse> QueryByPipelineRunAsync(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.QueryByPipelineRunWithHttpMessagesAsync(resourceGroupName, factoryName, runId, filterParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Query activity runs based on input filter conditions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ActivityRun> QueryByPipelineRunNext(this IActivityRunsOperations operations, string nextPageLink)
-            {
-                return operations.QueryByPipelineRunNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Query activity runs based on input filter conditions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ActivityRun>> QueryByPipelineRunNextAsync(this IActivityRunsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.QueryByPipelineRunNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

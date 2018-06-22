@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleIntegrationRuntime",
@@ -16,7 +16,7 @@
         "x-ms-correlation-request-id": "a453fdd5-2f17-4a84-b0c4-751151481ef3"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
         "name": "exampleIntegrationRuntime",
         "type": "Microsoft.DataFactory/factories/integrationruntimes",
         "properties": {

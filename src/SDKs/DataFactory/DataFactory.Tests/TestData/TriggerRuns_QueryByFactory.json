@@ -1,11 +1,11 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "filterParameters": {
-      "lastUpdatedAfter": "2018-06-13T22:19:56.5406897Z",
-      "lastUpdatedBefore": "2018-06-13T22:32:59.9920792Z",
+      "lastUpdatedAfter": "2018-06-16T00:36:44.3345758Z",
+      "lastUpdatedBefore": "2018-06-16T00:49:48.3686473Z",
       "filters": [
         {
           "operand": "TriggerName",
@@ -21,27 +21,27 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:29:53 GMT",
+        "Date": "Sat, 16 Jun 2018 00:46:22 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "889a5252-6085-458d-b851-3dd242a5f74d",
-        "x-ms-correlation-request-id": "889a5252-6085-458d-b851-3dd242a5f74d"
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "fb328f3e-d21e-44f7-80d7-dad60c955b4d",
+        "x-ms-correlation-request-id": "fb328f3e-d21e-44f7-80d7-dad60c955b4d"
       },
       "body": {
         "value": [
           {
             "triggerName": "exampleTrigger",
-            "triggerRunId": "08586726780867710179470567194CU35",
+            "triggerRunId": "08586724970898148904457116912CU27",
             "triggerType": "ScheduleTrigger",
-            "triggerRunTimestamp": "2018-06-13T22:26:38.6976401Z",
+            "triggerRunTimestamp": "2018-06-16T00:43:15.660141Z",
             "status": "Succeeded",
             "message": "",
             "properties": {
-              "TriggerTime": "6/13/2018 10:26:38 PM",
-              "ScheduleTime": "6/13/2018 10:26:38 PM"
+              "TriggerTime": "6/16/2018 12:43:15 AM",
+              "ScheduleTime": "6/16/2018 12:43:14 AM"
             },
             "triggeredPipelines": {
-              "examplePipeline": "a17b15bd-e6c7-40b4-9762-b1ea71be4e09"
+              "examplePipeline": "9f3ce8b3-37d7-43eb-96ac-a656c0476283"
             }
           }
         ]

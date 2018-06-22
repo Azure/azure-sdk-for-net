@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Factory's VSTS repo information.
+    /// Factory's git repo information.
     /// </summary>
     public partial class FactoryRepoUpdate
     {
@@ -30,14 +30,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the FactoryRepoUpdate class.
         /// </summary>
         /// <param name="factoryResourceId">The factory resource id.</param>
-        /// <param name="resourceGroupName">The resource group name.</param>
-        /// <param name="vstsConfiguration">VSTS repo information of the
+        /// <param name="repoConfiguration">Git repo information of the
         /// factory.</param>
-        public FactoryRepoUpdate(string factoryResourceId = default(string), string resourceGroupName = default(string), FactoryVSTSConfiguration vstsConfiguration = default(FactoryVSTSConfiguration))
+        public FactoryRepoUpdate(string factoryResourceId = default(string), FactoryRepoConfiguration repoConfiguration = default(FactoryRepoConfiguration))
         {
             FactoryResourceId = factoryResourceId;
-            ResourceGroupName = resourceGroupName;
-            VstsConfiguration = vstsConfiguration;
+            RepoConfiguration = repoConfiguration;
             CustomInit();
         }
 
@@ -53,16 +51,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public string FactoryResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource group name.
+        /// Gets or sets git repo information of the factory.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceGroupName")]
-        public string ResourceGroupName { get; set; }
+        [JsonProperty(PropertyName = "repoConfiguration")]
+        public FactoryRepoConfiguration RepoConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets VSTS repo information of the factory.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "vstsConfiguration")]
-        public FactoryVSTSConfiguration VstsConfiguration { get; set; }
-
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RepoConfiguration != null)
+            {
+                RepoConfiguration.Validate();
+            }
+        }
     }
 }

@@ -24,8 +24,8 @@ namespace DataFactory.Tests.UnitTests
     /// </summary>
     public class ExamplesUnitTest : BaseUnitTest
     {
-        [Theory]
-        [InlineData(@"secrets.json", @"exampleoutput", @"exampleoutputworkarounds")]
+        //[Theory]
+        //[InlineData(@"secrets.json", @"exampleoutput", @"exampleoutputworkarounds")]
         public void CaptureExamples(string secretsFile, string outputDirectory, string outputDirectoryWorkarounds = null)
         {
             // Uncomment the [Theory] and [InlineData(...)] above and run this method with your favorite locations for secrets and outputs to recapture examples.  It takes about 20-30 minutes.
@@ -54,9 +54,9 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
-        public void Factories_ConfigureRepo()
+        public void Factories_ConfigureFactoryRepo()
         {
-            RunTest("Factories_ConfigureRepo", (example, client, responseCode) =>
+            RunTest("Factories_ConfigureFactoryRepo", (example, client, responseCode) =>
             {
                 Factory resource = client.Factories.ConfigureFactoryRepo(LN(example), GetTypedParameter<FactoryRepoUpdate>(example, client, "factoryRepoUpdate"));
                 CheckResponseBody(example, client, responseCode, resource);
@@ -177,6 +177,16 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void IntegrationRuntimes_GetMonitoringData()
+        {
+            RunTest("IntegrationRuntimes_GetMonitoringData", (example, client, responseCode) =>
+            {
+                IntegrationRuntimeMonitoringData response = client.IntegrationRuntimes.GetMonitoringData(RGN(example), FN(example), IRN(example));
+                CheckResponseBody(example, client, responseCode, response);
+            });
+        }
+
+        [Fact]
         public void IntegrationRuntimes_RegenerateAuthKey()
         {
             RunTest("IntegrationRuntimes_RegenerateAuthKey", (example, client, responseCode) =>
@@ -226,6 +236,15 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void IntegrationRuntimes_SyncCredentials()
+        {
+            RunAyncApiTest("IntegrationRuntimes_SyncCredentials", (example, client, responseCode) =>
+            {
+                client.IntegrationRuntimes.SyncCredentials(RGN(example), FN(example), IRN(example));
+            });
+        }
+
+        [Fact]
         public void IntegrationRuntimeNodes_Update()
         {
             RunAyncApiTest("IntegrationRuntimeNodes_Update", (example, client, responseCode) =>
@@ -235,19 +254,6 @@ namespace DataFactory.Tests.UnitTests
                 {
                     ConcurrentJobsLimit = 2
                 });
-            });
-        }
-
-        [Fact]
-        public void IntegrationRuntimes_RemoveNode()
-        {
-            RunAyncApiTest("IntegrationRuntimes_RemoveNode", (example, client, responseCode) =>
-            {
-                client.IntegrationRuntimes.RemoveNode(RGN(example), FN(example), IRN(example),
-                    new IntegrationRuntimeRemoveNodeRequest
-                    {
-                        NodeName = "Node_1"
-                    });
             });
         }
 
@@ -373,7 +379,7 @@ namespace DataFactory.Tests.UnitTests
             RunTest("TriggerRuns_QueryByFactory", (example, client, responseCode) =>
             {
                 RunFilterParameters filterParams = GetTypedParameter<RunFilterParameters>(example, client, "filterParameters");
-                IPage<TriggerRun> response = client.TriggerRuns.QueryByFactory(RGN(example), FN(example), filterParams);
+                TriggerRunsQueryResponse response = client.TriggerRuns.QueryByFactory(RGN(example), FN(example), filterParams);
                 CheckResponseBody(example, client, responseCode, response);
             });
         }
@@ -514,17 +520,6 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
-        public void PipelineRuns_ListByFactory()
-        {
-            RunTest("PipelineRuns_ListByFactory", (example, client, responseCode) =>
-            {
-                RunFilterParameters filterParams = GetTypedParameter<RunFilterParameters>(example, client, "filterParameters");
-                PipelineRunQueryResponse response = client.PipelineRuns.QueryByFactory(RGN(example), FN(example), filterParams);
-                CheckResponseBody(example, client, responseCode, response);
-            });
-        }
-        
-        [Fact]
         public void PipelineRuns_Get()
         {
             RunTest("PipelineRuns_Get", (example, client, responseCode) =>
@@ -535,12 +530,23 @@ namespace DataFactory.Tests.UnitTests
         }
 
         [Fact]
+        public void PipelineRuns_QueryByFactory()
+        {
+            RunTest("PipelineRuns_QueryByFactory", (example, client, responseCode) =>
+            {
+                RunFilterParameters filterParams = GetTypedParameter<RunFilterParameters>(example, client, "filterParameters");
+                PipelineRunsQueryResponse response = client.PipelineRuns.QueryByFactory(RGN(example), FN(example), filterParams);
+                CheckResponseBody(example, client, responseCode, response);
+            });
+        }
+
+        [Fact]
         public void ActivityRuns_QueryByPipelineRun()
         {
             RunTest("ActivityRuns_QueryByPipelineRun", (example, client, responseCode) =>
             {
                 RunFilterParameters filterParams = GetTypedParameter<RunFilterParameters>(example, client, "filterParameters");
-                IPage<ActivityRun> response = client.ActivityRuns.QueryByPipelineRun(RGN(example), FN(example), GetTypedParameter<string>(example, client, "runId"), filterParams);
+                ActivityRunsQueryResponse response = client.ActivityRuns.QueryByPipelineRun(RGN(example), FN(example), GetTypedParameter<string>(example, client, "runId"), filterParams);
                 CheckResponseBody(example, client, responseCode, response);
             });
         }

@@ -1,16 +1,16 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:30:04 GMT",
+        "Date": "Sat, 16 Jun 2018 00:46:33 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-tenant-reads": "14998",
-        "x-ms-request-id": "e05e4e38-d167-4079-ae7e-1dd4d74a29b3",
-        "x-ms-correlation-request-id": "e05e4e38-d167-4079-ae7e-1dd4d74a29b3"
+        "x-ms-ratelimit-remaining-tenant-reads": "14999",
+        "x-ms-request-id": "522fceaa-5c3b-42ff-a518-843b2a53e0aa",
+        "x-ms-correlation-request-id": "522fceaa-5c3b-42ff-a518-843b2a53e0aa"
       },
       "body": {
         "value": [
@@ -380,651 +380,651 @@
             }
           },
           {
-            "Name": "Microsoft.DataFactory/register/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory Resource Provider",
-              "Operation": "Register Data Factory Resource Provider",
-              "Description": "Registers the subscription for the Data Factory Resource Provider."
+            "name": "Microsoft.DataFactory/register/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory Resource Provider",
+              "operation": "Register Data Factory Resource Provider",
+              "description": "Registers the subscription for the Data Factory Resource Provider."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/unregister/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory Resource Provider",
-              "Operation": "Unregister Data Factory Resource Provider",
-              "Description": "Unregisters the subscription for the Data Factory Resource Provider."
+            "name": "Microsoft.DataFactory/unregister/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory Resource Provider",
+              "operation": "Unregister Data Factory Resource Provider",
+              "description": "Unregisters the subscription for the Data Factory Resource Provider."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Read Data Factory",
-              "Description": "Reads the Data Factory."
+            "name": "Microsoft.DataFactory/datafactories/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Read Data Factory",
+              "description": "Reads the Data Factory."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Create or Update Data Factory",
-              "Description": "Creates or Updates the Data Factory."
+            "name": "Microsoft.DataFactory/datafactories/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Create or Update Data Factory",
+              "description": "Creates or Updates the Data Factory."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Delete Data Factory",
-              "Description": "Deletes the Data Factory."
+            "name": "Microsoft.DataFactory/datafactories/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Delete Data Factory",
+              "description": "Deletes the Data Factory."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/linkedServices/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Linked Service",
-              "Operation": "Read Linked Service",
-              "Description": "Reads any Linked Service."
+            "name": "Microsoft.DataFactory/datafactories/linkedServices/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Linked Service",
+              "operation": "Read Linked Service",
+              "description": "Reads any Linked Service."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/linkedServices/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Linked Service",
-              "Operation": "Delete Linked Service",
-              "Description": "Deletes any Linked Service."
+            "name": "Microsoft.DataFactory/datafactories/linkedServices/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Linked Service",
+              "operation": "Delete Linked Service",
+              "description": "Deletes any Linked Service."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/linkedServices/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Linked Service",
-              "Operation": "Create or Update Linked Service",
-              "Description": "Creates or Updates any Linked Service."
+            "name": "Microsoft.DataFactory/datafactories/linkedServices/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Linked Service",
+              "operation": "Create or Update Linked Service",
+              "description": "Creates or Updates any Linked Service."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Read Pipeline",
-              "Description": "Reads any Pipeline."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Read Pipeline",
+              "description": "Reads any Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Delete Pipeline",
-              "Description": "Deletes any Pipeline."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Delete Pipeline",
+              "description": "Deletes any Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/pause/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Pause Pipeline",
-              "Description": "Pauses any Pipeline."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/pause/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Pause Pipeline",
+              "description": "Pauses any Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/resume/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Resume Pipeline",
-              "Description": "Resumes any Pipeline."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/resume/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Resume Pipeline",
+              "description": "Resumes any Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/update/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Update Pipeline",
-              "Description": "Updates any Pipeline."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/update/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Update Pipeline",
+              "description": "Updates any Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Create or Update Pipeline",
-              "Description": "Creates or Updates any Pipeline."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Create or Update Pipeline",
+              "description": "Creates or Updates any Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datasets/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Read Dataset",
-              "Description": "Reads any Dataset."
+            "name": "Microsoft.DataFactory/datafactories/datasets/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Read Dataset",
+              "description": "Reads any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datasets/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Delete Dataset",
-              "Description": "Deletes any Dataset."
+            "name": "Microsoft.DataFactory/datafactories/datasets/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Delete Dataset",
+              "description": "Deletes any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datasets/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Create or Update Dataset",
-              "Description": "Creates or Updates any Dataset."
+            "name": "Microsoft.DataFactory/datafactories/datasets/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Create or Update Dataset",
+              "description": "Creates or Updates any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/tables/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Read Dataset",
-              "Description": "Reads any Dataset."
+            "name": "Microsoft.DataFactory/datafactories/tables/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Read Dataset",
+              "description": "Reads any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/tables/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Delete Dataset",
-              "Description": "Deletes any Dataset."
+            "name": "Microsoft.DataFactory/datafactories/tables/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Delete Dataset",
+              "description": "Deletes any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/tables/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Create or Update Dataset",
-              "Description": "Creates or Updates any Dataset."
+            "name": "Microsoft.DataFactory/datafactories/tables/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Create or Update Dataset",
+              "description": "Creates or Updates any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datasets/slices/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Slice",
-              "Operation": "Read Data Slices",
-              "Description": "Gets the Data Slices in the given period."
+            "name": "Microsoft.DataFactory/datafactories/datasets/slices/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Slice",
+              "operation": "Read Data Slices",
+              "description": "Gets the Data Slices in the given period."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datasets/slices/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Slice",
-              "Operation": "Update Data Slice Status",
-              "Description": "Update the Status of the Data Slice."
+            "name": "Microsoft.DataFactory/datafactories/datasets/slices/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Slice",
+              "operation": "Update Data Slice Status",
+              "description": "Update the Status of the Data Slice."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datasets/sliceruns/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Slice",
-              "Operation": "Read Data Slice Run",
-              "Description": "Reads the Data Slice Run for the given dataset with the given start time."
+            "name": "Microsoft.DataFactory/datafactories/datasets/sliceruns/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Slice",
+              "operation": "Read Data Slice Run",
+              "description": "Reads the Data Slice Run for the given dataset with the given start time."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/runs/loginfo/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Run Log",
-              "Operation": "Read Run Log Info",
-              "Description": "Reads a SAS URI to a blob container containing the logs."
+            "name": "Microsoft.DataFactory/datafactories/runs/loginfo/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Run Log",
+              "operation": "Read Run Log Info",
+              "description": "Reads a SAS URI to a blob container containing the logs."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/activitywindows/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Activity Windows",
-              "Operation": "Read Activity Windows in any Data Factory",
-              "Description": "Reads Activity Windows in the Data Factory with specified parameters."
+            "name": "Microsoft.DataFactory/datafactories/activitywindows/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Activity Windows",
+              "operation": "Read Activity Windows in any Data Factory",
+              "description": "Reads Activity Windows in the Data Factory with specified parameters."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/activitywindows/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Activity Windows",
-              "Operation": "Read Activity Windows for any Pipeline",
-              "Description": "Reads Activity Windows for the Pipeline with specified parameters."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/activitywindows/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Activity Windows",
+              "operation": "Read Activity Windows for any Pipeline",
+              "description": "Reads Activity Windows for the Pipeline with specified parameters."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datapipelines/activities/activitywindows/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Activity Windows",
-              "Operation": "Read Activity Windows for any Pipeline Activity",
-              "Description": "Reads Activity Windows for the Pipeline Activity with specified parameters."
+            "name": "Microsoft.DataFactory/datafactories/datapipelines/activities/activitywindows/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Activity Windows",
+              "operation": "Read Activity Windows for any Pipeline Activity",
+              "description": "Reads Activity Windows for the Pipeline Activity with specified parameters."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/datasets/activitywindows/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Activity Windows",
-              "Operation": "Read Activity Windows for any Dataset",
-              "Description": "Reads Activity Windows for the Dataset with specified parameters."
+            "name": "Microsoft.DataFactory/datafactories/datasets/activitywindows/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Activity Windows",
+              "operation": "Read Activity Windows for any Dataset",
+              "description": "Reads Activity Windows for the Dataset with specified parameters."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/gateways/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Gateway",
-              "Operation": "Read Gateway",
-              "Description": "Reads any Gateway."
+            "name": "Microsoft.DataFactory/datafactories/gateways/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Gateway",
+              "operation": "Read Gateway",
+              "description": "Reads any Gateway."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/gateways/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Gateway",
-              "Operation": "Create or Update Gateway",
-              "Description": "Creates or Updates any Gateway."
+            "name": "Microsoft.DataFactory/datafactories/gateways/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Gateway",
+              "operation": "Create or Update Gateway",
+              "description": "Creates or Updates any Gateway."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/gateways/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Gateway",
-              "Operation": "Delete Gateway",
-              "Description": "Deletes any Gateway."
+            "name": "Microsoft.DataFactory/datafactories/gateways/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Gateway",
+              "operation": "Delete Gateway",
+              "description": "Deletes any Gateway."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/gateways/connectioninfo/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Gateway",
-              "Operation": "Read Gateway Connection Info",
-              "Description": "Reads the Connection Info for any Gateway."
+            "name": "Microsoft.DataFactory/datafactories/gateways/connectioninfo/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Gateway",
+              "operation": "Read Gateway Connection Info",
+              "description": "Reads the Connection Info for any Gateway."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/gateways/listauthkeys/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Gateway",
-              "Operation": "List Gateway Authentication Keys",
-              "Description": "Lists the Authentication Keys for any Gateway."
+            "name": "Microsoft.DataFactory/datafactories/gateways/listauthkeys/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Gateway",
+              "operation": "List Gateway Authentication Keys",
+              "description": "Lists the Authentication Keys for any Gateway."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/datafactories/gateways/regenerateauthkey/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Gateway",
-              "Operation": "Regenerate Gateway Authentication Keys",
-              "Description": "Regenerates the Authentication Keys for any Gateway."
+            "name": "Microsoft.DataFactory/datafactories/gateways/regenerateauthkey/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Gateway",
+              "operation": "Regenerate Gateway Authentication Keys",
+              "description": "Regenerates the Authentication Keys for any Gateway."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Read Data Factory",
-              "Description": "Reads Data Factory."
+            "name": "Microsoft.DataFactory/factories/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Read Data Factory",
+              "description": "Reads Data Factory."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Create or Update any Data Factory.",
-              "Description": "Create or Update Data Factory"
+            "name": "Microsoft.DataFactory/factories/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Create or Update any Data Factory.",
+              "description": "Create or Update Data Factory"
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Delete Data Factory",
-              "Description": "Deletes Data Factory."
+            "name": "Microsoft.DataFactory/factories/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Delete Data Factory",
+              "description": "Deletes Data Factory."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/linkedServices/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Linked Service",
-              "Operation": "Read Linked Service",
-              "Description": "Reads Linked Service."
+            "name": "Microsoft.DataFactory/factories/linkedServices/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Linked Service",
+              "operation": "Read Linked Service",
+              "description": "Reads Linked Service."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/linkedServices/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Linked Service",
-              "Operation": "Delete Linked Service",
-              "Description": "Deletes Linked Service."
+            "name": "Microsoft.DataFactory/factories/linkedServices/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Linked Service",
+              "operation": "Delete Linked Service",
+              "description": "Deletes Linked Service."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/linkedServices/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Linked Service",
-              "Operation": "Create or Update any Linked Service.",
-              "Description": "Create or Update Linked Service"
+            "name": "Microsoft.DataFactory/factories/linkedServices/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Linked Service",
+              "operation": "Create or Update any Linked Service.",
+              "description": "Create or Update Linked Service"
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/pipelines/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Read Pipeline",
-              "Description": "Reads Pipeline."
+            "name": "Microsoft.DataFactory/factories/pipelines/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Read Pipeline",
+              "description": "Reads Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/pipelines/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Delete Pipeline",
-              "Description": "Deletes Pipeline."
+            "name": "Microsoft.DataFactory/factories/pipelines/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Delete Pipeline",
+              "description": "Deletes Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/pipelines/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Create or Update any Pipeline.",
-              "Description": "Create or Update Pipeline"
+            "name": "Microsoft.DataFactory/factories/pipelines/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Create or Update any Pipeline.",
+              "description": "Create or Update Pipeline"
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/pipelines/createrun/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Pipeline",
-              "Operation": "Create Pipeline Run",
-              "Description": "Creates a run for the Pipeline."
+            "name": "Microsoft.DataFactory/factories/pipelines/createrun/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Pipeline",
+              "operation": "Create Pipeline Run",
+              "description": "Creates a run for the Pipeline."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/cancelpipelinerun/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Cancel any Pipeline Run",
-              "Description": "Cancels the pipeline run specified by the run ID."
+            "name": "Microsoft.DataFactory/factories/cancelpipelinerun/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Cancel any Pipeline Run",
+              "description": "Cancels the pipeline run specified by the run ID."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/pipelineruns/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Read Pipeline Runs",
-              "Description": "Reads the Pipeline Runs."
+            "name": "Microsoft.DataFactory/factories/pipelineruns/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Read Pipeline Runs",
+              "description": "Reads the Pipeline Runs."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/pipelineruns/activityruns/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Read Activity Runs",
-              "Description": "Reads the activity runs for the specified pipeline run ID."
+            "name": "Microsoft.DataFactory/factories/pipelineruns/activityruns/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Read Activity Runs",
+              "description": "Reads the activity runs for the specified pipeline run ID."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/datasets/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Read Dataset",
-              "Description": "Reads any Dataset."
+            "name": "Microsoft.DataFactory/factories/datasets/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Read Dataset",
+              "description": "Reads any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/datasets/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Delete Dataset",
-              "Description": "Deletes any Dataset."
+            "name": "Microsoft.DataFactory/factories/datasets/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Delete Dataset",
+              "description": "Deletes any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/datasets/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Dataset",
-              "Operation": "Create or Update Dataset",
-              "Description": "Creates or Updates any Dataset."
+            "name": "Microsoft.DataFactory/factories/datasets/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Dataset",
+              "operation": "Create or Update Dataset",
+              "description": "Creates or Updates any Dataset."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Read Integration Runtime",
-              "Description": "Reads any Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Read Integration Runtime",
+              "description": "Reads any Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Create or Update Integration Runtime",
-              "Description": "Creates or Updates any Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Create or Update Integration Runtime",
+              "description": "Creates or Updates any Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Delete Integration Runtime",
-              "Description": "Deletes any Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Delete Integration Runtime",
+              "description": "Deletes any Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/start/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Start Integration Runtime",
-              "Description": "Starts any Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/start/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Start Integration Runtime",
+              "description": "Starts any Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/stop/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Stop Integration Runtime",
-              "Description": "Stops any Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/stop/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Stop Integration Runtime",
+              "description": "Stops any Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/getconnectioninfo/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Read Integration Runtime Connection Info",
-              "Description": "Reads Integration Runtime Connection Info."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/getconnectioninfo/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Read Integration Runtime Connection Info",
+              "description": "Reads Integration Runtime Connection Info."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/getstatus/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Read Integration Runtime Status",
-              "Description": "Reads Integration Runtime Status."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/getstatus/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Read Integration Runtime Status",
+              "description": "Reads Integration Runtime Status."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/listauthkeys/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "List Integration Runtime Authentication Keys",
-              "Description": "Lists the Authentication Keys for any Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/listauthkeys/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "List Integration Runtime Authentication Keys",
+              "description": "Lists the Authentication Keys for any Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/monitoringdata/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Get Integration Runtime Monitoring Data",
-              "Description": "Gets the Monitoring Data for any Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/monitoringdata/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Get Integration Runtime Monitoring Data",
+              "description": "Gets the Monitoring Data for any Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/nodes/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Delete Integration Runtime Node",
-              "Description": "Deletes the Node for the specified Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/nodes/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Delete Integration Runtime Node",
+              "description": "Deletes the Node for the specified Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/nodes/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Update Integration Runtime Node",
-              "Description": "Updates a self-hosted Integration Runtime Node."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/nodes/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Update Integration Runtime Node",
+              "description": "Updates a self-hosted Integration Runtime Node."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/nodes/ipAddress/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Read Integration Runtime Node IP Address",
-              "Description": "Returns the IP Address for the specified node of the Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/nodes/ipAddress/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Read Integration Runtime Node IP Address",
+              "description": "Returns the IP Address for the specified node of the Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/synccredentials/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Sync Credentials for Integration Runtime",
-              "Description": "Syncs the Credentials for the specified Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/synccredentials/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Sync Credentials for Integration Runtime",
+              "description": "Syncs the Credentials for the specified Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/upgrade/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Upgrade Integration Runtime",
-              "Description": "Upgrades the specified Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/upgrade/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Upgrade Integration Runtime",
+              "description": "Upgrades the specified Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/integrationruntimes/regenerateauthkey/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Integration Runtime",
-              "Operation": "Regenerate Integration Runtime Authentication Keys",
-              "Description": "Regenerates the Authentication Keys for the specified Integration Runtime."
+            "name": "Microsoft.DataFactory/factories/integrationruntimes/regenerateauthkey/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Integration Runtime",
+              "operation": "Regenerate Integration Runtime Authentication Keys",
+              "description": "Regenerates the Authentication Keys for the specified Integration Runtime."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/triggers/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Trigger",
-              "Operation": "Read Trigger",
-              "Description": "Reads any Trigger."
+            "name": "Microsoft.DataFactory/factories/triggers/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Trigger",
+              "operation": "Read Trigger",
+              "description": "Reads any Trigger."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/triggers/write",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Trigger",
-              "Operation": "Create or Update Trigger",
-              "Description": "Creates or Updates any Trigger."
+            "name": "Microsoft.DataFactory/factories/triggers/write",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Trigger",
+              "operation": "Create or Update Trigger",
+              "description": "Creates or Updates any Trigger."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/triggers/delete",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Trigger",
-              "Operation": "Delete Trigger",
-              "Description": "Deletes any Trigger."
+            "name": "Microsoft.DataFactory/factories/triggers/delete",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Trigger",
+              "operation": "Delete Trigger",
+              "description": "Deletes any Trigger."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/triggers/start/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Trigger",
-              "Operation": "Start Trigger",
-              "Description": "Starts any Trigger."
+            "name": "Microsoft.DataFactory/factories/triggers/start/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Trigger",
+              "operation": "Start Trigger",
+              "description": "Starts any Trigger."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/triggers/stop/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Trigger",
-              "Operation": "Stop Trigger",
-              "Description": "Stops any Trigger."
+            "name": "Microsoft.DataFactory/factories/triggers/stop/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Trigger",
+              "operation": "Stop Trigger",
+              "description": "Stops any Trigger."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/factories/triggers/triggerruns/read",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Read Trigger Runs",
-              "Description": "Reads the Trigger Runs."
+            "name": "Microsoft.DataFactory/factories/triggers/triggerruns/read",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Read Trigger Runs",
+              "description": "Reads the Trigger Runs."
             }
           },
           {
-            "Name": "Microsoft.DataFactory/locations/configureFactoryRepo/action",
-            "Display": {
-              "Provider": "Microsoft Data Factory",
-              "Resource": "Data Factory",
-              "Operation": "Configure Factory Repository",
-              "Description": "Configures the repository for the factory."
+            "name": "Microsoft.DataFactory/locations/configureFactoryRepo/action",
+            "display": {
+              "provider": "Microsoft Data Factory",
+              "resource": "Data Factory",
+              "operation": "Configure Factory Repository",
+              "description": "Configures the repository for the factory."
             }
           }
         ]

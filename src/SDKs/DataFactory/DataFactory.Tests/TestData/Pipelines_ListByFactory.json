@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "api-version": "2018-06-01"
@@ -8,16 +8,16 @@
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Jun 2018 22:20:56 GMT",
+        "Date": "Sat, 16 Jun 2018 00:37:43 GMT",
         "X-Content-Type-Options": "nosniff",
         "x-ms-ratelimit-remaining-subscription-reads": "14990",
-        "x-ms-request-id": "73d51b6b-fe05-475a-b267-d5ec593f3164",
-        "x-ms-correlation-request-id": "73d51b6b-fe05-475a-b267-d5ec593f3164"
+        "x-ms-request-id": "92292250-c10f-4c47-8eb6-b886b361add7",
+        "x-ms-correlation-request-id": "92292250-c10f-4c47-8eb6-b886b361add7"
       },
       "body": {
         "value": [
           {
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
             "name": "examplePipeline",
             "type": "Microsoft.DataFactory/factories/pipelines",
             "properties": {
@@ -40,7 +40,8 @@
                           },
                           "sink": {
                             "type": "BlobSink"
-                          }
+                          },
+                          "dataIntegrationUnits": 32
                         },
                         "inputs": [
                           {
@@ -78,7 +79,7 @@
                 }
               }
             },
-            "etag": "000052c4-0000-0000-0000-5b2198c70000"
+            "etag": "0a006cd4-0000-0000-0000-5b245bd60000"
           }
         ]
       }

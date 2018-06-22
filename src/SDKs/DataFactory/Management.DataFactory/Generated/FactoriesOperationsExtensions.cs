@@ -138,9 +138,13 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='factory'>
             /// Factory resource definition.
             /// </param>
-            public static Factory CreateOrUpdate(this IFactoriesOperations operations, string resourceGroupName, string factoryName, Factory factory)
+            /// <param name='ifMatch'>
+            /// ETag of the factory entity. Should only be specified for update, for which
+            /// it should match existing entity or can be * for unconditional update.
+            /// </param>
+            public static Factory CreateOrUpdate(this IFactoriesOperations operations, string resourceGroupName, string factoryName, Factory factory, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, factoryName, factory).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, factoryName, factory, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,12 +162,16 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='factory'>
             /// Factory resource definition.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the factory entity. Should only be specified for update, for which
+            /// it should match existing entity or can be * for unconditional update.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Factory> CreateOrUpdateAsync(this IFactoriesOperations operations, string resourceGroupName, string factoryName, Factory factory, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Factory> CreateOrUpdateAsync(this IFactoriesOperations operations, string resourceGroupName, string factoryName, Factory factory, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, factoryName, factory, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, factoryName, factory, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -227,9 +235,14 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='factoryName'>
             /// The factory name.
             /// </param>
-            public static Factory Get(this IFactoriesOperations operations, string resourceGroupName, string factoryName)
+            /// <param name='ifNoneMatch'>
+            /// ETag of the factory entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
+            public static Factory Get(this IFactoriesOperations operations, string resourceGroupName, string factoryName, string ifNoneMatch = default(string))
             {
-                return operations.GetAsync(resourceGroupName, factoryName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, factoryName, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -244,12 +257,17 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='factoryName'>
             /// The factory name.
             /// </param>
+            /// <param name='ifNoneMatch'>
+            /// ETag of the factory entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Factory> GetAsync(this IFactoriesOperations operations, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Factory> GetAsync(this IFactoriesOperations operations, string resourceGroupName, string factoryName, string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
