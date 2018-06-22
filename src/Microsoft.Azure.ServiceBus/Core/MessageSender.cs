@@ -609,22 +609,26 @@ namespace Microsoft.Azure.ServiceBus.Core
                         {
                             entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
                         }
-                }
+                    }
 
                     request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
 
-                    IEnumerable<long> sequenceNumbers = null;
                     var response = await this.ExecuteRequestResponseAsync(request).ConfigureAwait(false);
                     if (response.StatusCode == AmqpResponseStatusCode.OK)
                     {
-                        sequenceNumbers = response.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
+                        var sequenceNumbers = response.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
+                        if (sequenceNumbers == null || sequenceNumbers.Length < 1)
+                        {
+                            throw new ServiceBusException(true, "Could not schedule message successfully.");
+                        }
+
+                        return sequenceNumbers[0];
+
                     }
                     else
                     {
-                        response.ToMessagingContractException();
+                        throw response.ToMessagingContractException();
                     }
-
-                    return sequenceNumbers?.FirstOrDefault() ?? 0;
                 }
                 catch (Exception exception)
                 {
