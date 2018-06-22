@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -30,12 +31,12 @@ namespace DataFactory.Tests.ScenarioTests
             const string modeEnvironmentVariableName = "AZURE_TEST_MODE";
             const string playback = "Playback";
 
-            if (Environment.GetEnvironmentVariable(modeEnvironmentVariableName) == playback)
-            {
-                Environment.SetEnvironmentVariable(modeEnvironmentVariableName, playback);
-            }
             using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
+                if (Environment.GetEnvironmentVariable(modeEnvironmentVariableName) == playback)
+                {
+                    HttpMockServer.Mode = HttpRecorderMode.Playback;
+                }
                 this.ResourceGroupName = TestUtilities.GenerateName(ResourceGroupNamePrefix);
                 this.DataFactoryName = TestUtilities.GenerateName(DataFactoryNamePrefix);
                 this.Client = mockContext.GetServiceClient<DataFactoryManagementClient>(TestEnvironmentFactory.GetTestEnvironment());
