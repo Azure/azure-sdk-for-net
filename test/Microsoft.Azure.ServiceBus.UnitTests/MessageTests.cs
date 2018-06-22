@@ -4,9 +4,11 @@
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.Azure.ServiceBus.Core;
     using Xunit;
 
     public class MessageTests
@@ -187,6 +189,62 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 await queueClient.CloseAsync();
             }
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task MessagePropertiesShouldSupportValidPropertyTypes()
+        {
+            var queueName = TestConstants.NonPartitionedQueueName;
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+
+            /// Only following value types are supported:
+            /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
+            /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
+            var msg = new Message();
+            msg.UserProperties.Add("byte", (byte)2);
+            msg.UserProperties.Add("sbyte", (sbyte)3);
+            msg.UserProperties.Add("char", 'c');
+            msg.UserProperties.Add("short", (short)4);
+            msg.UserProperties.Add("ushort", (ushort)5);
+            msg.UserProperties.Add("int", (int)6);
+            msg.UserProperties.Add("uint", (uint)7);
+            msg.UserProperties.Add("long", (long)8);
+            msg.UserProperties.Add("ulong", (ulong)9);
+            msg.UserProperties.Add("float", (float)10.0);
+            msg.UserProperties.Add("double", (double)11.0);
+            msg.UserProperties.Add("decimal", (decimal)12.0);
+            msg.UserProperties.Add("bool", true);
+            msg.UserProperties.Add("Guid", Guid.NewGuid());
+            msg.UserProperties.Add("string", "value");
+            msg.UserProperties.Add("Uri", new Uri("http://nonExistingServiceBusWebsite.com"));
+            msg.UserProperties.Add("DateTime", DateTime.UtcNow);
+            msg.UserProperties.Add("DateTimeOffset", DateTimeOffset.UtcNow);
+            msg.UserProperties.Add("TimeSpan", TimeSpan.FromMinutes(5));
+
+            await sender.SendAsync(msg);
+            var receivedMsg = await receiver.ReceiveAsync();
+
+            Assert.IsType<byte>(receivedMsg.UserProperties["byte"]);
+            Assert.IsType<sbyte>(receivedMsg.UserProperties["sbyte"]);
+            Assert.IsType<char>(receivedMsg.UserProperties["char"]);
+            Assert.IsType<short>(receivedMsg.UserProperties["short"]);
+            Assert.IsType<ushort>(receivedMsg.UserProperties["ushort"]);
+            Assert.IsType<int>(receivedMsg.UserProperties["int"]);
+            Assert.IsType<uint>(receivedMsg.UserProperties["uint"]);
+            Assert.IsType<long>(receivedMsg.UserProperties["long"]);
+            Assert.IsType<ulong>(receivedMsg.UserProperties["ulong"]);
+            Assert.IsType<float>(receivedMsg.UserProperties["float"]);
+            Assert.IsType<double>(receivedMsg.UserProperties["double"]);
+            Assert.IsType<decimal>(receivedMsg.UserProperties["decimal"]);
+            Assert.IsType<bool>(receivedMsg.UserProperties["bool"]);
+            Assert.IsType<Guid>(receivedMsg.UserProperties["Guid"]);
+            Assert.IsType<string>(receivedMsg.UserProperties["string"]);
+            Assert.IsType<Uri>(receivedMsg.UserProperties["Uri"]);
+            Assert.IsType<DateTime>(receivedMsg.UserProperties["DateTime"]);
+            Assert.IsType<DateTimeOffset>(receivedMsg.UserProperties["DateTimeOffset"]);
+            Assert.IsType<TimeSpan>(receivedMsg.UserProperties["TimeSpan"]);
         }
     }
 }

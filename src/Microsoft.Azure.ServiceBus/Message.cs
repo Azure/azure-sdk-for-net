@@ -266,8 +266,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>
         /// Only following value types are supported:
         /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
-        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[],
-        /// and IList / IDictionary of supported types
+        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
         /// </remarks>
         public IDictionary<string, object> UserProperties { get; internal set; }
 
