@@ -17,7 +17,7 @@ namespace DataFactory.Tests.ScenarioTests
     {
         private const string ResourceGroupNamePrefix = "sdktestingadfrg";
         protected const string DataFactoryNamePrefix = "sdktestingfactory";
-        protected const string FactoryLocation = "East US 2";
+        protected const string FactoryLocation = "West US";
         protected static string ClassName = typeof(T).FullName;
 
         protected string ResourceGroupName { get; private set; }
@@ -27,7 +27,13 @@ namespace DataFactory.Tests.ScenarioTests
 
         protected async Task RunTest(Func<DataFactoryManagementClient, Task> initialAction, Func<DataFactoryManagementClient, Task> finallyAction, [CallerMemberName] string methodName = "")
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            const string modeEnvironmentVariableName = "AZURE_TEST_MODE";
+            const string playback = "Playback";
+
+            if (Environment.GetEnvironmentVariable(modeEnvironmentVariableName) == playback)
+            {
+                Environment.SetEnvironmentVariable(modeEnvironmentVariableName, playback);
+            }
             using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
                 this.ResourceGroupName = TestUtilities.GenerateName(ResourceGroupNamePrefix);
