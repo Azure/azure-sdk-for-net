@@ -73,6 +73,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// firewall configuration.</param>
         /// <param name="enableHttp2">Whether HTTP2 is enabled on the
         /// application gateway resource.</param>
+        /// <param name="enableFips">Whether FIPS is enabled on the application
+        /// gateway resource.</param>
+        /// <param name="autoscaleConfiguration">Autoscale
+        /// Configuration.</param>
         /// <param name="resourceGuid">Resource GUID property of the
         /// application gateway resource.</param>
         /// <param name="provisioningState">Provisioning state of the
@@ -80,7 +84,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ApplicationGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), ApplicationGatewaySslPolicy sslPolicy = default(ApplicationGatewaySslPolicy), string operationalState = default(string), IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(IList<ApplicationGatewayIPConfiguration>), IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default(IList<ApplicationGatewayAuthenticationCertificate>), IList<ApplicationGatewaySslCertificate> sslCertificates = default(IList<ApplicationGatewaySslCertificate>), IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(IList<ApplicationGatewayFrontendIPConfiguration>), IList<ApplicationGatewayFrontendPort> frontendPorts = default(IList<ApplicationGatewayFrontendPort>), IList<ApplicationGatewayProbe> probes = default(IList<ApplicationGatewayProbe>), IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(IList<ApplicationGatewayBackendHttpSettings>), IList<ApplicationGatewayHttpListener> httpListeners = default(IList<ApplicationGatewayHttpListener>), IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(IList<ApplicationGatewayUrlPathMap>), IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(IList<ApplicationGatewayRequestRoutingRule>), IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default(IList<ApplicationGatewayRedirectConfiguration>), ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default(ApplicationGatewayWebApplicationFirewallConfiguration), bool? enableHttp2 = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        /// <param name="zones">A list of availability zones denoting where the
+        /// resource needs to come from.</param>
+        public ApplicationGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), ApplicationGatewaySslPolicy sslPolicy = default(ApplicationGatewaySslPolicy), string operationalState = default(string), IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(IList<ApplicationGatewayIPConfiguration>), IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default(IList<ApplicationGatewayAuthenticationCertificate>), IList<ApplicationGatewaySslCertificate> sslCertificates = default(IList<ApplicationGatewaySslCertificate>), IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(IList<ApplicationGatewayFrontendIPConfiguration>), IList<ApplicationGatewayFrontendPort> frontendPorts = default(IList<ApplicationGatewayFrontendPort>), IList<ApplicationGatewayProbe> probes = default(IList<ApplicationGatewayProbe>), IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(IList<ApplicationGatewayBackendHttpSettings>), IList<ApplicationGatewayHttpListener> httpListeners = default(IList<ApplicationGatewayHttpListener>), IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(IList<ApplicationGatewayUrlPathMap>), IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(IList<ApplicationGatewayRequestRoutingRule>), IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default(IList<ApplicationGatewayRedirectConfiguration>), ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default(ApplicationGatewayWebApplicationFirewallConfiguration), bool? enableHttp2 = default(bool?), bool? enableFips = default(bool?), ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default(ApplicationGatewayAutoscaleConfiguration), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -100,9 +106,12 @@ namespace Microsoft.Azure.Management.Network.Models
             RedirectConfigurations = redirectConfigurations;
             WebApplicationFirewallConfiguration = webApplicationFirewallConfiguration;
             EnableHttp2 = enableHttp2;
+            EnableFips = enableFips;
+            AutoscaleConfiguration = autoscaleConfiguration;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Etag = etag;
+            Zones = zones;
             CustomInit();
         }
 
@@ -223,6 +232,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableHttp2 { get; set; }
 
         /// <summary>
+        /// Gets or sets whether FIPS is enabled on the application gateway
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableFips")]
+        public bool? EnableFips { get; set; }
+
+        /// <summary>
+        /// Gets or sets autoscale Configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.autoscaleConfiguration")]
+        public ApplicationGatewayAutoscaleConfiguration AutoscaleConfiguration { get; set; }
+
+        /// <summary>
         /// Gets or sets resource GUID property of the application gateway
         /// resource.
         /// </summary>
@@ -245,6 +267,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of availability zones denoting where the
+        /// resource needs to come from.
+        /// </summary>
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -265,6 +294,10 @@ namespace Microsoft.Azure.Management.Network.Models
             if (WebApplicationFirewallConfiguration != null)
             {
                 WebApplicationFirewallConfiguration.Validate();
+            }
+            if (AutoscaleConfiguration != null)
+            {
+                AutoscaleConfiguration.Validate();
             }
         }
     }
