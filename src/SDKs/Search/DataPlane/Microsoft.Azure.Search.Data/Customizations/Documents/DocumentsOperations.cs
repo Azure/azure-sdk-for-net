@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Search
                 await this.Client.DocumentsProxy.CountWithHttpMessagesAsync(
                     searchRequestOptions, 
                     customHeaders, 
-                    cancellationToken);
+                    cancellationToken).ConfigureAwait(false);
 
             return new AzureOperationResponse<long>()
             {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Search
                     searchRequestOptions,
                     autocompleteParameters,
                     customHeaders,
-                    cancellationToken);
+                    cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Search
                     request,
                     searchRequestOptions,
                     customHeaders,
-                    cancellationToken);
+                    cancellationToken).ConfigureAwait(false);
             }    
 
             return new AzureOperationResponse<AutocompleteResult>()
