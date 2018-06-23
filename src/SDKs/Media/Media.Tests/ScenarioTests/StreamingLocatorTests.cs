@@ -80,7 +80,6 @@ namespace Media.Tests.ScenarioTests
         {
             Assert.Equal(expectedAssetName, locator.AssetName);
             Assert.Equal(expectedName, locator.Name);
-            //Assert.NotEmpty(locator.ContentKeys);  // TODO: This is currently not implemented consistently.  Verify it once it is
             Assert.Equal(expectedDefaultContentKeyPolicyName, locator.DefaultContentKeyPolicyName);
             Assert.NotEqual(Guid.Empty, locator.StreamingLocatorId);
             Assert.Equal(expectedStreamingPolicyName, locator.StreamingPolicyName);
