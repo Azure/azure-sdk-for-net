@@ -103,10 +103,13 @@ namespace Backup.Tests
 
                 var backupLocation = client.BackupLocations.Get(ResourceGroupName, "local");
 
-                backupLocation.Path = @"\\100.68.73.194\Share";
-                backupLocation.UserName = @"Administrator";
+                backupLocation.Path = @"\\su1fileserver\SU1_Infrastructure_2\BackupStore";
+                backupLocation.UserName = @"azurestack\azurestackadmin";
                 backupLocation.Password = "password";
-                backupLocation.EncryptionKeyBase64 = "YVVOa0J3S2xTamhHZ1lyRU9wQ1pKQ0xWanhjaHlkaU5ZQnNDeHRPTGFQenJKdWZsRGtYT25oYmlaa1RMVWFKeQ==";
+                backupLocation.EncryptionKeyBase64 = "Q09WR3dOUEtia0VFeFZFbGdqVXFySm9TbEtxaHNNZ2VxQkdzUUZaVGRCbWtpbHplR2N3Z2hmR05wY2lqTElIbw==";
+                backupLocation.IsBackupSchedulerEnabled = false;
+                backupLocation.BackupFrequencyInHours = 10;
+                backupLocation.BackupRetentionPeriodInDays = 6;
 
                 var result = client.BackupLocations.Update(ResourceGroupName, "local", backupLocation);
                 Assert.NotNull(result);
@@ -118,10 +121,13 @@ namespace Backup.Tests
 
                 result = client.BackupLocations.Update(ResourceGroupName, "local", result);
 
-                Assert.Null(result.Path);
-                Assert.Null(result.UserName);
-                Assert.Empty(result.Password);
-                Assert.Empty(result.EncryptionKeyBase64);
+                Assert.Equal(result.Path, backupLocation.Path);
+                Assert.Equal(result.UserName, backupLocation.UserName);
+                Assert.Null(result.Password);
+                Assert.Null(result.EncryptionKeyBase64);
+                Assert.Equal(result.IsBackupSchedulerEnabled, backupLocation.IsBackupSchedulerEnabled);
+                Assert.Equal(result.BackupFrequencyInHours, backupLocation.BackupFrequencyInHours);
+                Assert.Equal(result.BackupRetentionPeriodInDays, backupLocation.BackupRetentionPeriodInDays);
 
             }, null, null, System.Net.HttpStatusCode.OK, false);
         }
