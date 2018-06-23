@@ -31,17 +31,23 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         /// <param name="exportable">Indicates if the private key can be
         /// exported.</param>
-        /// <param name="keyType">The key type.</param>
-        /// <param name="keySize">The key size in bytes. For example;  1024 or
-        /// 2048.</param>
+        /// <param name="keyType">The type of key pair to be used for the
+        /// certificate. Possible values include: 'EC', 'EC-HSM', 'RSA',
+        /// 'RSA-HSM', 'oct'</param>
+        /// <param name="keySize">The key size in bits. For example: 2048,
+        /// 3072, or 4096 for RSA.</param>
         /// <param name="reuseKey">Indicates if the same key pair will be used
         /// on certificate renewal.</param>
-        public KeyProperties(bool? exportable = default(bool?), string keyType = default(string), int? keySize = default(int?), bool? reuseKey = default(bool?))
+        /// <param name="curve">Elliptic curve name. For valid values, see
+        /// JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
+        /// 'P-521', 'P-256K'</param>
+        public KeyProperties(bool? exportable = default(bool?), string keyType = default(string), int? keySize = default(int?), bool? reuseKey = default(bool?), string curve = default(string))
         {
             Exportable = exportable;
             KeyType = keyType;
             KeySize = keySize;
             ReuseKey = reuseKey;
+            Curve = curve;
             CustomInit();
         }
 
@@ -57,13 +63,15 @@ namespace Microsoft.Azure.KeyVault.Models
         public bool? Exportable { get; set; }
 
         /// <summary>
-        /// Gets or sets the key type.
+        /// Gets or sets the type of key pair to be used for the certificate.
+        /// Possible values include: 'EC', 'EC-HSM', 'RSA', 'RSA-HSM', 'oct'
         /// </summary>
         [JsonProperty(PropertyName = "kty")]
         public string KeyType { get; set; }
 
         /// <summary>
-        /// Gets or sets the key size in bytes. For example;  1024 or 2048.
+        /// Gets or sets the key size in bits. For example: 2048, 3072, or 4096
+        /// for RSA.
         /// </summary>
         [JsonProperty(PropertyName = "key_size")]
         public int? KeySize { get; set; }
@@ -74,6 +82,14 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "reuse_key")]
         public bool? ReuseKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets elliptic curve name. For valid values, see
+        /// JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
+        /// 'P-521', 'P-256K'
+        /// </summary>
+        [JsonProperty(PropertyName = "crv")]
+        public string Curve { get; set; }
 
     }
 }

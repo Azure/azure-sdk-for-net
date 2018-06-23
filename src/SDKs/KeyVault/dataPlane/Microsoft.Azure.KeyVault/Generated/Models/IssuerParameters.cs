@@ -33,8 +33,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// names; for example, 'Self' or 'Unknown'.</param>
         /// <param name="certificateType">Type of certificate to be requested
         /// from the issuer provider.</param>
-        /// <param name="certificateTransparency">Indicates whether issuer should 
-        /// publish issued certificates to CT logs.</param>
+        /// <param name="certificateTransparency">Indicates if the certificates
+        /// generated under this policy should be published to certificate
+        /// transparency logs.</param>
         public IssuerParameters(string name = default(string), string certificateType = default(string), bool? certificateTransparency = default(bool?))
         {
             Name = name;
@@ -63,10 +64,11 @@ namespace Microsoft.Azure.KeyVault.Models
         public string CertificateType { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates if the certificates generated from this
-        /// issuer should be published to certificate transparency logs.
+        /// Gets or sets indicates if the certificates generated under this
+        /// policy should be published to certificate transparency logs.
         /// </summary>
         [JsonProperty(PropertyName = "cert_transparency")]
         public bool? CertificateTransparency { get; set; }
+
     }
 }

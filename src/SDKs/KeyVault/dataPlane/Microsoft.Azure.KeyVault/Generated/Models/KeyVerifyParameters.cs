@@ -35,7 +35,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// more information on possible algorithm types, see
         /// JsonWebKeySignatureAlgorithm. Possible values include: 'PS256',
         /// 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL', 'ES256',
-        /// 'ES384', 'ES512', 'ECDSA256'</param>
+        /// 'ES384', 'ES512', 'ES256K'</param>
         /// <param name="digest">The digest used for signing.</param>
         /// <param name="signature">The signature to be verified.</param>
         public KeyVerifyParameters(string algorithm, byte[] digest, byte[] signature)
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// information on possible algorithm types, see
         /// JsonWebKeySignatureAlgorithm. Possible values include: 'PS256',
         /// 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL', 'ES256',
-        /// 'ES384', 'ES512', 'ECDSA256'
+        /// 'ES384', 'ES512', 'ES256K'
         /// </summary>
         [JsonProperty(PropertyName = "alg")]
         public string Algorithm { get; set; }
