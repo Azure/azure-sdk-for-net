@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         const string EnqueuedTimeUtcName = "x-opt-enqueued-time";
         const string ScheduledEnqueueTimeUtcName = "x-opt-scheduled-enqueue-time";
         const string SequenceNumberName = "x-opt-sequence-number";
-        const string OffsetName = "x-opt-offset";
+        const string EnqueueSequenceNumberName = "x-opt-enqueue-sequence-number";
         const string LockedUntilName = "x-opt-locked-until";
         const string PublisherName = "x-opt-publisher";
         const string PartitionKeyName = "x-opt-partition-key";
@@ -308,8 +308,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                         case SequenceNumberName:
                             sbMessage.SystemProperties.SequenceNumber = (long)pair.Value;
                             break;
-                        case OffsetName:
-                            sbMessage.SystemProperties.EnqueuedSequenceNumber = long.Parse((string)pair.Value);
+                        case EnqueueSequenceNumberName:
+                            sbMessage.SystemProperties.EnqueuedSequenceNumber = (long)pair.Value;
                             break;
                         case LockedUntilName:
                             sbMessage.SystemProperties.LockedUntilUtc = (DateTime)pair.Value;
