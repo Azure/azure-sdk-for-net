@@ -29,14 +29,16 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the AutocompleteRequest class.
         /// </summary>
+        /// <param name="searchText">The search text on which to base
+        /// autocomplete results.</param>
         /// <param name="autocompleteMode">Specifies the mode for Autocomplete.
         /// The default is 'oneTerm'. Use 'twoTerms' to get shingles and
         /// 'oneTermWithContext' to use the current context while producing
         /// auto-completed terms. Possible values include: 'oneTerm',
         /// 'twoTerms', 'oneTermWithContext'</param>
-        /// <param name="fuzzy">A value indicating whether to use fuzzy
-        /// matching for the autocomplete query. Default is false. when set to
-        /// true, the query will autocomplete terms even if there's a
+        /// <param name="useFuzzyMatching">A value indicating whether to use
+        /// fuzzy matching for the autocomplete query. Default is false. When
+        /// set to true, the query will autocomplete terms even if there's a
         /// substituted or missing character in the search text. While this
         /// provides a better experience in some scenarios it comes at a
         /// performance cost as fuzzy autocomplete queries are slower and
@@ -52,8 +54,6 @@ namespace Microsoft.Azure.Search.Models
         /// query in order for the query to be reported as a success. This
         /// parameter can be useful for ensuring search availability even for
         /// services with only one replica. The default is 80.</param>
-        /// <param name="search">The search text on which to base autocomplete
-        /// results.</param>
         /// <param name="searchFields">The comma-separated list of field names
         /// to consider when querying for auto-completed terms.</param>
         /// <param name="suggesterName">The name of the suggester as specified
@@ -62,14 +62,14 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="top">The number of auto-completed terms to retrieve.
         /// This must be a value between 1 and 100. The default is to
         /// 5.</param>
-        public AutocompleteRequest(AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string search = default(string), string searchFields = default(string), string suggesterName = default(string), int? top = default(int?))
+        public AutocompleteRequest(string searchText = default(string), AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string searchFields = default(string), string suggesterName = default(string), int? top = default(int?))
         {
+            SearchText = searchText;
             AutocompleteMode = autocompleteMode;
-            Fuzzy = fuzzy;
+            UseFuzzyMatching = useFuzzyMatching;
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
             MinimumCoverage = minimumCoverage;
-            Search = search;
             SearchFields = searchFields;
             SuggesterName = suggesterName;
             Top = top;
@@ -80,6 +80,12 @@ namespace Microsoft.Azure.Search.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the search text on which to base autocomplete results.
+        /// </summary>
+        [JsonProperty(PropertyName = "search")]
+        public string SearchText { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the mode for Autocomplete. The default is
@@ -93,14 +99,14 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to use fuzzy matching for
-        /// the autocomplete query. Default is false. when set to true, the
+        /// the autocomplete query. Default is false. When set to true, the
         /// query will autocomplete terms even if there's a substituted or
         /// missing character in the search text. While this provides a better
         /// experience in some scenarios it comes at a performance cost as
         /// fuzzy autocomplete queries are slower and consume more resources.
         /// </summary>
         [JsonProperty(PropertyName = "fuzzy")]
-        public bool? Fuzzy { get; set; }
+        public bool? UseFuzzyMatching { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
@@ -127,12 +133,6 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "minimumCoverage")]
         public double? MinimumCoverage { get; set; }
-
-        /// <summary>
-        /// Gets or sets the search text on which to base autocomplete results.
-        /// </summary>
-        [JsonProperty(PropertyName = "search")]
-        public string Search { get; set; }
 
         /// <summary>
         /// Gets or sets the comma-separated list of field names to consider

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Search
                 await this.Client.DocumentsProxy.CountWithHttpMessagesAsync(
                     searchRequestOptions, 
                     customHeaders, 
-                    cancellationToken);
+                    cancellationToken).ConfigureAwait(false);
 
             return new AzureOperationResponse<long>()
             {
@@ -66,11 +66,10 @@ namespace Microsoft.Azure.Search
         }
 
         public async Task<AzureOperationResponse<AutocompleteResult>> AutocompleteWithHttpMessagesAsync(
-            AutocompleteMode autocompleteMode,
-            string search,
+            string searchText,
             string suggesterName,
-            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             AutocompleteParameters autocompleteParameters = null,
+            SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -81,13 +80,12 @@ namespace Microsoft.Azure.Search
             if (useGet)
             {
                 response = await this.Client.DocumentsProxy.AutocompleteGetWithHttpMessagesAsync(
-                    autocompleteMode,
-                    search,
+                    searchText,
                     suggesterName,
                     searchRequestOptions,
                     autocompleteParameters,
                     customHeaders,
-                    cancellationToken);
+                    cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -98,13 +96,13 @@ namespace Microsoft.Azure.Search
                 }
                 AutocompleteRequest request = new AutocompleteRequest()
                 {
-                    AutocompleteMode = autocompleteMode,
-                    Fuzzy = autocompleteParameters?.Fuzzy,
+                    AutocompleteMode = autocompleteParameters?.AutocompleteMode,
+                    UseFuzzyMatching = autocompleteParameters?.UseFuzzyMatching,
                     HighlightPostTag = autocompleteParameters?.HighlightPostTag,
                     HighlightPreTag = autocompleteParameters?.HighlightPreTag,
                     MinimumCoverage = autocompleteParameters?.MinimumCoverage,
                     SearchFields = searchFieldsStr,
-                    Search = search,
+                    SearchText = searchText,
                     SuggesterName = suggesterName,
                     Top = autocompleteParameters?.Top
                 };
@@ -113,7 +111,7 @@ namespace Microsoft.Azure.Search
                     request,
                     searchRequestOptions,
                     customHeaders,
-                    cancellationToken);
+                    cancellationToken).ConfigureAwait(false);
             }    
 
             return new AzureOperationResponse<AutocompleteResult>()

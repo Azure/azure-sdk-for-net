@@ -31,13 +31,15 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the AutocompleteParameters class.
         /// </summary>
-        /// <param name="fuzzy">A value indicating whether to use fuzzy
-        /// matching for the autocomplete query. Default is false. When set to
-        /// true, the query will find terms even if there's a substituted or
-        /// missing character in the search text. While this provides a better
-        /// experience in some scenarios it comes at a performance cost as
-        /// fuzzy autocomplete queries are slower and consume more
-        /// resources.</param>
+        /// <param name="autocompleteMode">Autocomplete mode. Possible values
+        /// include: 'oneTerm', 'twoTerms', 'oneTermWithContext'</param>
+        /// <param name="useFuzzyMatching">A value indicating whether to use
+        /// fuzzy matching for the autocomplete query. Default is false. When
+        /// set to true, the query will find terms even if there's a
+        /// substituted or missing character in the search text. While this
+        /// provides a better experience in some scenarios it comes at a
+        /// performance cost as fuzzy autocomplete queries are slower and
+        /// consume more resources.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
         /// highlights. Must be set with HighlightPreTag. If omitted, hit
         /// highlighting is disabled.</param>
@@ -54,9 +56,10 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="top">The number of auto-completed terms to retrieve.
         /// This must be a value between 1 and 100. The default is to
         /// 5.</param>
-        public AutocompleteParameters(bool? fuzzy = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> searchFields = default(IList<string>), int? top = default(int?))
+        public AutocompleteParameters(AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), IList<string> searchFields = default(IList<string>), int? top = default(int?))
         {
-            Fuzzy = fuzzy;
+            AutocompleteMode = autocompleteMode;
+            UseFuzzyMatching = useFuzzyMatching;
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
             MinimumCoverage = minimumCoverage;
@@ -71,6 +74,13 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets autocomplete mode. Possible values include: 'oneTerm',
+        /// 'twoTerms', 'oneTermWithContext'
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public AutocompleteMode? AutocompleteMode { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to use fuzzy matching for
         /// the autocomplete query. Default is false. When set to true, the
         /// query will find terms even if there's a substituted or missing
@@ -79,7 +89,7 @@ namespace Microsoft.Azure.Search.Models
         /// fuzzy autocomplete queries are slower and consume more resources.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
-        public bool? Fuzzy { get; set; }
+        public bool? UseFuzzyMatching { get; set; }
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
