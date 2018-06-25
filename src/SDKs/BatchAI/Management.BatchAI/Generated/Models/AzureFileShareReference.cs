@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the Azure File Share to mount on the cluster.
+    /// Azure File Share mounting configuration.
     /// </summary>
     public partial class AzureFileShareReference
     {
@@ -30,14 +30,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the AzureFileShareReference class.
         /// </summary>
-        /// <param name="accountName">Name of the storage account.</param>
-        /// <param name="azureFileUrl">URL to access the Azure File.</param>
-        /// <param name="credentials">Information of the Azure File
-        /// credentials.</param>
-        /// <param name="relativeMountPath">Specifies the relative path on the
-        /// compute node where the Azure file share will be mounted.</param>
-        /// <param name="fileMode">Specifies the file mode.</param>
-        /// <param name="directoryMode">Specifies the directory Mode.</param>
+        /// <param name="accountName">Account name.</param>
+        /// <param name="azureFileUrl">Azure File URL.</param>
+        /// <param name="credentials">Credentials.</param>
+        /// <param name="relativeMountPath">Relative mount path.</param>
+        /// <param name="fileMode">File mode.</param>
+        /// <param name="directoryMode">Directory mode.</param>
         public AzureFileShareReference(string accountName, string azureFileUrl, AzureStorageCredentialsInfo credentials, string relativeMountPath, string fileMode = default(string), string directoryMode = default(string))
         {
             AccountName = accountName;
@@ -55,49 +53,59 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the storage account.
+        /// Gets or sets account name.
         /// </summary>
+        /// <remarks>
+        /// Name of the Azure storage account.
+        /// </remarks>
         [JsonProperty(PropertyName = "accountName")]
         public string AccountName { get; set; }
 
         /// <summary>
-        /// Gets or sets URL to access the Azure File.
+        /// Gets or sets azure File URL.
         /// </summary>
+        /// <remarks>
+        /// URL to access the Azure File.
+        /// </remarks>
         [JsonProperty(PropertyName = "azureFileUrl")]
         public string AzureFileUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets information of the Azure File credentials.
+        /// Gets or sets credentials.
         /// </summary>
+        /// <remarks>
+        /// Information about the Azure storage credentials.
+        /// </remarks>
         [JsonProperty(PropertyName = "credentials")]
         public AzureStorageCredentialsInfo Credentials { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the relative path on the compute node where
-        /// the Azure file share will be mounted.
+        /// Gets or sets relative mount path.
         /// </summary>
         /// <remarks>
-        /// Note that all cluster level file shares will be mounted under
-        /// $AZ_BATCHAI_MOUNT_ROOT location and all job level file shares will
-        /// be mounted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
+        /// The relative path on the compute node where the Azure File share
+        /// will be mounted. Note that all cluster level file shares will be
+        /// mounted under $AZ_BATCHAI_MOUNT_ROOT location and all job level
+        /// file shares will be mounted under $AZ_BATCHAI_JOB_MOUNT_ROOT.
         /// </remarks>
         [JsonProperty(PropertyName = "relativeMountPath")]
         public string RelativeMountPath { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the file mode.
+        /// Gets or sets file mode.
         /// </summary>
         /// <remarks>
-        /// Default value is 0777. Valid only if OS is linux.
+        /// File mode for files on the mounted file share. Default value: 0777.
         /// </remarks>
         [JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the directory Mode.
+        /// Gets or sets directory mode.
         /// </summary>
         /// <remarks>
-        /// Default value is 0777. Valid only if OS is linux.
+        /// File mode for directories on the mounted file share. Default value:
+        /// 0777.
         /// </remarks>
         [JsonProperty(PropertyName = "directoryMode")]
         public string DirectoryMode { get; set; }

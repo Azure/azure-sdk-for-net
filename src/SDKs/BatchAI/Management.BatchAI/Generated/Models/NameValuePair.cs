@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a name-value pair.
+    /// Name-value pair.
     /// </summary>
     public partial class NameValuePair
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the NameValuePair class.
         /// </summary>
-        /// <param name="name">The name in the name-value pair.</param>
-        /// <param name="value">The value in the name-value pair.</param>
+        /// <param name="name">Name.</param>
+        /// <param name="value">Value.</param>
         public NameValuePair(string name = default(string), string value = default(string))
         {
             Name = name;
@@ -44,14 +44,20 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name in the name-value pair.
+        /// Gets or sets name.
         /// </summary>
+        /// <remarks>
+        /// The name in the name-value pair.
+        /// </remarks>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the value in the name-value pair.
+        /// Gets or sets value.
         /// </summary>
+        /// <remarks>
+        /// The value in the name-value pair.
+        /// </remarks>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 

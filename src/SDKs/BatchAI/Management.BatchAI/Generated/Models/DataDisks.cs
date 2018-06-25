@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for the data disk which would be created for the File Server.
+    /// Data disks settings.
     /// </summary>
     public partial class DataDisks
     {
@@ -30,17 +30,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the DataDisks class.
         /// </summary>
-        /// <param name="diskSizeInGB">Initial disk size in GB for blank data
-        /// disks, and the new desired size for resizing existing data
-        /// disks.</param>
-        /// <param name="diskCount">Number of data disks to be attached to the
-        /// VM. RAID level 0 will be applied in the case of multiple
-        /// disks.</param>
-        /// <param name="storageAccountType">Specifies the type of storage
-        /// account to be used on the disk. Possible values are: Standard_LRS
-        /// or Premium_LRS.</param>
-        /// <param name="cachingType">None, ReadOnly, ReadWrite. Default value
-        /// is None. This property is not patchable.</param>
+        /// <param name="diskSizeInGB">Disk size in GB.</param>
+        /// <param name="diskCount">Number of data disks.</param>
+        /// <param name="storageAccountType">Storage account type.</param>
+        /// <param name="cachingType">Caching type.</param>
         public DataDisks(int diskSizeInGB, int diskCount, string storageAccountType, CachingType? cachingType = default(CachingType?))
         {
             DiskSizeInGB = diskSizeInGB;
@@ -56,35 +49,44 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets initial disk size in GB for blank data disks, and the
-        /// new desired size for resizing existing data disks.
+        /// Gets or sets disk size in GB.
         /// </summary>
+        /// <remarks>
+        /// Disk size in GB for the blank data disks.
+        /// </remarks>
         [JsonProperty(PropertyName = "diskSizeInGB")]
         public int DiskSizeInGB { get; set; }
 
         /// <summary>
-        /// Gets or sets none, ReadOnly, ReadWrite. Default value is None. This
-        /// property is not patchable.
+        /// Gets or sets caching type.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'none', 'readonly', 'readwrite'
+        /// Caching type for the disks. Available values are none (default),
+        /// readonly, readwrite. Caching type can be set only for VM sizes
+        /// supporting premium storage. Possible values include: 'none',
+        /// 'readonly', 'readwrite'
         /// </remarks>
         [JsonProperty(PropertyName = "cachingType")]
         public CachingType? CachingType { get; set; }
 
         /// <summary>
-        /// Gets or sets number of data disks to be attached to the VM. RAID
-        /// level 0 will be applied in the case of multiple disks.
+        /// Gets or sets number of data disks.
         /// </summary>
+        /// <remarks>
+        /// Number of data disks attached to the File Server. If multiple disks
+        /// attached, they will be configured in RAID level 0.
+        /// </remarks>
         [JsonProperty(PropertyName = "diskCount")]
         public int DiskCount { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the type of storage account to be used on
-        /// the disk. Possible values are: Standard_LRS or Premium_LRS.
+        /// Gets or sets storage account type.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'Standard_LRS', 'Premium_LRS'
+        /// Type of storage account to be used on the disk. Possible values
+        /// are: Standard_LRS or Premium_LRS. Premium storage account type can
+        /// only be used with VM sizes supporting premium storage. Possible
+        /// values include: 'Standard_LRS', 'Premium_LRS'
         /// </remarks>
         [JsonProperty(PropertyName = "storageAccountType")]
         public string StorageAccountType { get; set; }

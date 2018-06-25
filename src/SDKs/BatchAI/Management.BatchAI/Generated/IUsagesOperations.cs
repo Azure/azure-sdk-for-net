@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.BatchAI
     using System.Threading.Tasks;
 
     /// <summary>
-    /// UsageOperations operations.
+    /// UsagesOperations operations.
     /// </summary>
-    public partial interface IUsageOperations
+    public partial interface IUsagesOperations
     {
         /// <summary>
         /// Gets the current usage information as well as limits for Batch AI

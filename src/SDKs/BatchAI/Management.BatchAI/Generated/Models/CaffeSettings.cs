@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the settings for Caffe job.
+    /// Caffe job settings.
     /// </summary>
     public partial class CaffeSettings
     {
@@ -29,16 +29,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the CaffeSettings class.
         /// </summary>
-        /// <param name="configFilePath">Specifies the path of the config
-        /// file.</param>
-        /// <param name="pythonScriptFilePath">The path and file name of the
-        /// python script to execute the job.</param>
-        /// <param name="pythonInterpreterPath">The path to python
-        /// interpreter.</param>
-        /// <param name="commandLineArgs">Command line arguments that needs to
-        /// be passed to the Caffe job.</param>
-        /// <param name="processCount">Number of processes parameter that is
-        /// passed to MPI runtime.</param>
+        /// <param name="configFilePath">Config file path.</param>
+        /// <param name="pythonScriptFilePath">Python script file path.</param>
+        /// <param name="pythonInterpreterPath">Python interpreter
+        /// path.</param>
+        /// <param name="commandLineArgs">Command line arguments.</param>
+        /// <param name="processCount">Process count.</param>
         public CaffeSettings(string configFilePath = default(string), string pythonScriptFilePath = default(string), string pythonInterpreterPath = default(string), string commandLineArgs = default(string), int? processCount = default(int?))
         {
             ConfigFilePath = configFilePath;
@@ -55,48 +51,50 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the path of the config file.
+        /// Gets or sets config file path.
         /// </summary>
         /// <remarks>
-        /// This property cannot be specified if pythonScriptFilePath is
-        /// specified.
+        /// Path of the config file for the job. This property cannot be
+        /// specified if pythonScriptFilePath is specified.
         /// </remarks>
         [JsonProperty(PropertyName = "configFilePath")]
         public string ConfigFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the path and file name of the python script to execute
-        /// the job.
+        /// Gets or sets python script file path.
         /// </summary>
         /// <remarks>
-        /// This property cannot be specified if configFilePath is specified.
+        /// Python script to execute. This property cannot be specified if
+        /// configFilePath is specified.
         /// </remarks>
         [JsonProperty(PropertyName = "pythonScriptFilePath")]
         public string PythonScriptFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to python interpreter.
+        /// Gets or sets python interpreter path.
         /// </summary>
         /// <remarks>
-        /// This property can be specified only if the pythonScriptFilePath is
-        /// specified.
+        /// The path to the Python interpreter. The property can be specified
+        /// only if the pythonScriptFilePath is specified.
         /// </remarks>
         [JsonProperty(PropertyName = "pythonInterpreterPath")]
         public string PythonInterpreterPath { get; set; }
 
         /// <summary>
-        /// Gets or sets command line arguments that needs to be passed to the
-        /// Caffe job.
+        /// Gets or sets command line arguments.
         /// </summary>
+        /// <remarks>
+        /// Command line arguments that need to be passed to the Caffe job.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLineArgs")]
         public string CommandLineArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets number of processes parameter that is passed to MPI
-        /// runtime.
+        /// Gets or sets process count.
         /// </summary>
         /// <remarks>
-        /// The default value for this property is equal to nodeCount property
+        /// Number of processes to launch for the job execution. The default
+        /// value for this property is equal to nodeCount property
         /// </remarks>
         [JsonProperty(PropertyName = "processCount")]
         public int? ProcessCount { get; set; }

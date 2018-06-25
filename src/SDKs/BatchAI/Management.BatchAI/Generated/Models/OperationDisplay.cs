@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <param name="resource">The resource type on which the operation is
         /// performed.</param>
         /// <param name="description">The friendly name of the
-        /// operation</param>
+        /// operation.</param>
         public OperationDisplay(string provider = default(string), string operation = default(string), string resource = default(string), string description = default(string))
         {
             Provider = provider;
@@ -51,31 +51,31 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets friendly name of the resource provider.
+        /// Gets friendly name of the resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
-        public string Provider { get; set; }
+        public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets or sets the operation type.
+        /// Gets the operation type.
         /// </summary>
         /// <remarks>
         /// For example: read, write, delete, or listKeys/action
         /// </remarks>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public string Operation { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource type on which the operation is performed.
+        /// Gets the resource type on which the operation is performed.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; set; }
+        public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets or sets the friendly name of the operation
+        /// Gets the friendly name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
     }
 }
