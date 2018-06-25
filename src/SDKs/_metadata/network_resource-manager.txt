@@ -1,33 +1,18 @@
 ﻿Installing AutoRest version: latest
-
-> autorest@2.0.4280 preinstall C:\Users\mitryakh\AppData\Roaming\npm\node_modules\autorest
-> node ./preinstall-check
-
-C:\Users\mitryakh\AppData\Roaming\npm\autorest -> C:\Users\mitryakh\AppData\Roaming\npm\node_modules\autorest\dist\app.js
-+ autorest@2.0.4280
-updated 1 package in 1.671s
-
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\private\azure-sdk-for-net\src\SDKs
-AutoRest code generation utility [version: 2.0.4280; node: v8.10.0]
-(C) 2018 Microsoft Corporation.
-https://aka.ms/autorest
-   Loading AutoRest core      'C:\Users\mitryakh\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
-   Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
-   Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
-
-2018-06-22 20:58:25 UTC
+2018-06-25 19:00:10 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      07f9a86c655ea2a4a73aa9e71d02a90d673a8253
+Commit:      32b0d873aa851d456dfde7d6ba1d89ff33f897f0
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\mitryakh\AppData\Roaming\npm  `-- autorest@2.0.4280
+Bootstrapper version:    autorest@2.0.4280
 
 
 Latest installed version:    
