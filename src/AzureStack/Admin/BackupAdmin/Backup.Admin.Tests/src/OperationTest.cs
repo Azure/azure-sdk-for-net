@@ -24,7 +24,7 @@ namespace Backup.Tests
             Assert.NotNull(op.Display.Resource);
         }
         
-        [Fact(Skip ="Need Environment")]
+        [Fact]
         public void TestListBackupOperations() {
             RunTest((client) => {
                 var operations = client.Operations.List();
