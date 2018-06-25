@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "ApplicationGateways", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "ApplicationSecurityGroups", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "AvailableEndpointServices", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "AzureFirewalls", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "BgpServiceCommunities", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "CheckDnsNameAvailability", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "ConnectionMonitors", "2018-04-01"),

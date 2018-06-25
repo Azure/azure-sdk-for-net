@@ -11,9 +11,12 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Expose new SKUs for VMSS VPN and ER gateways
-			- Add optional traffic analytics config fields to network watcher
-			- Remove two VirtualNetworkGateways' methods that are not in production
+			- Made VM reference in NIC readonly
+      - Added new VPN protocol
+			- Added examples for Express Route Circuit APIs
+			- AppGW FIPS mode enabled
+      - Added VirtualWan Swagger
+      - Removed enableRateLimiting property
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

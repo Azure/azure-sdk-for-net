@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.Network
 
 
         /// <summary>
+        /// Gets the IAzureFirewallsOperations.
+        /// </summary>
+        IAzureFirewallsOperations AzureFirewalls { get; }
+
+        /// <summary>
         /// Gets the IApplicationGatewaysOperations.
         /// </summary>
         IApplicationGatewaysOperations ApplicationGateways { get; }

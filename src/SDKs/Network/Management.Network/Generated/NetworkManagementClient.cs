@@ -73,6 +73,11 @@ namespace Microsoft.Azure.Management.Network
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IAzureFirewallsOperations.
+        /// </summary>
+        public virtual IAzureFirewallsOperations AzureFirewalls { get; private set; }
+
+        /// <summary>
         /// Gets the IApplicationGatewaysOperations.
         /// </summary>
         public virtual IApplicationGatewaysOperations ApplicationGateways { get; private set; }
@@ -513,6 +518,7 @@ namespace Microsoft.Azure.Management.Network
         /// </summary>
         private void Initialize()
         {
+            AzureFirewalls = new AzureFirewallsOperations(this);
             ApplicationGateways = new ApplicationGatewaysOperations(this);
             ApplicationSecurityGroups = new ApplicationSecurityGroupsOperations(this);
             DdosProtectionPlans = new DdosProtectionPlansOperations(this);
