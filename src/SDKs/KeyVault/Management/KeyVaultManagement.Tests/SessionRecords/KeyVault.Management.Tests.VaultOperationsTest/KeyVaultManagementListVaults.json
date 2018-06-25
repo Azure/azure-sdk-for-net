@@ -428,7 +428,7 @@
     },
     {
       "RequestUri": "/subscriptions/76fb41ba-5387-4dff-89f5-24ae457ade99/resourceGroups/sdktestrg126/providers/Microsoft.KeyVault/vaults?$top=2&api-version=2018-02-14&$skiptoken=c2RrdGVzdHZhdWx0OTg2Mg==",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZmYjQxYmEtNTM4Ny00ZGZmLTg5ZjUtMjRhZTQ1N2FkZTk5L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzEyNi9wcm92aWRlcnMvTWljcm9zb2Z0LktleVZhdWx0L3ZhdWx0cz8kdG9wPTImYXBpLXZlcnNpb249MjAxOC0wMi0xNA==JiRza2lwdG9rZW49YzJScmRHVnpkSFpoZFd4ME9UZzJNZz09",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZmYjQxYmEtNTM4Ny00ZGZmLTg5ZjUtMjRhZTQ1N2FkZTk5L3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzEyNi9wcm92aWRlcnMvTWljcm9zb2Z0LktleVZhdWx0L3ZhdWx0cz8kdG9wPTImYXBpLXZlcnNpb249MjAxOC0wMi0xNCYkc2tpcHRva2VuPWMyUnJkR1Z6ZEhaaGRXeDBPVGcyTWc9PQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
