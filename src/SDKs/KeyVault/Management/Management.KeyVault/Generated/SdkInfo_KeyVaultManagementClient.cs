@@ -1,5 +1,4 @@
-
-using System;
+Using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,9 +10,9 @@ internal static partial class SdkInfo
         {
             return new Tuple<string, string, string>[]
             {
-                new Tuple<string, string, string>("KeyVault", "Operations", "2018-02-14-preview"),
-                new Tuple<string, string, string>("KeyVault", "Vaults", "2018-02-14-preview"),
-                new Tuple<string, string, string>("KeyVaultManagementClient", "Vaults", "2018-02-14-preview"),
+                new Tuple<string, string, string>("KeyVault", "Operations", "2018-02-14"),
+                new Tuple<string, string, string>("KeyVault", "Vaults", "2018-02-14"),
+                new Tuple<string, string, string>("KeyVaultManagementClient", "Vaults", "2018-02-14"),
             }.AsEnumerable();
         }
     }
