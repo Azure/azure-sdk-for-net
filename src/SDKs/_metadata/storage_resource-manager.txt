@@ -1,9 +1,9 @@
-2018-06-22 02:57:16 UTC
+2018-06-25 03:10:42 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: blueww
-Branch:      staticweb_dfs
-Commit:      0c9b4e4b408e4017fca14b4141d0169916d4f703
+GitHub user: azure
+Branch:      master
+Commit:      37ca9e71d6c89b46ab990eb064ddb70308fd5824
 
 2) AutoRest information
 Requested version: latest
