@@ -86,7 +86,12 @@ function launchProcess {
     $p.WaitForExit()
     $stdout = $p.StandardOutput.ReadToEnd()
     $stderr = $p.StandardError.ReadToEnd()
-    Write-InfoLog $stdout 
+    <#
+    # send std output to the console only
+    # Display output produced by command invoked here in order to reduce the 
+    # metadata logged. In case of errors however, we need to log them
+    #>
+    Write-Host $stdout 
     Write-ErrorLog $stderr
     if($p.ExitCode -ne 0)
     {
@@ -130,7 +135,9 @@ param(
     [Parameter(Mandatory = $false)]
     [string] $ConfigFileTag,
     [Parameter(Mandatory = $true, HelpMessage ="Please provide a version for the AutoRest release")]
-    [string] $AutoRestVersion
+    [string] $AutoRestVersion,
+    [Parameter(Mandatory = $false)]
+    [string] $SdkGenerationType
     )
     
     Write-InfoLog "Generating CSharp code" 
@@ -145,6 +152,11 @@ param(
     if(-not [string]::IsNullOrWhiteSpace($ConfigFileTag))
     {
         $args = $args + " --tag=$ConfigFileTag"
+    }
+
+    if($SdkGenerationType -eq "multi-api")
+    {
+        $args = $args + " --multi-api"
     }
 
     if(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory))
@@ -212,6 +224,11 @@ function Start-MetadataGeneration {
     Try
     {
         $op = $((npm list -g autorest) | Out-String).Replace("`n", " ").Replace("`r"," ").Trim()
+        $tokens = $op.Split(" ")
+        if($tokens.Length -gt 1)
+        {
+            $op = $tokens[$tokens.Length-1]
+        }
         Write-InfoLog "Bootstrapper version:    $op" 
         Write-InfoLog "`n" 
     }
@@ -313,17 +330,21 @@ function Start-AutoRestCodeGeneration {
         [string] $Namespace,
 
         [Parameter(Mandatory = $false)]
-        [string] $ConfigFileTag
+        [string] $ConfigFileTag,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("single-api", "multi-api")]
+        [string] $SdkGenerationType = "single-api"
     )
 
     if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)){
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType
     }
     else {
         # default path which is the root directory of the RP in sdk repo
@@ -394,14 +415,15 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [string] $Namespace,
 
         [Parameter(Mandatory = $false)]
-        [string] $ConfigFileTag
+        [ValidateSet("single-api", "multi-api")]
+        [string] $SdkGenerationType = "single-api"
     )
 
     if (-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
         $SdkRootDirectory = $SdkDirectory
     }
     if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag 
     }
     elseif(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)) {
         Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag
@@ -424,10 +446,10 @@ function Start-CodeGeneration {
         [string] $SdkGenerationDirectory,
         [string] $Namespace,
         [string] $ConfigFileTag,
-        [string] $LocalConfigFilePath
+        [string] $LocalConfigFilePath,
+        [string] $SdkGenerationType
     )
     $localSdkRepoDirectory = Get-SdkRepoRootDirectory($(Get-InvokingScriptPath))
-    $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
     
     if(-not [string]::IsNullOrWhiteSpace($LocalConfigFilePath)) {
         
@@ -455,6 +477,7 @@ function Start-CodeGeneration {
             $logFile = [System.IO.Path]::GetTempFileName()+".txt";
         }
         else {
+            $localSdkRepoDirectory = Resolve-Path -Path "$localSdkRepoDirectory\..\SDKs"
             if(!(Test-Path -Path "$localSdkRepoDirectory\_metadata"))
             {
                 New-Item -ItemType Directory -Path "$localSdkRepoDirectory\_metadata"
@@ -480,10 +503,10 @@ function Start-CodeGeneration {
         Write-InfoLog "Commencing code generation"  
         
         if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkRootDirectory $SdkRootDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkRootDirectory $SdkRootDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SdkGenerationType $SdkGenerationType
         }
         elseif(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)) {
-            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkGenerationDirectory $SdkGenerationDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag
+            Invoke-AutoRestCodeGenerationCommand -ConfigFile $configFile -SdkGenerationDirectory $SdkGenerationDirectory -AutoRestVersion $AutoRestVersion -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SdkGenerationType $SdkGenerationType
         }
         else {
             Write-ErrorLog "Could not find an output directory to generate code, aborting."
