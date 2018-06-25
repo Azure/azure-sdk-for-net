@@ -105,7 +105,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 var kvClient = new KeyVaultClient(new TestKeyVaultCredential(fixture.GetAccessToken), httpClient);
                 Assert.Equal(httpClient, kvClient.HttpClient);
-                kvClient.GetKeysAsync(_vaultAddress).GetAwaiter().GetResult();
+                //kvClient.GetKeysAsync(_vaultAddress).GetAwaiter().GetResult();
             }
         }
 
