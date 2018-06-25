@@ -33,7 +33,8 @@ namespace DataFactory.Tests.ScenarioTests
 
             using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
-                if (Environment.GetEnvironmentVariable(modeEnvironmentVariableName).Equals(playback, StringComparison.OrdinalIgnoreCase))
+                string mode = Environment.GetEnvironmentVariable(modeEnvironmentVariableName);
+                if (mode != null && mode.Equals(playback, StringComparison.OrdinalIgnoreCase))
                 {
                     HttpMockServer.Mode = HttpRecorderMode.Playback;
                 }
