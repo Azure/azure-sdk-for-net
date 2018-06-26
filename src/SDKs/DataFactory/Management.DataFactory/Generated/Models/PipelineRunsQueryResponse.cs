@@ -19,24 +19,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A list pipeline runs.
     /// </summary>
-    public partial class PipelineRunQueryResponse
+    public partial class PipelineRunsQueryResponse
     {
         /// <summary>
-        /// Initializes a new instance of the PipelineRunQueryResponse class.
+        /// Initializes a new instance of the PipelineRunsQueryResponse class.
         /// </summary>
-        public PipelineRunQueryResponse()
+        public PipelineRunsQueryResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PipelineRunQueryResponse class.
+        /// Initializes a new instance of the PipelineRunsQueryResponse class.
         /// </summary>
         /// <param name="value">List of pipeline runs.</param>
         /// <param name="continuationToken">The continuation token for getting
         /// the next page of results, if any remaining results exist, null
         /// otherwise.</param>
-        public PipelineRunQueryResponse(IList<PipelineRun> value, string continuationToken = default(string))
+        public PipelineRunsQueryResponse(IList<PipelineRun> value, string continuationToken = default(string))
         {
             Value = value;
             ContinuationToken = continuationToken;

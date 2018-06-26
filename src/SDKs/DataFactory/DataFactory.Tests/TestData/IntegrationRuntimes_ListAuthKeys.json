@@ -1,23 +1,23 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleIntegrationRuntime",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:52 GMT",
-        "x-ms-request-id": "eecbf702-ed1d-4839-b235-ede3c87e0f49",
+        "Date": "Thu, 14 Jun 2018 14:51:00 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1189",
-        "x-ms-correlation-request-id": "a4a5f951-227f-4eb7-8471-a5dbe51c9b8b"
+        "x-ms-ratelimit-remaining-subscription-reads": "14999",
+        "x-ms-request-id": "2ea25426-9d1d-49f3-88b6-fb853eb02cb9",
+        "x-ms-correlation-request-id": "2ea25426-9d1d-49f3-88b6-fb853eb02cb9"
       },
       "body": {
-        "authKey1": "********************",
-        "authKey2": "********************"
+        "authKey1": "**********",
+        "authKey2": "**********"
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleIntegrationRuntime",
@@ -8,34 +8,26 @@
       "autoUpdate": "Off",
       "updateDelayOffset": "\"PT3H\""
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 29 Nov 2017 04:14:01 GMT",
-        "x-ms-request-id": "7ee6d3ac-d71b-426a-9023-f87616161540",
-        "X-Content-Type-Options": "nosniff"
+        "Date": "Wed, 13 Jun 2018 21:33:04 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1192",
+        "x-ms-request-id": "eb1c35f8-4b37-4d08-b5dd-d6a0ad8b182d",
+        "x-ms-correlation-request-id": "eb1c35f8-4b37-4d08-b5dd-d6a0ad8b182d"
       },
       "body": {
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
         "name": "exampleIntegrationRuntime",
+        "type": "Microsoft.DataFactory/factories/integrationruntimes",
         "properties": {
-          "state": "NeedRegistration",
           "type": "SelfHosted",
-          "typeProperties": {
-            "autoUpdate": "Off",
-            "taskQueueId": "00bb6126-79e3-46f1-a7ea-0d192a3efc26",
-            "nodes": [],
-            "updateDelayOffset": "PT3H",
-            "serviceUrls": [
-              "wu.frontend.int.clouddatahub-int.net",
-              "*.servicebus.windows.net"
-            ],
-            "versionStatus": "UpToDate",
-            "capabilities": {},
-            "createTime": "2017-11-29T04:13:56.3605984Z"
-          }
-        }
+          "description": "A selfhosted integration runtime"
+        },
+        "etag": "0400f1a1-0000-0000-0000-5b2188640000"
       }
     }
   }

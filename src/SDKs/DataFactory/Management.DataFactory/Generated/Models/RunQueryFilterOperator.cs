@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for PipelineRunQueryFilterOperator.
+    /// Defines values for RunQueryFilterOperator.
     /// </summary>
-    public static class PipelineRunQueryFilterOperator
+    public static class RunQueryFilterOperator
     {
         public const string Equals = "Equals";
         public const string NotEquals = "NotEquals";

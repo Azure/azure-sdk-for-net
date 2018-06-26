@@ -48,7 +48,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// namespace.</param>
         /// <param name="availabilities">Defines how often data for metrics
         /// becomes available.</param>
-        public OperationMetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), string enableRegionalMdmAccount = default(string), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), IList<OperationMetricAvailability> availabilities = default(IList<OperationMetricAvailability>))
+        /// <param name="dimensions">Defines the metric dimension.</param>
+        public OperationMetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), string enableRegionalMdmAccount = default(string), string sourceMdmAccount = default(string), string sourceMdmNamespace = default(string), IList<OperationMetricAvailability> availabilities = default(IList<OperationMetricAvailability>), IList<OperationMetricDimension> dimensions = default(IList<OperationMetricDimension>))
         {
             Name = name;
             DisplayName = displayName;
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             SourceMdmAccount = sourceMdmAccount;
             SourceMdmNamespace = sourceMdmNamespace;
             Availabilities = availabilities;
+            Dimensions = dimensions;
             CustomInit();
         }
 
@@ -121,6 +123,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "availabilities")]
         public IList<OperationMetricAvailability> Availabilities { get; set; }
+
+        /// <summary>
+        /// Gets or sets defines the metric dimension.
+        /// </summary>
+        [JsonProperty(PropertyName = "dimensions")]
+        public IList<OperationMetricDimension> Dimensions { get; set; }
 
     }
 }

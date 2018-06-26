@@ -1,21 +1,26 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleIntegrationRuntime",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:51 GMT",
-        "x-ms-request-id": "c38b64ae-4e0c-488d-8baa-6dc104cecdb2",
+        "Date": "Thu, 14 Jun 2018 14:53:21 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1190",
-        "x-ms-correlation-request-id": "500722f2-d4e5-4d88-b2d7-5231f158857c"
+        "x-ms-ratelimit-remaining-subscription-reads": "14998",
+        "x-ms-request-id": "05774db5-e79b-4224-9097-46714b92fbd8",
+        "x-ms-correlation-request-id": "05774db5-e79b-4224-9097-46714b92fbd8"
       },
       "body": {
+        "version": "3.8.6730.2",
+        "publicKey": "**********",
+        "serviceToken": "**********",
+        "identityCertThumbprint": "**********",
+        "hostServiceUri": "https://yanzhang-dt.fareast.corp.microsoft.com:8050/HostServiceRemote.svc/",
         "isIdentityCertExprired": false
       }
     }
