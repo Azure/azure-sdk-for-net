@@ -20,7 +20,9 @@
 	<PropertyGroup>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 	
+	</PropertyGroup>
   <PropertyGroup>
 	<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
 	<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
@@ -62,6 +64,7 @@
 			<AddProjectReferenceForDebuggingPurpose>true</AddProjectReferenceForDebuggingPurpose>
 			<Scope Condition=" '$(Scope)' == 'All' ">IdeScope</Scope>
 			<CmdLineBuild>false</CmdLineBuild>
+			<DefineConstants>$(DefineConstants);DebugInVS</DefineConstants>
 		  </PropertyGroup>
 		</When>
 		<Otherwise>

@@ -37,7 +37,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = @"SDKs\Compute";
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
@@ -80,7 +80,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = @"AzureStack\AzureBridgeAdmin";
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
@@ -122,7 +122,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = @"SDKs\Authorization\MultiApi";
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
@@ -267,7 +267,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = scope;
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
