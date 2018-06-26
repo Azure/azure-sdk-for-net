@@ -18,6 +18,8 @@ namespace Microsoft.Azure.ServiceBus
     public class ServiceBusConnection
     {
         static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
+        readonly object syncLock;
+        bool isClosedOrClosing;
 
         /// <summary>
         /// Creates a new connection to service bus.
@@ -90,6 +92,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.OperationTimeout = operationTimeout;
             this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
+            this.syncLock = new object();
         }
 
         /// <summary>
@@ -120,16 +123,61 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public ITokenProvider TokenProvider { get; set; }
 
+        /// <summary>
+        /// Returns true if the Service Bus Connection is closed or closing.
+        /// </summary>
+        public bool IsClosedOrClosing
+        {
+            get
+            {
+                lock (syncLock)
+                {
+                    return isClosedOrClosing;
+                }
+            }
+            internal set
+            {
+                lock (syncLock)
+                {
+                    isClosedOrClosing = value;
+                }
+            }
+        }
+
         internal FaultTolerantAmqpObject<AmqpConnection> ConnectionManager { get; set; }
 
         internal FaultTolerantAmqpObject<Controller> TransactionController { get; set; }
 
         /// <summary>
+        /// Throw an OperationCanceledException if the object is Closing.
+        /// </summary>
+        internal virtual void ThrowIfClosed()
+        {
+            if (this.IsClosedOrClosing)
+            {
+                throw new ObjectDisposedException($"{nameof(ServiceBusConnection)} has already been closed. Please create a new instance");
+            }
+        }
+
+        /// <summary>
         /// Closes the connection.
         /// </summary>
-        public Task CloseAsync()
+        public async Task CloseAsync()
         {
-            return this.ConnectionManager.CloseAsync();
+            var callClose = false;
+            lock (this.syncLock)
+            {
+                if (!this.IsClosedOrClosing)
+                {
+                    this.IsClosedOrClosing = true;
+                    callClose = true;
+                }
+            }
+
+            if (callClose)
+            {
+                await this.ConnectionManager.CloseAsync();
+            }
         }
 
         void InitializeConnection(ServiceBusConnectionStringBuilder builder)
@@ -244,5 +292,6 @@ namespace Microsoft.Azure.ServiceBus
                 port: port,
                 useSslStreamSecurity: true);
         }
+
     }
 }

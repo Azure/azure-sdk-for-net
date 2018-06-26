@@ -98,6 +98,10 @@ namespace Microsoft.Azure.ServiceBus
             if (callClose)
             {
                 await this.OnClosingAsync().ConfigureAwait(false);
+                if (OwnsConnection && this.ServiceBusConnection.IsClosedOrClosing == false)
+                {
+                    await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
+                }
             }
         }
 
@@ -139,10 +143,11 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         protected virtual void ThrowIfClosed()
         {
+            this.ServiceBusConnection.ThrowIfClosed();
             if (this.IsClosedOrClosing)
             {
                 throw new ObjectDisposedException($"{this.clientTypeName} with Id '{this.ClientId}' has already been closed. Please create a new {this.clientTypeName}.");
-            }
+            }            
         }
 
         /// <summary>

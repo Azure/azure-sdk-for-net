@@ -288,6 +288,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnection(string namespaceConnectionString, System.TimeSpan operationTimeout, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public ServiceBusConnection(string endpoint, Microsoft.Azure.ServiceBus.TransportType transportType, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public System.Uri Endpoint { get; set; }
+        public bool IsClosedOrClosing { get; }
         public System.TimeSpan OperationTimeout { get; set; }
         public Microsoft.Azure.ServiceBus.RetryPolicy RetryPolicy { get; set; }
         public Microsoft.Azure.ServiceBus.Primitives.ITokenProvider TokenProvider { get; set; }

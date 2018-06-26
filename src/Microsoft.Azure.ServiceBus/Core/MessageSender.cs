@@ -92,7 +92,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             TransportType transportType = TransportType.Amqp,
             RetryPolicy retryPolicy = null)
             : this(entityPath, null, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy)
-        {
+        {            
             this.OwnsConnection = true;
         }
 
@@ -154,6 +154,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.Path = entityPath;
             this.TransferDestinationPath = transferDestinationPath;
             this.EntityType = entityType;
+            this.ServiceBusConnection.ThrowIfClosed();
 
             if (cbsTokenProvider != null)
             {
@@ -442,11 +443,6 @@ namespace Microsoft.Azure.ServiceBus.Core
             this.clientLinkManager.Close();
             await this.SendLinkManager.CloseAsync().ConfigureAwait(false);
             await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
-
-            if (this.OwnsConnection)
-            {
-                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
-            }
         }
 
         static int ValidateMessages(IList<Message> messageList)

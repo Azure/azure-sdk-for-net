@@ -182,6 +182,7 @@ namespace Microsoft.Azure.ServiceBus
             this.EntityType = entityType;
             this.ReceiveMode = receiveMode;
             this.PrefetchCount = prefetchCount;
+            this.ServiceBusConnection.ThrowIfClosed();
 
             if (cbsTokenProvider != null)
             {
@@ -394,12 +395,9 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        protected override async Task OnClosingAsync()
+        protected override Task OnClosingAsync()
         {
-            if (this.OwnsConnection)
-            {
-                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
-            }
+            return Task.CompletedTask;
         }
     }
 }

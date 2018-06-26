@@ -102,6 +102,8 @@ namespace Microsoft.Azure.ServiceBus
             this.syncLock = new object();
             this.TopicName = entityPath;
             this.OwnsConnection = false;
+            this.ServiceBusConnection.ThrowIfClosed();
+
             if (this.ServiceBusConnection.TokenProvider != null)
             {
                 this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
@@ -233,11 +235,6 @@ namespace Microsoft.Azure.ServiceBus
             if (this.innerSender != null)
             {
                 await this.innerSender.CloseAsync().ConfigureAwait(false);
-            }
-
-            if (this.OwnsConnection)
-            {
-                await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
             }
         }
     }
