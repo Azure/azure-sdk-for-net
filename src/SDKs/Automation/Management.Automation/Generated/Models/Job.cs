@@ -62,9 +62,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// modified time of the job.</param>
         /// <param name="parameters">Gets or sets the parameters of the
         /// job.</param>
-        /// <param name="provisioningState">The provisioning state of a
-        /// resource.</param>
-        public Job(string id = default(string), string name = default(string), string type = default(string), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string startedBy = default(string), string runOn = default(string), System.Guid jobId = default(System.Guid), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string status = default(string), string statusDetails = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string exception = default(string), System.DateTimeOffset? lastModifiedTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusModifiedTime = default(System.DateTimeOffset?), IDictionary<string, string> parameters = default(IDictionary<string, string>), JobProvisioningStateProperty provisioningState = default(JobProvisioningStateProperty))
+        /// <param name="provisioningState">The current provisioning state of
+        /// the job. Possible values include: 'Failed', 'Succeeded',
+        /// 'Suspended', 'Processing'</param>
+        public Job(string id = default(string), string name = default(string), string type = default(string), RunbookAssociationProperty runbook = default(RunbookAssociationProperty), string startedBy = default(string), string runOn = default(string), System.Guid jobId = default(System.Guid), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string status = default(string), string statusDetails = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string exception = default(string), System.DateTimeOffset? lastModifiedTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusModifiedTime = default(System.DateTimeOffset?), IDictionary<string, string> parameters = default(IDictionary<string, string>), string provisioningState = default(string))
             : base(id, name, type)
         {
             Runbook = runbook;
@@ -172,10 +173,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         public IDictionary<string, string> Parameters { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of a resource.
+        /// Gets or sets the current provisioning state of the job. Possible
+        /// values include: 'Failed', 'Succeeded', 'Suspended', 'Processing'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public JobProvisioningStateProperty ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
 
     }
 }

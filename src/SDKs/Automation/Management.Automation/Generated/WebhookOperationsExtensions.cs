@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             public static string GenerateUri(this IWebhookOperations operations, string resourceGroupName, string automationAccountName)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='webhookName'>
             /// The webhook name.
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.

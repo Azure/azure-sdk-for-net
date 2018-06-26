@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='certificateName'>
         /// The name of certificate.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='certificateName'>
         /// The name of certificate.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='certificateName'>
         /// The parameters supplied to the create or update certificate
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='certificateName'>
         /// The parameters supplied to the update certificate operation.
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

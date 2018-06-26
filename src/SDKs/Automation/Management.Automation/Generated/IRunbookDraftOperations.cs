@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='runbookName'>
         /// The runbook name.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='runbookName'>
         /// The runbook name.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='runbookName'>
         /// The runbook name.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='runbookName'>
         /// The parameters supplied to the publish runbook operation.
@@ -135,13 +135,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<string,RunbookDraftPublishHeaders>> PublishWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<RunbookDraftPublishHeaders>> PublishWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Undo draft edit to last known published state identified by runbook
         /// name.
@@ -151,7 +148,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='runbookName'>
         /// The runbook name.
@@ -180,7 +177,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='runbookName'>
         /// The runbook name.
@@ -212,7 +209,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='runbookName'>
         /// The parameters supplied to the publish runbook operation.
@@ -226,12 +223,9 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<string,RunbookDraftPublishHeaders>> BeginPublishWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<RunbookDraftPublishHeaders>> BeginPublishWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string runbookName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -182,12 +182,12 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
             /// </param>
-            public static string Publish(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
+            public static RunbookDraftPublishHeaders Publish(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
                 return operations.PublishAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
@@ -211,11 +211,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> PublishAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunbookDraftPublishHeaders> PublishAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PublishWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
                 }
             }
 
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The runbook name.
@@ -332,12 +332,12 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
             /// </param>
-            public static string BeginPublish(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
+            public static RunbookDraftPublishHeaders BeginPublish(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName)
             {
                 return operations.BeginPublishAsync(resourceGroupName, automationAccountName, runbookName).GetAwaiter().GetResult();
             }
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='runbookName'>
             /// The parameters supplied to the publish runbook operation.
@@ -361,11 +361,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> BeginPublishAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RunbookDraftPublishHeaders> BeginPublishAsync(this IRunbookDraftOperations operations, string resourceGroupName, string automationAccountName, string runbookName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPublishWithHttpMessagesAsync(resourceGroupName, automationAccountName, runbookName, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
                 }
             }
 

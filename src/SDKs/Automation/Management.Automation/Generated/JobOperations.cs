@@ -1226,10 +1226,6 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             string apiVersion = "2017-05-15-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='hybridRunbookWorkerGroupName'>
             /// The hybrid runbook worker group name
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.

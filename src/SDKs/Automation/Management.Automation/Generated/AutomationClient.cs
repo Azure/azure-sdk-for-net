@@ -261,6 +261,11 @@ namespace Microsoft.Azure.Management.Automation
         public virtual IDscNodeConfigurationOperations DscNodeConfiguration { get; private set; }
 
         /// <summary>
+        /// Gets the IWatcherOperations.
+        /// </summary>
+        public virtual IWatcherOperations Watcher { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the AutomationClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -499,6 +504,7 @@ namespace Microsoft.Azure.Management.Automation
             DscCompilationJob = new DscCompilationJobOperations(this);
             DscCompilationJobStream = new DscCompilationJobStreamOperations(this);
             DscNodeConfiguration = new DscNodeConfigurationOperations(this);
+            Watcher = new WatcherOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
