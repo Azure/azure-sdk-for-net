@@ -33,6 +33,8 @@
     <!--<PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />-->
     <!--<PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.3.5-preview, 2.0.0)" />-->
     <PackageReference Include="Moq" Version="4.6.38-alpha" />
+	<!-- <PackageReference Include="Castle.Core" Version="4.0.0-beta001" /> -->
+	<!-- <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.0.1" /> -->
     <!--<PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />-->
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.13.9" />
   </ItemGroup>
@@ -43,9 +45,9 @@
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" />
-    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" />
+    <!-- <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" /> -->
+    <!-- <PackageReference Include="System.Diagnostics.TraceSource" Version="4.0.0" /> -->
+    <!-- <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" /> -->
   </ItemGroup>
 
   <ItemGroup>

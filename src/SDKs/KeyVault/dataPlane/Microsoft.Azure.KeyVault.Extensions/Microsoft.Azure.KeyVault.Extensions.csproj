@@ -18,19 +18,11 @@
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD;NETSTANDARD15</DefineConstants>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-
+  <!-- <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' "> -->
+    <!-- <DefineConstants>$(DefineConstants);NETSTANDARD;NETSTANDARD15</DefineConstants> -->
+  <!-- </PropertyGroup> -->
   
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <DefineConstants>$(DefineConstants);NET45</DefineConstants>
+    <DefineConstants>$(DefineConstants);NetFullFx</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
 </Project>

@@ -23,13 +23,13 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" />
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" />
+    <!-- <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" /> -->
+    <!-- <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" /> -->
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
     <DefineConstants>$(DefineConstants);NETSTANDARD;NETCOREAPP11</DefineConstants>
-    <DebugType>portable</DebugType>
+    <!-- <DebugType>portable</DebugType> -->
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
@@ -37,8 +37,8 @@
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <!-- <Reference Include="System" /> -->
+    <!-- <Reference Include="Microsoft.CSharp" /> -->
   </ItemGroup>
 
   <ItemGroup>

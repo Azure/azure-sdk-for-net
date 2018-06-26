@@ -34,12 +34,12 @@
   </PropertyGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
-    <PackageReference Include="System.Linq" Version="4.1.0" />
-    <PackageReference Include="System.Globalization" Version="4.0.11" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.1.0" />
-    <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" />
+    <!-- <PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" /> -->
+    <!-- <PackageReference Include="System.Linq" Version="4.1.0" /> -->
+    <!-- <PackageReference Include="System.Globalization" Version="4.0.11" /> -->
+    <!-- <PackageReference Include="System.Runtime.Extensions" Version="4.1.0" /> -->
+    <!-- <PackageReference Include="System.Security.Cryptography.Primitives" Version="4.0.0" /> -->
+    <!-- <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.2.0" /> -->
   </ItemGroup>
 
 </Project>

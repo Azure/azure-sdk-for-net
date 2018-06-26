@@ -11,11 +11,11 @@
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
     <!--<PackageReference Include="Microsoft.Azure.Management.DevTestLabs" Version="1.2.0" />-->
     <ProjectReference Include="..\Management.DevTestLabs\Microsoft.Azure.Management.DevTestLabs.csproj" />
 
-    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.1.0" />
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.0" />
   </ItemGroup>
   
   <ItemGroup>

@@ -14,7 +14,7 @@
     <!--<PackageReference Include="Microsoft.Azure.Graph.RBAC" Version="3.3.0-preview" />-->
     <ProjectReference Include="..\Graph.RBAC\Microsoft.Azure.Graph.RBAC.csproj" />
     
-    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.1.0" />
+    <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.0" />
   </ItemGroup>
   
   <ItemGroup>
