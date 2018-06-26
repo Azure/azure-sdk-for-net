@@ -16,7 +16,6 @@ namespace Microsoft.Azure.KeyVault.Models
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// A DeletedKeyBundle consisting of a WebKey plus its Attributes and
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// to be purged, in UTC</param>
         /// <param name="deletedDate">The time when the key was deleted, in
         /// UTC</param>
-        public DeletedKeyBundle(JsonWebKey key = default(JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? managed = default(bool?), string recoveryId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletedDate = default(System.DateTime?))
+        public DeletedKeyBundle(Microsoft.Azure.KeyVault.WebKey.JsonWebKey key = default(Microsoft.Azure.KeyVault.WebKey.JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? managed = default(bool?), string recoveryId = default(string), System.DateTime? scheduledPurgeDate = default(System.DateTime?), System.DateTime? deletedDate = default(System.DateTime?))
             : base(key, attributes, tags, managed)
         {
             RecoveryId = recoveryId;

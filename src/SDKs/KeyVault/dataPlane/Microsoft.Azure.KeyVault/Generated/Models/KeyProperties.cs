@@ -39,7 +39,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="reuseKey">Indicates if the same key pair will be used
         /// on certificate renewal.</param>
         /// <param name="curve">Elliptic curve name. For valid values, see
-        /// JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
+        /// Microsoft.Azure.KeyVault.WebKey.JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
         /// 'P-521', 'P-256K'</param>
         public KeyProperties(bool? exportable = default(bool?), string keyType = default(string), int? keySize = default(int?), bool? reuseKey = default(bool?), string curve = default(string))
         {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.KeyVault.Models
 
         /// <summary>
         /// Gets or sets elliptic curve name. For valid values, see
-        /// JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
+        /// Microsoft.Azure.KeyVault.WebKey.JsonWebKeyCurveName. Possible values include: 'P-256', 'P-384',
         /// 'P-521', 'P-256K'
         /// </summary>
         [JsonProperty(PropertyName = "crv")]

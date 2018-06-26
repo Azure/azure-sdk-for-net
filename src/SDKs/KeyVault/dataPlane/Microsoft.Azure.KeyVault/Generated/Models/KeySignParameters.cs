@@ -33,7 +33,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         /// <param name="algorithm">The signing/verification algorithm
         /// identifier. For more information on possible algorithm types, see
-        /// JsonWebKeySignatureAlgorithm. Possible values include: 'PS256',
+        /// Microsoft.Azure.KeyVault.WebKey.JsonWebKeySignatureAlgorithm. Possible values include: 'PS256',
         /// 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL', 'ES256',
         /// 'ES384', 'ES512', 'ES256K'</param>
         public KeySignParameters(string algorithm, byte[] value)
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Gets or sets the signing/verification algorithm identifier. For
         /// more information on possible algorithm types, see
-        /// JsonWebKeySignatureAlgorithm. Possible values include: 'PS256',
+        /// Microsoft.Azure.KeyVault.WebKey.JsonWebKeySignatureAlgorithm. Possible values include: 'PS256',
         /// 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL', 'ES256',
         /// 'ES384', 'ES512', 'ES256K'
         /// </summary>
