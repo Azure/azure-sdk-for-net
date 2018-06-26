@@ -53,8 +53,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
                 if ( digest.Length != SHA256_DIGEST_LENGTH
      )
-                    throw new ArgumentOutOfRangeException( "digest", String.Format( "The digest must be {0} bytes for SHA-256", SHA256_DIGEST_LENGTH
-         ));
+                    throw new ArgumentOutOfRangeException( "digest", String.Format( "The digest must be {0} bytes for SHA-256", SHA256_DIGEST_LENGTH ));
 
 #if FullNetFx
                 if ( _key is RSACryptoServiceProvider )
@@ -77,8 +76,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
                 if ( digest.Length != SHA256_DIGEST_LENGTH
      )
-                    throw new ArgumentOutOfRangeException( "digest", String.Format( "The digest must be {0} bytes for SHA-256", SHA256_DIGEST_LENGTH
-         ));
+                    throw new ArgumentOutOfRangeException( "digest", String.Format( "The digest must be {0} bytes for SHA-256", SHA256_DIGEST_LENGTH ));
 
                 if ( signature == null || signature.Length == 0 )
                     throw new ArgumentNullException( "signature" );
