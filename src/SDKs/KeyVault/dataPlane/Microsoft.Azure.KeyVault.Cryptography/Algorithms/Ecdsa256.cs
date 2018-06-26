@@ -9,13 +9,13 @@ using System.Security.Cryptography;
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
     /// <summary>
-    /// Represents ECDSA with a generic 256 bit curve.
+    /// Represents ECDSA with a P-256K curve.
     /// </summary>
-    public class Ecdsa256 : Ecdsa
+    public class ES256K : Ecdsa
     {
-        public const string AlgorithmName = "ECDSA256";
+        public const string AlgorithmName = "ES256K";
 
-        public Ecdsa256() : base( AlgorithmName )
+        public ES256K() : base( AlgorithmName )
         {
         }
 
