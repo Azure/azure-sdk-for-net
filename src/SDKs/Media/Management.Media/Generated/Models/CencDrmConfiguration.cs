@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Media.Models
     using System.Linq;
 
     /// <summary>
-    /// Class to specify drm configurations of CommonEncryptionCenc scheme in
+    /// Class to specify DRM configurations of CommonEncryptionCenc scheme in
     /// Streaming Policy
     /// </summary>
     public partial class CencDrmConfiguration
