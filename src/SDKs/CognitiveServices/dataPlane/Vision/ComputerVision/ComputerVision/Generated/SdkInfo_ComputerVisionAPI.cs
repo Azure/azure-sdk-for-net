@@ -19,22 +19,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImage", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImageByDomain", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImageByDomainInStream", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImageInStream", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "DescribeImage", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "DescribeImageInStream", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "GenerateThumbnail", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "GenerateThumbnailInStream", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "GetTextOperationResult", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "ListModels", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizePrintedText", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizePrintedTextInStream", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizeText", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizeTextInStream", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "TagImage", "1.0"),
-                new Tuple<string, string, string>("ComputerVisionAPI", "TagImageInStream", "1.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImage", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImageByDomain", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImageByDomainInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "AnalyzeImageInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "DescribeImage", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "DescribeImageInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "GenerateThumbnail", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "GenerateThumbnailInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "GetTextOperationResult", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "ListModels", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizePrintedText", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizePrintedTextInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizeText", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "RecognizeTextInStream", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "TagImage", "2.0"),
+                new Tuple<string, string, string>("ComputerVisionAPI", "TagImageInStream", "2.0"),
               }.AsEnumerable();
           }
       }

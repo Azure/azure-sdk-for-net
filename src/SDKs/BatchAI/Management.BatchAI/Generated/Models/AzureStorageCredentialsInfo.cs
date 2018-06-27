@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Credentials to access Azure File Share.
+    /// Azure storage account credentials.
     /// </summary>
     public partial class AzureStorageCredentialsInfo
     {
@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the AzureStorageCredentialsInfo
         /// class.
         /// </summary>
-        /// <param name="accountKey">Storage account key.</param>
-        /// <param name="accountKeySecretReference">Specifies the location of
-        /// the storage account key, which is a Key Vault Secret.</param>
+        /// <param name="accountKey">Account key.</param>
+        /// <param name="accountKeySecretReference">Account key secret
+        /// reference.</param>
         public AzureStorageCredentialsInfo(string accountKey = default(string), KeyVaultSecretReference accountKeySecretReference = default(KeyVaultSecretReference))
         {
             AccountKey = accountKey;
@@ -47,22 +47,21 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets storage account key.
+        /// Gets or sets account key.
         /// </summary>
         /// <remarks>
-        /// One of accountKey or accountKeySecretReference must be specified.
+        /// Storage account key. One of accountKey or accountKeySecretReference
+        /// must be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "accountKey")]
         public string AccountKey { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the location of the storage account key,
-        /// which is a Key Vault Secret.
+        /// Gets or sets account key secret reference.
         /// </summary>
         /// <remarks>
-        /// Users can store their secrets in Azure KeyVault and pass it to the
-        /// Batch AI Service to integrate with KeyVault. One of accountKey or
-        /// accountKeySecretReference must be specified.
+        /// Information about KeyVault secret storing the storage account key.
+        /// One of accountKey or accountKeySecretReference must be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "accountKeySecretReference")]
         public KeyVaultSecretReference AccountKeySecretReference { get; set; }

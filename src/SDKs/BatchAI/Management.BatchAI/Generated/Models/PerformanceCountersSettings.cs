@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the PerformanceCountersSettings
         /// class.
         /// </summary>
-        /// <param name="appInsightsReference">Specifies Azure Application
-        /// Insights information for performance counters reporting.</param>
+        /// <param name="appInsightsReference">Azure Application Insights
+        /// reference.</param>
         public PerformanceCountersSettings(AppInsightsReference appInsightsReference)
         {
             AppInsightsReference = appInsightsReference;
@@ -46,12 +46,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies Azure Application Insights information for
-        /// performance counters reporting.
+        /// Gets or sets azure Application Insights reference.
         /// </summary>
         /// <remarks>
-        /// If provided, Batch AI will upload node performance counters to the
-        /// corresponding Azure Application Insights account.
+        /// Azure Application Insights information for performance counters
+        /// reporting. If provided, Batch AI will upload node performance
+        /// counters to the corresponding Azure Application Insights account.
         /// </remarks>
         [JsonProperty(PropertyName = "appInsightsReference")]
         public AppInsightsReference AppInsightsReference { get; set; }

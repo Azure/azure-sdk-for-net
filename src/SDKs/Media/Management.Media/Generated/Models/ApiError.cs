@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the ApiError class.
         /// </summary>
-        /// <param name="error">ApiError</param>
+        /// <param name="error">The error properties.</param>
         public ApiError(ODataError error = default(ODataError))
         {
             Error = error;
@@ -42,11 +42,8 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets apiError
+        /// Gets or sets the error properties.
         /// </summary>
-        /// <remarks>
-        /// The error properties.
-        /// </remarks>
         [JsonProperty(PropertyName = "error")]
         public ODataError Error { get; set; }
 

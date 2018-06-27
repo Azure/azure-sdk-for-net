@@ -14,7 +14,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 {
     public class TenantGitTests : TestBase
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public async Task ValidateSaveDeploy()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -42,7 +42,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 // save changes in current database to configuration database
                 var saveConfigurationParameters = new SaveConfigurationParameter("master");
-                var getSaveResponse = testBase.client.TenantConfiguration.Save(
+                OperationResultContract getSaveResponse = testBase.client.TenantConfiguration.Save(
                     testBase.rgName,
                     testBase.serviceName,
                     saveConfigurationParameters);
@@ -50,6 +50,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(getSaveResponse);
                 Assert.NotNull(getSaveResponse.Status);
                 Assert.NotNull(getSaveResponse.ResultInfo);
+                Assert.Null(getSaveResponse.Error);
                 Assert.Equal(AsyncOperationStatus.Succeeded, getSaveResponse.Status);
 
                 // get the sync state of the repository after Save
@@ -63,23 +64,25 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 // validate changes in current database to configuration database
                 var deployConfigurationParameters = new DeployConfigurationParameters("master");
-                var getValidateResponse = testBase.client.TenantConfiguration.Validate(
+                OperationResultContract getValidateResponse = testBase.client.TenantConfiguration.Validate(
                     testBase.rgName,
                     testBase.serviceName,
                     deployConfigurationParameters);
 
                 Assert.NotNull(getValidateResponse);
                 Assert.NotNull(getSaveResponse.ResultInfo);
+                Assert.Null(getSaveResponse.Error);
                 Assert.Equal(AsyncOperationStatus.Succeeded, getSaveResponse.Status);
 
                 // deploy changes in current database to configuration database
-                var getDeployResponse = testBase.client.TenantConfiguration.Deploy(
+                OperationResultContract getDeployResponse = testBase.client.TenantConfiguration.Deploy(
                     testBase.rgName,
                     testBase.serviceName,
                     deployConfigurationParameters);
 
                 Assert.NotNull(getDeployResponse);
                 Assert.NotNull(getDeployResponse.ResultInfo);
+                Assert.Null(getSaveResponse.Error);
                 Assert.Equal(AsyncOperationStatus.Succeeded, getDeployResponse.Status);
 
                 // get the sync state of the repository

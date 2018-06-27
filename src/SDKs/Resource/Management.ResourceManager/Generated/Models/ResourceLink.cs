@@ -10,13 +10,15 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The resource link.
     /// </summary>
-    public partial class ResourceLink
+    public partial class ResourceLink : IResource
     {
         /// <summary>
         /// Initializes a new instance of the ResourceLink class.
@@ -67,7 +69,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

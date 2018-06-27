@@ -4,6 +4,12 @@
 
 ###  Feature Additions
 
+## Version 0.9.0-preview
+
+### Feature Additions
+
+* Remove maxParallelExecutionsPerNode limitation
+
 ## Version 0.8.0-preview
 
 ### Feature Additions

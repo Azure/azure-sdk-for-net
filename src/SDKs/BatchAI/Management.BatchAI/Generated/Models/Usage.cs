@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.BatchAI.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,24 +29,20 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the Usage class.
         /// </summary>
+        /// <param name="unit">An enum describing the unit of usage
+        /// measurement. Possible values include: 'Count'</param>
         /// <param name="currentValue">The current usage of the
         /// resource.</param>
         /// <param name="limit">The maximum permitted usage of the
         /// resource.</param>
         /// <param name="name">The name of the type of usage.</param>
-        public Usage(int currentValue, long limit, UsageName name)
+        public Usage(string unit = default(string), int? currentValue = default(int?), long? limit = default(long?), UsageName name = default(UsageName))
         {
+            Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for Usage class.
-        /// </summary>
-        static Usage()
-        {
-            Unit = "Count";
         }
 
         /// <summary>
@@ -56,41 +51,29 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the current usage of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "currentValue")]
-        public int CurrentValue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum permitted usage of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "limit")]
-        public long Limit { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the type of usage.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public UsageName Name { get; set; }
-
-        /// <summary>
-        /// An enum describing the unit of usage measurement.
+        /// Gets an enum describing the unit of usage measurement. Possible
+        /// values include: 'Count'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public static string Unit { get; private set; }
+        public string Unit { get; private set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets the current usage of the resource.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
+        [JsonProperty(PropertyName = "currentValue")]
+        public int? CurrentValue { get; private set; }
+
+        /// <summary>
+        /// Gets the maximum permitted usage of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "limit")]
+        public long? Limit { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the type of usage.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public UsageName Name { get; private set; }
+
     }
 }

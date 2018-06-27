@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// The image reference.
+    /// The OS image reference.
     /// </summary>
     public partial class ImageReference
     {
@@ -30,14 +30,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ImageReference class.
         /// </summary>
-        /// <param name="publisher">Publisher of the image.</param>
-        /// <param name="offer">Offer of the image.</param>
-        /// <param name="sku">SKU of the image.</param>
-        /// <param name="version">Version of the image.</param>
-        /// <param name="virtualMachineImageId">The ARM resource identifier of
-        /// the virtual machine image. Computes nodes of the cluster will be
-        /// created using this custom image. This is of the form
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}</param>
+        /// <param name="publisher">Publisher.</param>
+        /// <param name="offer">Offer.</param>
+        /// <param name="sku">SKU.</param>
+        /// <param name="version">Version.</param>
+        /// <param name="virtualMachineImageId">Custom VM image resource
+        /// ID.</param>
         public ImageReference(string publisher, string offer, string sku, string version = default(string), string virtualMachineImageId = default(string))
         {
             Publisher = publisher;
@@ -54,36 +52,48 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets publisher of the image.
+        /// Gets or sets publisher.
         /// </summary>
+        /// <remarks>
+        /// Publisher of the image.
+        /// </remarks>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets offer of the image.
+        /// Gets or sets offer.
         /// </summary>
+        /// <remarks>
+        /// Offer of the image.
+        /// </remarks>
         [JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
 
         /// <summary>
-        /// Gets or sets SKU of the image.
+        /// Gets or sets SKU.
         /// </summary>
+        /// <remarks>
+        /// SKU of the image.
+        /// </remarks>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets version of the image.
+        /// Gets or sets version.
         /// </summary>
+        /// <remarks>
+        /// Version of the image.
+        /// </remarks>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the ARM resource identifier of the virtual machine
-        /// image. Computes nodes of the cluster will be created using this
-        /// custom image. This is of the form
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}
+        /// Gets or sets custom VM image resource ID.
         /// </summary>
         /// <remarks>
+        /// The ARM resource identifier of the virtual machine image for the
+        /// compute nodes. This is of the form
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}.
         /// The virtual machine image must be in the same region and
         /// subscription as the cluster. For information about the firewall
         /// settings for the Batch node agent to communicate with the Batch

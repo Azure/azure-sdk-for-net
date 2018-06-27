@@ -367,6 +367,16 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the ITdeCertificatesOperations.
+        /// </summary>
+        public virtual ITdeCertificatesOperations TdeCertificates { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceTdeCertificatesOperations.
+        /// </summary>
+        public virtual IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -626,6 +636,8 @@ namespace Microsoft.Azure.Management.Sql
             DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
             BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
+            TdeCertificates = new TdeCertificatesOperations(this);
+            ManagedInstanceTdeCertificates = new ManagedInstanceTdeCertificatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

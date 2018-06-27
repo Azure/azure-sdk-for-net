@@ -7,17 +7,17 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "09cbab78-5be1-4e3b-817d-83bda3adbc71"
+          "89d3aab5-79b3-47cf-a860-072d06076027"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/2.0.0-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.SubscriptionClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/623d50f1-4fa8-4e46-a967-a9214aed43ab\",\r\n      \"subscriptionId\": \"623d50f1-4fa8-4e46-a967-a9214aed43ab\",\r\n      \"displayName\": \"CSM Test Environment Services\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Internal_2014-09-01\",\r\n        \"quotaId\": \"Internal_2014-09-01\",\r\n        \"spendingLimit\": \"Off\"\r\n      },\r\n      \"authorizationSource\": \"RoleBased\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d\",\r\n      \"subscriptionId\": \"11e23d44-5f84-4f2f-908f-e3bd3195243d\",\r\n      \"displayName\": \"Visual Studio Enterprise\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Public_2014-09-01\",\r\n        \"quotaId\": \"MSDN_2014-09-01\",\r\n        \"spendingLimit\": \"On\"\r\n      },\r\n      \"authorizationSource\": \"RoleBased\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n      \"subscriptionId\": \"fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n      \"displayName\": \"My Visual Studio Enterprise\",\r\n      \"state\": \"Enabled\",\r\n      \"subscriptionPolicies\": {\r\n        \"locationPlacementId\": \"Public_2014-09-01\",\r\n        \"quotaId\": \"MSDN_2014-09-01\",\r\n        \"spendingLimit\": \"On\"\r\n      },\r\n      \"authorizationSource\": \"RoleBased\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 May 2017 20:48:16 GMT"
+          "Thu, 07 Jun 2018 01:01:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -41,19 +41,22 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
+          "14998"
         ],
         "x-ms-request-id": [
-          "8e1614dd-8c71-45ee-9cdf-a00d157c7141"
+          "7603deeb-e1e5-4510-9c0b-92d5de0921b4"
         ],
         "x-ms-correlation-request-id": [
-          "8e1614dd-8c71-45ee-9cdf-a00d157c7141"
+          "7603deeb-e1e5-4510-9c0b-92d5de0921b4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20170501T204817Z:8e1614dd-8c71-45ee-9cdf-a00d157c7141"
+          "WESTUS2:20180607T010104Z:7603deeb-e1e5-4510-9c0b-92d5de0921b4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -61,6 +64,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "11e23d44-5f84-4f2f-908f-e3bd3195243d"
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
   }
 }

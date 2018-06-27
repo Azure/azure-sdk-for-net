@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// A REST API operation
+    /// A REST API operation.
     /// </summary>
     /// <remarks>
     /// Details of a REST API operation
@@ -53,13 +53,13 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the operation name.
+        /// Gets the operation name.
         /// </summary>
         /// <remarks>
         /// This is of the format {provider}/{resource}/{operation}
         /// </remarks>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets or sets the object that describes the operation.
@@ -68,10 +68,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         public OperationDisplay Display { get; set; }
 
         /// <summary>
-        /// Gets or sets the intended executor of the operation.
+        /// Gets the intended executor of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
-        public string Origin { get; set; }
+        public string Origin { get; private set; }
 
         /// <summary>
         /// Gets or sets properties of the operation.

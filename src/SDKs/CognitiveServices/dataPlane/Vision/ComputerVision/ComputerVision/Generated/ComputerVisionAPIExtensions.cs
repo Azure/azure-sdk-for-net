@@ -77,8 +77,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -188,8 +189,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -221,8 +223,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -257,8 +260,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -275,25 +279,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Recognize Text operation. When you use the Recognize Text interface, the
             /// response contains a field called 'Operation-Location'. The
             /// 'Operation-Location' field contains the URL that you must use for your Get
-            /// Handwritten Text Operation Result operation.
+            /// Recognize Text Operation Result operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='mode'>
+            /// Type of text to recognize. Possible values include: 'Handwritten',
+            /// 'Printed'
+            /// </param>
             /// <param name='url'>
             /// Publicly reachable URL of an image
-            /// </param>
-            /// <param name='detectHandwriting'>
-            /// If 'true' is specified, handwriting recognition is performed. If this
-            /// parameter is set to 'false' or is not specified, printed text recognition
-            /// is performed.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecognizeTextHeaders> RecognizeTextAsync(this IComputerVisionAPI operations, string url, bool? detectHandwriting = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecognizeTextHeaders> RecognizeTextAsync(this IComputerVisionAPI operations, string url, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizeTextWithHttpMessagesAsync(url, detectHandwriting, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RecognizeTextWithHttpMessagesAsync(url, mode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -308,8 +311,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// The operations group for this extension method.
             /// </param>
             /// <param name='operationId'>
-            /// Id of the text operation returned in the response of the 'Recognize
-            /// Handwritten Text'
+            /// Id of the text operation returned in the response of the 'Recognize Text'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -354,8 +356,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -465,8 +468,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -498,8 +502,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -534,8 +539,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='language'>
             /// The desired language for output generation. If this parameter is not
             /// specified, the default value is &amp;quot;en&amp;quot;.Supported
-            /// languages:en - English, Default.ja - Japanese pt - Portuguese zh -
-            /// Simplified Chinese. Possible values include: 'en', 'ja', 'pt', 'zh'
+            /// languages:en - English, Default. es - Spanish, ja - Japanese, pt -
+            /// Portuguese, zh - Simplified Chinese. Possible values include: 'en', 'es',
+            /// 'ja', 'pt', 'zh'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -552,7 +558,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Recognize Text operation. When you use the Recognize Text interface, the
             /// response contains a field called 'Operation-Location'. The
             /// 'Operation-Location' field contains the URL that you must use for your Get
-            /// Handwritten Text Operation Result operation.
+            /// Recognize Text Operation Result operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -560,17 +566,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='image'>
             /// An image stream.
             /// </param>
-            /// <param name='detectHandwriting'>
-            /// If 'true' is specified, handwriting recognition is performed. If this
-            /// parameter is set to 'false' or is not specified, printed text recognition
-            /// is performed.
+            /// <param name='mode'>
+            /// Type of text to recognize. Possible values include: 'Handwritten',
+            /// 'Printed'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecognizeTextInStreamHeaders> RecognizeTextInStreamAsync(this IComputerVisionAPI operations, Stream image, bool? detectHandwriting = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecognizeTextInStreamHeaders> RecognizeTextInStreamAsync(this IComputerVisionAPI operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RecognizeTextInStreamWithHttpMessagesAsync(image, detectHandwriting, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RecognizeTextInStreamWithHttpMessagesAsync(image, mode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

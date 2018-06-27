@@ -109,9 +109,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -208,9 +208,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -236,9 +236,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -268,9 +268,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -284,16 +284,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Recognize Text operation. When you use the Recognize Text
         /// interface, the response contains a field called
         /// 'Operation-Location'. The 'Operation-Location' field contains the
-        /// URL that you must use for your Get Handwritten Text Operation
-        /// Result operation.
+        /// URL that you must use for your Get Recognize Text Operation Result
+        /// operation.
         /// </summary>
+        /// <param name='mode'>
+        /// Type of text to recognize. Possible values include: 'Handwritten',
+        /// 'Printed'
+        /// </param>
         /// <param name='url'>
         /// Publicly reachable URL of an image
-        /// </param>
-        /// <param name='detectHandwriting'>
-        /// If 'true' is specified, handwriting recognition is performed. If
-        /// this parameter is set to 'false' or is not specified, printed text
-        /// recognition is performed.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -301,7 +300,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<RecognizeTextHeaders>> RecognizeTextWithHttpMessagesAsync(string url, bool? detectHandwriting = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<RecognizeTextHeaders>> RecognizeTextWithHttpMessagesAsync(string url, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This interface is used for getting text operation result. The URL
@@ -310,7 +309,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </summary>
         /// <param name='operationId'>
         /// Id of the text operation returned in the response of the 'Recognize
-        /// Handwritten Text'
+        /// Text'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -350,9 +349,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -449,9 +448,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -477,9 +476,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -509,9 +508,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
         /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.ja
-        /// - Japanese pt - Portuguese zh - Simplified Chinese. Possible values
-        /// include: 'en', 'ja', 'pt', 'zh'
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -525,16 +524,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Recognize Text operation. When you use the Recognize Text
         /// interface, the response contains a field called
         /// 'Operation-Location'. The 'Operation-Location' field contains the
-        /// URL that you must use for your Get Handwritten Text Operation
-        /// Result operation.
+        /// URL that you must use for your Get Recognize Text Operation Result
+        /// operation.
         /// </summary>
         /// <param name='image'>
         /// An image stream.
         /// </param>
-        /// <param name='detectHandwriting'>
-        /// If 'true' is specified, handwriting recognition is performed. If
-        /// this parameter is set to 'false' or is not specified, printed text
-        /// recognition is performed.
+        /// <param name='mode'>
+        /// Type of text to recognize. Possible values include: 'Handwritten',
+        /// 'Printed'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -542,7 +540,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<RecognizeTextInStreamHeaders>> RecognizeTextInStreamWithHttpMessagesAsync(Stream image, bool? detectHandwriting = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<RecognizeTextInStreamHeaders>> RecognizeTextInStreamWithHttpMessagesAsync(Stream image, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

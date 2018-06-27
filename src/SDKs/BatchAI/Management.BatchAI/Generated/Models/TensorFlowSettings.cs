@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the settings for TensorFlow job.
+    /// TensorFlow job settings.
     /// </summary>
     public partial class TensorFlowSettings
     {
@@ -30,19 +30,17 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the TensorFlowSettings class.
         /// </summary>
-        /// <param name="pythonScriptFilePath">The path and file name of the
-        /// python script to execute the job.</param>
-        /// <param name="pythonInterpreterPath">The path to python
-        /// interpreter.</param>
-        /// <param name="masterCommandLineArgs">Specifies the command line
-        /// arguments for the master task.</param>
-        /// <param name="workerCommandLineArgs">Specifies the command line
-        /// arguments for the worker task.</param>
-        /// <param name="parameterServerCommandLineArgs">Specifies the command
-        /// line arguments for the parameter server task.</param>
-        /// <param name="workerCount">The number of worker tasks.</param>
-        /// <param name="parameterServerCount">The number of parmeter server
-        /// tasks.</param>
+        /// <param name="pythonScriptFilePath">Python script file path.</param>
+        /// <param name="pythonInterpreterPath">Python interpreter
+        /// path.</param>
+        /// <param name="masterCommandLineArgs">Master command line
+        /// arguments.</param>
+        /// <param name="workerCommandLineArgs">Worker command line
+        /// arguments.</param>
+        /// <param name="parameterServerCommandLineArgs">Parameter server
+        /// command line arguments.</param>
+        /// <param name="workerCount">Worker count.</param>
+        /// <param name="parameterServerCount">Parameter server count.</param>
         public TensorFlowSettings(string pythonScriptFilePath, string pythonInterpreterPath = default(string), string masterCommandLineArgs = default(string), string workerCommandLineArgs = default(string), string parameterServerCommandLineArgs = default(string), int? workerCount = default(int?), int? parameterServerCount = default(int?))
         {
             PythonScriptFilePath = pythonScriptFilePath;
@@ -61,66 +59,73 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the path and file name of the python script to execute
-        /// the job.
+        /// Gets or sets python script file path.
         /// </summary>
+        /// <remarks>
+        /// The python script to execute.
+        /// </remarks>
         [JsonProperty(PropertyName = "pythonScriptFilePath")]
         public string PythonScriptFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to python interpreter.
+        /// Gets or sets python interpreter path.
         /// </summary>
+        /// <remarks>
+        /// The path to the Python interpreter.
+        /// </remarks>
         [JsonProperty(PropertyName = "pythonInterpreterPath")]
         public string PythonInterpreterPath { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the command line arguments for the master
-        /// task.
+        /// Gets or sets master command line arguments.
         /// </summary>
+        /// <remarks>
+        /// Command line arguments that need to be passed to the python script
+        /// for the master task.
+        /// </remarks>
         [JsonProperty(PropertyName = "masterCommandLineArgs")]
         public string MasterCommandLineArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the command line arguments for the worker
-        /// task.
+        /// Gets or sets worker command line arguments.
         /// </summary>
         /// <remarks>
-        /// This property is optional for single machine training.
+        /// Command line arguments that need to be passed to the python script
+        /// for the worker task. Optional for single process jobs.
         /// </remarks>
         [JsonProperty(PropertyName = "workerCommandLineArgs")]
         public string WorkerCommandLineArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the command line arguments for the parameter
-        /// server task.
+        /// Gets or sets parameter server command line arguments.
         /// </summary>
         /// <remarks>
-        /// This property is optional for single machine training.
+        /// Command line arguments that need to be passed to the python script
+        /// for the parameter server. Optional for single process jobs.
         /// </remarks>
         [JsonProperty(PropertyName = "parameterServerCommandLineArgs")]
         public string ParameterServerCommandLineArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of worker tasks.
+        /// Gets or sets worker count.
         /// </summary>
         /// <remarks>
-        /// If specified, the value must be less than or equal to (nodeCount *
-        /// numberOfGPUs per VM). If not specified, the default value is equal
-        /// to nodeCount. This property can be specified only for distributed
-        /// TensorFlow training
+        /// The number of worker tasks. If specified, the value must be less
+        /// than or equal to (nodeCount * numberOfGPUs per VM). If not
+        /// specified, the default value is equal to nodeCount. This property
+        /// can be specified only for distributed TensorFlow training.
         /// </remarks>
         [JsonProperty(PropertyName = "workerCount")]
         public int? WorkerCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of parmeter server tasks.
+        /// Gets or sets parameter server count.
         /// </summary>
         /// <remarks>
-        /// If specified, the value must be less than or equal to nodeCount. If
-        /// not specified, the default value is equal to 1 for distributed
-        /// TensorFlow training (This property is not applicable for single
-        /// machine training). This property can be specified only for
-        /// distributed TensorFlow training.
+        /// The number of parameter server tasks. If specified, the value must
+        /// be less than or equal to nodeCount. If not specified, the default
+        /// value is equal to 1 for distributed TensorFlow training. This
+        /// property can be specified only for distributed TensorFlow training.
         /// </remarks>
         [JsonProperty(PropertyName = "parameterServerCount")]
         public int? ParameterServerCount { get; set; }
