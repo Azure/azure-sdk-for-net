@@ -4,7 +4,7 @@
     <PackageId>Microsoft.Azure.KeyVault.Cryptography</PackageId>
     <Description>Microsoft Azure Key Vault Cryptography Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography</AssemblyTitle>
-    <VersionPrefix>3.0.1-preview</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.Cryptography</AssemblyName>
     <PackageTags>Microsoft Azure Key Vault Cryptography</PackageTags>    
     <PackageReleaseNotes>
