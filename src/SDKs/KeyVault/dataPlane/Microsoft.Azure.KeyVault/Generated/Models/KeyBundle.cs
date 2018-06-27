@@ -14,7 +14,6 @@ namespace Microsoft.Azure.KeyVault.Models
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// A KeyBundle consisting of a WebKey plus its attributes.
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="managed">True if the key's lifetime is managed by key
         /// vault. If this is a key backing a certificate, then managed will be
         /// true.</param>
-        public KeyBundle(JsonWebKey key = default(JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? managed = default(bool?))
+        public KeyBundle(Microsoft.Azure.KeyVault.WebKey.JsonWebKey key = default(Microsoft.Azure.KeyVault.WebKey.JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? managed = default(bool?))
         {
             Key = key;
             Attributes = attributes;
@@ -57,7 +56,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Gets or sets the Json web key.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
-        public JsonWebKey Key { get; set; }
+        public Microsoft.Azure.KeyVault.WebKey.JsonWebKey Key { get; set; }
 
         /// <summary>
         /// Gets or sets the key management attributes.

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
         private static readonly string P256TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"P-256\",\"x\":\"IzSTOwCKbS-BEdPwVT0xGnW18zzgyG7CwnMDKLULyQo\",\"y\":\"K7m-pJxgWIjHGHMF5IZpWLasH6TizES9eidg--wQkSE\",\"d\":\"9hY6iHNcR-IuyacHOelfiCvjRWyfOscFVL05zJM4Ne4\"}";
         private static readonly string P384TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"P-384\",\"x\":\"5XN86Y1xhKo1GuohlWzcvoJmZs36USIFopOU1wha6qbtZzM2C1OK01lh8DJYwQsi\",\"y\":\"ZsI5YcBKzo-0d5lS3106nYPshOi9LcCecNJebIina6fw7Ab7TD3f3fhNxEaAE6ja\",\"d\":\"6g0maM_o7vcYWJzPMwqE3l0v2vsyjWtOsvRyAch44aZLg9IGaVEUu6Ol718ICyWX\"}";
         private static readonly string P521TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"P-521\",\"x\":\"ASggRFEA2L_FxGjnU5FNplPHBi8tU0e2L89ZWro4ZpDYvBvel0gjao_S23fuNFlhufLp5kePdGbqujy45wHKMjMR\",\"y\":\"AFDVBsQZN2V1lox2kMCmqWL5Kn4f3X0mtqnBLWgPlOSl6l-tMDHj8gcLnMGJZNarCKVGVrdjhmK9BpbYy0Q8Omnm\",\"d\":\"AJC_2pp8DO_LxfFuC7yMfd7TGD51f8ydJgHy-Tf-37NBToBjGPo6njEcrppW1QSVWTMJpjfVWJb6x24YZQ73PP04\"}";
-        private static readonly string Secp256k1TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"SECP256K1\",\"x\":\"yBMUvQwthIjbdvYUC2DDDs6I45dqG0B1GQ3-Eg5RxXM\",\"y\":\"KGf5oIzA7QNhZ8gXP8LSQfZKSMsGrmcUphyWpD2ingg\",\"d\":\"qmWUH9HNAAYzeNrVYbtoVlrnbiRIa2jDZW5YJh7OoUs\"}";
+        private static readonly string Secp256k1TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"P-256K\",\"x\":\"yBMUvQwthIjbdvYUC2DDDs6I45dqG0B1GQ3-Eg5RxXM\",\"y\":\"KGf5oIzA7QNhZ8gXP8LSQfZKSMsGrmcUphyWpD2ingg\",\"d\":\"qmWUH9HNAAYzeNrVYbtoVlrnbiRIa2jDZW5YJh7OoUs\"}";
 
         [Fact]
         public static void HardCodedKeysMustWork()
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             DoHardCodedKeyTests( P256TestKey, EcKey.P256, 256, "ES256", 32 );
             DoHardCodedKeyTests( P384TestKey, EcKey.P384, 384, "ES384", 48 );
             DoHardCodedKeyTests( P521TestKey, EcKey.P521, 521, "ES512", 64 );
-            DoHardCodedKeyTests( Secp256k1TestKey, EcKey.SECP256K1, 256, "ECDSA256", 32 );
+            DoHardCodedKeyTests( Secp256k1TestKey, EcKey.P256K, 256, "ES256K", 32 );
         }
 
         private static void DoHardCodedKeyTests( string json, string curve, int keySize, string defaultAlgo, int digestSize )
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             DoRamdomKeyTest( EcKey.P256, 256, "ES256", 32 );
             DoRamdomKeyTest( EcKey.P384, 384, "ES384", 48 );
             DoRamdomKeyTest( EcKey.P521, 521, "ES512", 64 );
-            DoRamdomKeyTest( EcKey.SECP256K1, 256, "ECDSA256", 32 );
+            DoRamdomKeyTest( EcKey.P256K, 256, "ES256K", 32 );
         }
 
         private static void DoRamdomKeyTest( string curve, int keySize, string defaultAlgo, int digestSize )

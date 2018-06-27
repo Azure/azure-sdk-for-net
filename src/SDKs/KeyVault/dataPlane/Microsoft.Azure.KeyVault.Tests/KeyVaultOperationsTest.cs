@@ -345,9 +345,9 @@ namespace Microsoft.Azure.KeyVault.Tests
         {
             using (MockContext context = MockContext.Start(GetType().FullName))
             {
-                var curve = JsonWebKeyCurveName.SECP256K1;
+                var curve = JsonWebKeyCurveName.P256K;
                 var digestSize = 256;
-                var algorithm = JsonWebKeySignatureAlgorithm.ECDSA256;
+                var algorithm = JsonWebKeySignatureAlgorithm.ES256K;
 
                 TestEcKeyCreateSignVerify(curve, digestSize, algorithm);
             }

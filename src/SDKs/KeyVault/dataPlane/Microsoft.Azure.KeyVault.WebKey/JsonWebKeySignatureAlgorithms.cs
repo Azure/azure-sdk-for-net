@@ -31,12 +31,12 @@ namespace Microsoft.Azure.KeyVault.WebKey
         public const string ES384   = "ES384";
         // ECDSA using P-521 and SHA-512 
         public const string ES512   = "ES512";
-        // ECDSA using generic curve and SHA-256 (suited for SECP256K1)
-        public const string ECDSA256 = "ECDSA256";
+        // ECDSA using P-256K and SHA-256 (SECP256K1)
+        public const string ES256K = "ES256K";
 
         public static string[] AllRsaAlgorithms => new[] { RS256, RS384, RS512, RSNULL, PS256, PS384, PS512 };
 
-        public static string[] AllEcAlgorithms => new[] { ES256, ES384, ES512, ECDSA256 };
+        public static string[] AllEcAlgorithms => new[] { ES256, ES384, ES512, ES256K };
 
         /// <summary>
         /// All algorithms names. Use clone to avoid FxCop violation

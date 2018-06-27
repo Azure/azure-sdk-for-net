@@ -12,9 +12,9 @@ namespace Microsoft.Azure.KeyVault.WebKey
         public const string P256 = "P-256";
         public const string P384 = "P-384";
         public const string P521 = "P-521";
-        public const string SECP256K1 = "SECP256K1";
+        public const string P256K = "P-256K";
 
-        private static readonly string[] _allCurves = {P256, P384, P521, SECP256K1};
+        private static readonly string[] _allCurves = {P256, P384, P521, P256K};
 
         /// <summary>
         /// All curves for EC. Use clone to avoid FxCop violation
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             switch ( curve )
             {
                 case P256:
-                case SECP256K1:
+                case P256K:
                     return 32;
 
                 case P384:

@@ -22,7 +22,6 @@ namespace Microsoft.Azure.KeyVault
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// The key vault client performs cryptographic key operations and vault
@@ -160,7 +159,7 @@ namespace Microsoft.Azure.KeyVault
         private void Initialize()
         {
             BaseUri = "{vaultBaseUrl}";
-            ApiVersion = "7.0-preview";
+            ApiVersion = "7.0";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -209,11 +208,11 @@ namespace Microsoft.Azure.KeyVault
         /// new key.
         /// </param>
         /// <param name='kty'>
-        /// The type of key to create. For valid values, see JsonWebKeyType. Possible
+        /// The type of key to create. For valid values, see Microsoft.Azure.KeyVault.WebKey.JsonWebKeyType. Possible
         /// values include: 'EC', 'EC-HSM', 'RSA', 'RSA-HSM', 'oct'
         /// </param>
         /// <param name='keySize'>
-        /// The key size in bytes. For example, 1024 or 2048.
+        /// The key size in bits. For example: 2048, 3072, or 4096 for RSA.
         /// </param>
         /// <param name='keyOps'>
         /// </param>
@@ -223,8 +222,8 @@ namespace Microsoft.Azure.KeyVault
         /// Application specific metadata in the form of key-value pairs.
         /// </param>
         /// <param name='curve'>
-        /// Elliptic curve name. For valid values, see JsonWebKeyCurveName. Possible
-        /// values include: 'P-256', 'P-384', 'P-521', 'SECP256K1'
+        /// Elliptic curve name. For valid values, see Microsoft.Azure.KeyVault.WebKey.JsonWebKeyCurveName. Possible
+        /// values include: 'P-256', 'P-384', 'P-521', 'P-256K'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -486,7 +485,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<KeyBundle>> ImportKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, JsonWebKey key, bool? hsm = default(bool?), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<KeyBundle>> ImportKeyWithHttpMessagesAsync(string vaultBaseUrl, string keyName, Microsoft.Azure.KeyVault.WebKey.JsonWebKey key, bool? hsm = default(bool?), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -881,7 +880,7 @@ namespace Microsoft.Azure.KeyVault
         /// </param>
         /// <param name='keyOps'>
         /// Json web key operations. For more information on possible key operations,
-        /// see JsonWebKeyOperation.
+        /// see Microsoft.Azure.KeyVault.WebKey.JsonWebKeyOperation.
         /// </param>
         /// <param name='keyAttributes'>
         /// </param>
@@ -2605,9 +2604,9 @@ namespace Microsoft.Azure.KeyVault
         /// </param>
         /// <param name='algorithm'>
         /// The signing/verification algorithm identifier. For more information on
-        /// possible algorithm types, see JsonWebKeySignatureAlgorithm. Possible values
+        /// possible algorithm types, see Microsoft.Azure.KeyVault.WebKey.JsonWebKeySignatureAlgorithm. Possible values
         /// include: 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL',
-        /// 'ES256', 'ES384', 'ES512', 'ECDSA256'
+        /// 'ES256', 'ES384', 'ES512', 'ES256K'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -2844,9 +2843,9 @@ namespace Microsoft.Azure.KeyVault
         /// </param>
         /// <param name='algorithm'>
         /// The signing/verification algorithm. For more information on possible
-        /// algorithm types, see JsonWebKeySignatureAlgorithm. Possible values include:
+        /// algorithm types, see Microsoft.Azure.KeyVault.WebKey.JsonWebKeySignatureAlgorithm. Possible values include:
         /// 'PS256', 'PS384', 'PS512', 'RS256', 'RS384', 'RS512', 'RSNULL', 'ES256',
-        /// 'ES384', 'ES512', 'ECDSA256'
+        /// 'ES384', 'ES512', 'ES256K'
         /// </param>
         /// <param name='digest'>
         /// The digest used for signing.

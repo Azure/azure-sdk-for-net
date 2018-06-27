@@ -47,7 +47,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
                 case JsonWebKeyCurveName.P521:
                     return ToNistCurveEcdsa( includePrivateParameters ? BCRYPT_ECDSA_PRIVATE_P521_MAGIC : BCRYPT_ECDSA_PUBLIC_P521_MAGIC, 66, includePrivateParameters );
 
-                case JsonWebKeyCurveName.SECP256K1:
+                case JsonWebKeyCurveName.P256K:
                     return ToGenericCurveEcdsa( includePrivateParameters ? BCRYPT_ECDSA_PRIVATE_GENERIC_MAGIC : BCRYPT_ECDSA_PUBLIC_GENERIC_MAGIC, Secp256k1, includePrivateParameters );
 
                 default:
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if ( !curve.Equals( Secp256k1 ) )
                 throw new NotSupportedException( $"Unsupported curve: {curve}" );
 
-            dest.Curve = JsonWebKeyCurveName.SECP256K1;
+            dest.Curve = JsonWebKeyCurveName.P256K;
 
             var cbFieldLength = curve.Prime.Length;
             dest.X = ValidateSize( reader.ReadBytes( cbFieldLength ), expectedSize, nameof( dest.X ) );

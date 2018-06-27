@@ -26,7 +26,7 @@ namespace Microsoft.Azure.KeyVault
         public const string P256 = "P-256";
         public const string P384 = "P-384";
         public const string P521 = "P-521";
-        public const string SECP256K1 = "SECP256K1";
+        public const string P256K = "P-256K";
 
         private static readonly string DefaultCurve = P256;
 
@@ -86,10 +86,10 @@ namespace Microsoft.Azure.KeyVault
                     DefaultSignatureAlgorithm = Es512.AlgorithmName;
                     break;
 
-                case SECP256K1:
+                case P256K:
                     cngAlgo = CngAlgorithm_Generic_ECDSA;
                     kcp.Parameters.Add( new CngProperty( NativeMethods.BCRYPT_ECC_PARAMETERS, Secp256k1Parameters.CurveBlob, CngPropertyOptions.None ) );
-                    DefaultSignatureAlgorithm = Ecdsa256.AlgorithmName;
+                    DefaultSignatureAlgorithm = ES256K.AlgorithmName;
                     break;
 
                 default:
@@ -143,9 +143,9 @@ namespace Microsoft.Azure.KeyVault
                     DefaultSignatureAlgorithm = Es512.AlgorithmName;
                     break;
 
-                case SECP256K1:
+                case P256K:
                     key = ImportGenericKey( Secp256k1Parameters, x, y, d );
-                    DefaultSignatureAlgorithm = Ecdsa256.AlgorithmName;
+                    DefaultSignatureAlgorithm = ES256K.AlgorithmName;
                     break;
 
                 default:

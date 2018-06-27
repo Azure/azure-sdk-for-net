@@ -40,7 +40,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
             Default.AddAlgorithm( Es256.AlgorithmName, new Es256() );
             Default.AddAlgorithm( Es384.AlgorithmName, new Es384() );
             Default.AddAlgorithm( Es512.AlgorithmName, new Es512() );
-            Default.AddAlgorithm( Ecdsa256.AlgorithmName, new Ecdsa256() );
+            Default.AddAlgorithm( ES256K.AlgorithmName, new ES256K() );
         }
 
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]

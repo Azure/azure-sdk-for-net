@@ -15,7 +15,6 @@ namespace Microsoft.Azure.KeyVault.Models
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// The key import parameters.
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="keyAttributes">The key management attributes.</param>
         /// <param name="tags">Application specific metadata in the form of
         /// key-value pairs.</param>
-        public KeyImportParameters(JsonWebKey key, bool? hsm = default(bool?), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public KeyImportParameters(Microsoft.Azure.KeyVault.WebKey.JsonWebKey key, bool? hsm = default(bool?), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Hsm = hsm;
             Key = key;
@@ -64,7 +63,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Gets or sets the Json web key
         /// </summary>
         [JsonProperty(PropertyName = "key")]
-        public JsonWebKey Key { get; set; }
+        public Microsoft.Azure.KeyVault.WebKey.JsonWebKey Key { get; set; }
 
         /// <summary>
         /// Gets or sets the key management attributes.
