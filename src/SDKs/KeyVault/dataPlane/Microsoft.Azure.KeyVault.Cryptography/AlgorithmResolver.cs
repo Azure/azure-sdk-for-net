@@ -32,6 +32,8 @@ namespace Microsoft.Azure.KeyVault.Cryptography
             Default.AddAlgorithm( RsaOaep.AlgorithmName, new RsaOaep() );
 
             Default.AddAlgorithm( Rs256.AlgorithmName, new Rs256() );
+            Default.AddAlgorithm( Rs384.AlgorithmName, new Rs384() );
+            Default.AddAlgorithm( Rs512.AlgorithmName, new Rs512());
 
 #if FullNetFx
             Default.AddAlgorithm( RsNull.AlgorithmName, new RsNull() );
