@@ -25,6 +25,70 @@ namespace Microsoft.AzureStack.Management.Subscriptions.Admin
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
+            /// Move subscriptions between delegated provider offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            public static void MoveSubscriptions(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition)
+            {
+                operations.MoveSubscriptionsAsync(moveSubscriptionsDefinition).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Move subscriptions between delegated provider offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task MoveSubscriptionsAsync(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.MoveSubscriptionsWithHttpMessagesAsync(moveSubscriptionsDefinition, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Validate that user subscriptions can be moved between delegated provider
+            /// offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            public static void ValidateMoveSubscriptions(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition)
+            {
+                operations.ValidateMoveSubscriptionsAsync(moveSubscriptionsDefinition).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validate that user subscriptions can be moved between delegated provider
+            /// offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ValidateMoveSubscriptionsAsync(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ValidateMoveSubscriptionsWithHttpMessagesAsync(moveSubscriptionsDefinition, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Get the list of subscriptions.
             /// </summary>
             /// <param name='operations'>
@@ -195,6 +259,70 @@ namespace Microsoft.AzureStack.Management.Subscriptions.Admin
             public static async Task DeleteAsync(this ISubscriptionsOperations operations, string subscription, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(subscription, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Move subscriptions between delegated provider offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            public static void BeginMoveSubscriptions(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition)
+            {
+                operations.BeginMoveSubscriptionsAsync(moveSubscriptionsDefinition).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Move subscriptions between delegated provider offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginMoveSubscriptionsAsync(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginMoveSubscriptionsWithHttpMessagesAsync(moveSubscriptionsDefinition, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Validate that user subscriptions can be moved between delegated provider
+            /// offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            public static void BeginValidateMoveSubscriptions(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition)
+            {
+                operations.BeginValidateMoveSubscriptionsAsync(moveSubscriptionsDefinition).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validate that user subscriptions can be moved between delegated provider
+            /// offers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='moveSubscriptionsDefinition'>
+            /// Move subscriptions parameter.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginValidateMoveSubscriptionsAsync(this ISubscriptionsOperations operations, MoveSubscriptionsDefinition moveSubscriptionsDefinition, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginValidateMoveSubscriptionsWithHttpMessagesAsync(moveSubscriptionsDefinition, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
