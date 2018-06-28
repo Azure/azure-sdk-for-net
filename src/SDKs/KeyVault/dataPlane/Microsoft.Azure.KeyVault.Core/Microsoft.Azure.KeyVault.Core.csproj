@@ -9,7 +9,7 @@
     <PackageTags>Microsoft Azure Key Vault Core</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public preview release of the Azure Key Vault SDK. Included in this preview are updates to support eliptical curve keys.  This package should not be used in production. It is subject to breaking changes, and will not be supported once the preview has ended. 
+        Moving version to 3.0 to align all Azure Key Vault SDK packages.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
