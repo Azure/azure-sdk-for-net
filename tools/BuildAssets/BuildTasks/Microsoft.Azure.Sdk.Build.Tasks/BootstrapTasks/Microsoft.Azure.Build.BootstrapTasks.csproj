@@ -17,10 +17,10 @@
     <OutputPath>$(TaskBinaryOutput)</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build" Version="15.1.1012" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.1.1012" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.1.1012" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.1012" />
+    <PackageReference Include="Microsoft.Build" Version="15.7.179" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="15.7.179" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.7.179" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.7.179" />
   </ItemGroup>
   <!-- <Target Name="CopyOutput" AfterTargets="AfterBuild" Condition="'$(CIBuild)' != 'true'"> -->
 	<!-- <Message Text="CIBuild status ... $(CIBuild)"/> -->
