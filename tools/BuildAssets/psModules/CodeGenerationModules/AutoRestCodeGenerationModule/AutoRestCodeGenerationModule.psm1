@@ -154,9 +154,9 @@ param(
         $args = $args + " --tag=$ConfigFileTag"
     }
 
-    if($SdkGenerationType -eq "multi-api")
+    if($SdkGenerationType -eq "multiapi")
     {
-        $args = $args + " --multi-api"
+        $args = $args + " --multiapi"
     }
 
     if(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory))
@@ -333,8 +333,8 @@ function Start-AutoRestCodeGeneration {
         [string] $ConfigFileTag,
 
         [Parameter(Mandatory = $false)]
-        [ValidateSet("single-api", "multi-api")]
-        [string] $SdkGenerationType = "single-api"
+        [ValidateSet("singleapi", "multiapi")]
+        [string] $SdkGenerationType = "singleapi"
     )
 
     if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
@@ -353,7 +353,7 @@ function Start-AutoRestCodeGeneration {
         {
             Write-Error "Could not find default output directory since script is not run from a sdk repo, please provide one!"
         }
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType
     }
 }
 
@@ -415,8 +415,8 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [string] $Namespace,
 
         [Parameter(Mandatory = $false)]
-        [ValidateSet("single-api", "multi-api")]
-        [string] $SdkGenerationType = "single-api"
+        [ValidateSet("singleapi", "multiapi")]
+        [string] $SdkGenerationType = "singleapi"
     )
 
     if (-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
