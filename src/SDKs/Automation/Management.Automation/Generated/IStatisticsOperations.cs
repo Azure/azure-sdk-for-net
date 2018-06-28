@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <see href="http://aka.ms/azureautomationsdk/statisticsoperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='filter'>
         /// The filter to apply on the operation.

@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Automation.Models
 {
 
     /// <summary>
-    /// Defines values for AutomationKeyName.
+    /// Defines values for GroupTypeEnum.
     /// </summary>
-    public static class AutomationKeyName
+    public static class GroupTypeEnum
     {
-        public const string Primary = "Primary";
-        public const string Secondary = "Secondary";
+        public const string User = "User";
+        public const string System = "System";
     }
 }

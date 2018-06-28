@@ -13,8 +13,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for a ARM proxy resource. It will have
-    /// everything other than required location and tags
+    /// ARM proxy resource.
     /// </summary>
     public partial class ProxyResource : Resource
     {

@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,13 +20,13 @@ namespace Microsoft.Azure.Management.Automation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VariableOperations operations.
+    /// WatcherOperations operations.
     /// </summary>
-    public partial interface IVariableOperations
+    public partial interface IWatcherOperations
     {
         /// <summary>
-        /// Create a variable.
-        /// <see href="http://aka.ms/azureautomationsdk/variableoperations" />
+        /// Create the watcher identified by watcher name.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure Resource group.
@@ -33,11 +34,11 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccountName'>
         /// The name of the automation account.
         /// </param>
-        /// <param name='variableName'>
-        /// The variable name.
+        /// <param name='watcherName'>
+        /// The watcher name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create or update variable operation.
+        /// The create or update parameters for watcher.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,10 +55,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Variable>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string variableName, VariableCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Watcher>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string watcherName, Watcher parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a variable.
-        /// <see href="http://aka.ms/azureautomationsdk/variableoperations" />
+        /// Retrieve the watcher identified by watcher name.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure Resource group.
@@ -65,11 +66,40 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccountName'>
         /// The name of the automation account.
         /// </param>
-        /// <param name='variableName'>
-        /// The variable name.
+        /// <param name='watcherName'>
+        /// The watcher name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<Watcher>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string watcherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update the watcher identified by watcher name.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='watcherName'>
+        /// The watcher name.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the update variable operation.
+        /// The update parameters for watcher.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -86,10 +116,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Variable>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string variableName, VariableUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Watcher>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string watcherName, WatcherUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete the variable.
-        /// <see href="http://aka.ms/azureautomationsdk/variableoperations" />
+        /// Delete the watcher by name.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure Resource group.
@@ -97,8 +127,8 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccountName'>
         /// The name of the automation account.
         /// </param>
-        /// <param name='variableName'>
-        /// The name of variable.
+        /// <param name='watcherName'>
+        /// The watcher name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -112,10 +142,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string variableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string watcherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve the variable identified by variable name.
-        /// <see href="http://aka.ms/azureautomationsdk/variableoperations" />
+        /// Resume the watcher identified by watcher name.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of an Azure Resource group.
@@ -123,8 +153,60 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='automationAccountName'>
         /// The name of the automation account.
         /// </param>
-        /// <param name='variableName'>
-        /// The name of variable.
+        /// <param name='watcherName'>
+        /// The watcher name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string watcherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Resume the watcher identified by watcher name.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='watcherName'>
+        /// The watcher name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string watcherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve a list of watchers.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of an Azure Resource group.
+        /// </param>
+        /// <param name='automationAccountName'>
+        /// The name of the automation account.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,36 +223,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Variable>> GetWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string variableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Watcher>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, ODataQuery<Watcher> odataQuery = default(ODataQuery<Watcher>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieve a list of variables.
-        /// <see href="http://aka.ms/azureautomationsdk/variableoperations" />
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of an Azure Resource group.
-        /// </param>
-        /// <param name='automationAccountName'>
-        /// The name of the automation account.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Variable>>> ListByAutomationAccountWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Retrieve a list of variables.
-        /// <see href="http://aka.ms/azureautomationsdk/variableoperations" />
+        /// Retrieve a list of watchers.
+        /// <see href="http://aka.ms/azureautomationsdk/watcheroperations" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -190,6 +246,6 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Variable>>> ListByAutomationAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Watcher>>> ListByAutomationAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

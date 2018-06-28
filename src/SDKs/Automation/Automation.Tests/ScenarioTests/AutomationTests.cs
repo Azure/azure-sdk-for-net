@@ -59,7 +59,7 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Waiting on webservice deployment")]
         public void CanCreateUpdateDeleteSchedule()
         {
             using (var context = MockContext.Start(GetType().FullName))
@@ -269,7 +269,7 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Waiting on webservice deployment")]
+        [Fact]
         public void CanCreateUpdateDeleteDscNodeConfiguration()
         {
             using (var context = MockContext.Start(GetType().FullName))

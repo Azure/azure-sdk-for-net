@@ -10,31 +10,28 @@
 
 namespace Microsoft.Azure.Management.Automation.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// The Sub Resource definition.
-    /// </summary>
-    public partial class SubResource : IResource
+    public partial class KeyListResult
     {
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the KeyListResult class.
         /// </summary>
-        public SubResource()
+        public KeyListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubResource class.
+        /// Initializes a new instance of the KeyListResult class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        public SubResource(string id = default(string))
+        /// <param name="keys">Lists the automation keys.</param>
+        public KeyListResult(IList<Key> keys = default(IList<Key>))
         {
-            Id = id;
+            Keys = keys;
             CustomInit();
         }
 
@@ -44,10 +41,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource Id
+        /// Gets or sets lists the automation keys.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "keys")]
+        public IList<Key> Keys { get; set; }
 
     }
 }

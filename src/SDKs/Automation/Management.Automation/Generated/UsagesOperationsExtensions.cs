@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             public static IEnumerable<Usage> ListByAutomationAccount(this IUsagesOperations operations, string resourceGroupName, string automationAccountName)
             {
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

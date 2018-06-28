@@ -255,5 +255,10 @@ namespace Microsoft.Azure.Management.Automation
         /// </summary>
         IDscNodeConfigurationOperations DscNodeConfiguration { get; }
 
+        /// <summary>
+        /// Gets the IWatcherOperations.
+        /// </summary>
+        IWatcherOperations Watcher { get; }
+
     }
 }
