@@ -259,12 +259,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets a session object of any <see cref="IMessageSession.SessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
-        /// <param name="serverWaitTime">Amount of time for which the call should wait to fetch the next session.</param>
+        /// <param name="operationTimeout">Amount of time for which the call should wait to fetch the next session.</param>
         /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
         /// Individual sessions can further register additional plugins.</remarks>
-        public Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan serverWaitTime)
+        public Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan operationTimeout)
         {
-            return this.AcceptMessageSessionAsync(null, serverWaitTime);
+            return this.AcceptMessageSessionAsync(null, operationTimeout);
         }
 
         /// <summary>
@@ -282,10 +282,10 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets a particular session object identified by <paramref name="sessionId"/> that can be used to receive messages for that sessionId.
         /// </summary>
         /// <param name="sessionId">The sessionId present in all its messages.</param>
-        /// <param name="serverWaitTime">Amount of time for which the call should wait to fetch the next session.</param>
+        /// <param name="operationTimeout">Amount of time for which the call should wait to fetch the next session.</param>
         /// <remarks>All plugins registered on <see cref="SessionClient"/> will be applied to each <see cref="MessageSession"/> that is accepted.
         /// Individual sessions can further register additional plugins.</remarks>
-        public async Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan serverWaitTime)
+        public async Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan operationTimeout)
         {
             this.ThrowIfClosed();
 
@@ -314,8 +314,8 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 acceptMessageSessionTask = this.RetryPolicy.RunOperation(
-                    () => session.GetSessionReceiverLinkAsync(serverWaitTime),
-                    serverWaitTime);
+                    () => session.GetSessionReceiverLinkAsync(operationTimeout),
+                    operationTimeout);
                 await acceptMessageSessionTask.ConfigureAwait(false);
             }
             catch (Exception exception)

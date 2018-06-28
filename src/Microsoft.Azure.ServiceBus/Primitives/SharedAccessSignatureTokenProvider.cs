@@ -19,7 +19,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     {
         const TokenScope DefaultTokenScope = TokenScope.Entity;
 
-        internal static readonly TimeSpan DefaultTokenTimeout = TimeSpan.FromMinutes(60);
+        internal static readonly TimeSpan DefaultTokenTTL = TimeSpan.FromMinutes(60);
 
         readonly byte[] encodedSharedAccessKey;
         readonly string keyName;
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         }
 
         internal SharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope = TokenScope.Entity)
-            : this(keyName, sharedAccessKey, MessagingTokenProviderKeyEncoder, DefaultTokenTimeout, tokenScope)
+            : this(keyName, sharedAccessKey, MessagingTokenProviderKeyEncoder, DefaultTokenTTL, tokenScope)
         {
         }
 
@@ -87,8 +87,12 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
         /// </summary>
-        /// <param name="appliesTo">The URI which the access token applies to</param>
-        /// <param name="timeout">The time span that specifies the timeout value for the message that gets the security token</param>
+        /// <param name="appliesTo">The URI which the access token applies to. If <see cref="SharedAccessSignatureTokenProvider"/>
+        /// is initiated with SASKeyName and SASKey, the token will be generated for this uri. If initiated with SASToken, then 
+        /// the value is ignored.</param>
+        /// <param name="timeout">The timeout value for how long it takes to get the security token (not the token time to live). 
+        /// For SAS token, no asynchronous operation takes place and hence this timeout is ignored.</param>
+        /// <remarks>This parameter <paramref name="timeout"/> is here for compatibility, but is not currently used.</remarks>
         /// <returns><see cref="SecurityToken"/></returns>
         public override Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {

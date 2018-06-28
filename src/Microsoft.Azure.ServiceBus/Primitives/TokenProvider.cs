@@ -17,6 +17,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// </summary>
         /// <param name="sharedAccessSignature">The shared access signature</param>
         /// <returns>A TokenProvider initialized with the shared access signature</returns>
+        /// <remarks><see cref="TokenProvider.GetTokenAsync(string, TimeSpan)"/> parameters will not be used 
+        /// to manipulate target URL and token TTL.</remarks>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature)
         {
             return new SharedAccessSignatureTokenProvider(sharedAccessSignature);
@@ -28,15 +30,11 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
+        /// <remarks>Default token TTL is 1 hour and token scope is at entity level.</remarks>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey);
         }
-
-        //internal static TokenProvider CreateIoTTokenProvider(string keyName, string sharedAccessKey)
-        //{
-        //    return new IoTTokenProvider(keyName, sharedAccessKey, DefaultTokenTimeout);
-        //}
 
         /// <summary>
         /// Construct a TokenProvider based on the provided Key Name and Shared Access Key.
@@ -44,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenTimeToLive">The token time to live</param>
-        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
+        /// <returns>A TokenProvider initialized with the provided keyName and key.</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenTimeToLive);
@@ -56,7 +54,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
-        /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
+        /// <returns>A TokenProvider initialized with the provided keyName and key</returns>
+        /// <remarks>Default token TTL is 1 hour.</remarks>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope)
         {
             return new SharedAccessSignatureTokenProvider(keyName, sharedAccessKey, tokenScope);
@@ -163,8 +162,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.
         /// </summary>
         /// <param name="appliesTo">The URI which the access token applies to</param>
-        /// <param name="timeout">The time span that specifies the timeout value for the message that gets the security token</param>
-        /// <returns></returns>
+        /// <param name="timeout">The timeout value for how long it takes to get the security token (not the token time to live).</param>
+        /// <remarks>This parameter <paramref name="timeout"/> is here for compatibility, but is not currently used.</remarks>
         public abstract Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout);
     }
 }

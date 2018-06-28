@@ -115,9 +115,9 @@ namespace Microsoft.Azure.ServiceBus
     {
         string EntityPath { get; }
         System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync();
-        System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(System.TimeSpan serverWaitTime);
+        System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(System.TimeSpan operationTimeout);
         System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(string sessionId);
-        System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(string sessionId, System.TimeSpan serverWaitTime);
+        System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(string sessionId, System.TimeSpan operationTimeout);
     }
     public interface ISubscriptionClient : Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity
     {
@@ -364,9 +364,9 @@ namespace Microsoft.Azure.ServiceBus
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public override Microsoft.Azure.ServiceBus.ServiceBusConnection ServiceBusConnection { get; }
         public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync() { }
-        public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(System.TimeSpan serverWaitTime) { }
+        public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(System.TimeSpan operationTimeout) { }
         public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(string sessionId) { }
-        public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(string sessionId, System.TimeSpan serverWaitTime) { }
+        public System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.IMessageSession> AcceptMessageSessionAsync(string sessionId, System.TimeSpan operationTimeout) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
         public override void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin) { }
         public override void UnregisterPlugin(string serviceBusPluginName) { }
