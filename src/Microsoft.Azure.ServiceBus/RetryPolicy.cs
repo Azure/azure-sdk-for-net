@@ -39,6 +39,11 @@ namespace Microsoft.Azure.ServiceBus
         public static RetryPolicy Default => new RetryExponential(DefaultRetryMinBackoff, DefaultRetryMaxBackoff, DefaultRetryMaxCount);
 
         /// <summary>
+        /// Returns a <see cref="NoRetry"/> retry policy.
+        /// </summary>
+        public static RetryPolicy NoRetry => new NoRetry();
+
+        /// <summary>
         /// Determines whether or not the server returned a busy error.
         /// </summary>
         public bool IsServerBusy { get; protected set; }

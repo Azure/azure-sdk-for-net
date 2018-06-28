@@ -1330,6 +1330,57 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.WriteEvent(112, connectionManager, exception);
         }
+
+        [Event(113, Level = EventLevel.Informational, Message = "{0}: Management operation '{1}' for '{2}' started.")]
+        public void ManagementOperationStart(string clientId, string operationName, string details = "")
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(113, clientId, operationName, details);
+            }
+        }
+
+        [Event(114, Level = EventLevel.Informational, Message = "{0}: Management operation '{1}' for '{2}' finished.")]
+        public void ManagementOperationEnd(string clientId, string operationName, string details = "")
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(114, clientId, operationName, details);
+            }
+        }
+
+        [NonEvent]
+        public void ManagementOperationException(string clientId, string operationName, Exception exception)
+        {
+            if (this.IsEnabled())
+            {
+                this.ManagementOperationException(clientId, operationName, exception.ToString());
+            }
+        }
+
+        [Event(115, Level = EventLevel.Error, Message = "{0}: Management operation '{1}' encountered exception: '{2}'.")]
+        void ManagementOperationException(string clientId, string operationName, string exception)
+        {
+            this.WriteEvent(115, clientId, operationName, exception);
+        }
+
+        [Event(116, Level = EventLevel.Informational, Message = "{0}: Management client created with operationTimeout:{1}, tokenProvider:{2}.")]
+        public void ManagementClientCreated(string clientId, double operationTimeout, string tokenProvider)
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(116, clientId, operationTimeout, tokenProvider);
+            }
+        }
+
+        [Event(117, Level = EventLevel.Warning, Message = "[De]Serialization failed for object:{0}; Details:{1}")]
+        public void ManagementSerializationException(string objectName, string details = "")
+        {
+            if (this.IsEnabled())
+            {
+                this.WriteEvent(117, objectName, details);
+            }
+        }
     }
 
     internal static class TraceHelper

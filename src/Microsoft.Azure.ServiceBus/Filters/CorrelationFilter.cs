@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using System;
     using System.Collections.Generic;
     using System.Text;
     using Primitives;
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus
     /// </remarks>
     public sealed class CorrelationFilter : Filter
     {
-        private PropertyDictionary properties;
+        internal PropertyDictionary properties;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CorrelationFilter" /> class with default values.
@@ -196,6 +197,85 @@ namespace Microsoft.Azure.ServiceBus
 
                 builder.AppendFormat("{0} = '{1}'", propertyName, value);
             }
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 13;
+            unchecked
+            {
+                hash = (hash * 7) + this.CorrelationId?.GetHashCode() ?? 0;
+                hash = (hash * 7) + this.MessageId?.GetHashCode() ?? 0;
+                hash = (hash * 7) + this.SessionId?.GetHashCode() ?? 0; 
+            }
+
+            return hash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as CorrelationFilter;
+            return this.Equals(other);
+        }
+
+        public override bool Equals(Filter other)
+        {
+            if (other is CorrelationFilter correlationFilter)
+            {
+                if (string.Equals(this.CorrelationId, correlationFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(this.MessageId, correlationFilter.MessageId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(this.To, correlationFilter.To, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(this.ReplyTo, correlationFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(this.Label, correlationFilter.Label, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(this.SessionId, correlationFilter.SessionId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(this.ReplyToSessionId, correlationFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(this.ContentType, correlationFilter.ContentType, StringComparison.OrdinalIgnoreCase)
+                    && (this.properties != null && correlationFilter.properties != null
+                        || this.properties == null && correlationFilter.properties == null))
+                {
+                    if (this.properties != null)
+                    {
+                        if (this.properties.Count != correlationFilter.properties.Count)
+                        {
+                            return false;
+                        }
+
+                        foreach (var param in this.properties)
+                        {
+                            if (!correlationFilter.properties.TryGetValue(param.Key, out var otherParamValue) ||
+                                (param.Value == null ^ otherParamValue == null) ||
+                                (param.Value != null && !param.Value.Equals(otherParamValue)))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool operator == (CorrelationFilter o1, CorrelationFilter o2)
+        {
+            if (ReferenceEquals(o1, o2))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            {
+                return false;
+            }
+
+            return o1.Equals(o2);
+        }
+
+        public static bool operator != (CorrelationFilter p1, CorrelationFilter p2)
+        {
+            return !(p1 == p2);
         }
     }
 }

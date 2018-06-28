@@ -3,6 +3,8 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using System;
+
     /// <summary>
     /// Represents the filter actions which are allowed for the transformation
     /// of a message that have been matched by a filter expression.
@@ -13,12 +15,14 @@ namespace Microsoft.Azure.ServiceBus
     /// for example assigning a group ID based on the correlation ID of a message.
     /// </remarks>
     /// <seealso cref="SqlRuleAction"/>
-    public abstract class RuleAction
+    public abstract class RuleAction : IEquatable<RuleAction>
     {
         internal RuleAction()
         {
             // This is intentionally left blank. This constructor exists
             // only to prevent external assemblies inheriting from it.
         }
+
+        public abstract bool Equals(RuleAction other);
     }
 }

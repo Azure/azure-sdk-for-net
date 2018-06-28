@@ -3,6 +3,8 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using System;
+
     /// <summary>
     /// Describes a filter expression that is evaluated against a Message.
     /// </summary>
@@ -17,12 +19,14 @@ namespace Microsoft.Azure.ServiceBus
     /// <seealso cref="TrueFilter"/>
     /// <seealso cref="CorrelationFilter "/>
     /// <seealso cref="FalseFilter"/>
-    public abstract class Filter
+    public abstract class Filter : IEquatable<Filter>
     {
         internal Filter()
         {
             // This is intentionally left blank. This constructor exists
             // only to prevent external assemblies inheriting from it.
         }
+        
+        public abstract bool Equals(Filter other);
     }
 }

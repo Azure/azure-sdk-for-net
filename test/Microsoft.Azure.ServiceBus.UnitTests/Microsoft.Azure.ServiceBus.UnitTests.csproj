@@ -16,7 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.ServiceBus\Microsoft.Azure.ServiceBus.csproj" />
   </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\ExpectedMessagingExceptionTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageQueueTests.cs" />
@@ -35,7 +34,6 @@
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnSessionTopicSubscriptionTests.cs" />
     <compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SubscriptionClientDiagnosticsTests.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.2" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />

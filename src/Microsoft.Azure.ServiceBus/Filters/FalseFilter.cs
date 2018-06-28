@@ -8,8 +8,6 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public sealed class FalseFilter : SqlFilter
     {
-        internal static readonly FalseFilter Default = new FalseFilter();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FalseFilter" /> class.
         /// </summary>
@@ -25,6 +23,41 @@ namespace Microsoft.Azure.ServiceBus
         public override string ToString()
         {
             return "FalseFilter";
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is FalseFilter;
+        }
+
+        public override bool Equals(Filter other)
+        {
+            return other is FalseFilter;
+        }
+
+        public static bool operator ==(FalseFilter o1, FalseFilter o2)
+        {
+            if (ReferenceEquals(o1, o2))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            {
+                return false;
+            }
+
+            return o1.Equals(o2);
+        }
+
+        public static bool operator !=(FalseFilter o1, FalseFilter o2)
+        {
+            return !(o1 == o2);
         }
     }
 }

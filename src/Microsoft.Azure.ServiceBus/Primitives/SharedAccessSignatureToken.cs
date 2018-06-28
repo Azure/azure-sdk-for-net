@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// <summary>
     /// A WCF SecurityToken that wraps a Shared Access Signature
     /// </summary>
-    class SharedAccessSignatureToken : SecurityToken
+    internal class SharedAccessSignatureToken : SecurityToken
     {
         internal const string SharedAccessSignature = "SharedAccessSignature";
         internal const string SignedResource = "sr";

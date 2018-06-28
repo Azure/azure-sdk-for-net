@@ -115,7 +115,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         string NormalizeAppliesTo(string appliesTo)
         {
-            return ServiceBusUriHelper.NormalizeUri(appliesTo, "http", true, stripPath: this.tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
+            return ServiceBusUriHelper.NormalizeUri(appliesTo, "https", true, stripPath: this.tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
         }
 
         static class SharedAccessSignatureBuilder

@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using Primitives;
@@ -12,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public sealed class SqlRuleAction : RuleAction
     {
-        PropertyDictionary parameters;
+        internal PropertyDictionary parameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlRuleAction" /> class with the specified SQL expression.
@@ -58,6 +59,70 @@ namespace Microsoft.Azure.ServiceBus
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "SqlRuleAction: {0}", this.SqlExpression);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.SqlExpression?.GetHashCode() ?? base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as RuleAction;
+            return this.Equals(other);
+        }
+
+        public override bool Equals(RuleAction other)
+        {
+            if (other is SqlRuleAction sqlAction)
+            {
+                if (string.Equals(this.SqlExpression, sqlAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
+                    && (this.parameters != null && sqlAction.parameters != null
+                        || this.parameters == null && sqlAction.parameters == null))
+                {
+                    if (this.parameters != null)
+                    {
+                        if (this.parameters.Count != sqlAction.parameters.Count)
+                        {
+                            return false;
+                        }
+
+                        foreach (var param in this.parameters)
+                        {
+                            if (!sqlAction.parameters.TryGetValue(param.Key, out var otherParamValue) ||
+                                (param.Value == null ^ otherParamValue == null) ||
+                                (param.Value != null && !param.Value.Equals(otherParamValue)))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool operator ==(SqlRuleAction o1, SqlRuleAction o2)
+        {
+            if (ReferenceEquals(o1, o2))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            {
+                return false;
+            }
+
+            return o1.Equals(o2);
+        }
+
+        public static bool operator !=(SqlRuleAction o1, SqlRuleAction o2)
+        {
+            return !(o1 == o2);
         }
     }
 }

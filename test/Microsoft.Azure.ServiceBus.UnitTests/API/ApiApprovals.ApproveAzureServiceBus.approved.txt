@@ -36,11 +36,15 @@ namespace Microsoft.Azure.ServiceBus
         public string ReplyToSessionId { get; set; }
         public string SessionId { get; set; }
         public string To { get; set; }
+        public override bool Equals(object obj) { }
+        public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
+        public override int GetHashCode() { }
         public override string ToString() { }
     }
     public class static EntityNameHelper
     {
         public static string FormatDeadLetterPath(string entityPath) { }
+        public static string FormatRulePath(string topicPath, string subscriptionName, string ruleName) { }
         public static string FormatSubQueuePath(string entityPath, string subQueueName) { }
         public static string FormatSubscriptionPath(string topicPath, string subscriptionName) { }
         public static string FormatTransferDeadLetterPath(string entityPath) { }
@@ -72,9 +76,15 @@ namespace Microsoft.Azure.ServiceBus
     public sealed class FalseFilter : Microsoft.Azure.ServiceBus.SqlFilter
     {
         public FalseFilter() { }
+        public override bool Equals(object obj) { }
+        public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
+        public override int GetHashCode() { }
         public override string ToString() { }
     }
-    public abstract class Filter { }
+    public abstract class Filter : System.IEquatable<Microsoft.Azure.ServiceBus.Filter>
+    {
+        public abstract bool Equals(Microsoft.Azure.ServiceBus.Filter other);
+    }
     public interface IClientEntity
     {
         string ClientId { get; }
@@ -254,22 +264,31 @@ namespace Microsoft.Azure.ServiceBus
         protected RetryPolicy() { }
         public static Microsoft.Azure.ServiceBus.RetryPolicy Default { get; }
         public bool IsServerBusy { get; set; }
+        public static Microsoft.Azure.ServiceBus.RetryPolicy NoRetry { get; }
         public string ServerBusyExceptionMessage { get; set; }
         public virtual bool IsRetryableException(System.Exception exception) { }
         protected abstract bool OnShouldRetry(System.TimeSpan remainingTime, int currentRetryCount, out System.TimeSpan retryInterval);
         public System.Threading.Tasks.Task RunOperation(System.Func<System.Threading.Tasks.Task> operation, System.TimeSpan operationTimeout) { }
     }
-    public abstract class RuleAction { }
-    public sealed class RuleDescription
+    public abstract class RuleAction : System.IEquatable<Microsoft.Azure.ServiceBus.RuleAction>
+    {
+        public abstract bool Equals(Microsoft.Azure.ServiceBus.RuleAction other);
+    }
+    public sealed class RuleDescription : System.IEquatable<Microsoft.Azure.ServiceBus.RuleDescription>
     {
         public const string DefaultRuleName = "$Default";
         public RuleDescription() { }
         public RuleDescription(string name) { }
+        [System.ObsoleteAttribute("This constructor will be removed in next version, please use RuleDescription(stri" +
+            "ng, Filter) instead.")]
         public RuleDescription(Microsoft.Azure.ServiceBus.Filter filter) { }
         public RuleDescription(string name, Microsoft.Azure.ServiceBus.Filter filter) { }
         public Microsoft.Azure.ServiceBus.RuleAction Action { get; set; }
         public Microsoft.Azure.ServiceBus.Filter Filter { get; set; }
         public string Name { get; set; }
+        public override bool Equals(object obj) { }
+        public bool Equals(Microsoft.Azure.ServiceBus.RuleDescription otherRule) { }
+        public override int GetHashCode() { }
     }
     public sealed class ServerBusyException : Microsoft.Azure.ServiceBus.ServiceBusException
     {
@@ -371,6 +390,9 @@ namespace Microsoft.Azure.ServiceBus
         public SqlFilter(string sqlExpression) { }
         public System.Collections.Generic.IDictionary<string, object> Parameters { get; }
         public string SqlExpression { get; }
+        public override bool Equals(object obj) { }
+        public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
+        public override int GetHashCode() { }
         public override string ToString() { }
     }
     public sealed class SqlRuleAction : Microsoft.Azure.ServiceBus.RuleAction
@@ -378,6 +400,9 @@ namespace Microsoft.Azure.ServiceBus
         public SqlRuleAction(string sqlExpression) { }
         public System.Collections.Generic.IDictionary<string, object> Parameters { get; }
         public string SqlExpression { get; }
+        public override bool Equals(object obj) { }
+        public override bool Equals(Microsoft.Azure.ServiceBus.RuleAction other) { }
+        public override int GetHashCode() { }
         public override string ToString() { }
     }
     public class SubscriptionClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.ISubscriptionClient
@@ -438,6 +463,9 @@ namespace Microsoft.Azure.ServiceBus
     public sealed class TrueFilter : Microsoft.Azure.ServiceBus.SqlFilter
     {
         public TrueFilter() { }
+        public override bool Equals(object obj) { }
+        public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
+        public override int GetHashCode() { }
         public override string ToString() { }
     }
     public sealed class UnauthorizedException : Microsoft.Azure.ServiceBus.ServiceBusException
@@ -580,6 +608,205 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
     public class static MessageInteropExtensions
     {
         public static T GetBody<T>(this Microsoft.Azure.ServiceBus.Message message, System.Runtime.Serialization.XmlObjectSerializer serializer = null) { }
+    }
+}
+namespace Microsoft.Azure.ServiceBus.Management
+{
+    
+    public enum AccessRights
+    {
+        Manage = 0,
+        Send = 1,
+        Listen = 2,
+    }
+    public abstract class AuthorizationRule : System.IEquatable<Microsoft.Azure.ServiceBus.Management.AuthorizationRule>
+    {
+        public abstract string ClaimType { get; }
+        public System.DateTime CreatedTime { get; }
+        public abstract string KeyName { get; set; }
+        public System.DateTime ModifiedTime { get; }
+        public abstract System.Collections.Generic.List<Microsoft.Azure.ServiceBus.Management.AccessRights> Rights { get; set; }
+        public abstract bool Equals(Microsoft.Azure.ServiceBus.Management.AuthorizationRule comparand);
+    }
+    public class AuthorizationRules : System.Collections.Generic.List<Microsoft.Azure.ServiceBus.Management.AuthorizationRule>, System.IEquatable<Microsoft.Azure.ServiceBus.Management.AuthorizationRules>
+    {
+        public AuthorizationRules() { }
+        public override bool Equals(object obj) { }
+        public bool Equals(Microsoft.Azure.ServiceBus.Management.AuthorizationRules other) { }
+        public override int GetHashCode() { }
+    }
+    public enum EntityStatus
+    {
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Active = 0,
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Disabled = 1,
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SendDisabled = 3,
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ReceiveDisabled = 4,
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Unknown = 99,
+    }
+    public class ManagementClient
+    {
+        public ManagementClient(string connectionString) { }
+        public ManagementClient(string endpoint, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider) { }
+        public ManagementClient(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder, Microsoft.Azure.ServiceBus.Primitives.ITokenProvider tokenProvider = null) { }
+        public static System.Net.Http.HttpRequestMessage CloneRequest(System.Net.Http.HttpRequestMessage req) { }
+        public System.Threading.Tasks.Task CloseAsync() { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueDescription> CreateQueueAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueDescription> CreateQueueAsync(Microsoft.Azure.ServiceBus.Management.QueueDescription queueDescription, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.RuleDescription> CreateRuleAsync(string topicName, string subscriptionName, Microsoft.Azure.ServiceBus.RuleDescription ruleDescription, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription> CreateSubscriptionAsync(string topicPath, string subscriptionName, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription> CreateSubscriptionAsync(Microsoft.Azure.ServiceBus.Management.SubscriptionDescription subscriptionDescription, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription> CreateSubscriptionAsync(Microsoft.Azure.ServiceBus.Management.SubscriptionDescription subscriptionDescription, Microsoft.Azure.ServiceBus.RuleDescription defaultRule, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.TopicDescription> CreateTopicAsync(string topicPath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.TopicDescription> CreateTopicAsync(Microsoft.Azure.ServiceBus.Management.TopicDescription topicDescription, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task DeleteQueueAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task DeleteRuleAsync(string topicPath, string subscriptionName, string ruleName, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task DeleteSubscriptionAsync(string topicPath, string subscriptionName, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task DeleteTopicAsync(string topicPath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueDescription> GetQueueAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueRuntimeInfo> GetQueueRuntimeInfoAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Management.QueueDescription>> GetQueuesAsync(int count = 100, int skip = 0, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.RuleDescription> GetRuleAsync(string topicPath, string subscriptionName, string ruleName, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.RuleDescription>> GetRulesAsync(string topicPath, string subscriptionName, int count = 100, int skip = 0, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription> GetSubscriptionAsync(string topicPath, string subscriptionName, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.SubscriptionRuntimeInfo> GetSubscriptionRuntimeInfoAsync(string topicPath, string subscriptionName, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription>> GetSubscriptionsAsync(string topicPath, int count = 100, int skip = 0, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.TopicDescription> GetTopicAsync(string topicPath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.TopicRuntimeInfo> GetTopicRuntimeInfoAsync(string topicPath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Management.TopicDescription>> GetTopicsAsync(int count = 100, int skip = 0, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<bool> QueueExistsAsync(string queuePath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<bool> SubscriptionExistsAsync(string topicPath, string subscriptionName, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<bool> TopicExistsAsync(string topicPath, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.QueueDescription> UpdateQueueAsync(Microsoft.Azure.ServiceBus.Management.QueueDescription queueDescription, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.RuleDescription> UpdateRuleAsync(string topicPath, string subscriptionName, Microsoft.Azure.ServiceBus.RuleDescription ruleDescription, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription> UpdateSubscriptionAsync(Microsoft.Azure.ServiceBus.Management.SubscriptionDescription subscriptionDescription, System.Threading.CancellationToken cancellationToken = null) { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Management.TopicDescription> UpdateTopicAsync(Microsoft.Azure.ServiceBus.Management.TopicDescription topicDescription, System.Threading.CancellationToken cancellationToken = null) { }
+    }
+    public class MessageCountDetails
+    {
+        public MessageCountDetails() { }
+        public long ActiveMessageCount { get; }
+        public long DeadLetterMessageCount { get; }
+        public long ScheduledMessageCount { get; }
+        public long TransferDeadLetterMessageCount { get; }
+        public long TransferMessageCount { get; }
+    }
+    public class MessagingEntityAlreadyExistsException : Microsoft.Azure.ServiceBus.ServiceBusException
+    {
+        public MessagingEntityAlreadyExistsException(string message) { }
+        public MessagingEntityAlreadyExistsException(string message, System.Exception innerException) { }
+    }
+    public class QueueDescription : System.IEquatable<Microsoft.Azure.ServiceBus.Management.QueueDescription>
+    {
+        public QueueDescription(string path) { }
+        public Microsoft.Azure.ServiceBus.Management.AuthorizationRules AuthorizationRules { get; }
+        public System.TimeSpan AutoDeleteOnIdle { get; set; }
+        public System.TimeSpan DefaultMessageTimeToLive { get; set; }
+        public System.TimeSpan DuplicateDetectionHistoryTimeWindow { get; set; }
+        public bool EnableBatchedOperations { get; set; }
+        public bool EnableDeadLetteringOnMessageExpiration { get; set; }
+        public bool EnablePartitioning { get; set; }
+        public string ForwardDeadLetteredMessagesTo { get; set; }
+        public string ForwardTo { get; set; }
+        public System.TimeSpan LockDuration { get; set; }
+        public int MaxDeliveryCount { get; set; }
+        public long MaxSizeInMB { get; set; }
+        public string Path { get; set; }
+        public bool RequiresDuplicateDetection { get; set; }
+        public bool RequiresSession { get; set; }
+        public Microsoft.Azure.ServiceBus.Management.EntityStatus Status { get; set; }
+        public string UserMetadata { get; set; }
+        public override bool Equals(object obj) { }
+        public bool Equals(Microsoft.Azure.ServiceBus.Management.QueueDescription other) { }
+        public override int GetHashCode() { }
+    }
+    public class QueueRuntimeInfo
+    {
+        public System.DateTime AccessedAt { get; }
+        public System.DateTime CreatedAt { get; }
+        public long MessageCount { get; }
+        public Microsoft.Azure.ServiceBus.Management.MessageCountDetails MessageCountDetails { get; }
+        public string Path { get; }
+        public long SizeInBytes { get; }
+        public System.DateTime UpdatedAt { get; }
+    }
+    public class SharedAccessAuthorizationRule : Microsoft.Azure.ServiceBus.Management.AuthorizationRule
+    {
+        public SharedAccessAuthorizationRule(string keyName, System.Collections.Generic.IEnumerable<Microsoft.Azure.ServiceBus.Management.AccessRights> rights) { }
+        public SharedAccessAuthorizationRule(string keyName, string primaryKey, System.Collections.Generic.IEnumerable<Microsoft.Azure.ServiceBus.Management.AccessRights> rights) { }
+        public SharedAccessAuthorizationRule(string keyName, string primaryKey, string secondaryKey, System.Collections.Generic.IEnumerable<Microsoft.Azure.ServiceBus.Management.AccessRights> rights) { }
+        public override string ClaimType { get; }
+        public virtual string KeyName { get; set; }
+        public string PrimaryKey { get; set; }
+        public override System.Collections.Generic.List<Microsoft.Azure.ServiceBus.Management.AccessRights> Rights { get; set; }
+        public string SecondaryKey { get; set; }
+        public override bool Equals(object obj) { }
+        public override bool Equals(Microsoft.Azure.ServiceBus.Management.AuthorizationRule other) { }
+        public override int GetHashCode() { }
+    }
+    public class SubscriptionDescription : System.IEquatable<Microsoft.Azure.ServiceBus.Management.SubscriptionDescription>
+    {
+        public SubscriptionDescription(string topicPath, string subscriptionName) { }
+        public System.TimeSpan AutoDeleteOnIdle { get; set; }
+        public System.TimeSpan DefaultMessageTimeToLive { get; set; }
+        public bool EnableBatchedOperations { get; set; }
+        public bool EnableDeadLetteringOnFilterEvaluationExceptions { get; set; }
+        public bool EnableDeadLetteringOnMessageExpiration { get; set; }
+        public string ForwardDeadLetteredMessagesTo { get; set; }
+        public string ForwardTo { get; set; }
+        public System.TimeSpan LockDuration { get; set; }
+        public int MaxDeliveryCount { get; set; }
+        public bool RequiresSession { get; set; }
+        public Microsoft.Azure.ServiceBus.Management.EntityStatus Status { get; set; }
+        public string SubscriptionName { get; set; }
+        public string TopicPath { get; set; }
+        public string UserMetadata { get; set; }
+        public override bool Equals(object obj) { }
+        public bool Equals(Microsoft.Azure.ServiceBus.Management.SubscriptionDescription otherDescription) { }
+        public override int GetHashCode() { }
+    }
+    public class SubscriptionRuntimeInfo
+    {
+        public System.DateTime AccessedAt { get; }
+        public System.DateTime CreatedAt { get; }
+        public long MessageCount { get; }
+        public Microsoft.Azure.ServiceBus.Management.MessageCountDetails MessageCountDetails { get; }
+        public string SubscriptionName { get; }
+        public string TopicPath { get; }
+        public System.DateTime UpdatedAt { get; }
+    }
+    public class TopicDescription : System.IEquatable<Microsoft.Azure.ServiceBus.Management.TopicDescription>
+    {
+        public TopicDescription(string path) { }
+        public Microsoft.Azure.ServiceBus.Management.AuthorizationRules AuthorizationRules { get; }
+        public System.TimeSpan AutoDeleteOnIdle { get; set; }
+        public System.TimeSpan DefaultMessageTimeToLive { get; set; }
+        public System.TimeSpan DuplicateDetectionHistoryTimeWindow { get; set; }
+        public bool EnableBatchedOperations { get; set; }
+        public bool EnablePartitioning { get; set; }
+        public long MaxSizeInMB { get; set; }
+        public string Path { get; set; }
+        public bool RequiresDuplicateDetection { get; set; }
+        public Microsoft.Azure.ServiceBus.Management.EntityStatus Status { get; set; }
+        public bool SupportOrdering { get; set; }
+        public string UserMetadata { get; set; }
+        public override bool Equals(object obj) { }
+        public bool Equals(Microsoft.Azure.ServiceBus.Management.TopicDescription otherDescription) { }
+        public override int GetHashCode() { }
+    }
+    public class TopicRuntimeInfo
+    {
+        public System.DateTime AccessedAt { get; }
+        public System.DateTime CreatedAt { get; }
+        public Microsoft.Azure.ServiceBus.Management.MessageCountDetails MessageCountDetails { get; }
+        public string Path { get; }
+        public long SizeInBytes { get; }
+        public int SubscriptionCount { get; }
+        public System.DateTime UpdatedAt { get; }
     }
 }
 namespace Microsoft.Azure.ServiceBus.Primitives

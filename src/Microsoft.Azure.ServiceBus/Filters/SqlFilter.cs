@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using Primitives;
@@ -19,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus
     /// </remarks>
     public class SqlFilter : Filter
     {
-        PropertyDictionary parameters;
+        internal PropertyDictionary parameters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlFilter" /> class using the specified SQL expression.
@@ -54,6 +55,7 @@ namespace Microsoft.Azure.ServiceBus
 
         /// <summary>
         /// Sets the value of a filter expression.
+        /// Allowed types: string, int, long, bool, double
         /// </summary>
         /// <value>The value of a filter expression.</value>
         public IDictionary<string, object> Parameters => this.parameters ?? (this.parameters = new PropertyDictionary());
@@ -65,6 +67,70 @@ namespace Microsoft.Azure.ServiceBus
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "SqlFilter: {0}", this.SqlExpression);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.SqlExpression?.GetHashCode() ?? base.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Filter;
+            return this.Equals(other);
+        }
+
+        public override bool Equals(Filter other)
+        {
+            if (other is SqlFilter sqlFilter)
+            {
+                if (string.Equals(this.SqlExpression, sqlFilter.SqlExpression, StringComparison.OrdinalIgnoreCase)
+                    && (this.parameters != null && sqlFilter.parameters != null
+                        || this.parameters == null && sqlFilter.parameters == null))
+                {
+                    if (this.parameters != null)
+                    {
+                        if (this.parameters.Count != sqlFilter.parameters.Count)
+                        {
+                            return false;
+                        }
+
+                        foreach (var param in this.parameters)
+                        {
+                            if (!sqlFilter.parameters.TryGetValue(param.Key, out var otherParamValue) ||
+                                (param.Value == null ^ otherParamValue == null) ||
+                                (param.Value != null && !param.Value.Equals(otherParamValue)))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool operator ==(SqlFilter o1, SqlFilter o2)
+        {
+            if (ReferenceEquals(o1, o2))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(o1, null) || ReferenceEquals(o2, null))
+            {
+                return false;
+            }
+
+            return o1.Equals(o2);
+        }
+
+        public static bool operator !=(SqlFilter o1, SqlFilter o2)
+        {
+            return !(o1 == o2);
         }
     }
 }
