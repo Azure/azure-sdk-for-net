@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.WebKey.Tests</PackageId>
     <Description>Microsoft.Azure.KeyVault.WebKey.Tests Class Library</Description>
-    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.WebKey.Tests</AssemblyName>    
   </PropertyGroup>
   <PropertyGroup>

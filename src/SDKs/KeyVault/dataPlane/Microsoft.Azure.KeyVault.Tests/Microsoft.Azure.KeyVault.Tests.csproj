@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.Tests</PackageId>
     <Description>Microsoft.Azure.KeyVault.Tests Class Library</Description>
-    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.Tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup>
