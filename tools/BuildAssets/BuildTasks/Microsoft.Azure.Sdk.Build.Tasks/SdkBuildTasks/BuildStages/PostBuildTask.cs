@@ -52,11 +52,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
 
         public PostBuildTask()
         {
-            DebugTraceEnabled = EnableDebugTrace;
+            
         }
         
         public override bool Execute()
         {
+            DebugTraceEnabled = EnableDebugTrace;
             TaskLogger.LogDebugInfo("Executing PostBuildTask");
             if (!string.IsNullOrEmpty(AssemblyFullPath))
             {
@@ -64,6 +65,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
             }
             else
             {
+                TaskLogger.LogDebugInfo("Retreving API Map from project");
                 GetApiMapFromProject();
             }
 
@@ -112,7 +114,13 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         {
             SdkProjectMetaData metaProject = null;
             List<SdkProjectMetaData> filteredProjects = TaskData.FilterCategorizedProjects(SdkProjects);
-            if(filteredProjects.Count <= 0)
+            TaskLogger.LogDebugInfo<SdkProjectMetaData>(filteredProjects, (proj) =>
+            {
+                string projInfo = string.Format("Framework:'{0}', ProjPath:'{1}'", proj.FxMonikerString, proj.FullProjectPath);
+                return projInfo;
+            });
+
+            if (filteredProjects.Count <= 0)
             {
                 foreach(ITaskItem item in sdkProjects)
                 {
@@ -173,6 +181,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                         foreach (PropertyInfo pInfo in sdkInfoProp)
                         {
                             IEnumerable<Tuple<string, string, string>> apiMap = (IEnumerable<Tuple<string, string, string>>)pInfo.GetValue(null, null);
+                            TaskLogger.LogDebugInfo(apiMap);
 
                             if (apiMap.Any())
                             {
@@ -243,6 +252,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         {
             string azApiPropertyName = BuildStageConstant.API_TAG_PROPERTYNAME;
             string propsFile = GetApiTagsPropsPath(sdkProject);
+            TaskLogger.LogDebugInfo("Retreived meta data file:'{0}'", propsFile);
             Project propsProject;
 
             if (!string.IsNullOrEmpty(propsFile))
@@ -257,6 +267,9 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 }
 
                 string existingApiTags = propsProject.GetPropertyValue(azApiPropertyName);
+                TaskLogger.LogDebugInfo("Existing tag:'{0}'", string.IsNullOrEmpty(existingApiTags) ? string.Empty : existingApiTags);
+                TaskLogger.LogDebugInfo("New tag:'{0}'", string.IsNullOrEmpty(apiTag) ? string.Empty : apiTag);
+
                 if (!existingApiTags.Trim().Equals(apiTag.Trim(), StringComparison.OrdinalIgnoreCase))
                 {
                     propsProject.SetProperty(azApiPropertyName, apiTag);
@@ -270,6 +283,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
         {
             string apiTagsPropsPath = string.Empty;
             List<string> importsList = sdkProject.ProjectImports;
+            TaskLogger.LogDebugInfo<string>(importsList, (import) => import.ToString());
 
             foreach(string apiTagsFileName in importsList)
             {
@@ -293,6 +307,7 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.BuildStages
                 }
             }
 
+            TaskLogger.LogDebugInfo("MetaData file:'{0}'", apiTagsPropsPath);
             return apiTagsPropsPath;
         }
 

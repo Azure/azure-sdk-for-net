@@ -21,6 +21,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         private List<string> _allProjs;
         private List<string> _testProjs;
         private List<string> _ignoreProjs;
+        private List<string> _includeProjs;
 
         #endregion
 
@@ -54,6 +55,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             }
 
         }
+
+        public List<string> IncludePathTokenList { get; set; }
 
         public List<string> TestProjectTokenList
         {
@@ -129,6 +132,31 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             }
         }
 
+        public IReadOnlyList<string> IncludeProjectList
+        {
+            get
+            {
+                if (_includeProjs == null)
+                {
+                    _includeProjs = new List<string>();
+                }
+
+                if (_includeProjs?.Count <= 0)
+                {
+                    foreach (string iP in IncludePathTokenList)
+                    {
+                        var includePaths = from proj in AllProjectList where proj.Contains(iP) select proj;
+                        if (includePaths.Any<string>())
+                        {
+                            _includeProjs.AddRange(includePaths);
+                        }
+                    }
+                }
+
+                return _includeProjs.AsReadOnly();
+            }
+        }
+
         /// <summary>
         /// This will be path especially when we run a CI run and search all possible projects
         /// </summary>
@@ -169,6 +197,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
                     ProjectExtensionList.Add(ext);
             }
         }
+
+        public ProjectSearchUtility(string rootDirPath, List<string> ignorePathTokens, List<string> includePathTokens) : this(rootDirPath, ignorePathTokens, DEFAULT_PROJECT_EXTENSION)
+        {
+            IncludePathTokenList = includePathTokens;
+        }
         #endregion
         
         /// <summary>
@@ -178,14 +211,12 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
         /// <returns></returns>
         public List<string> GetFilteredProjects()
         {
-            IEnumerable<string> filteredProjects = AllProjectList.Except<string>(IgnoredProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-            return filteredProjects?.ToList<string>();
+            return FilterList(AllProjectList, true, true);
         }
 
         public List<string> GetFilteredTestProjects()
         {
-            IEnumerable<string> filteredTestProjects = AllTestProjectList.Except<string>(IgnoredProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-            return filteredTestProjects?.ToList<string>();
+            return FilterList(AllTestProjectList, true, true);
         }
 
         public List<string> GetAllSDKProjects()
@@ -201,13 +232,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
             if (Directory.Exists(searchProjInDirPath))
             {
                 ProjectRootDir = searchProjInDirPath;
-                scopedProjects = SearchProjects(searchProjInDirPath);
+                List<string> searchedScopedProjects = SearchProjects(searchProjInDirPath);
                 List<string> testProjs = SearchTestProjects(searchProjInDirPath);
 
-                var filteredProjs = scopedProjects.Except<string>(testProjs, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-                filteredProjs = filteredProjs.Except<string>(IgnoredProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-
-                scopedProjects = filteredProjs.ToList<string>();
+                var filteredProjs = searchedScopedProjects.Except<string>(testProjs, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+                scopedProjects = FilterList(filteredProjs, true, true);
             }
 
             return scopedProjects;
@@ -215,20 +244,58 @@ namespace Microsoft.WindowsAzure.Build.Tasks.Utilities
 
         public List<string> GetScopedTestProjects(string scopePath)
         {
-            List<string> testScopedProjects = new List<string>();
+            List<string> returnTestScopedProjects = new List<string>();
             
             string searchDir = AdjustPathForScopedProjects(RootDirForSearch, scopePath);
             if (Directory.Exists(searchDir))
             {
-                testScopedProjects = SearchTestProjects(searchDir);
-                var filteredProjs = testScopedProjects.Except<string>(IgnoredProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
-
-                testScopedProjects = filteredProjs.ToList<string>();
+                List<string> testScopedProjects = SearchTestProjects(searchDir);
+                returnTestScopedProjects = FilterList(testScopedProjects, true, true);
             }
 
-            return testScopedProjects;
+            return returnTestScopedProjects;
         }
-        
+
+        private List<string> FilterList(IEnumerable<string> listToBeFiltered, bool filterOnIgnoreList = true, bool filterOnIncludeList = true)
+        {
+            List<string> returnList = new List<string>();
+            IEnumerable<string> filteredList = listToBeFiltered;
+
+            if (listToBeFiltered != null && listToBeFiltered.Any<string>())
+            {
+                // Filter on IgnoreProject list
+                if (filterOnIgnoreList && IgnoredProjectList.Any<string>())
+                {
+                    filteredList = listToBeFiltered.Except<string>(IgnoredProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+                }
+
+                // Filter on IncludeProject List
+                if (filteredList != null && filteredList.Any<string>())
+                {
+                    if (filterOnIncludeList && IncludeProjectList.Any<string>())
+                    {
+                        filteredList = filteredList.Intersect<string>(IncludeProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+                    }
+                }
+                else // this means IgnoreProjectList was either empty or the master list was empty due to filter on ignore list
+                     // e.g. Scope was SDKs\Compute and IgnoreList had Compute
+                     // in any case, we will now apply IncludeList on the master list
+                {
+                    if (filterOnIncludeList && IncludeProjectList.Any<string>())
+                    {
+                        filteredList = listToBeFiltered.Intersect<string>(IncludeProjectList, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+                    }
+                }
+            }
+            
+            if(filteredList != null && filteredList.Any<string>())
+            {
+                returnList = filteredList.ToList<string>();
+            }
+
+            return returnList;
+        }
+
         #region Search
         private List<string> SearchProjects(string searchDirPath)
         {

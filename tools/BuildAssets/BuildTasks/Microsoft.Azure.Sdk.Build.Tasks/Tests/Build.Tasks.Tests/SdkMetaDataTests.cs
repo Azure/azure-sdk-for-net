@@ -63,7 +63,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects cproj = new SDKCategorizeProjects();
             cproj.SourceRootDirPath = sourceRootDir;
             cproj.BuildScope = scope;
-            cproj.IgnoreDirNameForSearchingProjects = Path.Combine(ignoreDir);
+            cproj.IgnorePathTokens = Path.Combine(ignoreDir);
             cproj.Execute();
             return cproj;
         }
