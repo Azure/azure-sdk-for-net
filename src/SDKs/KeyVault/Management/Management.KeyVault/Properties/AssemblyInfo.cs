@@ -10,7 +10,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides key vault management capabilities for Microsoft Azure.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.3.0.0")]
+[assembly: AssemblyFileVersion("2.4.1.1")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Azure .NET SDK")]

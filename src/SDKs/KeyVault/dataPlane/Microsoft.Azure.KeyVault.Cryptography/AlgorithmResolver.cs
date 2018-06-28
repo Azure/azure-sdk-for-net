@@ -33,9 +33,14 @@ namespace Microsoft.Azure.KeyVault.Cryptography
 
             Default.AddAlgorithm( Rs256.AlgorithmName, new Rs256() );
 
-#if NET45
+#if FullNetFx
             Default.AddAlgorithm( RsNull.AlgorithmName, new RsNull() );
 #endif
+
+            Default.AddAlgorithm( Es256.AlgorithmName, new Es256() );
+            Default.AddAlgorithm( Es384.AlgorithmName, new Es384() );
+            Default.AddAlgorithm( Es512.AlgorithmName, new Es512() );
+            Default.AddAlgorithm( ES256K.AlgorithmName, new ES256K() );
         }
 
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
@@ -62,10 +67,10 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         public void AddAlgorithm( string algorithmName, Algorithm provider )
         {
             if ( string.IsNullOrWhiteSpace( algorithmName ) )
-                throw new ArgumentNullException( "algorithmName" );
+                throw new ArgumentNullException( nameof( algorithmName ) );
 
             if ( provider == null )
-                throw new ArgumentNullException( "provider" );
+                throw new ArgumentNullException( nameof( provider ) );
 
             _algorithms[algorithmName] = provider;
         }

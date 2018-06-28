@@ -38,7 +38,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
             // Assert
             Assert.True( encrypted.Item1.SequenceEqual( EK ) );
-            Assert.True( encrypted.Item2.Equals( "A128KW" ) );
+            Assert.Equal("A128KW", encrypted.Item2);
 
             var decrypted = await key.UnwrapKeyAsync( EK, AesKw128.AlgorithmName ).ConfigureAwait( false );
 
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
             // Assert
             Assert.True( encrypted.Item1.SequenceEqual( EK ) );
-            Assert.True( encrypted.Item2.Equals( "A192KW" ) );
+            Assert.Equal("A192KW", encrypted.Item2);
 
             var decrypted = await key.UnwrapKeyAsync( EK, AesKw192.AlgorithmName ).ConfigureAwait( false );
 
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
             // Assert
             Assert.True( encrypted.Item1.SequenceEqual( EK ) );
-            Assert.True( encrypted.Item2.Equals( "A256KW" ) );
+            Assert.Equal("A256KW", encrypted.Item2);
 
             var decrypted = await key.UnwrapKeyAsync( EK, AesKw256.AlgorithmName ).ConfigureAwait( false );
 
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
             // Assert
             Assert.True( encrypted.Item1.SequenceEqual( EK ) );
-            Assert.True( encrypted.Item2.Equals( "A128KW" ) );
+            Assert.Equal("A128KW", encrypted.Item2);
 
             var decrypted = await key.UnwrapKeyAsync( EK, AesKw128.AlgorithmName ).ConfigureAwait( false );
 
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
             // Assert
             Assert.True( encrypted.Item1.SequenceEqual( EK ) );
-            Assert.True( encrypted.Item2.Equals( "A192KW" ) );
+            Assert.Equal("A192KW", encrypted.Item2);
 
             var decrypted = await key.UnwrapKeyAsync( EK, AesKw192.AlgorithmName ).ConfigureAwait( false );
 
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 
             // Assert
             Assert.True( encrypted.Item1.SequenceEqual( EK ) );
-            Assert.True( encrypted.Item2.Equals( "A256KW" ) );
+            Assert.Equal("A256KW", encrypted.Item2);
 
             var decrypted = await key.UnwrapKeyAsync( EK, AesKw256.AlgorithmName ).ConfigureAwait( false );
 
