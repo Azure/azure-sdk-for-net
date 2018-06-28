@@ -23,6 +23,7 @@ namespace Microsoft.Azure.Search
                 new Tuple<string, string, string>("SearchServiceClient", "GetServiceStatistics", "2017-11-11-Preview"),
                 new Tuple<string, string, string>("SearchServiceClient", "Indexers", "2017-11-11-Preview"),
                 new Tuple<string, string, string>("SearchServiceClient", "Indexes", "2017-11-11-Preview"),
+                new Tuple<string, string, string>("SearchServiceClient", "Skillsets", "2017-11-11-Preview"),
                 new Tuple<string, string, string>("SearchServiceClient", "SynonymMaps", "2017-11-11-Preview"),
               }.AsEnumerable();
           }

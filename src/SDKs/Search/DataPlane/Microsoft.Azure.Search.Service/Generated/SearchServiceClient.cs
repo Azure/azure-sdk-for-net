@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Search
         public virtual IIndexersOperations Indexers { get; private set; }
 
         /// <summary>
+        /// Gets the ISkillsetsOperations.
+        /// </summary>
+        public virtual ISkillsetsOperations Skillsets { get; private set; }
+
+        /// <summary>
         /// Gets the ISynonymMapsOperations.
         /// </summary>
         public virtual ISynonymMapsOperations SynonymMaps { get; private set; }
@@ -191,6 +196,7 @@ namespace Microsoft.Azure.Search
         {
             DataSources = new DataSourcesOperations(this);
             Indexers = new IndexersOperations(this);
+            Skillsets = new SkillsetsOperations(this);
             SynonymMaps = new SynonymMapsOperations(this);
             Indexes = new IndexesOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}";
@@ -238,6 +244,8 @@ namespace Microsoft.Azure.Search
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataDeletionDetectionPolicy>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScoringFunction>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScoringFunction>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Skill>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Skill>("@odata.type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
