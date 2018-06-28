@@ -72,7 +72,7 @@ namespace Subscriptions.Tests
 
                 var newPlan = new PlanAcquisition()
                 {
-                    AcquisitionId = "df462f5d-5345-4ff6-9af9-2ff71984025e",
+                    AcquisitionId = "df462f5d-5345-4ff6-9af9-2ff71984025f",
                     PlanId = plan.Id
                 };
 
