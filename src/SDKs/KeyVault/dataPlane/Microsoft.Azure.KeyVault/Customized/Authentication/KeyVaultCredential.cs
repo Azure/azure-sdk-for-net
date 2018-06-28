@@ -17,7 +17,9 @@ namespace Microsoft.Azure.KeyVault
     /// The Key Vault credential class that implements <see cref="ServiceClientCredentials"/>
     /// </summary>
     public class KeyVaultCredential : ServiceClientCredentials
-    {        
+    {
+        private KeyVaultClient _client = null;
+
         /// <summary>
         /// The authentication callback
         /// </summary>
@@ -35,6 +37,15 @@ namespace Microsoft.Azure.KeyVault
         public KeyVaultCredential(KeyVaultClient.AuthenticationCallback authenticationCallback)
         {
             OnAuthenticate = authenticationCallback;
+        }
+        
+        /// <summary>
+        /// Clones the current KeyVaultCredential object.
+        /// </summary>
+        /// <returns>A new KeyVaultCredential instance using the same authentication callback as the current instance.</returns>
+        internal KeyVaultCredential Clone()
+        {
+            return new KeyVaultCredential(OnAuthenticate);
         }
 
         private async Task<string> PreAuthenticate(Uri url)
@@ -78,6 +89,20 @@ namespace Microsoft.Azure.KeyVault
             return null;
         }
 
+        public override void InitializeServiceClient<T>(ServiceClient<T> client)
+        {
+            base.InitializeServiceClient(client);
+
+            var kvClient = client as KeyVaultClient;
+
+            if (kvClient == null)
+            {
+                throw new ArgumentException("KeyVaultCredential credentials are only for use with the KeyVaultClient service client.");
+            }
+
+            _client = kvClient;
+        }
+
         public override async Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (request == null)
@@ -91,7 +116,11 @@ namespace Microsoft.Azure.KeyVault
             else
             {
                 HttpResponseMessage response;
-                HttpClient client = new HttpClient();
+
+                // if this credential is tied to a specific KeyVaultClient reuse it's HttpClient to send the 
+                // initial unauthed request to get the challange, otherwise create a new HttpClient
+                HttpClient client = _client?.HttpClient ?? new HttpClient();
+
                 using (var r = new HttpRequestMessage(request.Method, request.RequestUri))
                 {                    
                     response = await client.SendAsync(r).ConfigureAwait(false);
