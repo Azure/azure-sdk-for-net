@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataFactory
     public static partial class ActivityRunsOperationsExtensions
     {
             /// <summary>
-            /// List activity runs based on input filter conditions.
+            /// Query activity runs based on input filter conditions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,28 +36,16 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='runId'>
             /// The pipeline run identifier.
             /// </param>
-            /// <param name='startTime'>
-            /// The start time of activity runs in ISO8601 format.
+            /// <param name='filterParameters'>
+            /// Parameters to filter the activity runs.
             /// </param>
-            /// <param name='endTime'>
-            /// The end time of activity runs in ISO8601 format.
-            /// </param>
-            /// <param name='status'>
-            /// The status of the pipeline run.
-            /// </param>
-            /// <param name='activityName'>
-            /// The name of the activity.
-            /// </param>
-            /// <param name='linkedServiceName'>
-            /// The linked service name.
-            /// </param>
-            public static IPage<ActivityRun> ListByPipelineRun(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, System.DateTime startTime, System.DateTime endTime, string status = default(string), string activityName = default(string), string linkedServiceName = default(string))
+            public static ActivityRunsQueryResponse QueryByPipelineRun(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, RunFilterParameters filterParameters)
             {
-                return operations.ListByPipelineRunAsync(resourceGroupName, factoryName, runId, startTime, endTime, status, activityName, linkedServiceName).GetAwaiter().GetResult();
+                return operations.QueryByPipelineRunAsync(resourceGroupName, factoryName, runId, filterParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List activity runs based on input filter conditions.
+            /// Query activity runs based on input filter conditions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -71,61 +59,15 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='runId'>
             /// The pipeline run identifier.
             /// </param>
-            /// <param name='startTime'>
-            /// The start time of activity runs in ISO8601 format.
-            /// </param>
-            /// <param name='endTime'>
-            /// The end time of activity runs in ISO8601 format.
-            /// </param>
-            /// <param name='status'>
-            /// The status of the pipeline run.
-            /// </param>
-            /// <param name='activityName'>
-            /// The name of the activity.
-            /// </param>
-            /// <param name='linkedServiceName'>
-            /// The linked service name.
+            /// <param name='filterParameters'>
+            /// Parameters to filter the activity runs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ActivityRun>> ListByPipelineRunAsync(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, System.DateTime startTime, System.DateTime endTime, string status = default(string), string activityName = default(string), string linkedServiceName = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActivityRunsQueryResponse> QueryByPipelineRunAsync(this IActivityRunsOperations operations, string resourceGroupName, string factoryName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByPipelineRunWithHttpMessagesAsync(resourceGroupName, factoryName, runId, startTime, endTime, status, activityName, linkedServiceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// List activity runs based on input filter conditions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ActivityRun> ListByPipelineRunNext(this IActivityRunsOperations operations, string nextPageLink)
-            {
-                return operations.ListByPipelineRunNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List activity runs based on input filter conditions.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ActivityRun>> ListByPipelineRunNextAsync(this IActivityRunsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByPipelineRunNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.QueryByPipelineRunWithHttpMessagesAsync(resourceGroupName, factoryName, runId, filterParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "triggerName": "exampleTrigger",
@@ -12,12 +12,11 @@
           "recurrence": {
             "frequency": "Minute",
             "interval": 4,
-            "startTime": "2017-09-13T17:57:21.7240518Z",
-            "endTime": "2017-09-13T18:13:21.7240518Z",
+            "startTime": "2018-06-16T00:39:14.905167Z",
+            "endTime": "2018-06-16T00:55:14.905167Z",
             "timeZone": "UTC"
           }
         },
-        "description": "Example description",
         "pipelines": [
           {
             "pipelineReference": {
@@ -30,35 +29,36 @@
               ]
             }
           }
-        ]
+        ],
+        "description": "Example description"
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:58:21 GMT",
-        "x-ms-request-id": "aa1aee23-db99-4aee-83e3-36b46ec02829",
+        "Date": "Sat, 16 Jun 2018 00:40:15 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-correlation-request-id": "f0eff525-3ed5-4488-aa0e-3284c2b400f6"
+        "x-ms-ratelimit-remaining-subscription-writes": "1185",
+        "x-ms-request-id": "d5ccf096-0618-4b26-9829-db77e4c391c7",
+        "x-ms-correlation-request-id": "d5ccf096-0618-4b26-9829-db77e4c391c7"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
         "name": "exampleTrigger",
+        "type": "Microsoft.DataFactory/factories/triggers",
         "properties": {
           "type": "ScheduleTrigger",
           "typeProperties": {
             "recurrence": {
               "frequency": "Minute",
               "interval": 4,
-              "startTime": "2017-09-13T17:57:21.7240518Z",
-              "endTime": "2017-09-13T18:13:21.7240518Z",
+              "startTime": "2018-06-16T00:39:14.905167Z",
+              "endTime": "2018-06-16T00:55:14.905167Z",
               "timeZone": "UTC"
             }
           },
-          "description": "Example description",
           "pipelines": [
             {
               "pipelineReference": {
@@ -72,9 +72,10 @@
               }
             }
           ],
+          "description": "Example description",
           "runtimeState": "Stopped"
         },
-        "etag": "28032ba7-0000-0000-0000-59b971bd0000"
+        "etag": "0a008dd4-0000-0000-0000-5b245c6f0000"
       }
     }
   }

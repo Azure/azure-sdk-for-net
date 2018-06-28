@@ -37,12 +37,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
-        public Activity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>))
+        /// <param name="userProperties">Activity user properties.</param>
+        public Activity(string name, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>))
         {
             AdditionalProperties = additionalProperties;
             Name = name;
             Description = description;
             DependsOn = dependsOn;
+            UserProperties = userProperties;
             CustomInit();
         }
 
@@ -75,6 +77,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "dependsOn")]
         public IList<ActivityDependency> DependsOn { get; set; }
+
+        /// <summary>
+        /// Gets or sets activity user properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "userProperties")]
+        public IDictionary<string, string> UserProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

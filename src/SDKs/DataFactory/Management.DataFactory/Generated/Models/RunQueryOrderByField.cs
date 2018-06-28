@@ -12,13 +12,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for PipelineRunQueryFilterOperand.
+    /// Defines values for RunQueryOrderByField.
     /// </summary>
-    public static class PipelineRunQueryFilterOperand
+    public static class RunQueryOrderByField
     {
-        public const string PipelineName = "PipelineName";
-        public const string Status = "Status";
         public const string RunStart = "RunStart";
         public const string RunEnd = "RunEnd";
+        public const string PipelineName = "PipelineName";
+        public const string Status = "Status";
+        public const string ActivityName = "ActivityName";
+        public const string ActivityRunStart = "ActivityRunStart";
+        public const string ActivityRunEnd = "ActivityRunEnd";
+        public const string TriggerName = "TriggerName";
+        public const string TriggerRunTimestamp = "TriggerRunTimestamp";
     }
 }

@@ -32,10 +32,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Name of the entity that started the pipeline
         /// run.</param>
         /// <param name="id">The ID of the entity that started the run.</param>
-        public PipelineRunInvokedBy(string name = default(string), string id = default(string))
+        /// <param name="invokedByType">The type of the entity that started the
+        /// run.</param>
+        public PipelineRunInvokedBy(string name = default(string), string id = default(string), string invokedByType = default(string))
         {
             Name = name;
             Id = id;
+            InvokedByType = invokedByType;
             CustomInit();
         }
 
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the entity that started the run.
+        /// </summary>
+        [JsonProperty(PropertyName = "invokedByType")]
+        public string InvokedByType { get; private set; }
 
     }
 }

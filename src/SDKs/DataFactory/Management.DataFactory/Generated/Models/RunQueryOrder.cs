@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for PipelineRunQueryOrder.
+    /// Defines values for RunQueryOrder.
     /// </summary>
-    public static class PipelineRunQueryOrder
+    public static class RunQueryOrder
     {
         public const string ASC = "ASC";
         public const string DESC = "DESC";

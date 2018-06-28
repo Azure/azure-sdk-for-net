@@ -17,29 +17,34 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Query filter option for listing pipeline runs.
+    /// Query filter option for listing runs.
     /// </summary>
-    public partial class PipelineRunQueryFilter
+    public partial class RunQueryFilter
     {
         /// <summary>
-        /// Initializes a new instance of the PipelineRunQueryFilter class.
+        /// Initializes a new instance of the RunQueryFilter class.
         /// </summary>
-        public PipelineRunQueryFilter()
+        public RunQueryFilter()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PipelineRunQueryFilter class.
+        /// Initializes a new instance of the RunQueryFilter class.
         /// </summary>
-        /// <param name="operand">Parameter name to be used for filter.
+        /// <param name="operand">Parameter name to be used for filter. The
+        /// allowed operands to query pipeline runs are PipelineName, RunStart,
+        /// RunEnd and Status; to query activity runs are ActivityName,
+        /// ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to
+        /// query trigger runs are TriggerName, TriggerRunTimestamp and Status.
         /// Possible values include: 'PipelineName', 'Status', 'RunStart',
-        /// 'RunEnd'</param>
+        /// 'RunEnd', 'ActivityName', 'ActivityRunStart', 'ActivityRunEnd',
+        /// 'ActivityType', 'TriggerName', 'TriggerRunTimestamp'</param>
         /// <param name="operatorProperty">Operator to be used for filter.
         /// Possible values include: 'Equals', 'NotEquals', 'In',
         /// 'NotIn'</param>
         /// <param name="values">List of filter values.</param>
-        public PipelineRunQueryFilter(string operand, string operatorProperty, IList<string> values)
+        public RunQueryFilter(string operand, string operatorProperty, IList<string> values)
         {
             Operand = operand;
             OperatorProperty = operatorProperty;
@@ -53,8 +58,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets parameter name to be used for filter. Possible values
-        /// include: 'PipelineName', 'Status', 'RunStart', 'RunEnd'
+        /// Gets or sets parameter name to be used for filter. The allowed
+        /// operands to query pipeline runs are PipelineName, RunStart, RunEnd
+        /// and Status; to query activity runs are ActivityName,
+        /// ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to
+        /// query trigger runs are TriggerName, TriggerRunTimestamp and Status.
+        /// Possible values include: 'PipelineName', 'Status', 'RunStart',
+        /// 'RunEnd', 'ActivityName', 'ActivityRunStart', 'ActivityRunEnd',
+        /// 'ActivityType', 'TriggerName', 'TriggerRunTimestamp'
         /// </summary>
         [JsonProperty(PropertyName = "operand")]
         public string Operand { get; set; }
