@@ -3,19 +3,12 @@
 
 using Microsoft.Azure.Sdk.Build.Tasks.BuildStages;
 using Microsoft.Build.Evaluation;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Tasks;
-using Microsoft.Build.Utilities;
 using Microsoft.WindowsAzure.Build.Tasks;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using nonCore = Microsoft.Build.Utilities;
 
 namespace Build.Tasks.Tests
 {
@@ -37,7 +30,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = @"SDKs\Compute";
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
@@ -80,7 +73,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = @"AzureStack\AzureBridgeAdmin";
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
@@ -122,7 +115,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = @"SDKs\Authorization\MultiApi";
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
@@ -267,7 +260,7 @@ namespace Build.Tasks.Tests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = scope;
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {

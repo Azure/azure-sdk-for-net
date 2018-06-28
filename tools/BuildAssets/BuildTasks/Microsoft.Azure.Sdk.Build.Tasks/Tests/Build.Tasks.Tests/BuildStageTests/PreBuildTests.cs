@@ -34,7 +34,7 @@ namespace Build.Tasks.Tests.BuildStageTests
             SDKCategorizeProjects sdkCat = new SDKCategorizeProjects();
             sdkCat.SourceRootDirPath = catProjTest.sourceRootDir;
             sdkCat.BuildScope = scope;
-            sdkCat.IgnoreDirNameForSearchingProjects = Path.Combine(catProjTest.ignoreDir);
+            sdkCat.IgnorePathTokens = Path.Combine(catProjTest.ignoreDir);
 
             if (sdkCat.Execute())
             {
