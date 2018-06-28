@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         /// We ignore all directory paths that has the provided directory name
         /// for e.g. Microsoft.Azure.KeyVault.Samples, we will ignore any paths that has the given names
         /// </summary>
-        public string IgnoreDirNameForSearchingProjects
+        public string IgnorePathTokens
         {
             get
             {
@@ -78,6 +78,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 _ignoreDirNameForSearchingProjects = value;
             }
         }
+
+        public string IncludePathTokens { get; set; }
 
         /// <summary>
         /// List of project file extension.
@@ -180,18 +182,27 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             List<string> testProjects = new List<string>();
             List<string> allProjects = new List<string>();
             List<string> ignorePathList = new List<string>();
+            List<string> includePathList = new List<string>();
 
             // We try to guess if build tasks projects are being built, if yes we ignore tests being built
             if (BuildScope.Contains(@"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks"))
             {
-                IgnoreDirNameForSearchingProjects = string.Join(" ", IgnoreDirNameForSearchingProjects, @"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks\Tests");
+                IgnorePathTokens = string.Join(" ", IgnorePathTokens, @"BuildAssets\BuildTasks\Microsoft.Azure.Sdk.Build.Tasks\Tests");
             }
 
-            string[] ignoreTokens = IgnoreDirNameForSearchingProjects.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string igTkn in ignoreTokens)
+            string[] ignoreTokens = IgnorePathTokens?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] includeTokens = IncludePathTokens?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if(ignoreTokens != null && ignoreTokens.Any<string>())
             {
-                ignorePathList.Add(igTkn);
+                ignorePathList = ignoreTokens.ToList<string>();
             }
+            
+            if(includeTokens != null && includeTokens.Any<string>())
+            {
+                includePathList = includeTokens.ToList<string>();
+            }
+            
 
             if (!ignorePathList.Contains(KV_IGNOREDIRNAME))
             {
@@ -199,7 +210,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             }
 
             string[] projExtList = SearchProjectFileExt?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            ProjectSearchUtility ProjUtil = new ProjectSearchUtility(SourceRootDirPath, ignorePathList, projExtList);
+            ProjectSearchUtility ProjUtil = new ProjectSearchUtility(SourceRootDirPath, ignorePathList, includePathList);
             if (BuildScope.Equals("All", StringComparison.OrdinalIgnoreCase))
             {
                 sdkProjects = ProjUtil.GetAllSDKProjects();
@@ -267,12 +278,15 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
             ConcurrentBag<SdkProjectMetaData> projCollection = new ConcurrentBag<SdkProjectMetaData>();
 
-            //foreach (ITaskItem proj in projList)
-            //{
+#if DebugInVS
+            foreach (ITaskItem proj in projList)
+            {
+#else
             ThreadingTsk.Parallel.ForEach<ITaskItem>(projList, (proj) =>
             {
-                try
-                {
+#endif
+            try
+            {
                     projCollection.Add(new SdkProjectMetaData() { MsBuildProject = new Project(proj.ItemSpec), ProjectTaskItem = proj });
                 }
                 catch (Exception ex)
@@ -286,11 +300,13 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                         Debug.WriteLine(ex.Message);
                     }
                 }
+#if !DebugInVS
             });
-            //}
-            
+#else
+            }
+#endif
 
-            foreach(SdkProjectMetaData sdkProjMD in projCollection)
+            foreach (SdkProjectMetaData sdkProjMD in projCollection)
             {
                 string targetFxList = sdkProjMD.MsBuildProject.GetPropertyValue("TargetFrameworks");
                 if (string.IsNullOrEmpty(targetFxList))

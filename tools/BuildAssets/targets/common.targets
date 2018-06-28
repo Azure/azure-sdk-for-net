@@ -82,8 +82,9 @@
       <LatestProjectDefaultCleanTarget Condition=" '$(LatestProjectDefaultCleanTarget)' == '' ">Clean</LatestProjectDefaultCleanTarget>
     </PropertyGroup>
     <Message Text="Cleaning Initiated....." />
+	<Message Text="Cleaning @(SDKProject);@(SDKTestProject);@(nonSdkProj);@(unsupportedProj)" Condition=" '$(SkipRestore)' != 'true' "/>
     <MSBuild Targets="$(LatestProjectDefaultCleanTarget)"
-        Projects="@(SDKProject);@(SDKTestProject);@(unsupportedProj)"
+        Projects="@(SDKProject);@(SDKTestProject);@(nonSdkProj);@(unsupportedProj)"
         Properties="PackageOutputPath=$(PackageOutputPath)"
         BuildInParallel="$(BuildInParallel)"
         ContinueOnError="ErrorAndStop" />
@@ -102,7 +103,8 @@
     <PropertyGroup>
       <LatestProjectDefaultRestoreTarget Condition=" '$(LatestProjectDefaultRestoreTarget)' == '' ">Restore</LatestProjectDefaultRestoreTarget>
     </PropertyGroup>
-    <Message Text="Now Restoring @(SDKProject);@(SDKTestProject);@(unsupportedProj)" />
+	<Message Text="Restoring Initiated....." />
+    <Message Text="Now Restoring @(SDKProject);@(SDKTestProject);@(nonSdkProj);@(unsupportedProj)" Condition=" '$(SkipRestore)' != 'true' "/>
 
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
             Projects="@(SDKProject);@(SDKTestProject)"
@@ -110,7 +112,7 @@
             ContinueOnError="ErrorAndStop" />
 	
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
-              Projects="@(unsupportedProj)"
+              Projects="@(nonSdkProj);@(unsupportedProj)"
               BuildInParallel="$(BuildInParallel)"
               ContinueOnError="ErrorAndStop" />
         
@@ -197,7 +199,7 @@
 
     <Message Text="Building NonSdk projects ..... @(nonSdkProj)" Condition=" '@(nonSdkProj)' != '' " />       
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
-            Projects="@(unsupportedProj)"
+            Projects="@(nonSdkProj)"
             Properties="CmdLineBuild=$(CmdLineBuild)"
             BuildInParallel="$(BuildInParallel)"
             ContinueOnError="ErrorAndStop">
@@ -292,33 +294,13 @@
       />
   </Target>
 
-  <Target Name="PublishingNuget_Original">
-    <Error Condition=" ('$(NugetPackageName)' == '') " Text="Please Provide Package Name that has to be published /p:NugetPackagename=[packagename]" />
-    <Error Condition=" ('$(NugetPackageName)' == '') AND ('$(Scope)' == '' OR '$(Scope)' == 'all') " Text="Publishing nuget package without specifying scope or packageName has now been disabled" />
-    <Error Condition=" '$(NuGetKey)' == '' " Text="You must provide the NuGetKey parameter to the build: /p:NuGetKey=YOUR_PUBLISHING_KEY" />
-    <PropertyGroup>
-      <PublishNugetToDir Condition=" '$(PublishNugetToDir)' == '' ">$(LibraryRoot)PublishedNugets</PublishNugetToDir>
-    </PropertyGroup>
-
-    <Message Text="Trying to Create directory $(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir))" />
-    <MakeDir Directories="$(PublishNugetToDir)" Condition="!Exists($(PublishNugetToDir)) AND !$([System.Text.RegularExpressions.Regex]::IsMatch('$(PublishNugetToDir)', '^(?i)http'))" />
-    <Message Text="Publishing directory detected $(PublishNugetToDir)" Condition="Exists($(PublishNugetToDir))" />
-    <PropertyGroup>
-      <PublishDestination Condition=" '$(PublishNugetToDir)' != '' "> -Source $(PublishNugetToDir)</PublishDestination>
-    </PropertyGroup>
-
-    <Message Importance="high" Text="Publishing main and symbols packages to the cloud at $(NuGetPublishingSource)" />
-    <Exec Command="$(NuGetCommand) push &quot;$(PackageOutputPath)\*$(NugetPackageName)*.nupkg&quot; $(NuGetKey)$(PublishDestination)"
-			  IgnoreExitCode="true" />
-    <!--Condition=" '%(SdkNuGetPackage.Publish)' != 'false' " />-->
-  </Target>
-
   <Target Name="CategorizeProjects">
     <DebugTask Condition=" '$(DebugMode)' == 'true'"/>
     <SDKCategorizeProjects
       SourceRootDirPath="$(LibrarySourceFolder)"
       BuildScope="$(Scope)"
-      IgnoreDirNameForSearchingProjects="$(DefaultPathTokenToIgnore)"
+      IgnorePathTokens="$(DefaultPathTokenToIgnore)"
+	  IncludePathTokens="$(IncludePathTokens)"
       >
       <Output TaskParameter="net452SdkProjectsToBuild" ItemName="net452SDKProj" />
 	  <Output TaskParameter="net461SdkProjectsToBuild" ItemName="net461SDKProj" />
