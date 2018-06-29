@@ -49,35 +49,6 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
-        public void CleanupAllResources()
-        {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var client = GetResourceManagementClient(context, handler);
-                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
-
-                var groups = client.ResourceGroups.List();
-                foreach (var group in groups)
-                {
-                    var resources = client.Resources.ListByResourceGroup(group.Name, new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/sites"));
-                    foreach (var resource in resources)
-                    {
-                        client.Resources.Delete(group.Name, 
-                            CreateResourceIdentity(resource).ResourceProviderNamespace, 
-                            string.Empty,
-                            CreateResourceIdentity(resource).ResourceType,
-                            resource.Name,
-                            CreateResourceIdentity(resource).ResourceProviderApiVersion);
-                    }
-                    client.ResourceGroups.BeginDelete(group.Name);
-                }
-            }
-
-        }
-
-        [Fact]
         public void CreateResourceWithPlan()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
