@@ -181,9 +181,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </summary>
         /// <remarks>
         /// Possible values are: cntk, tensorflow, caffe, caffe2, chainer,
-        /// pytorch, custom, mpi, horovod. Possible values include: 'cntk',
-        /// 'tensorflow', 'caffe', 'caffe2', 'chainer', 'horovod', 'mpi',
-        /// 'custom'
+        /// pytorch, custom, custommpi, horovod. Possible values include:
+        /// 'cntk', 'tensorflow', 'caffe', 'caffe2', 'chainer', 'horovod',
+        /// 'custommpi', 'custom'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.toolType")]
         public string ToolType { get; set; }
