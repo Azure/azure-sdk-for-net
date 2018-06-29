@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides API functions for consuming Microsoft Azure Cognitive Services Language APIs.")]
 
 [assembly: AssemblyVersion("1.0.1.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
