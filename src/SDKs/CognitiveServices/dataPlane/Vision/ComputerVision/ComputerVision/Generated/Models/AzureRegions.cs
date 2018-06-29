@@ -44,7 +44,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         [EnumMember(Value = "australiaeast")]
         Australiaeast,
         [EnumMember(Value = "brazilsouth")]
-        Brazilsouth
+        Brazilsouth,
+        [EnumMember(Value = "canadacentral")]
+        Canadacentral,
+        [EnumMember(Value = "centralindia")]
+        Centralindia,
+        [EnumMember(Value = "uksouth")]
+        Uksouth,
+        [EnumMember(Value = "japaneast")]
+        Japaneast
     }
     internal static class AzureRegionsEnumExtension
     {
@@ -81,6 +89,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
                     return "australiaeast";
                 case AzureRegions.Brazilsouth:
                     return "brazilsouth";
+                case AzureRegions.Canadacentral:
+                    return "canadacentral";
+                case AzureRegions.Centralindia:
+                    return "centralindia";
+                case AzureRegions.Uksouth:
+                    return "uksouth";
+                case AzureRegions.Japaneast:
+                    return "japaneast";
             }
             return null;
         }
@@ -113,6 +129,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
                     return AzureRegions.Australiaeast;
                 case "brazilsouth":
                     return AzureRegions.Brazilsouth;
+                case "canadacentral":
+                    return AzureRegions.Canadacentral;
+                case "centralindia":
+                    return AzureRegions.Centralindia;
+                case "uksouth":
+                    return AzureRegions.Uksouth;
+                case "japaneast":
+                    return AzureRegions.Japaneast;
             }
             return null;
         }

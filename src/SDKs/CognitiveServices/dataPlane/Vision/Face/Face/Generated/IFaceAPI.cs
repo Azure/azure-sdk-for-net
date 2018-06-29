@@ -37,7 +37,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Supported Azure regions for Cognitive Services endpoints. Possible
         /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
         /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth'
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'canadacentral', 'centralindia', 'uksouth', 'japaneast'
         /// </summary>
         AzureRegions AzureRegion { get; set; }
 
