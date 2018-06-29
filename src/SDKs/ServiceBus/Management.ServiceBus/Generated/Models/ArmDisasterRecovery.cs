@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Gets number of entities pending to be replicated.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.pendingReplicationOperationsCount ")]
+        [JsonProperty(PropertyName = "properties.pendingReplicationOperationsCount")]
         public long? PendingReplicationOperationsCount { get; private set; }
 
         /// <summary>
