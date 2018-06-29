@@ -41,10 +41,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="type">Resource type</param>
         /// <param name="provisioningState">Provisioning state of Migration
         /// Configuration </param>
-        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string))
+        /// <param name="pendingReplicationOperationsCount">Number of entities
+        /// pending to be replicated.</param>
+        public MigrationConfigProperties(string targetNamespace, string postMigrationName, string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), long? pendingReplicationOperationsCount = default(long?))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
+            PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             TargetNamespace = targetNamespace;
             PostMigrationName = postMigrationName;
             CustomInit();
@@ -60,6 +63,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets number of entities pending to be replicated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pendingReplicationOperationsCount")]
+        public long? PendingReplicationOperationsCount { get; private set; }
 
         /// <summary>
         /// Gets or sets existing premium Namespace ARM Id name which has no
