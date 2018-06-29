@@ -853,7 +853,7 @@ namespace Policy.Tests
         {
             // get an existing test management group to be parent
             var allManagementGroups = client.ManagementGroups.List();
-            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals("AzGovTest7"));
+            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals("AzGovLiveTest"));
 
             // make a management group using the given parameters
             var managementGroupDetails = new CreateManagementGroupDetails(parent: new CreateParentGroupInfo(id: parentManagementGroup.Id), updatedBy: displayName);
