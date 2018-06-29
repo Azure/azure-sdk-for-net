@@ -5,6 +5,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.ServiceBus.Core;
     using Xunit;
 
     public class ServiceBusConnectionStringBuilderTests
@@ -86,13 +88,68 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         void ConnectionStringBuilderShouldNotFailWhileParsingUnknownProperties()
         {
-            string connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
+            var connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
             var csBuilder = new ServiceBusConnectionStringBuilder(connectionString);
             Assert.Equal("amqps://hello.servicebus.windows.net", csBuilder.Endpoint);
             Assert.Equal("myQ", csBuilder.EntityPath);
             Assert.Single(csBuilder.ConnectionStringProperties);
             Assert.True(csBuilder.ConnectionStringProperties.ContainsKey("secretmessage"));
             Assert.Equal("h=llo", csBuilder.ConnectionStringProperties["secretmessage"]);
+        }
+
+        [Fact]
+        void ConnectionStringBuilderShouldOutputTransportTypeIfWebSocket()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder
+            {
+                Endpoint = "amqps://contoso.servicebus.windows.net",
+                EntityPath = "myQ",
+                SasKeyName = "keyname",
+                SasKey = "key",
+                TransportType = TransportType.AmqpWebSockets
+            };
+
+            Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;TransportType=AmqpWebSockets;EntityPath=myQ", csBuilder.ToString());
+        }
+
+        [Fact]
+        void ConnectionStringBuilderShouldParseTransportTypeIfWebSocket()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;TransportType=AmqpWebSockets");
+            Assert.Equal(TransportType.AmqpWebSockets, csBuilder.TransportType);
+        }
+
+        [Fact]
+        void ConnectionStringBuilderShouldDefaultToAmqp()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key");
+            Assert.Equal(TransportType.Amqp, csBuilder.TransportType);
+        }
+
+        [Fact]
+        void ConnectionStringBuilderShouldParseToken()
+        {
+            var token = "SharedAccessSignature sr=https%3a%2f%2fmynamespace.servicebus.windows.net%2fvendor-&sig=AQGQJjSzXxECxcz%2bbT2rasdfasdfasdfa%2bkBq%2bdJZVabU%3d&se=64953734126&skn=PolicyName";
+            var csBuilder = new ServiceBusConnectionStringBuilder("SharedAccessSignature=" + token+";Endpoint=sb://contoso.servicebus.windows.net");
+            Assert.Equal("sb://contoso.servicebus.windows.net", csBuilder.Endpoint);
+            Assert.Equal(token, csBuilder.SasToken);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task NonAmqpUriSchemesShouldWorkAsExpected()
+        {
+            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+            csb.Endpoint = new UriBuilder(csb.Endpoint)
+            {
+                Scheme = Uri.UriSchemeHttps
+            }.Uri.ToString();
+            csb.EntityPath = TestConstants.NonPartitionedQueueName;
+
+            var receiver = new MessageReceiver(csb);
+            var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+
+            await receiver.CloseAsync();
         }
     }
 }
