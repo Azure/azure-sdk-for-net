@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("Provides developers with a library to publish events to Azure EventGrid.")]
 
 [assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.5.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
