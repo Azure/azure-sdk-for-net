@@ -224,7 +224,35 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.True(testProduct.Product.Name.Equals(testProductName));
             Assert.True(testProduct.Product.Version.Equals(testProductVersion));
         }
-        
+
+        [Fact]
+        public void AddDuplicateUserAgentInfo()
+        {
+            string defaultProductName = "FxVersion";
+            string testProductName = "TestProduct";
+            string testProductVersion = "1.0.0.0";
+
+            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+            fakeClient.SetUserAgent(testProductName, testProductVersion);
+
+            Assert.Equal(5, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+            fakeClient.SetUserAgent(testProductName, testProductVersion);
+            Assert.Equal(5, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+        }
+
+        [Fact]
+        public void CheckIfHttpClientIsDisposed()
+        {
+            FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
+            fakeClient.DoStuffSync();
+            Assert.Equal(4, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
+
+            fakeClient.Dispose();
+            Assert.Throws(typeof(NullReferenceException), () => fakeClient.DoStuffSync());
+        }
+
+
+
 #if FullNetFx
         [Fact]
         public void VerifyOsInfoInUserAgent()
