@@ -12,13 +12,56 @@ namespace Microsoft.Azure.Search
 
     internal partial class IndexesOperations
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Creates a new Azure Search index or updates an index if it already
+        /// exists.
+        /// </summary>
+        /// <param name='index'>
+        /// The definition of the index to create or update.
+        /// </param>
+        /// <param name='allowIndexDowntime'>
+        /// Allows new analyzers, tokenizers, token filters, or char filters
+        /// to be added to an index by taking the index offline for at least
+        /// a few seconds. This temporarily causes indexing and query
+        /// requests to fail. Performance and write availability of the index
+        /// can be impaired for several minutes after the index is updated,
+        /// or longer for very large indexes.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='accessCondition'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
         public Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             return CreateOrUpdateWithHttpMessagesAsync(index != null ? index.Name : null, index, allowIndexDowntime, searchRequestOptions, accessCondition, customHeaders, cancellationToken);
         }
-        
-        /// <inheritdoc />
+
+        /// <summary>
+        /// Determines whether or not the given index exists in the Azure Search service.
+        /// </summary>
+        /// <param name="indexName">
+        /// The name of the index.
+        /// </param>
+        /// <param name='searchRequestOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <returns>
+        /// A response with the value <c>true</c> if the index exists; <c>false</c> otherwise.
+        /// </returns>
         public Task<AzureOperationResponse<bool>> ExistsWithHttpMessagesAsync(
             string indexName,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
