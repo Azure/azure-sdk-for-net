@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for IPVersion.
     /// </summary>
-    public static class IPVersion
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(IPVersionConverter))]
+    public struct IPVersion : System.IEquatable<IPVersion>
     {
-        public const string IPv4 = "IPv4";
-        public const string IPv6 = "IPv6";
+        private IPVersion(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly IPVersion IPv4 = "IPv4";
+
+        public static readonly IPVersion IPv6 = "IPv6";
+
+
+        /// <summary>
+        /// Underlying value of enum IPVersion
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for IPVersion
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type IPVersion
+        /// </summary>
+        public bool Equals(IPVersion e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to IPVersion
+        /// </summary>
+        public static implicit operator IPVersion(string value)
+        {
+            return new IPVersion(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert IPVersion to string
+        /// </summary>
+        public static implicit operator string(IPVersion e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum IPVersion
+        /// </summary>
+        public static bool operator == (IPVersion e1, IPVersion e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum IPVersion
+        /// </summary>
+        public static bool operator != (IPVersion e1, IPVersion e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for IPVersion
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is IPVersion && Equals((IPVersion)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode IPVersion
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

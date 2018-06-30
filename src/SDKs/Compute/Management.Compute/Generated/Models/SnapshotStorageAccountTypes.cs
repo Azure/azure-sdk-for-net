@@ -10,14 +10,98 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for SnapshotStorageAccountTypes.
     /// </summary>
-    public static class SnapshotStorageAccountTypes
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(SnapshotStorageAccountTypesConverter))]
+    public struct SnapshotStorageAccountTypes : System.IEquatable<SnapshotStorageAccountTypes>
     {
-        public const string StandardLRS = "Standard_LRS";
-        public const string PremiumLRS = "Premium_LRS";
-        public const string StandardZRS = "Standard_ZRS";
+        private SnapshotStorageAccountTypes(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly SnapshotStorageAccountTypes StandardLRS = "Standard_LRS";
+
+        public static readonly SnapshotStorageAccountTypes PremiumLRS = "Premium_LRS";
+
+        public static readonly SnapshotStorageAccountTypes StandardZRS = "Standard_ZRS";
+
+
+        /// <summary>
+        /// Underlying value of enum SnapshotStorageAccountTypes
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for SnapshotStorageAccountTypes
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type SnapshotStorageAccountTypes
+        /// </summary>
+        public bool Equals(SnapshotStorageAccountTypes e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to SnapshotStorageAccountTypes
+        /// </summary>
+        public static implicit operator SnapshotStorageAccountTypes(string value)
+        {
+            return new SnapshotStorageAccountTypes(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert SnapshotStorageAccountTypes to string
+        /// </summary>
+        public static implicit operator string(SnapshotStorageAccountTypes e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum SnapshotStorageAccountTypes
+        /// </summary>
+        public static bool operator == (SnapshotStorageAccountTypes e1, SnapshotStorageAccountTypes e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum SnapshotStorageAccountTypes
+        /// </summary>
+        public static bool operator != (SnapshotStorageAccountTypes e1, SnapshotStorageAccountTypes e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for SnapshotStorageAccountTypes
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is SnapshotStorageAccountTypes && Equals((SnapshotStorageAccountTypes)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode SnapshotStorageAccountTypes
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
