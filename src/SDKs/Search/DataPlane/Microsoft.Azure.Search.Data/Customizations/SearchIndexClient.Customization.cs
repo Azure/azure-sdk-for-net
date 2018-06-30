@@ -51,13 +51,25 @@ namespace Microsoft.Azure.Search
             Initialize(searchServiceName, indexName, credentials);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the credentials used to authenticate to an Azure Search service. This can be either a query API key or an admin API key.
+        /// </summary>
+        /// <remarks>
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Search.
+        /// </remarks>
         public SearchCredentials SearchCredentials => (SearchCredentials)Credentials;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Indicates whether the index client should use HTTP GET for making Search and Suggest requests to the
+        /// Azure Search REST API. The default is <c>false</c>, which indicates that HTTP POST will be used.
+        /// </summary>
         public bool UseHttpGetForQueries { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Changes the BaseUri of this client to target a different index in the same Azure Search service. This method is NOT thread-safe; You
+        /// must guarantee that no other threads are using the client before calling it.
+        /// </summary>
+        /// <param name="newIndexName">The name of the index to which all subsequent requests should be sent.</param>
         [Obsolete("This method is deprecated. Please set the IndexName property instead.")]
         public void TargetDifferentIndex(string newIndexName)
         {
