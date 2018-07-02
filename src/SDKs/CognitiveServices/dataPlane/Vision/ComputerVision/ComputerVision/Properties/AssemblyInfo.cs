@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides access to the Microsoft Cognitive Services ComputerVision APIs.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]

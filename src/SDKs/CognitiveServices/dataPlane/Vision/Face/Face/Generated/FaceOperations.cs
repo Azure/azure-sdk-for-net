@@ -777,6 +777,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// with faceIds, landmarks, and attributes.
         /// </summary>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='returnFaceId'>
         /// A value indicating whether the operation should return faceIds of detected

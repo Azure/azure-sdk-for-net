@@ -52,7 +52,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// Supported Azure regions for Cognitive Services endpoints. Possible values
         /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
         /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-        /// 'eastasia', 'australiaeast', 'brazilsouth'
+        /// 'eastasia', 'australiaeast', 'brazilsouth', 'canadacentral',
+        /// 'centralindia', 'uksouth', 'japaneast'
         /// </summary>
         public AzureRegions AzureRegion { get; set; }
 

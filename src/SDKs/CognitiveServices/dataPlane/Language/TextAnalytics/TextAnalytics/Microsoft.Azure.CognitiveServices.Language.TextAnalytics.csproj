@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Language.TextAnalytics</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Language APIs.</Description>
-    <VersionPrefix>1.0.1-preview</VersionPrefix>
+    <VersionPrefix>1.1.0-preview</VersionPrefix>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.TextAnalytics</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Text Analytics API;Text Analytics;REST HTTP client;netcore451511</PackageTags>
     <PackageReleaseNotes>
@@ -16,8 +16,7 @@
     Note: This package is the successor to the Microsoft.Azure.CognitiveServices.Language NuGet package.
 
     Changes in this release:
-    1. New /entities endpoint support
-    2. Additional AzureRegions: Westus2, Eastus, Southcentralus, Northeurope, Eastasia, Australiaeast, Brazilsouth
+    1. Additional AzureRegions: Canada Central, Japan East, Central India and UK South
     ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
