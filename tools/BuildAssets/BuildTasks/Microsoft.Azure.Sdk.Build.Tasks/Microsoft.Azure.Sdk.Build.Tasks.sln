@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Sdk.Build.Tasks", "SdkBuildTasks\Microsoft.Azure.Sdk.Build.Tasks.csproj", "{F7170FBA-EB69-4910-9F52-3259E73FC4ED}"
 EndProject
@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MsbuildTests", "MsbuildTest
 		Tests\MsbuildTests\PackagingTests.proj = Tests\MsbuildTests\PackagingTests.proj
 		Tests\MsbuildTests\PublishNugetPackageTests.proj = Tests\MsbuildTests\PublishNugetPackageTests.proj
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSCmdLets.Tests", "Tests\PSCmdletTests\PSCmdLets.Tests.csproj", "{FD2F1938-D2C2-4BDF-A23C-FC039D816AC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,8 +36,15 @@ Global
 		{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D36088F5-DE32-4883-BFE1-CE5ACBEB52D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD2F1938-D2C2-4BDF-A23C-FC039D816AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD2F1938-D2C2-4BDF-A23C-FC039D816AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD2F1938-D2C2-4BDF-A23C-FC039D816AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD2F1938-D2C2-4BDF-A23C-FC039D816AC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4C59836-DD41-4C62-8055-21076098F0D8}
 	EndGlobalSection
 EndGlobal

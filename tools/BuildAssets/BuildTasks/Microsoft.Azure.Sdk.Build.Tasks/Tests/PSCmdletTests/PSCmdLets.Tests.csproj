@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeGenCmdletDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\..\..\..\psModules\CodeGenerationModules'))</CodeGenCmdletDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CodeGenCmdlets Include="$(CodeGenCmdletDir)\**\*.*" />
+    <PackageReference Include="System.Management.Automation.dll" Version="10.0.10586" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <Folder Include="TestAssets\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="TestAssets\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <Target Name="CopyTestAssets" AfterTargets="Build">
+    <Copy SourceFiles="@(CodeGenCmdlets)" DestinationFolder="$(OutputPath)\TestAssets" />
+  </Target>
+</Project>
