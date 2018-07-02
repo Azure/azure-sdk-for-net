@@ -59,7 +59,7 @@ namespace Automation.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Waiting on webservice deployment")]
+        [Fact]
         public void CanCreateUpdateDeleteSchedule()
         {
             using (var context = MockContext.Start(GetType().FullName))

@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "Keys", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "LinkedWorkspace", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Module", "2015-10-31"),
+                new Tuple<string, string, string>("Automation", "NodeCountInformation", "2018-01-15"),
                 new Tuple<string, string, string>("Automation", "NodeReports", "2018-01-15"),
                 new Tuple<string, string, string>("Automation", "ObjectDataTypes", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Operations", "2015-10-31"),

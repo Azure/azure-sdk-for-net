@@ -13,7 +13,7 @@
           "31"
         ],
         "x-ms-client-request-id": [
-          "2820aa1c-4f69-4bbc-b369-a2a5ff4b5885"
+          "ef736054-c85d-474b-8d79-00fb2a7d5b9d"
         ],
         "accept-language": [
           "en-US"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:17 GMT"
+          "Mon, 02 Jul 2018 18:38:49 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,16 +47,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "28230d6c-91ba-4703-80d6-5ce2d2b8b43a"
+          "fc079687-67e4-42a6-b432-fad2fb77b1ee"
         ],
         "x-ms-correlation-request-id": [
-          "28230d6c-91ba-4703-80d6-5ce2d2b8b43a"
+          "fc079687-67e4-42a6-b432-fad2fb77b1ee"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072817Z:28230d6c-91ba-4703-80d6-5ce2d2b8b43a"
+          "WESTUS2:20180702T183849Z:fc079687-67e4-42a6-b432-fad2fb77b1ee"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
@@ -74,20 +77,20 @@
           "188"
         ],
         "x-ms-client-request-id": [
-          "fd063432-e56f-4864-92f9-b544c2860421"
+          "7c8690a1-406a-48ad-baab-62001935d52b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"automation-sdk-test-account\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": null,\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": null,\r\n      \"capacity\": null\r\n    },\r\n    \"state\": \"Ok\",\r\n    \"RegistrationUrl\": \"https://eus2-agentservice-prod-1.azure-automation.net/accounts/66f31e70-cba1-4e99-aff8-80ab1e48d848\",\r\n    \"creationTime\": \"2017-11-19T23:28:21.013-08:00\",\r\n    \"lastModifiedBy\": \"\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:28:21.013-08:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"automation-sdk-test-account\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts\",\r\n  \"location\": \"East US 2\",\r\n  \"tags\": {},\r\n  \"etag\": null,\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Basic\",\r\n      \"family\": null,\r\n      \"capacity\": null\r\n    },\r\n    \"state\": \"Ok\",\r\n    \"RegistrationUrl\": \"https://eus2-agentservice-prod-1.azure-automation.net/accounts/394c62db-3762-4b73-8234-e25fc4f82b6b\",\r\n    \"creationTime\": \"2018-07-02T11:38:51.137-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2018-07-02T11:38:51.137-07:00\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "623"
+          "625"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,7 +102,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:19 GMT"
+          "Mon, 02 Jul 2018 18:38:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -111,7 +114,7 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "fd063432-e56f-4864-92f9-b544c2860421"
+          "7c8690a1-406a-48ad-baab-62001935d52b"
         ],
         "x-ms-location": [
           "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account?api-version=2015-10-31"
@@ -132,10 +135,13 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "34edd242-c6fa-4a93-93ef-7418a4505aae"
+          "89886b8e-a7ab-4bab-94a6-f4d11260e781"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072820Z:34edd242-c6fa-4a93-93ef-7418a4505aae"
+          "WESTUS2:20180702T183851Z:89886b8e-a7ab-4bab-94a6-f4d11260e781"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
@@ -147,14 +153,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7f15c134-db7e-4b50-afd1-87ccf6ee44ed"
+          "d73d915e-57c1-4874-95eb-9adbb889af00"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -169,7 +175,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:20 GMT"
+          "Mon, 02 Jul 2018 18:38:50 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -184,7 +190,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "7f15c134-db7e-4b50-afd1-87ccf6ee44ed"
+          "d73d915e-57c1-4874-95eb-9adbb889af00"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -196,13 +202,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14846"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "57cb4b77-c127-4902-bcb8-ba14334bf2d0"
+          "a7159d92-ce33-47e8-b857-6eec1dc4a5ac"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072820Z:57cb4b77-c127-4902-bcb8-ba14334bf2d0"
+          "WESTUS2:20180702T183851Z:a7159d92-ce33-47e8-b857-6eec1dc4a5ac"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -214,14 +223,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ca00bdd0-6d0e-4fb7-ab60-0efc25edecb1"
+          "fb1a0460-80a3-47e0-8eae-313cd1927a8a"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -236,7 +245,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:20 GMT"
+          "Mon, 02 Jul 2018 18:38:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -251,7 +260,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "ca00bdd0-6d0e-4fb7-ab60-0efc25edecb1"
+          "fb1a0460-80a3-47e0-8eae-313cd1927a8a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -263,13 +272,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14845"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "2d45c86b-7a73-4a3c-8109-0a92217e7997"
+          "b9dcef0f-b326-4f00-b9c1-b4f4ab64579d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072820Z:2d45c86b-7a73-4a3c-8109-0a92217e7997"
+          "WESTUS2:20180702T183852Z:b9dcef0f-b326-4f00-b9c1-b4f4ab64579d"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -281,14 +293,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e534cc4e-b38f-44d5-a38d-f3286e5fa9af"
+          "41f983d8-21b7-453d-b61a-293ccb7d92ba"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -303,7 +315,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:20 GMT"
+          "Mon, 02 Jul 2018 18:38:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -318,7 +330,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "e534cc4e-b38f-44d5-a38d-f3286e5fa9af"
+          "41f983d8-21b7-453d-b61a-293ccb7d92ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -330,13 +342,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14844"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "2fa1625f-d791-4ba7-9081-baf99f2c8653"
+          "04859b57-bca0-45c1-8542-bb6f7e8c079f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072820Z:2fa1625f-d791-4ba7-9081-baf99f2c8653"
+          "WESTUS2:20180702T183852Z:04859b57-bca0-45c1-8542-bb6f7e8c079f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -348,14 +363,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3c921816-bf6c-4715-84fd-7ac5f24149ff"
+          "d23f6947-dd33-44cd-9ef2-4f2d8b5a7de8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -370,7 +385,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:21 GMT"
+          "Mon, 02 Jul 2018 18:38:51 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -385,7 +400,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "3c921816-bf6c-4715-84fd-7ac5f24149ff"
+          "d23f6947-dd33-44cd-9ef2-4f2d8b5a7de8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -397,13 +412,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14843"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "7c640e5a-f8a1-4949-85c0-ce1b6629e6e6"
+          "85d4e094-ece8-4feb-ad5f-39641da54908"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072821Z:7c640e5a-f8a1-4949-85c0-ce1b6629e6e6"
+          "WESTUS2:20180702T183852Z:85d4e094-ece8-4feb-ad5f-39641da54908"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -415,14 +433,14 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0f3190ce-e9c4-4107-9bd8-48d783ef818d"
+          "887d2ca4-eeb2-40d9-8180-be13d24b1020"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"value\": []\r\n}",
@@ -437,7 +455,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:22 GMT"
+          "Mon, 02 Jul 2018 18:38:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -452,53 +470,56 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "0f3190ce-e9c4-4107-9bd8-48d783ef818d"
+          "887d2ca4-eeb2-40d9-8180-be13d24b1020"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14842"
+          "14995"
         ],
         "x-ms-correlation-request-id": [
-          "4e18a059-78dd-446e-9ad6-c01ba0b82028"
+          "df522355-5072-4c1b-808d-5cbb0f6c3d32"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072822Z:4e18a059-78dd-446e-9ad6-c01ba0b82028"
+          "WESTUS2:20180702T183853Z:df522355-5072-4c1b-808d-5cbb0f6c3d32"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU4MTQwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"hourlySche3127\",\r\n  \"properties\": {\r\n    \"startTime\": \"2017-11-20T23:28:22.3178996Z\",\r\n    \"expiryTime\": \"2017-11-25T23:28:22.3178996Z\",\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"hourlySche8140\",\r\n  \"properties\": {\r\n    \"startTime\": \"2018-07-03T11:38:53.1142695-07:00\",\r\n    \"expiryTime\": \"2018-07-08T11:38:53.1142695-07:00\",\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "203"
+          "213"
         ],
         "x-ms-client-request-id": [
-          "f987ac6c-8bc4-4f9a-820a-32c71cb8e877"
+          "cb9e777f-0af6-4875-9e8c-7d8d398473b0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"hourlySche3127\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"startTime\": \"2017-11-20T15:28:00-08:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2017-11-25T15:28:00-08:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": true,\r\n    \"nextRun\": \"2017-11-20T15:28:00-08:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2017-11-19T23:28:24.263-08:00\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:28:24.263-08:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140\",\r\n  \"name\": \"hourlySche8140\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Schedules\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"startTime\": \"2018-07-03T11:38:00-07:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2018-07-08T11:38:00-07:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": true,\r\n    \"nextRun\": \"2018-07-03T11:38:00-07:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2018-07-02T11:38:53.667-07:00\",\r\n    \"lastModifiedTime\": \"2018-07-02T11:38:53.667-07:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "649"
+          "708"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -510,25 +531,25 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:22 GMT"
+          "Mon, 02 Jul 2018 18:38:52 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31"
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "f987ac6c-8bc4-4f9a-820a-32c71cb8e877"
+          "cb9e777f-0af6-4875-9e8c-7d8d398473b0"
         ],
         "x-ms-location": [
-          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31"
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31"
         ],
         "ocp-location": [
-          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31"
+          "https://management.azure.com/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -543,32 +564,35 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "32bbcd7e-d1e0-4a48-bcec-a6547ab26294"
+          "f0c1c54c-7953-45fa-b97a-972f44c3d0f9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072822Z:32bbcd7e-d1e0-4a48-bcec-a6547ab26294"
+          "WESTUS2:20180702T183853Z:f0c1c54c-7953-45fa-b97a-972f44c3d0f9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU4MTQwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "76179686-7869-4764-a3b3-f54eb248bd8d"
+          "5ead48ce-4575-4256-afa9-b00609f6f955"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"hourlySche3127\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"startTime\": \"2017-11-20T15:28:00-08:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2017-11-25T15:28:00-08:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": true,\r\n    \"nextRun\": \"2017-11-20T15:28:00-08:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2017-11-19T23:28:24.263-08:00\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:28:24.263-08:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140\",\r\n  \"name\": \"hourlySche8140\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Schedules\",\r\n  \"properties\": {\r\n    \"description\": null,\r\n    \"startTime\": \"2018-07-03T11:38:00-07:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2018-07-08T11:38:00-07:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": true,\r\n    \"nextRun\": \"2018-07-03T11:38:00-07:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2018-07-02T11:38:53.667-07:00\",\r\n    \"lastModifiedTime\": \"2018-07-02T11:38:53.667-07:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -580,7 +604,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:22 GMT"
+          "Mon, 02 Jul 2018 18:38:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -595,7 +619,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "76179686-7869-4764-a3b3-f54eb248bd8d"
+          "5ead48ce-4575-4256-afa9-b00609f6f955"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -607,35 +631,38 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14841"
+          "14994"
         ],
         "x-ms-correlation-request-id": [
-          "93dc3a36-9d0e-4df1-99e2-f5fef8ba6db9"
+          "3cf700ce-c25b-45bd-97b9-85c38697644f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072823Z:93dc3a36-9d0e-4df1-99e2-f5fef8ba6db9"
+          "WESTUS2:20180702T183853Z:3cf700ce-c25b-45bd-97b9-85c38697644f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU4MTQwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9589f4ba-1f76-41d6-968d-7196ede173be"
+          "4bef7f1e-7fa8-4ad9-97af-802d68c5e3e1"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127\",\r\n  \"name\": \"hourlySche3127\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"startTime\": \"2017-11-20T15:28:00-08:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2017-11-25T15:28:00-08:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": false,\r\n    \"nextRun\": \"2017-11-20T15:28:00-08:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2017-11-19T23:28:24.263-08:00\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:28:24.907-08:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140\",\r\n  \"name\": \"hourlySche8140\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Schedules\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"startTime\": \"2018-07-03T11:38:00-07:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2018-07-08T11:38:00-07:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": false,\r\n    \"nextRun\": \"2018-07-03T11:38:00-07:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2018-07-02T11:38:53.667-07:00\",\r\n    \"lastModifiedTime\": \"2018-07-02T11:38:54.103-07:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -647,7 +674,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:23 GMT"
+          "Mon, 02 Jul 2018 18:38:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -662,7 +689,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "9589f4ba-1f76-41d6-968d-7196ede173be"
+          "4bef7f1e-7fa8-4ad9-97af-802d68c5e3e1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -674,32 +701,35 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14840"
+          "14993"
         ],
         "x-ms-correlation-request-id": [
-          "221d1835-3c51-4935-887e-5b916d2a989d"
+          "6ca6799e-d3c1-4b22-9a26-278938f43a18"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072823Z:221d1835-3c51-4935-887e-5b916d2a989d"
+          "WESTUS2:20180702T183854Z:6ca6799e-d3c1-4b22-9a26-278938f43a18"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU4MTQwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e65f4f14-3509-4467-97ea-8249137eb56b"
+          "c80c47d5-54f9-4a78-974a-defa3aab54ae"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"code\": \"NotFound\",\r\n  \"message\": \"\"\r\n}",
@@ -717,7 +747,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:23 GMT"
+          "Mon, 02 Jul 2018 18:38:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -726,7 +756,7 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "e65f4f14-3509-4467-97ea-8249137eb56b"
+          "c80c47d5-54f9-4a78-974a-defa3aab54ae"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -738,22 +768,25 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14839"
+          "14992"
         ],
         "x-ms-correlation-request-id": [
-          "f58a10d9-2305-4b82-84fe-e7253ec5cee5"
+          "b166d1d8-ffe7-4f5a-9f39-1d14b42af1f9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072823Z:f58a10d9-2305-4b82-84fe-e7253ec5cee5"
+          "WESTUS2:20180702T183854Z:b166d1d8-ffe7-4f5a-9f39-1d14b42af1f9"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU4MTQwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"name\": \"hourlySche3127\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"isEnabled\": false\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"hourlySche8140\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"isEnabled\": false\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -762,17 +795,17 @@
           "120"
         ],
         "x-ms-client-request-id": [
-          "c12d00e9-4598-4136-b177-526c0916344a"
+          "89b6511c-80e9-4ba0-9e76-13d1e113a640"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"hourlySche3127\",\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"startTime\": \"2017-11-20T15:28:00-08:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2017-11-25T15:28:00-08:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": false,\r\n    \"nextRun\": \"2017-11-20T15:28:00-08:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2017-11-19T23:28:24.263-08:00\",\r\n    \"lastModifiedTime\": \"2017-11-19T23:28:24.263-08:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140\",\r\n  \"name\": \"hourlySche8140\",\r\n  \"type\": \"Microsoft.Automation/AutomationAccounts/Schedules\",\r\n  \"properties\": {\r\n    \"description\": \"hourly schedule\",\r\n    \"startTime\": \"2018-07-03T11:38:00-07:00\",\r\n    \"startTimeOffsetMinutes\": 0.0,\r\n    \"expiryTime\": \"2018-07-08T11:38:00-07:00\",\r\n    \"expiryTimeOffsetMinutes\": 0.0,\r\n    \"isEnabled\": false,\r\n    \"nextRun\": \"2018-07-03T11:38:00-07:00\",\r\n    \"nextRunOffsetMinutes\": 0.0,\r\n    \"interval\": 1,\r\n    \"frequency\": \"Hour\",\r\n    \"creationTime\": \"2018-07-02T11:38:53.667-07:00\",\r\n    \"lastModifiedTime\": \"2018-07-02T11:38:53.667-07:00\",\r\n    \"timeZone\": \"UTC\",\r\n    \"advancedSchedule\": null\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -784,7 +817,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:23 GMT"
+          "Mon, 02 Jul 2018 18:38:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -799,7 +832,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "c12d00e9-4598-4136-b177-526c0916344a"
+          "89b6511c-80e9-4ba0-9e76-13d1e113a640"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -814,29 +847,32 @@
           "1196"
         ],
         "x-ms-correlation-request-id": [
-          "88022064-e2ca-433f-8abe-b97bbfdc27f4"
+          "7ac9c842-2cd6-404e-840c-e9e8a7fa0032"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072823Z:88022064-e2ca-433f-8abe-b97bbfdc27f4"
+          "WESTUS2:20180702T183854Z:7ac9c842-2cd6-404e-840c-e9e8a7fa0032"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche3127?api-version=2015-10-31",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGUzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
+      "RequestUri": "/subscriptions/b5e4748c-f69a-467c-8749-e2f9c8cd3db0/resourceGroups/automation-sdk-test/providers/Microsoft.Automation/automationAccounts/automation-sdk-test-account/schedules/hourlySche8140?api-version=2015-10-31",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjVlNDc0OGMtZjY5YS00NjdjLTg3NDktZTJmOWM4Y2QzZGIwL3Jlc291cmNlR3JvdXBzL2F1dG9tYXRpb24tc2RrLXRlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRvbWF0aW9uL2F1dG9tYXRpb25BY2NvdW50cy9hdXRvbWF0aW9uLXNkay10ZXN0LWFjY291bnQvc2NoZWR1bGVzL2hvdXJseVNjaGU4MTQwP2FwaS12ZXJzaW9uPTIwMTUtMTAtMzE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "36ec4c70-da8c-4689-be3f-6c23d1af82fa"
+          "75ede5e2-624a-4dec-a625-d48e496e9d1f"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.0.0.0"
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.1.0.0"
         ]
       },
       "ResponseBody": "",
@@ -851,7 +887,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Nov 2017 07:28:23 GMT"
+          "Mon, 02 Jul 2018 18:38:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -860,7 +896,7 @@
           "Microsoft-IIS/8.5"
         ],
         "x-ms-request-id": [
-          "36ec4c70-da8c-4689-be3f-6c23d1af82fa"
+          "75ede5e2-624a-4dec-a625-d48e496e9d1f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -871,14 +907,17 @@
         "X-Powered-By": [
           "ASP.NET"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "8f88d42d-ac8c-44ab-8f5d-c568a74eb9ff"
+          "ce268530-4599-40d0-a32a-0aa6d9ef7782"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171120T072823Z:8f88d42d-ac8c-44ab-8f5d-c568a74eb9ff"
+          "WESTUS2:20180702T183854Z:ce268530-4599-40d0-a32a-0aa6d9ef7782"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 200
@@ -886,7 +925,7 @@
   ],
   "Names": {
     "CanCreateUpdateDeleteSchedule": [
-      "hourlySche3127"
+      "hourlySche8140"
     ]
   },
   "Variables": {
