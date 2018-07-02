@@ -117,7 +117,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 var checknameAlias = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(disasterRecoveryName));
 
-                Assert.True(checknameAlias.NameAvailable, "The Alias Name: '"+ disasterRecoveryName + "' is not avilable");
+                Assert.True(checknameAlias.NameAvailable, "The Alias Name: '" + disasterRecoveryName + "' is not avilable");
 
                 //CheckNameAvaliability for Alias with same as namespace name (alternateName will be used in this case)
                 var checknameAliasSame = EventHubManagementClient.DisasterRecoveryConfigs.CheckNameAvailability(resourceGroup, namespaceName, new CheckNameAvailabilityParameter(namespaceName));
@@ -136,11 +136,14 @@ namespace EventHub.Tests.ScenarioTests
                 //// Get the created DisasterRecovery config - Primary
                 var disasterRecoveryGetResponse = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
                 Assert.NotNull(disasterRecoveryGetResponse);
+                if (disasterRecoveryGetResponse.PendingReplicationOperationsCount.HasValue)
+                    Assert.True(disasterRecoveryGetResponse.PendingReplicationOperationsCount >= 0);
+                else
+                    Assert.False(disasterRecoveryGetResponse.PendingReplicationOperationsCount.HasValue);
                 Assert.Equal(disasterRecoveryGetResponse.Role, RoleDisasterRecovery.Primary);
 
                 //// Get the created DisasterRecovery config - Secondary
                 var disasterRecoveryGetResponse_Sec = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName2, disasterRecoveryName);
-                Assert.NotNull(disasterRecoveryGetResponse_Sec);
                 Assert.Equal(disasterRecoveryGetResponse_Sec.Role, RoleDisasterRecovery.Secondary);
 
                 //Get authorization rule thorugh Alias 
@@ -156,6 +159,13 @@ namespace EventHub.Tests.ScenarioTests
                 {
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
+
+                disasterRecoveryGetResponse = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
+
+                if (disasterRecoveryGetResponse.PendingReplicationOperationsCount.HasValue)
+                    Assert.True(disasterRecoveryGetResponse.PendingReplicationOperationsCount >= 0);
+                else
+                    Assert.False(disasterRecoveryGetResponse.PendingReplicationOperationsCount.HasValue);
 
                 //// Break Pairing
                 EventHubManagementClient.DisasterRecoveryConfigs.BreakPairing(resourceGroup, namespaceName, disasterRecoveryName);
@@ -174,10 +184,20 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.NotNull(DisasterRecoveryResponse_update);
                 TestUtilities.Wait(TimeSpan.FromSeconds(10));
 
-                while (EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)
+                var getGeoDRResponse = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
+
+                while (getGeoDRResponse.ProvisioningState != ProvisioningStateDR.Succeeded)
                 {
+                    getGeoDRResponse = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
                     TestUtilities.Wait(TimeSpan.FromSeconds(10));
                 }
+
+                getGeoDRResponse = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
+
+                if (getGeoDRResponse.PendingReplicationOperationsCount.HasValue)
+                    Assert.True(getGeoDRResponse.PendingReplicationOperationsCount >= 0);
+                else
+                    Assert.False(getGeoDRResponse.PendingReplicationOperationsCount.HasValue);
 
                 // Fail over
                 EventHubManagementClient.DisasterRecoveryConfigs.FailOver(resourceGroup, namespaceName2, disasterRecoveryName);
