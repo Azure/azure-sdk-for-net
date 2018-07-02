@@ -116,7 +116,10 @@ namespace Subscriptions.Tests
             {
                 var offer = client.Offers.Get(TestContext.ResourceGroupName, TestContext.MoveOfferName);
 
-                var subsriptionIds = new[] { "ce4c7fdb-5a38-46f5-8bbc-b8b328a87ab7", "a0d1a71c-0b27-4e73-abfc-169512576f7e", "85d57d7e-c8b4-4ab3-ba62-54b5984fa3c7" };
+                var subsriptionIds = new[] {
+                    "ce4c7fdb-5a38-46f5-8bbc-b8b328a87ab7",
+                    "a0d1a71c-0b27-4e73-abfc-169512576f7e",
+                    "85d57d7e-c8b4-4ab3-ba62-54b5984fa3c7" };
                 var subscriptions = new Subscription[3];
 
                 for (var i = 0; i < subscriptions.Length; i++)
@@ -165,7 +168,7 @@ namespace Subscriptions.Tests
 
                 foreach (var subscription in subscriptions)
                 {
-                    Assert.Equal(expectedOfferId, subscription.OfferId);
+                    Assert.Equal(delegatedProviderOffer.Id, subscription.OfferId);
                     client.Subscriptions.Delete(subscription.SubscriptionId);
                 }
             });
