@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Microsoft.Azure.CognitiveServices.Vision.Face.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Face.Tests</AssemblyName>
-    <VersionPrefix>1.0.2-preview</VersionPrefix>
+    <Version>1.0.2-preview</Version>
   </PropertyGroup>
   
   <PropertyGroup>    
