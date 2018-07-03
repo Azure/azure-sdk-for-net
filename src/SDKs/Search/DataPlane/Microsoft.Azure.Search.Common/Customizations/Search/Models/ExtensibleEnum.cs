@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Search.Models
         /// Compares the ExtensibleEnum for equality with another ExtensibleEnum.
         /// </summary>
         /// <param name="other">The ExtensibleEnum with which to compare.</param>
-        /// <returns><b>true</b> if the ExtensibleEnum objects are equal; <b>false</b> otherwise.</returns>
+        /// <returns><c>true</c> if the ExtensibleEnum objects are equal; otherwise, <c>false</c>.</returns>
         public bool Equals(T other)
         {
             if (object.ReferenceEquals(other, null))
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Search.Models
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
-        /// <returns><b>true</b> if the specified object is equal to the current object; otherwise, <b>false</b>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             return this.Equals(obj as T);
