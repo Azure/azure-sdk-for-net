@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Search
         /// <param name='accessCondition'>
         /// Additional parameters for the operation.
         /// </param>
-        /// <return>
+        /// <returns>
         /// The indexer that was created or updated.
-        /// </return>
+        /// </returns>
         public static Indexer CreateOrUpdate(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
             return operations.CreateOrUpdateAsync(indexer, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
@@ -60,9 +60,9 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <return>
+        /// <returns>
         /// The indexer that was created or updated.
-        /// </return>
+        /// </returns>
         public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexer, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))

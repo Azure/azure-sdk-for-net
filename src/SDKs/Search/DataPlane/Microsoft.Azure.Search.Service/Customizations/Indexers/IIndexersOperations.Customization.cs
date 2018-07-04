@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Search
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null.
         /// </exception>
-        /// <return>
+        /// <returns>
         /// A response object containing the response body and response headers.
-        /// </return>
+        /// </returns>
         Task<AzureOperationResponse<Indexer>> CreateOrUpdateWithHttpMessagesAsync(Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>

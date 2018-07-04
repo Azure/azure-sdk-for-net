@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Search
         /// <param name='accessCondition'>
         /// Additional parameters for the operation.
         /// </param>
-        /// <return>
+        /// <returns>
         /// The index that was created or updated.
-        /// </return>
+        /// </returns>
         public static Index CreateOrUpdate(this IIndexesOperations operations, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
             return operations.CreateOrUpdateAsync(index, allowIndexDowntime, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
@@ -76,9 +76,9 @@ namespace Microsoft.Azure.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <return>
+        /// <returns>
         /// The index that was created or updated.
-        /// </return>
+        /// </returns>
         public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(index, allowIndexDowntime, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
