@@ -5,6 +5,7 @@
 
 using Microsoft.AzureStack.Management.Subscriptions.Admin;
 using Microsoft.AzureStack.Management.Subscriptions.Admin.Models;
+using Subscriptions.Tests.src.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,31 +61,29 @@ namespace Subscriptions.Tests
         public void TestCreateUpdateThenDeletePlan()
         {
             RunTest((client) => {
-                var location = "redmond";
-                var rg = "testrg";
                 var name = "testplans";
                 var description = "description of the plan";
 
-                var quota = client.Quotas.List(location).First();
+                var quota = client.Quotas.List(TestContext.LocationName).First();
 
                 var result = client.Plans.CreateOrUpdate(
-                    rg,
+                    TestContext.ResourceGroupName,
                     name,
                     new Plan(
                         planName: name,
                         displayName: name,
-                        location: location,
+                        location: TestContext.LocationName,
                         description: description,
                         quotaIds: new List<string> { quota.Id }
                     ));
 
                 ValidatePlan(result);
-                var plan = client.Plans.Get(rg, name);
+                var plan = client.Plans.Get(TestContext.ResourceGroupName, name);
                 ValidatePlan(plan);
 
-                client.Plans.Delete(rg, name);
+                client.Plans.Delete(TestContext.ResourceGroupName, name);
 
-                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => client.Plans.Get(rg, name));
+                Assert.Throws<Microsoft.Rest.Azure.CloudException>(() => client.Plans.Get(TestContext.ResourceGroupName, name));
             });
         }
 
