@@ -15,6 +15,6 @@ namespace Microsoft.Azure.EventGrid
 
         bool TryGetCustomEventMapping(string eventType, out Type eventDataType);
 
-        IReadOnlyList<KeyValuePair<string, Type>> GetAllCustomEventMappings();
+        IEnumerable<KeyValuePair<string, Type>> ListAllCustomEventMappings();
     }
 }
