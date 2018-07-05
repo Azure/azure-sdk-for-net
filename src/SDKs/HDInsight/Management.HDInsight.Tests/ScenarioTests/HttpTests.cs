@@ -22,15 +22,16 @@ namespace Management.HDInsight.Tests
     using System.Collections.Generic;
     using Xunit;
 
+    [Collection("ScenarioTests")]
     public class HttpTests
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestDisableEnableDisableHttpCustom()
         {
             string clusterName = "hdisdk-httpcustom";
             string testName = "CanDisableEnableDisableHttpCustom";
             string suiteName = GetType().FullName;
-            ClusterCreateParameters createParams = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            ClusterCreateParameters createParams = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
 
             HDInsightManagementTestUtilities.CreateClusterInNewResourceGroupAndRunTest(suiteName, testName,clusterName, createParams, (client, rgName) =>
             {
@@ -47,13 +48,13 @@ namespace Management.HDInsight.Tests
             });
         }
 
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestDisableEnableDisableHttpExtended()
         {
             string clusterName = "hdisdk-http";
             string testName = "CanDisableEnableDisableHttpExtended";
             string suiteName = GetType().FullName;
-            ClusterCreateParameters createParams = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            ClusterCreateParameters createParams = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
 
             HDInsightManagementTestUtilities.CreateClusterInNewResourceGroupAndRunTest(suiteName, testName, clusterName, createParams, (client, rgName) =>
             {

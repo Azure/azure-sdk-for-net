@@ -99,7 +99,7 @@ namespace Management.HDInsight.Tests
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return context.GetServiceClient<ResourceManagementClient>(TestEnvironmentFactory.GetTestEnvironment(), false, new DelegatingHandler[] { handler });
+            return context.GetServiceClient<ResourceManagementClient>(false, new DelegatingHandler[] { handler });
         }
 
         public static bool IsRecordMode()

@@ -86,8 +86,8 @@ namespace Management.HDInsight.Tests.UnitTests
             Assert.NotNull(zookeepernode);
             Assert.Equal(3, zookeepernode.TargetInstanceCount);
 
-            //RServer clustes contain an additional edge node. Return if not RServer.
-            if (!createParams.ClusterType.Equals("RServer", StringComparison.OrdinalIgnoreCase))
+            //RServer & MLServices clusters contain an additional edge node. Return if not RServer or not MLServices.
+            if (!new []{ "RServer", "MLServices" }.Contains(createParams.ClusterType, StringComparer.OrdinalIgnoreCase))
             {
                 Assert.Equal(3, roleCollection.Count);
                 return;
