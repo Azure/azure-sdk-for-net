@@ -5,6 +5,7 @@ using Microsoft.Rest.ClientRuntime.Tests.CustomClients;
 using Microsoft.Rest.ClientRuntime.Tests.Fakes;
 using Microsoft.Rest.TransientFaultHandling;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -228,7 +229,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         [Fact]
         public void AddDuplicateUserAgentInfo()
         {
-            //FullNetFx -- Default (3) + 1 (TestClient) + 1 added below = 5
+            // FullNetFx -- Default (3) + 1 (TestClient) + 1 added below = 5
             // NetCore -- Default (1 as OS Name and version is not applicable in netCore) + 1 (TestClient) + 1 (below) = 3
             string defaultProductName = "FxVersion";
             string testProductName = "TestProduct";
