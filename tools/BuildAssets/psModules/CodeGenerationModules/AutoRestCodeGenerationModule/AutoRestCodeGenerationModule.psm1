@@ -377,12 +377,9 @@ function Start-AutoRestCodeGeneration {
 .PARAMETER LocalConfigFilePath
     The local Rest Spec config file for which to generate the sdk
 
-.PARAMETER SdkRootDirectory
-    The root path in csharp-sdks-folder in config file where to generate the code
-
-.PARAMETER SdkGenerationDirectory
-    The path that where the code will be generate (overrides output-folder specified in config file)
-    
+.PARAMETER SdkDirectory
+    The exact path where the SDK will get generated (ignores csharp-sdk-folder specified in the config file)
+   
 .PARAMETER Namespace
     The C# namespace for sdk to generate
 
@@ -402,13 +399,7 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [Parameter(Mandatory = $false)]
         [string] $AutoRestVersion = "latest",
 
-        [Parameter(ParameterSetName="sdkRootDir", Mandatory = $false, HelpMessage="The root directory equivalent to csharp-sdks-folder in config file. Eg.: Code will be generated in SdkRootDirectory/Compute/Management.Compute/Generated")]
-        [string] $SdkRootDirectory,
-
-        [Parameter(ParameterSetName="sdkOutputDir", Mandatory=$false, HelpMessage="The final directory where generrated code will go. Eg.: Code will be generated in sdkGenerationDirectory/Generated/")]
-        [string] $SdkGenerationDirectory,
-
-        [Parameter(ParameterSetName="sdkOutputDirLegacy", Mandatory=$false, HelpMessage="Legacy parameter same as SdkRootDirectory")]
+        [Parameter(Mandatory=$true, HelpMessage="Exact path where the sdk will get generated")]
         [string] $SdkDirectory,
 
         [Parameter(Mandatory = $false)]
@@ -419,19 +410,7 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [string] $SdkGenerationType = "singleapi"
     )
 
-    if (-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
-        $SdkRootDirectory = $SdkDirectory
-    }
-    if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestVersion $AutoRestVersion
-    }
-    elseif(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestVersion $AutoRestVersion
-    }
-    else
-    {
-        Write-Error "Please provide an output directory for the generated code"
-    }
+    Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestVersion $AutoRestVersion
 }
 
 function Start-CodeGeneration {
