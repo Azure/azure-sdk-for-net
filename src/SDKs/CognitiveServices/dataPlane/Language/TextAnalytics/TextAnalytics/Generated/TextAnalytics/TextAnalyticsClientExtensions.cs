@@ -15,9 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for TextAnalyticsAPI.
+    /// Extension methods for TextAnalyticsClient.
     /// </summary>
-    public static partial class TextAnalyticsAPIExtensions
+    public static partial class TextAnalyticsClientExtensions
     {
             /// <summary>
             /// The API returns a list of strings denoting the key talking points in the
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<KeyPhraseBatchResult> KeyPhrasesAsync(this ITextAnalyticsAPI operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<KeyPhraseBatchResult> KeyPhrasesAsync(this ITextAnalyticsClient operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.KeyPhrasesWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LanguageBatchResult> DetectLanguageAsync(this ITextAnalyticsAPI operations, BatchInput input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LanguageBatchResult> DetectLanguageAsync(this ITextAnalyticsClient operations, BatchInput input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectLanguageWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SentimentBatchResult> SentimentAsync(this ITextAnalyticsAPI operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SentimentBatchResult> SentimentAsync(this ITextAnalyticsClient operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.SentimentWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EntitiesBatchResult> EntitiesAsync(this ITextAnalyticsAPI operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EntitiesBatchResult> EntitiesAsync(this ITextAnalyticsClient operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.EntitiesWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
                 {

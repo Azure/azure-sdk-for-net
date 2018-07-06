@@ -11,9 +11,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for SpellCheckAPI.
+    /// Extension methods for SpellCheckClient.
     /// </summary>
-    public static partial class SpellCheckAPIExtensions
+    public static partial class SpellCheckClientExtensions
     {
             /// <summary>
             /// The Bing Spell Check API lets you perform contextual grammar and spell
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SpellCheckModel> SpellCheckerAsync(this ISpellCheckAPI operations, string text, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string actionType = default(string), string appName = default(string), string countryCode = default(string), string clientMachineName = default(string), string docId = default(string), string market = default(string), string sessionId = default(string), string setLang = default(string), string userId = default(string), string mode = default(string), string preContextText = default(string), string postContextText = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SpellCheckModel> SpellCheckerAsync(this ISpellCheckClient operations, string text, string acceptLanguage = default(string), string pragma = default(string), string userAgent = default(string), string clientId = default(string), string clientIp = default(string), string location = default(string), string actionType = default(string), string appName = default(string), string countryCode = default(string), string clientMachineName = default(string), string docId = default(string), string market = default(string), string sessionId = default(string), string setLang = default(string), string userId = default(string), string mode = default(string), string preContextText = default(string), string postContextText = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.SpellCheckerWithHttpMessagesAsync(text, acceptLanguage, pragma, userAgent, clientId, clientIp, location, actionType, appName, countryCode, clientMachineName, docId, market, sessionId, setLang, userId, mode, preContextText, postContextText, null, cancellationToken).ConfigureAwait(false))
                 {

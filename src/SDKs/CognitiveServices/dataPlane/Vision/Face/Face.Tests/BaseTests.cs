@@ -15,12 +15,9 @@ namespace FaceSDK.Tests
             FaceSubscriptionKey = "";
         }
 
-        protected IFaceAPI GetFaceClient(DelegatingHandler handler)
+        protected IFaceClient GetFaceClient(DelegatingHandler handler)
         {
-            IFaceAPI client = new FaceAPI(new ApiKeyServiceClientCredentials(FaceSubscriptionKey), handlers: handler)
-            {
-                AzureRegion = Face.AzureRegions.Westus
-            };
+            IFaceClient client = new FaceClient(new ApiKeyServiceClientCredentials(FaceSubscriptionKey), handlers: handler);
 
             return client;
         }

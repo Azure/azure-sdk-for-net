@@ -9,12 +9,9 @@ namespace Language.Tests
         public static bool IsTestTenant = false;
         private static string SubscriptionKey = "000";
 
-        protected ITextAnalyticsAPI GetClient(DelegatingHandler handler)
+        protected ITextAnalyticsClient GetClient(DelegatingHandler handler)
         {
-            return new TextAnalyticsAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handlers: handler)
-            {
-                AzureRegion = AzureRegions.Westus
-            };
+            return new TextAnalyticsClient(new ApiKeyServiceClientCredentials(SubscriptionKey), handlers: handler);
         }
     }
 }

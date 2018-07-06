@@ -13,16 +13,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
 
   internal static partial class SdkInfo
   {
-      public static IEnumerable<Tuple<string, string, string>> ApiInfo_TextAnalyticsAPI
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_TextAnalyticsClient
       {
           get
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("TextAnalyticsAPI", "Detect Language", "v2.0"),
-                new Tuple<string, string, string>("TextAnalyticsAPI", "Entities", "v2.0"),
-                new Tuple<string, string, string>("TextAnalyticsAPI", "Key Phrases", "v2.0"),
-                new Tuple<string, string, string>("TextAnalyticsAPI", "Sentiment", "v2.0"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Detect Language", "v2.0"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Entities", "v2.0"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Key Phrases", "v2.0"),
+                new Tuple<string, string, string>("TextAnalyticsClient", "Sentiment", "v2.0"),
               }.AsEnumerable();
           }
       }

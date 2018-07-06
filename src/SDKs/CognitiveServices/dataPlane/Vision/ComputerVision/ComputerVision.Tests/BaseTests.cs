@@ -57,12 +57,9 @@ namespace ComputerVisionSDK.Tests
             ComputerVisionSubscriptionKey = "";
         }
 
-        protected IComputerVisionAPI GetComputerVisionClient(DelegatingHandler handler)
+        protected IComputerVisionClient GetComputerVisionClient(DelegatingHandler handler)
         {
-            IComputerVisionAPI client = new ComputerVisionAPI(new ApiKeyServiceClientCredentials(ComputerVisionSubscriptionKey), handlers: handler)
-            {
-                AzureRegion = Vision.AzureRegions.Westus
-            };
+            IComputerVisionClient client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(ComputerVisionSubscriptionKey), handlers: handler);
 
             return client;
         }
