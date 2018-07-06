@@ -347,7 +347,7 @@ function Start-AutoRestCodeGeneration {
 
         [Parameter(Mandatory = $false)]
         [ValidateSet("singleapi", "multiapi")]
-        [string] $SdkGenerationType = "singleapi"
+        [string] $SdkGenerationType = "singleapi",
 
         [Parameter(Mandatory = $false)]
         [string] $AutoRestCodeGenerationFlags
@@ -438,7 +438,7 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
 
         [Parameter(Mandatory = $false)]
         [ValidateSet("singleapi", "multiapi")]
-        [string] $SdkGenerationType = "singleapi"
+        [string] $SdkGenerationType = "singleapi",
 
         [Parameter(Mandatory = $false)]
         [string] $AutoRestCodeGenerationFlags
