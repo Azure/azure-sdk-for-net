@@ -18,7 +18,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "ThumbnailImageInStreamTest");
 
-                IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance());
+                IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
                 using (Stream result = client.GenerateThumbnailInStreamAsync(64, 64, stream).Result)
                 {
@@ -47,7 +47,7 @@ namespace ComputerVisionSDK.Tests
 
                 string ImageUrl = GetTestImageUrl("house.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (Stream result = client.GenerateThumbnailAsync(64, 64, ImageUrl).Result)
                 {
                     byte[] expected = File.ReadAllBytes(GetTestImagePath("house_thumbnail.jpg"));
@@ -72,7 +72,7 @@ namespace ComputerVisionSDK.Tests
 
                 string imageUrl = GetTestImageUrl("house.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     Assert.ThrowsAsync<ValidationException>(() => client.GenerateThumbnailAsync(5000, 64, imageUrl));
                     Assert.ThrowsAsync<ValidationException>(() => client.GenerateThumbnailAsync(64, 5000, imageUrl));

@@ -17,7 +17,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeCelebritiesDomainImageInStreamTest");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("satya.jpg"), FileMode.Open))
                 {
                     DomainModelResults results = client.AnalyzeImageByDomainInStreamAsync("celebrities", stream).Result;
@@ -47,7 +47,7 @@ namespace ComputerVisionSDK.Tests
 
                 string celebrityUrl = GetTestImageUrl("satya.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     DomainModelResults results = client.AnalyzeImageByDomainAsync("celebrities", celebrityUrl).Result;
 
@@ -77,7 +77,7 @@ namespace ComputerVisionSDK.Tests
                 string landmarksUrl = GetTestImageUrl("spaceneedle.jpg");
                 const string Portuguese = "pt";
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     DomainModelResults results = client.AnalyzeImageByDomainAsync("landmarks", landmarksUrl, Portuguese).Result;
 

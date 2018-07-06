@@ -22,12 +22,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     /// <summary>
     /// An API for face detection, verification, and identification.
     /// </summary>
-    public partial class FaceAPI : ServiceClient<FaceAPI>, IFaceAPI
+    public partial class FaceClient : ServiceClient<FaceClient>, IFaceClient
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        internal string BaseUri {get; set;}
+        public System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -38,15 +38,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Gets or sets json deserialization settings.
         /// </summary>
         public JsonSerializerSettings DeserializationSettings { get; private set; }
-
-        /// <summary>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-        /// 'eastasia', 'australiaeast', 'brazilsouth', 'canadacentral',
-        /// 'centralindia', 'uksouth', 'japaneast'
-        /// </summary>
-        public AzureRegions AzureRegion { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
@@ -74,18 +65,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         public virtual IFaceListOperations FaceList { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the FaceAPI class.
+        /// Initializes a new instance of the FaceClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected FaceAPI(params DelegatingHandler[] handlers) : base(handlers)
+        protected FaceClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FaceAPI class.
+        /// Initializes a new instance of the FaceClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -93,13 +84,58 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected FaceAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected FaceClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FaceAPI class.
+        /// Initializes a new instance of the FaceClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        protected FaceClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FaceClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        protected FaceClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FaceClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -110,7 +146,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public FaceAPI(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public FaceClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -124,7 +160,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Initializes a new instance of the FaceAPI class.
+        /// Initializes a new instance of the FaceClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -138,12 +174,81 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public FaceAPI(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public FaceClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
                 throw new System.ArgumentNullException("credentials");
             }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FaceClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public FaceClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FaceClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public FaceClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
             Credentials = credentials;
             if (Credentials != null)
             {
@@ -164,7 +269,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             PersonGroupPerson = new PersonGroupPerson(this);
             PersonGroup = new PersonGroupOperations(this);
             FaceList = new FaceListOperations(this);
-            BaseUri = "https://{AzureRegion}.api.cognitive.microsoft.com/face/v1.0";
+            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/face/v1.0");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

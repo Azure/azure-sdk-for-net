@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
     /// The Spell Check API - V7 lets you check a text string for spelling and
     /// grammar errors.
     /// </summary>
-    public partial class SpellCheckAPI : ServiceClient<SpellCheckAPI>, ISpellCheckAPI
+    public partial class SpellCheckClient : ServiceClient<SpellCheckClient>, ISpellCheckClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -44,18 +44,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SpellCheckAPI(params DelegatingHandler[] handlers) : base(handlers)
+        protected SpellCheckClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -63,13 +63,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SpellCheckAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected SpellCheckClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected SpellCheckAPI(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected SpellCheckClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected SpellCheckAPI(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected SpellCheckClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SpellCheckAPI(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public SpellCheckClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SpellCheckAPI(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public SpellCheckClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SpellCheckAPI(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public SpellCheckClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         }
 
         /// <summary>
-        /// Initializes a new instance of the SpellCheckAPI class.
+        /// Initializes a new instance of the SpellCheckClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SpellCheckAPI(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public SpellCheckClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

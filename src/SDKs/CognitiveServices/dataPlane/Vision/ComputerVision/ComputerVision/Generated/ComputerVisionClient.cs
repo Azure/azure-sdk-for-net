@@ -32,12 +32,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
     /// intelligently generate images thumbnails for displaying large images
     /// effectively.
     /// </summary>
-    public partial class ComputerVisionAPI : ServiceClient<ComputerVisionAPI>, IComputerVisionAPI
+    public partial class ComputerVisionClient : ServiceClient<ComputerVisionClient>, IComputerVisionClient
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        internal string BaseUri {get; set;}
+        public System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -50,32 +50,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-        /// 'eastasia', 'australiaeast', 'brazilsouth', 'canadacentral',
-        /// 'centralindia', 'uksouth', 'japaneast'
-        /// </summary>
-        public AzureRegions AzureRegion { get; set; }
-
-        /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionAPI class.
+        /// Initializes a new instance of the ComputerVisionClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected ComputerVisionAPI(params DelegatingHandler[] handlers) : base(handlers)
+        protected ComputerVisionClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionAPI class.
+        /// Initializes a new instance of the ComputerVisionClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -83,13 +74,58 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected ComputerVisionAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected ComputerVisionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionAPI class.
+        /// Initializes a new instance of the ComputerVisionClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        protected ComputerVisionClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ComputerVisionClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        protected ComputerVisionClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ComputerVisionClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -100,7 +136,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public ComputerVisionAPI(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ComputerVisionClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -114,7 +150,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionAPI class.
+        /// Initializes a new instance of the ComputerVisionClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -128,12 +164,81 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public ComputerVisionAPI(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ComputerVisionClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
                 throw new System.ArgumentNullException("credentials");
             }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ComputerVisionClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ComputerVisionClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ComputerVisionClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ComputerVisionClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
             Credentials = credentials;
             if (Credentials != null)
             {
@@ -150,7 +255,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "https://{AzureRegion}.api.cognitive.microsoft.com/vision/v2.0";
+            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/vision/v2.0");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -215,9 +320,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "ListModels", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "models").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -400,9 +504,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "analyze";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "analyze").ToString();
             List<string> _queryParameters = new List<string>();
             if (visualFeatures != null)
             {
@@ -612,9 +715,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "GenerateThumbnail", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "generateThumbnail";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "generateThumbnail").ToString();
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("width={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(width, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("height={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(height, SerializationSettings).Trim('"'))));
@@ -782,9 +884,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizePrintedText", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "ocr";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "ocr").ToString();
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("detectOrientation={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(detectOrientation, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
@@ -968,9 +1069,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "DescribeImage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "describe";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "describe").ToString();
             List<string> _queryParameters = new List<string>();
             if (maxCandidates != null)
             {
@@ -1155,9 +1255,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "TagImage", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "tag";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "tag").ToString();
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
@@ -1346,9 +1445,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageByDomain", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{model}/analyze";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "models/{model}/analyze").ToString();
             _url = _url.Replace("{model}", System.Uri.EscapeDataString(model));
             List<string> _queryParameters = new List<string>();
             if (language != null)
@@ -1520,9 +1618,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizeText", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "recognizeText";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "recognizeText").ToString();
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("mode={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(mode, SerializationSettings).Trim('"'))));
             if (_queryParameters.Count > 0)
@@ -1677,9 +1774,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "GetTextOperationResult", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "textOperations/{operationId}";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "textOperations/{operationId}").ToString();
             _url = _url.Replace("{operationId}", System.Uri.EscapeDataString(operationId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1856,9 +1952,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "analyze";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "analyze").ToString();
             List<string> _queryParameters = new List<string>();
             if (visualFeatures != null)
             {
@@ -2066,9 +2161,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "GenerateThumbnailInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "generateThumbnail";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "generateThumbnail").ToString();
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("width={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(width, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("height={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(height, SerializationSettings).Trim('"'))));
@@ -2234,9 +2328,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizePrintedTextInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "ocr";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "ocr").ToString();
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(language, SerializationSettings).Trim('"'))));
             _queryParameters.Add(string.Format("detectOrientation={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(detectOrientation, SerializationSettings).Trim('"'))));
@@ -2418,9 +2511,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "DescribeImageInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "describe";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "describe").ToString();
             List<string> _queryParameters = new List<string>();
             if (maxCandidates != null)
             {
@@ -2603,9 +2695,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "TagImageInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "tag";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "tag").ToString();
             List<string> _queryParameters = new List<string>();
             if (language != null)
             {
@@ -2792,9 +2883,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "AnalyzeImageByDomainInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{model}/analyze";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "models/{model}/analyze").ToString();
             _url = _url.Replace("{model}", System.Uri.EscapeDataString(model));
             List<string> _queryParameters = new List<string>();
             if (language != null)
@@ -2964,9 +3054,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 ServiceClientTracing.Enter(_invocationId, this, "RecognizeTextInStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "recognizeText";
-            _url = _url.Replace("{AzureRegion}", SafeJsonConvert.SerializeObject(AzureRegion, SerializationSettings).Trim('"'));
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "recognizeText").ToString();
             List<string> _queryParameters = new List<string>();
             _queryParameters.Add(string.Format("mode={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(mode, SerializationSettings).Trim('"'))));
             if (_queryParameters.Count > 0)

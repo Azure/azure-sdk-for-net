@@ -18,7 +18,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
     /// The Spell Check API - V7 lets you check a text string for spelling and
     /// grammar errors.
     /// </summary>
-    public partial interface ISpellCheckAPI : System.IDisposable
+    public partial interface ISpellCheckClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
