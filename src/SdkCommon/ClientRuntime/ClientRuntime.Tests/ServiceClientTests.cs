@@ -258,7 +258,6 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         {
             FakeServiceClient fakeClient = new FakeServiceClient(new FakeHttpHandler());
             fakeClient.DoStuffSync();
-            Assert.Equal(4, fakeClient.HttpClient.DefaultRequestHeaders.UserAgent.Count);
 
             fakeClient.Dispose();
             try
