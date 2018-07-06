@@ -112,8 +112,8 @@ namespace Microsoft.Rest
                 throw new InvalidOperationException(Resources.TokenProviderCannotBeNull);
             }
 
-            request.Headers.Authorization = await TokenProvider.GetAuthenticationHeaderAsync(cancellationToken);
-            await base.ProcessHttpRequestAsync(request, cancellationToken);
+            request.Headers.Authorization = await TokenProvider.GetAuthenticationHeaderAsync(cancellationToken).ConfigureAwait(false);
+            await base.ProcessHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
         }
     }
 }
