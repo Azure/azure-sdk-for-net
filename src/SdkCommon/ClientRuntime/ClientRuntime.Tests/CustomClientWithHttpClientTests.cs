@@ -207,6 +207,48 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal(defaultVersion.ToString(), "1.0.0.0");
         }
 
+        /// <summary>
+        /// This is to verify if a HttpClient is passed, we add default userAgent information
+        /// inside defaultheaders of the passed in HttpClient ONLY once
+        /// </summary>
+        [Fact]
+        public void AddFxVersionHeaderInformationOnce()
+        {
+            //Version defaultVersion = null;
+            HttpClient hc = new HttpClient(new ContosoMessageHandler());
+            ContosoServiceClient contosoServiceClient = new ContosoServiceClient();
+            string productName = contosoServiceClient.GetType().FullName;
+            contosoServiceClient.Dispose();
+            hc.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(productName, "1.0.0.0"));
+            
+            contosoServiceClient = new ContosoServiceClient(hc, false);
+            HttpResponseMessage response = contosoServiceClient.DoSyncWork();
+            contosoServiceClient.Dispose();
+            
+            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = contosoServiceClient.HttpClient.DefaultRequestHeaders.UserAgent;            
+            var productInfos = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+            Assert.Single(productInfos);
+        }
+
+        /// <summary>
+        /// This is to verify if a HttpClient is passed that contains ProductInfoHeaderValues with comments in
+        /// userAgent information, no exception occurs while merging
+        /// </summary>
+        [Fact]
+        public void IgnoreProductInfoHeaderValueCommentsDuringMerge()
+        {
+            const string comment = "(comment)";
+            HttpClient hc = new HttpClient(new ContosoMessageHandler());
+            hc.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(comment));
+            ContosoServiceClient contosoClient = new ContosoServiceClient(hc, false);
+            HttpResponseMessage response = contosoClient.DoSyncWork();
+            
+            HttpHeaderValueCollection<ProductInfoHeaderValue> userAgentValueCollection = contosoClient.HttpClient.DefaultRequestHeaders.UserAgent;
+            contosoClient.Dispose();
+            var productInfos = userAgentValueCollection.Where<ProductInfoHeaderValue>((p) => p.Product == null && p.Comment.Equals(comment, StringComparison.OrdinalIgnoreCase));
+            Assert.Single(productInfos);
+        }
+
         private HttpResponseMessage SendAndReceiveResponse(HttpClient httpClient)
         {
             // Create HTTP transport objects

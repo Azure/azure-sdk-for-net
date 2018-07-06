@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Microsoft.Rest
@@ -43,6 +43,11 @@ namespace Microsoft.Rest
         /// Flag to track if provided httpClient needs to disposed
         /// </summary>
         private bool _disposeHttpClient;
+
+        /// <summary>
+        /// Flag to track if the root handler needs to disposed
+        /// </summary>
+        private bool _disposeRootHandler;
 
         /// <summary>
         /// Field used for ClientVersion property
@@ -253,6 +258,7 @@ namespace Microsoft.Rest
         protected ServiceClient()
             : this(CreateRootHandler())
         {
+            _disposeRootHandler = true;
         }
 
         /// <summary>
@@ -281,6 +287,7 @@ namespace Microsoft.Rest
         protected ServiceClient(params DelegatingHandler[] handlers)
             : this(CreateRootHandler(), handlers)
         {
+            _disposeRootHandler = true;
         }
 
         /// <summary>
@@ -392,8 +399,11 @@ namespace Microsoft.Rest
                 {
                     HttpClient.Dispose();
                     HttpClient = null;
-                }                
-                
+                }
+
+                if (_disposeRootHandler)
+                    HttpClientHandler.Dispose();
+
                 FirstMessageHandler = null;
                 HttpClientHandler = null;
             }
@@ -427,6 +437,8 @@ namespace Microsoft.Rest
                 if(httpClientHandler == null)
                 {
                     httpClientHandler = CreateRootHandler();
+                    //set flag to dispose of handler, since it was not supplied and had to be created here
+                    _disposeRootHandler = true;
                 }
 
                 HttpClientHandler = httpClientHandler;
@@ -479,9 +491,8 @@ namespace Microsoft.Rest
         {
             if (!_disposed && HttpClient != null)
             {
-                MergeUserAgentInfo(DefaultUserAgentInfoList);
-                string cleanedProductName = CleanUserAgentInfoEntry(productName);                
-                HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(cleanedProductName, version));
+                string cleanedProductName = CleanUserAgentInfoEntry(productName);
+                MergeUserAgentInfo(DefaultUserAgentInfoList.Concat( new[] { new ProductInfoHeaderValue(cleanedProductName, version) }));
                 return true;
             }
 
@@ -507,13 +518,11 @@ namespace Microsoft.Rest
         /// We do this because, now we accept passed in HttpClient.
         /// So for any reason the passed HttpClient has our default UserAgent info (based on key name), we will not verify and check the values and will honor those values
         /// </summary>
-        private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
+        private void MergeUserAgentInfo(IEnumerable<ProductInfoHeaderValue> defaultUserAgentInfoList)
         {
-            // If you want to log ProductName in userAgent, it has to be without spaces
-
             foreach(ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
             {
-                if(!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)));
+                if (!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product != null && hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase)))
                 {
                     HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
                 }
