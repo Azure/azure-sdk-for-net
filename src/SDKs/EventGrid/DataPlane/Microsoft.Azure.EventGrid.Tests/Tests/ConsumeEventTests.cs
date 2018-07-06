@@ -137,7 +137,7 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             eventGridSubscriber2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemSent", typeof(ContosoItemSentEventData));
             eventGridSubscriber2.AddOrUpdateCustomEventMapping("Contoso.Items.ItemReceived", typeof(ContosoItemReceivedEventData));
 
-            IReadOnlyList<KeyValuePair<string, Type>> list = eventGridSubscriber2.GetAllCustomEventMappings();
+            IReadOnlyList<KeyValuePair<string, Type>> list = eventGridSubscriber2.ListAllCustomEventMappings().ToList();
             Assert.Equal(2, list.Count);
 
             Assert.True(eventGridSubscriber2.TryGetCustomEventMapping("Contoso.Items.ItemSent", out Type retrievedType));
