@@ -4,12 +4,13 @@
     <Description>Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest.</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime</AssemblyName>
     <AssemblyTitle>Client Runtime Library for Microsoft AutoRest Generated Clients</AssemblyTitle>
-    <Version>2.3.11</Version>
+    <Version>2.3.12</Version>
     <PackageId>Microsoft.Rest.ClientRuntime</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Fixed serialization/deserializtion of additional properties
+        1) Minor imporovements around unifying code path to a common paths for ServiceClient constructors.
+		2) Fixing potential hangs as ConfigureAwait(false) was not specified on few await calls.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
