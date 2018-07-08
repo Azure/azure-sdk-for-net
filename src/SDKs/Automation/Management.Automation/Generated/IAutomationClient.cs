@@ -48,6 +48,12 @@ namespace Microsoft.Azure.Management.Automation
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The type of counts to retrieve. Possible values include: 'status',
+        /// 'nodeconfiguration'
+        /// </summary>
+        string CountType1 { get; set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -186,6 +192,11 @@ namespace Microsoft.Azure.Management.Automation
         IWebhookOperations Webhook { get; }
 
         /// <summary>
+        /// Gets the IWatcherOperations.
+        /// </summary>
+        IWatcherOperations Watcher { get; }
+
+        /// <summary>
         /// Gets the ISoftwareUpdateConfigurationsOperations.
         /// </summary>
         ISoftwareUpdateConfigurationsOperations SoftwareUpdateConfigurations { get; }
@@ -256,9 +267,9 @@ namespace Microsoft.Azure.Management.Automation
         IDscNodeConfigurationOperations DscNodeConfiguration { get; }
 
         /// <summary>
-        /// Gets the IWatcherOperations.
+        /// Gets the INodeCountInformationOperations.
         /// </summary>
-        IWatcherOperations Watcher { get; }
+        INodeCountInformationOperations NodeCountInformation { get; }
 
     }
 }
