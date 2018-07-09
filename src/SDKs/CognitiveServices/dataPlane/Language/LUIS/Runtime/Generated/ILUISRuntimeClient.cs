@@ -16,11 +16,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
 
     /// <summary>
     /// </summary>
-    public partial interface ILuisRuntimeAPI : System.IDisposable
+    public partial interface ILUISRuntimeClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
+        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -31,14 +32,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// Gets or sets json deserialization settings.
         /// </summary>
         JsonSerializerSettings DeserializationSettings { get; }
-
-        /// <summary>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth'
-        /// </summary>
-        AzureRegions AzureRegion { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client

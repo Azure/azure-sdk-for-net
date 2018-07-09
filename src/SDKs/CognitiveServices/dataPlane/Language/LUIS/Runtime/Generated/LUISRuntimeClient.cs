@@ -19,12 +19,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
     using System.Net;
     using System.Net.Http;
 
-    public partial class LuisRuntimeAPI : ServiceClient<LuisRuntimeAPI>, ILuisRuntimeAPI
+    public partial class LUISRuntimeClient : ServiceClient<LUISRuntimeClient>, ILUISRuntimeClient
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        internal string BaseUri {get; set;}
+        public System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -37,14 +37,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-        /// 'eastasia', 'australiaeast', 'brazilsouth'
-        /// </summary>
-        public AzureRegions AzureRegion { get; set; }
-
-        /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
@@ -55,18 +47,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         public virtual IPrediction Prediction { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the LuisRuntimeAPI class.
+        /// Initializes a new instance of the LUISRuntimeClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected LuisRuntimeAPI(params DelegatingHandler[] handlers) : base(handlers)
+        protected LUISRuntimeClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LuisRuntimeAPI class.
+        /// Initializes a new instance of the LUISRuntimeClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -74,13 +66,58 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected LuisRuntimeAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected LUISRuntimeClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the LuisRuntimeAPI class.
+        /// Initializes a new instance of the LUISRuntimeClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        protected LUISRuntimeClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the LUISRuntimeClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        protected LUISRuntimeClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            BaseUri = baseUri;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the LUISRuntimeClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -91,7 +128,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public LuisRuntimeAPI(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public LUISRuntimeClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -105,7 +142,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         }
 
         /// <summary>
-        /// Initializes a new instance of the LuisRuntimeAPI class.
+        /// Initializes a new instance of the LUISRuntimeClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Subscription credentials which uniquely identify client subscription.
@@ -119,12 +156,81 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public LuisRuntimeAPI(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public LUISRuntimeClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
                 throw new System.ArgumentNullException("credentials");
             }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the LUISRuntimeClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public LUISRuntimeClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the LUISRuntimeClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public LUISRuntimeClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
             Credentials = credentials;
             if (Credentials != null)
             {
@@ -142,7 +248,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         private void Initialize()
         {
             Prediction = new Prediction(this);
-            BaseUri = "https://{AzureRegion}.api.cognitive.microsoft.com/luis/v2.0/apps";
+            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/luis/v2.0");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

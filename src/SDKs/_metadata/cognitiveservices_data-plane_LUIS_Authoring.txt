@@ -1,11 +1,20 @@
-2018-05-15 11:52:05 UTC
-
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/LUIS/Authoring/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\azure-sdk-for-net\src\SDKs
+2018-07-09 18:54:19 UTC
 1) azure-rest-api-specs repository information
-GitHub user: Azure
+GitHub fork: Azure
 Branch:      master
-Commit:      cc5c0ef579d006a23a32685298e77015408d25ce
+Commit:      dce3c0a91a455a7ea568106a16a090e2b06d966d
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\a-moghan\AppData\Roaming\npm `-- autorest@2.0.4262  
+Bootstrapper version:    autorest@2.0.4280
+
+
 Latest installed version:    
+
+

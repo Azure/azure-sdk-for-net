@@ -13,16 +13,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
 
   internal static partial class SdkInfo
   {
-      public static IEnumerable<Tuple<string, string, string>> ApiInfo_PredictionEndpoint
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_PredictionClient
       {
           get
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImage", "2.0"),
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageUrl", "2.0"),
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageUrlWithNoStore", "2.0"),
-                new Tuple<string, string, string>("PredictionEndpoint", "PredictImageWithNoStore", "2.0"),
+                new Tuple<string, string, string>("PredictionClient", "PredictImage", "2.0"),
+                new Tuple<string, string, string>("PredictionClient", "PredictImageUrl", "2.0"),
+                new Tuple<string, string, string>("PredictionClient", "PredictImageUrlWithNoStore", "2.0"),
+                new Tuple<string, string, string>("PredictionClient", "PredictImageWithNoStore", "2.0"),
               }.AsEnumerable();
           }
       }
