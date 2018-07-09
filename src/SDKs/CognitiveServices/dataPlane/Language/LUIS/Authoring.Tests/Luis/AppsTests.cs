@@ -162,10 +162,10 @@
 
                 var result = await client.Apps.ListEndpointsAsync(testAppId);
 
-                Assert.Equal("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Westus.ToString().ToLowerInvariant()]);
-                Assert.Equal("https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Eastus2.ToString().ToLowerInvariant()]);
-                Assert.Equal("https://westcentralus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Westcentralus.ToString().ToLowerInvariant()]);
-                Assert.Equal("https://southeastasia.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result[AzureRegions.Southeastasia.ToString().ToLowerInvariant()]);
+                Assert.Equal("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result["westus"]);
+                Assert.Equal("https://eastus2.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result["eastus2"]);
+                Assert.Equal("https://westcentralus.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result["westcentralus"]);
+                Assert.Equal("https://southeastasia.api.cognitive.microsoft.com/luis/v2.0/apps/" + testAppId, result["southeastasia"]);
 
                 // Cleanup
                 await client.Apps.DeleteAsync(testAppId);
@@ -180,7 +180,7 @@
                 var result = await client.Apps.PublishAsync(appId, new ApplicationPublishObject
                 {
                     IsStaging = false,
-                    Region = AzureRegions.Westus.ToString().ToLowerInvariant(),
+                    Region = "westus",
                     VersionId = "0.1"
                 });
 

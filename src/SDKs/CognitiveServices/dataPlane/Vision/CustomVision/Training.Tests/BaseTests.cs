@@ -41,9 +41,9 @@
             this.fixture = fixture;
         }
 
-        protected ITrainingApi GetTrainingApiClient()
+        protected ITrainingClient GetTrainingClientClient()
         {
-            ITrainingApi client = new TrainingApi(handlers: HttpMockServer.CreateInstance())
+            ITrainingClient client = new TrainingClient(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = TrainingKey,
             };
@@ -54,7 +54,7 @@
         public async Task<Guid> CreateTrainedImageClassificationProjectAsync(Guid? domain = null)
         {
 #if RECORD_MODE
-            var client = GetTrainingApiClient();
+            var client = GetTrainingClientClient();
             var projName = Guid.NewGuid().ToString();
 
             // Create a project
@@ -156,7 +156,7 @@
                 {"scissors_20", new double[] { 0.231617644, 0.08459154, 0.504901946, 0.8480392 } }
             };
 
-            var client = GetTrainingApiClient();
+            var client = GetTrainingClientClient();
 
             // Find the object detection domain
             var domains = await client.GetDomainsAsync();

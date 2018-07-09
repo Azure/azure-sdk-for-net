@@ -13,7 +13,6 @@ namespace LUIS.Authoring.Tests.Luis
     {
         private const HttpRecorderMode mode = HttpRecorderMode.Playback;
 
-        protected const AzureRegions region = AzureRegions.Westus;
         protected readonly Guid appId = new Guid("86226c53-b7a6-416f-876b-226b2b5ab07b");
         protected readonly Guid appId_error = new Guid("86226c53-b7a6-416f-876b-226b2b5ab07d");
         protected readonly Guid noneId = new Guid("76c92d38-2e8e-46f0-9645-5c5040c1bab1");
@@ -21,20 +20,17 @@ namespace LUIS.Authoring.Tests.Luis
 
         private string ClassName => GetType().FullName;
 
-        private ILuisAuthoringAPI GetClient(DelegatingHandler handler)
+        private ILUISAuthoringClient GetClient(DelegatingHandler handler)
         {
-            return new LuisAuthoringAPI(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler)
-            {
-                AzureRegion = region
-            };
+            return new LUISAuthoringClient(new ApiKeyServiceClientCredentials(subscriptionKey), handlers: handler);
         }
 
-        protected async void UseClientFor(Func<ILuisAuthoringAPI, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
+        protected async void UseClientFor(Func<ILUISAuthoringClient, Task> doTest, string className = null, [CallerMemberName] string methodName = "")
         {
             using (MockContext context = MockContext.Start(className ?? ClassName, methodName))
             {
                 HttpMockServer.Initialize(className ?? ClassName, methodName, mode);
-                ILuisAuthoringAPI client = GetClient(HttpMockServer.CreateInstance());
+                ILUISAuthoringClient client = GetClient(HttpMockServer.CreateInstance());
                 
                 await doTest(client);
                 context.Stop();

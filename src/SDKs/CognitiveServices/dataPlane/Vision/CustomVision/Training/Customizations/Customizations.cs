@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 {
-    public partial class TrainingApi
+    public partial class TrainingClient
     {
         /// <summary>
         /// An partial-method to perform custom initialization.

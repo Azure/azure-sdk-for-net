@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
     /// <summary>
     /// </summary>
-    public partial interface ITrainingApi : System.IDisposable
+    public partial interface ITrainingClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
