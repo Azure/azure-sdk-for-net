@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Vision.Face
+namespace Microsoft.Azure.CognitiveServices.Language.SpellCheck
 {
   using System;
   using System.Collections.Generic;
@@ -13,16 +13,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
   internal static partial class SdkInfo
   {
-      public static IEnumerable<Tuple<string, string, string>> ApiInfo_FaceAPI
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_SpellCheckClient
       {
           get
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("FaceAPI", "Face", "1.0"),
-                new Tuple<string, string, string>("FaceAPI", "FaceList", "1.0"),
-                new Tuple<string, string, string>("FaceAPI", "PersonGroup", "1.0"),
-                new Tuple<string, string, string>("FaceAPI", "PersonGroupPerson", "1.0"),
+                new Tuple<string, string, string>("SpellCheckClient", "SpellChecker", "1.0"),
               }.AsEnumerable();
           }
       }

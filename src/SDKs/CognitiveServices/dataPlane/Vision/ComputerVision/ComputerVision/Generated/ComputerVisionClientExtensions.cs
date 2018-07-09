@@ -18,9 +18,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ComputerVisionAPI.
+    /// Extension methods for ComputerVisionClient.
     /// </summary>
-    public static partial class ComputerVisionAPIExtensions
+    public static partial class ComputerVisionClientExtensions
     {
             /// <summary>
             /// This operation returns the list of domain-specific models that are
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListModelsResult> ListModelsAsync(this IComputerVisionAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ListModelsResult> ListModelsAsync(this IComputerVisionClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListModelsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionAPI operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageAsync(this IComputerVisionClient operations, string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageWithHttpMessagesAsync(url, visualFeatures, details, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GenerateThumbnailAsync(this IComputerVisionAPI operations, int width, int height, string url, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GenerateThumbnailAsync(this IComputerVisionClient operations, int width, int height, string url, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.GenerateThumbnailWithHttpMessagesAsync(width, height, url, smartCropping, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OcrResult> RecognizePrintedTextAsync(this IComputerVisionAPI operations, bool detectOrientation, string url, OcrLanguages language = default(OcrLanguages), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OcrResult> RecognizePrintedTextAsync(this IComputerVisionClient operations, bool detectOrientation, string url, OcrLanguages language = default(OcrLanguages), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RecognizePrintedTextWithHttpMessagesAsync(detectOrientation, url, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionAPI operations, string url, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageAsync(this IComputerVisionClient operations, string url, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DescribeImageWithHttpMessagesAsync(url, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagResult> TagImageAsync(this IComputerVisionAPI operations, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagResult> TagImageAsync(this IComputerVisionClient operations, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.TagImageWithHttpMessagesAsync(url, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainModelResults> AnalyzeImageByDomainAsync(this IComputerVisionAPI operations, string model, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainModelResults> AnalyzeImageByDomainAsync(this IComputerVisionClient operations, string model, string url, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageByDomainWithHttpMessagesAsync(model, url, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecognizeTextHeaders> RecognizeTextAsync(this IComputerVisionAPI operations, string url, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecognizeTextHeaders> RecognizeTextAsync(this IComputerVisionClient operations, string url, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RecognizeTextWithHttpMessagesAsync(url, mode, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TextOperationResult> GetTextOperationResultAsync(this IComputerVisionAPI operations, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TextOperationResult> GetTextOperationResultAsync(this IComputerVisionClient operations, string operationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTextOperationResultWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionAPI operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), string details = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageAnalysis> AnalyzeImageInStreamAsync(this IComputerVisionClient operations, Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), string details = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageInStreamWithHttpMessagesAsync(image, visualFeatures, details, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GenerateThumbnailInStreamAsync(this IComputerVisionAPI operations, int width, int height, Stream image, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Stream> GenerateThumbnailInStreamAsync(this IComputerVisionClient operations, int width, int height, Stream image, bool? smartCropping = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var _result = await operations.GenerateThumbnailInStreamWithHttpMessagesAsync(width, height, image, smartCropping, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
@@ -437,7 +437,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OcrResult> RecognizePrintedTextInStreamAsync(this IComputerVisionAPI operations, bool detectOrientation, Stream image, OcrLanguages language = default(OcrLanguages), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OcrResult> RecognizePrintedTextInStreamAsync(this IComputerVisionClient operations, bool detectOrientation, Stream image, OcrLanguages language = default(OcrLanguages), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RecognizePrintedTextInStreamWithHttpMessagesAsync(detectOrientation, image, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionAPI operations, Stream image, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageDescription> DescribeImageInStreamAsync(this IComputerVisionClient operations, Stream image, string maxCandidates = "1", string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DescribeImageInStreamWithHttpMessagesAsync(image, maxCandidates, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagResult> TagImageInStreamAsync(this IComputerVisionAPI operations, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagResult> TagImageInStreamAsync(this IComputerVisionClient operations, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.TagImageInStreamWithHttpMessagesAsync(image, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -546,7 +546,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainModelResults> AnalyzeImageByDomainInStreamAsync(this IComputerVisionAPI operations, string model, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainModelResults> AnalyzeImageByDomainInStreamAsync(this IComputerVisionClient operations, string model, Stream image, string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeImageByDomainInStreamWithHttpMessagesAsync(model, image, language, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -573,7 +573,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecognizeTextInStreamHeaders> RecognizeTextInStreamAsync(this IComputerVisionAPI operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecognizeTextInStreamHeaders> RecognizeTextInStreamAsync(this IComputerVisionClient operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RecognizeTextInStreamWithHttpMessagesAsync(image, mode, null, cancellationToken).ConfigureAwait(false))
                 {

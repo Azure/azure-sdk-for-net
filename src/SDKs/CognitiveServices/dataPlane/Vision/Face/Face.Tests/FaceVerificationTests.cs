@@ -17,7 +17,7 @@ namespace FaceSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationPositive");
 
-                IFaceAPI client = GetFaceClient(HttpMockServer.CreateInstance());
+                IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
 
                 Guid? faceId1 = null;
                 Guid? faceId2 = null;
@@ -46,7 +46,7 @@ namespace FaceSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationNegative");
 
-                IFaceAPI client = GetFaceClient(HttpMockServer.CreateInstance());
+                IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
 
                 Guid? faceId1 = null;
                 Guid? faceId2 = null;
@@ -75,7 +75,7 @@ namespace FaceSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "FaceVerificationNegative2");
 
-                IFaceAPI client = GetFaceClient(HttpMockServer.CreateInstance());
+                IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId2 = null;
                 string personGroupId = "123";
 

@@ -18,7 +18,7 @@ namespace SpellCheckSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "SpellCheck");
 
-                ISpellCheckAPI client = new SpellCheckAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
+                ISpellCheckClient client = new SpellCheckClient(new ApiKeyServiceClientCredentials(SubscriptionKey), HttpMockServer.CreateInstance());
 
                 var resp = client.SpellCheckerAsync(text: "Bill Gatas").Result;
                 Assert.NotNull(resp);

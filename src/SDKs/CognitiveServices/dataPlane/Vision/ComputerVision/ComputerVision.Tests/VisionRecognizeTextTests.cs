@@ -12,7 +12,7 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionRecognizeTextTests : BaseTests
     {
-        static private RecognitionResult GetRecognitionResultWithPolling(IComputerVisionAPI client, string operationLocation)
+        static private RecognitionResult GetRecognitionResultWithPolling(IComputerVisionClient client, string operationLocation)
         {
             string operationId = operationLocation.Substring(operationLocation.LastIndexOf('/') + 1);
 
@@ -40,7 +40,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "RecognizeTextInStreamTest");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
                 {
                     RecognizeTextInStreamHeaders headers = client.RecognizeTextInStreamAsync(stream, TextRecognitionMode.Handwritten).Result;
@@ -70,7 +70,7 @@ namespace ComputerVisionSDK.Tests
 
                 string imageUrl = GetTestImageUrl("signage.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     RecognizeTextHeaders headers = client.RecognizeTextAsync(imageUrl, TextRecognitionMode.Printed).Result;
 
