@@ -13,13 +13,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
 
   internal static partial class SdkInfo
   {
-      public static IEnumerable<Tuple<string, string, string>> ApiInfo_LanguageUnderstandingIntelligentServiceLUISEndpointAPIforrunningpredictionsandextractinguserintentionsandentitiesfromutterances
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_LUISRuntimeClient
       {
           get
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("LanguageUnderstandingIntelligentServiceLUISEndpointAPIforrunningpredictionsandextractinguserintentionsandentitiesfromutterances", "Prediction", "v2.0 preview"),
+                new Tuple<string, string, string>("LUISRuntimeClient", "Prediction", "2.0"),
               }.AsEnumerable();
           }
       }
