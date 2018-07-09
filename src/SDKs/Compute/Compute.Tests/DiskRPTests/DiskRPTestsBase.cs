@@ -334,12 +334,12 @@ namespace Compute.Tests.DiskRPTests
 
             switch (diskCreateOption)
             {
-                case DiskCreateOption.Empty:
+                case "Empty":
                     disk = GenerateBaseDisk(diskCreateOption);
                     disk.DiskSizeGB = diskSizeGB;
                     disk.Zones = zones;
                     break;
-                case DiskCreateOption.Import:
+                case "Import":
                     disk = GenerateImportDisk(diskCreateOption, rgName);
                     disk.DiskSizeGB = diskSizeGB;
                     disk.Zones = zones;
@@ -402,7 +402,7 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
-        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = SnapshotStorageAccountTypes.StandardLRS)
+        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = "Standard_LRS")
         {
             Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes);
             return snapshot;

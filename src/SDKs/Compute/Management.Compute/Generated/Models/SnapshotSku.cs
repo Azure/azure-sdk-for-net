@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">The sku name. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'Standard_ZRS'</param>
         /// <param name="tier">The sku tier.</param>
-        public SnapshotSku(string name = default(string), string tier = default(string))
+        public SnapshotSku(SnapshotStorageAccountTypes? name = default(SnapshotStorageAccountTypes?), string tier = default(string))
         {
             Name = name;
             Tier = tier;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Premium_LRS', 'Standard_ZRS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public SnapshotStorageAccountTypes? Name { get; set; }
 
         /// <summary>
         /// Gets the sku tier.
