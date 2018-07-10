@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var provider = AzureServiceTokenProviderFactory.Create(Constants.AzureCliConnectionString, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.AzureCliConnectionString, provider.ConnectionString);
-            Assert.IsType(typeof(AzureCliAccessTokenProvider), provider);
+            Assert.IsType<AzureCliAccessTokenProvider>(provider);
 
             provider = AzureServiceTokenProviderFactory.Create(Constants.AzureCliConnectionStringWithSpaces, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.AzureCliConnectionStringWithSpaces, provider.ConnectionString);
-            Assert.IsType(typeof(AzureCliAccessTokenProvider), provider);
+            Assert.IsType<AzureCliAccessTokenProvider>(provider);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.NotNull(provider);
             Assert.Equal(Constants.AzureCliConnectionStringEndingWithSemiColonAndSpace, provider.ConnectionString);
-            Assert.IsType(typeof(AzureCliAccessTokenProvider), provider);
+            Assert.IsType<AzureCliAccessTokenProvider>(provider);
         }
 
         [Fact]
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var provider = AzureServiceTokenProviderFactory.Create(Constants.ManagedServiceIdentityConnectionString, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.ManagedServiceIdentityConnectionString, provider.ConnectionString);
-            Assert.IsType(typeof(MsiAccessTokenProvider), provider);
+            Assert.IsType<MsiAccessTokenProvider>(provider);
         }
 
         [Fact]
@@ -160,17 +160,17 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringThumbprintLocalMachine, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.CertificateConnStringThumbprintLocalMachine, provider.ConnectionString);
-            Assert.IsType(typeof(ClientCertificateAzureServiceTokenProvider), provider);
+            Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
 
             provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringThumbprintCurrentUser, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.CertificateConnStringThumbprintCurrentUser, provider.ConnectionString);
-            Assert.IsType(typeof(ClientCertificateAzureServiceTokenProvider), provider);
+            Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
 
             provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringSubjectNameCurrentUser, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.CertificateConnStringSubjectNameCurrentUser, provider.ConnectionString);
-            Assert.IsType(typeof(ClientCertificateAzureServiceTokenProvider), provider);
+            Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
         }
 
         [Fact]
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             var provider = AzureServiceTokenProviderFactory.Create(Constants.ClientSecretConnString, Constants.AzureAdInstance);
             Assert.NotNull(provider);
             Assert.Equal(Constants.ClientSecretConnString, provider.ConnectionString);
-            Assert.IsType(typeof(ClientSecretAccessTokenProvider), provider);
+            Assert.IsType<ClientSecretAccessTokenProvider>(provider);
         }
     }
 }

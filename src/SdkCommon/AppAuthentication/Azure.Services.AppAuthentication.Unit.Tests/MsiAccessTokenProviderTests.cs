@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // Get token.
-            var token = await msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId,Constants.TenantId).ConfigureAwait(false);
+            var authResult = await msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
             // Check if the principalused and type are as expected. 
-            Validator.ValidateToken(token, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
+            Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // Ensure exception is thrown when getting the token
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
             Assert.Contains(Constants.TokenResponseFormatExceptionMessage, exception.ToString());
             Assert.Contains(Constants.JsonParseErrorException, exception.ToString());
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // Ensure exception is thrown when getting the token
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
             Assert.Contains(Constants.FailedToGetTokenError, exception.ToString());
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
@@ -88,13 +88,13 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
             // Get token. This confirms that the environment variables are being read. 
-            var token = await msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
+            var authResult = await msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
 
             // Delete the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
 
-            Validator.ValidateToken(token, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
+            Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             // Delete the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             // Delete the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockMsi);
             MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             // Delete the environment variables
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv, null);

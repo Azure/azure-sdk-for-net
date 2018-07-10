@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource">Resource to access.</param>
         /// <param name="authority">Authority where resource is present.</param>
         /// <returns></returns>
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
             // If authority is not specified, start with common. Once known, after the first time token is acquired, use that. 
             if (string.IsNullOrWhiteSpace(authority))
@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             // Use ADAL's default token cache, instead of file based cache.
             // This prevents dependency on file and DPAPI, and enables service account scenarios. 
-            string accessToken = null;
+            AppAuthenticationResult authResult = null;
 
             try
             {
                 // See if token is present in cache
-                accessToken = await _authenticationContext.AcquireTokenSilentAsync(authority, resource, ClientId).ConfigureAwait(false);
+                authResult = await _authenticationContext.AcquireTokenSilentAsync(authority, resource, ClientId).ConfigureAwait(false);
 
             }
             catch
@@ -58,14 +58,14 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
 
             // If token not in cache, acquire it
-            if (accessToken == null)
+            if (authResult == null)
             {
                 // This causes ADAL to use IWA
                 UserCredential userCredential = new UserCredential();
 
                 try
                 {
-                    accessToken = await _authenticationContext.AcquireTokenAsync(authority, resource, ClientId, userCredential).ConfigureAwait(false);
+                    authResult = await _authenticationContext.AcquireTokenAsync(authority, resource, ClientId, userCredential).ConfigureAwait(false);
                 }
                 catch (Exception exp)
                 {
@@ -82,6 +82,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 }
             }
 
+            var accessToken = authResult?.AccessToken;
+
             if (accessToken != null)
             {
                 AccessToken token = AccessToken.Parse(accessToken);
@@ -90,7 +92,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 PrincipalUsed.TenantId = _currentUserTenant = token.TenantId;
                 PrincipalUsed.IsAuthenticated = true;
 
-                return accessToken;
+                return authResult;
             }
 
             // If result is null, token could not be acquired, and no exception was thrown. 

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _httpClient = httpClient;
         }
 
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         PrincipalUsed.TenantId = token.TenantId;
                     }
 
-                    return tokenResponse.AccessToken;
+                    return AppAuthenticationResult.Create(tokenResponse, TokenResponse.DateFormat.Unix);
                 }
 
                 string exceptionText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

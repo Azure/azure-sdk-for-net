@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on thumbprint in the connection string. 
-            string token = await provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
+            var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId).ConfigureAwait(false);
             
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            Validator.ValidateToken(token, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 cert.Thumbprint, true, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Ensure exception is thrown when getting the token
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId));
 
             Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.ToString());
             // Delete the cert, since testing is done. 
@@ -178,12 +178,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 cert.Subject, false, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on subject name in the connection string. 
-            string token = await provider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
+            var authResult = await provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty).ConfigureAwait(false);
 
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
 
-            Validator.ValidateToken(token, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
+            Validator.ValidateToken(authResult.AccessToken, provider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId, cert.Thumbprint);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                 cert.Subject, false, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
             // Get the token. This will test that ClientCertificateAzureServiceTokenProvider could fetch the cert from CurrentUser store based on subject name in the connection string. 
-            var exception = Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, string.Empty));
+            var exception = Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, string.Empty));
 
             // Delete the cert, since testing is done. 
             CertUtil.DeleteCertificate(cert.Thumbprint);
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             ClientCertificateAzureServiceTokenProvider provider = new ClientCertificateAzureServiceTokenProvider(Constants.TestAppId,
                 Guid.NewGuid().ToString(), false, Constants.CurrentUserStore, Constants.TenantId, Constants.AzureAdInstance, mockAuthenticationContext);
 
-            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetTokenAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => provider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
 
             Assert.Contains(Constants.KeyVaultResourceId, exception.Message);
             Assert.Contains(Constants.TenantId, exception.Message);

@@ -2,15 +2,16 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
         <Description>Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.</Description>
-        <Version>1.0.3</Version>
+        <Version>1.2.0-preview</Version>
         <AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
         <PackageTags>Azure Authentication AppAuthentication</PackageTags>
 	<PackageReleaseNotes>
 		<![CDATA[
 			Documentation can be found at https://go.microsoft.com/fwlink/p/?linkid=862452.
 			
-			MsiAccessTokenProvider updated to use IDMS endpoint for authentication
-			Bug fix: Serializable tag was missing on AzureServicesTokenProviderException
+			Adding new .NET 4.7.2 targeted package
+			Adding new method GetAuthResultAsync to AzureServiceTokenProvider
+			Adding new class SqlAzureAppAuthProvider that implements new SqlAuthenticationProvider (only in .NET 4.7.2 targeted package)
 		]]>
 	</PackageReleaseNotes>
     </PropertyGroup>
@@ -18,13 +19,16 @@
         <Content Include="build\*.targets" PackagePath="build\" />
     </ItemGroup>
     <PropertyGroup>
-        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+        <TargetFrameworks>netstandard1.4;net452;net472</TargetFrameworks>
     </PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
+		<DefineConstants>net472;FullNetFx</DefineConstants>		
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
     <ItemGroup>
+		<Reference Include="System.Net.Http" />
         <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.14.2" />
-    </ItemGroup>
-    <ItemGroup>
-        <Reference Include="System.Net.Http" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
         <PackageReference Include="System.Diagnostics.Process">

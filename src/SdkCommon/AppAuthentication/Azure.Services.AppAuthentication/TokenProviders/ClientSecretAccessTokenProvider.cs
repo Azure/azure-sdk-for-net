@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             };
         }
 
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
             string errorMessage = string.Empty;
 
@@ -58,14 +58,16 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 ClientCredential clientCredential = new ClientCredential(_clientId, _clientSecret);
 
-                var result = await _authenticationContext.AcquireTokenAsync(authority, resource, clientCredential).ConfigureAwait(false);
+                var authResult = await _authenticationContext.AcquireTokenAsync(authority, resource, clientCredential).ConfigureAwait(false);
 
-                if (result != null)
+                var accessToken = authResult?.AccessToken;
+
+                if (accessToken != null)
                 {
                     PrincipalUsed.IsAuthenticated = true;
-                    PrincipalUsed.TenantId = AccessToken.Parse(result).TenantId;
+                    PrincipalUsed.TenantId = AccessToken.Parse(accessToken).TenantId;
 
-                    return result;
+                    return authResult;
                 }
             }
             catch (Exception ex)

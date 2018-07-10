@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
@@ -19,11 +20,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="clientId"></param>
         /// <param name="userCredential"></param>
         /// <returns></returns>
-        public async Task<string> AcquireTokenAsync(string authority, string resource, string clientId, UserCredential userCredential)
+        public async Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, string clientId, UserCredential userCredential)
         {
             AuthenticationContext authenticationContext = new AuthenticationContext(authority);
-            var result = await authenticationContext.AcquireTokenAsync(resource, clientId, userCredential).ConfigureAwait(false);
-            return result.AccessToken;
+            var authResult = await authenticationContext.AcquireTokenAsync(resource, clientId, userCredential).ConfigureAwait(false);
+            return AppAuthenticationResult.Create(authResult);
         }
 
         /// <summary>
@@ -33,11 +34,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource"></param>
         /// <param name="clientId"></param>
         /// <returns></returns>
-        public async Task<string> AcquireTokenSilentAsync(string authority, string resource, string clientId)
+        public async Task<AppAuthenticationResult> AcquireTokenSilentAsync(string authority, string resource, string clientId)
         {
             AuthenticationContext authenticationContext = new AuthenticationContext(authority);
-            var result = await authenticationContext.AcquireTokenSilentAsync(resource, clientId).ConfigureAwait(false);
-            return result.AccessToken;
+            var authResult = await authenticationContext.AcquireTokenSilentAsync(resource, clientId).ConfigureAwait(false);
+            return AppAuthenticationResult.Create(authResult);
         }
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource"></param>
         /// <param name="clientCredential"></param>
         /// <returns></returns>
-        public async Task<string> AcquireTokenAsync(string authority, string resource, ClientCredential clientCredential)
+        public async Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, ClientCredential clientCredential)
         {
             AuthenticationContext authenticationContext = new AuthenticationContext(authority);
             var authResult = await authenticationContext.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
-            return authResult.AccessToken;
+            return AppAuthenticationResult.Create(authResult);
         }
 
         /// <summary>
@@ -61,11 +62,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource"></param>
         /// <param name="clientCertificate"></param>
         /// <returns></returns>
-        public async Task<string> AcquireTokenAsync(string authority, string resource, IClientAssertionCertificate clientCertificate)
+        public async Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, IClientAssertionCertificate clientCertificate)
         {
             AuthenticationContext authenticationContext = new AuthenticationContext(authority);
-            var result = await authenticationContext.AcquireTokenAsync(resource, clientCertificate).ConfigureAwait(false);
-            return result.AccessToken;
+            var authResult = await authenticationContext.AcquireTokenAsync(resource, clientCertificate).ConfigureAwait(false);
+            return AppAuthenticationResult.Create(authResult);
         }
     }
 }

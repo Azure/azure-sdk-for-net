@@ -49,13 +49,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         internal static string GetUserTokenResponse(long secondsFromCurrent, bool formatForVisualStudio = false)
         {
             string tokenResult =
-                "{  \"accessToken\": \"{accesstoken}\",  \"expiresOn\": \"2017-08-19 18:52:40.624222\",  \"subscription\": \"1135bf8c-f190-46f2-bfd6-d57c57852c04\",  \"tenant\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",  \"tokenType\": \"Bearer\"}";
+                "{  \"accessToken\": \"{accesstoken}\",  \"expiresOn\": \"{expireson}\",  \"subscription\": \"1135bf8c-f190-46f2-bfd6-d57c57852c04\",  \"tenant\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",  \"tokenType\": \"Bearer\"}";
 
             tokenResult = tokenResult.Replace("{accesstoken}", GetUserToken(secondsFromCurrent));
+            tokenResult = tokenResult.Replace("{expireson}", DateTimeOffset.Now.AddSeconds(secondsFromCurrent).ToString());
 
             if (formatForVisualStudio)
             {
                 tokenResult = tokenResult.Replace("accessToken", "access_token");
+                tokenResult = tokenResult.Replace("expiresOn", "expires_on");
             }
 
             return tokenResult;

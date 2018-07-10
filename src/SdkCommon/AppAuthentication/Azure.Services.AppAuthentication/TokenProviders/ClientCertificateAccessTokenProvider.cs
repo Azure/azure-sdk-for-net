@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource">Resource to access.</param>
         /// <param name="authority">Authority where resource is.</param>
         /// <returns></returns>
-        public override async Task<string> GetTokenAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
             // If authority is not specified, create it using azureAdInstance and tenant Id. Tenant ID comes from the connection string. 
             if (string.IsNullOrWhiteSpace(authority))
@@ -130,8 +130,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
                         ClientAssertionCertificate certCred = new ClientAssertionCertificate(_clientId, cert);
 
-                        string accessToken =
+                        var authResult =
                             await _authenticationContext.AcquireTokenAsync(authority, resource, certCred).ConfigureAwait(false);
+
+                        var accessToken = authResult?.AccessToken;
 
                         if (accessToken != null)
                         {
@@ -139,7 +141,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             PrincipalUsed.IsAuthenticated = true;
                             PrincipalUsed.TenantId = AccessToken.Parse(accessToken).TenantId;
 
-                            return accessToken;
+                            return authResult;
                         }
                     }
                     catch (Exception exp)

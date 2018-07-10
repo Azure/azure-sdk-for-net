@@ -9,24 +9,24 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// <summary>
     /// Cache for access tokens. 
     /// </summary>
-    internal class AccessTokenCache
+    internal class AppAuthResultCache
     {
-        private static readonly ConcurrentDictionary<string, Tuple<AccessToken, Principal>> CacheDictionary = new ConcurrentDictionary<string, Tuple<AccessToken, Principal>>();
+        private static readonly ConcurrentDictionary<string, Tuple<AppAuthenticationResult, Principal>> CacheDictionary = new ConcurrentDictionary<string, Tuple<AppAuthenticationResult, Principal>>();
 
         /// <summary>
         /// Gets the token from the cache. If it is present, and not about to expire, it is returned. 
         /// </summary>
         /// <param name="cacheKey"></param>
         /// <returns></returns>
-        public static Tuple<AccessToken, Principal> Get(string cacheKey)
+        public static Tuple<AppAuthenticationResult, Principal> Get(string cacheKey)
         {
-            Tuple<AccessToken, Principal> tokenTuple;
+            Tuple<AppAuthenticationResult, Principal> resultTuple;
 
-            if (CacheDictionary.TryGetValue(cacheKey, out tokenTuple))
+            if (CacheDictionary.TryGetValue(cacheKey, out resultTuple))
             {
-                if (tokenTuple?.Item1 != null && !tokenTuple.Item1.IsAboutToExpire())
+                if (resultTuple?.Item1 != null && !resultTuple.Item1.IsNearExpiry())
                 {
-                    return tokenTuple;
+                    return resultTuple;
                 }
             }
 
@@ -37,10 +37,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// Tuple of access token and principal are added to the cache after the token is aquired. 
         /// </summary>
         /// <param name="cacheKey"></param>
-        /// <param name="tokenTuple"></param>
-        public static void AddOrUpdate(string cacheKey, Tuple<AccessToken, Principal> tokenTuple)
+        /// <param name="resultTuple"></param>
+        public static void AddOrUpdate(string cacheKey, Tuple<AppAuthenticationResult, Principal> resultTuple)
         {
-            CacheDictionary.AddOrUpdate(cacheKey, tokenTuple, (s, tuple) => tokenTuple);
+            CacheDictionary.AddOrUpdate(cacheKey, resultTuple, (s, tuple) => resultTuple);
         }
 
         /// <summary>
