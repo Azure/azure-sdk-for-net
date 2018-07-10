@@ -23,7 +23,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
     using System.Threading;
     using System.Threading.Tasks;
 
-    public partial class TrainingClient : ServiceClient<TrainingClient>, ITrainingClient
+    public partial class TrainingApi : ServiceClient<TrainingApi>, ITrainingApi
     {
         /// <summary>
         /// The base URI of the service.
@@ -45,18 +45,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the TrainingClient class.
+        /// Initializes a new instance of the TrainingApi class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public TrainingClient(params DelegatingHandler[] handlers) : base(handlers)
+        public TrainingApi(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrainingClient class.
+        /// Initializes a new instance of the TrainingApi class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -64,13 +64,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public TrainingClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public TrainingApi(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrainingClient class.
+        /// Initializes a new instance of the TrainingApi class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public TrainingClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public TrainingApi(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrainingClient class.
+        /// Initializes a new instance of the TrainingApi class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public TrainingClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public TrainingApi(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/customvision/v2.0");
+            BaseUri = new System.Uri("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.1/Training");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/domains").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "domains").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/domains/{domainId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "domains/{domainId}").ToString();
             _url = _url.Replace("{domainId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(domainId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -509,7 +509,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/tagged").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/tagged").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -700,7 +700,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/untagged").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/untagged").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -878,7 +878,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/tagged/count").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/tagged/count").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -1043,7 +1043,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/untagged/count").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/untagged/count").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -1208,7 +1208,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/id").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/id").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (imageIds != null)
@@ -1380,7 +1380,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (tagIds != null)
@@ -1553,7 +1553,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (imageIds != null)
@@ -1699,7 +1699,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/files").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/files").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1860,7 +1860,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/urls").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/urls").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2021,7 +2021,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/predictions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/predictions").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2178,7 +2178,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/tags").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/tags").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2340,7 +2340,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/tags").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/tags").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (imageIds != null)
@@ -2491,7 +2491,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/regions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/regions").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -2645,7 +2645,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/images/regions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/images/regions").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (regionIds != null)
@@ -2788,7 +2788,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/{projectId}/images/{imageId}/regionproposals").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/images/{imageId}/regionproposals").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{imageId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(imageId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -2937,7 +2937,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/predictions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/predictions").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (ids != null)
@@ -3079,7 +3079,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/predictions/query").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/predictions/query").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -3242,7 +3242,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/quicktest/url").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/quicktest/url").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -3412,7 +3412,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/quicktest/image").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/quicktest/image").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -3580,7 +3580,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/train").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/train").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -3719,7 +3719,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3827,6 +3827,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='domainId'>
         /// The id of the domain to use for this project. Defaults to General
         /// </param>
+        /// <param name='classificationType'>
+        /// The type of classifier to create for this project. Possible values include:
+        /// 'Multiclass', 'Multilabel'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -3848,7 +3852,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (name == null)
             {
@@ -3868,12 +3872,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("description", description);
                 tracingParameters.Add("domainId", domainId);
+                tracingParameters.Add("classificationType", classificationType);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateProject", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects").ToString();
             List<string> _queryParameters = new List<string>();
             if (name != null)
             {
@@ -3886,6 +3891,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (domainId != null)
             {
                 _queryParameters.Add(string.Format("domainId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(domainId, SerializationSettings).Trim('"'))));
+            }
+            if (classificationType != null)
+            {
+                _queryParameters.Add(string.Format("classificationType={0}", System.Uri.EscapeDataString(classificationType)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4032,7 +4041,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -4172,7 +4181,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -4305,7 +4314,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -4454,7 +4463,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -4601,7 +4610,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -4746,7 +4755,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -4884,7 +4893,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -5047,7 +5056,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}/performance").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}/performance").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
@@ -5235,7 +5244,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}/performance/images").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}/performance/images").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
@@ -5416,7 +5425,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}/performance/images/count").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}/performance/images/count").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
@@ -5573,7 +5582,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}/export").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}/export").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -5681,10 +5690,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The iteration id
         /// </param>
         /// <param name='platform'>
-        /// The target platform (coreml or tensorflow)
+        /// The target platform (coreml or tensorflow). Possible values include:
+        /// 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'
         /// </param>
         /// <param name='flavor'>
-        /// The flavor of the target platform (Windows, Linux, ARM, or GPU)
+        /// The flavor of the target platform (Windows, Linux, ARM, or GPU). Possible
+        /// values include: 'Linux', 'Windows'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5733,7 +5744,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/iterations/{iterationId}/export").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/iterations/{iterationId}/export").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
@@ -5899,7 +5910,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/tags/{tagId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/tags/{tagId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{tagId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(tagId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
@@ -6053,7 +6064,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/tags/{tagId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/tags/{tagId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{tagId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(tagId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -6191,7 +6202,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/tags/{tagId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/tags/{tagId}").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{tagId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(tagId, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -6345,7 +6356,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/tags").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/tags").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -6509,7 +6520,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Training/projects/{projectId}/tags").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "projects/{projectId}/tags").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (name != null)
