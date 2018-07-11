@@ -15,9 +15,9 @@ function Get-SdkRepoRootDirectory {
     )
     
     $currPath = $scriptPath
-    if($scriptPath.Contains("\src\SDKs\") -or $scriptPath.Contains("\src\AzureStack\"))
+    if($scriptPath.Contains("\src\SDKs\") -or $scriptPath.Contains("\src\AzureStack\") -or $scriptPath.Contains("\src\Profiles\"))
     {
-        while(![string]::IsNullOrEmpty($currPath) -and !(($currPath.EndsWith("\src\SDKs") -or $currPath.EndsWith("\src\AzureStack")) -and $(Test-Path "$currPath\..\..\.gitignore")))
+        while(![string]::IsNullOrEmpty($currPath) -and !(($currPath.EndsWith("\src\SDKs") -or $currPath.EndsWith("\src\AzureStack") -or $currPath.EndsWith("\src\Profiles")) -and $(Test-Path "$currPath\..\..\.gitignore")))
         {
             $currPath = $(Split-Path $currPath -parent)
         }
@@ -28,7 +28,7 @@ function Get-SdkRepoRootDirectory {
 function Get-InvokingScriptPath {
     $arr =$($(Get-PSCallStack).InvocationInfo.PSCommandPath)
     foreach ($p in $arr) {
-        if(![string]::IsNullOrEmpty($p) -and ($p.Contains("\src\SDKs") -or $p.Contains("\src\AzureStack")))
+        if(![string]::IsNullOrEmpty($p) -and ($p.Contains("\src\SDKs") -or $p.Contains("\src\AzureStack") -or $p.Contains("\src\Profiles")))
         {
             return $(Split-Path $p -Parent)
         }
