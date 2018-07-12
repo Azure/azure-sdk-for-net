@@ -384,6 +384,7 @@
                 Assert.Equal("Exporting", export.Status);
                 Assert.Null(export.DownloadUri);
                 Assert.Equal("TensorFlow", export.Platform);
+                Assert.False(export.NewerVersionAvailable);
 
                 while (export.Status != "Done")
                 {
@@ -421,7 +422,7 @@
                 Assert.NotEqual(iterationToDelete.Id, trainedIteration.Id);
                 Assert.NotEqual(Guid.Empty, trainedIteration.Id);
                 Assert.False(trainedIteration.IsDefault);
-                Assert.Equal("Staging", trainedIteration.Status);
+                Assert.True("Staging" == trainedIteration.Status || "Training" == trainedIteration.Status);
                 Assert.False(trainedIteration.Exportable);
 
                 await client.DeleteProjectAsync(projectId);
