@@ -4,6 +4,8 @@
 
 ###  Feature Additions
 
+* Support sharing self-hosted integration runtime across data factories and subscriptions
+
 ## Version 0.9.0-preview
 
 ### Feature Additions

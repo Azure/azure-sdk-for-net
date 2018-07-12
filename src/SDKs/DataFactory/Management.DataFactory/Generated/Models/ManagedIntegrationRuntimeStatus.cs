@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime belong to.</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
-        /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
-        /// 'Offline'</param>
+        /// 'Stopping', 'NeedRegistration', 'Online', 'Limited', 'Offline',
+        /// 'AccessDenied'</param>
         /// <param name="createTime">The time at which the integration runtime
         /// was created, in ISO8601 format.</param>
         /// <param name="nodes">The list of nodes for managed integration

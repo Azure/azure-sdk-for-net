@@ -25,5 +25,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public const string Online = "Online";
         public const string Limited = "Limited";
         public const string Offline = "Offline";
+        public const string AccessDenied = "AccessDenied";
     }
 }
