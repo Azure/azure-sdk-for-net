@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Microsoft.Azure.Management.Authorization;
+using Microsoft.Azure.Management.Authorization.Models;
 using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
 using Microsoft.Rest;
@@ -11,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using Rm = Microsoft.Azure.Management.Resources;
 
 namespace DataFactory.Tests.Utils
@@ -28,9 +31,12 @@ namespace DataFactory.Tests.Utils
         private string outputFolder;
         private string outputFolderWorkarounds;
 
+        private IAuthorizationManagementClient authClient;
         private IDataFactoryManagementClient client;
         private Rm.IResourceManagementClient rmClient;
         private ExampleTracingInterceptor interceptor;
+
+        private string roleAssignmentName = Guid.NewGuid().ToString();
 
         public ExampleCapture(string secretsFile, string outputFolder, string outputFolderWorkarounds = null)
         {
@@ -39,6 +45,7 @@ namespace DataFactory.Tests.Utils
             this.outputFolderWorkarounds = outputFolderWorkarounds;
             this.client = ExampleHelpers.GetRealClient(secrets);
             this.rmClient = ExampleHelpers.GetRealRmClient(secrets);
+            this.authClient = ExampleHelpers.GetAuthorizationClient(secrets);
             this.interceptor = new ExampleTracingInterceptor(client.SubscriptionId, client.ApiVersion);
             ServiceClientTracing.AddTracingInterceptor(interceptor);
         }        
@@ -145,6 +152,10 @@ namespace DataFactory.Tests.Utils
 
                 CaptureOperations_List(); // 200
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
             finally
             {
                 ServiceClientTracing.IsEnabled = false;
@@ -179,6 +190,7 @@ namespace DataFactory.Tests.Utils
             try
             {
                 client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName);
+                client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName + "-linked");
             }
             catch (CloudException)
             {
@@ -205,7 +217,12 @@ namespace DataFactory.Tests.Utils
         private void CaptureFactories_CreateOrUpdate()
         {
             interceptor.CurrentExampleName = "Factories_CreateOrUpdate";
-            Factory resource = client.Factories.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName, new Factory { Location = secrets.FactoryLocation });
+            Factory resource = client.Factories.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName,
+                new Factory
+                {
+                    Identity = new FactoryIdentity(),
+                    Location = secrets.FactoryLocation
+                });
         }
 
         private void CaptureFactories_Update()
@@ -263,7 +280,7 @@ namespace DataFactory.Tests.Utils
             client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName);
         }
 
-        private IntegrationRuntimeResource GetIntegrationRuntimeResource(string type, string description, string location = null)
+        private IntegrationRuntimeResource GetIntegrationRuntimeResource(string type, string description, string location = null, string resourceId = null)
         {
             if (type.Equals("Managed", StringComparison.OrdinalIgnoreCase))
             {
@@ -286,7 +303,7 @@ namespace DataFactory.Tests.Utils
                                 CatalogAdminUserName = this.secrets.CatalogAdminUsername,
                                 CatalogAdminPassword = new SecureString(this.secrets.CatalogAdminPassword),
                                 CatalogServerEndpoint = this.secrets.CatalogServerEndpoint,
-                                CatalogPricingTier = "S1"
+                                CatalogPricingTier = "Basic"
                             }
                         }
                     }
@@ -299,6 +316,20 @@ namespace DataFactory.Tests.Utils
                     Properties = new SelfHostedIntegrationRuntime
                     {
                         Description = description
+                    }
+                };
+            }
+            else if (type.Equals("Linked", StringComparison.OrdinalIgnoreCase))
+            {
+                return new IntegrationRuntimeResource
+                {
+                    Properties = new SelfHostedIntegrationRuntime()
+                    {
+                        Description = description,
+                        LinkedInfo = new LinkedIntegrationRuntimeRbacAuthorization()
+                        {
+                            ResourceId = resourceId
+                        }
                     }
                 };
             }
@@ -423,6 +454,102 @@ namespace DataFactory.Tests.Utils
             interceptor.CurrentExampleName = "IntegrationRuntimeNodes_GetIpAddress";
 
             client.IntegrationRuntimeNodes.GetIpAddress(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, "YANZHANG-02");
+        }
+
+        private void CaptureIntegrationRuntimes_GrantPermission()
+        {
+            ServiceClientTracing.IsEnabled = false;
+            IntegrationRuntimeResource origIntegrationRuntime = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
+            Factory LinkedFactory = client.Factories.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName + "-linked",
+                new Factory
+                {
+                    Identity = new FactoryIdentity(),
+                    Location = secrets.FactoryLocation
+                });
+
+            Task.Delay(TimeSpan.FromSeconds(30)).Wait();
+
+            // Create role assignment
+            authClient.RoleAssignments.Create(
+                origIntegrationRuntime.Id,
+                roleAssignmentName,
+                new RoleAssignmentCreateParameters()
+                {
+                    // Contributor
+                    RoleDefinitionId =
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                    PrincipalId = LinkedFactory.Identity.PrincipalId.Value.ToString()
+                });
+
+            ServiceClientTracing.IsEnabled = true;
+        }
+
+        private void CaptureIntegrationRuntimes_RevokePermission()
+        {
+            ServiceClientTracing.IsEnabled = false;
+            Factory LinkedFactory = client.Factories.Get(secrets.ResourceGroupName, secrets.FactoryName + "-linked");
+            IntegrationRuntimeResource origIntegrationRuntime = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
+
+            authClient.RoleAssignments.Delete(origIntegrationRuntime.Id, roleAssignmentName);
+
+            client.Factories.Delete(secrets.ResourceGroupName, secrets.FactoryName + "-linked");
+            ServiceClientTracing.IsEnabled = true;
+        }
+
+        private void CaptureIntegrationRuntimes_CreateLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_CreateLinkedIntegrationRuntime";
+
+            ServiceClientTracing.IsEnabled = false;
+            IntegrationRuntimeResource resource = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName);
+
+            ServiceClientTracing.IsEnabled = true;
+            IntegrationRuntimeResource resource2 = client.IntegrationRuntimes.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked",
+                GetIntegrationRuntimeResource(type: "Linked", description: "A Linked integration runtime", resourceId: resource.Id));
+        }
+
+        private void CaptureIntegrationRuntimes_GetLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_GetLinkedIntegrationRuntime";
+            IntegrationRuntimeResource resource = client.IntegrationRuntimes.Get(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked");
+        }
+
+        private void CaptureIntegrationRuntimes_GetStatusLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_GetStatusLinkedIntegrationRuntime";
+            IntegrationRuntimeStatusResponse response = client.IntegrationRuntimes.GetStatus(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked");
+        }
+
+        private void CaptureIntegrationRuntimes_UpdateLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_UpdateLinkedIntegrationRuntime";
+
+            IntegrationRuntimeResource resource2 = client.IntegrationRuntimes.CreateOrUpdate(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked",
+                GetIntegrationRuntimeResource(type: "Linked", description: "A Linked integration runtime"));
+        }
+
+        private void CaptureIntegrationRuntimes_DeleteLinkedIntegrationRuntime()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_DeleteLinkedIntegrationRuntime";
+            try
+            {
+                client.IntegrationRuntimes.Delete(secrets.ResourceGroupName, secrets.FactoryName + "-linked", integrationRuntimeName + "-linked");
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        private void CaptureIntegrationRuntimes_RemoveLinks()
+        {
+            interceptor.CurrentExampleName = "IntegrationRuntimes_RemoveLinks";
+            try
+            {
+                client.IntegrationRuntimes.RemoveLinks(secrets.ResourceGroupName, secrets.FactoryName, integrationRuntimeName, new LinkedIntegrationRuntimeRequest(secrets.FactoryName + "-linked"));
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         private LinkedServiceResource GetLinkedServiceResource(string description)

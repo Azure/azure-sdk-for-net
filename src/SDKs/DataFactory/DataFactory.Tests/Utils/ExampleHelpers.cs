@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Microsoft.Azure.Management.Authorization;
 using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
 using Rm = Microsoft.Azure.Management.Resources; // Collides with Microsoft.Rest.Serialization on SafeJsonConvert
@@ -141,7 +142,29 @@ namespace DataFactory.Tests.Utils
                 throw new ArgumentException("Secrets environment must be test, prod, or nightly, currently {0}", secrets.Environment);
             }
             return client;
+        }
 
+        public static IAuthorizationManagementClient GetAuthorizationClient(ExampleSecrets secrets)
+        {
+            IAuthorizationManagementClient client = null;
+            if (secrets.Environment == "dogfood")
+            {
+                string ArmTenant = secrets.TenantId;
+                string ArmServicePrincipalIdentity = secrets.ClientId;
+                string SubId = secrets.SubId;
+                // Use service principal with key to authenticate against Azure
+                string secret = secrets.ClientSecret;
+                var cac = new ClientCredential(ArmServicePrincipalIdentity, secret);
+                var context = new AuthenticationContext("https://login.windows-ppe.net/" + ArmTenant);
+                AuthenticationResult result = context.AcquireTokenAsync("https://management.core.windows.net/", cac).Result;
+                ServiceClientCredentials creds = new TokenCredentials(result.AccessToken);
+                client = new AuthorizationManagementClient(creds) {
+                    SubscriptionId = secrets.SubId,
+                    BaseUri = new Uri("https://api-dogfood.resources.windows-int.net/")
+                };
+            }
+            
+            return client;
         }
 
         public static IDataFactoryManagementClient GetRealClient(ExampleSecrets secrets)
