@@ -41,9 +41,9 @@
             this.fixture = fixture;
         }
 
-        protected ITrainingClient GetTrainingClientClient()
+        protected ITrainingApi GetTrainingClient()
         {
-            ITrainingClient client = new TrainingClient(handlers: HttpMockServer.CreateInstance())
+            ITrainingApi client = new TrainingApi(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = TrainingKey,
             };
