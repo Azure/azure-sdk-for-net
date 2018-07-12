@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
 
     /// <summary>
     /// </summary>
-    public partial interface IPredictionClient : System.IDisposable
+    public partial interface IPredictionEndpoint : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
     using System.Threading;
     using System.Threading.Tasks;
 
-    public partial class PredictionClient : ServiceClient<PredictionClient>, IPredictionClient
+    public partial class PredictionEndpoint : ServiceClient<PredictionEndpoint>, IPredictionEndpoint
     {
         /// <summary>
         /// The base URI of the service.
@@ -45,18 +45,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the PredictionClient class.
+        /// Initializes a new instance of the PredictionEndpoint class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public PredictionClient(params DelegatingHandler[] handlers) : base(handlers)
+        public PredictionEndpoint(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PredictionClient class.
+        /// Initializes a new instance of the PredictionEndpoint class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -64,13 +64,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public PredictionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public PredictionEndpoint(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PredictionClient class.
+        /// Initializes a new instance of the PredictionEndpoint class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public PredictionClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public PredictionEndpoint(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         }
 
         /// <summary>
-        /// Initializes a new instance of the PredictionClient class.
+        /// Initializes a new instance of the PredictionEndpoint class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public PredictionClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public PredictionEndpoint(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://api.cognitive.microsoft.com/customvision/v2.0");
+            BaseUri = new System.Uri("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Prediction/{projectId}/url").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/url").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Prediction/{projectId}/image").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/image").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Prediction/{projectId}/url/nostore").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/url/nostore").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
@@ -761,7 +761,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Prediction/{projectId}/image/nostore").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{projectId}/image/nostore").ToString();
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (iterationId != null)
