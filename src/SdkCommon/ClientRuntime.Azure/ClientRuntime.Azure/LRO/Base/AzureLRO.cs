@@ -5,6 +5,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 {
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.Properties;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -213,7 +214,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     // the response. In that case the assumption is the status is Succeeded.
                     if (CurrentPollingState.RawBody != null &&
                         CurrentPollingState.RawBody["properties"] != null &&
-                        CurrentPollingState.RawBody["properties"]["provisioningState"] != null)
+                        CurrentPollingState.RawBody["properties"]["provisioningState"] != null &&
+                        (string)CurrentPollingState.RawBody["properties"]["provisioningState"] != null)
                     {
                         CurrentPollingState.Status = (string)CurrentPollingState.RawBody["properties"]["provisioningState"];
                     }

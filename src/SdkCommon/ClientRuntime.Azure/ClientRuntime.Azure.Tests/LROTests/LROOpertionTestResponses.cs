@@ -275,6 +275,32 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Tests
 
             yield return response3;
         }
+
+        static internal IEnumerable<HttpResponseMessage> MockAsyncOperaionWithNullProvisioningState()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("")
+            };
+            response1.Headers.Add("Location", "http://custom/status");
+
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.Accepted)
+            {
+                Content = new StringContent("null")
+            };
+            response2.Headers.Add("Location", "http://custom/status2");
+
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{ \"properties\": { \"provisioningState\": null }, \"id\": \"100\", \"name\": \"foo\" }")
+            };
+
+            yield return response3;
+        }
         #endregion
 
         #endregion

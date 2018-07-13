@@ -148,6 +148,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         /// Test
         /// </summary>
         [Fact]
+        public void TestAsyncOperationWithNullProvisioningState()
+        {
+            var tokenCredentials = new TokenCredentials("123", "abc");
+            var handler = new PlaybackTestHandler(LROResponse.MockAsyncOperaionWithNullProvisioningState());
+            var fakeClient = new RedisManagementClient(tokenCredentials, handler);
+            fakeClient.LongRunningOperationInitialTimeout = fakeClient.LongRunningOperationRetryTimeout = 0;
+            var resource = fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
+            Assert.Equal("100", resource.Id);
+        }
+
+        /// <summary>
+        /// Test
+        /// </summary>
+        [Fact]
         public void TestAsyncOperationWithNonSuccessStatusAndInvalidResponseContent()
         {
             var tokenCredentials = new TokenCredentials("123", "abc");
