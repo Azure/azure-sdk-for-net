@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DatabaseBlobAuditingPoliciesOperations operations.
+    /// ExtendedDatabaseBlobAuditingPoliciesOperations operations.
     /// </summary>
-    public partial interface IDatabaseBlobAuditingPoliciesOperations
+    public partial interface IExtendedDatabaseBlobAuditingPoliciesOperations
     {
         /// <summary>
-        /// Gets a database's blob auditing policy.
+        /// Gets an extended database's blob auditing policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DatabaseBlobAuditingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ExtendedDatabaseBlobAuditingPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a database's blob auditing policy.
+        /// Creates or updates an extended database's blob auditing policy.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the database.
         /// </param>
         /// <param name='parameters'>
-        /// The database blob auditing policy.
+        /// The extended database blob auditing policy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -85,6 +85,6 @@ namespace Microsoft.Azure.Management.Sql
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DatabaseBlobAuditingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, DatabaseBlobAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ExtendedDatabaseBlobAuditingPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, string databaseName, ExtendedDatabaseBlobAuditingPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -18,21 +18,23 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A database blob auditing policy.
+    /// An extended server blob auditing policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DatabaseBlobAuditingPolicy : ProxyResource
+    public partial class ExtendedServerBlobAuditingPolicy : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
+        /// Initializes a new instance of the ExtendedServerBlobAuditingPolicy
+        /// class.
         /// </summary>
-        public DatabaseBlobAuditingPolicy()
+        public ExtendedServerBlobAuditingPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
+        /// Initializes a new instance of the ExtendedServerBlobAuditingPolicy
+        /// class.
         /// </summary>
         /// <param name="state">Specifies the state of the policy. If state is
         /// Enabled, storageEndpoint and storageAccountAccessKey are required.
@@ -40,7 +42,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="kind">Resource kind.</param>
+        /// <param name="predicateExpression">Specifies condition of where
+        /// clause when creating an audit.</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
         /// Enabled, storageEndpoint is required.</param>
@@ -128,10 +131,10 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="isStorageSecondaryKeyInUse">Specifies whether
         /// storageAccountAccessKey value is the storage's secondary
         /// key.</param>
-        public DatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?))
+        public ExtendedServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string predicateExpression = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?))
             : base(id, name, type)
         {
-            Kind = kind;
+            PredicateExpression = predicateExpression;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -148,10 +151,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource kind.
+        /// Gets or sets specifies condition of where clause when creating an
+        /// audit.
         /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
+        [JsonProperty(PropertyName = "properties.predicateExpression")]
+        public string PredicateExpression { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the state of the policy. If state is
