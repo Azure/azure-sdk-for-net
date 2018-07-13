@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Sql
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for DatabaseBlobAuditingPoliciesOperations.
+    /// Extension methods for ExtendedDatabaseBlobAuditingPoliciesOperations.
     /// </summary>
-    public static partial class DatabaseBlobAuditingPoliciesOperationsExtensions
+    public static partial class ExtendedDatabaseBlobAuditingPoliciesOperationsExtensions
     {
             /// <summary>
-            /// Gets a database's blob auditing policy.
+            /// Gets an extended database's blob auditing policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='databaseName'>
             /// The name of the database.
             /// </param>
-            public static DatabaseBlobAuditingPolicy Get(this IDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            public static ExtendedDatabaseBlobAuditingPolicy Get(this IExtendedDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName)
             {
                 return operations.GetAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a database's blob auditing policy.
+            /// Gets an extended database's blob auditing policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DatabaseBlobAuditingPolicy> GetAsync(this IDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExtendedDatabaseBlobAuditingPolicy> GetAsync(this IExtendedDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Creates or updates a database's blob auditing policy.
+            /// Creates or updates an extended database's blob auditing policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,15 +86,15 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the database.
             /// </param>
             /// <param name='parameters'>
-            /// The database blob auditing policy.
+            /// The extended database blob auditing policy.
             /// </param>
-            public static DatabaseBlobAuditingPolicy CreateOrUpdate(this IDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseBlobAuditingPolicy parameters)
+            public static ExtendedDatabaseBlobAuditingPolicy CreateOrUpdate(this IExtendedDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ExtendedDatabaseBlobAuditingPolicy parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serverName, databaseName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates a database's blob auditing policy.
+            /// Creates or updates an extended database's blob auditing policy.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -110,12 +110,12 @@ namespace Microsoft.Azure.Management.Sql
             /// The name of the database.
             /// </param>
             /// <param name='parameters'>
-            /// The database blob auditing policy.
+            /// The extended database blob auditing policy.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DatabaseBlobAuditingPolicy> CreateOrUpdateAsync(this IDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, DatabaseBlobAuditingPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ExtendedDatabaseBlobAuditingPolicy> CreateOrUpdateAsync(this IExtendedDatabaseBlobAuditingPoliciesOperations operations, string resourceGroupName, string serverName, string databaseName, ExtendedDatabaseBlobAuditingPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A database blob auditing policy.
+    /// A server blob auditing policy.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DatabaseBlobAuditingPolicy : ProxyResource
+    public partial class ServerBlobAuditingPolicy : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
+        /// Initializes a new instance of the ServerBlobAuditingPolicy class.
         /// </summary>
-        public DatabaseBlobAuditingPolicy()
+        public ServerBlobAuditingPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DatabaseBlobAuditingPolicy class.
+        /// Initializes a new instance of the ServerBlobAuditingPolicy class.
         /// </summary>
         /// <param name="state">Specifies the state of the policy. If state is
         /// Enabled, storageEndpoint and storageAccountAccessKey are required.
@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="kind">Resource kind.</param>
         /// <param name="storageEndpoint">Specifies the blob storage endpoint
         /// (e.g. https://MyAccount.blob.core.windows.net). If state is
         /// Enabled, storageEndpoint is required.</param>
@@ -128,10 +127,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="isStorageSecondaryKeyInUse">Specifies whether
         /// storageAccountAccessKey value is the storage's secondary
         /// key.</param>
-        public DatabaseBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string kind = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?))
+        public ServerBlobAuditingPolicy(BlobAuditingPolicyState state, string id = default(string), string name = default(string), string type = default(string), string storageEndpoint = default(string), string storageAccountAccessKey = default(string), int? retentionDays = default(int?), IList<string> auditActionsAndGroups = default(IList<string>), System.Guid? storageAccountSubscriptionId = default(System.Guid?), bool? isStorageSecondaryKeyInUse = default(bool?))
             : base(id, name, type)
         {
-            Kind = kind;
             State = state;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
@@ -146,12 +144,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets resource kind.
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
 
         /// <summary>
         /// Gets or sets specifies the state of the policy. If state is
