@@ -75,7 +75,7 @@ namespace Microsoft.Rest.Azure
                 case HttpStatusCode.OK:
                     if (resource != null && resource["properties"] != null &&
                         resource["properties"]["provisioningState"] != null &&
-                        resource["properties"]["provisioningState"].HasValues)
+                        (string)resource["properties"]["provisioningState"] != null)
                     {
                         Status = (string)resource["properties"]["provisioningState"];
                     }
@@ -87,7 +87,7 @@ namespace Microsoft.Rest.Azure
                 case HttpStatusCode.Created:
                     if (resource != null && resource["properties"] != null &&
                         resource["properties"]["provisioningState"] != null &&
-                        resource["properties"]["provisioningState"].HasValues)
+                        (string)resource["properties"]["provisioningState"] != null)
                     {
                         Status = (string) resource["properties"]["provisioningState"];
                     }

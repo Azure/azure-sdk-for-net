@@ -850,7 +850,7 @@ namespace Microsoft.Rest.Azure
                     if (resource != null &&
                         resource["properties"] != null &&
                         resource["properties"]["provisioningState"] != null &&
-                        resource["properties"]["provisioningState"].HasValues)
+                        (string)resource["properties"]["provisioningState"] != null)
                     {
                         pollingState.Status = (string)resource["properties"]["provisioningState"];
                     }
