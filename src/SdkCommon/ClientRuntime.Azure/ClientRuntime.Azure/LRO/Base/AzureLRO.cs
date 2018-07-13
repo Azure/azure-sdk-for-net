@@ -213,7 +213,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     // the response. In that case the assumption is the status is Succeeded.
                     if (CurrentPollingState.RawBody != null &&
                         CurrentPollingState.RawBody["properties"] != null &&
-                        CurrentPollingState.RawBody["properties"]["provisioningState"] != null)
+                        CurrentPollingState.RawBody["properties"]["provisioningState"] != null &&
+                        CurrentPollingState.RawBody["properties"]["provisioningState"].HasValues)
                     {
                         CurrentPollingState.Status = (string)CurrentPollingState.RawBody["properties"]["provisioningState"];
                     }

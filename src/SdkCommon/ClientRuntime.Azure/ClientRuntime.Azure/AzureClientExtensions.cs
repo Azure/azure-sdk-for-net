@@ -849,7 +849,8 @@ namespace Microsoft.Rest.Azure
                     // the response. In that case the assumption is the status is Succeeded.
                     if (resource != null &&
                         resource["properties"] != null &&
-                        resource["properties"]["provisioningState"] != null)
+                        resource["properties"]["provisioningState"] != null &&
+                        resource["properties"]["provisioningState"].HasValues)
                     {
                         pollingState.Status = (string)resource["properties"]["provisioningState"];
                     }

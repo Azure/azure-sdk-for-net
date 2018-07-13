@@ -138,7 +138,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             string provisionState = string.Empty;
             if (this.RawBody != null &&
                    this.RawBody["properties"] != null &&
-                   this.RawBody["properties"]["provisioningState"] != null)
+                   this.RawBody["properties"]["provisioningState"] != null &&
+                   this.RawBody["properties"]["provisioningState"].HasValues)
             {
                 provisionState = (string)this.RawBody["properties"]["provisioningState"];
             }
