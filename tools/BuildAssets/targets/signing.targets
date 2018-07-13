@@ -1,5 +1,5 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="PreSign" DependsOnTargets="GlobalReadinessTools">
+  <Target Name="PreSign" Condition=" '$(CodeSign)' == 'true' AND '$(AuthenticodeSign)' == 'true' " DependsOnTargets="GlobalReadinessTools">
     <PropertyGroup>
       <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
     </PropertyGroup>
