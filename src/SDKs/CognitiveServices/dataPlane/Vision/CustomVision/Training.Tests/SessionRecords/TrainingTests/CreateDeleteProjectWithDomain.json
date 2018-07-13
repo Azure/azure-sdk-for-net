@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v2.0/Training/projects?name=Test%20Project&description=This%20is%20a%20test%20project&domainId=c151d5b5-dd07-472a-acc8-15d29dea8518",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3QmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjBwcm9qZWN0JmRvbWFpbklkPWMxNTFkNWI1LWRkMDctNDcyYS1hY2M4LTE1ZDI5ZGVhODUxOA==",
+      "RequestUri": "/customvision/v2.1/Training/projects?name=Test%20Project&description=This%20is%20a%20test%20project&domainId=c151d5b5-dd07-472a-acc8-15d29dea8518",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3QmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjBwcm9qZWN0JmRvbWFpbklkPWMxNTFkNWI1LWRkMDctNDcyYS1hY2M4LTE1ZDI5ZGVhODUxOA==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -11,22 +11,22 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"ffb1ae60-a400-44b3-affa-2f62cbd02087\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"useNegativeSet\": true,\r\n    \"classificationType\": \"MultiLabel\",\r\n    \"detectionParameters\": null\r\n  },\r\n  \"created\": \"2018-04-25T21:13:36.71\",\r\n  \"lastModified\": \"2018-04-25T21:13:36.71\",\r\n  \"thumbnailUri\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"140fd86d-c9bb-472e-bfbb-d9d4233f40e1\",\r\n  \"name\": \"Test Project (1)\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null\r\n  },\r\n  \"created\": \"2018-07-12T15:23:24.6766667\",\r\n  \"lastModified\": \"2018-07-12T15:23:24.6766667\",\r\n  \"thumbnailUri\": null\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "347"
+          "361"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 21:13:36 GMT"
+          "Thu, 12 Jul 2018 15:23:24 GMT"
         ],
         "apim-request-id": [
-          "e4e2783d-5e2b-4624-9ef6-5c92fba8f5d2"
+          "4bf14949-d162-4432-a5b9-d280cff8ed7f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -38,8 +38,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v2.0/Training/projects/ffb1ae60-a400-44b3-affa-2f62cbd02087",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL3Byb2plY3RzL2ZmYjFhZTYwLWE0MDAtNDRiMy1hZmZhLTJmNjJjYmQwMjA4Nw==",
+      "RequestUri": "/customvision/v2.1/Training/projects/140fd86d-c9bb-472e-bfbb-d9d4233f40e1",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL3Byb2plY3RzLzE0MGZkODZkLWM5YmItNDcyZS1iZmJiLWQ5ZDQyMzNmNDBlMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -48,7 +48,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
       "ResponseBody": "",
@@ -57,10 +57,10 @@
           "0"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 21:13:36 GMT"
+          "Thu, 12 Jul 2018 15:23:24 GMT"
         ],
         "apim-request-id": [
-          "0392ee91-38fa-4796-9fa2-9072894541c3"
+          "155b9be7-0ff6-4a93-96dc-ef54299deabf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

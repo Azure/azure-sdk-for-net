@@ -34,7 +34,7 @@
 #if RECORD_MODE
             // Write out project ids so they are available during playback.
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(ObjectDetectionProjectId);
+            sb.AppendLine(ObjectDetectionProjectId.ToString());
             foreach(var kvp in ProjectToGuidMapping)
             {
                 sb.AppendLine($"{kvp.Key}, {kvp.Value.ToString()}");
