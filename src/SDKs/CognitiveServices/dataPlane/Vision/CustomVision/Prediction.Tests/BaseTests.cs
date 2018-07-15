@@ -27,9 +27,9 @@
 #endif
         }
 
-        protected IPredictionClient GetPredictionClientClient()
+        protected IPredictionEndpoint GetPredictionClientClient()
         {
-            IPredictionClient client = new PredictionClient(handlers: HttpMockServer.CreateInstance())
+            IPredictionEndpoint client = new PredictionEndpoint(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = PredictionKey
             };

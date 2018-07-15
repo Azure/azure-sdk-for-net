@@ -85,7 +85,7 @@ In "SDKs\< RPName >", you will find projects for services that have already been
     - The file 'generate.cmd', used to generate library code for the given service, can also be found in this project
   - Services also contain a project for their tests
 
-### Branches: vs17Dev vs. master
+### Branches: psSdkJson6 vs. master
 
 The **psSdkJson6** branch contains the code generated from AutoRest tool.
 
@@ -109,6 +109,30 @@ The **master** branch contains the code generated from Hydra/Hyak.
  8. If you're using **master** branch, bump up the package version in YourService.nuget.proj. If you're using **psSdkJson6** branch, change the package version in the .csproj file, as well as in the AssemblyInfo.cs file.
  9.  A Pull request of your Azure SDK for .NET changes against **psSdkJson6** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
  11. Both the pull requests will be reviewed and merged by the Azure SDK team
+
+### New Resource Provider
+1. If you have never created an SDK for your service before, you will need the following things to get your SDK in the repo
+2. Follow the standard process described above.
+3. Directory names helps in using basic heuristics in finding projects as well it's associated test projects during CI process.
+4. Create a new directory (name of your service e.g. Compute, Storage etc)
+5. If you have a data plane as well as management plane follow the following directory structure.
+ - `SDKs\<RPName>\management\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
+ - `SDKs\<RPName\management\<RPName>.Tests\Management.<RPName>.Tests.csproj`
+ - `SDKs\<RPName>\dataplane\Microsoft.Azure.<RPName>\Microsoft.Azure.<RPName>.csproj`
+ - `SDKs\<RPName\dataplane\Microsoft.Azure.<RPName>.Tests\Microsoft.Azure.<RPName>.Tests.csproj`
+6. If you only have management plane SDK then have the following directory structure
+ - `SDKs\<RPName>\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
+ - `SDKs\<RPName\<RPName>.Tests\Management.<RPName>.Tests.csproj`
+7. Copy .csproj from any other .csproj and update the following information in the new .csproj
+ - PackageId
+ - Description
+ - AssemblyTitle
+ - AssemblyName
+ - Version
+ - PackageTags
+ - PackageReleaseNotes (this is important because this information is displayed on www.nuget.org when your nuget package is published
+8. Copy existing generate.ps1 file from another dirctory and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
+During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
 
 ### Code Review Process
 

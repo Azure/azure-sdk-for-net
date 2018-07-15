@@ -429,6 +429,35 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </exception>
         Task<AzureOperationResponse> UpgradeWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Remove all linked integration runtimes under specific data factory
+        /// in a self-hosted integration runtime.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='factoryName'>
+        /// The factory name.
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// The integration runtime name.
+        /// </param>
+        /// <param name='linkedIntegrationRuntimeRequest'>
+        /// The data factory name for the linked integration runtime.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RemoveLinksWithHttpMessagesAsync(string resourceGroupName, string factoryName, string integrationRuntimeName, LinkedIntegrationRuntimeRequest linkedIntegrationRuntimeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Starts a ManagedReserved type integration runtime.
         /// </summary>
         /// <param name='resourceGroupName'>
