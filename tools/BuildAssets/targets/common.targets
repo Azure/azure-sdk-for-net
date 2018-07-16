@@ -174,13 +174,13 @@
     </MSBuild>
 
     <!--Test Project-->
-	  <Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
+	  <!-- <Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
              Projects="@(netCore11TestProj)"
              Properties="TargetFramework=$(NetCore11)"
              BuildInParallel="$(BuildInParallel)"
              ContinueOnError="true">
-    </MSBuild>
+    </MSBuild> -->
 
     <Message Text="Building Test Projects ..... @(netCore20TestProj) for $(NetCore20)" Condition=" '@(netCore20TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
