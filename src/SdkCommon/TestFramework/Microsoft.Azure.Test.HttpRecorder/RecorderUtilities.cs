@@ -178,8 +178,8 @@ namespace Microsoft.Azure.Test.HttpRecorder
             HttpMockServer.FileSystemUtilsObject.WriteFile(
                 path, JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
                 {
-                    TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                    TypeNameHandling = TypeNameHandling.None
+                    TypeNameAssemblyFormat = 0, // Simple = 0, Full = 1 (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization. Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
+                    TypeNameHandling = TypeNameHandling.None,
                 }));
         }
 
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             string json = HttpMockServer.FileSystemUtilsObject.ReadFileAsText(path);
             return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
                 {
-                    TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                    TypeNameAssemblyFormat = 0, // Simple = 0, Full = 1 (we have an issue with duplicate namespace between newtonsoft and System.Runtime.Serialization. Once we upgrade to newtonsoft 11.x, we can start using TypeNameAssemblyFormatHandling instead)
                     TypeNameHandling = TypeNameHandling.None
                 });
         }
