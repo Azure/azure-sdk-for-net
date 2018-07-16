@@ -6,9 +6,9 @@
     <AssemblyName>Microsoft.Azure.KeyVault.TestFramework</AssemblyName>    
     <VersionPrefix>3.0.0-alpha</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  <!-- <PropertyGroup> -->
+    <!-- <TargetFrameworks>netcoreapp1.1</TargetFrameworks> -->
+  <!-- </PropertyGroup> -->
 
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />

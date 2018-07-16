@@ -7,9 +7,9 @@
     <AssemblyName>PowerBIDedicated.Tests</AssemblyName>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.PowerBIDedicated\Microsoft.Azure.Management.PowerBIDedicated.csproj" />

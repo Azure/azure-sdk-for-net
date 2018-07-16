@@ -7,9 +7,9 @@
     <Authors>Microsoft Corporation</Authors>
     <AssemblyName>Microsoft.Azure.EventGrid.Tests</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\..\management\Management.EventGrid\Microsoft.Azure.Management.EventGrid.csproj" />

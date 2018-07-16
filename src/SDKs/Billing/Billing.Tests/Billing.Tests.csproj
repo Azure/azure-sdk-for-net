@@ -8,9 +8,9 @@
     <VersionPrefix>2.0.0</VersionPrefix>    
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.Billing\Microsoft.Azure.Management.Billing.csproj" />
