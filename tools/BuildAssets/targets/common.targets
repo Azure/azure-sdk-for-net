@@ -104,7 +104,7 @@
     <PropertyGroup>
       <LatestProjectDefaultRestoreTarget Condition=" '$(LatestProjectDefaultRestoreTarget)' == '' ">Restore</LatestProjectDefaultRestoreTarget>
     </PropertyGroup>
-	<Message Text="Restoring Initiated....." />
+	  <Message Text="Restoring Initiated....." />
     <Message Text="Now Restoring @(SDKProject);@(SDKTestProject);@(nonSdkProj);@(unsupportedProj)" Condition=" '$(SkipRestore)' != 'true' "/>
 
     <MSBuild Targets="$(LatestProjectDefaultRestoreTarget)"
@@ -164,6 +164,15 @@
       <Output TaskParameter="TargetOutputs" ItemName="netCore11Assemblies" />
     </MSBuild>
 
+    <Message Text="Building SDK Projects ..... @(netCore20SDKProjects) for $(NetCore20)" Condition=" '@(netCore20SDKProjects)' != '' " />
+    <MSBuild Targets="Build"
+             Projects="@(netCore20SDKProjects)"
+             Properties="TargetFramework=$(NetCore20)"
+             BuildInParallel="$(BuildInParallel)"
+             ContinueOnError="ErrorAndStop">
+      <Output TaskParameter="TargetOutputs" ItemName="netCore20Assemblies" />
+    </MSBuild>
+
     <!--Test Project-->
 	  <Message Text="Building Test Projects ..... @(netCore11TestProj) for $(NetCore11)" Condition=" '@(netCore11TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
@@ -176,7 +185,7 @@
     <Message Text="Building Test Projects ..... @(netCore20TestProj) for $(NetCore20)" Condition=" '@(netCore20TestProj)' != '' " />
     <MSBuild Targets="$(LatestProjectDefaultBuildTarget)"
              Projects="@(netCore20TestProj)"
-             Properties="TargetFramework=$(NetCore11)"
+             Properties="TargetFramework=$(NetCore20)"
              BuildInParallel="$(BuildInParallel)"
              ContinueOnError="true">
     </MSBuild>
@@ -223,16 +232,16 @@
   <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
     <Message Text="Executing Tests......"/>
     <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\netCore11\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
+    <Exec Command="dotnet test -f $(NetCore11) %(netCore11TestProj.Identity) --no-restore --no-build -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore11)\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
 
     <Message Text="Running .NET Core 2.0 Tests .... @(netCore20TestProj)" Condition=" '@(netCore20TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetCore11) %(netCore20TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\netCore11\%(netCore20TestProj.Filename).trx " Condition="@(netCore20TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore20TestProj.RootDir)%(netCore20TestProj.Directory)" />
+    <Exec Command="dotnet test -f $(NetCore20) %(netCore20TestProj.Identity) --no-restore --no-build -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore20)\%(netCore20TestProj.Filename).trx " Condition="@(netCore20TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore20TestProj.RootDir)%(netCore20TestProj.Directory)" />
 
     <Message Text="Running .NET 4.5.2 Tests .... @(net452TestProj)" Condition=" '@(net452TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetFx452) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
+    <Exec Command="dotnet test -f $(NetFx452) %(net452TestProj.Identity) --no-restore --no-build -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx452)\%(net452TestProj.Filename).trx " Condition="@(net452TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net452TestProj.RootDir)%(net452TestProj.Directory)" />
 	
 	<Message Text="Running .NET 4.6.1 Tests .... @(net461TestProj)" Condition=" '@(net461TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetFx461) %(net452TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\net452\%(net452TestProj.Filename).trx " Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
+    <Exec Command="dotnet test -f $(NetFx461) %(net452TestProj.Identity) --no-restore --no-build -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetFx461)\%(net452TestProj.Filename).trx " Condition="@(net461TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(net461TestProj.RootDir)%(net461TestProj.Directory)" />
   </Target>
 
   <Target Name="PackgNugetBootStrap" DependsOnTargets="Package;SignNugetPackage">
@@ -312,12 +321,13 @@
       SourceRootDirPath="$(LibrarySourceFolder)"
       BuildScope="$(Scope)"
       IgnorePathTokens="$(DefaultPathTokenToIgnore)"
-	  IncludePathTokens="$(IncludePathTokens)"
+	    IncludePathTokens="$(IncludePathTokens)"
       >
       <Output TaskParameter="net452SdkProjectsToBuild" ItemName="net452SDKProj" />
-	  <Output TaskParameter="net461SdkProjectsToBuild" ItemName="net461SDKProj" />
+	    <Output TaskParameter="net461SdkProjectsToBuild" ItemName="net461SDKProj" />
       <Output TaskParameter="netStd14SdkProjectsToBuild" ItemName="netStd14SDKProj" />
       <Output TaskParameter="netCore11SdkProjectsToBuild" ItemName="netCore11SDKProj" />
+      <Output TaskParameter="netCore20SdkProjectsToBuild" ItemName="netCore20SDKProj" />
       <Output TaskParameter="netCore11TestProjectsToBuild" ItemName="netCore11TestProj" />
       <Output TaskParameter="netCore20TestProjectsToBuild" ItemName="netCore20TestProj" />
       <Output TaskParameter="net452TestProjectsToBuild" ItemName="net452TestProj" />
@@ -329,7 +339,7 @@
 
     <Message Text="Categorizing Projects....."/>
     <ItemGroup>
-      <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netCore11SDKProj)"/>
+      <TotalSdkProjects Include="@(net452SDKProj);@(net461SDKProj);@(netStd14SDKProj);@(netCore11SDKProj);@(netCore20SDKProj)"/>
       <TotalTestProjects Include="@(netCore11TestProj);@(netCore20TestProj);@(net452TestProj);@(net461TestProj)"/>
     </ItemGroup>
 
@@ -361,6 +371,7 @@
 	    <net461SDKProjects Include="@(net461SDKProj)"/>
       <netStd14SDKProjects Include="@(netStd14SDKProj)"/>
       <netCore11SDKProjects Include="@(netCore11SDKProj)"/>
+      <netCore20SDKProjects Include="@(netCore20SDKProj)"/>
       <netCore11TestProjects Include="@(netCore11TestProj)"/>
       <netCore20TestProjects Include="@(netCore20TestProj)"/>
       <net452TestProjects Include="@(net452TestProj)"/>

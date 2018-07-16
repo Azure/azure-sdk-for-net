@@ -5,7 +5,12 @@
     <AssemblyTitle>Microsoft.Azure.Build.BootstrapperTasks</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Build.BootstrapTasks</AssemblyName>
     <Version>1.0.0</Version>
-  </PropertyGroup>  
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net46</TargetFrameworks>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(CIBuild)' == 'true'">
     <TaskBinaryOutput>bin\$(Configuration)\</TaskBinaryOutput>
   </PropertyGroup>

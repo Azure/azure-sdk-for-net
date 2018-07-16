@@ -127,6 +127,9 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         [Output]
         public ITaskItem[] netCore11SdkProjectsToBuild { get; private set; }
 
+        [Output]
+        public ITaskItem[] netCore20SdkProjectsToBuild { get; private set; }
+
         /// <summary>
         /// List of .NET 452 projects that will be separated from the list of projects that 
         /// are multi targeting
@@ -245,7 +248,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             var net461SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.net461 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netStd14SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netstandard14 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
             var netCore11SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
-            
+            var netCore20SdkProjects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp20 && s.ProjectType == SdkProjctType.Sdk) select s.ProjectTaskItem;
+
             var testNetCore11Projects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp11 && s.ProjectType == SdkProjctType.Test) select s.ProjectTaskItem;
             var testNetCore20Projects = from s in projWithMetaData where (s.IsTargetFxSupported == true && s.FxMoniker == TargetFrameworkMoniker.netcoreapp20 && s.ProjectType == SdkProjctType.Test) select s.ProjectTaskItem;
 
@@ -258,6 +262,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             net461SdkProjectsToBuild = net461SdkProjects?.ToArray<ITaskItem>();
             netStd14SdkProjectsToBuild = netStd14SdkProjects?.ToArray<ITaskItem>();
             netCore11SdkProjectsToBuild = netCore11SdkProjects?.ToArray<ITaskItem>();
+            netCore20SdkProjectsToBuild = netCore20SdkProjects?.ToArray<ITaskItem>();
 
             netCore11TestProjectsToBuild = testNetCore11Projects?.ToArray<ITaskItem>();
             netCore20TestProjectsToBuild = testNetCore20Projects?.ToArray<ITaskItem>();
