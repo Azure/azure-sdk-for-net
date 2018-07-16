@@ -6,9 +6,9 @@
     <AssemblyName>Scheduler.Test</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  <!-- <PropertyGroup> -->
+    <!-- <TargetFrameworks>netcoreapp1.1</TargetFrameworks> -->
+  <!-- </PropertyGroup> -->
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.Scheduler" Version="2.2.0" />-->    
     <ProjectReference Include="..\Management.Scheduler\Microsoft.Azure.Management.Scheduler.csproj" />
