@@ -231,8 +231,8 @@
 
   <Target Name="Test" Condition=" '$(SkipTests)' != 'true' ">
     <Message Text="Executing Tests......"/>
-    <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
-    <Exec Command="dotnet test -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore11)\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" />
+    <!-- <Message Text="Running .NET Core 1.1 Tests .... @(netCore11TestProj)" Condition=" '@(netCore11TestProj)' != '' " />
+    <Exec Command="dotnet test -f $(NetCore11) %(netCore11TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore11)\%(netCore11TestProj.Filename).trx " Condition="@(netCore11TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore11TestProj.RootDir)%(netCore11TestProj.Directory)" /> -->
 
     <Message Text="Running .NET Core 2.0 Tests .... @(netCore20TestProj)" Condition=" '@(netCore20TestProj)' != '' " />
     <Exec Command="dotnet test -f $(NetCore20) %(netCore20TestProj.Identity) -l trx;LogFileName=$(LibraryRoot)TestResults\$(NetCore20)\%(netCore20TestProj.Filename).trx " Condition="@(netCore20TestProj) != ''" ContinueOnError="false" WorkingDirectory="%(netCore20TestProj.RootDir)%(netCore20TestProj.Directory)" />
