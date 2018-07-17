@@ -34,7 +34,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -45,6 +44,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Gets or sets json deserialization settings.
         /// </summary>
         JsonSerializerSettings DeserializationSettings { get; }
+
+        /// <summary>
+        /// Supported Cognitive Services endpoints. Possible values include:
+        /// 'West US', 'West Europe', 'Southeast Asia', 'East US 2', 'West
+        /// Central US', 'West US 2', 'East US', 'South Central US', 'North
+        /// Europe', 'East Asia', 'Australia East', 'Brazil South'
+        /// </summary>
+        string Endpoint { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client
