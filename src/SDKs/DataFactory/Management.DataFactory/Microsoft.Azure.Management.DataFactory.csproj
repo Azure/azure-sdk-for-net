@@ -12,7 +12,7 @@
 		<PackageReleaseNotes>
 			<![CDATA[
     - Added support for sharing self-hosted integration runtime across data factories and subscriptions
-	- Added support for Databricks Spark Jar and Databricks Spark Python activities
+    - Added support for Databricks Spark Jar and Databricks Spark Python activities
 
             ]]>
 		</PackageReleaseNotes>
