@@ -10,13 +10,14 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Factory's VSTS repo information.
     /// </summary>
-    public partial class FactoryVSTSConfiguration
+    public partial class FactoryVSTSConfiguration : FactoryRepoConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the FactoryVSTSConfiguration class.
@@ -29,22 +30,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the FactoryVSTSConfiguration class.
         /// </summary>
-        /// <param name="accountName">VSTS account name.</param>
+        /// <param name="accountName">Account name.</param>
+        /// <param name="repositoryName">Rrepository name.</param>
+        /// <param name="collaborationBranch">Collaboration branch.</param>
+        /// <param name="rootFolder">Root folder.</param>
         /// <param name="projectName">VSTS project name.</param>
-        /// <param name="repositoryName">VSTS repository name.</param>
-        /// <param name="collaborationBranch">VSTS collaboration
-        /// branch.</param>
-        /// <param name="rootFolder">VSTS root folder.</param>
-        /// <param name="lastCommitId">VSTS last commit id.</param>
+        /// <param name="lastCommitId">Last commit id.</param>
         /// <param name="tenantId">VSTS tenant id.</param>
-        public FactoryVSTSConfiguration(string accountName = default(string), string projectName = default(string), string repositoryName = default(string), string collaborationBranch = default(string), string rootFolder = default(string), string lastCommitId = default(string), string tenantId = default(string))
+        public FactoryVSTSConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName, string lastCommitId = default(string), string tenantId = default(string))
+            : base(accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
         {
-            AccountName = accountName;
             ProjectName = projectName;
-            RepositoryName = repositoryName;
-            CollaborationBranch = collaborationBranch;
-            RootFolder = rootFolder;
-            LastCommitId = lastCommitId;
             TenantId = tenantId;
             CustomInit();
         }
@@ -55,40 +51,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets VSTS account name.
-        /// </summary>
-        [JsonProperty(PropertyName = "accountName")]
-        public string AccountName { get; set; }
-
-        /// <summary>
         /// Gets or sets VSTS project name.
         /// </summary>
         [JsonProperty(PropertyName = "projectName")]
         public string ProjectName { get; set; }
-
-        /// <summary>
-        /// Gets or sets VSTS repository name.
-        /// </summary>
-        [JsonProperty(PropertyName = "repositoryName")]
-        public string RepositoryName { get; set; }
-
-        /// <summary>
-        /// Gets or sets VSTS collaboration branch.
-        /// </summary>
-        [JsonProperty(PropertyName = "collaborationBranch")]
-        public string CollaborationBranch { get; set; }
-
-        /// <summary>
-        /// Gets or sets VSTS root folder.
-        /// </summary>
-        [JsonProperty(PropertyName = "rootFolder")]
-        public string RootFolder { get; set; }
-
-        /// <summary>
-        /// Gets or sets VSTS last commit id.
-        /// </summary>
-        [JsonProperty(PropertyName = "lastCommitId")]
-        public string LastCommitId { get; set; }
 
         /// <summary>
         /// Gets or sets VSTS tenant id.
@@ -96,5 +62,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (ProjectName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ProjectName");
+            }
+        }
     }
 }

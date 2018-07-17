@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the settings for job preparation.
+    /// Job preparation settings.
     /// </summary>
     public partial class JobPreparation
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the JobPreparation class.
         /// </summary>
-        /// <param name="commandLine">The command line to execute.</param>
+        /// <param name="commandLine">Command line.</param>
         public JobPreparation(string commandLine)
         {
             CommandLine = commandLine;
@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the command line to execute.
+        /// Gets or sets command line.
         /// </summary>
         /// <remarks>
-        /// If containerSettings is specified on the job, this commandLine will
-        /// be executed in the same container as job. Otherwise it will be
-        /// executed on the node.
+        /// The command line to execute. If containerSettings is specified on
+        /// the job, this commandLine will be executed in the same container as
+        /// job. Otherwise it will be executed on the node.
         /// </remarks>
         [JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }

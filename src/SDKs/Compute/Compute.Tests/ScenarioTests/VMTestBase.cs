@@ -25,7 +25,7 @@ namespace Compute.Tests
     public class VMTestBase
     {
         protected const string TestPrefix = "crptestar";
-        protected const string PLACEHOLDER = "[PLACEHOLDER]";
+        protected const string PLACEHOLDER = "[PLACEHOLDEr1]";
         protected const string ComputerName = "Test";
 
         protected ResourceManagementClient m_ResourcesClient;
@@ -209,8 +209,8 @@ namespace Compute.Tests
             bool createWithPublicIpAddress = false,
             bool waitForCompletion = true,
             bool hasManagedDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0,
-            string storageAccountType = StorageAccountTypes.StandardLRS,
+            string vmSize = "Standard_A0",
+            string storageAccountType = "Standard_LRS",
             bool? writeAcceleratorEnabled = null,
             IList<string> zones = null)
         {
@@ -731,7 +731,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateDefaultVMInput(string rgName, string storageAccountName, ImageReference imageRef, string asetId, string nicId, bool hasManagedDisks = false,
-            string vmSize = VirtualMachineSizeTypes.StandardA0, string storageAccountType = StorageAccountTypes.StandardLRS, bool? writeAcceleratorEnabled = null)
+            string vmSize = "Standard_A0", string storageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = ComputeManagementTestUtilities.GenerateName(TestPrefix);

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v1.0/models/celebrities/analyze",
-      "EncodedRequestUri": "L3Zpc2lvbi92MS4wL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXpl",
+      "RequestUri": "/vision/v2.0/models/celebrities/analyze",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXpl",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/satya.jpg\"\r\n}",
       "RequestHeaders": {
@@ -17,10 +17,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"faceRectangle\": {\r\n          \"top\": 50,\r\n          \"left\": 212,\r\n          \"width\": 54,\r\n          \"height\": 54\r\n        },\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.98922520875930786\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"f4765af5-fd39-4f20-bf4b-24d1be6b8c31\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"faceRectangle\": {\r\n          \"top\": 50,\r\n          \"left\": 212,\r\n          \"width\": 54,\r\n          \"height\": 54\r\n        },\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.98922520875930786\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"9107fba4-152e-436a-9450-4558c6379177\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "252"
@@ -32,10 +32,10 @@
           "close"
         ],
         "Date": [
-          "Wed, 30 May 2018 20:53:36 GMT"
+          "Thu, 14 Jun 2018 00:34:24 GMT"
         ],
         "apim-request-id": [
-          "f4765af5-fd39-4f20-bf4b-24d1be6b8c31"
+          "9107fba4-152e-436a-9450-4558c6379177"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

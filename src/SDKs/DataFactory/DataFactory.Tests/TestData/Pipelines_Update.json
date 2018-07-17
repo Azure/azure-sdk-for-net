@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "pipelineName": "examplePipeline",
@@ -26,7 +26,8 @@
                     },
                     "sink": {
                       "type": "BlobSink"
-                    }
+                    },
+                    "dataIntegrationUnits": 32
                   },
                   "inputs": [
                     {
@@ -65,20 +66,21 @@
         }
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:55 GMT",
-        "x-ms-request-id": "593b4383-377c-4e4d-8141-c6e76d313b8f",
+        "Date": "Sat, 16 Jun 2018 00:37:43 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1181",
-        "x-ms-correlation-request-id": "0bdb8812-2d23-4619-9582-2f16c2434e68"
+        "x-ms-ratelimit-remaining-subscription-writes": "1191",
+        "x-ms-request-id": "91a763b0-d944-493f-83fc-e989c8b6e122",
+        "x-ms-correlation-request-id": "91a763b0-d944-493f-83fc-e989c8b6e122"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/pipelines/examplePipeline",
         "name": "examplePipeline",
+        "type": "Microsoft.DataFactory/factories/pipelines",
         "properties": {
           "description": "Example description",
           "activities": [
@@ -99,7 +101,8 @@
                       },
                       "sink": {
                         "type": "BlobSink"
-                      }
+                      },
+                      "dataIntegrationUnits": 32
                     },
                     "inputs": [
                       {
@@ -137,7 +140,7 @@
             }
           }
         },
-        "etag": "280324a7-0000-0000-0000-59b9712b0000"
+        "etag": "0a006cd4-0000-0000-0000-5b245bd60000"
       }
     }
   }

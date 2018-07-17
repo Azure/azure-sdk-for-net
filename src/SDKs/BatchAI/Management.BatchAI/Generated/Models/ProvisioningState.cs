@@ -10,63 +10,15 @@
 
 namespace Microsoft.Azure.Management.BatchAI.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ProvisioningState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ProvisioningState
+    public static class ProvisioningState
     {
-        [EnumMember(Value = "creating")]
-        Creating,
-        [EnumMember(Value = "succeeded")]
-        Succeeded,
-        [EnumMember(Value = "failed")]
-        Failed,
-        [EnumMember(Value = "deleting")]
-        Deleting
-    }
-    internal static class ProvisioningStateEnumExtension
-    {
-        internal static string ToSerializedValue(this ProvisioningState? value)
-        {
-            return value == null ? null : ((ProvisioningState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ProvisioningState value)
-        {
-            switch( value )
-            {
-                case ProvisioningState.Creating:
-                    return "creating";
-                case ProvisioningState.Succeeded:
-                    return "succeeded";
-                case ProvisioningState.Failed:
-                    return "failed";
-                case ProvisioningState.Deleting:
-                    return "deleting";
-            }
-            return null;
-        }
-
-        internal static ProvisioningState? ParseProvisioningState(this string value)
-        {
-            switch( value )
-            {
-                case "creating":
-                    return ProvisioningState.Creating;
-                case "succeeded":
-                    return ProvisioningState.Succeeded;
-                case "failed":
-                    return ProvisioningState.Failed;
-                case "deleting":
-                    return ProvisioningState.Deleting;
-            }
-            return null;
-        }
+        public const string Creating = "creating";
+        public const string Succeeded = "succeeded";
+        public const string Failed = "failed";
+        public const string Deleting = "deleting";
     }
 }

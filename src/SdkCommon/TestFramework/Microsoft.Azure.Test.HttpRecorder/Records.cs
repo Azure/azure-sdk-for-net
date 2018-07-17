@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 {
                     throw new KeyNotFoundException(
                         string.Format("Unable to find a matching HTTP request for URL '{0}'. Calling method {1}().", 
-                            Utilities.DecodeBase64AsUri(key), 
+                            RecorderUtilities.DecodeBase64AsUri(key), 
                             GetCallingMethodName()));
                 }
             }

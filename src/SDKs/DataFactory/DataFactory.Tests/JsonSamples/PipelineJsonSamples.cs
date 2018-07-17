@@ -3122,7 +3122,7 @@ namespace DataFactory.Tests.JsonSamples
                   },
                   enableSkipIncompatibleRow: true,
                   parallelCopies: 32,
-                  cloudDataMovementUnits: 16,
+                  dataIntegrationUnits: 16,
                   enableSkipIncompatibleRow: true,
                   redirectIncompatibleRowSettings: {
                       linkedServiceName: {

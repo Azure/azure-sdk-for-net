@@ -31,8 +31,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the Deployment class.
         /// </summary>
         /// <param name="properties">The deployment properties.</param>
-        public Deployment(DeploymentProperties properties)
+        /// <param name="location">The location to store the deployment
+        /// data.</param>
+        public Deployment(DeploymentProperties properties, string location = default(string))
         {
+            Location = location;
             Properties = properties;
             CustomInit();
         }
@@ -41,6 +44,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the location to store the deployment data.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the deployment properties.

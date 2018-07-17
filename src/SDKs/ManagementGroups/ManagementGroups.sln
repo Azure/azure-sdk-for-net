@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management.ManagementGroups", "Management.ManagementGroups\Management.ManagementGroups.csproj", "{A8928771-00A2-4412-A921-19712279D15D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Management.ManagementGroups", "Management.ManagementGroups\Management.ManagementGroups.csproj", "{A8928771-00A2-4412-A921-19712279D15D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagementGroups.Tests", "ManagementGroups.Tests\ManagementGroups.Tests.csproj", "{34013B7A-E0FC-4346-B484-F47AA5AD1BCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManagementGroups.Tests", "ManagementGroups.Tests\ManagementGroups.Tests.csproj", "{34013B7A-E0FC-4346-B484-F47AA5AD1BCF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resource.Tests", "..\Resource\Resource.Tests\Resource.Tests.csproj", "{ADBDF78E-5AF0-43CC-8930-3039A282DEC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.ResourceManager", "..\Resource\Management.ResourceManager\Microsoft.Azure.Management.ResourceManager.csproj", "{F25E8F8F-20F7-4939-A235-651E7F88D32F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{34013B7A-E0FC-4346-B484-F47AA5AD1BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34013B7A-E0FC-4346-B484-F47AA5AD1BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34013B7A-E0FC-4346-B484-F47AA5AD1BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADBDF78E-5AF0-43CC-8930-3039A282DEC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADBDF78E-5AF0-43CC-8930-3039A282DEC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADBDF78E-5AF0-43CC-8930-3039A282DEC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADBDF78E-5AF0-43CC-8930-3039A282DEC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F25E8F8F-20F7-4939-A235-651E7F88D32F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F25E8F8F-20F7-4939-A235-651E7F88D32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F25E8F8F-20F7-4939-A235-651E7F88D32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F25E8F8F-20F7-4939-A235-651E7F88D32F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

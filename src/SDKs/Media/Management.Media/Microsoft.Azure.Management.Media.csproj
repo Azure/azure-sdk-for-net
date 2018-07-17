@@ -6,18 +6,31 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Media</PackageId>
 		<Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-		<VersionPrefix>1.0.0</VersionPrefix>
+		<Version>1.8.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
 		<PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
                 <PackageReleaseNotes>
                         <![CDATA[
-        This release adds support for the Preview V3 API of Azure Media Services, including:
+        This release adds support for the 2nd Preview of the V3 API of Azure Media Services, including:
+
         1. Transforms and Jobs to encode or analyze media content.
         2. StreamingLocators for publishing and streaming content to end user devices
-        3. StreamingPolicies and ContentKeyPolicies to configure key delivery and content protection (DRM) when delivering content.
+        3. StreamingPolicies and ContentKeyPolicies to configure key delivery and content protection (DRM)
+           when delivering content.
         4. LiveEvents and LiveOutputs to configure the ingest and archiving of live streaming content.
         5. Assets to store and publish media content in Azure Storage. 
-        6. StreamingEndpoints to configure and scale dynamic packaging, encryption and streaming for both live and on demand media content.
+        6. StreamingEndpoints to configure and scale dynamic packaging, encryption and streaming for
+           both live and on demand media content.
+
+        Updates from the 1st Preview of the V3 API include support for Protected Preview on Live Events
+        and the addition of CorrelationData to the Job object.
+
+        Note that type of the ContentKeys property of StreamingLocators has changed from 
+        StreamingLocatorUserDefinedContentKey to StreamingLocatorContentKey. This allows the ContentKeyId
+        information to be available when a user creates a StreamingLocator even for ContentKeys
+        created by MediaServices.  Also the CustomLicenseAcquisitionUrlTemplate property of EnvelopeEncryption 
+        was renamed to CustomKeyAcquisitionUrlTemplate.
+
                         ]]>
                 </PackageReleaseNotes>
 	</PropertyGroup>

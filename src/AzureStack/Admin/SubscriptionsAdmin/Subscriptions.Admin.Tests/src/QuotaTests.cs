@@ -5,6 +5,7 @@
 
 using Microsoft.AzureStack.Management.Subscriptions.Admin;
 using Microsoft.AzureStack.Management.Subscriptions.Admin.Models;
+using Subscriptions.Tests.src.Helpers;
 using System;
 using Xunit;
 
@@ -25,7 +26,7 @@ namespace Subscriptions.Tests
         [Fact]
         public void TestListQuotas() {
             RunTest((client) => {
-                var quotas = client.Quotas.List("redmond");
+                var quotas = client.Quotas.List(TestContext.LocationName);
                 quotas.ForEach(q => ValidateQuota(q));
             });
         }

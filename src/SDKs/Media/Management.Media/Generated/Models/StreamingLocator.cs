@@ -56,7 +56,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// used by this Streaming Locator</param>
         /// <param name="contentKeys">ContentKeys used by this Streaming
         /// Locator</param>
-        public StreamingLocator(string assetName, string streamingPolicyName, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.Guid? streamingLocatorId = default(System.Guid?), string defaultContentKeyPolicyName = default(string), IList<StreamingLocatorUserDefinedContentKey> contentKeys = default(IList<StreamingLocatorUserDefinedContentKey>))
+        /// <param name="alternativeMediaId">An Alternative Media Identifier
+        /// associated with the StreamingLocator.  This identifier can be used
+        /// to distinguish different StreamingLocators for the same Asset for
+        /// authorization purposes in the CustomLicenseAcquisitionUrlTemplate
+        /// or the CustomKeyAcquisitionUrlTemplate of the StreamingPolicy
+        /// specified in the StreamingPolicyName field.</param>
+        public StreamingLocator(string assetName, string streamingPolicyName, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.Guid? streamingLocatorId = default(System.Guid?), string defaultContentKeyPolicyName = default(string), IList<StreamingLocatorContentKey> contentKeys = default(IList<StreamingLocatorContentKey>), string alternativeMediaId = default(string))
             : base(id, name, type)
         {
             AssetName = assetName;
@@ -67,6 +73,7 @@ namespace Microsoft.Azure.Management.Media.Models
             StreamingPolicyName = streamingPolicyName;
             DefaultContentKeyPolicyName = defaultContentKeyPolicyName;
             ContentKeys = contentKeys;
+            AlternativeMediaId = alternativeMediaId;
             CustomInit();
         }
 
@@ -129,7 +136,18 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Gets or sets contentKeys used by this Streaming Locator
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentKeys")]
-        public IList<StreamingLocatorUserDefinedContentKey> ContentKeys { get; set; }
+        public IList<StreamingLocatorContentKey> ContentKeys { get; set; }
+
+        /// <summary>
+        /// Gets or sets an Alternative Media Identifier associated with the
+        /// StreamingLocator.  This identifier can be used to distinguish
+        /// different StreamingLocators for the same Asset for authorization
+        /// purposes in the CustomLicenseAcquisitionUrlTemplate or the
+        /// CustomKeyAcquisitionUrlTemplate of the StreamingPolicy specified in
+        /// the StreamingPolicyName field.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alternativeMediaId")]
+        public string AlternativeMediaId { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -49,6 +49,7 @@ namespace KeyVault.Management.Tests
                     true,
                     null,
                     new[] { testBase.accPol },
+                    testBase.vaultProperties.NetworkAcls,
                     testBase.tags);
 
                 //Update
@@ -83,6 +84,7 @@ namespace KeyVault.Management.Tests
                     true,
                     null,
                     new[] { testBase.accPol },
+                    testBase.vaultProperties.NetworkAcls,
                     testBase.tags);
 
                 var retrievedVault = testBase.client.Vaults.Get(
@@ -102,6 +104,7 @@ namespace KeyVault.Management.Tests
                     true,
                     null,
                     new[] { testBase.accPol },
+                    testBase.vaultProperties.NetworkAcls,
                     testBase.tags);
 
                 // Delete
@@ -440,6 +443,47 @@ namespace KeyVault.Management.Tests
             Assert.Equal(expectedEnableSoftDelete, vault.Properties.EnableSoftDelete);
             Assert.True(expectedTags.DictionaryEqual(vault.Tags));
             Assert.True(expectedPolicies.IsEqual(vault.Properties.AccessPolicies));
+        }
+
+        private void ValidateVault(
+            Vault vault,
+            string expectedVaultName,
+            string expectedResourceGroupName,
+            string expectedSubId,
+            Guid expectedTenantId,
+            string expectedLocation,
+            string expectedSkuFamily,
+            SkuName expectedSku,
+            bool expectedEnabledForDeployment,
+            bool expectedEnabledForTemplateDeployment,
+            bool expectedEnabledForDiskEncryption,
+            bool? expectedEnableSoftDelete,
+            AccessPolicyEntry[] expectedPolicies,
+            NetworkRuleSet networkRuleSet,
+            Dictionary<string, string> expectedTags)
+        {
+            ValidateVault(
+                vault,
+                expectedVaultName,
+                expectedResourceGroupName,
+                expectedSubId,
+                expectedTenantId,
+                expectedLocation,
+                expectedSkuFamily,
+                expectedSku,
+                expectedEnabledForDeployment,
+                expectedEnabledForTemplateDeployment,
+                expectedEnabledForDiskEncryption,
+                expectedEnableSoftDelete,
+                expectedPolicies,
+                expectedTags);
+
+            Assert.NotNull(vault.Properties.NetworkAcls);
+            Assert.Equal(networkRuleSet.DefaultAction, vault.Properties.NetworkAcls.DefaultAction);
+            Assert.Equal(networkRuleSet.Bypass, vault.Properties.NetworkAcls.Bypass);
+            Assert.True(vault.Properties.NetworkAcls.IpRules != null && vault.Properties.NetworkAcls.IpRules.Count == 2);
+            Assert.Equal(networkRuleSet.IpRules[0].Value, vault.Properties.NetworkAcls.IpRules[0].Value);
+            Assert.Equal(networkRuleSet.IpRules[1].Value, vault.Properties.NetworkAcls.IpRules[1].Value);
         }
     }
 

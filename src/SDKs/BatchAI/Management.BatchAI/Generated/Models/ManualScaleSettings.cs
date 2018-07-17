@@ -29,12 +29,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ManualScaleSettings class.
         /// </summary>
-        /// <param name="targetNodeCount">The desired number of compute nodes
-        /// in the Cluster.</param>
-        /// <param name="nodeDeallocationOption">Determines what to do with the
-        /// job(s) running on compute node if the Cluster size is
-        /// decreasing.</param>
-        public ManualScaleSettings(int targetNodeCount, DeallocationOption? nodeDeallocationOption = default(DeallocationOption?))
+        /// <param name="targetNodeCount">Target node count.</param>
+        /// <param name="nodeDeallocationOption">Node deallocation
+        /// options.</param>
+        public ManualScaleSettings(int targetNodeCount, string nodeDeallocationOption = default(string))
         {
             TargetNodeCount = targetNodeCount;
             NodeDeallocationOption = nodeDeallocationOption;
@@ -47,25 +45,24 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the desired number of compute nodes in the Cluster.
+        /// Gets or sets target node count.
         /// </summary>
         /// <remarks>
-        /// Default is 0. If autoScaleSettings are not specified, then the
-        /// Cluster starts with this target.
+        /// The desired number of compute nodes in the Cluster. Default is 0.
         /// </remarks>
         [JsonProperty(PropertyName = "targetNodeCount")]
         public int TargetNodeCount { get; set; }
 
         /// <summary>
-        /// Gets or sets determines what to do with the job(s) running on
-        /// compute node if the Cluster size is decreasing.
+        /// Gets or sets node deallocation options.
         /// </summary>
         /// <remarks>
-        /// The default value is requeue. Possible values include: 'requeue',
-        /// 'terminate', 'waitforjobcompletion', 'unknown'
+        /// An action to be performed when the cluster size is decreasing. The
+        /// default value is requeue. Possible values include: 'requeue',
+        /// 'terminate', 'waitforjobcompletion'
         /// </remarks>
         [JsonProperty(PropertyName = "nodeDeallocationOption")]
-        public DeallocationOption? NodeDeallocationOption { get; set; }
+        public string NodeDeallocationOption { get; set; }
 
         /// <summary>
         /// Validate the object.

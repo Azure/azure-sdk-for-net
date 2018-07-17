@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the DefaultKey class.
         /// </summary>
         /// <param name="label">Label can be used to specify Content Key when
-        /// creating Stremaing Locator</param>
+        /// creating a Streaming Locator</param>
         /// <param name="policyName">Policy used by Default Key</param>
         public DefaultKey(string label = default(string), string policyName = default(string))
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Media.Models
 
         /// <summary>
         /// Gets or sets label can be used to specify Content Key when creating
-        /// Stremaing Locator
+        /// a Streaming Locator
         /// </summary>
         [JsonProperty(PropertyName = "label")]
         public string Label { get; set; }

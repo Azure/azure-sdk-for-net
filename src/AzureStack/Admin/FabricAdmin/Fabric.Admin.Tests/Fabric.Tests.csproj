@@ -8,9 +8,9 @@
     <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Fabric.Admin\Microsoft.AzureStack.Management.Fabric.Admin.csproj" />

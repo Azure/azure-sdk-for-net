@@ -11,13 +11,14 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Deployment information.
     /// </summary>
-    public partial class DeploymentExtended
+    public partial class DeploymentExtended : IResource
     {
         /// <summary>
         /// Initializes a new instance of the DeploymentExtended class.
@@ -32,11 +33,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="name">The name of the deployment.</param>
         /// <param name="id">The ID of the deployment.</param>
+        /// <param name="location">the location of the deployment.</param>
         /// <param name="properties">Deployment properties.</param>
-        public DeploymentExtended(string name, string id = default(string), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
+        public DeploymentExtended(string name, string id = default(string), string location = default(string), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
         {
             Id = id;
             Name = name;
+            Location = location;
             Properties = properties;
             CustomInit();
         }
@@ -47,16 +50,22 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the deployment.
+        /// Gets the ID of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the deployment.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets deployment properties.

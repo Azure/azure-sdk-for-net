@@ -211,7 +211,7 @@ namespace ResourceGroups.Tests
                 var parameters = new Deployment
                 {
                     Properties = new DeploymentProperties()
-                    {
+                   {
                         Template = File.ReadAllText(Path.Combine("ScenarioTests", "good-website.json")),
                         Parameters =
                         JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
@@ -402,6 +402,48 @@ namespace ResourceGroups.Tests
                 var operations = client.DeploymentOperations.List(groupName, deploymentName, null);
 
                 Assert.True(operations.Any());
+            }
+        }
+
+        [Fact]
+        public void SubscriptionLevelDeployment()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = "SDK-test";
+                string deploymentName = TestUtilities.GenerateName("csmd");
+                string resourceName = TestUtilities.GenerateName("csmr");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "subscription_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'armbuilddemo1803'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "WestUS"
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtSubscriptionScope(deploymentName, parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtSubscriptionScope(deploymentName, parameters);
+
+                var deployment = client.Deployments.GetAtSubscriptionScope(deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
             }
         }
     }

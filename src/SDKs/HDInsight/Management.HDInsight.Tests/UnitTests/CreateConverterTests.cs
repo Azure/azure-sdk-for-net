@@ -85,6 +85,14 @@ namespace Management.HDInsight.Tests.UnitTests
         }
 
         [Fact]
+        public void CanConvertMLServicesCluster()
+        {
+            ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();
+            createParams.ClusterType = "MlServicEs";
+            ExtendedParameterValidators.ValidateSpecConversion(createParams);
+        }
+
+        [Fact]
         public void CanConvertHadoopClusterWithCustomVnet()
         {
             ClusterCreateParameters createParams = GetClusterCreateParamsWithMinRequiredValues();

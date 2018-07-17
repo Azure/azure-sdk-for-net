@@ -5,9 +5,9 @@
     <AssemblyName>AnalysisServices.Tests</AssemblyName>
     <PackageId>AnalysisServices.Tests</PackageId>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Management.Analysis\Microsoft.Azure.Management.Analysis.csproj" />

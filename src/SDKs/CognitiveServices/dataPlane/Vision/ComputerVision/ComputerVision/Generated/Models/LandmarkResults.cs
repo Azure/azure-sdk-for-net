@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Initializes a new instance of the LandmarkResults class.
         /// </summary>
         /// <param name="requestId">Id of the REST API request.</param>
-        public LandmarkResults(IList<LandmarkResultsLandmarksItem> landmarks = default(IList<LandmarkResultsLandmarksItem>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
+        public LandmarkResults(IList<LandmarksModel> landmarks = default(IList<LandmarksModel>), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
             Landmarks = landmarks;
             RequestId = requestId;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "landmarks")]
-        public IList<LandmarkResultsLandmarksItem> Landmarks { get; set; }
+        public IList<LandmarksModel> Landmarks { get; set; }
 
         /// <summary>
         /// Gets or sets id of the REST API request.

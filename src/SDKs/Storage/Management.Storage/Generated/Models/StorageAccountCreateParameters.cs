@@ -67,7 +67,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// include: 'Hot', 'Cool'</param>
         /// <param name="enableHttpsTrafficOnly">Allows https traffic only to
         /// storage service if sets to true.</param>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?))
+        /// <param name="isHnsEnabled">Account HierarchicalNamespace enabled if
+        /// sets to true.</param>
+        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             NetworkRuleSet = networkRuleSet;
             AccessTier = accessTier;
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
+            IsHnsEnabled = isHnsEnabled;
             CustomInit();
         }
 
@@ -164,6 +167,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.supportsHttpsTrafficOnly")]
         public bool? EnableHttpsTrafficOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets account HierarchicalNamespace enabled if sets to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isHnsEnabled")]
+        public bool? IsHnsEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

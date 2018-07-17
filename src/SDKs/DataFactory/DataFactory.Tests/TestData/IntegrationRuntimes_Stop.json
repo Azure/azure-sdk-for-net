@@ -1,29 +1,23 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "integrationRuntimeName": "exampleManagedIntegrationRuntime",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
-    "202": {
-      "headers": {
-        "Date": "Tue, 28 Nov 2017 07:39:21 GMT",
-        "Location": "https://adfrpnightly.svc.datafactory-test.azure.com/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationRuntimes/exampleManagedIntegrationRuntime/stop/operationresults/50799841b7f94497ae43291b791db7e0?api-version=2017-09-01-preview",
-        "Retry-After": "15",
-        "x-ms-request-id": "b36c64a2-3306-4374-b93f-ec91dbb3bf26",
-        "X-Content-Type-Options": "nosniff"
-      },
-      "body": null
-    },
     "200": {
       "headers": {
-        "Date": "Tue, 28 Nov 2017 07:40:23 GMT",
-        "x-ms-request-id": "bcff281c-ae61-4e2d-8a0c-044e34c1d04a",
-        "X-Content-Type-Options": "nosniff"
+        "Date": "Wed, 13 Jun 2018 21:33:03 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1193",
+        "x-ms-request-id": "87f6c2c7-92f1-40e6-bb01-769f9e6ca22f",
+        "x-ms-correlation-request-id": "87f6c2c7-92f1-40e6-bb01-769f9e6ca22f"
       },
-      "body": null
+      "body": {
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleManagedIntegrationRuntime"
+      }
     }
   }
 }

@@ -56,6 +56,7 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "TestJobStreams", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Usages", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Variable", "2015-10-31"),
+                new Tuple<string, string, string>("Automation", "Watcher", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "Webhook", "2015-10-31"),
               }.AsEnumerable();
           }

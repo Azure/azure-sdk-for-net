@@ -1,17 +1,35 @@
-﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/automation/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Users\menein\Source\Repos\me\azure-sdk-for-net\tools\..\src\SDKs\
-2018-05-21 23:41:17 UTC
+﻿Installing AutoRest version: latest
+
+> autorest@2.0.4280 preinstall C:\Program Files\nodejs\node_modules\autorest
+> node ./preinstall-check
+
+C:\Program Files\nodejs\autorest -> C:\Program Files\nodejs\node_modules\autorest\dist\app.js
++ autorest@2.0.4280
+updated 1 package in 4.571s
+
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/automation/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\azure\sdk\src\SDKs\Automation\Management.Automation
+AutoRest code generation utility [version: 2.0.4280; node: v8.9.1]
+(C) 2018 Microsoft Corporation.
+https://aka.ms/autorest
+   Loading AutoRest core      'C:\Users\vameru\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
+   Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.51)
+   Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
+
+2018-06-26 00:10:27 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      e76b99571744235eb7d16ff55581d6ad21ffd254
+Commit:      5a702f17ac0989db40df4b42186cfbe4a0996bbd
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\menein\AppData\Roaming\npm  `-- autorest@2.0.4262
+Bootstrapper version:    C:\Program Files\nodejs  `-- autorest@2.0.4280
 
 
 Latest installed version:    
-.\tools\generate.ps1 was invoked by generate.ps1
 
 

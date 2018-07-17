@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "ApplicationGateways", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "ApplicationSecurityGroups", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "AvailableEndpointServices", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "AzureFirewalls", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "BgpServiceCommunities", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "CheckDnsNameAvailability", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "ConnectionMonitors", "2018-04-01"),
@@ -36,6 +37,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "ExpressRouteCrossConnectionPeerings", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCrossConnections", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteServiceProviders", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "HubVirtualNetworkConnections", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "InboundNatRules", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerBackendAddressPools", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerFrontendIPConfigurations", "2018-04-01"),
@@ -59,10 +61,16 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "SecurityRules", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "Subnets", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "Usages", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "VirtualHubs", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "VirtualNetworkGatewayConnections", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "VirtualNetworkGateways", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "VirtualNetworkPeerings", "2018-04-01"),
                 new Tuple<string, string, string>("Network", "VirtualNetworks", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "VirtualWANs", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "VpnConnections", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "VpnGateways", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "VpnSites", "2018-04-01"),
+                new Tuple<string, string, string>("Network", "VpnSitesConfiguration", "2018-04-01"),
               }.AsEnumerable();
           }
       }

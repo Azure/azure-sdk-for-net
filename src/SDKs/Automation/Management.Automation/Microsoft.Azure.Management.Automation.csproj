@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Automation</PackageId>
     <Description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</Description>
-    <Version>3.0.3-preview</Version>
+    <Version>3.1.0-preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Automation Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Automation</AssemblyName>
     <PackageTags>Automation;Runbook;</PackageTags>
-    <PackageReleaseNotes>Newer resources added: sourceControl, sourceControlSyncJobs, Jobs. Major version release: SDK rebuilt using the Swagger specs - Changes in the namespaces and interfaces.</PackageReleaseNotes>
+    <PackageReleaseNotes>Minor Bug Fixes and adding new resource: Watchers</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

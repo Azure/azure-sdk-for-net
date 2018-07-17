@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
 
   <PropertyGroup>
@@ -14,13 +14,14 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\Resource\Resource.Tests\Resource.Tests.csproj" />
     <ProjectReference Include="..\Management.ManagementGroups\Management.ManagementGroups.csproj" />
   </ItemGroup>
-
 
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
 </Project>

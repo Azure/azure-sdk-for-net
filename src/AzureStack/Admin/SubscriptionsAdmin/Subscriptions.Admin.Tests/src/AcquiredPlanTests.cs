@@ -9,6 +9,7 @@ using Microsoft.AzureStack.Management.Subscriptions.Admin;
 using Microsoft.AzureStack.Management.Subscriptions.Admin.Models;
 using System;
 using Xunit;
+using Subscriptions.Tests.src.Helpers;
 
 namespace Subscriptions.Tests
 {
@@ -56,9 +57,9 @@ namespace Subscriptions.Tests
         [Fact]
         public void TestGetAcquiredPlan() {
             RunTest((client) => {
-                var subscription = client.Subscriptions.List().FirstOrDefault();
-                var acquiredPlan = client.AcquiredPlans.List(subscription.DelegatedProviderSubscriptionId).First();
-                var result = client.AcquiredPlans.Get(subscription.DelegatedProviderSubscriptionId, acquiredPlan.AcquisitionId);
+                var subscription = client.Subscriptions.Get(TestContext.TenantSubscriptionId);
+                var acquiredPlan = client.AcquiredPlans.List(subscription.SubscriptionId).First();
+                var result = client.AcquiredPlans.Get(subscription.SubscriptionId, acquiredPlan.AcquisitionId);
                 AssertSame(acquiredPlan, result);
             });
         }
@@ -71,7 +72,7 @@ namespace Subscriptions.Tests
 
                 var newPlan = new PlanAcquisition()
                 {
-                    AcquisitionId = "4FDD5149-B7E6-46E1-AC30-4D7E3AF4B69B",
+                    AcquisitionId = "df462f5d-5345-4ff6-9af9-2ff71984025f",
                     PlanId = plan.Id
                 };
 

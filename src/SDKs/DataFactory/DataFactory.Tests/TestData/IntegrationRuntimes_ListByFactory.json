@@ -1,47 +1,31 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
-    "api-version": "2017-09-01-preview"
+    "ifNoneMatch": null,
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Tue, 28 Nov 2017 07:05:28 GMT",
-        "x-ms-request-id": "a31dcf14-5eca-42c3-a0ac-5448c2f8b095",
-        "X-Content-Type-Options": "nosniff"
+        "Date": "Wed, 13 Jun 2018 21:33:05 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14909",
+        "x-ms-request-id": "f632df92-1140-4e19-9e19-0b1c8cbe393b",
+        "x-ms-correlation-request-id": "f632df92-1140-4e19-9e19-0b1c8cbe393b"
       },
       "body": {
         "value": [
           {
-            "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
             "name": "exampleIntegrationRuntime",
+            "type": "Microsoft.DataFactory/factories/integrationruntimes",
             "properties": {
-              "type": "Managed",
-              "typeProperties": {
-                "computeProperties": {
-                  "location": "West US",
-                  "nodeSize": "Standard_D1_v2",
-                  "numberOfNodes": 1,
-                  "maxParallelExecutionsPerNode": 1
-                },
-                "ssisProperties": {
-                  "catalogInfo": {
-                    "catalogServerEndpoint": "yandongtestsvr.database.windows.net",
-                    "catalogAdminUserName": "yanzhang",
-                    "catalogAdminPassword": {
-                      "type": "SecureString",
-                      "value": "**********"
-                    },
-                    "catalogPricingTier": "S1"
-                  }
-                }
-              },
-              "description": "A managed reserved integration runtime",
-              "state": "Initial"
+              "type": "SelfHosted",
+              "description": "A selfhosted integration runtime"
             },
-            "etag": "0100333d-0000-0000-0000-5a1d0ab80000"
+            "etag": "0400f1a1-0000-0000-0000-5b2188640000"
           }
         ]
       }

@@ -17,7 +17,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DescribeImageInStreamTest");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
                 {
                     ImageDescription result = client.DescribeImageInStreamAsync(stream).Result;
@@ -66,7 +66,7 @@ namespace ComputerVisionSDK.Tests
 
                 string imageUrl = GetTestImageUrl("dog.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     string maxCandidates = 2.ToString(CultureInfo.InvariantCulture);
 
@@ -112,7 +112,7 @@ namespace ComputerVisionSDK.Tests
 
                 string imageUrl = GetTestImageUrl("dog.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     string maxCandidates = "1";
 

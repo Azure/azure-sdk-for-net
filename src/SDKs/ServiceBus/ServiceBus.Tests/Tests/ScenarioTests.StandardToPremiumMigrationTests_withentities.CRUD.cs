@@ -92,31 +92,34 @@ namespace ServiceBus.Tests.ScenarioTests
                 var getPremiumNamespace = this.ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceNamePremium);
 
                 var getStandardNamespace = this.ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceNameStandrad);
+                
+                // Add 50 queue to standrad namespace
 
+                for (int count = 0; count < 50; count++)
+                {
+                    var createdqueue = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceNameStandrad, TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix), new SBQueue { });
+                }
+                
+                // Add 50 Topic to standrad namespace
 
-                // Add queue to standrad namespace
-
-                var createdqueue = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceNameStandrad, queueName1,  new SBQueue { });
-
-                var createdqueue2 = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceNameStandrad, queueName2, new SBQueue { });
-
-                // add topics to Standard namespace
-
-                var createdtopic = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceNameStandrad, topicName1, new SBTopic { });
-
-                var createdtopic1 = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceNameStandrad, topicName2, new SBTopic { });
-
+                for (int count = 0; count < 50; count++)
+                {
+                    var createdtopic = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceNameStandrad, TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix), new SBTopic { });
+                }
+                
                 // create the Migartion Config
 
                 var createMigrationConfigutationresponse = this.ServiceBusManagementClient.MigrationConfigs.CreateAndStartMigration(resourceGroup, namespaceNameStandrad, new MigrationConfigProperties { PostMigrationName = postmigrationName, TargetNamespace = getPremiumNamespace.Id });
 
-                var getMigrationConfiguration = this.ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad);
-
+                var getResponseMigrationConfiguration = ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad);
                 // Wait and check for Provisioning state is succeeded
-                while (this.ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad).ProvisioningState.Equals("Accepted"))
+                while (getResponseMigrationConfiguration.ProvisioningState != "Succeeded" || getResponseMigrationConfiguration.PendingReplicationOperationsCount.HasValue && getResponseMigrationConfiguration.PendingReplicationOperationsCount !=0)
                 {
+                    getResponseMigrationConfiguration = ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad);
                     TestUtilities.Wait(TimeSpan.FromSeconds(30));
                 }
+
+                var getMigrationConfiguration = this.ServiceBusManagementClient.MigrationConfigs.Get(resourceGroup, namespaceNameStandrad);
 
                 // List migrationconfigurations
                 var ListMigrationconfigurations = this.ServiceBusManagementClient.MigrationConfigs.List(resourceGroup, namespaceNameStandrad);
@@ -127,11 +130,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 // check for entity migration
                 var QueuesPremiumnamespaceResponse = this.ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceNamePremium);
 
-                Assert.Equal(2, QueuesPremiumnamespaceResponse.Count<SBQueue>());
+                Assert.Equal(50, QueuesPremiumnamespaceResponse.Count<SBQueue>());
                 
                 var TopicsPremiumnamespaceResponse = this.ServiceBusManagementClient.Topics.ListByNamespace(resourceGroup, namespaceNamePremium);
 
-                Assert.Equal(2, TopicsPremiumnamespaceResponse.Count<SBTopic>());
+                Assert.Equal(50, TopicsPremiumnamespaceResponse.Count<SBTopic>());
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(60));
 

@@ -6,10 +6,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services ComputerVision APIs.</Description>
-    <VersionPrefix>1.1.0</VersionPrefix>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
-    <PackageReleaseNotes>The Cognitive Services Computer Vision Client SDK lets users analyze images via Azure-hosted image classifiers. Classify images, generate image captions, recognize text, create smart thumbnails, and more.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    1) Support customizing service endpoints.
+    ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

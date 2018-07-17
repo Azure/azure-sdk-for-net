@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v1.0/models/landmarks/analyze?language=pt",
-      "EncodedRequestUri": "L3Zpc2lvbi92MS4wL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
+      "RequestUri": "/vision/v2.0/models/landmarks/analyze?language=pt",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL21vZGVscy9sYW5kbWFya3MvYW5hbHl6ZT9sYW5ndWFnZT1wdA==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/spaceneedle.jpg\"\r\n}",
       "RequestHeaders": {
@@ -17,10 +17,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991440773010254\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"a5623e39-1d7b-43ed-b936-23891383179e\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"landmarks\": [\r\n      {\r\n        \"name\": \"Obelisco Espacial\",\r\n        \"confidence\": 0.99991440773010254\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"c8e97c27-8cd8-41b1-9925-6e236a8c31af\",\r\n  \"metadata\": {\r\n    \"height\": 479,\r\n    \"width\": 243,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "193"
@@ -32,10 +32,10 @@
           "close"
         ],
         "Date": [
-          "Wed, 30 May 2018 20:53:34 GMT"
+          "Thu, 14 Jun 2018 00:34:22 GMT"
         ],
         "apim-request-id": [
-          "a5623e39-1d7b-43ed-b936-23891383179e"
+          "c8e97c27-8cd8-41b1-9925-6e236a8c31af"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

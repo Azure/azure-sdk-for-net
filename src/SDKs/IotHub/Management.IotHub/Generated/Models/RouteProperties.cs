@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// maximum length of 64 characters, and must be unique.</param>
         /// <param name="source">The source that the routing rule is to be
         /// applied to, such as DeviceMessages. Possible values include:
-        /// 'DeviceMessages', 'TwinChangeEvents', 'DeviceLifecycleEvents',
-        /// 'DeviceJobLifecycleEvents'</param>
+        /// 'Invalid', 'DeviceMessages', 'TwinChangeEvents',
+        /// 'DeviceLifecycleEvents', 'DeviceJobLifecycleEvents'</param>
         /// <param name="endpointNames">The list of endpoints to which messages
         /// that satisfy the condition are routed. Currently only one endpoint
         /// is allowed.</param>
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
 
         /// <summary>
         /// Gets or sets the source that the routing rule is to be applied to,
-        /// such as DeviceMessages. Possible values include: 'DeviceMessages',
-        /// 'TwinChangeEvents', 'DeviceLifecycleEvents',
+        /// such as DeviceMessages. Possible values include: 'Invalid',
+        /// 'DeviceMessages', 'TwinChangeEvents', 'DeviceLifecycleEvents',
         /// 'DeviceJobLifecycleEvents'
         /// </summary>
         [JsonProperty(PropertyName = "source")]

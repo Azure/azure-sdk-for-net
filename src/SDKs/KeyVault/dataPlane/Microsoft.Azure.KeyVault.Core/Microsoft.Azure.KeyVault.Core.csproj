@@ -5,8 +5,13 @@
     <Description>Microsoft Azure Key Vault Core Class Library</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Core</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.KeyVault.Core</AssemblyName>
-    <VersionPrefix>2.0.4</VersionPrefix>
-    <PackageTags>Microsoft Azure key vault core</PackageTags>
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <PackageTags>Microsoft Azure Key Vault Core</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        Moving version to 3.0 to align all Azure Key Vault SDK packages.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

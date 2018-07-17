@@ -19,7 +19,7 @@ namespace ComputerVisionSDK.Tests
 
                 const string Chinese = "zh";
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
                 {
                     TagResult result = client.TagImageInStreamAsync(stream, Chinese).Result;
@@ -40,7 +40,7 @@ namespace ComputerVisionSDK.Tests
 
                 string imageUrl = GetTestImageUrl("house.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     TagResult result = client.TagImageAsync(imageUrl).Result;
 

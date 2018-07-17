@@ -16,8 +16,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about the execution of a job in the Azure Batch
-    /// service.
+    /// Information about the execution of a job.
     /// </summary>
     public partial class JobPropertiesExecutionInfo
     {
@@ -32,13 +31,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the JobPropertiesExecutionInfo class.
         /// </summary>
-        /// <param name="startTime">The time at which the job started
-        /// running.</param>
-        /// <param name="endTime">The time at which the job completed.</param>
-        /// <param name="exitCode">The exit code of the job.</param>
-        /// <param name="errors">Contains details of various errors encountered
-        /// by the service during job execution</param>
-        public JobPropertiesExecutionInfo(System.DateTime startTime, System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), IList<BatchAIError> errors = default(IList<BatchAIError>))
+        /// <param name="startTime">Start time.</param>
+        /// <param name="endTime">End time.</param>
+        /// <param name="exitCode">Exit code.</param>
+        /// <param name="errors">Errors.</param>
+        public JobPropertiesExecutionInfo(System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), IList<BatchAIError> errors = default(IList<BatchAIError>))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -53,50 +50,47 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the time at which the job started running.
+        /// Gets start time.
         /// </summary>
         /// <remarks>
-        /// 'Running' corresponds to the running state. If the job has been
-        /// restarted or retried, this is the most recent time at which the job
-        /// started running. This property is present only for job that are in
-        /// the running or completed state.
+        /// The time at which the job started running. 'Running' corresponds to
+        /// the running state. If the job has been restarted or retried, this
+        /// is the most recent time at which the job started running. This
+        /// property is present only for job that are in the running or
+        /// completed state.
         /// </remarks>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime StartTime { get; set; }
+        public System.DateTime? StartTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the time at which the job completed.
+        /// Gets end time.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if the job is in completed state.
+        /// The time at which the job completed. This property is only returned
+        /// if the job is in completed state.
         /// </remarks>
         [JsonProperty(PropertyName = "endTime")]
-        public System.DateTime? EndTime { get; set; }
+        public System.DateTime? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the exit code of the job.
+        /// Gets exit code.
         /// </summary>
         /// <remarks>
-        /// This property is only returned if the job is in completed state.
+        /// The exit code of the job. This property is only returned if the job
+        /// is in completed state.
         /// </remarks>
         [JsonProperty(PropertyName = "exitCode")]
-        public int? ExitCode { get; set; }
+        public int? ExitCode { get; private set; }
 
         /// <summary>
-        /// Gets or sets contains details of various errors encountered by the
-        /// service during job execution
+        /// Gets errors.
         /// </summary>
+        /// <remarks>
+        /// A collection of errors encountered by the service during job
+        /// execution.
+        /// </remarks>
         [JsonProperty(PropertyName = "errors")]
-        public IList<BatchAIError> Errors { get; set; }
+        public IList<BatchAIError> Errors { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }

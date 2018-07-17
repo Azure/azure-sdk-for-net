@@ -51,11 +51,15 @@ namespace Microsoft.Azure.Management.BatchAI
         public BatchAIManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Adds a cluster. A cluster is a collection of compute nodes. Multiple jobs
-        /// can be run on the same cluster.
+        /// Creates a Cluster in the given Workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster within the specified resource group. Cluster names
@@ -63,7 +67,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// (-) and underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to provide for cluster creation.
+        /// The parameters to provide for the Cluster creation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -71,26 +75,32 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string clusterName, ClusterCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Cluster> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, clusterName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Cluster> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Update the properties of a given cluster.
+        /// Updates properties of a Cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster within the specified resource group. Cluster names
         /// can only contain a combination of alphanumeric characters along with dash
         /// (-) and underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
-        /// <param name='parameters'>
-        /// Additional parameters for cluster update.
+        /// <param name='scaleSettings'>
+        /// Scale settings. Desired scale settings for the cluster. Batch AI service
+        /// supports manual and auto scale clusters.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -113,7 +123,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string clusterName, ScaleSettings scaleSettings = default(ScaleSettings), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -124,6 +134,25 @@ namespace Microsoft.Azure.Management.BatchAI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
+                }
+            }
+            if (workspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
+            }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 64);
+                }
+                if (workspaceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[-\\w_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[-\\w_]+$");
                 }
             }
             if (clusterName == null)
@@ -140,14 +169,10 @@ namespace Microsoft.Azure.Management.BatchAI
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w_]+$");
                 }
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             if (Client.ApiVersion == null)
             {
@@ -157,6 +182,15 @@ namespace Microsoft.Azure.Management.BatchAI
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (scaleSettings != null)
+            {
+                scaleSettings.Validate();
+            }
+            ClusterUpdateParameters parameters = new ClusterUpdateParameters();
+            if (scaleSettings != null)
+            {
+                parameters.ScaleSettings = scaleSettings;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -165,6 +199,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -172,8 +207,9 @@ namespace Microsoft.Azure.Management.BatchAI
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/clusters/{clusterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/workspaces/{workspaceName}/clusters/{clusterName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -318,6 +354,11 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
         /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
+        /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster within the specified resource group. Cluster names
         /// can only contain a combination of alphanumeric characters along with dash
@@ -329,18 +370,23 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, clusterName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about the specified Cluster.
+        /// Gets information about a Cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster within the specified resource group. Cluster names
@@ -368,7 +414,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -379,6 +425,25 @@ namespace Microsoft.Azure.Management.BatchAI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
+                }
+            }
+            if (workspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
+            }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 64);
+                }
+                if (workspaceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[-\\w_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[-\\w_]+$");
                 }
             }
             if (clusterName == null)
@@ -395,9 +460,9 @@ namespace Microsoft.Azure.Management.BatchAI
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w_]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -416,14 +481,16 @@ namespace Microsoft.Azure.Management.BatchAI
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/clusters/{clusterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/workspaces/{workspaceName}/clusters/{clusterName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -557,10 +624,15 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Get the IP address, port of all the compute nodes in the cluster.
+        /// Get the IP address, port of all the compute nodes in the Cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster within the specified resource group. Cluster names
@@ -588,7 +660,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -599,6 +671,25 @@ namespace Microsoft.Azure.Management.BatchAI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
+                }
+            }
+            if (workspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
+            }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 64);
+                }
+                if (workspaceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[-\\w_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[-\\w_]+$");
                 }
             }
             if (clusterName == null)
@@ -615,9 +706,9 @@ namespace Microsoft.Azure.Management.BatchAI
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w_]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -636,14 +727,16 @@ namespace Microsoft.Azure.Management.BatchAI
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListRemoteLoginInformation", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/clusters/{clusterName}/listRemoteLoginInformation").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/workspaces/{workspaceName}/clusters/{clusterName}/listRemoteLoginInformation").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -777,224 +870,17 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Clusters associated with the subscription.
-        /// </summary>
-        /// <param name='clustersListOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<Cluster>>> ListWithHttpMessagesAsync(ClustersListOptions clustersListOptions = default(ClustersListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            string filter = default(string);
-            if (clustersListOptions != null)
-            {
-                filter = clustersListOptions.Filter;
-            }
-            string select = default(string);
-            if (clustersListOptions != null)
-            {
-                select = clustersListOptions.Select;
-            }
-            int? maxResults = default(int?);
-            if (clustersListOptions != null)
-            {
-                maxResults = clustersListOptions.MaxResults;
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("select", select);
-                tracingParameters.Add("maxResults", maxResults);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.BatchAI/clusters").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
-            }
-            if (maxResults != null)
-            {
-                _queryParameters.Add(string.Format("maxresults={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(maxResults, Client.SerializationSettings).Trim('"'))));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Cluster>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets information about the Clusters associated within the specified
-        /// resource group.
+        /// Gets information about Clusters associated with the given Workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
         /// </param>
-        /// <param name='clustersListByResourceGroupOptions'>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='clustersListByWorkspaceOptions'>
         /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
@@ -1018,7 +904,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Cluster>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, ClustersListByResourceGroupOptions clustersListByResourceGroupOptions = default(ClustersListByResourceGroupOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Cluster>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ClustersListByWorkspaceOptions clustersListByWorkspaceOptions = default(ClustersListByWorkspaceOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1031,6 +917,25 @@ namespace Microsoft.Azure.Management.BatchAI
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
+            if (workspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
+            }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 64);
+                }
+                if (workspaceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[-\\w_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[-\\w_]+$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -1039,20 +944,10 @@ namespace Microsoft.Azure.Management.BatchAI
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string filter = default(string);
-            if (clustersListByResourceGroupOptions != null)
-            {
-                filter = clustersListByResourceGroupOptions.Filter;
-            }
-            string select = default(string);
-            if (clustersListByResourceGroupOptions != null)
-            {
-                select = clustersListByResourceGroupOptions.Select;
-            }
             int? maxResults = default(int?);
-            if (clustersListByResourceGroupOptions != null)
+            if (clustersListByWorkspaceOptions != null)
             {
-                maxResults = clustersListByResourceGroupOptions.MaxResults;
+                maxResults = clustersListByWorkspaceOptions.MaxResults;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1062,29 +957,21 @@ namespace Microsoft.Azure.Management.BatchAI
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("select", select);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("maxResults", maxResults);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroup", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByWorkspace", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/clusters").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/workspaces/{workspaceName}/clusters").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (select != null)
-            {
-                _queryParameters.Add(string.Format("$select={0}", System.Uri.EscapeDataString(select)));
             }
             if (maxResults != null)
             {
@@ -1216,11 +1103,15 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Adds a cluster. A cluster is a collection of compute nodes. Multiple jobs
-        /// can be run on the same cluster.
+        /// Creates a Cluster in the given Workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster within the specified resource group. Cluster names
@@ -1228,7 +1119,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// (-) and underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to provide for cluster creation.
+        /// The parameters to provide for the Cluster creation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1251,7 +1142,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, ClusterCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string clusterName, ClusterCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1262,6 +1153,25 @@ namespace Microsoft.Azure.Management.BatchAI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
+                }
+            }
+            if (workspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
+            }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 64);
+                }
+                if (workspaceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[-\\w_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[-\\w_]+$");
                 }
             }
             if (clusterName == null)
@@ -1278,9 +1188,9 @@ namespace Microsoft.Azure.Management.BatchAI
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w_]+$");
                 }
             }
             if (parameters == null)
@@ -1307,6 +1217,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1314,8 +1225,9 @@ namespace Microsoft.Azure.Management.BatchAI
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/clusters/{clusterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/workspaces/{workspaceName}/clusters/{clusterName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -1460,6 +1372,11 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
         /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a combination
+        /// of alphanumeric characters along with dash (-) and underscore (_). The name
+        /// must be from 1 through 64 characters long.
+        /// </param>
         /// <param name='clusterName'>
         /// The name of the cluster within the specified resource group. Cluster names
         /// can only contain a combination of alphanumeric characters along with dash
@@ -1483,7 +1400,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1494,6 +1411,25 @@ namespace Microsoft.Azure.Management.BatchAI
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
+                }
+            }
+            if (workspaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
+            }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 64);
+                }
+                if (workspaceName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[-\\w_]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[-\\w_]+$");
                 }
             }
             if (clusterName == null)
@@ -1510,9 +1446,9 @@ namespace Microsoft.Azure.Management.BatchAI
                 {
                     throw new ValidationException(ValidationRules.MinLength, "clusterName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w\\._]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(clusterName, "^[-\\w_]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w\\._]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "clusterName", "^[-\\w_]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -1531,14 +1467,16 @@ namespace Microsoft.Azure.Management.BatchAI
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("workspaceName", workspaceName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/clusters/{clusterName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BatchAI/workspaces/{workspaceName}/clusters/{clusterName}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{workspaceName}", System.Uri.EscapeDataString(workspaceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
@@ -1654,7 +1592,7 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Get the IP address, port of all the compute nodes in the cluster.
+        /// Get the IP address, port of all the compute nodes in the Cluster.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1827,7 +1765,7 @@ namespace Microsoft.Azure.Management.BatchAI
         }
 
         /// <summary>
-        /// Gets information about the Clusters associated with the subscription.
+        /// Gets information about Clusters associated with the given Workspace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1853,7 +1791,7 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Cluster>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Cluster>>> ListByWorkspaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1868,181 +1806,7 @@ namespace Microsoft.Azure.Management.BatchAI
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
-            }
-            // Construct URL
-            string _url = "{nextLink}";
-            _url = _url.Replace("{nextLink}", nextPageLink);
-            List<string> _queryParameters = new List<string>();
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IPage<Cluster>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Cluster>>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets information about the Clusters associated within the specified
-        /// resource group.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<IPage<Cluster>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (nextPageLink == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextPageLink", nextPageLink);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByResourceGroupNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByWorkspaceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

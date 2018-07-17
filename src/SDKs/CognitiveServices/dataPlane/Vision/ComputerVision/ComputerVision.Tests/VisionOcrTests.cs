@@ -16,7 +16,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "OcrImageInStreamTest");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("signage.jpg"), FileMode.Open))
                 {
                     const bool DetectOrientation = true;
@@ -44,7 +44,7 @@ namespace ComputerVisionSDK.Tests
 
                 string germanTextUrl = GetTestImageUrl("achtung.jpg");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     const bool DetectOrientation = true;
                     OcrResult result = client.RecognizePrintedTextAsync(DetectOrientation, germanTextUrl, OcrLanguages.De).Result;
