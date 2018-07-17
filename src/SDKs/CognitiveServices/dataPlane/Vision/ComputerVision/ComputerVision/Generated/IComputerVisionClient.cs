@@ -34,7 +34,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -45,6 +44,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// Gets or sets json deserialization settings.
         /// </summary>
         JsonSerializerSettings DeserializationSettings { get; }
+
+        /// <summary>
+        /// Supported Cognitive Services endpoints
+        /// </summary>
+        string Endpoint { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client
