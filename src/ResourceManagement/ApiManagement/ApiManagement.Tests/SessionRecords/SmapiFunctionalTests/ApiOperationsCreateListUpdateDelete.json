@@ -1,0 +1,607 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcz9hcGktdmVyc2lvbj0yMDE2LTEwLTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001\",\r\n      \"name\": \"Echo API\",\r\n      \"description\": null,\r\n      \"serviceUrl\": \"http://echoapi.cloudapp.net/api\",\r\n      \"path\": \"echo\",\r\n      \"protocols\": [\r\n        \"https\"\r\n      ],\r\n      \"authenticationSettings\": null,\r\n      \"subscriptionKeyParameterNames\": null\r\n    }\r\n  ],\r\n  \"count\": 1,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "264"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ae4276d2-633d-4589-8a5f-f237adfe0996"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "2dddfc1e-fae3-46a7-a597-cbc1b74a9aef"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164004Z:2dddfc1e-fae3-46a7-a597-cbc1b74a9aef"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:03 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTEwLTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080004\",\r\n      \"name\": \"Create resource\",\r\n      \"method\": \"POST\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a POST call based on the echo backend above. The request body is expected to contain JSON-formatted data (see example below). A policy is used to automatically transform any request sent in JSON directly to XML. In a real-world scenario this could be used to enable modern clients to speak to a legacy backend.\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080003\",\r\n      \"name\": \"Modify Resource\",\r\n      \"method\": \"PUT\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a PUT call handled by the same \\\"echo\\\" backend as above. You can now specify a request body in addition to headers and it will be returned as well.\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080005\",\r\n      \"name\": \"Remove resource\",\r\n      \"method\": \"DELETE\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a DELETE call which traditionally deletes the resource. It is based on the same \\\"echo\\\" backend as in all other operations so nothing is actually deleted.\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080006\",\r\n      \"name\": \"Retrieve header only\",\r\n      \"method\": \"HEAD\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"The HEAD operation returns only headers. In this demonstration a policy is used to set additional headers when the response is returned and to enable JSONP.\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080001\",\r\n      \"name\": \"Retrieve resource\",\r\n      \"method\": \"GET\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a GET call on a sample resource. It is handled by an \\\"echo\\\" backend which returns a response equal to the request (the supplied headers and body are being returned as received).\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080002\",\r\n      \"name\": \"Retrieve resource (cached)\",\r\n      \"method\": \"GET\",\r\n      \"urlTemplate\": \"/resource-cached\",\r\n      \"description\": \"A demonstration of a GET call with caching enabled on the same \\\"echo\\\" backend as above. Cache TTL is set to 1 hour. When you make the first request the headers you supplied will be cached. Subsequent calls will return the same headers as the first time even if you change them in your request.\"\r\n    }\r\n  ],\r\n  \"count\": 6,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "2340"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6241f291-4caa-487e-9c09-a65ba6f7103b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14994"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b02f501-ce1d-44a1-b90f-eff9b3694a8f"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164004Z:1b02f501-ce1d-44a1-b90f-eff9b3694a8f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations?api-version=2016-10-10&$top=3",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTEwLTEwJiR0b3A9Mw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080004\",\r\n      \"name\": \"Create resource\",\r\n      \"method\": \"POST\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a POST call based on the echo backend above. The request body is expected to contain JSON-formatted data (see example below). A policy is used to automatically transform any request sent in JSON directly to XML. In a real-world scenario this could be used to enable modern clients to speak to a legacy backend.\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080003\",\r\n      \"name\": \"Modify Resource\",\r\n      \"method\": \"PUT\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a PUT call handled by the same \\\"echo\\\" backend as above. You can now specify a request body in addition to headers and it will be returned as well.\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080005\",\r\n      \"name\": \"Remove resource\",\r\n      \"method\": \"DELETE\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a DELETE call which traditionally deletes the resource. It is based on the same \\\"echo\\\" backend as in all other operations so nothing is actually deleted.\"\r\n    }\r\n  ],\r\n  \"count\": 6,\r\n  \"nextLink\": \"https://management.azure.com:443/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations?api-version=2016-10-10&%24top=3&%24skip=3\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1450"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a502e2a9-845c-4973-854c-dca5ecd0e1c9"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-correlation-request-id": [
+          "abdfbd2a-96d5-4f46-915f-08ce820fd869"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164004Z:abdfbd2a-96d5-4f46-915f-08ce820fd869"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations?api-version=2016-10-10&%24top=3&%24skip=3",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE2LTEwLTEwJiUyNHRvcD0zJiUyNHNraXA9Mw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080006\",\r\n      \"name\": \"Retrieve header only\",\r\n      \"method\": \"HEAD\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"The HEAD operation returns only headers. In this demonstration a policy is used to set additional headers when the response is returned and to enable JSONP.\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080001\",\r\n      \"name\": \"Retrieve resource\",\r\n      \"method\": \"GET\",\r\n      \"urlTemplate\": \"/resource\",\r\n      \"description\": \"A demonstration of a GET call on a sample resource. It is handled by an \\\"echo\\\" backend which returns a response equal to the request (the supplied headers and body are being returned as received).\"\r\n    },\r\n    {\r\n      \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080002\",\r\n      \"name\": \"Retrieve resource (cached)\",\r\n      \"method\": \"GET\",\r\n      \"urlTemplate\": \"/resource-cached\",\r\n      \"description\": \"A demonstration of a GET call with caching enabled on the same \\\"echo\\\" backend as above. Cache TTL is set to 1 hour. When you make the first request the headers you supplied will be cached. Subsequent calls will return the same headers as the first time even if you change them in your request.\"\r\n    }\r\n  ],\r\n  \"count\": 6,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1189"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1dcfa332-b8c6-46e6-90e2-916d2e40f14a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "f01f8791-e9b4-479d-a37a-3e4078abbd35"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164005Z:f01f8791-e9b4-479d-a37a-3e4078abbd35"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:04 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations/582c82624d79b90080080006?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucy81ODJjODI2MjRkNzliOTAwODAwODAwMDY/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/apis/582c82614d79b90080040001/operations/582c82624d79b90080080006\",\r\n  \"name\": \"Retrieve header only\",\r\n  \"method\": \"HEAD\",\r\n  \"urlTemplate\": \"/resource\",\r\n  \"templateParameters\": [],\r\n  \"description\": \"The HEAD operation returns only headers. In this demonstration a policy is used to set additional headers when the response is returned and to enable JSONP.\",\r\n  \"request\": {\r\n    \"description\": null,\r\n    \"queryParameters\": [],\r\n    \"headers\": [],\r\n    \"representations\": []\r\n  },\r\n  \"responses\": [\r\n    {\r\n      \"statusCode\": 200,\r\n      \"description\": null,\r\n      \"representations\": [],\r\n      \"headers\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "516"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "17752517-5572-479a-8e1d-dd071cbc056f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-correlation-request-id": [
+          "e52d9aac-8ab9-42c6-991c-8c08b769ce33"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164005Z:e52d9aac-8ab9-42c6-991c-8c08b769ce33"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:05 GMT"
+        ],
+        "ETag": [
+          "\"AAAAAAAACOU=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations/operationid6667?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucy9vcGVyYXRpb25pZDY2Njc/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"operationName4795\",\r\n  \"method\": \"PATCH\",\r\n  \"urlTemplate\": \"/newresource\",\r\n  \"templateParameters\": [],\r\n  \"description\": \"operationDescription7366\",\r\n  \"request\": {\r\n    \"description\": \"operationRequestDescription6741\",\r\n    \"queryParameters\": [\r\n      {\r\n        \"name\": \"newOperationRequestParmName8641\",\r\n        \"description\": \"newOperationRequestParamDescr599\",\r\n        \"type\": \"string\",\r\n        \"defaultValue\": \"newOperationRequestParamDefaultValue2006\",\r\n        \"required\": true,\r\n        \"values\": [\r\n          \"newOperationRequestParamDefaultValue2006\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ]\r\n      }\r\n    ],\r\n    \"headers\": [\r\n      {\r\n        \"name\": \"newOperationRequestHeaderParmName421\",\r\n        \"description\": \"newOperationRequestHeaderParamDescr5854\",\r\n        \"type\": \"string\",\r\n        \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue5308\",\r\n        \"required\": true,\r\n        \"values\": [\r\n          \"newOperationRequestHeaderParamDefaultValue5308\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ]\r\n      }\r\n    ],\r\n    \"representations\": [\r\n      {\r\n        \"contentType\": \"newOperationRequestRepresentationContentType1414\",\r\n        \"sample\": \"newOperationRequestRepresentationSample5857\"\r\n      }\r\n    ]\r\n  },\r\n  \"responses\": [\r\n    {\r\n      \"statusCode\": 1980785443,\r\n      \"description\": \"newOperationResponseDescription7853\",\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationResponseRepresentationContentType4180\",\r\n          \"sample\": \"newOperationResponseRepresentationSample2804\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "1631"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "83874cc0-6e30-47f9-a1f2-60da7e0634c1"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "89f0ba3d-9e83-41e1-8129-3e7d66fb46ce"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164007Z:89f0ba3d-9e83-41e1-8129-3e7d66fb46ce"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:06 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations/operationid6667?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucy9vcGVyYXRpb25pZDY2Njc/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/apis/582c82614d79b90080040001/operations/operationid6667\",\r\n  \"name\": \"operationName4795\",\r\n  \"method\": \"PATCH\",\r\n  \"urlTemplate\": \"/newresource\",\r\n  \"templateParameters\": [],\r\n  \"description\": \"operationDescription7366\",\r\n  \"request\": {\r\n    \"description\": \"operationRequestDescription6741\",\r\n    \"queryParameters\": [\r\n      {\r\n        \"name\": \"newOperationRequestParmName8641\",\r\n        \"description\": \"newOperationRequestParamDescr599\",\r\n        \"type\": \"string\",\r\n        \"defaultValue\": \"newOperationRequestParamDefaultValue2006\",\r\n        \"required\": true,\r\n        \"values\": [\r\n          \"newOperationRequestParamDefaultValue2006\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ]\r\n      }\r\n    ],\r\n    \"headers\": [\r\n      {\r\n        \"name\": \"newOperationRequestHeaderParmName421\",\r\n        \"description\": \"newOperationRequestHeaderParamDescr5854\",\r\n        \"type\": \"string\",\r\n        \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue5308\",\r\n        \"required\": true,\r\n        \"values\": [\r\n          \"newOperationRequestHeaderParamDefaultValue5308\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ]\r\n      }\r\n    ],\r\n    \"representations\": [\r\n      {\r\n        \"contentType\": \"newOperationRequestRepresentationContentType1414\",\r\n        \"sample\": \"newOperationRequestRepresentationSample5857\"\r\n      }\r\n    ]\r\n  },\r\n  \"responses\": [\r\n    {\r\n      \"statusCode\": 1980785443,\r\n      \"description\": \"newOperationResponseDescription7853\",\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationResponseRepresentationContentType4180\",\r\n          \"sample\": \"newOperationResponseRepresentationSample2804\"\r\n        }\r\n      ],\r\n      \"headers\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1207"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e35a214f-6ef0-4a90-835e-46a87a0522e3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-correlation-request-id": [
+          "3460c03a-de75-404e-aa09-cc37cb9caae4"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164007Z:3460c03a-de75-404e-aa09-cc37cb9caae4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:07 GMT"
+        ],
+        "ETag": [
+          "\"AAAAAAAACQM=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations/operationid6667?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucy9vcGVyYXRpb25pZDY2Njc/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/apis/582c82614d79b90080040001/operations/operationid6667\",\r\n  \"name\": \"patchedName4695\",\r\n  \"method\": \"HEAD\",\r\n  \"urlTemplate\": \"/newresource\",\r\n  \"templateParameters\": [],\r\n  \"description\": \"patchedDescription6958\",\r\n  \"request\": {\r\n    \"description\": \"operationRequestDescription6741\",\r\n    \"queryParameters\": [\r\n      {\r\n        \"name\": \"newOperationRequestParmName8641\",\r\n        \"description\": \"newOperationRequestParamDescr599\",\r\n        \"type\": \"string\",\r\n        \"defaultValue\": \"newOperationRequestParamDefaultValue2006\",\r\n        \"required\": true,\r\n        \"values\": [\r\n          \"newOperationRequestParamDefaultValue2006\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ]\r\n      }\r\n    ],\r\n    \"headers\": [\r\n      {\r\n        \"name\": \"newOperationRequestHeaderParmName421\",\r\n        \"description\": \"newOperationRequestHeaderParamDescr5854\",\r\n        \"type\": \"string\",\r\n        \"defaultValue\": \"newOperationRequestHeaderParamDefaultValue5308\",\r\n        \"required\": true,\r\n        \"values\": [\r\n          \"newOperationRequestHeaderParamDefaultValue5308\",\r\n          \"1\",\r\n          \"2\",\r\n          \"3\"\r\n        ]\r\n      }\r\n    ],\r\n    \"representations\": [\r\n      {\r\n        \"contentType\": \"newOperationRequestRepresentationContentType1414\",\r\n        \"sample\": \"newOperationRequestRepresentationSample5857\"\r\n      }\r\n    ]\r\n  },\r\n  \"responses\": [\r\n    {\r\n      \"statusCode\": 1980785443,\r\n      \"description\": \"newOperationResponseDescription7853\",\r\n      \"representations\": [\r\n        {\r\n          \"contentType\": \"newOperationResponseRepresentationContentType4180\",\r\n          \"sample\": \"newOperationResponseRepresentationSample2804\"\r\n        }\r\n      ],\r\n      \"headers\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "1202"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "7e6f810f-d781-4528-913a-d31e1e85844d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14989"
+        ],
+        "x-ms-correlation-request-id": [
+          "294a4d0c-05c4-4f54-a60a-6313a0a89749"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164008Z:294a4d0c-05c4-4f54-a60a-6313a0a89749"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:07 GMT"
+        ],
+        "ETag": [
+          "\"AAAAAAAACQQ=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations/operationid6667?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucy9vcGVyYXRpb25pZDY2Njc/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"Operation not found.\",\r\n    \"details\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "85"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fd3ee036-7062-4980-986b-2f1dd41d43ed"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14988"
+        ],
+        "x-ms-correlation-request-id": [
+          "f7a56f20-626f-4234-997c-8c0f37f835e4"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164010Z:f7a56f20-626f-4234-997c-8c0f37f835e4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:09 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations/operationid6667?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucy9vcGVyYXRpb25pZDY2Njc/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"Name\": \"patchedName4695\",\r\n  \"Description\": \"patchedDescription6958\",\r\n  \"Method\": \"HEAD\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "98"
+        ],
+        "If-Match": [
+          "\"AAAAAAAACQM=\""
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "cee47a60-fd52-443e-aaaa-50e46deddca5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "f5106dde-5f47-4a3c-bcef-0dac1c9b1931"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164007Z:f5106dde-5f47-4a3c-bcef-0dac1c9b1931"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:07 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/apis/582c82614d79b90080040001/operations/operationid6667?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvYXBpcy81ODJjODI2MTRkNzliOTAwODAwNDAwMDEvb3BlcmF0aW9ucy9vcGVyYXRpb25pZDY2Njc/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "If-Match": [
+          "*"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "65b116ae-df66-476d-b5e0-2c99a34602dc"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "93149ddb-9949-4a4d-83d1-bf6954f35175"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161116T164010Z:93149ddb-9949-4a4d-83d1-bf6954f35175"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 16:40:09 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {
+    "ApiOperationsCreateListUpdateDelete": [
+      "operationid6667",
+      "operationName4795",
+      "operationDescription7366",
+      "operationRequestDescription6741",
+      "newOperationRequestHeaderParmName421",
+      "newOperationRequestHeaderParamDescr5854",
+      "newOperationRequestHeaderParamDefaultValue5308",
+      "newOperationRequestParmName8641",
+      "newOperationRequestParamDescr599",
+      "newOperationRequestParamDefaultValue2006",
+      "newOperationRequestRepresentationContentType1414",
+      "newOperationRequestRepresentationSample5857",
+      "newOperationResponseDescription7853",
+      "newOperationResponseRepresentationContentType4180",
+      "newOperationResponseRepresentationSample2804",
+      "patchedName4695",
+      "patchedDescription6958"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68"
+  }
+}

@@ -1,0 +1,386 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/identityProviders/Facebook?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvaWRlbnRpdHlQcm92aWRlcnMvRmFjZWJvb2s/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"clientId\": \"clientId9146\",\r\n  \"clientSecret\": \"clientSecret9689\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "73"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "132894f1-0df3-4b40-81f1-0328d82e6b2e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "c1e4c0c0-6d83-4af1-acc5-75fe1f8a72da"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161130T062510Z:c1e4c0c0-6d83-4af1-acc5-75fe1f8a72da"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Nov 2016 06:25:09 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/identityProviders/Facebook?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvaWRlbnRpdHlQcm92aWRlcnMvRmFjZWJvb2s/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"clientId\": \"clientId9146\",\r\n  \"clientSecret\": \"clientSecret9689\",\r\n  \"type\": \"facebook\",\r\n  \"allowedTenants\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a48f8363-8f33-48d9-a88c-21d8b499d52c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14967"
+        ],
+        "x-ms-correlation-request-id": [
+          "2c871593-42e2-435f-a5ef-a6354a4156b5"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161130T062510Z:2c871593-42e2-435f-a5ef-a6354a4156b5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Nov 2016 06:25:10 GMT"
+        ],
+        "ETag": [
+          "\"AAAAAAAAD7w=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/identityProviders/Facebook?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvaWRlbnRpdHlQcm92aWRlcnMvRmFjZWJvb2s/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"clientId\": \"clientId9146\",\r\n  \"clientSecret\": \"clientSecret1449\",\r\n  \"type\": \"facebook\",\r\n  \"allowedTenants\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "101"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ff20ae07-1095-411c-ab20-5c313f8b1968"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14965"
+        ],
+        "x-ms-correlation-request-id": [
+          "17133748-df29-46b0-8fcf-aed7a549e106"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161130T062517Z:17133748-df29-46b0-8fcf-aed7a549e106"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Nov 2016 06:25:17 GMT"
+        ],
+        "ETag": [
+          "\"AAAAAAAAD70=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/identityProviders/Facebook?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvaWRlbnRpdHlQcm92aWRlcnMvRmFjZWJvb2s/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"IdentityProvider not found.\",\r\n    \"details\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "92"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9d7ab4ef-8ed6-48fd-b808-7c3ab94baea0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14964"
+        ],
+        "x-ms-correlation-request-id": [
+          "a146d371-166c-4dd8-98ee-f02b6a97ee2a"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161130T062520Z:a146d371-166c-4dd8-98ee-f02b6a97ee2a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Nov 2016 06:25:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/identityProviders?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvaWRlbnRpdHlQcm92aWRlcnM/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"clientId\": \"clientId9146\",\r\n    \"clientSecret\": \"clientSecret9689\",\r\n    \"type\": \"facebook\",\r\n    \"allowedTenants\": null\r\n  }\r\n]",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "103"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1e32e0ff-62c6-460f-83e3-fd71c08d2e4c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14966"
+        ],
+        "x-ms-correlation-request-id": [
+          "4897dd4e-5571-4ca8-a5c6-fd3004fde296"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161130T062511Z:4897dd4e-5571-4ca8-a5c6-fd3004fde296"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Nov 2016 06:25:10 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/identityProviders/Facebook?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvaWRlbnRpdHlQcm92aWRlcnMvRmFjZWJvb2s/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"clientSecret\": \"clientSecret1449\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "42"
+        ],
+        "If-Match": [
+          "\"AAAAAAAAD7w=\""
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "63d7d22c-b01b-452c-9008-7265faeb5c4b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "030e6f93-66a4-45bb-991b-7e6740e5c6a9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161130T062517Z:030e6f93-66a4-45bb-991b-7e6740e5c6a9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Nov 2016 06:25:16 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/identityProviders/Facebook?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvaWRlbnRpdHlQcm92aWRlcnMvRmFjZWJvb2s/YXBpLXZlcnNpb249MjAxNi0xMC0xMA==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "If-Match": [
+          "\"AAAAAAAAD70=\""
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.2.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "92b92451-8177-47e3-b522-a34517e3e9dd"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "b113e204-0b9a-4671-afd3-19748a9a8969"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20161130T062519Z:b113e204-0b9a-4671-afd3-19748a9a8969"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 30 Nov 2016 06:25:18 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {
+    "IdentityProviderCreateListUpdateDelete": [
+      "clientId9146",
+      "clientSecret9689",
+      "clientSecret1449"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68"
+  }
+}

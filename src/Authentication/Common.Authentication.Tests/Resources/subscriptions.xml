@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Subscriptions version="1.0" xmlns="urn:Microsoft.WindowsAzure.Management:WaPSCmdlets">
+  <Subscription name="mysub1">
+    <SubscriptionId>279b0675-cf67-467f-98f0-67ae31eb540f</SubscriptionId>
+    <Thumbprint>12D09EC0008EEE10C1B80AB70B3739E6BC509BB3</Thumbprint>
+    <ServiceEndpoint>0853C43B56C81CE8FC44C8ACDC8C54783C6080E2</ServiceEndpoint>
+    <CurrentStorageAccountName>0853C43B56C81CE8FC44C8ACDC8C54783C6080E2</CurrentStorageAccountName>
+  </Subscription>
+  <Subscription name="mysub2">
+    <SubscriptionId>279b0675-cf67-467f-98f0-67ae31eb540f</SubscriptionId>
+    <Thumbprint>12D09EC0008EEE10C1B80AB70B3739E6BC509BB3</Thumbprint>
+    <ServiceEndpoint>0853C43B56C81CE8FC44C8ACDC8C54783C6080E2</ServiceEndpoint>
+    <CurrentStorageAccountName>0853C43B56C81CE8FC44C8ACDC8C54783C6080E2</CurrentStorageAccountName>
+  </Subscription>
+</Subscriptions>

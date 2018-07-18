@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/providers/Microsoft.AppService/apiapps?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgwNGFlMTQtYjgzNS00NjMwLWFjMTQtNDRmMDFhNWE4YzI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBwU2VydmljZS9hcGlhcHBzP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiApps.ApiAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"type\": \"Microsoft.AppService/apiapps\",\r\n      \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble04/providers/Microsoft.AppService/apiapps/dropboxconnector\",\r\n      \"name\": \"DropboxConnector\",\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"package\": {\r\n          \"id\": \"DropboxConnector\",\r\n          \"version\": \"0.0.441\"\r\n        },\r\n        \"updatePolicy\": \"Auto\",\r\n        \"accessLevel\": \"Internal\",\r\n        \"api\": {\r\n          \"endpoint\": \"https://dropboxconnector9e451d0e137a4b368f4039369ec869cc.azurewebsites.net\",\r\n          \"hasDefinition\": false\r\n        },\r\n        \"host\": {\r\n          \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble04/providers/Microsoft.Web/sites/dropboxconnector9e451d0e137a4b368f4039369ec869cc\",\r\n          \"resourceName\": \"dropboxconnector9e451d0e137a4b368f4039369ec869cc\",\r\n          \"resourceType\": \"Microsoft.Web/sites\"\r\n        },\r\n        \"gateway\": {\r\n          \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble04/providers/Microsoft.AppService/gateways/fooble042804ae14b8354630ac1444f01a5a8c28\",\r\n          \"resourceName\": \"fooble042804ae14b8354630ac1444f01a5a8c28\",\r\n          \"resourceType\": \"Microsoft.AppService/gateways\"\r\n        },\r\n        \"dependencies\": [],\r\n        \"authentication\": {\r\n          \"clientId\": \"foo\"\r\n        },\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.AppService/apiapps\",\r\n      \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble04/providers/Microsoft.AppService/apiapps/microsoft.apiapp\",\r\n      \"name\": \"Microsoft.ApiApp\",\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"package\": {\r\n          \"id\": \"Microsoft.ApiApp\",\r\n          \"version\": \"0.9.4\"\r\n        },\r\n        \"updatePolicy\": \"Disabled\",\r\n        \"accessLevel\": \"Internal\",\r\n        \"api\": {\r\n          \"endpoint\": \"https://microsoft-apiapp3a46be93cfe04b7aa3ae61425c5ac585.azurewebsites.net\",\r\n          \"hasDefinition\": false\r\n        },\r\n        \"host\": {\r\n          \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble04/providers/Microsoft.Web/sites/microsoft-apiapp3a46be93cfe04b7aa3ae61425c5ac585\",\r\n          \"resourceName\": \"microsoft-apiapp3a46be93cfe04b7aa3ae61425c5ac585\",\r\n          \"resourceType\": \"Microsoft.Web/sites\"\r\n        },\r\n        \"gateway\": {\r\n          \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble04/providers/Microsoft.AppService/gateways/fooble042804ae14b8354630ac1444f01a5a8c28\",\r\n          \"resourceName\": \"fooble042804ae14b8354630ac1444f01a5a8c28\",\r\n          \"resourceType\": \"Microsoft.AppService/gateways\"\r\n        },\r\n        \"dependencies\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"type\": \"Microsoft.AppService/apiapps\",\r\n      \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble98/providers/Microsoft.AppService/apiapps/emptyapp\",\r\n      \"name\": \"EmptyApp\",\r\n      \"location\": \"West US\",\r\n      \"properties\": {\r\n        \"package\": {\r\n          \"id\": \"Microsoft.ApiApp\",\r\n          \"version\": \"0.9.4\"\r\n        },\r\n        \"updatePolicy\": \"Disabled\",\r\n        \"accessLevel\": \"Internal\",\r\n        \"api\": {\r\n          \"endpoint\": \"https://microsoft-apiapp34c21032da7047bc910a29e52d2d09d7.azurewebsites.net\",\r\n          \"hasDefinition\": false\r\n        },\r\n        \"host\": {\r\n          \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble98/providers/Microsoft.Web/sites/microsoft-apiapp34c21032da7047bc910a29e52d2d09d7\",\r\n          \"resourceName\": \"microsoft-apiapp34c21032da7047bc910a29e52d2d09d7\",\r\n          \"resourceType\": \"Microsoft.Web/sites\"\r\n        },\r\n        \"gateway\": {\r\n          \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/fooble98/providers/Microsoft.AppService/gateways/fooble982804ae14b8354630ac1444f01a5a8c28\",\r\n          \"resourceName\": \"fooble982804ae14b8354630ac1444f01a5a8c28\",\r\n          \"resourceType\": \"Microsoft.AppService/gateways\"\r\n        },\r\n        \"dependencies\": [],\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "3236"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "744fed55-8977-4988-8ca9-740c1693b2d4"
+        ],
+        "x-rp-requesturi": [
+          "https://apiapp-rp-prod-wus.msp.windows.net/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/providers/Microsoft.AppService/apiapps?api-version=2015-03-01-preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "542632a1-f9f6-4f3b-906f-86d194b65ae8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150515T234120Z:542632a1-f9f6-4f3b-906f-86d194b65ae8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 May 2015 23:41:19 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "2804ae14-b835-4630-ac14-44f01a5a8c28"
+  }
+}

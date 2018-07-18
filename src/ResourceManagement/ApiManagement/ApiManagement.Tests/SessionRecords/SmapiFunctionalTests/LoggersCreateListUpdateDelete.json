@@ -1,0 +1,386 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/loggers/newlogger9340?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvbG9nZ2Vycy9uZXdsb2dnZXI5MzQwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMTA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"type\": \"AzureEventHub\",\r\n  \"description\": \"newloggerDescription8425\",\r\n  \"credentials\": {\r\n    \"name\": \"sdkeventhub\",\r\n    \"connectionString\": \"$TestStringToBeReplaced\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "325"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d3243fc3-6847-44eb-99e0-3f8060f2a28f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "f71c27c1-ad8d-4d43-9fc1-e888660830a2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20161116T190651Z:f71c27c1-ad8d-4d43-9fc1-e888660830a2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 19:06:50 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/loggers/newlogger9340?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvbG9nZ2Vycy9uZXdsb2dnZXI5MzQwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/loggers/newlogger9340\",\r\n  \"type\": \"azureEventHub\",\r\n  \"description\": \"newloggerDescription8425\",\r\n  \"credentials\": {\r\n    \"name\": \"sdkeventhub\",\r\n    \"connectionString\": \"$TestStringToBeReplaced\"\r\n  },\r\n  \"isBuffered\": true\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "338"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0d79fcb4-e6a6-4ee8-aff1-c8d7484de199"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14984"
+        ],
+        "x-ms-correlation-request-id": [
+          "b83880d7-5652-4c93-b05e-69f7d3d4a842"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20161116T190651Z:b83880d7-5652-4c93-b05e-69f7d3d4a842"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 19:06:51 GMT"
+        ],
+        "ETag": [
+          "\"AAAAAAAACWg=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/loggers/newlogger9340?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvbG9nZ2Vycy9uZXdsb2dnZXI5MzQwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/loggers/newlogger9340\",\r\n  \"type\": \"azureEventHub\",\r\n  \"description\": \"patchedDescription4619\",\r\n  \"credentials\": {\r\n    \"name\": \"sdkeventhub\",\r\n    \"connectionString\": \"$TestStringToBeReplaced\"\r\n  },\r\n  \"isBuffered\": true\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "336"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5999bcb0-f6aa-47fd-abfb-347d9a0c51ce"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14981"
+        ],
+        "x-ms-correlation-request-id": [
+          "ce8cb51c-7fac-4740-8ef1-989e1fd9ac25"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20161116T190747Z:ce8cb51c-7fac-4740-8ef1-989e1fd9ac25"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 19:07:46 GMT"
+        ],
+        "ETag": [
+          "\"AAAAAAAACWk=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/loggers/newlogger9340?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvbG9nZ2Vycy9uZXdsb2dnZXI5MzQwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"Logger not found.\",\r\n    \"details\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "82"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0237329d-8f18-4b31-a1c3-5c9cf9d088fe"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14980"
+        ],
+        "x-ms-correlation-request-id": [
+          "a9eda640-d5dc-4d43-9c83-71878add8313"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20161116T190750Z:a9eda640-d5dc-4d43-9c83-71878add8313"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 19:07:49 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/loggers?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvbG9nZ2Vycz9hcGktdmVyc2lvbj0yMDE2LTEwLTEw",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/loggers/newlogger8088\",\r\n      \"type\": \"azureEventHub\",\r\n      \"description\": \"newloggerDescription3709\",\r\n      \"credentials\": {\r\n        \"name\": \"sdkeventhub\",\r\n        \"connectionString\": \"$TestStringToBeReplaced\"\r\n      },\r\n      \"isBuffered\": true\r\n    },\r\n    {\r\n      \"id\": \"/loggers/newlogger9340\",\r\n      \"type\": \"azureEventHub\",\r\n      \"description\": \"newloggerDescription8425\",\r\n      \"credentials\": {\r\n        \"name\": \"sdkeventhub\",\r\n        \"connectionString\": \"$TestStringToBeReplaced\"\r\n      },\r\n      \"isBuffered\": true\r\n    }\r\n  ],\r\n  \"count\": 2,\r\n  \"nextLink\": null\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "715"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "48c1440a-9564-4b52-89d5-454de0af5f2b"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14982"
+        ],
+        "x-ms-correlation-request-id": [
+          "f4fdba58-4f11-453a-b13e-5a35ed1b5846"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20161116T190747Z:f4fdba58-4f11-453a-b13e-5a35ed1b5846"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 19:07:46 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/loggers/newlogger9340?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvbG9nZ2Vycy9uZXdsb2dnZXI5MzQwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMTA=",
+      "RequestMethod": "PATCH",
+      "RequestBody": "{\r\n  \"type\": \"AzureEventHub\",\r\n  \"description\": \"patchedDescription4619\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ],
+        "Content-Length": [
+          "75"
+        ],
+        "If-Match": [
+          "\"AAAAAAAACWg=\""
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "3229879c-4273-402e-ae34-cea56c4cd5fc"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "931687af-8c74-49d5-b786-d029c004815b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20161116T190747Z:931687af-8c74-49d5-b786-d029c004815b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 19:07:46 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-East-US/providers/Microsoft.ApiManagement/service/hydraapimservice8559/loggers/newlogger9340?api-version=2016-10-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUVhc3QtVVMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvaHlkcmFhcGltc2VydmljZTg1NTkvbG9nZ2Vycy9uZXdsb2dnZXI5MzQwP2FwaS12ZXJzaW9uPTIwMTYtMTAtMTA=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "If-Match": [
+          "\"AAAAAAAACWk=\""
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/3.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "8ca9abc3-7bc0-4d29-b571-5b20df1849d3"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-correlation-request-id": [
+          "7c33d767-52ca-4bb1-94a7-7f1748577c41"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20161116T190750Z:7c33d767-52ca-4bb1-94a7-7f1748577c41"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 16 Nov 2016 19:07:49 GMT"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {
+    "LoggersCreateListUpdateDelete": [
+      "newlogger9340",
+      "newloggerDescription8425",
+      "patchedDescription4619"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68"
+  }
+}

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="Configuration.ScenarioTest" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-06.2.4">
+  <WebRole name="Configuration.ScenarioTest.WebRole" vmsize="Small">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="Endpoint1" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Endpoints>
+      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+    </Endpoints>
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+  </WebRole>
+</ServiceDefinition>

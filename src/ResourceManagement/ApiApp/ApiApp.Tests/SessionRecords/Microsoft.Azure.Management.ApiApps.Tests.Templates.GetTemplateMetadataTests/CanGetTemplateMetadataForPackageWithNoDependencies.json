@@ -1,0 +1,126 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourcegroups/apiapptest8558?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgwNGFlMTQtYjgzNS00NjMwLWFjMTQtNDRmMDFhNWE4YzI4L3Jlc291cmNlZ3JvdXBzL2FwaWFwcHRlc3Q4NTU4P2FwaS12ZXJzaW9uPTIwMTQtMDQtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/resourceGroups/apiapptest8558\",\r\n  \"name\": \"apiapptest8558\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "189"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "26e68d77-e016-4164-bd3c-5fabd8824156"
+        ],
+        "x-ms-correlation-request-id": [
+          "26e68d77-e016-4164-bd3c-5fabd8824156"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150515T234156Z:26e68d77-e016-4164-bd3c-5fabd8824156"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 May 2015 23:41:55 GMT"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/providers/Microsoft.AppService/deploymenttemplates/Microsoft.Azure.AppService.ApiApps.TestBench/listmetadata?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjgwNGFlMTQtYjgzNS00NjMwLWFjMTQtNDRmMDFhNWE4YzI4L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXBwU2VydmljZS9kZXBsb3ltZW50dGVtcGxhdGVzL01pY3Jvc29mdC5BenVyZS5BcHBTZXJ2aWNlLkFwaUFwcHMuVGVzdEJlbmNoL2xpc3RtZXRhZGF0YT9hcGktdmVyc2lvbj0yMDE1LTAzLTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Management.ApiApps.ApiAppManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": {\r\n    \"microserviceId\": \"Microsoft.Azure.AppService.ApiApps.TestBench\",\r\n    \"displayName\": \"Test Bench\",\r\n    \"appSettings\": [],\r\n    \"dependsOn\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "134"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "144e98d0-08b6-46a4-a362-1b65ec94eac0"
+        ],
+        "x-rp-requesturi": [
+          "https://apiapp-rp-prod-all.msp.windows.net/subscriptions/2804ae14-b835-4630-ac14-44f01a5a8c28/providers/Microsoft.AppService/deploymenttemplates/Microsoft.Azure.AppService.ApiApps.TestBench/listmetadata?api-version=2015-03-01-preview"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "4d0328af-0f2e-4fa7-81c8-329622da4999"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20150515T234157Z:4d0328af-0f2e-4fa7-81c8-329622da4999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 15 May 2015 23:41:56 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.0"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "WithNewGroup": [
+      "apiapptest8558"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "2804ae14-b835-4630-ac14-44f01a5a8c28"
+  }
+}

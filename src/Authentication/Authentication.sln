@@ -1,0 +1,42 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authentication", "Common.Authentication\Common.Authentication.csproj", "{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Authentication.Tests", "Common.Authentication.Tests\Common.Authentication.Tests.csproj", "{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Net40-Debug|Any CPU = Net40-Debug|Any CPU
+		Net40-Release|Any CPU = Net40-Release|Any CPU
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
+		Portable-Debug|Any CPU = Portable-Debug|Any CPU
+		Portable-Release|Any CPU = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net40-Debug|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net40-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Portable-Debug|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{B95C489C-8CB7-4DCF-8D5F-B9AEBDBBAF89}.Portable-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net40-Debug|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net40-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Portable-Debug|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{C2CF99A2-D35E-4AED-AFB9-C26960AF1D0D}.Portable-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WindowsAzureLibraries.vsmdi
+	EndGlobalSection
+EndGlobal
