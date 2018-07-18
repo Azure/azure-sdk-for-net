@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// Defines values for Details.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Details
+    public enum ImageDetail
     {
         [EnumMember(Value = "celebrities")]
         Celebrities,
@@ -28,31 +28,31 @@ namespace Microsoft.Azure.Search.Models
     }
     internal static class DetailsEnumExtension
     {
-        internal static string ToSerializedValue(this Details? value)
+        internal static string ToSerializedValue(this ImageDetail? value)
         {
-            return value == null ? null : ((Details)value).ToSerializedValue();
+            return value == null ? null : ((ImageDetail)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this Details value)
+        internal static string ToSerializedValue(this ImageDetail value)
         {
             switch( value )
             {
-                case Details.Celebrities:
+                case ImageDetail.Celebrities:
                     return "celebrities";
-                case Details.Landmarks:
+                case ImageDetail.Landmarks:
                     return "landmarks";
             }
             return null;
         }
 
-        internal static Details? ParseDetails(this string value)
+        internal static ImageDetail? ParseDetails(this string value)
         {
             switch( value )
             {
                 case "celebrities":
-                    return Details.Celebrities;
+                    return ImageDetail.Celebrities;
                 case "landmarks":
-                    return Details.Landmarks;
+                    return ImageDetail.Landmarks;
             }
             return null;
         }

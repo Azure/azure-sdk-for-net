@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Search.Models
         /// code to use. Default is en.</param>
         /// <param name="minimumPrecision">A value between 0 and 1 to indicate
         /// the confidence of the results.</param>
-        public NamedEntityRecognitionSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IList<Categories?> categories = default(IList<Categories?>), NamedEntityRecognitionSkillLanguage defaultLanguageCode = default(NamedEntityRecognitionSkillLanguage), double? minimumPrecision = default(double?))
+        public NamedEntityRecognitionSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IList<NamedEntityCategory?> categories = default(IList<NamedEntityCategory?>), NamedEntityRecognitionSkillLanguage defaultLanguageCode = default(NamedEntityRecognitionSkillLanguage), double? minimumPrecision = default(double?))
             : base(description, context, inputs, outputs)
         {
             Categories = categories;
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets a list of named entity categories.
         /// </summary>
         [JsonProperty(PropertyName = "categories")]
-        public IList<Categories?> Categories { get; set; }
+        public IList<NamedEntityCategory?> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating which language code to use. Default

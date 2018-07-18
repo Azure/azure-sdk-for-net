@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="visualFeatures">A list of visual features.</param>
         /// <param name="details">A string indicating which domain-specific
         /// details to return.</param>
-        public ImageAnalysisSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, ImageAnalysisSkillLanguage defaultLanguageCode = default(ImageAnalysisSkillLanguage), IList<VisualFeatures?> visualFeatures = default(IList<VisualFeatures?>), IList<Details?> details = default(IList<Details?>))
+        public ImageAnalysisSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, ImageAnalysisSkillLanguage defaultLanguageCode = default(ImageAnalysisSkillLanguage), IList<VisualFeature?> visualFeatures = default(IList<VisualFeature?>), IList<ImageDetail?> details = default(IList<ImageDetail?>))
             : base(description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
@@ -71,14 +71,14 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets a list of visual features.
         /// </summary>
         [JsonProperty(PropertyName = "visualFeatures")]
-        public IList<VisualFeatures?> VisualFeatures { get; set; }
+        public IList<VisualFeature?> VisualFeatures { get; set; }
 
         /// <summary>
         /// Gets or sets a string indicating which domain-specific details to
         /// return.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<Details?> Details { get; set; }
+        public IList<ImageDetail?> Details { get; set; }
 
         /// <summary>
         /// Validate the object.

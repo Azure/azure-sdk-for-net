@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// Defines values for VisualFeatures.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum VisualFeatures
+    public enum VisualFeature
     {
         [EnumMember(Value = "categories")]
         Categories,
@@ -36,47 +36,47 @@ namespace Microsoft.Azure.Search.Models
     }
     internal static class VisualFeaturesEnumExtension
     {
-        internal static string ToSerializedValue(this VisualFeatures? value)
+        internal static string ToSerializedValue(this VisualFeature? value)
         {
-            return value == null ? null : ((VisualFeatures)value).ToSerializedValue();
+            return value == null ? null : ((VisualFeature)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this VisualFeatures value)
+        internal static string ToSerializedValue(this VisualFeature value)
         {
             switch( value )
             {
-                case VisualFeatures.Categories:
+                case VisualFeature.Categories:
                     return "categories";
-                case VisualFeatures.Tags:
+                case VisualFeature.Tags:
                     return "tags";
-                case VisualFeatures.Description:
+                case VisualFeature.Description:
                     return "description";
-                case VisualFeatures.Faces:
+                case VisualFeature.Faces:
                     return "faces";
-                case VisualFeatures.ImageType:
+                case VisualFeature.ImageType:
                     return "imageType";
-                case VisualFeatures.Color:
+                case VisualFeature.Color:
                     return "color";
             }
             return null;
         }
 
-        internal static VisualFeatures? ParseVisualFeatures(this string value)
+        internal static VisualFeature? ParseVisualFeatures(this string value)
         {
             switch( value )
             {
                 case "categories":
-                    return VisualFeatures.Categories;
+                    return VisualFeature.Categories;
                 case "tags":
-                    return VisualFeatures.Tags;
+                    return VisualFeature.Tags;
                 case "description":
-                    return VisualFeatures.Description;
+                    return VisualFeature.Description;
                 case "faces":
-                    return VisualFeatures.Faces;
+                    return VisualFeature.Faces;
                 case "imageType":
-                    return VisualFeatures.ImageType;
+                    return VisualFeature.ImageType;
                 case "color":
-                    return VisualFeatures.Color;
+                    return VisualFeature.Color;
             }
             return null;
         }

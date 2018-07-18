@@ -14,9 +14,6 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class SkillsetsTests : SearchTestBase<SearchServiceFixture>
     {
-        public const char PathSeparator = '/';
-        public const string RootName = "document";
-
         public const string InputImageFieldName = "image";
         public const string InputUrlFieldName = "url";
         // The query string is for SAS token and it is optional
@@ -25,7 +22,7 @@ namespace Microsoft.Azure.Search.Tests
         public const string OutputTextFieldName = "text";
         public const string OutputLayoutTextFieldName = "layoutText";
 
-        public static string RootPathString { get; } = PathSeparator + RootName;
+        public const string RootPathString = "/document";
 
         [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrKeyPhrase()
@@ -33,9 +30,9 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage.en.ToString(), KeyPhraseExtractionSkillLanguage.en.ToString()));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage.fr.ToString(), KeyPhraseExtractionSkillLanguage.fr.ToString()));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage.es.ToString(), KeyPhraseExtractionSkillLanguage.es.ToString()));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage.En, KeyPhraseExtractionSkillLanguage.En));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage.Fr, KeyPhraseExtractionSkillLanguage.Fr));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage.Es, KeyPhraseExtractionSkillLanguage.Es));
             });
         }
 
@@ -45,9 +42,9 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.pt.ToString(), SentimentSkillLanguage.pt_PT.ToString()));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.fi.ToString(), SentimentSkillLanguage.fi.ToString()));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.en.ToString(), SentimentSkillLanguage.en.ToString()));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Pt, SentimentSkillLanguage.PtPt));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.Fi, SentimentSkillLanguage.Fi));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSentiment(OcrSkillLanguage.En, SentimentSkillLanguage.En));
             });
         }
 
@@ -87,7 +84,8 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity());
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(null, null));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm.Printed, new List<NamedEntityCategory?> { NamedEntityCategory.Location, NamedEntityCategory.Organization, NamedEntityCategory.Person } ));
             });
         }
 
@@ -107,9 +105,10 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.en.ToString(), SplitSkillLanguage.en.ToString()));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.fr.ToString(), SplitSkillLanguage.fr.ToString()));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.fi.ToString(), SplitSkillLanguage.fi.ToString()));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.En, SplitSkillLanguage.En, TextSplitMode.Pages));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.Fr, SplitSkillLanguage.Fr, TextSplitMode.Pages));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.Fi, SplitSkillLanguage.Fi, TextSplitMode.Sentences));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrSplitText(OcrSkillLanguage.Da, SplitSkillLanguage.Da, TextSplitMode.Sentences));
             });
         }
 
@@ -120,7 +119,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                Skillset skillset = CreateTestOcrSkillset(1);
+                Skillset skillset = CreateTestOcrSkillset(1, TextExtractionAlgorithm.Printed);
 
                 AzureOperationResponse<Skillset> response =
                     searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
@@ -135,13 +134,13 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                Skillset skillset = CreateTestOcrSkillset(1);
+                Skillset skillset = CreateTestOcrSkillset(1, TextExtractionAlgorithm.Handwritten);
 
                 AzureOperationResponse<Skillset> response =
                     searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
                 Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
 
-                skillset = CreateTestOcrSkillset(2, skillset.Name);
+                skillset = CreateTestOcrSkillset(2, TextExtractionAlgorithm.Printed, skillset.Name);
                 response =
                     searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
                 Assert.Equal(HttpStatusCode.OK, response.Response.StatusCode);
@@ -154,7 +153,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndGetSkillset(searchClient, CreateTestOcrSkillset(1));
+                CreateAndGetSkillset(searchClient, CreateTestOcrSkillset(1, TextExtractionAlgorithm.Printed));
             });
         }
 
@@ -164,7 +163,20 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CreateAndGetSkillset(searchClient, CreateTestOcrSkillset(repeat: 1, shouldDetectOrientation: true));
+                CreateAndGetSkillset(searchClient, CreateTestOcrSkillset(repeat: 1, algorithm: TextExtractionAlgorithm.Printed, shouldDetectOrientation: true));
+            });
+        }
+
+        [Fact]
+        public void GetSkillsetThrowsOnNotFound()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.Skillsets.Get("thisSkillsetdoesnotexist"),
+                    HttpStatusCode.NotFound);
             });
         }
 
@@ -175,7 +187,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                Skillset skillset = CreateTestOcrSkillset(1);
+                Skillset skillset = CreateTestOcrSkillset(1, TextExtractionAlgorithm.Printed);
 
                 // Try delete before the Skillset even exists.
                 AzureOperationResponse deleteResponse =
@@ -193,6 +205,36 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void ExistsReturnsFalseForNonExistingSkillset()
+        {
+            Run(() =>
+            {
+                SearchServiceClient client = Data.GetSearchServiceClient();
+                Assert.False(client.Skillsets.Exists("nonexistent"));
+            });
+        }
+
+        [Fact]
+        public void ExistsReturnsTrueForExistingSkillset()
+        {
+            Run(() =>
+            {
+                SearchServiceClient client = Data.GetSearchServiceClient();
+                Skillset skillset = CreateTestOcrSkillset(1, TextExtractionAlgorithm.Handwritten);
+
+                try
+                {
+                    client.Skillsets.Create(skillset);
+                    Assert.True(client.Skillsets.Exists(skillset.Name));
+                }
+                finally
+                {
+                    client.Skillsets.Delete(skillset.Name);
+                }
+            });
+        }
+
         private void CreateAndGetSkillset(SearchServiceClient searchClient, Skillset expectedSkillset)
         {
             try
@@ -207,7 +249,7 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private static Skillset CreateTestOcrSkillset(int repeat, string name = null, bool shouldDetectOrientation = false)
+        private static Skillset CreateTestOcrSkillset(int repeat, TextExtractionAlgorithm algorithm, string name = null, bool shouldDetectOrientation = false)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -224,10 +266,9 @@ namespace Microsoft.Azure.Search.Tests
                     new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" + i }
                 };
 
-
-                skills.Add(new OcrSkill("Tested OCR skill", PathSeparator + RootName, _inputs, _outputs)
+                skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
                 {
-                    TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
+                    TextExtractionAlgorithm = algorithm,
                     ShouldDetectOrientation = shouldDetectOrientation,
                     DefaultLanguageCode = "en"
                 });
@@ -254,7 +295,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expected, actual, new ModelComparer<Skillset>());
         }
 
-        private static Skillset CreateTestSkillsetOcrKeyPhrase(string ocrLanguageCode = "en", string keyPhraseLanguageCode = "en")
+        private static Skillset CreateTestSkillsetOcrKeyPhrase(OcrSkillLanguage ocrLanguageCode, KeyPhraseExtractionSkillLanguage keyPhraseLanguageCode)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -269,7 +310,7 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", PathSeparator + RootName, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = ocrLanguageCode,
@@ -294,7 +335,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", PathSeparator + RootName, _inputs1, _outputs1)
+            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", RootPathString, _inputs1, _outputs1)
             {
                 DefaultLanguageCode = keyPhraseLanguageCode,
 
@@ -303,7 +344,7 @@ namespace Microsoft.Azure.Search.Tests
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
 
-        private static Skillset CreateTestSkillsetOcrSentiment(string ocrLanguageCode = "en", string sentimentLanguageCode = "en")
+        private static Skillset CreateTestSkillsetOcrSentiment(OcrSkillLanguage ocrLanguageCode, SentimentSkillLanguage sentimentLanguageCode)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -318,7 +359,7 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", PathSeparator + RootName, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Handwritten,
                 DefaultLanguageCode = ocrLanguageCode,
@@ -343,7 +384,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SentimentSkill("Tested Sentiment skill", PathSeparator + RootName, _inputs1, _outputs1)
+            skills.Add(new SentimentSkill("Tested Sentiment skill", RootPathString, _inputs1, _outputs1)
             {
                 DefaultLanguageCode = sentimentLanguageCode,
 
@@ -367,11 +408,23 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "description", TargetName = "mydescription" }
             };
 
-            skills.Add(new ImageAnalysisSkill("Tested image analysis skill", PathSeparator + RootName, _inputs, _outputs)
+            skills.Add(new ImageAnalysisSkill("Tested image analysis skill", RootPathString, _inputs, _outputs)
             {
-                VisualFeatures = new List<VisualFeatures?> { VisualFeatures.Description },
-                DefaultLanguageCode = "en",
-
+                VisualFeatures = new List<VisualFeature?>
+                {
+                    VisualFeature.Categories,
+                    VisualFeature.Color,
+                    VisualFeature.Description,
+                    VisualFeature.Faces,
+                    VisualFeature.ImageType,
+                    VisualFeature.Tags
+                },
+                Details = new List<ImageDetail?>
+                {
+                    ImageDetail.Celebrities,
+                    ImageDetail.Landmarks
+                },
+                DefaultLanguageCode = "en"
             });
 
             List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
@@ -392,10 +445,9 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", PathSeparator + RootName, _inputs1, _outputs1)
+            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", RootPathString, _inputs1, _outputs1)
             {
-                DefaultLanguageCode = "en",
-
+                DefaultLanguageCode = "en"
             });
 
             return new Skillset("testskillset2", "Skillset for testing", skills);
@@ -423,7 +475,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new LanguageDetectionSkill("Tested Language Detection skill", PathSeparator + RootName, _inputs, _outputs));
+            skills.Add(new LanguageDetectionSkill("Tested Language Detection skill", RootPathString, _inputs, _outputs));
 
             return new Skillset("testskillset3", "Skillset for testing", skills);
         }
@@ -460,12 +512,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new MergeSkill("Tested Merged Text skill", PathSeparator + RootName, _inputs, _outputs));
+            skills.Add(new MergeSkill("Tested Merged Text skill", RootPathString, _inputs, _outputs));
 
             return new Skillset("testskillset4", "Skillset for testing", skills);
         }
 
-        private static Skillset CreateTestSkillsetOcrNamedEntity()
+        private static Skillset CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm? algorithm, List<NamedEntityCategory?> categories)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -480,11 +532,10 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", PathSeparator + RootName, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
             {
-                TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = "en",
-
+                TextExtractionAlgorithm = algorithm,
+                DefaultLanguageCode = "en"
             });
 
             List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
@@ -505,10 +556,10 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", PathSeparator + RootName, _inputs1, _outputs1)
+            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, _inputs1, _outputs1)
             {
-                DefaultLanguageCode = "en",
-
+                Categories = categories,
+                DefaultLanguageCode = "en"
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills);
@@ -529,11 +580,10 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", PathSeparator + RootName, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = "en",
-
+                DefaultLanguageCode = "en"
             });
 
             List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
@@ -554,12 +604,12 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new ShaperSkill("Tested Shaper skill", PathSeparator + RootName, _inputs1, _outputs1));
+            skills.Add(new ShaperSkill("Tested Shaper skill", RootPathString, _inputs1, _outputs1));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
 
-        private static Skillset CreateTestSkillsetOcrSplitText(string ocrLanguageCode = "en", string splitLanguageCode = "en")
+        private static Skillset CreateTestSkillsetOcrSplitText(OcrSkillLanguage ocrLanguageCode, SplitSkillLanguage splitLanguageCode, TextSplitMode textSplitMode)
         {
             List<Skill> skills = new List<Skill>();
 
@@ -574,7 +624,7 @@ namespace Microsoft.Azure.Search.Tests
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", PathSeparator + RootName, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = ocrLanguageCode
@@ -598,9 +648,9 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SplitSkill("Tested Split skill", PathSeparator + RootName, _inputs1, _outputs1)
+            skills.Add(new SplitSkill("Tested Split skill", RootPathString, _inputs1, _outputs1)
             {
-                TextSplitMode = TextSplitMode.Pages,
+                TextSplitMode = textSplitMode,
                 DefaultLanguageCode = splitLanguageCode
             });
 

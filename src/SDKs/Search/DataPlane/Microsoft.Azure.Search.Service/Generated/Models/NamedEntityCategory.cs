@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// Defines values for Categories.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Categories
+    public enum NamedEntityCategory
     {
         [EnumMember(Value = "location")]
         Location,
@@ -30,35 +30,35 @@ namespace Microsoft.Azure.Search.Models
     }
     internal static class CategoriesEnumExtension
     {
-        internal static string ToSerializedValue(this Categories? value)
+        internal static string ToSerializedValue(this NamedEntityCategory? value)
         {
-            return value == null ? null : ((Categories)value).ToSerializedValue();
+            return value == null ? null : ((NamedEntityCategory)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this Categories value)
+        internal static string ToSerializedValue(this NamedEntityCategory value)
         {
             switch( value )
             {
-                case Categories.Location:
+                case NamedEntityCategory.Location:
                     return "location";
-                case Categories.Organization:
+                case NamedEntityCategory.Organization:
                     return "organization";
-                case Categories.Person:
+                case NamedEntityCategory.Person:
                     return "person";
             }
             return null;
         }
 
-        internal static Categories? ParseCategories(this string value)
+        internal static NamedEntityCategory? ParseCategories(this string value)
         {
             switch( value )
             {
                 case "location":
-                    return Categories.Location;
+                    return NamedEntityCategory.Location;
                 case "organization":
-                    return Categories.Organization;
+                    return NamedEntityCategory.Organization;
                 case "person":
-                    return Categories.Person;
+                    return NamedEntityCategory.Person;
             }
             return null;
         }
