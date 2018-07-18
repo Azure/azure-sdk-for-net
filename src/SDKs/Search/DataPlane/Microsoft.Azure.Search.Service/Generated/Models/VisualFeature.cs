@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for VisualFeature.
+    /// Defines values for VisualFeatures.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum VisualFeature
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Search.Models
         [EnumMember(Value = "color")]
         Color
     }
-    internal static class VisualFeatureEnumExtension
+    internal static class VisualFeaturesEnumExtension
     {
         internal static string ToSerializedValue(this VisualFeature? value)
         {
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Search.Models
             return null;
         }
 
-        internal static VisualFeature? ParseVisualFeature(this string value)
+        internal static VisualFeature? ParseVisualFeatures(this string value)
         {
             switch( value )
             {
