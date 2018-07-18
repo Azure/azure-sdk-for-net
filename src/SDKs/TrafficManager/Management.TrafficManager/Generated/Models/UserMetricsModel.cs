@@ -10,40 +10,39 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for a ARM tracked top level resource
+    /// Class representing Traffic Manager User Metrics.
     /// </summary>
-    public partial class TrackedResource : Resource
+    [Rest.Serialization.JsonTransformation]
+    public partial class UserMetricsModel : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the UserMetricsModel class.
         /// </summary>
-        public TrackedResource()
+        public UserMetricsModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the UserMetricsModel class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Network/trafficmanagerProfiles.</param>
-        /// <param name="tags">Resource tags.</param>
-        /// <param name="location">The Azure Region where the resource
-        /// lives</param>
-        public TrackedResource(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string))
+        /// <param name="key">The key returned by the User Metrics
+        /// operation.</param>
+        public UserMetricsModel(string id = default(string), string name = default(string), string type = default(string), string key = default(string))
             : base(id, name, type)
         {
-            Tags = tags;
-            Location = location;
+            Key = key;
             CustomInit();
         }
 
@@ -53,16 +52,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags.
+        /// Gets or sets the key returned by the User Metrics operation.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Azure Region where the resource lives
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [JsonProperty(PropertyName = "properties.key")]
+        public string Key { get; set; }
 
     }
 }

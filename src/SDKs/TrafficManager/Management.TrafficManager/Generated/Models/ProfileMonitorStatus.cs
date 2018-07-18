@@ -10,16 +10,102 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ProfileMonitorStatus.
     /// </summary>
-    public static class ProfileMonitorStatus
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ProfileMonitorStatusConverter))]
+    public struct ProfileMonitorStatus : System.IEquatable<ProfileMonitorStatus>
     {
-        public const string CheckingEndpoints = "CheckingEndpoints";
-        public const string Online = "Online";
-        public const string Degraded = "Degraded";
-        public const string Disabled = "Disabled";
-        public const string Inactive = "Inactive";
+        private ProfileMonitorStatus(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly ProfileMonitorStatus CheckingEndpoints = "CheckingEndpoints";
+
+        public static readonly ProfileMonitorStatus Online = "Online";
+
+        public static readonly ProfileMonitorStatus Degraded = "Degraded";
+
+        public static readonly ProfileMonitorStatus Disabled = "Disabled";
+
+        public static readonly ProfileMonitorStatus Inactive = "Inactive";
+
+
+        /// <summary>
+        /// Underlying value of enum ProfileMonitorStatus
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for ProfileMonitorStatus
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type ProfileMonitorStatus
+        /// </summary>
+        public bool Equals(ProfileMonitorStatus e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to ProfileMonitorStatus
+        /// </summary>
+        public static implicit operator ProfileMonitorStatus(string value)
+        {
+            return new ProfileMonitorStatus(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert ProfileMonitorStatus to string
+        /// </summary>
+        public static implicit operator string(ProfileMonitorStatus e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum ProfileMonitorStatus
+        /// </summary>
+        public static bool operator == (ProfileMonitorStatus e1, ProfileMonitorStatus e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum ProfileMonitorStatus
+        /// </summary>
+        public static bool operator != (ProfileMonitorStatus e1, ProfileMonitorStatus e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for ProfileMonitorStatus
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ProfileMonitorStatus && Equals((ProfileMonitorStatus)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ProfileMonitorStatus
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
