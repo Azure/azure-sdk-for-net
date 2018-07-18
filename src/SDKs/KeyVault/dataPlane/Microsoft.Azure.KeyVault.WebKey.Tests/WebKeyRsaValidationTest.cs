@@ -36,7 +36,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 throw new CryptographicException( string.Format( "{0} is not supported", key.GetType().FullName ) );
             }
-#elif NETCOREAPP11
+#elif NETCOREAPP20
             plainText = key.Decrypt(cipherText, RSAEncryptionPadding.OaepSHA1);
 #else
 #error Unknown Build Flavor            
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 throw new CryptographicException( string.Format( "{0} is not supported", key.GetType().FullName ) );
             }
-#elif NETCOREAPP11
+#elif NETCOREAPP20
             cipherText = key.Encrypt( _plainText, RSAEncryptionPadding.OaepSHA1 );
 #else
             #error Unknown Build Flavor            

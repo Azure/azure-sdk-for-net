@@ -6,9 +6,9 @@
     <AssemblyName>PostgreSQL.Tests</AssemblyName>
     <Description>PostgreSQL.Tests Class Library</Description>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.2" />
