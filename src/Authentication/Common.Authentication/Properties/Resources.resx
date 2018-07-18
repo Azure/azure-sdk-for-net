@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountNeedsToBeSpecified" xml:space="preserve">
+    <value>Account needs to be specified</value>
+  </data>
+  <data name="AzureDirectoryName" xml:space="preserve">
+    <value>Windows Azure Powershell</value>
+  </data>
+  <data name="CertificateNotFoundInStore" xml:space="preserve">
+    <value>No certificate was found in the certificate store with thumbprint {0}</value>
+  </data>
+  <data name="ChangingDefaultEnvironmentNotSupported" xml:space="preserve">
+    <value>Changing public environment is not supported.</value>
+  </data>
+  <data name="CredentialOrganizationIdMessage" xml:space="preserve">
+    <value>-Credential parameter can only be used with Organization ID credentials. For more information, please refer to http://go.microsoft.com/fwlink/?linkid=331007&amp;clcid=0x409 for more information about the difference between an organizational account and a Microsoft account.</value>
+  </data>
+  <data name="EnvironmentNameNeedsToBeSpecified" xml:space="preserve">
+    <value>Environment name needs to be specified</value>
+  </data>
+  <data name="EnvironmentNeedsToBeSpecified" xml:space="preserve">
+    <value>Environment needs to be specified</value>
+  </data>
+  <data name="EnvironmentNotFound" xml:space="preserve">
+    <value>The environment name '{0}' is not found.</value>
+  </data>
+  <data name="ExpiredRefreshToken" xml:space="preserve">
+    <value>Your Microsoft Azure credential in the Windows PowerShell session has expired. Please use Add-AzureAccount to login again.</value>
+  </data>
+  <data name="FilePathIsNotValid" xml:space="preserve">
+    <value>File path is not valid</value>
+  </data>
+  <data name="IllegalPath" xml:space="preserve">
+    <value>Illegal characters in path.</value>
+  </data>
+  <data name="InvalidCertificate" xml:space="preserve">
+    <value>Invalid certificate format. Publish settings may be corrupted. Use Get-AzurePublishSettingsFile to download updated settings</value>
+  </data>
+  <data name="InvalidCredentialType" xml:space="preserve">
+    <value>Credential type invalid, only handles '{0}'</value>
+  </data>
+  <data name="InvalidDefaultSubscription" xml:space="preserve">
+    <value>No default subscription has been designated. Use Select-AzureSubscription -Default &lt;subscriptionName&gt; to set the default subscription.</value>
+  </data>
+  <data name="InvalidDnsName" xml:space="preserve">
+    <value>"{0}" is an invalid DNS name for {1}</value>
+  </data>
+  <data name="InvalidFileExtension" xml:space="preserve">
+    <value>The provided file in {0} must be have {1} extension</value>
+  </data>
+  <data name="InvalidManagementClientType" xml:space="preserve">
+    <value>Cannot create instance of management client type {0}. It does not have the expected constructor.</value>
+  </data>
+  <data name="InvalidOrEmptyArgumentMessage" xml:space="preserve">
+    <value>{0} is invalid or empty</value>
+  </data>
+  <data name="InvalidSubscriptionName" xml:space="preserve">
+    <value>Must specify a non-null subscription name.</value>
+  </data>
+  <data name="InvalidSubscriptionState" xml:space="preserve">
+    <value>Your Azure credentials have not been set up or have expired, please run Add-AzureAccount to set up your Azure credentials.</value>
+  </data>
+  <data name="NoInternetConnection" xml:space="preserve">
+    <value>Please connect to internet before executing this cmdlet</value>
+  </data>
+  <data name="PathDoesNotExist" xml:space="preserve">
+    <value>Path {0} doesn't exist.</value>
+  </data>
+  <data name="PathDoesNotExistForElement" xml:space="preserve">
+    <value>Path for {0} doesn't exist in {1}.</value>
+  </data>
+  <data name="PublishSettingsFileRealmFormat" xml:space="preserve">
+    <value>&amp;whr={0}</value>
+  </data>
+  <data name="RemoveDefaultSubscription" xml:space="preserve">
+    <value>The default subscription is being removed. Use Select-AzureSubscription -Default &lt;subscriptionName&gt; to select a new default subscription.</value>
+  </data>
+  <data name="RemovingDefaultEnvironmentsNotSupported" xml:space="preserve">
+    <value>Removing public environment is not supported.</value>
+  </data>
+  <data name="ServiceKeyNotFound" xml:space="preserve">
+    <value>Unable to retrieve service key for ServicePrincipal account {0}. Please run the Add-AzureAccount cmdlet to supply the credentials for this service principal.</value>
+  </data>
+  <data name="ServiceNameExists" xml:space="preserve">
+    <value>The provided service name {0} already exists, please pick another name</value>
+  </data>
+  <data name="SPNRenewTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Renewing token using AppId: '{0}', AdalConfiguration with ADDomain: '{1}', AdEndpoint: '{2}', ClientId: '{3}', RedirectUri: '{4}'</value>
+  </data>
+  <data name="SPNTokenExpirationCheckTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Checking token expiration, token expires '{0}' Comparing to '{1}' With threshold '{2}', calculated time until token expiry: '{3}'</value>
+  </data>
+  <data name="SubscriptionIdNotFoundMessage" xml:space="preserve">
+    <value>The subscription id {0} doesn't exist.</value>
+  </data>
+  <data name="SubscriptionNameNeedsToBeSpecified" xml:space="preserve">
+    <value>Subscription name needs to be specified</value>
+  </data>
+  <data name="SubscriptionNameNotFoundMessage" xml:space="preserve">
+    <value>The subscription name {0} doesn't exist.</value>
+  </data>
+  <data name="SubscriptionNeedsToBeSpecified" xml:space="preserve">
+    <value>Subscription needs to be specified</value>
+  </data>
+  <data name="UnableToPatchJson" xml:space="preserve">
+    <value>Unable to update mismatching Json structured: {0} {1}.</value>
+  </data>
+  <data name="UnknownCredentialType" xml:space="preserve">
+    <value>Illegal credential type</value>
+  </data>
+  <data name="UPNAcquireTokenConfigTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Acquiring token using AdalConfiguration with Domain: '{0}', AdEndpoint: '{1}', ClientId: '{2}', ClientRedirectUri: {3}</value>
+  </data>
+  <data name="UPNAcquireTokenContextTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Acquiring token using context with Authority '{0}', CorrelationId: '{1}', ValidateAuthority: '{2}'</value>
+  </data>
+  <data name="UPNExpiredTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Token is expired</value>
+  </data>
+  <data name="UPNRenewTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Renewing Token with Type: '{0}', Expiry: '{1}', MultipleResource? '{2}', Tenant: '{3}', UserId: '{4}'</value>
+  </data>
+  <data name="UPNRenewTokenUserInfoTrace" xml:space="preserve">
+    <value>[Common.Authentication]: User info for token DisplayId: '{0}', Name: {2} {1}, IdProvider: '{3}', Uid: '{4}'</value>
+  </data>
+  <data name="UPNTokenExpirationCheckTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Checking token expiration, token expires '{0}' Comparing to '{1}' With threshold '{2}', calculated time until token expiry: '{3}'</value>
+  </data>
+  <data name="UserNameIsNotValid" xml:space="preserve">
+    <value>User name is not valid</value>
+  </data>
+  <data name="UserNameNeedsToBeSpecified" xml:space="preserve">
+    <value>User name needs to be specified</value>
+  </data>
+  <data name="x86InProgramFiles" xml:space="preserve">
+    <value> (x86)</value>
+  </data>
+  <data name="AccountNotFound" xml:space="preserve">
+    <value>No account was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount.</value>
+  </data>
+  <data name="AdalAuthException" xml:space="preserve">
+    <value>[Common.Authentication]: Received exception {0}, while authenticating.</value>
+  </data>
+  <data name="AdalMultipleTokens" xml:space="preserve">
+    <value>Multiple tokens were found for this user. Please clear your token cache using, Clear-AzureProfile and try this command again.</value>
+  </data>
+  <data name="AdalUserInteractionRequired" xml:space="preserve">
+    <value>User Interaction is required to authenticate this user. Please execute Add-AzureAccount without parameters and enter your credentials.</value>
+  </data>
+  <data name="TenantNotFound" xml:space="preserve">
+    <value>No tenant was found for this subscription. Please execute Clear-AzureProfile and then execute Add-AzureAccount.</value>
+  </data>
+  <data name="UPNAuthenticationTokenTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Received token with LoginType '{0}', Tenant: '{1}', UserId: '{2}'</value>
+  </data>
+  <data name="UPNAuthenticationTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Authenticating using Account: '{0}', environment: '{1}', tenant: '{2}'</value>
+  </data>
+  <data name="AdalAuthConfigurationTrace" xml:space="preserve">
+    <value>[Common.Authentication]: Authenticating using configuration values: Domain: '{0}', Endpoint: '{1}', ClientId: '{2}', ClientRedirect: '{3}', ResourceClientUri: '{4}', ValidateAuthrity: '{5}'</value>
+  </data>
+  <data name="NoAccountInContext" xml:space="preserve">
+    <value>[Common.Authentication]: No matching account record for account {0} in subscription {1}</value>
+  </data>
+  <data name="NoEnvironmentInContext" xml:space="preserve">
+    <value>[Common.Authentication]: No matching environment record for environment {0} in subscription {1}, using AzureCloud environment instead</value>
+  </data>
+  <data name="AuthenticatingForSingleTenant" xml:space="preserve">
+    <value>[Common.Authentication]: Authenticating for account {0} with single tenant {1}</value>
+  </data>
+</root>

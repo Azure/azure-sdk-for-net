@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <!--
+Microsoft.Azure.Common.Authentication
+-->
+    <SdkNuGetPackage Include="Microsoft.Azure.Common.Authentication">
+      <PackageVersion>1.0.28-preview</PackageVersion>
+      <Folder>$(MSBuildThisFileDirectory)</Folder>
+    </SdkNuGetPackage>
+  </ItemGroup>
+</Project>

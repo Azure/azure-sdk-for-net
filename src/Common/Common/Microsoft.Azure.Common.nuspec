@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Azure.Common</id>
+    <title>Microsoft Azure Common Library</title>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <summary>Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, which enables centralized discovery of available Microsoft Azure libraries.</summary>
+    <description>Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, which enables centralized discovery of available Microsoft Azure libraries.
+
+.NET Framework Recommended during Preview:
+At this time, applications looking to use the Microsoft Azure Management Libraries should use the .NET Framework. Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Microsoft Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Microsoft Azure services.
+
+Supported Portable Library Platforms:
+- .NET Framework 4.5, 4.5.1
+- .NET for Windows Store apps
+- Windows Phone 8, 8.1
+- Silverlight 5
+- Portable Class Libraries</description>
+    <copyright>Copyright © Microsoft Corporation</copyright>
+    <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
+    <references>
+      <group targetFramework="portable-net45+wp8+wpa81+win">
+        <reference file="Microsoft.Azure.Common.dll" />
+      </group>
+      <group targetFramework="net45">
+        <reference file="Microsoft.Azure.Common.dll" />
+        <reference file="Microsoft.Azure.Common.NetFramework.dll" />
+      </group>
+      <group targetFramework="net40">
+        <reference file="Microsoft.Azure.Common.dll" />
+        <reference file="Microsoft.Azure.Common.NetFramework.dll" />
+      </group>
+    </references>
+    <dependencies>
+      <dependency id="Microsoft.Azure.Common.Dependencies" version="__VERSION_Microsoft.Azure.Common.Dependencies__" />
+      <dependency id="Hyak.Common" version="1.0.2" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Common\Common\**\*.cs" target="src\Common" />
+    <file src="Common\Common\Properties\*.resx" target="src\Common\Properties" />
+    <file src="Common\Common.NetFramework\**\*.cs" target="src\Common.NetFramework" />
+    <file src="..\binaries\portable\Microsoft.Azure.Common.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Common.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\portable\Microsoft.Azure.Common.xml" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.NetFramework.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.NetFramework.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Common.NetFramework.pdb" target="lib\net45" />
+    <file src="..\binaries\net40\Microsoft.Azure.Common.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Common.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Common.xml" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Common.NetFramework.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Common.NetFramework.xml" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Common.NetFramework.pdb" target="lib\net40" />
+  </files>
+</package>

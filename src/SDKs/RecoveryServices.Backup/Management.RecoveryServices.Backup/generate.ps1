@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "recoveryservicesbackup/resource-manager" -AutoRestVersion "latest"

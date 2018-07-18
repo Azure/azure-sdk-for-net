@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<runtimemanifest>
+  <baseuri uri="http://CDN/" />
+  <runtimes>
+    <runtime type="iisnode" version="0.1.20" filepath="/iisnode/bar.exe" />
+    <runtime type="iisnode" version="0.1.21" filepath="/iisnode/default.exe" default="true" />
+    <runtime type="node" version="0.8.2" filepath="/node/foo.exe" />
+    <runtime type="node" version="0.6.20" filepath="/node/default.exe" default="true" />
+    <runtime type="php" version="5.3" filepath="/php/5.3.exe" default="true" />
+    <runtime type="cache" version="1.7.0" filepath="/cache/1.7.0.exe" default="false" />
+    <runtime type="cache" version="1.8.0" filepath="/cache/1.8.0.exe" default="true" />
+  </runtimes>
+</runtimemanifest>

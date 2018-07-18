@@ -1,0 +1,43 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions?api-version=2014-04-01-preview",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "Microsoft.Azure.Subscriptions.SubscriptionClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e\",\r\n      \"subscriptionId\": \"5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e\",\r\n      \"displayName\": \"adminNext528\",\r\n      \"state\": \"Enabled\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "079f1af3-cba4-4160-9951-0568094c4a97"
+        ],
+        "x-ms-correlation-request-id": [
+          "079f1af3-cba4-4160-9951-0568094c4a97"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20140627T223133Z:079f1af3-cba4-4160-9951-0568094c4a97"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 27 Jun 2014 22:31:33 GMT"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "5c7c0e6a-3d2f-4b8e-9ffd-089778451d1e"
+  }
+}

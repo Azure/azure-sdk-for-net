@@ -1,0 +1,113 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependencies", "..\TestDependencies\TestDependencies.csproj", "{40F35645-00EE-4DF2-B66E-7624546B66DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault", "Microsoft.Azure.KeyVault\KeyVault.csproj", "{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Tests", "KeyVault.Tests\KeyVault.Tests.csproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reference", "Reference", "{EF80DC3B-2081-42D8-B750-BD0596098007}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Core", "Microsoft.Azure.KeyVault.Core\KeyVault.Core.csproj", "{B419782D-CA57-40F9-9322-340A4E852E82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Extensions", "Microsoft.Azure.KeyVault.Extensions\KeyVault.Extensions.csproj", "{937E445A-5604-4998-A9F5-9BE1E39001A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{27F92F6A-8799-4446-BF25-61D4A3534EAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{2697CCC5-FB26-4F02-9AAA-97D55883C4A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Cryptography.Tests", "KeyVault.Cryptography.Tests\KeyVault.Cryptography.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E273F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Extensions.Tests", "KeyVault.Extensions.Tests\KeyVault.Extensions.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E274A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Net40-Debug|Any CPU = Net40-Debug|Any CPU
+		Net40-Release|Any CPU = Net40-Release|Any CPU
+		Net45-Debug|Any CPU = Net45-Debug|Any CPU
+		Net45-Release|Any CPU = Net45-Release|Any CPU
+		Portable-Debug|Any CPU = Portable-Debug|Any CPU
+		Portable-Release|Any CPU = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{40F35645-00EE-4DF2-B66E-7624546B66DF}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Release|Any CPU.Build.0 = Portable-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A4}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40F35645-00EE-4DF2-B66E-7624546B66DF} = {EF80DC3B-2081-42D8-B750-BD0596098007}
+		{BEC7DBF7-A3B1-4088-BDFF-C1C2A0FD6F56} = {2697CCC5-FB26-4F02-9AAA-97D55883C4A3}
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
+		{B419782D-CA57-40F9-9322-340A4E852E82} = {2697CCC5-FB26-4F02-9AAA-97D55883C4A3}
+		{937E445A-5604-4998-A9F5-9BE1E39001A4} = {2697CCC5-FB26-4F02-9AAA-97D55883C4A3}
+		{E01674C0-B8D7-4598-971C-48B0180E273F} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
+		{E01674C0-B8D7-4598-971C-48B0180E274A} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
+	EndGlobalSection
+EndGlobal
