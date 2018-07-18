@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the credential.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Credential
+    public partial class Credential : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the Credential class.
@@ -32,17 +32,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the Credential class.
         /// </summary>
-        /// <param name="id">Gets the id of the resource.</param>
-        /// <param name="name">Gets the name of the credential.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="userName">Gets the user name of the
         /// credential.</param>
         /// <param name="creationTime">Gets the creation time.</param>
         /// <param name="lastModifiedTime">Gets the last modified time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public Credential(string id = default(string), string name = default(string), string userName = default(string), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string))
+        public Credential(string id = default(string), string name = default(string), string type = default(string), string userName = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
             UserName = userName;
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
@@ -56,18 +57,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the id of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the credential.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets the user name of the credential.
         /// </summary>
         [JsonProperty(PropertyName = "properties.userName")]
@@ -77,13 +66,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; private set; }
+        public System.DateTimeOffset LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the description.

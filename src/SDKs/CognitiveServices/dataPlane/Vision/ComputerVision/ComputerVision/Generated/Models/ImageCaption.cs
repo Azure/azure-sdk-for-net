@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="text">The text of the caption</param>
         /// <param name="confidence">The level of confidence the service has in
         /// the caption</param>
-        public ImageCaption(string text = default(string), double? confidence = default(double?))
+        public ImageCaption(string text = default(string), double confidence = default(double))
         {
             Text = text;
             Confidence = confidence;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets the level of confidence the service has in the caption
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
-        public double? Confidence { get; set; }
+        public double Confidence { get; set; }
 
     }
 }

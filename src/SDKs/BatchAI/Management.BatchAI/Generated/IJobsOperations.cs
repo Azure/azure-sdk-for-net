@@ -24,10 +24,55 @@ namespace Microsoft.Azure.Management.BatchAI
     public partial interface IJobsOperations
     {
         /// <summary>
-        /// Adds a Job that gets executed on a cluster.
+        /// Gets a list of Jobs within the specified Experiment.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='jobsListByExperimentOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<Job>>> ListByExperimentWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, JobsListByExperimentOptions jobsListByExperimentOptions = default(JobsListByExperimentOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates a Job in the given Experiment.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='jobName'>
         /// The name of the job within the specified resource group. Job names
@@ -53,12 +98,22 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Job>> CreateWithHttpMessagesAsync(string resourceGroupName, string jobName, JobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Job>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, JobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified Batch AI job.
+        /// Deletes a Job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='jobName'>
         /// The name of the job within the specified resource group. Job names
@@ -78,12 +133,22 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the specified Batch AI job.
+        /// Gets information about a Job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='jobName'>
         /// The name of the job within the specified resource group. Job names
@@ -106,116 +171,24 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Job>> GetWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the IP address and port information of all the compute nodes
-        /// which are used for job execution.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the job within the specified resource group. Job names
-        /// can only contain a combination of alphanumeric characters along
-        /// with dash (-) and underscore (_). The name must be from 1 through
-        /// 64 characters long.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Terminates a job.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='jobName'>
-        /// The name of the job within the specified resource group. Job names
-        /// can only contain a combination of alphanumeric characters along
-        /// with dash (-) and underscore (_). The name must be from 1 through
-        /// 64 characters long.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> TerminateWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets information about the jobs associated with the subscription.
-        /// </summary>
-        /// <param name='jobsListOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Job>>> ListWithHttpMessagesAsync(JobsListOptions jobsListOptions = default(JobsListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets information about the Batch AI jobs associated within the
-        /// specified resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='jobsListByResourceGroupOptions'>
-        /// Additional parameters for the operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Job>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, JobsListByResourceGroupOptions jobsListByResourceGroupOptions = default(JobsListByResourceGroupOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Job>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all directories and files inside the given directory of the
-        /// output directory (Only if the output directory is on Azure File
-        /// Share or Azure Storage container).
+        /// Job's output directory (if the output directory is on Azure File
+        /// Share or Azure Storage Container).
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='jobName'>
         /// The name of the job within the specified resource group. Job names
@@ -241,12 +214,97 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<File>>> ListOutputFilesWithHttpMessagesAsync(string resourceGroupName, string jobName, JobsListOutputFilesOptions jobsListOutputFilesOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<File>>> ListOutputFilesWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, JobsListOutputFilesOptions jobsListOutputFilesOptions, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a Job that gets executed on a cluster.
+        /// Gets a list of currently existing nodes which were used for the Job
+        /// execution. The returned information contains the node ID, its
+        /// public IP and SSH port.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='jobName'>
+        /// The name of the job within the specified resource group. Job names
+        /// can only contain a combination of alphanumeric characters along
+        /// with dash (-) and underscore (_). The name must be from 1 through
+        /// 64 characters long.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Terminates a job.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='jobName'>
+        /// The name of the job within the specified resource group. Job names
+        /// can only contain a combination of alphanumeric characters along
+        /// with dash (-) and underscore (_). The name must be from 1 through
+        /// 64 characters long.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> TerminateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates a Job in the given Experiment.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='jobName'>
         /// The name of the job within the specified resource group. Job names
@@ -272,12 +330,22 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Job>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string jobName, JobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Job>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, JobCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the specified Batch AI job.
+        /// Deletes a Job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
         /// </param>
         /// <param name='jobName'>
         /// The name of the job within the specified resource group. Job names
@@ -297,13 +365,23 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Terminates a job.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
         /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace. Workspace names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
+        /// <param name='experimentName'>
+        /// The name of the experiment. Experiment names can only contain a
+        /// combination of alphanumeric characters along with dash (-) and
+        /// underscore (_). The name must be from 1 through 64 characters long.
+        /// </param>
         /// <param name='jobName'>
         /// The name of the job within the specified resource group. Job names
         /// can only contain a combination of alphanumeric characters along
@@ -322,10 +400,9 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginTerminateWithHttpMessagesAsync(string resourceGroupName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginTerminateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string experimentName, string jobName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the IP address and port information of all the compute nodes
-        /// which are used for job execution.
+        /// Gets a list of Jobs within the specified Experiment.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -345,56 +422,11 @@ namespace Microsoft.Azure.Management.BatchAI
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets information about the jobs associated with the subscription.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Job>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets information about the Batch AI jobs associated within the
-        /// specified resource group.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<Job>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Job>>> ListByExperimentNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all directories and files inside the given directory of the
-        /// output directory (Only if the output directory is on Azure File
-        /// Share or Azure Storage container).
+        /// Job's output directory (if the output directory is on Azure File
+        /// Share or Azure Storage Container).
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -415,5 +447,29 @@ namespace Microsoft.Azure.Management.BatchAI
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<File>>> ListOutputFilesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of currently existing nodes which were used for the Job
+        /// execution. The returned information contains the node ID, its
+        /// public IP and SSH port.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<RemoteLoginInformation>>> ListRemoteLoginInformationNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

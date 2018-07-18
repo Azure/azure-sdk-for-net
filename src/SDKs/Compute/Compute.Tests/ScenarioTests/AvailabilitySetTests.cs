@@ -21,12 +21,13 @@ namespace Compute.Tests
         ComputeManagementClient computeClient;
         ResourceManagementClient resourcesClient;
 
-        ResourceGroup resourceGroup;
+        ResourceGroup resourceGroup1;
+        ResourceGroup resourceGroup2;
 
         string subId;
         string location;
-        const string testPrefix = TestPrefix;
-        string resourceGroupName;
+        string baseResourceGroupName;
+        string resourceGroup1Name;
 
         // These values are configurable in the service, but normal default values are FD = 3 and UD = 5
         // FD values can be 2 or 3
@@ -43,15 +44,16 @@ namespace Compute.Tests
         const int UDTooLow = 0;
         const int UDTooHi = 21;
 
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void TestOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                Initialize(context);
-
                 try
                 {
+                    EnsureClientsInitialized(context);
+                    Initialize(context);
+
                     // Attempt to Create Availability Set with out of bounds FD and UD values
                     VerifyInvalidFDUDValuesFail();
 
@@ -63,10 +65,13 @@ namespace Compute.Tests
 
                     // Updating an Availability Set should fail
                     //VerifyUpdateFails();
+
+                    // Make sure availability sets across resource groups are listed successfully
+                    VerifyListAvailabilitySetsInSubscription();
                 }
                 finally
                 {
-                    resourcesClient.ResourceGroups.Delete(resourceGroupName);
+                    resourcesClient.ResourceGroups.Delete(resourceGroup1Name);
                 }
             }
         }
@@ -78,16 +83,17 @@ namespace Compute.Tests
             computeClient = ComputeManagementTestUtilities.GetComputeManagementClient(context, handler);
 
             subId = computeClient.SubscriptionId;
-            location = ComputeManagementTestUtilities.DefaultLocation;
+            location = m_location;
 
-            resourceGroupName = ComputeManagementTestUtilities.GenerateName(testPrefix);
+            baseResourceGroupName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+            resourceGroup1Name = baseResourceGroupName + "_1";
 
-            resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
-                resourceGroupName,
+            resourceGroup1 = resourcesClient.ResourceGroups.CreateOrUpdate(
+                resourceGroup1Name,
                 new ResourceGroup
                 {
                     Location = location,
-                    Tags = new Dictionary<string, string>() { { resourceGroupName, DateTime.UtcNow.ToString("u") } }
+                    Tags = new Dictionary<string, string>() { { resourceGroup1Name, DateTime.UtcNow.ToString("u") } }
                 });
         }
 
@@ -105,7 +111,7 @@ namespace Compute.Tests
             };
 
             // Create and expect success.
-            var createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(resourceGroupName, availabilitySetName, inputAvailabilitySet);
+            var createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(resourceGroup1Name, availabilitySetName, inputAvailabilitySet);
 
             try // Modify the FD and expect failure
             {
@@ -121,7 +127,7 @@ namespace Compute.Tests
                 };
 
                 createOrUpdateResponse = null;
-                createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(resourceGroupName, availabilitySetName, inputAvailabilitySet);
+                createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(resourceGroup1Name, availabilitySetName, inputAvailabilitySet);
             }
             catch (CloudException ex)
             {
@@ -143,7 +149,7 @@ namespace Compute.Tests
                 };
 
                 createOrUpdateResponse = null;
-                createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(resourceGroupName, availabilitySetName, inputAvailabilitySet);
+                createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(resourceGroup1Name, availabilitySetName, inputAvailabilitySet);
             }
             catch (CloudException ex)
             {
@@ -152,7 +158,7 @@ namespace Compute.Tests
             Assert.True(createOrUpdateResponse == null);
 
             // Clean up
-            computeClient.AvailabilitySets.Delete(resourceGroupName, availabilitySetName);
+            computeClient.AvailabilitySets.Delete(resourceGroup1Name, availabilitySetName);
         }
 
         private void VerifyNonDefaultValuesSucceed()
@@ -179,12 +185,12 @@ namespace Compute.Tests
             };
 
             var createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(
-                resourceGroupName,
+                resourceGroup1Name,
                 inputAvailabilitySetName,
                 inputAvailabilitySet);
 
             // This call will also delete the Availability Set
-            ValidateResults(createOrUpdateResponse, inputAvailabilitySet, inputAvailabilitySetName, nonDefaultFD, nonDefaultUD);
+            ValidateResults(createOrUpdateResponse, inputAvailabilitySet, resourceGroup1Name, inputAvailabilitySetName, nonDefaultFD, nonDefaultUD);
         }
 
         private void VerifyDefaultValuesSucceed()
@@ -201,18 +207,29 @@ namespace Compute.Tests
             };
 
             var createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(
-                resourceGroupName,
+                resourceGroup1Name,
                 inputAvailabilitySetName,
                 inputAvailabilitySet);
 
             // List AvailabilitySets
-            string expectedAvailabilitySetId = Helpers.GetAvailabilitySetRef(subId, resourceGroupName, inputAvailabilitySetName);
-            var listResponse = computeClient.AvailabilitySets.List(resourceGroupName);
+            string expectedAvailabilitySetId = Helpers.GetAvailabilitySetRef(subId, resourceGroup1Name, inputAvailabilitySetName);
+            var listResponse = computeClient.AvailabilitySets.List(resourceGroup1Name);
             ValidateAvailabilitySet(inputAvailabilitySet, listResponse.FirstOrDefault(x => x.Name == inputAvailabilitySetName),
                 inputAvailabilitySetName, expectedAvailabilitySetId, defaultFD, defaultUD);
 
+            AvailabilitySetUpdate updateParams = new AvailabilitySetUpdate()
+            {
+                Tags = inputAvailabilitySet.Tags
+            };
+
+            string updateKey = "UpdateTag";
+            updateParams.Tags.Add(updateKey, "updateValue");
+            createOrUpdateResponse = computeClient.AvailabilitySets.Update(resourceGroup1Name, inputAvailabilitySetName, updateParams);
+
+            Assert.True(createOrUpdateResponse.Tags.ContainsKey(updateKey));
+
             // This call will also delete the Availability Set
-            ValidateResults(createOrUpdateResponse, inputAvailabilitySet, inputAvailabilitySetName, defaultFD, defaultUD);
+            ValidateResults(createOrUpdateResponse, inputAvailabilitySet, resourceGroup1Name, inputAvailabilitySetName, defaultFD, defaultUD);
         }
 
         private void VerifyInvalidFDUDValuesFail()
@@ -234,7 +251,7 @@ namespace Compute.Tests
             try
             {
                 createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(
-                    resourceGroupName,
+                    resourceGroup1Name,
                     inputAvailabilitySetName,
                     inputAvailabilitySet);
             }
@@ -248,7 +265,7 @@ namespace Compute.Tests
             try
             {
                 createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(
-                    resourceGroupName,
+                    resourceGroup1Name,
                     inputAvailabilitySetName,
                     inputAvailabilitySet);
             }
@@ -263,7 +280,7 @@ namespace Compute.Tests
             try
             {
                 createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(
-                    resourceGroupName,
+                    resourceGroup1Name,
                     inputAvailabilitySetName,
                     inputAvailabilitySet);
             }
@@ -278,7 +295,7 @@ namespace Compute.Tests
             try
             {
                 createOrUpdateResponse = computeClient.AvailabilitySets.CreateOrUpdate(
-                resourceGroupName,
+                resourceGroup1Name,
                 inputAvailabilitySetName,
                 inputAvailabilitySet);
             }
@@ -290,15 +307,15 @@ namespace Compute.Tests
             Assert.True(createOrUpdateResponse == null);
         }
 
-        private void ValidateResults(AvailabilitySet createOrUpdateResponse, AvailabilitySet inputAvailabilitySet, string inputAvailabilitySetName, int expectedFD, int expectedUD)
+        private void ValidateResults(AvailabilitySet outputAvailabilitySet, AvailabilitySet inputAvailabilitySet, string resourceGroupName, string inputAvailabilitySetName, int expectedFD, int expectedUD)
         {
             string expectedAvailabilitySetId = Helpers.GetAvailabilitySetRef(subId, resourceGroupName, inputAvailabilitySetName);
 
-            Assert.True(createOrUpdateResponse.Name == inputAvailabilitySetName);
-            Assert.True(createOrUpdateResponse.Location.ToLower() == this.location.ToLower()
-                     || createOrUpdateResponse.Location.ToLower() == inputAvailabilitySet.Location.ToLower());
+            Assert.True(outputAvailabilitySet.Name == inputAvailabilitySetName);
+            Assert.True(outputAvailabilitySet.Location.ToLower() == this.location.ToLower()
+                     || outputAvailabilitySet.Location.ToLower() == inputAvailabilitySet.Location.ToLower());
 
-            ValidateAvailabilitySet(inputAvailabilitySet, createOrUpdateResponse, inputAvailabilitySetName, expectedAvailabilitySetId, expectedFD, expectedUD);
+            ValidateAvailabilitySet(inputAvailabilitySet, outputAvailabilitySet, inputAvailabilitySetName, expectedAvailabilitySetId, expectedFD, expectedUD);
 
             // GET AvailabilitySet
             var getResponse = computeClient.AvailabilitySets.Get(resourceGroupName, inputAvailabilitySetName);
@@ -311,7 +328,6 @@ namespace Compute.Tests
             // Delete AvailabilitySet
             computeClient.AvailabilitySets.Delete(resourceGroupName, inputAvailabilitySetName);
         }
-
 
         private void ValidateAvailabilitySet(AvailabilitySet inputAvailabilitySet, AvailabilitySet outputAvailabilitySet, string inputAvailabilitySetName, string expectedAvailabilitySetId, int expectedFD, int expectedUD)
         {
@@ -334,6 +350,79 @@ namespace Compute.Tests
             // TODO: Dev work corresponding to setting status is not yet checked in.
             //Assert.NotNull(outputAvailabilitySet.Properties.Id);
             //Assert.True(expectedAvailabilitySetIds.ToLowerInvariant() == outputAvailabilitySet.Properties.Id.ToLowerInvariant());
+        }
+
+        // Make sure availability sets across resource groups are listed successfully
+        private void VerifyListAvailabilitySetsInSubscription()
+        {
+            string resourceGroup2Name = baseResourceGroupName + "_2";
+            string baseInputAvailabilitySetName = ComputeManagementTestUtilities.GenerateName("asdefaultvalues");
+            string availabilitySet1Name = baseInputAvailabilitySetName + "_1";
+            string availabilitySet2Name = baseInputAvailabilitySetName + "_2";
+
+            try
+            {
+                AvailabilitySet inputAvailabilitySet1 = new AvailabilitySet
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                    {
+                        {"RG1", "rg1"},
+                        {"testTag", "1"},
+                    },
+                };
+                AvailabilitySet outputAvailabilitySet1 = computeClient.AvailabilitySets.CreateOrUpdate(
+                    resourceGroup1Name,
+                    availabilitySet1Name,
+                    inputAvailabilitySet1);
+
+                resourceGroup2 = resourcesClient.ResourceGroups.CreateOrUpdate(
+                    resourceGroup2Name,
+                    new ResourceGroup
+                    {
+                        Location = location,
+                        Tags = new Dictionary<string, string>() { { resourceGroup2Name, DateTime.UtcNow.ToString("u") } }
+                    });
+
+                AvailabilitySet inputAvailabilitySet2 = new AvailabilitySet
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                    {
+                        {"RG2", "rg2"},
+                        {"testTag", "2"},
+                    },
+                };
+                AvailabilitySet outputAvailabilitySet2 = computeClient.AvailabilitySets.CreateOrUpdate(
+                    resourceGroup2Name,
+                    availabilitySet2Name,
+                    inputAvailabilitySet2);
+
+                IPage<AvailabilitySet> response = computeClient.AvailabilitySets.ListBySubscription();
+                Assert.Null(response.NextPageLink);
+
+                int validationCount = 0;
+
+                foreach (AvailabilitySet availabilitySet in response)
+                {
+                    if (availabilitySet.Name == availabilitySet1Name)
+                    {
+                        ValidateResults(outputAvailabilitySet1, inputAvailabilitySet1, resourceGroup1Name, availabilitySet1Name, defaultFD, defaultUD);
+                        validationCount++;
+                    }
+                    else if (availabilitySet.Name == availabilitySet2Name)
+                    {
+                        ValidateResults(outputAvailabilitySet2, inputAvailabilitySet2, resourceGroup2Name, availabilitySet2Name, defaultFD, defaultUD);
+                        validationCount++;
+                    }
+                }
+
+                Assert.True(validationCount == 2);
+            }
+            finally
+            {
+                resourcesClient.ResourceGroups.Delete(resourceGroup2Name);
+            }
         }
     }
 }

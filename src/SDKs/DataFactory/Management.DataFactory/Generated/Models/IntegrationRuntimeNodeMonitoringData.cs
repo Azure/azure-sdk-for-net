@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// node.</param>
         /// <param name="receivedBytes">Received bytes on the integration
         /// runtime node.</param>
-        public IntegrationRuntimeNodeMonitoringData(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string nodeName = default(string), int? availableMemoryInMB = default(int?), double? cpuUtilization = default(double?), int? concurrentJobsLimit = default(int?), int? concurrentJobsRunning = default(int?), int? maxConcurrentJobs = default(int?), double? sentBytes = default(double?), double? receivedBytes = default(double?))
+        public IntegrationRuntimeNodeMonitoringData(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string nodeName = default(string), int? availableMemoryInMB = default(int?), int? cpuUtilization = default(int?), int? concurrentJobsLimit = default(int?), int? concurrentJobsRunning = default(int?), int? maxConcurrentJobs = default(int?), double? sentBytes = default(double?), double? receivedBytes = default(double?))
         {
             AdditionalProperties = additionalProperties;
             NodeName = nodeName;
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets CPU percentage on the integration runtime node.
         /// </summary>
         [JsonProperty(PropertyName = "cpuUtilization")]
-        public double? CpuUtilization { get; private set; }
+        public int? CpuUtilization { get; private set; }
 
         /// <summary>
         /// Gets maximum concurrent jobs on the integration runtime node.

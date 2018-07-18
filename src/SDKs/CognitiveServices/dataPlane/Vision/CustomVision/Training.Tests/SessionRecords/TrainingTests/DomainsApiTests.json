@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v1.2/Training/domains",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL2RvbWFpbnM=",
+      "RequestUri": "/customvision/v2.1/Training/domains",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL2RvbWFpbnM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -11,22 +11,22 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"Id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"Name\": \"General\",\r\n    \"Exportable\": false\r\n  },\r\n  {\r\n    \"Id\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"Name\": \"Food\",\r\n    \"Exportable\": false\r\n  },\r\n  {\r\n    \"Id\": \"ca455789-012d-4b50-9fec-5bb63841c793\",\r\n    \"Name\": \"Landmarks\",\r\n    \"Exportable\": false\r\n  },\r\n  {\r\n    \"Id\": \"b30a91ae-e3c1-4f73-a81e-c270bff27c39\",\r\n    \"Name\": \"Retail\",\r\n    \"Exportable\": false\r\n  },\r\n  {\r\n    \"Id\": \"45badf75-3591-4f26-a705-45678d3e9f5f\",\r\n    \"Name\": \"Adult\",\r\n    \"Exportable\": false\r\n  },\r\n  {\r\n    \"Id\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"Name\": \"General (compact)\",\r\n    \"Exportable\": true\r\n  },\r\n  {\r\n    \"Id\": \"b5cfd229-2ac7-4b2b-8d0a-2b0661344894\",\r\n    \"Name\": \"Landmarks (compact)\",\r\n    \"Exportable\": true\r\n  },\r\n  {\r\n    \"Id\": \"6b4faeda-8396-481b-9f8b-177b9fa3097f\",\r\n    \"Name\": \"Retail (compact)\",\r\n    \"Exportable\": true\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"name\": \"General\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"name\": \"Food\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"ca455789-012d-4b50-9fec-5bb63841c793\",\r\n    \"name\": \"Landmarks\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"b30a91ae-e3c1-4f73-a81e-c270bff27c39\",\r\n    \"name\": \"Retail\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"45badf75-3591-4f26-a705-45678d3e9f5f\",\r\n    \"name\": \"Adult\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"name\": \"General (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"b5cfd229-2ac7-4b2b-8d0a-2b0661344894\",\r\n    \"name\": \"Landmarks (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"6b4faeda-8396-481b-9f8b-177b9fa3097f\",\r\n    \"name\": \"Retail (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n    \"name\": \"General\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  }\r\n]",
       "ResponseHeaders": {
         "Content-Length": [
-          "681"
+          "1115"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Thu, 22 Feb 2018 06:29:08 GMT"
+          "Thu, 12 Jul 2018 15:21:59 GMT"
         ],
         "apim-request-id": [
-          "00bed5af-c812-4f19-bcf5-d377ff621794"
+          "c1b7d8a6-b738-4e40-9f04-8116b0283018"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -38,8 +38,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v1.2/Training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92MS4yL1RyYWluaW5nL2RvbWFpbnMvZWU4NWE3NGMtNDA1ZS00YWRjLWJiNDctZmZhOGNhMGM5ZjMx",
+      "RequestUri": "/customvision/v2.1/Training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL2RvbWFpbnMvZWU4NWE3NGMtNDA1ZS00YWRjLWJiNDctZmZhOGNhMGM5ZjMx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -48,22 +48,22 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/1.0.2.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"Id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"Name\": \"General\",\r\n  \"Exportable\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"name\": \"General\",\r\n  \"type\": \"Classification\",\r\n  \"exportable\": false,\r\n  \"enabled\": true\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "81"
+          "120"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Thu, 22 Feb 2018 06:29:08 GMT"
+          "Thu, 12 Jul 2018 15:22:00 GMT"
         ],
         "apim-request-id": [
-          "6cceb244-c376-4bb3-ad0a-54014758c519"
+          "762d35a9-3681-4a1b-86c0-ec74829caf6f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

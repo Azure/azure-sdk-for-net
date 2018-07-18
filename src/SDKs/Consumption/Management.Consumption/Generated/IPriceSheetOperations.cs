@@ -39,6 +39,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// value of the nextLink element will include a skiptoken parameter
         /// that specifies a starting point to use for subsequent calls.
         /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the top N results.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -54,7 +57,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PriceSheetResult>> GetWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PriceSheetResult>> GetWithHttpMessagesAsync(string expand = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the price sheet for a scope by subscriptionId and billing
         /// period. Price sheet is available via this API only for May 1, 2014
@@ -75,6 +78,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// value of the nextLink element will include a skiptoken parameter
         /// that specifies a starting point to use for subsequent calls.
         /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the top N results.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -90,6 +96,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PriceSheetResult>> GetByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PriceSheetResult>> GetByBillingPeriodWithHttpMessagesAsync(string billingPeriodName, string expand = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

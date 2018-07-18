@@ -524,6 +524,52 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<USqlTable>> GetTableWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieves the list of table fragments from the Data Lake Analytics
+        /// catalog.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the table fragments.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema containing the table fragments.
+        /// </param>
+        /// <param name='tableName'>
+        /// The name of the table containing the table fragments.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='select'>
+        /// OData Select statement. Limits the properties on each entry to just
+        /// those requested, e.g. Categories?$select=CategoryName,Description.
+        /// Optional.
+        /// </param>
+        /// <param name='count'>
+        /// The Boolean value of true or false to request a count of the
+        /// matching resources included with the resources in the response,
+        /// e.g. Categories?$count=true. Optional.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<USqlTableFragment>>> ListTableFragmentsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableFragment> odataQuery = default(ODataQuery<USqlTableFragment>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>
         /// <param name='accountName'>
@@ -924,6 +970,49 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlTableStatistics>>> ListTableStatisticsWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieves a preview set of rows in given partition.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the partition.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema containing the partition.
+        /// </param>
+        /// <param name='tableName'>
+        /// The name of the table containing the partition.
+        /// </param>
+        /// <param name='partitionName'>
+        /// The name of the table partition.
+        /// </param>
+        /// <param name='maxRows'>
+        /// The maximum number of preview rows to be retrieved.Rows returned
+        /// may be less than or equal to this number depending on row sizes and
+        /// number of rows in the partition.
+        /// </param>
+        /// <param name='maxColumns'>
+        /// The maximum number of columns to be retrieved.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<USqlTablePreview>> PreviewTablePartitionWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string partitionName, long? maxRows = default(long?), long? maxColumns = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Retrieves the specified table partition from the Data Lake
         /// Analytics catalog.
         /// </summary>
@@ -959,6 +1048,46 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<USqlTablePartition>> GetTablePartitionWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, string partitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves a preview set of rows in given table.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Analytics account upon which to execute catalog
+        /// operations.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database containing the table.
+        /// </param>
+        /// <param name='schemaName'>
+        /// The name of the schema containing the table.
+        /// </param>
+        /// <param name='tableName'>
+        /// The name of the table.
+        /// </param>
+        /// <param name='maxRows'>
+        /// The maximum number of preview rows to be retrieved. Rows returned
+        /// may be less than or equal to this number depending on row sizes and
+        /// number of rows in the table.
+        /// </param>
+        /// <param name='maxColumns'>
+        /// The maximum number of columns to be retrieved.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<USqlTablePreview>> PreviewTableWithHttpMessagesAsync(string accountName, string databaseName, string schemaName, string tableName, long? maxRows = default(long?), long? maxColumns = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of table partitions from the Data Lake Analytics
         /// catalog.
@@ -1745,6 +1874,29 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<USqlProcedure>>> ListProceduresNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves the list of table fragments from the Data Lake Analytics
+        /// catalog.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<USqlTableFragment>>> ListTableFragmentsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the list of tables from the Data Lake Analytics catalog.
         /// </summary>

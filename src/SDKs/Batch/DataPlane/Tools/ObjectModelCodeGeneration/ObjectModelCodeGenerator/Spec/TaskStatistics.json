@@ -1,7 +1,7 @@
     {
       "Name": "TaskStatistics",
       "ProtocolName": "Models.TaskStatistics",
-      "Comment": "Resource usage statistics for the task.",
+      "SummaryComment": "Resource usage statistics for the task.",
       "IsConstructorPublic": false,
       "Properties": [
         {

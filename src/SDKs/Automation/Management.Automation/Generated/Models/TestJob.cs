@@ -51,7 +51,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// modified time of the test job.</param>
         /// <param name="parameters">Gets or sets the parameters of the test
         /// job.</param>
-        public TestJob(System.DateTime? creationTime = default(System.DateTime?), string status = default(string), string statusDetails = default(string), string runOn = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string exception = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), System.DateTime? lastStatusModifiedTime = default(System.DateTime?), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        /// <param name="logActivityTrace">The activity-level tracing options
+        /// of the runbook.</param>
+        public TestJob(System.DateTimeOffset creationTime = default(System.DateTimeOffset), string status = default(string), string statusDetails = default(string), string runOn = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string exception = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), System.DateTimeOffset? lastStatusModifiedTime = default(System.DateTimeOffset?), IDictionary<string, string> parameters = default(IDictionary<string, string>), int? logActivityTrace = default(int?))
         {
             CreationTime = creationTime;
             Status = status;
@@ -63,6 +65,7 @@ namespace Microsoft.Azure.Management.Automation.Models
             LastModifiedTime = lastModifiedTime;
             LastStatusModifiedTime = lastStatusModifiedTime;
             Parameters = parameters;
+            LogActivityTrace = logActivityTrace;
             CustomInit();
         }
 
@@ -75,7 +78,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the creation time of the test job.
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
-        public System.DateTime? CreationTime { get; set; }
+        public System.DateTimeOffset CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the status of the test job.
@@ -100,13 +103,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the start time of the test job.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
-        public System.DateTime? StartTime { get; set; }
+        public System.DateTimeOffset? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the end time of the test job.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
-        public System.DateTime? EndTime { get; set; }
+        public System.DateTimeOffset? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the exception of the test job.
@@ -118,19 +121,25 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the last modified time of the test job.
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last status modified time of the test job.
         /// </summary>
         [JsonProperty(PropertyName = "lastStatusModifiedTime")]
-        public System.DateTime? LastStatusModifiedTime { get; set; }
+        public System.DateTimeOffset? LastStatusModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters of the test job.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public IDictionary<string, string> Parameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the activity-level tracing options of the runbook.
+        /// </summary>
+        [JsonProperty(PropertyName = "logActivityTrace")]
+        public int? LogActivityTrace { get; set; }
 
     }
 }

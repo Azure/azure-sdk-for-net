@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the BatchAIError class.
         /// </summary>
-        /// <param name="code">An identifier for the error. Codes are invariant
+        /// <param name="code">An identifier of the error. Codes are invariant
         /// and are intended to be consumed programmatically.</param>
         /// <param name="message">A message describing the error, intended to
         /// be suitable for display in a user interface.</param>
@@ -51,24 +51,24 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an identifier for the error. Codes are invariant and
-        /// are intended to be consumed programmatically.
+        /// Gets an identifier of the error. Codes are invariant and are
+        /// intended to be consumed programmatically.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets a message describing the error, intended to be
-        /// suitable for display in a user interface.
+        /// Gets a message describing the error, intended to be suitable for
+        /// display in a user interface.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets a list of additional details about the error.
+        /// Gets a list of additional details about the error.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<NameValuePair> Details { get; set; }
+        public IList<NameValuePair> Details { get; private set; }
 
     }
 }

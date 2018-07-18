@@ -31,13 +31,13 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyOperationResult> EncryptAsync(this IKeyVaultClient operations, string keyIdentifier, string algorithm, byte[] plainText, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
+                throw new ArgumentNullException(nameof( algorithm ));
 
             if (plainText == null)
-                throw new ArgumentNullException("plainText");
+                throw new ArgumentNullException(nameof( plainText ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyOperationResult> DecryptAsync(this IKeyVaultClient operations, string keyIdentifier, string algorithm, byte[] cipherText, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
+                throw new ArgumentNullException(nameof( algorithm ));
 
             if (cipherText == null)
-                throw new ArgumentNullException("cipherText");
+                throw new ArgumentNullException(nameof( cipherText ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
@@ -87,13 +87,13 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyOperationResult> SignAsync(this IKeyVaultClient operations, string keyIdentifier, string algorithm, byte[] digest, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
+                throw new ArgumentNullException(nameof( algorithm ));
 
             if (digest == null)
-                throw new ArgumentNullException("digest");
+                throw new ArgumentNullException(nameof( digest ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
@@ -115,16 +115,16 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<bool> VerifyAsync(this IKeyVaultClient operations, string keyIdentifier, string algorithm, byte[] digest, byte[] signature, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
+                throw new ArgumentNullException(nameof( algorithm ));
 
             if (digest == null)
-                throw new ArgumentNullException("digest");
+                throw new ArgumentNullException(nameof( digest ));
 
             if (signature == null)
-                throw new ArgumentNullException("signature");
+                throw new ArgumentNullException(nameof( signature ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
@@ -146,13 +146,13 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyOperationResult> WrapKeyAsync(this IKeyVaultClient operations, string keyIdentifier, string algorithm, byte[] key, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
+                throw new ArgumentNullException(nameof( algorithm ));
 
             if (key == null)
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof( key ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
@@ -174,13 +174,13 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyOperationResult> UnwrapKeyAsync(this IKeyVaultClient operations, string keyIdentifier, string algorithm, byte[] wrappedKey, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             if (string.IsNullOrEmpty(algorithm))
-                throw new ArgumentNullException("algorithm");
+                throw new ArgumentNullException(nameof( algorithm ));
 
             if (wrappedKey == null)
-                throw new ArgumentNullException("wrappedKey");
+                throw new ArgumentNullException(nameof( wrappedKey ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
@@ -204,10 +204,10 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyBundle> GetKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
+                throw new ArgumentNullException(nameof( keyName ));
 
             using (var _result = await operations.GetKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyBundle> GetKeyAsync(this IKeyVaultClient operations, string keyIdentifier, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
@@ -246,10 +246,10 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyBundle> UpdateKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, string[] keyOps = null, KeyAttributes attributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
+                throw new ArgumentNullException(nameof( keyName ));
 
             using (var _result = await operations.UpdateKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, string.Empty, keyOps, attributes, tags, null, cancellationToken).ConfigureAwait(false))
             {
@@ -269,11 +269,39 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyBundle> UpdateKeyAsync(this IKeyVaultClient operations, string keyIdentifier, string[] keyOps = null, KeyAttributes attributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(keyIdentifier))
-                throw new ArgumentNullException("keyIdentifier");
+                throw new ArgumentNullException(nameof( keyIdentifier ));
 
             var keyId = new KeyIdentifier(keyIdentifier);
 
             using (var _result = await operations.UpdateKeyWithHttpMessagesAsync(keyId.Vault, keyId.Name, keyId.Version ?? string.Empty, keyOps, attributes, tags, null, cancellationToken).ConfigureAwait(false))
+            {
+                return _result.Body;
+            }
+        }
+
+        public static async Task<KeyBundle> CreateKeyAsync( this IKeyVaultClient operations, string vaultBaseUrl, string keyName, NewKeyParameters parameters, CancellationToken cancellationToken = default( CancellationToken ) )
+        {
+            if (string.IsNullOrEmpty( vaultBaseUrl ))
+                throw new ArgumentNullException( nameof( vaultBaseUrl ) );
+
+            if (string.IsNullOrEmpty( keyName ))
+                throw new ArgumentNullException( nameof( keyName ) );
+
+            if (parameters == null)
+                throw new ArgumentNullException( nameof( parameters ) );
+
+            using (var _result = await operations.CreateKeyWithHttpMessagesAsync(
+                vaultBaseUrl,
+                keyName,
+                parameters.Kty,
+                parameters.KeySize,
+                parameters.KeyOps,
+                parameters.Attributes,
+                parameters.Tags,
+                parameters.CurveName,
+                null, // customHeaders
+                cancellationToken
+            ).ConfigureAwait(false))
             {
                 return _result.Body;
             }
@@ -291,19 +319,18 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<KeyBundle> ImportKeyAsync(this IKeyVaultClient operations, string vaultBaseUrl, string keyName, KeyBundle keyBundle, bool? importToHardware = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrEmpty(keyName))
-                throw new ArgumentNullException("keyName");
+                throw new ArgumentNullException(nameof( keyName ));
 
             if (keyBundle == null)
-                throw new ArgumentNullException("keyBundle");
+                throw new ArgumentNullException(nameof( keyBundle ));
 
             using (var _result = await operations.ImportKeyWithHttpMessagesAsync(vaultBaseUrl, keyName, keyBundle.Key, importToHardware, keyBundle.Attributes, keyBundle.Tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }
-
         }
         #endregion
 
@@ -319,10 +346,10 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<SecretBundle> GetSecretAsync(this IKeyVaultClient operations, string vaultBaseUrl, string secretName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrEmpty(secretName))
-                throw new ArgumentNullException("secretName");
+                throw new ArgumentNullException(nameof( secretName ));
 
             using (var _result = await operations.GetSecretWithHttpMessagesAsync(vaultBaseUrl, secretName, string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
@@ -339,7 +366,7 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<SecretBundle> GetSecretAsync(this IKeyVaultClient operations, string secretIdentifier, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(secretIdentifier))
-                throw new ArgumentNullException("secretIdentifier");
+                throw new ArgumentNullException(nameof( secretIdentifier ));
 
             var secretId = new SecretIdentifier(secretIdentifier);
             using (var _result = await operations.GetSecretWithHttpMessagesAsync(secretId.Vault, secretId.Name, secretId.Version ?? string.Empty, null, cancellationToken).ConfigureAwait(false))
@@ -360,7 +387,7 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<SecretBundle> UpdateSecretAsync(this IKeyVaultClient operations, string secretIdentifier, string contentType = null, SecretAttributes secretAttributes = null, Dictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(secretIdentifier))
-                throw new ArgumentNullException("secretIdentifier");
+                throw new ArgumentNullException(nameof( secretIdentifier ));
 
             var secretId = new SecretIdentifier(secretIdentifier);
 
@@ -501,10 +528,10 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<CertificateBundle> GetCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrEmpty(certificateName))
-                throw new ArgumentNullException("certificateName");
+                throw new ArgumentNullException(nameof( certificateName ));
 
             using (var _result = await operations.GetCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, string.Empty, null, cancellationToken).ConfigureAwait(false))
             {
@@ -521,7 +548,7 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<CertificateBundle> GetCertificateAsync(this IKeyVaultClient operations, string certificateIdentifier, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrEmpty(certificateIdentifier))
-                throw new ArgumentNullException("certificateIdentifier");
+                throw new ArgumentNullException(nameof( certificateIdentifier ));
 
             var certId = new CertificateIdentifier(certificateIdentifier);
 
@@ -543,7 +570,7 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<CertificateBundle> UpdateCertificateAsync(this IKeyVaultClient operations, string certificateIdentifier, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(certificateIdentifier))
-                throw new ArgumentNullException("certificateIdentifier");
+                throw new ArgumentNullException(nameof( certificateIdentifier ));
 
             var certId = new CertificateIdentifier(certificateIdentifier);
             using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(certId.Vault, certId.Name, certId.Version ?? string.Empty, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
@@ -567,13 +594,13 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<CertificateBundle> ImportCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, X509Certificate2Collection certificateCollection, CertificatePolicy certificatePolicy, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrWhiteSpace(certificateName))
-                throw new ArgumentNullException("certificateName");
+                throw new ArgumentNullException(nameof( certificateName ));
 
             if (null == certificateCollection)
-                throw new ArgumentNullException("certificateCollection");
+                throw new ArgumentNullException(nameof( certificateCollection ));
 
             var base64EncodedCertificate = Convert.ToBase64String(certificateCollection.Export(X509ContentType.Pfx));
             using (var _result = await operations.ImportCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, base64EncodedCertificate, string.Empty, certificatePolicy, certificateAttributes, tags, null, cancellationToken))
@@ -595,10 +622,10 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<CertificateBundle> MergeCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, X509Certificate2Collection x509Certificates, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrWhiteSpace(certificateName))
-                throw new ArgumentNullException("certificateName");
+                throw new ArgumentNullException(nameof( certificateName ));
 
             if (x509Certificates == null || x509Certificates.Count == 0)
                 throw new ArgumentException("x509Certificates");
@@ -625,10 +652,10 @@ namespace Microsoft.Azure.KeyVault
         public static async Task<string> GetPendingCertificateSigningRequestAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(vaultBaseUrl))
-                throw new ArgumentNullException("vaultBaseUrl");
+                throw new ArgumentNullException(nameof( vaultBaseUrl ));
 
             if (string.IsNullOrWhiteSpace(certificateName))
-                throw new ArgumentNullException("certificateName");
+                throw new ArgumentNullException(nameof( certificateName ));
             
             using (var _result = await operations.GetPendingCertificateSigningRequestWithHttpMessagesAsync(vaultBaseUrl, certificateName, null, cancellationToken))
             {

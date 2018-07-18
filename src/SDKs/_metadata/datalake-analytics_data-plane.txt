@@ -1,10 +1,38 @@
-2018-02-07 22:22:52 UTC
+﻿Installing AutoRest version: latest
 
+> autorest@2.0.4280 preinstall C:\Program Files\nodejs\node_modules\.staging\autorest-2f6de348
+> node ./preinstall-check
+
+C:\Program Files\nodejs\autorest -> C:\Program Files\nodejs\node_modules\autorest\dist\app.js
+C:\Program Files\nodejs
+`-- autorest@2.0.4280 
+
+
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datalake-analytics/data-plane/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\code\AzureSDK\azure-sdk-for-net\src\SDKs
+AutoRest code generation utility [version: 2.0.4280; node: v7.10.0]
+(C) 2018 Microsoft Corporation.
+https://aka.ms/autorest
+   Loading AutoRest core      'C:\Users\dongwwa\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
+   Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
+   Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
+Processing batch task - {"package-catalog":true} .
+Processing batch task - {"package-job":true} .
+
+2018-06-14 05:54:39 UTC
 1) azure-rest-api-specs repository information
-GitHub user: Azure
+GitHub fork: Azure
 Branch:      master
-Commit:      f6330512616c264543fec0f02f21072a1559173b
+Commit:      69592a62dd01225f16a9b398664c3b9d6ddc8268
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\jooro\AppData\Roaming\npm `-- autorest@2.0.4245  
+Bootstrapper version:    C:\Program Files\nodejs  `-- autorest@2.0.4280
+
+
+Latest installed version:    
+
+

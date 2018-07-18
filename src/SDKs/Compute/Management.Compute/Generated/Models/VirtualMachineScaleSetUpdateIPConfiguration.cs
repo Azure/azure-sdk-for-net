@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">The load balancer inbound
         /// nat pools.</param>
-        public VirtualMachineScaleSetUpdateIPConfiguration(string id = default(string), string name = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), string privateIPAddressVersion = default(string), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetUpdateIPConfiguration(string id = default(string), string name = default(string), ApiEntityReference subnet = default(ApiEntityReference), bool? primary = default(bool?), VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default(VirtualMachineScaleSetUpdatePublicIPAddressConfiguration), IPVersion? privateIPAddressVersion = default(IPVersion?), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
             : base(id)
         {
             Name = name;
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Possible values include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
-        public string PrivateIPAddressVersion { get; set; }
+        public IPVersion? PrivateIPAddressVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the application gateway backend address pools.

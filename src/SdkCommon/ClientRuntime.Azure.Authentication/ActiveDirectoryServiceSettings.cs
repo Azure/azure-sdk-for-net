@@ -30,7 +30,7 @@ namespace Microsoft.Rest.Azure.Authentication
 
         private static readonly ActiveDirectoryServiceSettings AzureUSGovernmentSettings = new ActiveDirectoryServiceSettings
         {
-            AuthenticationEndpoint = new Uri("https://login.microsoftonline.com/"),
+            AuthenticationEndpoint = new Uri("https://login.microsoftonline.us/"),
             TokenAudience = new Uri("https://management.core.usgovcloudapi.net/"),
             ValidateAuthority = true
         };

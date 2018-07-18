@@ -79,6 +79,11 @@ namespace Microsoft.Azure.Management.IotHub
         IIotHubResourceOperations IotHubResource { get; }
 
         /// <summary>
+        /// Gets the IResourceProviderCommonOperations.
+        /// </summary>
+        IResourceProviderCommonOperations ResourceProviderCommon { get; }
+
+        /// <summary>
         /// Gets the ICertificatesOperations.
         /// </summary>
         ICertificatesOperations Certificates { get; }

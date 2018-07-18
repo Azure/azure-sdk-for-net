@@ -5,7 +5,7 @@
 using DataFactory.Tests.Utils;
 using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.DataFactory.Models;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Rest.Azure;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -22,12 +22,12 @@ namespace DataFactory.Tests.ScenarioTests
             Func<DataFactoryManagementClient, Task> action = async (client) =>
             {
                 Factory createResponse = client.Factories.CreateOrUpdate(this.ResourceGroupName, this.DataFactoryName, new Factory(location: FactoryLocation));
-                ErrorResponseException exception = await Assert.ThrowsAsync<ErrorResponseException>(async () =>
+                CloudException exception = await Assert.ThrowsAsync<CloudException>(async () =>
                 {
-                    await client.Factories.CancelPipelineRunWithHttpMessagesAsync(this.ResourceGroupName, this.DataFactoryName, "efbe5443-9879-4495-94a6-4d7c394133ad");
+                    await client.PipelineRuns.CancelWithHttpMessagesAsync(this.ResourceGroupName, this.DataFactoryName, "efbe5443-9879-4495-94a6-4d7c394133ad");
                 });
 
-                Assert.Equal(exception.Response.StatusCode, HttpStatusCode.BadRequest);
+                Assert.Equal(HttpStatusCode.BadRequest, exception.Response.StatusCode);
             };
 
             Func<DataFactoryManagementClient, Task> finallyAction = async (client) =>

@@ -2,6 +2,25 @@
 
 ## Current version
 
+###  Feature Additions
+
+* Support sharing self-hosted integration runtime across data factories and subscriptions
+
+## Version 0.9.0-preview
+
+### Feature Additions
+
+* Remove maxParallelExecutionsPerNode limitation
+
+## Version 0.8.0-preview
+
+### Feature Additions
+
+* Added Configure factory repository operation
+* Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
+* Updated Several model types from SecretBase to Object
+* Added Blob Events trigger
+
 ## Version 0.7.0-preview
 
 ### Feature Additions

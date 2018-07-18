@@ -7,12 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.ServiceBus</PackageId>
 		<Description>Provides developers with libraries to create and manage Namespaces and manage Authorization Rules. Note: This client library is for ServiceBus under Azure Resource Manager.</Description>
 		<AssemblyName>Microsoft.Azure.Management.ServiceBus</AssemblyName>
-		<Version>1.2.0</Version>
+		<Version>1.4.0</Version>
 		<PackageTags>Microsoft Azure ServiceBus Management;ServiceBus;ServiceBus management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-		      Servicebus: Property added - 
-          1) Rule-Correlation Filter : 'properties' of type Dictionary<string,string>
+		      Servicebus: 
+          1) Added property pendingReplicationOperationsCount to GeoDR and Migration
 	  ]]>
 		</PackageReleaseNotes>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

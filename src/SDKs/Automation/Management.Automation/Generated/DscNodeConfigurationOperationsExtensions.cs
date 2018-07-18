@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.Automation
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -28,15 +29,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeConfigurationName'>
             /// The Dsc node configuration name.
             /// </param>
-            public static void Delete(this IDscNodeConfigurationOperations operations, string automationAccountName, string nodeConfigurationName)
+            public static void Delete(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName)
             {
-                operations.DeleteAsync(automationAccountName, nodeConfigurationName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, automationAccountName, nodeConfigurationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,8 +50,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeConfigurationName'>
             /// The Dsc node configuration name.
@@ -55,9 +62,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDscNodeConfigurationOperations operations, string automationAccountName, string nodeConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(automationAccountName, nodeConfigurationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeConfigurationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -67,15 +74,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeConfigurationName'>
             /// The Dsc node configuration name.
             /// </param>
-            public static DscNodeConfiguration Get(this IDscNodeConfigurationOperations operations, string automationAccountName, string nodeConfigurationName)
+            public static DscNodeConfiguration Get(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName)
             {
-                return operations.GetAsync(automationAccountName, nodeConfigurationName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, nodeConfigurationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,8 +95,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeConfigurationName'>
             /// The Dsc node configuration name.
@@ -94,9 +107,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DscNodeConfiguration> GetAsync(this IDscNodeConfigurationOperations operations, string automationAccountName, string nodeConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DscNodeConfiguration> GetAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, nodeConfigurationName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeConfigurationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -109,18 +122,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeConfigurationName'>
-            /// The create or update parameters for configuration.
+            /// The Dsc node configuration name.
             /// </param>
             /// <param name='parameters'>
             /// The create or update parameters for configuration.
             /// </param>
-            public static DscNodeConfiguration CreateOrUpdate(this IDscNodeConfigurationOperations operations, string automationAccountName, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateParameters parameters)
+            public static DscNodeConfiguration CreateOrUpdate(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(automationAccountName, nodeConfigurationName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, automationAccountName, nodeConfigurationName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,11 +146,14 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='nodeConfigurationName'>
-            /// The create or update parameters for configuration.
+            /// The Dsc node configuration name.
             /// </param>
             /// <param name='parameters'>
             /// The create or update parameters for configuration.
@@ -142,9 +161,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DscNodeConfiguration> CreateOrUpdateAsync(this IDscNodeConfigurationOperations operations, string automationAccountName, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DscNodeConfiguration> CreateOrUpdateAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(automationAccountName, nodeConfigurationName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeConfigurationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -157,15 +176,21 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<DscNodeConfiguration> ListByAutomationAccount(this IDscNodeConfigurationOperations operations, string automationAccountName, string filter = default(string))
+            /// <param name='inlinecount'>
+            /// Return total rows.
+            /// </param>
+            public static IPage<DscNodeConfiguration> ListByAutomationAccount(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, ODataQuery<DscNodeConfiguration> odataQuery = default(ODataQuery<DscNodeConfiguration>), string inlinecount = default(string))
             {
-                return operations.ListByAutomationAccountAsync(automationAccountName, filter).GetAwaiter().GetResult();
+                return operations.ListByAutomationAccountAsync(resourceGroupName, automationAccountName, odataQuery, inlinecount).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -175,18 +200,78 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            /// <param name='filter'>
-            /// The filter to apply on the operation.
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='inlinecount'>
+            /// Return total rows.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DscNodeConfiguration>> ListByAutomationAccountAsync(this IDscNodeConfigurationOperations operations, string automationAccountName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DscNodeConfiguration>> ListByAutomationAccountAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, ODataQuery<DscNodeConfiguration> odataQuery = default(ODataQuery<DscNodeConfiguration>), string inlinecount = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(automationAccountName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(resourceGroupName, automationAccountName, odataQuery, inlinecount, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create the node configuration identified by node configuration name.
+            /// <see href="http://aka.ms/azureautomationsdk/dscnodeconfigurations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='nodeConfigurationName'>
+            /// The Dsc node configuration name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The create or update parameters for configuration.
+            /// </param>
+            public static DscNodeConfiguration BeginCreateOrUpdate(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateParameters parameters)
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, automationAccountName, nodeConfigurationName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create the node configuration identified by node configuration name.
+            /// <see href="http://aka.ms/azureautomationsdk/dscnodeconfigurations" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            /// <param name='nodeConfigurationName'>
+            /// The Dsc node configuration name.
+            /// </param>
+            /// <param name='parameters'>
+            /// The create or update parameters for configuration.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DscNodeConfiguration> BeginCreateOrUpdateAsync(this IDscNodeConfigurationOperations operations, string resourceGroupName, string automationAccountName, string nodeConfigurationName, DscNodeConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, nodeConfigurationName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

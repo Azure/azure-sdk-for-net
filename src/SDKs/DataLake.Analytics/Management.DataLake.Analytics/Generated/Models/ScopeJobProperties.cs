@@ -33,46 +33,46 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the ScopeJobProperties class.
         /// </summary>
-        /// <param name="script">the script to run. Please note that the
+        /// <param name="script">The script to run. Please note that the
         /// maximum script size is 3 MB.</param>
-        /// <param name="runtimeVersion">the runtime version of the Data Lake
+        /// <param name="runtimeVersion">The runtime version of the Data Lake
         /// Analytics engine to use for the specific type of job being
         /// run.</param>
-        /// <param name="resources">the list of resources that are required by
-        /// the job</param>
-        /// <param name="userAlgebraPath">the algebra file path after the job
-        /// has completed</param>
-        /// <param name="notifier">the list of email addresses, separated by
+        /// <param name="resources">The list of resources that are required by
+        /// the job.</param>
+        /// <param name="userAlgebraPath">The algebra file path after the job
+        /// has completed.</param>
+        /// <param name="notifier">The list of email addresses, separated by
         /// semi-colons, to notify when the job reaches a terminal
         /// state.</param>
-        /// <param name="totalCompilationTime">the total time this job spent
+        /// <param name="totalCompilationTime">The total time this job spent
         /// compiling. This value should not be set by the user and will be
         /// ignored if it is.</param>
-        /// <param name="totalPausedTime">the total time this job spent paused.
+        /// <param name="totalQueuedTime">The total time this job spent queued.
         /// This value should not be set by the user and will be ignored if it
         /// is.</param>
-        /// <param name="totalQueuedTime">the total time this job spent queued.
-        /// This value should not be set by the user and will be ignored if it
-        /// is.</param>
-        /// <param name="totalRunningTime">the total time this job spent
+        /// <param name="totalRunningTime">The total time this job spent
         /// executing. This value should not be set by the user and will be
         /// ignored if it is.</param>
-        /// <param name="rootProcessNodeId">the ID used to identify the job
+        /// <param name="totalPausedTime">The total time this job spent paused.
+        /// This value should not be set by the user and will be ignored if it
+        /// is.</param>
+        /// <param name="rootProcessNodeId">The ID used to identify the job
         /// manager coordinating job execution. This value should not be set by
         /// the user and will be ignored if it is.</param>
-        /// <param name="yarnApplicationId">the ID used to identify the yarn
+        /// <param name="yarnApplicationId">The ID used to identify the yarn
         /// application executing the job. This value should not be set by the
         /// user and will be ignored if it is.</param>
-        public ScopeJobProperties(string script, string runtimeVersion = default(string), IList<ScopeJobResource> resources = default(IList<ScopeJobResource>), string userAlgebraPath = default(string), string notifier = default(string), System.TimeSpan? totalCompilationTime = default(System.TimeSpan?), System.TimeSpan? totalPausedTime = default(System.TimeSpan?), System.TimeSpan? totalQueuedTime = default(System.TimeSpan?), System.TimeSpan? totalRunningTime = default(System.TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string))
+        public ScopeJobProperties(string script, string runtimeVersion = default(string), IList<ScopeJobResource> resources = default(IList<ScopeJobResource>), string userAlgebraPath = default(string), string notifier = default(string), System.TimeSpan? totalCompilationTime = default(System.TimeSpan?), System.TimeSpan? totalQueuedTime = default(System.TimeSpan?), System.TimeSpan? totalRunningTime = default(System.TimeSpan?), System.TimeSpan? totalPausedTime = default(System.TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string))
             : base(script, runtimeVersion)
         {
             Resources = resources;
             UserAlgebraPath = userAlgebraPath;
             Notifier = notifier;
             TotalCompilationTime = totalCompilationTime;
-            TotalPausedTime = totalPausedTime;
             TotalQueuedTime = totalQueuedTime;
             TotalRunningTime = totalRunningTime;
+            TotalPausedTime = totalPausedTime;
             RootProcessNodeId = rootProcessNodeId;
             YarnApplicationId = yarnApplicationId;
             CustomInit();
@@ -84,13 +84,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list of resources that are required by the job
+        /// Gets the list of resources that are required by the job.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
         public IList<ScopeJobResource> Resources { get; private set; }
 
         /// <summary>
-        /// Gets the algebra file path after the job has completed
+        /// Gets the algebra file path after the job has completed.
         /// </summary>
         [JsonProperty(PropertyName = "userAlgebraPath")]
         public string UserAlgebraPath { get; private set; }
@@ -110,13 +110,6 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public System.TimeSpan? TotalCompilationTime { get; private set; }
 
         /// <summary>
-        /// Gets the total time this job spent paused. This value should not be
-        /// set by the user and will be ignored if it is.
-        /// </summary>
-        [JsonProperty(PropertyName = "totalPausedTime")]
-        public System.TimeSpan? TotalPausedTime { get; private set; }
-
-        /// <summary>
         /// Gets the total time this job spent queued. This value should not be
         /// set by the user and will be ignored if it is.
         /// </summary>
@@ -129,6 +122,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "totalRunningTime")]
         public System.TimeSpan? TotalRunningTime { get; private set; }
+
+        /// <summary>
+        /// Gets the total time this job spent paused. This value should not be
+        /// set by the user and will be ignored if it is.
+        /// </summary>
+        [JsonProperty(PropertyName = "totalPausedTime")]
+        public System.TimeSpan? TotalPausedTime { get; private set; }
 
         /// <summary>
         /// Gets the ID used to identify the job manager coordinating job

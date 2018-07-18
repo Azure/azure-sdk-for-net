@@ -27,14 +27,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Initializes a new instance of the Export class.
         /// </summary>
         /// <param name="platform">Possible values include: 'CoreML',
-        /// 'TensorFlow'</param>
+        /// 'TensorFlow', 'DockerFile', 'ONNX'</param>
         /// <param name="status">Possible values include: 'Exporting',
         /// 'Failed', 'Done'</param>
-        public Export(string platform = default(string), string status = default(string), string downloadUri = default(string))
+        /// <param name="flavor">Possible values include: 'Linux',
+        /// 'Windows'</param>
+        public Export(string platform = default(string), string status = default(string), string downloadUri = default(string), string flavor = default(string), bool newerVersionAvailable = default(bool))
         {
             Platform = platform;
             Status = status;
             DownloadUri = downloadUri;
+            Flavor = flavor;
+            NewerVersionAvailable = newerVersionAvailable;
             CustomInit();
         }
 
@@ -44,21 +48,33 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets possible values include: 'CoreML', 'TensorFlow'
+        /// Gets possible values include: 'CoreML', 'TensorFlow', 'DockerFile',
+        /// 'ONNX'
         /// </summary>
-        [JsonProperty(PropertyName = "Platform")]
+        [JsonProperty(PropertyName = "platform")]
         public string Platform { get; private set; }
 
         /// <summary>
         /// Gets possible values include: 'Exporting', 'Failed', 'Done'
         /// </summary>
-        [JsonProperty(PropertyName = "Status")]
+        [JsonProperty(PropertyName = "status")]
         public string Status { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "DownloadUri")]
+        [JsonProperty(PropertyName = "downloadUri")]
         public string DownloadUri { get; private set; }
+
+        /// <summary>
+        /// Gets possible values include: 'Linux', 'Windows'
+        /// </summary>
+        [JsonProperty(PropertyName = "flavor")]
+        public string Flavor { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "newerVersionAvailable")]
+        public bool NewerVersionAvailable { get; private set; }
 
     }
 }

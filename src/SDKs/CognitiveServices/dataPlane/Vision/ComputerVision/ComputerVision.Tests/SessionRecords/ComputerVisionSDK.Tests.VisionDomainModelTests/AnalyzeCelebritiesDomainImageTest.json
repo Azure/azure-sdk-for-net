@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v1.0/models/celebrities/analyze",
+      "EncodedRequestUri": "L3Zpc2lvbi92MS4wL21vZGVscy9jZWxlYnJpdGllcy9hbmFseXpl",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"http://video.ch9.ms/ch9/ac40/1209d088-5752-4413-b003-fdbeb326ac40/IgniteKeynoteSatya_512.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "105"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"result\": {\r\n    \"celebrities\": [\r\n      {\r\n        \"faceRectangle\": {\r\n          \"top\": 50,\r\n          \"left\": 212,\r\n          \"width\": 54,\r\n          \"height\": 54\r\n        },\r\n        \"name\": \"Satya Nadella\",\r\n        \"confidence\": 0.98922520875930786\r\n      }\r\n    ]\r\n  },\r\n  \"requestId\": \"21703252-3d98-4561-8c77-da00ba2cd7f2\",\r\n  \"metadata\": {\r\n    \"height\": 288,\r\n    \"width\": 512,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "252"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Connection": [
+          "close"
+        ],
+        "Date": [
+          "Fri, 25 May 2018 02:54:51 GMT"
+        ],
+        "apim-request-id": [
+          "21703252-3d98-4561-8c77-da00ba2cd7f2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

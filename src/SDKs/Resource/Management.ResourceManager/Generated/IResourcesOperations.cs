@@ -246,6 +246,47 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<GenericResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates a resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group for the resource. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='resourceProviderNamespace'>
+        /// The namespace of the resource provider.
+        /// </param>
+        /// <param name='parentResourcePath'>
+        /// The parent resource identity.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The resource type of the resource to update.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource to update.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// The API version to use for the operation.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters for updating the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<GenericResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets a resource.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -361,6 +402,36 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<GenericResource>> CreateOrUpdateByIdWithHttpMessagesAsync(string resourceId, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates a resource by ID.
+        /// </summary>
+        /// <param name='resourceId'>
+        /// The fully qualified ID of the resource, including the resource name
+        /// and resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+        /// </param>
+        /// <param name='apiVersion'>
+        /// The API version to use for the operation.
+        /// </param>
+        /// <param name='parameters'>
+        /// Update resource parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<GenericResource>> UpdateByIdWithHttpMessagesAsync(string resourceId, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a resource by ID.
         /// </summary>
@@ -528,6 +599,47 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<GenericResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates a resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group for the resource. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='resourceProviderNamespace'>
+        /// The namespace of the resource provider.
+        /// </param>
+        /// <param name='parentResourcePath'>
+        /// The parent resource identity.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The resource type of the resource to update.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the resource to update.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// The API version to use for the operation.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters for updating the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<GenericResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes a resource by ID.
         /// </summary>
         /// <param name='resourceId'>
@@ -581,6 +693,36 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<GenericResource>> BeginCreateOrUpdateByIdWithHttpMessagesAsync(string resourceId, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates a resource by ID.
+        /// </summary>
+        /// <param name='resourceId'>
+        /// The fully qualified ID of the resource, including the resource name
+        /// and resource type. Use the format,
+        /// /subscriptions/{guid}/resourceGroups/{resource-group-name}/{resource-provider-namespace}/{resource-type}/{resource-name}
+        /// </param>
+        /// <param name='apiVersion'>
+        /// The API version to use for the operation.
+        /// </param>
+        /// <param name='parameters'>
+        /// Update resource parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<GenericResource>> BeginUpdateByIdWithHttpMessagesAsync(string resourceId, string apiVersion, GenericResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all the resources for a resource group.
         /// </summary>

@@ -37,12 +37,15 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// runbook workers.</param>
         /// <param name="credential">Sets the credential of a worker
         /// group.</param>
-        public HybridRunbookWorkerGroup(string id = default(string), string name = default(string), IList<HybridRunbookWorker> hybridRunbookWorkers = default(IList<HybridRunbookWorker>), RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty))
+        /// <param name="groupType">Type of the HybridWorkerGroup. Possible
+        /// values include: 'User', 'System'</param>
+        public HybridRunbookWorkerGroup(string id = default(string), string name = default(string), IList<HybridRunbookWorker> hybridRunbookWorkers = default(IList<HybridRunbookWorker>), RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty), string groupType = default(string))
         {
             Id = id;
             Name = name;
             HybridRunbookWorkers = hybridRunbookWorkers;
             Credential = credential;
+            GroupType = groupType;
             CustomInit();
         }
 
@@ -74,6 +77,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "credential")]
         public RunAsCredentialAssociationProperty Credential { get; set; }
+
+        /// <summary>
+        /// Gets or sets type of the HybridWorkerGroup. Possible values
+        /// include: 'User', 'System'
+        /// </summary>
+        [JsonProperty(PropertyName = "groupType")]
+        public string GroupType { get; set; }
 
     }
 }

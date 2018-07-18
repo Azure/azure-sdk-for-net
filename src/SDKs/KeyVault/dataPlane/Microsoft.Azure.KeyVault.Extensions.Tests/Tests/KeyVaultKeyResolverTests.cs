@@ -3,20 +3,13 @@
 // license information.
 
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.KeyVault.Core;
-using Microsoft.Azure.KeyVault.WebKey;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Xunit;
 using KeyVault.TestFramework;
+using Microsoft.Azure.KeyVault.WebKey;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace Microsoft.Azure.KeyVault.Extensions.Tests
 {
@@ -24,11 +17,11 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
     /// <summary>
     /// Verify Symmetric Key.
     /// </summary>
-    public class KeyVaultKeyResolverTests : IClassFixture<KeyVaultTestFixture>
+    public class KeyResolver : IClassFixture<KeyVaultTestFixture>
     {
         private KeyVaultTestFixture fixture;
 
-        public KeyVaultKeyResolverTests(KeyVaultTestFixture fixture)
+        public KeyResolver(KeyVaultTestFixture fixture)
         {
             this.fixture = fixture;
             _standardVaultOnly = fixture.standardVaultOnly;
@@ -75,7 +68,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a key in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyVault_KeyResolver_ResolveKey()
+        public void ResolveKey()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -111,7 +104,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a 128bit secret encoded as base64 in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyVault_KeyResolver_ResolveSecret128Base64()
+        public void ResolveSecret128Base64()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -123,7 +116,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a 192bit secret encoded as base64 in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyVault_KeyResolver_ResolveSecret192Base64()
+        public void ResolveSecret192Base64()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -135,7 +128,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         /// Test resolving a key from a 256bit secret encoded as base64 in a vault using various KeyVaultKeyResolver constructors.
         /// </summary>
         [Fact]
-        public void KeyVault_KeyResolver_ResolveSecret256Base64()
+        public void ResolveSecret256Base64()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {

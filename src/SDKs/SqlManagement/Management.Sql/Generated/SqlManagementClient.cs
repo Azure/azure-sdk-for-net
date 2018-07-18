@@ -187,11 +187,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IDatabaseUsagesOperations DatabaseUsages { get; private set; }
 
         /// <summary>
-        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
-
-        /// <summary>
         /// Gets the IDatabaseAutomaticTuningOperations.
         /// </summary>
         public virtual IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; private set; }
@@ -247,6 +242,81 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
 
         /// <summary>
+        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        public virtual IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentRuleBaselinesOperations DatabaseVulnerabilityAssessmentRuleBaselines { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentsOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentsOperations DatabaseVulnerabilityAssessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobAgentsOperations.
+        /// </summary>
+        public virtual IJobAgentsOperations JobAgents { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobCredentialsOperations.
+        /// </summary>
+        public virtual IJobCredentialsOperations JobCredentials { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobExecutionsOperations.
+        /// </summary>
+        public virtual IJobExecutionsOperations JobExecutions { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobsOperations.
+        /// </summary>
+        public virtual IJobsOperations Jobs { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobStepExecutionsOperations.
+        /// </summary>
+        public virtual IJobStepExecutionsOperations JobStepExecutions { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobStepsOperations.
+        /// </summary>
+        public virtual IJobStepsOperations JobSteps { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobTargetExecutionsOperations.
+        /// </summary>
+        public virtual IJobTargetExecutionsOperations JobTargetExecutions { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobTargetGroupsOperations.
+        /// </summary>
+        public virtual IJobTargetGroupsOperations JobTargetGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobVersionsOperations.
+        /// </summary>
+        public virtual IJobVersionsOperations JobVersions { get; private set; }
+
+        /// <summary>
         /// Gets the ILongTermRetentionBackupsOperations.
         /// </summary>
         public virtual ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; private set; }
@@ -272,6 +342,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IServerDnsAliasesOperations ServerDnsAliases { get; private set; }
 
         /// <summary>
+        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// </summary>
+        public virtual IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IRestorePointsOperations.
         /// </summary>
         public virtual IRestorePointsOperations RestorePoints { get; private set; }
@@ -292,9 +367,29 @@ namespace Microsoft.Azure.Management.Sql
         public virtual ICapabilitiesOperations Capabilities { get; private set; }
 
         /// <summary>
+        /// Gets the IDatabaseVulnerabilityAssessmentScansOperations.
+        /// </summary>
+        public virtual IDatabaseVulnerabilityAssessmentScansOperations DatabaseVulnerabilityAssessmentScans { get; private set; }
+
+        /// <summary>
         /// Gets the IInstanceFailoverGroupsOperations.
         /// </summary>
         public virtual IInstanceFailoverGroupsOperations InstanceFailoverGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the IBackupShortTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual IBackupShortTermRetentionPoliciesOperations BackupShortTermRetentionPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the ITdeCertificatesOperations.
+        /// </summary>
+        public virtual ITdeCertificatesOperations TdeCertificates { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedInstanceTdeCertificatesOperations.
+        /// </summary>
+        public virtual IManagedInstanceTdeCertificatesOperations ManagedInstanceTdeCertificates { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -520,7 +615,6 @@ namespace Microsoft.Azure.Management.Sql
             TransparentDataEncryptionActivities = new TransparentDataEncryptionActivitiesOperations(this);
             ServerUsages = new ServerUsagesOperations(this);
             DatabaseUsages = new DatabaseUsagesOperations(this);
-            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
             DatabaseAutomaticTuning = new DatabaseAutomaticTuningOperations(this);
             EncryptionProtectors = new EncryptionProtectorsOperations(this);
             FailoverGroups = new FailoverGroupsOperations(this);
@@ -532,16 +626,36 @@ namespace Microsoft.Azure.Management.Sql
             SyncMembers = new SyncMembersOperations(this);
             SubscriptionUsages = new SubscriptionUsagesOperations(this);
             VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
+            ExtendedDatabaseBlobAuditingPolicies = new ExtendedDatabaseBlobAuditingPoliciesOperations(this);
+            ExtendedServerBlobAuditingPolicies = new ExtendedServerBlobAuditingPoliciesOperations(this);
+            ServerBlobAuditingPolicies = new ServerBlobAuditingPoliciesOperations(this);
+            DatabaseBlobAuditingPolicies = new DatabaseBlobAuditingPoliciesOperations(this);
+            DatabaseVulnerabilityAssessmentRuleBaselines = new DatabaseVulnerabilityAssessmentRuleBaselinesOperations(this);
+            DatabaseVulnerabilityAssessments = new DatabaseVulnerabilityAssessmentsOperations(this);
+            JobAgents = new JobAgentsOperations(this);
+            JobCredentials = new JobCredentialsOperations(this);
+            JobExecutions = new JobExecutionsOperations(this);
+            Jobs = new JobsOperations(this);
+            JobStepExecutions = new JobStepExecutionsOperations(this);
+            JobSteps = new JobStepsOperations(this);
+            JobTargetExecutions = new JobTargetExecutionsOperations(this);
+            JobTargetGroups = new JobTargetGroupsOperations(this);
+            JobVersions = new JobVersionsOperations(this);
             LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
             BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
             ManagedDatabases = new ManagedDatabasesOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
             ServerDnsAliases = new ServerDnsAliasesOperations(this);
+            ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
             RestorePoints = new RestorePointsOperations(this);
             DatabaseOperations = new DatabaseOperations(this);
             ElasticPoolOperations = new ElasticPoolOperations(this);
             Capabilities = new CapabilitiesOperations(this);
+            DatabaseVulnerabilityAssessmentScans = new DatabaseVulnerabilityAssessmentScansOperations(this);
             InstanceFailoverGroups = new InstanceFailoverGroupsOperations(this);
+            BackupShortTermRetentionPolicies = new BackupShortTermRetentionPoliciesOperations(this);
+            TdeCertificates = new TdeCertificatesOperations(this);
+            ManagedInstanceTdeCertificates = new ManagedInstanceTdeCertificatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

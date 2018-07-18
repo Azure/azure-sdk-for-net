@@ -3,14 +3,14 @@
 
 namespace Compute.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using Microsoft.Azure.Management.Compute;
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-
     using Xunit;
 
     public class VMScaleSetPriorityTests : VMScaleSetTestsBase
@@ -27,13 +27,13 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Regular")]
         public void TestVMScaleSetPriorityOperations_Accept_Regular()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                TestVMScaleSetPriorityOperationsInternal(context, "Regular");
+                TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Regular);
             }
         }
 
@@ -49,13 +49,13 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Low")]
         public void TestVMScaleSetPriorityOperations_Accept_Low()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                TestVMScaleSetPriorityOperationsInternal(context, "Low");
+                TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Low);
             }
         }
 
@@ -66,10 +66,7 @@ namespace Compute.Tests
             IList<string> zones = null
             )
         {
-            EnsureClientsInitialized(context);
-            this.m_location = "westcentralus";
-
-            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
             // Create resource group
             var rgName = TestUtilities.GenerateName(TestPrefix);
@@ -79,6 +76,10 @@ namespace Compute.Tests
 
             try
             {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                EnsureClientsInitialized(context);
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
                 var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                 m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
@@ -116,16 +117,99 @@ namespace Compute.Tests
                 var listSkusResponse = m_CrpClient.VirtualMachineScaleSets.ListSkus(rgName, vmssName);
                 Assert.NotNull(listSkusResponse);
                 Assert.False(listSkusResponse.Count() == 0);
-                Assert.Same(inputVMScaleSet.VirtualMachineProfile.Priority, priority);
+                Assert.Same(inputVMScaleSet.VirtualMachineProfile.Priority.ToString(), priority);
 
                 m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
             }
             finally
             {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                 //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                 //of the test to cover deletion. CSM does persistent retrying over all RG resources.
                 m_ResourcesClient.ResourceGroups.Delete(rgName);
             }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create Low Priority VMScaleSet with no EvictionPolicy specified
+        /// Create Low Priority VMScaleSet with 'Delete' EvictionPolicy specified
+        /// Delete VMScaleSet
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScaleSetEvictionPolicyOperations")]
+        public void TestVMScaleSetEvictionPolicyOperations()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
+                // Create resource group
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+
+                try
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    // Create low priority scaleset with no eviction policy specified
+                    TestVMScaleSetEvictionPolicyInternal(rgName, storageAccountOutput, imageRef);
+
+                    // Create low priority scaleset with 'delete' eviction policy specified
+                    TestVMScaleSetEvictionPolicyInternal(rgName, storageAccountOutput, imageRef, VirtualMachineEvictionPolicyTypes.Delete);
+                }
+                finally
+                {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                    //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        private void TestVMScaleSetEvictionPolicyInternal(
+            string rgName,
+            StorageAccount storageAccount,
+            ImageReference imageRef,
+            string evictionPolicy = null)
+        {
+            VirtualMachineScaleSet inputVMScaleSet;
+
+            var vmssName = TestUtilities.GenerateName("vmss");
+
+            var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                rgName,
+                vmssName,
+                storageAccount,
+                imageRef,
+                out inputVMScaleSet,
+                null,
+                (vmScaleSet) =>
+                {
+                    vmScaleSet.Overprovision = true;
+                    vmScaleSet.VirtualMachineProfile.Priority = VirtualMachinePriorityTypes.Low;
+                    if (evictionPolicy != null) vmScaleSet.VirtualMachineProfile.EvictionPolicy = evictionPolicy;
+                    vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1;
+                    vmScaleSet.Sku.Tier = "Standard";
+                    vmScaleSet.Sku.Capacity = 2;
+                });
+
+            ValidateVMScaleSet(inputVMScaleSet, getResponse);
+
+            evictionPolicy = evictionPolicy ?? VirtualMachineEvictionPolicyTypes.Deallocate;
+
+            Assert.Equal(getResponse.VirtualMachineProfile.EvictionPolicy.ToString(), evictionPolicy);
+
+            m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
         }
     }
 }

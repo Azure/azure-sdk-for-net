@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DataFactory
     public partial interface IActivityRunsOperations
     {
         /// <summary>
-        /// List activity runs based on input filter conditions.
+        /// Query activity runs based on input filter conditions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
@@ -35,20 +35,8 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='runId'>
         /// The pipeline run identifier.
         /// </param>
-        /// <param name='startTime'>
-        /// The start time of activity runs in ISO8601 format.
-        /// </param>
-        /// <param name='endTime'>
-        /// The end time of activity runs in ISO8601 format.
-        /// </param>
-        /// <param name='status'>
-        /// The status of the pipeline run.
-        /// </param>
-        /// <param name='activityName'>
-        /// The name of the activity.
-        /// </param>
-        /// <param name='linkedServiceName'>
-        /// The linked service name.
+        /// <param name='filterParameters'>
+        /// Parameters to filter the activity runs.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -56,7 +44,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -65,28 +53,6 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ActivityRun>>> ListByPipelineRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, System.DateTime startTime, System.DateTime endTime, string status = default(string), string activityName = default(string), string linkedServiceName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List activity runs based on input filter conditions.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<ActivityRun>>> ListByPipelineRunNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ActivityRunsQueryResponse>> QueryByPipelineRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string runId, RunFilterParameters filterParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -33,15 +33,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the UpdateJobParameters class.
         /// </summary>
-        /// <param name="degreeOfParallelism">the degree of parallelism used
+        /// <param name="degreeOfParallelism">The degree of parallelism used
         /// for this job. This must be greater than 0, if set to less than 0 it
         /// will default to 1.</param>
-        /// <param name="priority">the priority value for the current job.
+        /// <param name="priority">The priority value for the current job.
         /// Lower numbers have a higher priority. By default, a job has a
         /// priority of 1000. This must be greater than 0.</param>
-        /// <param name="tags">the key-value pairs used to add additional
-        /// metadata to the job information. (Only for use internally with
-        /// Scope job type.)</param>
+        /// <param name="tags">The key-value pairs used to add additional
+        /// metadata to the job information.</param>
         public UpdateJobParameters(int? degreeOfParallelism = default(int?), int? priority = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             DegreeOfParallelism = degreeOfParallelism;
@@ -72,7 +71,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets or sets the key-value pairs used to add additional metadata to
-        /// the job information. (Only for use internally with Scope job type.)
+        /// the job information.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }

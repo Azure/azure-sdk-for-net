@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for PossibleOperationsDirections.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum PossibleOperationsDirections
+    public static class PossibleOperationsDirections
     {
-        [EnumMember(Value = "PrimaryToRecovery")]
-        PrimaryToRecovery,
-        [EnumMember(Value = "RecoveryToPrimary")]
-        RecoveryToPrimary
-    }
-    internal static class PossibleOperationsDirectionsEnumExtension
-    {
-        internal static string ToSerializedValue(this PossibleOperationsDirections? value)
-        {
-            return value == null ? null : ((PossibleOperationsDirections)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this PossibleOperationsDirections value)
-        {
-            switch( value )
-            {
-                case PossibleOperationsDirections.PrimaryToRecovery:
-                    return "PrimaryToRecovery";
-                case PossibleOperationsDirections.RecoveryToPrimary:
-                    return "RecoveryToPrimary";
-            }
-            return null;
-        }
-
-        internal static PossibleOperationsDirections? ParsePossibleOperationsDirections(this string value)
-        {
-            switch( value )
-            {
-                case "PrimaryToRecovery":
-                    return PossibleOperationsDirections.PrimaryToRecovery;
-                case "RecoveryToPrimary":
-                    return PossibleOperationsDirections.RecoveryToPrimary;
-            }
-            return null;
-        }
+        public const string PrimaryToRecovery = "PrimaryToRecovery";
+        public const string RecoveryToPrimary = "RecoveryToPrimary";
     }
 }

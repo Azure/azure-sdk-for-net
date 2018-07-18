@@ -26,11 +26,12 @@ namespace Management.HDInsight.Tests.UnitTests
         [Fact]
         public void TestCreateCustomization()
         {
+            string testName = "TestCreateCustomization";
             TestDelegatingHandler handler = new TestDelegatingHandler();
             HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
 
-            client.Clusters.BeginCreating(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetCustomCreateParametersIaas());
-            client.Clusters.BeginCreate(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetIaasClusterSpec());
+            client.Clusters.BeginCreating(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName));
+            client.Clusters.BeginCreate(ResourceGroupName, ClusterName, ClusterCreateParametersHelpers.GetIaasClusterSpec(testName.ToLowerInvariant()));
             
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
         }

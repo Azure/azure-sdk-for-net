@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="id">Gets the id of the resource.</param>
         /// <param name="name">Gets the name of the connection type.</param>
+        /// <param name="type">Resource type</param>
         /// <param name="isGlobal">Gets or sets a Boolean value to indicate if
         /// the connection type is global.</param>
         /// <param name="fieldDefinitions">Gets the field definitions of the
@@ -44,10 +45,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public ConnectionType(string id = default(string), string name = default(string), bool? isGlobal = default(bool?), IDictionary<string, FieldDefinition> fieldDefinitions = default(IDictionary<string, FieldDefinition>), System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?), string description = default(string))
+        public ConnectionType(string id = default(string), string name = default(string), string type = default(string), bool? isGlobal = default(bool?), IDictionary<string, FieldDefinition> fieldDefinitions = default(IDictionary<string, FieldDefinition>), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
         {
             Id = id;
             Name = name;
+            Type = type;
             IsGlobal = isGlobal;
             FieldDefinitions = fieldDefinitions;
             CreationTime = creationTime;
@@ -74,6 +76,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
         /// Gets or sets a Boolean value to indicate if the connection type is
         /// global.
         /// </summary>
@@ -90,13 +98,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets the creation time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
-        public System.DateTime? CreationTime { get; private set; }
+        public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the last modified time.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
-        public System.DateTime? LastModifiedTime { get; set; }
+        public System.DateTimeOffset LastModifiedTime { get; set; }
 
         /// <summary>
         /// Gets or sets the description.

@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the ScheduleUpdateParameters class.
         /// </summary>
-        /// <param name="name">Gets or sets the name of the schedule.</param>
+        /// <param name="name">Gets or sets the name of the Schedule.</param>
         /// <param name="description">Gets or sets the description of the
         /// schedule.</param>
         /// <param name="isEnabled">Gets or sets a value indicating whether
         /// this schedule is enabled.</param>
-        public ScheduleUpdateParameters(string name, string description = default(string), bool? isEnabled = default(bool?))
+        public ScheduleUpdateParameters(string name = default(string), string description = default(string), bool? isEnabled = default(bool?))
         {
             Name = name;
             Description = description;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the schedule.
+        /// Gets or sets the name of the Schedule.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -68,18 +68,5 @@ namespace Microsoft.Azure.Management.Automation.Models
         [JsonProperty(PropertyName = "properties.isEnabled")]
         public bool? IsEnabled { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

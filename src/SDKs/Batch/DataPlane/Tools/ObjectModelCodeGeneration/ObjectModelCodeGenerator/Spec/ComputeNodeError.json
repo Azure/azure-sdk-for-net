@@ -1,7 +1,7 @@
     {
       "Name": "ComputeNodeError",
       "ProtocolName": "Models.ComputeNodeError",
-      "Comment": "An error encountered by an Azure Batch compute node.",
+      "SummaryComment": "An error encountered by an Azure Batch compute node.",
       "IsConstructorPublic": false,
       "IsUsedInCollections": true,
       "Properties": [

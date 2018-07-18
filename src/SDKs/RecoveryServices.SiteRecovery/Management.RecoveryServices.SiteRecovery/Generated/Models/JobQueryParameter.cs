@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="affectedObjectTypes">The type of objects.</param>
         /// <param name="jobStatus">The states of the job to be filtered can be
         /// in.</param>
-        public JobQueryParameter(string startTime = default(string), string endTime = default(string), string fabricId = default(string), IList<string> affectedObjectTypes = default(IList<string>), IList<string> jobStatus = default(IList<string>))
+        public JobQueryParameter(string startTime = default(string), string endTime = default(string), string fabricId = default(string), string affectedObjectTypes = default(string), string jobStatus = default(string))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -75,13 +73,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Gets or sets the type of objects.
         /// </summary>
         [JsonProperty(PropertyName = "affectedObjectTypes")]
-        public IList<string> AffectedObjectTypes { get; set; }
+        public string AffectedObjectTypes { get; set; }
 
         /// <summary>
         /// Gets or sets the states of the job to be filtered can be in.
         /// </summary>
         [JsonProperty(PropertyName = "jobStatus")]
-        public IList<string> JobStatus { get; set; }
+        public string JobStatus { get; set; }
 
     }
 }

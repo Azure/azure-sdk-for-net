@@ -29,48 +29,48 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobStatisticsVertexStage class.
         /// </summary>
-        /// <param name="dataRead">the amount of data read, in bytes.</param>
-        /// <param name="dataReadCrossPod">the amount of data read across
+        /// <param name="dataRead">The amount of data read, in bytes.</param>
+        /// <param name="dataReadCrossPod">The amount of data read across
         /// multiple pods, in bytes.</param>
-        /// <param name="dataReadIntraPod">the amount of data read in one pod,
+        /// <param name="dataReadIntraPod">The amount of data read in one pod,
         /// in bytes.</param>
-        /// <param name="dataToRead">the amount of data remaining to be read,
+        /// <param name="dataToRead">The amount of data remaining to be read,
         /// in bytes.</param>
-        /// <param name="dataWritten">the amount of data written, in
+        /// <param name="dataWritten">The amount of data written, in
         /// bytes.</param>
-        /// <param name="duplicateDiscardCount">the number of duplicates that
+        /// <param name="duplicateDiscardCount">The number of duplicates that
         /// were discarded.</param>
-        /// <param name="failedCount">the number of failures that occured in
+        /// <param name="failedCount">The number of failures that occured in
         /// this stage.</param>
-        /// <param name="maxVertexDataRead">the maximum amount of data read in
+        /// <param name="maxVertexDataRead">The maximum amount of data read in
         /// a single vertex, in bytes.</param>
-        /// <param name="minVertexDataRead">the minimum amount of data read in
+        /// <param name="minVertexDataRead">The minimum amount of data read in
         /// a single vertex, in bytes.</param>
-        /// <param name="readFailureCount">the number of read failures in this
+        /// <param name="readFailureCount">The number of read failures in this
         /// stage.</param>
-        /// <param name="revocationCount">the number of vertices that were
+        /// <param name="revocationCount">The number of vertices that were
         /// revoked during this stage.</param>
-        /// <param name="runningCount">the number of currently running vertices
+        /// <param name="runningCount">The number of currently running vertices
         /// in this stage.</param>
-        /// <param name="scheduledCount">the number of currently scheduled
-        /// vertices in this stage</param>
-        /// <param name="stageName">the name of this stage in job
+        /// <param name="scheduledCount">The number of currently scheduled
+        /// vertices in this stage.</param>
+        /// <param name="stageName">The name of this stage in job
         /// execution.</param>
-        /// <param name="succeededCount">the number of vertices that succeeded
+        /// <param name="succeededCount">The number of vertices that succeeded
         /// in this stage.</param>
-        /// <param name="tempDataWritten">the amount of temporary data written,
+        /// <param name="tempDataWritten">The amount of temporary data written,
         /// in bytes.</param>
-        /// <param name="totalCount">the total vertex count for this
+        /// <param name="totalCount">The total vertex count for this
         /// stage.</param>
-        /// <param name="totalFailedTime">the amount of time that failed
+        /// <param name="totalFailedTime">The amount of time that failed
         /// vertices took up in this stage.</param>
-        /// <param name="totalProgress">the current progress of this stage, as
+        /// <param name="totalProgress">The current progress of this stage, as
         /// a percentage.</param>
-        /// <param name="totalSucceededTime">the amount of time all successful
+        /// <param name="totalSucceededTime">The amount of time all successful
         /// vertices took in this stage.</param>
-        /// <param name="totalPeakMemUsage">the sum of the peak memory usage of
+        /// <param name="totalPeakMemUsage">The sum of the peak memory usage of
         /// all the vertices in the stage, in bytes.</param>
-        /// <param name="totalExecutionTime">the sum of the total execution
+        /// <param name="totalExecutionTime">The sum of the total execution
         /// time of all the vertices in the stage.</param>
         /// <param name="maxDataReadVertex">the vertex with the maximum amount
         /// of data read.</param>
@@ -78,19 +78,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// execution time.</param>
         /// <param name="maxPeakMemUsageVertex">the vertex with the maximum
         /// peak memory usage.</param>
-        /// <param name="estimatedVertexCpuCoreCount">the estimated vertex CPU
+        /// <param name="estimatedVertexCpuCoreCount">The estimated vertex CPU
         /// core count.</param>
-        /// <param name="estimatedVertexPeakCpuCoreCount">the estimated vertex
+        /// <param name="estimatedVertexPeakCpuCoreCount">The estimated vertex
         /// peak CPU core count.</param>
-        /// <param name="estimatedVertexMemSize">the estimated vertex memory
+        /// <param name="estimatedVertexMemSize">The estimated vertex memory
         /// size, in bytes.</param>
-        /// <param name="allocatedContainerCpuCoreCount">the statistics
+        /// <param name="allocatedContainerCpuCoreCount">The statistics
         /// information for the allocated container CPU core count.</param>
-        /// <param name="allocatedContainerMemSize">the statistics information
+        /// <param name="allocatedContainerMemSize">The statistics information
         /// for the allocated container memory size.</param>
-        /// <param name="usedVertexCpuCoreCount">the statistics information for
+        /// <param name="usedVertexCpuCoreCount">The statistics information for
         /// the used vertex CPU core count.</param>
-        /// <param name="usedVertexPeakMemSize">the statistics information for
+        /// <param name="usedVertexPeakMemSize">The statistics information for
         /// the used vertex peak memory size.</param>
         public JobStatisticsVertexStage(long? dataRead = default(long?), long? dataReadCrossPod = default(long?), long? dataReadIntraPod = default(long?), long? dataToRead = default(long?), long? dataWritten = default(long?), int? duplicateDiscardCount = default(int?), int? failedCount = default(int?), long? maxVertexDataRead = default(long?), long? minVertexDataRead = default(long?), int? readFailureCount = default(int?), int? revocationCount = default(int?), int? runningCount = default(int?), int? scheduledCount = default(int?), string stageName = default(string), int? succeededCount = default(int?), long? tempDataWritten = default(long?), int? totalCount = default(int?), System.TimeSpan? totalFailedTime = default(System.TimeSpan?), int? totalProgress = default(int?), System.TimeSpan? totalSucceededTime = default(System.TimeSpan?), long? totalPeakMemUsage = default(long?), System.TimeSpan? totalExecutionTime = default(System.TimeSpan?), JobStatisticsVertex maxDataReadVertex = default(JobStatisticsVertex), JobStatisticsVertex maxExecutionTimeVertex = default(JobStatisticsVertex), JobStatisticsVertex maxPeakMemUsageVertex = default(JobStatisticsVertex), int? estimatedVertexCpuCoreCount = default(int?), int? estimatedVertexPeakCpuCoreCount = default(int?), long? estimatedVertexMemSize = default(long?), ResourceUsageStatistics allocatedContainerCpuCoreCount = default(ResourceUsageStatistics), ResourceUsageStatistics allocatedContainerMemSize = default(ResourceUsageStatistics), ResourceUsageStatistics usedVertexCpuCoreCount = default(ResourceUsageStatistics), ResourceUsageStatistics usedVertexPeakMemSize = default(ResourceUsageStatistics))
         {
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? RunningCount { get; private set; }
 
         /// <summary>
-        /// Gets the number of currently scheduled vertices in this stage
+        /// Gets the number of currently scheduled vertices in this stage.
         /// </summary>
         [JsonProperty(PropertyName = "scheduledCount")]
         public int? ScheduledCount { get; private set; }

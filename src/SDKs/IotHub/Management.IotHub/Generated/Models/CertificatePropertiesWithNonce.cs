@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// time.</param>
         /// <param name="verificationCode">The certificate's verification code
         /// that will be used for proof of possession.</param>
-        public CertificatePropertiesWithNonce(string subject = default(string), System.DateTime? expiry = default(System.DateTime?), string thumbprint = default(string), bool? isVerified = default(bool?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string verificationCode = default(string))
+        /// <param name="certificate">The certificate content</param>
+        public CertificatePropertiesWithNonce(string subject = default(string), System.DateTime? expiry = default(System.DateTime?), string thumbprint = default(string), bool? isVerified = default(bool?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string verificationCode = default(string), string certificate = default(string))
         {
             Subject = subject;
             Expiry = expiry;
@@ -55,6 +56,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
             Created = created;
             Updated = updated;
             VerificationCode = verificationCode;
+            Certificate = certificate;
             CustomInit();
         }
 
@@ -108,6 +110,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "verificationCode")]
         public string VerificationCode { get; private set; }
+
+        /// <summary>
+        /// Gets the certificate content
+        /// </summary>
+        [JsonProperty(PropertyName = "certificate")]
+        public string Certificate { get; private set; }
 
     }
 }

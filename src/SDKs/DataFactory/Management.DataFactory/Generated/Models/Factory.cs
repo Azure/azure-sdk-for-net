@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="type">The resource type.</param>
         /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
+        /// <param name="eTag">Etag identifies change in the resource.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="identity">Managed service identity of the
@@ -48,14 +49,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="createTime">Time the factory was created in ISO8601
         /// format.</param>
         /// <param name="version">Version of the factory.</param>
-        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string))
-            : base(id, name, type, location, tags)
+        /// <param name="repoConfiguration">Git repo information of the
+        /// factory.</param>
+        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string), FactoryRepoConfiguration repoConfiguration = default(FactoryRepoConfiguration))
+            : base(id, name, type, location, tags, eTag)
         {
             AdditionalProperties = additionalProperties;
             Identity = identity;
             ProvisioningState = provisioningState;
             CreateTime = createTime;
             Version = version;
+            RepoConfiguration = repoConfiguration;
             CustomInit();
         }
 
@@ -95,5 +99,24 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; private set; }
 
+        /// <summary>
+        /// Gets or sets git repo information of the factory.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.repoConfiguration")]
+        public FactoryRepoConfiguration RepoConfiguration { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RepoConfiguration != null)
+            {
+                RepoConfiguration.Validate();
+            }
+        }
     }
 }

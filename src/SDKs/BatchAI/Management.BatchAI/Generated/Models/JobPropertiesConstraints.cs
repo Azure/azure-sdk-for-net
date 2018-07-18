@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the JobPropertiesConstraints class.
         /// </summary>
-        /// <param name="maxWallClockTime">Max time the job can run.</param>
+        /// <param name="maxWallClockTime">Max wall clock time.</param>
         public JobPropertiesConstraints(System.TimeSpan? maxWallClockTime = default(System.TimeSpan?))
         {
             MaxWallClockTime = maxWallClockTime;
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets max time the job can run.
+        /// Gets or sets max wall clock time.
         /// </summary>
         /// <remarks>
-        /// Default Value = 1 week.
+        /// Max time the job can run. Default value: 1 week.
         /// </remarks>
         [JsonProperty(PropertyName = "maxWallClockTime")]
         public System.TimeSpan? MaxWallClockTime { get; set; }

@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// id.</param>
         /// <param name="providerSpecificDetails">The provider specific input
         /// to update replication protected item.</param>
-        public UpdateReplicationProtectedItemInputProperties(string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string enableRdpOnTargetOption = default(string), IList<VMNicInputDetails> vmNics = default(IList<VMNicInputDetails>), LicenseType? licenseType = default(LicenseType?), string recoveryAvailabilitySetId = default(string), UpdateReplicationProtectedItemProviderInput providerSpecificDetails = default(UpdateReplicationProtectedItemProviderInput))
+        public UpdateReplicationProtectedItemInputProperties(string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string enableRdpOnTargetOption = default(string), IList<VMNicInputDetails> vmNics = default(IList<VMNicInputDetails>), string licenseType = default(string), string recoveryAvailabilitySetId = default(string), UpdateReplicationProtectedItemProviderInput providerSpecificDetails = default(UpdateReplicationProtectedItemProviderInput))
         {
             RecoveryAzureVMName = recoveryAzureVMName;
             RecoveryAzureVMSize = recoveryAzureVMSize;
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'NoLicenseType', 'WindowsServer'
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]
-        public LicenseType? LicenseType { get; set; }
+        public string LicenseType { get; set; }
 
         /// <summary>
         /// Gets or sets the target availability set id.

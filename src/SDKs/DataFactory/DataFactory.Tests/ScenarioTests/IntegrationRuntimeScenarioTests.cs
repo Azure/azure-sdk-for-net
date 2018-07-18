@@ -155,7 +155,7 @@ namespace DataFactory.Tests.ScenarioTests
                         NodeSize = "Standard_D1_v2",
                         MaxParallelExecutionsPerNode = 1,
                         NumberOfNodes = 1,
-                        Location = "eastUS"
+                        Location = "WestUS"
                     },
                     SsisProperties = new IntegrationRuntimeSsisProperties
                     {

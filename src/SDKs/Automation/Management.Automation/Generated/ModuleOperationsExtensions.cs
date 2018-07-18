@@ -28,15 +28,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The module name.
             /// </param>
-            public static void Delete(this IModuleOperations operations, string automationAccountName, string moduleName)
+            public static void Delete(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName)
             {
-                operations.DeleteAsync(automationAccountName, moduleName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, automationAccountName, moduleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,8 +49,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The module name.
@@ -55,9 +61,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IModuleOperations operations, string automationAccountName, string moduleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(automationAccountName, moduleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, moduleName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -67,15 +73,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The module name.
             /// </param>
-            public static Module Get(this IModuleOperations operations, string automationAccountName, string moduleName)
+            public static Module Get(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName)
             {
-                return operations.GetAsync(automationAccountName, moduleName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, moduleName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,8 +94,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The module name.
@@ -94,9 +106,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Module> GetAsync(this IModuleOperations operations, string automationAccountName, string moduleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Module> GetAsync(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, moduleName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, moduleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -109,8 +121,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The name of module.
@@ -118,9 +133,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The create or update parameters for module.
             /// </param>
-            public static Module CreateOrUpdate(this IModuleOperations operations, string automationAccountName, string moduleName, ModuleCreateOrUpdateParameters parameters)
+            public static Module CreateOrUpdate(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName, ModuleCreateOrUpdateParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(automationAccountName, moduleName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, automationAccountName, moduleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,8 +145,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The name of module.
@@ -142,9 +160,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Module> CreateOrUpdateAsync(this IModuleOperations operations, string automationAccountName, string moduleName, ModuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Module> CreateOrUpdateAsync(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName, ModuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(automationAccountName, moduleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, moduleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -157,8 +175,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The name of module.
@@ -166,9 +187,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The update parameters for module.
             /// </param>
-            public static Module Update(this IModuleOperations operations, string automationAccountName, string moduleName, ModuleUpdateParameters parameters)
+            public static Module Update(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName, ModuleUpdateParameters parameters)
             {
-                return operations.UpdateAsync(automationAccountName, moduleName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, automationAccountName, moduleName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -178,8 +199,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='moduleName'>
             /// The name of module.
@@ -190,9 +214,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Module> UpdateAsync(this IModuleOperations operations, string automationAccountName, string moduleName, ModuleUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Module> UpdateAsync(this IModuleOperations operations, string resourceGroupName, string automationAccountName, string moduleName, ModuleUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(automationAccountName, moduleName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, moduleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -205,12 +229,15 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            public static IPage<Module> ListByAutomationAccount(this IModuleOperations operations, string automationAccountName)
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            public static IPage<Module> ListByAutomationAccount(this IModuleOperations operations, string resourceGroupName, string automationAccountName)
             {
-                return operations.ListByAutomationAccountAsync(automationAccountName).GetAwaiter().GetResult();
+                return operations.ListByAutomationAccountAsync(resourceGroupName, automationAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -220,15 +247,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Module>> ListByAutomationAccountAsync(this IModuleOperations operations, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Module>> ListByAutomationAccountAsync(this IModuleOperations operations, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(automationAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

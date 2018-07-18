@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code below this line -->
+
+    <PropertyGroup>
+        <PackageId>Microsoft.AzureStack.Management.Fabric.Admin</PackageId>
+        <Description>Provides developers with libraries for the fabric admin under AzureStack to manage fabric infrastructure.</Description>
+        <VersionPrefix>0.2.0-preview</VersionPrefix>
+        <AssemblyName>Microsoft.AzureStack.Management.Fabric.Admin</AssemblyName>
+        <PackageTags>Microsoft Azure Stack;Fabric;REST HTTP client;azureostackfficial;netcore451511</PackageTags>
+        <PackageReleaseNotes>
+            <![CDATA[
+                Preview release of the AzureStack Fabric administrator SDK which allows administrators to view and manage infrastructure components.   
+                1) Stop, Start and Shutdown of scale unit nodes. 
+                2) Drain and Resume of scale unit nodes for FRU related activities. 
+                3) Repair of scale unit nodes 
+                4) Restart of Infrastructure role 
+                5) Stop, Start and Shutdown of Infrastructure role instances 
+                6) Create new IpPools 
+                    Note: Once created an IpPool cannot be removed without a redeployment
+            ]]>
+        </PackageReleaseNotes>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    </PropertyGroup>
+
+    <!-- Please do not move/edit code below this line -->
+    <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+    <!-- Please do not move/edit code above this line -->
+</Project>

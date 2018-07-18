@@ -21,6 +21,7 @@ namespace Management.HDInsight.Tests
     using System.Net;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
+    [Collection("ScenarioTests")]
     public class CapabilitiesTests
     {
         [Fact]

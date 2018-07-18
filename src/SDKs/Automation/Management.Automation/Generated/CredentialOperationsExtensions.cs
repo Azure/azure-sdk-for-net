@@ -28,15 +28,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
             /// </param>
-            public static void Delete(this ICredentialOperations operations, string automationAccountName, string credentialName)
+            public static void Delete(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName)
             {
-                operations.DeleteAsync(automationAccountName, credentialName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, automationAccountName, credentialName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -46,8 +49,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
@@ -55,9 +61,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ICredentialOperations operations, string automationAccountName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(automationAccountName, credentialName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, automationAccountName, credentialName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -67,15 +73,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
             /// </param>
-            public static Credential Get(this ICredentialOperations operations, string automationAccountName, string credentialName)
+            public static Credential Get(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName)
             {
-                return operations.GetAsync(automationAccountName, credentialName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, automationAccountName, credentialName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -85,8 +94,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
@@ -94,9 +106,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Credential> GetAsync(this ICredentialOperations operations, string automationAccountName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Credential> GetAsync(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(automationAccountName, credentialName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, automationAccountName, credentialName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -109,8 +121,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the create or update credential operation.
@@ -118,9 +133,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The parameters supplied to the create or update credential operation.
             /// </param>
-            public static Credential CreateOrUpdate(this ICredentialOperations operations, string automationAccountName, string credentialName, CredentialCreateOrUpdateParameters parameters)
+            public static Credential CreateOrUpdate(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName, CredentialCreateOrUpdateParameters parameters)
             {
-                return operations.CreateOrUpdateAsync(automationAccountName, credentialName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, automationAccountName, credentialName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,8 +145,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the create or update credential operation.
@@ -142,9 +160,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Credential> CreateOrUpdateAsync(this ICredentialOperations operations, string automationAccountName, string credentialName, CredentialCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Credential> CreateOrUpdateAsync(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName, CredentialCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(automationAccountName, credentialName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, credentialName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -157,8 +175,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the Update credential operation.
@@ -166,9 +187,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='parameters'>
             /// The parameters supplied to the Update credential operation.
             /// </param>
-            public static Credential Update(this ICredentialOperations operations, string automationAccountName, string credentialName, CredentialUpdateParameters parameters)
+            public static Credential Update(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName, CredentialUpdateParameters parameters)
             {
-                return operations.UpdateAsync(automationAccountName, credentialName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, automationAccountName, credentialName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -178,8 +199,11 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the Update credential operation.
@@ -190,9 +214,9 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Credential> UpdateAsync(this ICredentialOperations operations, string automationAccountName, string credentialName, CredentialUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Credential> UpdateAsync(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, string credentialName, CredentialUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(automationAccountName, credentialName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, automationAccountName, credentialName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -205,12 +229,15 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
             /// </param>
-            public static IPage<Credential> ListByAutomationAccount(this ICredentialOperations operations, string automationAccountName)
+            /// <param name='automationAccountName'>
+            /// The name of the automation account.
+            /// </param>
+            public static IPage<Credential> ListByAutomationAccount(this ICredentialOperations operations, string resourceGroupName, string automationAccountName)
             {
-                return operations.ListByAutomationAccountAsync(automationAccountName).GetAwaiter().GetResult();
+                return operations.ListByAutomationAccountAsync(resourceGroupName, automationAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -220,15 +247,18 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of an Azure Resource group.
+            /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Credential>> ListByAutomationAccountAsync(this ICredentialOperations operations, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Credential>> ListByAutomationAccountAsync(this ICredentialOperations operations, string resourceGroupName, string automationAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(automationAccountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByAutomationAccountWithHttpMessagesAsync(resourceGroupName, automationAccountName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
