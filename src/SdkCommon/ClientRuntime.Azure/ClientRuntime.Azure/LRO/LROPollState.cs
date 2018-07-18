@@ -133,19 +133,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             return deserializedData;
         }
 
-        internal string GetProvisioningState()
-        {
-            string provisionState = string.Empty;
-            if (this.RawBody != null &&
-                   this.RawBody["properties"] != null &&
-                   this.RawBody["properties"]["provisioningState"] != null)
-            {
-                provisionState = (string)this.RawBody["properties"]["provisioningState"];
-            }
-
-            return provisionState;
-        }
-
         /// <summary>
         /// Gets a resource from the specified URL.
         /// </summary>
