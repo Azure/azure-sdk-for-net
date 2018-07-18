@@ -2,6 +2,8 @@
 
 ## Current version
 
+## Version 1.0.0
+
 ###  Feature Additions
 
 * Added support for sharing self-hosted integration runtime across data factories and subscriptions
