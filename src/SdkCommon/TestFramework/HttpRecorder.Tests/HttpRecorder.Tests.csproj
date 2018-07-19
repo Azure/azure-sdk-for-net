@@ -27,5 +27,8 @@
     <None Update="SampleData\BinaryData\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>  
+  <ItemGroup>
+    <Folder Include="MockResponse\" />
   </ItemGroup>
 </Project>
