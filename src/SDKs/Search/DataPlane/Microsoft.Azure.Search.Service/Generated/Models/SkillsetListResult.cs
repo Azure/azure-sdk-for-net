@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Response from a List skillset request. If successful, it includes the
+    /// Response from a list Skillset request. If successful, it includes the
     /// full definitions of all skillsets.
     /// </summary>
     public partial class SkillsetListResult

@@ -15,7 +15,10 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// output field mapping for a skill.
+    /// Output field mapping for a skill.
+    /// <see
+    /// href="https://docs.microsoft.com/rest/api/searchservice/naming-rules"
+    /// />
     /// </summary>
     public partial class OutputFieldMappingEntry
     {
@@ -30,9 +33,11 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the OutputFieldMappingEntry class.
         /// </summary>
-        /// <param name="name">The name of the output.</param>
-        /// <param name="targetName">The target name of the output.</param>
-        public OutputFieldMappingEntry(string name, string targetName)
+        /// <param name="name">The name of the output defined by the
+        /// skill.</param>
+        /// <param name="targetName">The target name of the output. It is
+        /// optional and default to name.</param>
+        public OutputFieldMappingEntry(string name, string targetName = default(string))
         {
             Name = name;
             TargetName = targetName;
@@ -45,13 +50,14 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the output.
+        /// Gets or sets the name of the output defined by the skill.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the target name of the output.
+        /// Gets or sets the target name of the output. It is optional and
+        /// default to name.
         /// </summary>
         [JsonProperty(PropertyName = "targetName")]
         public string TargetName { get; set; }
@@ -67,10 +73,6 @@ namespace Microsoft.Azure.Search.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (TargetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetName");
             }
         }
     }

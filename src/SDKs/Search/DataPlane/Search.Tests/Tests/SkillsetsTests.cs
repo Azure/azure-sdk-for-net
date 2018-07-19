@@ -37,6 +37,22 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionWithDefaultSettings()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithOcrDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithImageAnalysisDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithKeyPhraseExtractionDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithMergeDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithNamedEntityRecognitionDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithSentimentDefaultSettings());
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithSplitDefaultSettings());
+            });
+        }
+
+        [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionOcrHandwritingSentiment()
         {
             Run(() =>
@@ -85,7 +101,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
                 CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(null, null));
-                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm.Printed, new List<NamedEntityCategory?> { NamedEntityCategory.Location, NamedEntityCategory.Organization, NamedEntityCategory.Person } ));
+                CreateAndValidateSkillset(searchClient, CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm.Printed, new List<NamedEntityCategory> { NamedEntityCategory.Location, NamedEntityCategory.Organization, NamedEntityCategory.Person } ));
             });
         }
 
@@ -235,6 +251,54 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        public static Skillset CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm? algorithm, List<NamedEntityCategory> categories)
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
+                new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
+            };
+
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
+            {
+                TextExtractionAlgorithm = algorithm,
+                DefaultLanguageCode = "en"
+            });
+
+            List<InputFieldMappingEntry> inputs1 = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/mytext"
+                }
+            };
+
+            List<OutputFieldMappingEntry> outputs1 = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "entities",
+                    TargetName = "myEntities"
+                }
+            };
+
+            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs1, outputs1)
+            {
+                Categories = categories,
+                DefaultLanguageCode = "en"
+            });
+
+            return new Skillset("testskillset", "Skillset for testing", skills);
+        }
+
         private void CreateAndGetSkillset(SearchServiceClient searchClient, Skillset expectedSkillset)
         {
             try
@@ -249,11 +313,199 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
+        private static Skillset CreateSkillsetWithOcrDefaultSettings()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
+                new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
+            };
+
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs));
+
+            return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithImageAnalysisDefaultSettings()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
+                new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry { Name = "description", TargetName = "mydescription" }
+            };
+
+            skills.Add(new ImageAnalysisSkill("Tested image analysis skill", RootPathString, inputs, outputs));
+
+            return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithKeyPhraseExtractionDefaultSettings()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/myText"
+                }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "keyPhrases",
+                    TargetName = "myKeyPhrases"
+                }
+            };
+
+            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", RootPathString, inputs, outputs));
+
+            return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithMergeDefaultSettings()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/text"
+                },
+                new InputFieldMappingEntry
+                {
+                    Name = "itemsToInsert",
+                    Source = "/document/textitems"
+                },
+                new InputFieldMappingEntry
+                {
+                    Name = "offsets",
+                    Source = "/document/offsets"
+                }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "mergedText",
+                    TargetName = "myMergedText"
+                }
+            };
+
+            skills.Add(new MergeSkill("Tested Merged Text skill", RootPathString, inputs, outputs));
+
+            return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithNamedEntityRecognitionDefaultSettings()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/mytext"
+                }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "entities",
+                    TargetName = "myEntities"
+                }
+            };
+
+            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, inputs, outputs));
+
+            return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithSentimentDefaultSettings()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/mytext"
+                }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "score",
+                    TargetName = "mySentiment"
+                }
+            };
+
+            skills.Add(new SentimentSkill("Tested Sentiment skill", RootPathString, inputs, outputs));
+
+            return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
+        }
+
+        private static Skillset CreateSkillsetWithSplitDefaultSettings()
+        {
+            List<Skill> skills = new List<Skill>();
+
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/mytext"
+                }
+            };
+
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "textItems",
+                    TargetName = "myTextItems"
+                }
+            };
+
+            skills.Add(new SplitSkill("Tested Split skill", RootPathString, inputs, outputs)
+            {
+                TextSplitMode = TextSplitMode.Pages
+            });
+
+            return new Skillset(SearchTestUtilities.GenerateName(), description: "Skillset for testing default configuration", skills: skills);
+        }
+
         private static Skillset CreateTestOcrSkillset(int repeat, TextExtractionAlgorithm algorithm, string name = null, bool shouldDetectOrientation = false)
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
                 new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
@@ -261,12 +513,12 @@ namespace Microsoft.Azure.Search.Tests
 
             for (int i = 0; i < repeat; i++)
             {
-                List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+                List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
                 {
                     new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" + i }
                 };
 
-                skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
+                skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
                 {
                     TextExtractionAlgorithm = algorithm,
                     ShouldDetectOrientation = shouldDetectOrientation,
@@ -299,25 +551,25 @@ namespace Microsoft.Azure.Search.Tests
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
                 new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
             };
 
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = ocrLanguageCode,
 
             });
 
-            List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs1 = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry
                 {
@@ -326,7 +578,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            List<OutputFieldMappingEntry> _outputs1 = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs1 = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry
                 {
@@ -335,7 +587,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", RootPathString, _inputs1, _outputs1)
+            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", RootPathString, inputs1, outputs1)
             {
                 DefaultLanguageCode = keyPhraseLanguageCode,
 
@@ -348,25 +600,25 @@ namespace Microsoft.Azure.Search.Tests
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
                 new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
             };
 
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Handwritten,
                 DefaultLanguageCode = ocrLanguageCode,
 
             });
 
-            List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs1 = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry
                 {
@@ -375,7 +627,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            List<OutputFieldMappingEntry> _outputs1 = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs1 = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry
                 {
@@ -384,7 +636,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SentimentSkill("Tested Sentiment skill", RootPathString, _inputs1, _outputs1)
+            skills.Add(new SentimentSkill("Tested Sentiment skill", RootPathString, inputs1, outputs1)
             {
                 DefaultLanguageCode = sentimentLanguageCode,
 
@@ -397,20 +649,20 @@ namespace Microsoft.Azure.Search.Tests
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
                 new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
             };
 
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry { Name = "description", TargetName = "mydescription" }
             };
 
-            skills.Add(new ImageAnalysisSkill("Tested image analysis skill", RootPathString, _inputs, _outputs)
+            skills.Add(new ImageAnalysisSkill("Tested image analysis skill", RootPathString, inputs, outputs)
             {
-                VisualFeatures = new List<VisualFeature?>
+                VisualFeatures = new List<VisualFeature>
                 {
                     VisualFeature.Categories,
                     VisualFeature.Color,
@@ -419,7 +671,7 @@ namespace Microsoft.Azure.Search.Tests
                     VisualFeature.ImageType,
                     VisualFeature.Tags
                 },
-                Details = new List<ImageDetail?>
+                Details = new List<ImageDetail>
                 {
                     ImageDetail.Celebrities,
                     ImageDetail.Landmarks
@@ -427,7 +679,7 @@ namespace Microsoft.Azure.Search.Tests
                 DefaultLanguageCode = "en"
             });
 
-            List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs1 = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry
                 {
@@ -436,7 +688,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            List<OutputFieldMappingEntry> _outputs1 = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs1 = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry
                 {
@@ -445,7 +697,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", RootPathString, _inputs1, _outputs1)
+            skills.Add(new KeyPhraseExtractionSkill("Tested Key Phrase skill", RootPathString, inputs1, outputs1)
             {
                 DefaultLanguageCode = "en"
             });
@@ -457,7 +709,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry
                 {
@@ -466,7 +718,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry
                 {
@@ -475,7 +727,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new LanguageDetectionSkill("Tested Language Detection skill", RootPathString, _inputs, _outputs));
+            skills.Add(new LanguageDetectionSkill("Tested Language Detection skill", RootPathString, inputs, outputs));
 
             return new Skillset("testskillset3", "Skillset for testing", skills);
         }
@@ -484,7 +736,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry
                 {
@@ -503,7 +755,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry
                 {
@@ -512,81 +764,37 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new MergeSkill("Tested Merged Text skill", RootPathString, _inputs, _outputs));
+            skills.Add(new MergeSkill("Tested Merged Text skill", RootPathString, inputs, outputs)
+            {
+                InsertPreTag = "__",
+                InsertPostTag = "__e"
+            });
 
             return new Skillset("testskillset4", "Skillset for testing", skills);
-        }
-
-        private static Skillset CreateTestSkillsetOcrNamedEntity(TextExtractionAlgorithm? algorithm, List<NamedEntityCategory?> categories)
-        {
-            List<Skill> skills = new List<Skill>();
-
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
-            {
-                new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
-                new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
-            };
-
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
-            {
-                new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
-            };
-
-            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
-            {
-                TextExtractionAlgorithm = algorithm,
-                DefaultLanguageCode = "en"
-            });
-
-            List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
-            {
-                new InputFieldMappingEntry
-                {
-                    Name = "text",
-                    Source = "/document/mytext"
-                }
-            };
-
-            List<OutputFieldMappingEntry> _outputs1 = new List<OutputFieldMappingEntry>()
-            {
-                new OutputFieldMappingEntry
-                {
-                    Name = "entities",
-                    TargetName = "myEntities"
-                }
-            };
-
-            skills.Add(new NamedEntityRecognitionSkill("Tested Named Entity Recognition skill", RootPathString, _inputs1, _outputs1)
-            {
-                Categories = categories,
-                DefaultLanguageCode = "en"
-            });
-
-            return new Skillset("testskillset", "Skillset for testing", skills);
         }
 
         private static Skillset CreateTestSkillsetOcrShaper()
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
                 new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
             };
 
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = "en"
             });
 
-            List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs1 = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry
                 {
@@ -595,7 +803,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            List<OutputFieldMappingEntry> _outputs1 = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs1 = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry
                 {
@@ -604,7 +812,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new ShaperSkill("Tested Shaper skill", RootPathString, _inputs1, _outputs1));
+            skills.Add(new ShaperSkill("Tested Shaper skill", RootPathString, inputs1, outputs1));
 
             return new Skillset("testskillset", "Skillset for testing", skills);
         }
@@ -613,24 +821,24 @@ namespace Microsoft.Azure.Search.Tests
         {
             List<Skill> skills = new List<Skill>();
 
-            List<InputFieldMappingEntry> _inputs = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry { Name = "url", Source = "/document/url" },
                 new InputFieldMappingEntry { Name = "queryString", Source = "/document/queryString" }
             };
 
-            List<OutputFieldMappingEntry> _outputs = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry { Name = "text", TargetName = "mytext" }
             };
 
-            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, _inputs, _outputs)
+            skills.Add(new OcrSkill("Tested OCR skill", RootPathString, inputs, outputs)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
                 DefaultLanguageCode = ocrLanguageCode
             });
 
-            List<InputFieldMappingEntry> _inputs1 = new List<InputFieldMappingEntry>()
+            List<InputFieldMappingEntry> inputs1 = new List<InputFieldMappingEntry>()
             {
                 new InputFieldMappingEntry
                 {
@@ -639,7 +847,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            List<OutputFieldMappingEntry> _outputs1 = new List<OutputFieldMappingEntry>()
+            List<OutputFieldMappingEntry> outputs1 = new List<OutputFieldMappingEntry>()
             {
                 new OutputFieldMappingEntry
                 {
@@ -648,7 +856,7 @@ namespace Microsoft.Azure.Search.Tests
                 }
             };
 
-            skills.Add(new SplitSkill("Tested Split skill", RootPathString, _inputs1, _outputs1)
+            skills.Add(new SplitSkill("Tested Split skill", RootPathString, inputs1, outputs1)
             {
                 TextSplitMode = textSplitMode,
                 DefaultLanguageCode = splitLanguageCode

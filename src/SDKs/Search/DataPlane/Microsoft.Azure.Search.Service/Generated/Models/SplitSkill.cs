@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// The skill to split text.
+    /// A skill to split a string into chunks of text.
     /// <see
     /// href="https://docs.microsoft.com/azure/search/cognitive-search-skill-textsplit"
     /// />
@@ -37,15 +37,20 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
-        /// <param name="context">The context of the skill.</param>
-        /// <param name="inputs">The inputs of the skill.</param>
-        /// <param name="outputs">The outputs of the skill.</param>
+        /// <param name="context">Represents the level at which operations take
+        /// place, such as the document root or document content (for example,
+        /// /document or /document/content).</param>
+        /// <param name="inputs">Inputs of the skills could be a column in the
+        /// source data set, or the output of an upstream skill.</param>
+        /// <param name="outputs">The output of a skill is either a field in an
+        /// Azure Search index, or a value that can be consumed as an input by
+        /// another skill.</param>
         /// <param name="defaultLanguageCode">A value indicating which language
         /// code to use. Default is en.</param>
         /// <param name="textSplitMode">A value indicating which split mode to
         /// perform. Possible values include: 'pages', 'sentences'</param>
-        /// <param name="maximumPageLength">The desired maximum page
-        /// length.</param>
+        /// <param name="maximumPageLength">The desired maximum page length.
+        /// Default is 10000.</param>
         public SplitSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, SplitSkillLanguage defaultLanguageCode = default(SplitSkillLanguage), TextSplitMode? textSplitMode = default(TextSplitMode?), int? maximumPageLength = default(int?))
             : base(description, context, inputs, outputs)
         {
@@ -75,7 +80,7 @@ namespace Microsoft.Azure.Search.Models
         public TextSplitMode? TextSplitMode { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired maximum page length.
+        /// Gets or sets the desired maximum page length. Default is 10000.
         /// </summary>
         [JsonProperty(PropertyName = "maximumPageLength")]
         public int? MaximumPageLength { get; set; }

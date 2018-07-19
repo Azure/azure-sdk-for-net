@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Search
     public partial interface ISkillsetsOperations
     {
         /// <summary>
-        /// Retrieves a Cognitive Search skillset in an Azure Search service.
-        /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+        /// Retrieves a cognitive skillset in an Azure Search service.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
         /// </summary>
         /// <param name='skillsetName'>
         /// The name of the skillset to retrieve.
@@ -50,15 +50,15 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<Skillset>> GetWithHttpMessagesAsync(string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Cognitive Search skillset in an Azure Search service.
-        /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+        /// Creates a new cognitive skillset in an Azure Search service.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
         /// </summary>
         /// <param name='skillsetName'>
         /// The name of the skillset to create or update.
         /// </param>
         /// <param name='skillset'>
-        /// The skillset containing one or more Cognitive Search skills to
-        /// create or update in an Azure Search service.
+        /// The skillset containing one or more cognitive skills to create or
+        /// update in an Azure Search service.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -80,8 +80,8 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<Skillset>> CreateOrUpdateWithHttpMessagesAsync(string skillsetName, Skillset skillset, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a Cognitive Search skillset in an Azure Search service.
-        /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+        /// Deletes a cognitive skillset in an Azure Search service.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/delete-skillset" />
         /// </summary>
         /// <param name='skillsetName'>
         /// The name of the skillset to delete.
@@ -103,8 +103,8 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string skillsetName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all Cognitive Search skillsets in an Azure Search service.
-        /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+        /// List all cognitive skillsets in an Azure Search service.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />
         /// </summary>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation
@@ -126,12 +126,12 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<SkillsetListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Cognitive Search skillset in an Azure Search service.
+        /// Creates a new cognitive skillset in an Azure Search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/create-skillset" />
         /// </summary>
         /// <param name='skillset'>
-        /// The skillset containing one or more Cognitive Search skills to
-        /// create in an Azure Search service.
+        /// The skillset containing one or more cognitive skills to create in
+        /// an Azure Search service.
         /// </param>
         /// <param name='searchRequestOptions'>
         /// Additional parameters for the operation

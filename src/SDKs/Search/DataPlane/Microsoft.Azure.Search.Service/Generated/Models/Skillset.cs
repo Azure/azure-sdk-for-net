@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// A list of Cognitive Search skills.
+    /// A list of cognitive skills.
     /// <see
     /// href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob"
     /// />

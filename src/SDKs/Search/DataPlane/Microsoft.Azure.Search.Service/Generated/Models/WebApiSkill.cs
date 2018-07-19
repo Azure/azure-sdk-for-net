@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// The customized Web Api skill.
+    /// A skill that can call a Web API endpoint, allowing you to extend a
+    /// skillset by having it call your custom code.
     /// <see
     /// href="https://docs.microsoft.com/azure/search/cognitive-search-custom-skill-interface"
     /// />
@@ -38,15 +39,22 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
-        /// <param name="context">The context of the skill.</param>
-        /// <param name="inputs">The inputs of the skill.</param>
-        /// <param name="outputs">The outputs of the skill.</param>
-        /// <param name="uri">The url for the Web Api.</param>
+        /// <param name="context">Represents the level at which operations take
+        /// place, such as the document root or document content (for example,
+        /// /document or /document/content).</param>
+        /// <param name="inputs">Inputs of the skills could be a column in the
+        /// source data set, or the output of an upstream skill.</param>
+        /// <param name="outputs">The output of a skill is either a field in an
+        /// Azure Search index, or a value that can be consumed as an input by
+        /// another skill.</param>
+        /// <param name="uri">The url for the Web API.</param>
         /// <param name="httpHeaders">The headers required to make the http
         /// request.</param>
         /// <param name="httpMethod">The method for the http request.</param>
-        /// <param name="timeout">The desired timeout for the request.</param>
-        /// <param name="batchSize">The desired batch size.</param>
+        /// <param name="timeout">The desired timeout for the request. Default
+        /// is 30 seconds.</param>
+        /// <param name="batchSize">The desired batch size which indicates
+        /// number of documents.</param>
         public WebApiSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, System.TimeSpan? timeout = default(System.TimeSpan?), int? batchSize = default(int?))
             : base(description, context, inputs, outputs)
         {
@@ -64,7 +72,7 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the url for the Web Api.
+        /// Gets or sets the url for the Web API.
         /// </summary>
         [JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
@@ -82,13 +90,15 @@ namespace Microsoft.Azure.Search.Models
         public string HttpMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired timeout for the request.
+        /// Gets or sets the desired timeout for the request. Default is 30
+        /// seconds.
         /// </summary>
         [JsonProperty(PropertyName = "timeout")]
         public System.TimeSpan? Timeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired batch size.
+        /// Gets or sets the desired batch size which indicates number of
+        /// documents.
         /// </summary>
         [JsonProperty(PropertyName = "batchSize")]
         public int? BatchSize { get; set; }
