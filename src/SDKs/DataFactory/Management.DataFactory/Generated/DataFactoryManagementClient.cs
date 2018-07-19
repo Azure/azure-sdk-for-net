@@ -394,6 +394,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DependencyReference>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DependencyReference>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyTranslator>("type"));
