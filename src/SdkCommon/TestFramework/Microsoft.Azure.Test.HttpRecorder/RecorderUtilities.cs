@@ -22,8 +22,13 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
         public static bool IsHttpContentBinary(HttpContent content)
         {
+            bool isBinary = false;
             var contentType = content?.Headers?.ContentType?.MediaType;
-            return ((content != null) && binaryMimeRegex.IsMatch(contentType));
+
+            if (contentType != null)
+                isBinary = ( (content != null) && (binaryMimeRegex.IsMatch(contentType)) );
+
+            return isBinary;
         }
 
         public static string SerializeBinary(byte[] content)
