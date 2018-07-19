@@ -10,17 +10,104 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for EndpointMonitorStatus.
     /// </summary>
-    public static class EndpointMonitorStatus
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(EndpointMonitorStatusConverter))]
+    public struct EndpointMonitorStatus : System.IEquatable<EndpointMonitorStatus>
     {
-        public const string CheckingEndpoint = "CheckingEndpoint";
-        public const string Online = "Online";
-        public const string Degraded = "Degraded";
-        public const string Disabled = "Disabled";
-        public const string Inactive = "Inactive";
-        public const string Stopped = "Stopped";
+        private EndpointMonitorStatus(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly EndpointMonitorStatus CheckingEndpoint = "CheckingEndpoint";
+
+        public static readonly EndpointMonitorStatus Online = "Online";
+
+        public static readonly EndpointMonitorStatus Degraded = "Degraded";
+
+        public static readonly EndpointMonitorStatus Disabled = "Disabled";
+
+        public static readonly EndpointMonitorStatus Inactive = "Inactive";
+
+        public static readonly EndpointMonitorStatus Stopped = "Stopped";
+
+
+        /// <summary>
+        /// Underlying value of enum EndpointMonitorStatus
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for EndpointMonitorStatus
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type EndpointMonitorStatus
+        /// </summary>
+        public bool Equals(EndpointMonitorStatus e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to EndpointMonitorStatus
+        /// </summary>
+        public static implicit operator EndpointMonitorStatus(string value)
+        {
+            return new EndpointMonitorStatus(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert EndpointMonitorStatus to string
+        /// </summary>
+        public static implicit operator string(EndpointMonitorStatus e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum EndpointMonitorStatus
+        /// </summary>
+        public static bool operator == (EndpointMonitorStatus e1, EndpointMonitorStatus e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum EndpointMonitorStatus
+        /// </summary>
+        public static bool operator != (EndpointMonitorStatus e1, EndpointMonitorStatus e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for EndpointMonitorStatus
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is EndpointMonitorStatus && Equals((EndpointMonitorStatus)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode EndpointMonitorStatus
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

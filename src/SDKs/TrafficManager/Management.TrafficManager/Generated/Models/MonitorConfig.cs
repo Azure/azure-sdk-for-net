@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// <param name="customHeaders">List of custom headers.</param>
         /// <param name="expectedStatusCodeRanges">List of expected status code
         /// ranges.</param>
-        public MonitorConfig(string profileMonitorStatus = default(string), string protocol = default(string), long? port = default(long?), string path = default(string), long? intervalInSeconds = default(long?), long? timeoutInSeconds = default(long?), long? toleratedNumberOfFailures = default(long?), IList<MonitorConfigCustomHeadersItem> customHeaders = default(IList<MonitorConfigCustomHeadersItem>), IList<MonitorConfigExpectedStatusCodeRangesItem> expectedStatusCodeRanges = default(IList<MonitorConfigExpectedStatusCodeRangesItem>))
+        public MonitorConfig(ProfileMonitorStatus? profileMonitorStatus = default(ProfileMonitorStatus?), MonitorProtocol? protocol = default(MonitorProtocol?), long? port = default(long?), string path = default(string), long? intervalInSeconds = default(long?), long? timeoutInSeconds = default(long?), long? toleratedNumberOfFailures = default(long?), IList<MonitorConfigCustomHeadersItem> customHeaders = default(IList<MonitorConfigCustomHeadersItem>), IList<MonitorConfigExpectedStatusCodeRangesItem> expectedStatusCodeRanges = default(IList<MonitorConfigExpectedStatusCodeRangesItem>))
         {
             ProfileMonitorStatus = profileMonitorStatus;
             Protocol = protocol;
@@ -81,14 +81,14 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Online', 'Degraded', 'Disabled', 'Inactive'
         /// </summary>
         [JsonProperty(PropertyName = "profileMonitorStatus")]
-        public string ProfileMonitorStatus { get; set; }
+        public ProfileMonitorStatus? ProfileMonitorStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the protocol (HTTP, HTTPS or TCP) used to probe for
         /// endpoint health. Possible values include: 'HTTP', 'HTTPS', 'TCP'
         /// </summary>
         [JsonProperty(PropertyName = "protocol")]
-        public string Protocol { get; set; }
+        public MonitorProtocol? Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets the TCP port used to probe for endpoint health.

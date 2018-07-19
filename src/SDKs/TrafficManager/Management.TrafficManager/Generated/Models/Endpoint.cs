@@ -53,12 +53,12 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Weighted' traffic routing method. Possible values are from 1 to
         /// 1000.</param>
         /// <param name="priority">The priority of this endpoint when using the
-        /// ‘Priority’ traffic routing method. Possible values are from 1 to
+        /// 'Priority' traffic routing method. Possible values are from 1 to
         /// 1000, lower values represent higher priority. This is an optional
         /// parameter.  If specified, it must be specified on all endpoints,
         /// and no two endpoints can share the same priority value.</param>
         /// <param name="endpointLocation">Specifies the location of the
-        /// external or nested endpoints when using the ‘Performance’ traffic
+        /// external or nested endpoints when using the 'Performance' traffic
         /// routing method.</param>
         /// <param name="endpointMonitorStatus">The monitoring status of the
         /// endpoint. Possible values include: 'CheckingEndpoint', 'Online',
@@ -68,11 +68,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// profile to be considered available. Only applicable to endpoint of
         /// type 'NestedEndpoints'.</param>
         /// <param name="geoMapping">The list of countries/regions mapped to
-        /// this endpoint when using the ‘Geographic’ traffic routing method.
+        /// this endpoint when using the 'Geographic' traffic routing method.
         /// Please consult Traffic Manager Geographic documentation for a full
         /// list of accepted values.</param>
+        /// <param name="subnets">The list of subnets, IP addresses, and/or
+        /// address ranges mapped to this endpoint when using the 'Subnet'
+        /// traffic routing method. An empty list will match all ranges not
+        /// covered by other endpoints.</param>
         /// <param name="customHeaders">List of custom headers.</param>
-        public Endpoint(string id = default(string), string name = default(string), string type = default(string), string targetResourceId = default(string), string target = default(string), string endpointStatus = default(string), long? weight = default(long?), long? priority = default(long?), string endpointLocation = default(string), string endpointMonitorStatus = default(string), long? minChildEndpoints = default(long?), IList<string> geoMapping = default(IList<string>), IList<EndpointPropertiesCustomHeadersItem> customHeaders = default(IList<EndpointPropertiesCustomHeadersItem>))
+        public Endpoint(string id = default(string), string name = default(string), string type = default(string), string targetResourceId = default(string), string target = default(string), EndpointStatus? endpointStatus = default(EndpointStatus?), long? weight = default(long?), long? priority = default(long?), string endpointLocation = default(string), EndpointMonitorStatus? endpointMonitorStatus = default(EndpointMonitorStatus?), long? minChildEndpoints = default(long?), IList<string> geoMapping = default(IList<string>), IList<EndpointPropertiesSubnetsItem> subnets = default(IList<EndpointPropertiesSubnetsItem>), IList<EndpointPropertiesCustomHeadersItem> customHeaders = default(IList<EndpointPropertiesCustomHeadersItem>))
             : base(id, name, type)
         {
             TargetResourceId = targetResourceId;
@@ -84,6 +88,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
             EndpointMonitorStatus = endpointMonitorStatus;
             MinChildEndpoints = minChildEndpoints;
             GeoMapping = geoMapping;
+            Subnets = subnets;
             CustomHeaders = customHeaders;
             CustomInit();
         }
@@ -115,7 +120,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpointStatus")]
-        public string EndpointStatus { get; set; }
+        public EndpointStatus? EndpointStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the weight of this endpoint when using the 'Weighted'
@@ -126,7 +131,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
 
         /// <summary>
         /// Gets or sets the priority of this endpoint when using the
-        /// ‘Priority’ traffic routing method. Possible values are from 1 to
+        /// 'Priority' traffic routing method. Possible values are from 1 to
         /// 1000, lower values represent higher priority. This is an optional
         /// parameter.  If specified, it must be specified on all endpoints,
         /// and no two endpoints can share the same priority value.
@@ -136,7 +141,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
 
         /// <summary>
         /// Gets or sets specifies the location of the external or nested
-        /// endpoints when using the ‘Performance’ traffic routing method.
+        /// endpoints when using the 'Performance' traffic routing method.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpointLocation")]
         public string EndpointLocation { get; set; }
@@ -147,7 +152,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Inactive', 'Stopped'
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpointMonitorStatus")]
-        public string EndpointMonitorStatus { get; set; }
+        public EndpointMonitorStatus? EndpointMonitorStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum number of endpoints that must be available
@@ -160,12 +165,21 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
 
         /// <summary>
         /// Gets or sets the list of countries/regions mapped to this endpoint
-        /// when using the ‘Geographic’ traffic routing method. Please consult
+        /// when using the 'Geographic' traffic routing method. Please consult
         /// Traffic Manager Geographic documentation for a full list of
         /// accepted values.
         /// </summary>
         [JsonProperty(PropertyName = "properties.geoMapping")]
         public IList<string> GeoMapping { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of subnets, IP addresses, and/or address
+        /// ranges mapped to this endpoint when using the 'Subnet' traffic
+        /// routing method. An empty list will match all ranges not covered by
+        /// other endpoints.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subnets")]
+        public IList<EndpointPropertiesSubnetsItem> Subnets { get; set; }
 
         /// <summary>
         /// Gets or sets list of custom headers.
