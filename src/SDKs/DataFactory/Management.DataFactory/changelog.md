@@ -2,6 +2,8 @@
 
 ## Current version
 
+###  Feature Additions
+
 ## Version 1.1.0
 
 ###  Feature Additions
