@@ -150,6 +150,53 @@ namespace Compute.Tests
         /// Create Storage Account
         /// Create Network Resources
         /// Create VMScaleSet
+        /// Start VMScaleSetVM
+        /// RunCommand VMScaleSetVM
+        /// Delete VMScaleSetVM
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetVMOperations_RunCommand()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                InitializeCommon(context);
+                instanceId = "0";
+                bool passed = false;
+                try
+                {
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
+                        rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet,
+                        createWithManagedDisks: true);
+
+                    m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
+
+                    RunCommandResult result = m_CrpClient.VirtualMachineScaleSetVMs.RunCommand(rgName, vmScaleSet.Name, instanceId, new RunCommandInput() { CommandId = "ipconfig" });
+                    Assert.NotNull(result);
+                    Assert.NotNull(result.Value);
+                    Assert.True(result.Value.Count > 0);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations for a VMSS VM with managed disks:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VMScaleSet
         /// Get VMScaleSetVM Model View
         /// Create DataDisk
         /// Update VirtualMachineScaleVM to Attach Disk
