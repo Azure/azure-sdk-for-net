@@ -17,28 +17,38 @@
 		<DefaultPathTokenToIgnore>$(IgnorePathTokens) Microsoft.Azure.KeyVault.Samples AzureBatchFileConventions.IntegrationTests Batch.FileStaging.Tests Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests Az.Auth.Tests</DefaultPathTokenToIgnore>
 		<BuildWideDebugTrace Condition=" '$(DebugTrace)' == '' ">false</BuildWideDebugTrace>
 	</PropertyGroup>
+
+	<!-- <PropertyGroup Condition=" '$(Configuration)' == 'Debug' AND '$(DelaySignForInternalsVisible)' == 'true' ">
+		There are certain projects that needs internals visible for test purpose
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>true</DelaySign>
+		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
 	<PropertyGroup>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
 	
-	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>true</DelaySign>
+		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup> -->
+
   <PropertyGroup>
-	<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
-	<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
-	<SignClientConfigDir>$(SignManifestRootDir)\signClientConfig</SignClientConfigDir>
-	<AuthenticodeSign>false</AuthenticodeSign>
+		<SignManifestRootDir>$(BinariesFolder)\signManifest</SignManifestRootDir>
+		<SignServiceDir>$(SignManifestRootDir)\signService</SignServiceDir>
+		<SignClientConfigDir>$(SignManifestRootDir)\signClientConfig</SignClientConfigDir>
+		<AuthenticodeSign>false</AuthenticodeSign>
   </PropertyGroup>
   <PropertyGroup>
-	<PackageRootDir>$(BuiltPackageOutputDir)</PackageRootDir>
-	<UnsignedPackageRootDir>$(PackageRootDir)\unsigned</UnsignedPackageRootDir>
-	<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
+		<PackageRootDir>$(BuiltPackageOutputDir)</PackageRootDir>
+		<UnsignedPackageRootDir>$(PackageRootDir)\unsigned</UnsignedPackageRootDir>
+		<SignedPackageRootDir>$(PackageRootDir)\signed</SignedPackageRootDir>
   </PropertyGroup>
   
   <PropertyGroup>	
-	<BuildNameLabel>DesktopBuild</BuildNameLabel>
+		<BuildNameLabel>DesktopBuild</BuildNameLabel>
   </PropertyGroup>
-
 
 	<PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
 		<DefineConstants>net452;FullNetFx;LEGACY</DefineConstants>
@@ -56,6 +66,12 @@
 		<DefineConstants>netcoreapp11</DefineConstants>
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+		<DefineConstants>netcoreapp20</DefineConstants>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFrameworks)\$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
 
 	<Choose>

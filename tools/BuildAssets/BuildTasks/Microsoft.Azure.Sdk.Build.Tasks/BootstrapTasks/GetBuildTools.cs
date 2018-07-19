@@ -16,10 +16,23 @@ namespace Microsoft.Azure.Build.BootstrapTasks
     /// </summary>
     public class GetBuildTools : Task
     {
-        #region Fields
+
+        #region CONST
+        const string DEFAULT_RAW_URI_Prefix = @"https://raw.githubusercontent.com";
+        const string DEFAULT_FORK = "Azure";
+        const string DEFAULT_BRANCH_NAME = "SdkBuildTools";
+        const string AKAMS_URI = @"http://aka.ms/AzNetSDKBuildTools";
+
         const string COPY_TO_RELATIVEPATH = @"tools\SdkBuildTools\";
         const string COPY_FROM_RELATIVEPATH = @"tools\BuildAssets\";
-        const string DEFAULT_REMOTE_ROOT_DIR = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/SdkBuildTools/";
+        const string DEFAULT_REMOTE_ROOT_DIR = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/";
+        //const string DEFAULT_REMOTE_ROOT_DIR = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/SdkBuildTools/";
+        #endregion
+
+        #region Fields
+        private string _remoteRootDir;
+        private string _remoteBranchName;
+        private string _localBranchRootDir;
 
         private WebClient _webCopier;
         private TaskLogger _buildToolsLogger;
@@ -32,14 +45,104 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         /// <summary>
         /// Sets/Gets Local branch Root Directory
         /// </summary>
+        //[Required]
+        //public string LocalBranchRootDir { get; set; }
+
         [Required]
-        public string LocalBranchRootDir { get; set; }
+        public string LocalBranchRootDir
+        { 
+            get
+            {
+                return _localBranchRootDir;
+            }
+
+            set
+            {
+                _localBranchRootDir = value;
+
+                if (string.IsNullOrEmpty(_localBranchRootDir))
+                {
+                    throw new ApplicationException("Cannot have 'LocalBranchRootDir' null or empty");
+                }
+                else if (!Directory.Exists(_localBranchRootDir))
+                {
+                    throw new DirectoryNotFoundException(string.Format("Specified directory '{0}' is either invalid or does not exists", _localBranchRootDir));
+                }
+                else
+                {
+                    LocalBranchCopyToRootDir = Path.Combine(_localBranchRootDir, COPY_TO_RELATIVEPATH);
+                }
+            }
+        }
+
+        public string RemoteBranchName
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(_remoteBranchName))
+                {
+                    _remoteBranchName = DEFAULT_BRANCH_NAME;
+                }
+
+                return _remoteBranchName;
+            }
+
+            set { _remoteBranchName = value; } }
+
+        public string ForkName { get; set; }
+
+        public bool WhatIf { get; set; }
+
+        public bool OverrideLocal { get; set; }
         #endregion
 
+        #region other properties
         /// <summary>
         /// Remote root directory (e.g. http://github.com/azure/azure-sdk-for-net/<branchName>)
         /// </summary>
-        public string RemoteRootDir { get; set; }
+        public string RemoteRootDir
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_remoteRootDir))
+                {
+                    if (Directory.Exists(LocalBranchRootDir))
+                    {
+                        string localCopyFrom = Path.Combine(LocalBranchRootDir, COPY_FROM_RELATIVEPATH);
+                        if (Directory.Exists(localCopyFrom))
+                        {
+                            if (OverrideLocal == false) //this helps for not copying local buildAssets but rather from remote location (applicable for scenarios running in build tools branch)
+                            {
+                                _remoteRootDir = LocalBranchRootDir;
+                            }
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(_remoteRootDir))
+                    {
+                        Uri remoteUri = GetRemoteUri();
+                        if (remoteUri == null)
+                        {
+                            //_remoteRootDir = Path.Combine(DEFAULT_RAW_URI_Prefix, DEFAULT_FORK, DEFAULT_BRANCH_NAME);
+                            _remoteRootDir = string.Join(Path.AltDirectorySeparatorChar.ToString(), DEFAULT_RAW_URI_Prefix, DEFAULT_FORK, DEFAULT_BRANCH_NAME);
+                        }
+                        else
+                        {
+                            string url = remoteUri.ToString();
+                            if (url.ToLower().Contains("readme.md"))
+                            {
+                                url = url.ToLower().Replace("readme.md", "");
+                                _remoteRootDir = url;
+                            }
+                        }
+                    }
+                }
+
+                return _remoteRootDir;
+            }
+
+            set { _remoteRootDir = value; }
+        }
 
         /// <summary>
         /// Local branch root directory where files need to be copied to
@@ -70,6 +173,8 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         /// Output debug traces during execution of task
         /// </summary>
         public bool DebugTrace { get; set; }
+
+        #endregion
 
         #region Misc external objects
         /// <summary>
@@ -109,6 +214,8 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         #endregion
 
         #region Constrcutor/Init
+
+ 
         public GetBuildTools(string localRootDir, string remoteRootDir)
         {
             LocalBranchRootDir = localRootDir;
@@ -125,31 +232,37 @@ namespace Microsoft.Azure.Build.BootstrapTasks
 
         private void Init()
         {
-            if (string.IsNullOrEmpty(LocalBranchRootDir))
-            {
-                throw new ApplicationException("Cannot have 'LocalBranchRootDir' null or empty");
-            }
-            else if (!Directory.Exists(LocalBranchRootDir))
-            {
-                throw new DirectoryNotFoundException(string.Format("Specified directory '{0}' is either invalid or does not exists", LocalBranchRootDir));
-            }
-            else
-            {
-                LocalBranchCopyToRootDir = Path.Combine(LocalBranchRootDir, COPY_TO_RELATIVEPATH);
-            }
+            //if(string.IsNullOrEmpty(RemoteBranchName))
+            //{
+            //    RemoteBranchName = DEFAULT_BRANCH_NAME;
+            //}
 
-            if (string.IsNullOrEmpty(RemoteRootDir))
-            {
-                string localCopyFrom = Path.Combine(LocalBranchRootDir, COPY_FROM_RELATIVEPATH);
-                if(!Directory.Exists(localCopyFrom))
-                {
-                    RemoteRootDir = DEFAULT_REMOTE_ROOT_DIR;
-                }
-                else
-                {
-                    RemoteRootDir = LocalBranchRootDir;
-                }
-            }
+            //if (string.IsNullOrEmpty(LocalBranchRootDir))
+            //{
+            //    throw new ApplicationException("Cannot have 'LocalBranchRootDir' null or empty");
+            //}
+            //else if (!Directory.Exists(LocalBranchRootDir))
+            //{
+            //    throw new DirectoryNotFoundException(string.Format("Specified directory '{0}' is either invalid or does not exists", LocalBranchRootDir));
+            //}
+            //else
+            //{
+            //    LocalBranchCopyToRootDir = Path.Combine(LocalBranchRootDir, COPY_TO_RELATIVEPATH);
+            //}
+
+            //if (string.IsNullOrEmpty(RemoteRootDir))
+            //{
+            //    string localCopyFrom = Path.Combine(LocalBranchRootDir, COPY_FROM_RELATIVEPATH);
+            //    if(!Directory.Exists(localCopyFrom))
+            //    {
+            //        //RemoteRootDir = DEFAULT_REMOTE_ROOT_DIR;
+            //        RemoteRootDir = Path.Combine(DEFAULT_REMOTE_ROOT_DIR, RemoteBranchName, Path.AltDirectorySeparatorChar.ToString());
+            //    }
+            //    else
+            //    {
+            //        RemoteRootDir = LocalBranchRootDir;
+            //    }
+            //}
 
             if (RemoteRootDir.StartsWith("http"))
             {
@@ -162,8 +275,8 @@ namespace Microsoft.Azure.Build.BootstrapTasks
                 RemoteMetaDataFilePath = Path.Combine(RemoteCopyFromRootDir, @"metaData\FilesToCopy.txt");
             }
 
-            BuildToolsLogger.LogInfo("RemoteCopyFromRootDir '{0}'", RemoteCopyFromRootDir);
-            BuildToolsLogger.LogInfo("LocalBranchCopyToRootDir '{0}'", LocalBranchCopyToRootDir);
+            BuildToolsLogger.LogDebugInfo("RemoteCopyFromRootDir: '{0}'", RemoteCopyFromRootDir);
+            BuildToolsLogger.LogDebugInfo("LocalBranchCopyToRootDir: '{0}'", LocalBranchCopyToRootDir);
         }
         #endregion
 
@@ -181,20 +294,29 @@ namespace Microsoft.Azure.Build.BootstrapTasks
                 string copyTo = string.Empty;
                 string fileName = string.Empty;
 
-                unableToCopyFilePath = new List<string>();
-                LocalMetaDataFilePath = CopyFile(RemoteMetaDataFilePath);
-
-                string[] filesToCopy = File.ReadAllLines(LocalMetaDataFilePath);
-
-                foreach (string fl in filesToCopy)
+                if (WhatIf == true)
                 {
-                    copyFrom = Path.Combine(RemoteCopyFromRootDir, fl);
-                    copyTo = Path.Combine(LocalBranchCopyToRootDir, fl);
-                    CopyFile(copyFrom, copyTo);
+                    BuildToolsLogger.LogInfo("Build tools will be copied FROM: '{0}'", RemoteCopyFromRootDir);
+                    BuildToolsLogger.LogInfo("Build tools will be copied TO: '{0}'", LocalBranchCopyToRootDir);
                 }
+                else
+                {
+                    BuildToolsLogger.LogInfo("Updating Tools.....");
+                    unableToCopyFilePath = new List<string>();
+                    LocalMetaDataFilePath = CopyFile(RemoteMetaDataFilePath);
 
-                CopyPowershellModules(Path.Combine(LocalBranchCopyToRootDir), filesToCopy);
-                ReportErrors();
+                    string[] filesToCopy = File.ReadAllLines(LocalMetaDataFilePath);
+
+                    foreach (string fl in filesToCopy)
+                    {
+                        copyFrom = Path.Combine(RemoteCopyFromRootDir, fl);
+                        copyTo = Path.Combine(LocalBranchCopyToRootDir, fl);
+                        CopyFile(copyFrom, copyTo);
+                    }
+
+                    CopyPowershellModules(Path.Combine(LocalBranchCopyToRootDir), filesToCopy);
+                    ReportErrors();
+                }
             }
             catch (Exception ex)
             {
@@ -211,6 +333,40 @@ namespace Microsoft.Azure.Build.BootstrapTasks
 
             return true;
         }
+
+        private Uri GetRemoteUri()
+        {
+            Uri remoteUri = null;
+            HttpWebRequest req = null;
+
+            try
+            {
+                req = (HttpWebRequest)WebRequest.Create(AKAMS_URI);
+                req.Method = "HEAD";
+                //req.AllowAutoRedirect = false;
+
+                HttpWebResponse myResp = (HttpWebResponse)req.GetResponse();
+                //if (myResp.StatusCode == HttpStatusCode.Redirect)
+                if (myResp.StatusCode == HttpStatusCode.OK)
+                {
+                    string url = myResp.ResponseUri.ToString();
+                    if(!url.ToLower().Contains("microsoft"))
+                    {
+                        remoteUri = myResp.ResponseUri;
+                        //BuildToolsLogger.LogInfo("redirected to:" + myResp.GetResponseHeader("Location"));
+                    }
+                }
+
+                if (remoteUri == null)
+                {
+                    BuildToolsLogger.LogDebugInfo("Unable to retrieve aka.ms uri");
+                }
+            }
+            catch { }
+
+            return remoteUri;
+        }
+
 
         /// <summary>
         /// Copy powershell modules to the user profile powershell dir
@@ -241,7 +397,6 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         /// <returns></returns>
         private string CopyFile(string sourceFile, string destinationPath = "")
         {
-
             if (string.IsNullOrEmpty(destinationPath))
             {
                 destinationPath = LocalBranchCopyToRootDir;
@@ -267,7 +422,7 @@ namespace Microsoft.Azure.Build.BootstrapTasks
             }
             else
             {
-                BuildToolsLogger.LogInfo("Copying {0}", destinationPath);
+                BuildToolsLogger.LogDebugInfo("Copying to {0}", destinationPath);
             }
 
             return destinationPath;
