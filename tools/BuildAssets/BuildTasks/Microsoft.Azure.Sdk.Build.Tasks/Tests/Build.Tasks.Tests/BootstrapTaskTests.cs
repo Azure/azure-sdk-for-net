@@ -63,6 +63,46 @@ namespace Build.Tasks.Tests
             Assert.True(getBldTools.unableToCopyFilePath.Count > 0);
         }
 
+        [Fact]
+        public void GetRemoteUri()
+        {
+            string localBranchRootDir = GetSourceRootDir();
+            Assert.False(string.IsNullOrEmpty(localBranchRootDir));
+            
+            GetBuildTools getBldTools = new GetBuildTools();
+            getBldTools.LocalBranchRootDir = localBranchRootDir;
+            getBldTools.WhatIf = true;
+            getBldTools.OverrideLocal = true;
+
+            getBldTools.Execute();
+            Assert.NotNull(getBldTools.RemoteCopyFromRootDir);
+            Assert.StartsWith("http", getBldTools.RemoteCopyFromRootDir, StringComparison.OrdinalIgnoreCase);
+
+            Assert.False(getBldTools.RemoteCopyFromRootDir.EndsWith("readme.md", StringComparison.OrdinalIgnoreCase));
+
+            Assert.NotNull(getBldTools.LocalBranchCopyToRootDir);
+        }
+
+        [Fact]
+        public void OverrideLocal()
+        {
+            string localBranchRootDir = GetSourceRootDir();
+            Assert.False(string.IsNullOrEmpty(localBranchRootDir));
+
+            GetBuildTools getBldTools = new GetBuildTools();
+            getBldTools.LocalBranchRootDir = localBranchRootDir;
+            getBldTools.WhatIf = true;
+            getBldTools.OverrideLocal = false;
+
+            getBldTools.Execute();
+            Assert.NotNull(getBldTools.RemoteCopyFromRootDir);
+            Assert.False(getBldTools.RemoteCopyFromRootDir.StartsWith("http"));
+
+            Assert.NotNull(getBldTools.LocalBranchCopyToRootDir);
+        }
+
+
+
         private string GetSourceRootDir()
         {
             string srcRootDir = string.Empty;

@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
             ProjectTaskItem = project;
             FxMoniker = fxMoniker;
             FullProjectPath = fullProjectPath;
-            IsTargetFxSupported = isTargetFxSupported;
+            //IsTargetFxSupported = isTargetFxSupported;
+            IsTargetFxSupported = IsFxSupported(fxMonikerString);
             ProjectType = projectType;
             TargetOutputFullPath = targetOutputPath;
             FxMonikerString = fxMonikerString;
@@ -65,10 +66,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
             ProjectTaskItem = project;
             FxMoniker = fxMoniker;
             FullProjectPath = fullProjectPath;
-            IsTargetFxSupported = isTargetFxSupported;
+            //IsTargetFxSupported = isTargetFxSupported;
             ProjectType = projectType;
             TargetOutputFullPath = targetOutputPath;
             FxMonikerString = fxMonikerString;
+            IsTargetFxSupported = IsFxSupported(fxMonikerString);
             MsBuildProject = msbuildProject;
             IsProjectDataPlane = isProjectDataPlaneProject;
             IsFxFullDesktopVersion = IsExpectedFxCategory(fxMoniker, TargetFxCategory.FullDesktop);
@@ -197,16 +199,24 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
             string monikerString = string.Empty;
             switch (fxMoniker)
             {
-                case TargetFrameworkMoniker.net452:
-                    monikerString = "net452";
-                    break;
-
                 case TargetFrameworkMoniker.netcoreapp11:
                     monikerString = "netcoreapp1.1";
                     break;
 
+                case TargetFrameworkMoniker.netcoreapp20:
+                    monikerString = "netcoreapp2.0";
+                    break;
+
                 case TargetFrameworkMoniker.netstandard14:
                     monikerString = "netstandard1.4";
+                    break;
+
+                case TargetFrameworkMoniker.netstandard16:
+                    monikerString = "netstandard1.6";
+                    break;
+
+                case TargetFrameworkMoniker.net452:
+                    monikerString = "net452";
                     break;
 
                 case TargetFrameworkMoniker.net46:
@@ -215,6 +225,10 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
 
                 case TargetFrameworkMoniker.net461:
                     monikerString = "net461";
+                    break;
+
+                case TargetFrameworkMoniker.net462:
+                    monikerString = "net462";
                     break;
             }
 
@@ -229,11 +243,14 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                 case TargetFrameworkMoniker.net452:
                 case TargetFrameworkMoniker.net46:
                 case TargetFrameworkMoniker.net461:
+                case TargetFrameworkMoniker.net462:
                     expectedFxCat = (expectedFxCategory == TargetFxCategory.FullDesktop);
                     break;
 
                 case TargetFrameworkMoniker.netcoreapp11:
+                case TargetFrameworkMoniker.netcoreapp20:
                 case TargetFrameworkMoniker.netstandard14:
+                case TargetFrameworkMoniker.netstandard16:
                     expectedFxCat = (expectedFxCategory == TargetFxCategory.NetCore);
                     break;
             }
@@ -268,18 +285,28 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
             TargetFrameworkMoniker validMoniker = TargetFrameworkMoniker.UnSupported;
             switch (lcMoniker)
             {
-                case "net452":
-                    validMoniker = TargetFrameworkMoniker.net452;
-                    fxSupported = true;
-                    break;
-
                 case "netcoreapp1.1":
                     validMoniker = TargetFrameworkMoniker.netcoreapp11;
                     fxSupported = true;
                     break;
 
+                case "netcoreapp2.0":
+                    validMoniker = TargetFrameworkMoniker.netcoreapp20;
+                    fxSupported = true;
+                    break;
+
                 case "netstandard1.4":
                     validMoniker = TargetFrameworkMoniker.netstandard14;
+                    fxSupported = true;
+                    break;
+
+                case "netstandard1.6":
+                    validMoniker = TargetFrameworkMoniker.netstandard16;
+                    fxSupported = false;
+                    break;
+
+                case "net452":
+                    validMoniker = TargetFrameworkMoniker.net452;
                     fxSupported = true;
                     break;
 
@@ -292,6 +319,12 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                     validMoniker = TargetFrameworkMoniker.net461;
                     fxSupported = true;
                     break;
+
+                case "net462":
+                    validMoniker = TargetFrameworkMoniker.net462;
+                    fxSupported = false;
+                    break;
+
                 default:
                     validMoniker = TargetFrameworkMoniker.UnSupported;
                     fxSupported = false;
@@ -308,16 +341,24 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
             TargetFrameworkMoniker validMoniker = TargetFrameworkMoniker.UnSupported;
             switch (lcMoniker)
             {
-                case "net452":
-                    validMoniker = TargetFrameworkMoniker.net452;
-                    break;
-
                 case "netcoreapp1.1":
                     validMoniker = TargetFrameworkMoniker.netcoreapp11;
                     break;
 
+                case "netcoreapp2.0":
+                    validMoniker = TargetFrameworkMoniker.netcoreapp20;
+                    break;
+
                 case "netstandard1.4":
                     validMoniker = TargetFrameworkMoniker.netstandard14;
+                    break;
+
+                case "netstandard1.6":
+                    validMoniker = TargetFrameworkMoniker.netstandard16;
+                    break;
+
+                case "net452":
+                    validMoniker = TargetFrameworkMoniker.net452;
                     break;
 
                 case "net46":
@@ -327,6 +368,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
                 case "net461":
                     validMoniker = TargetFrameworkMoniker.net461;
                     break;
+
+                case "net462":
+                    validMoniker = TargetFrameworkMoniker.net462;
+                    break;
+
                 default:
                     validMoniker = TargetFrameworkMoniker.UnSupported;
                     break;
@@ -343,8 +389,11 @@ namespace Microsoft.Azure.Sdk.Build.Tasks.Models
         net452,
         net46,
         net461,
+        net462,
         netcoreapp11,
+        netcoreapp20,
         netstandard14,
+        netstandard16,
         UnSupported
     }
 

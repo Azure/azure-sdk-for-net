@@ -37,13 +37,30 @@ namespace Microsoft.Azure.Build.BootstrapTasks
         {
             if (IsBuildEngineInitialized)
             {
-                if(OutputDebugTrace)
+                Log.LogMessage(messageToLog);
+            }
+            else
+            {
+                Debug.WriteLine(messageToLog);
+            }
+        }
+
+        public void LogDebugInfo(string messageToLog)
+        {
+            if (IsBuildEngineInitialized)
+            {
+                if (OutputDebugTrace)
                     Log.LogMessage(messageToLog);
             }
             else
             {
                 Debug.WriteLine(messageToLog);
             }
+        }
+
+        public void LogDebugInfo(string outputFormat, params string[] info)
+        {
+            LogDebugInfo(string.Format(outputFormat, info));
         }
 
         public void LogInfo(string outputFormat, params string[] info)

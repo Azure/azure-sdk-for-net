@@ -8,6 +8,10 @@
     <PackageTags>TestPackage;$(AdditionalVersionTags)</PackageTags>
   </PropertyGroup>
 
+   <PropertyGroup>
+  	<TargetFrameworks>net46</TargetFrameworks>
+  </PropertyGroup> 
+
   <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
     <PackageReference Include="Microsoft.Build" Version="15.7.179" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.7.179" />
