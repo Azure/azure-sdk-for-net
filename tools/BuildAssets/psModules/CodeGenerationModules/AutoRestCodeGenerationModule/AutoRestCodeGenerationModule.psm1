@@ -15,9 +15,9 @@ function Get-SdkRepoRootDirectory {
     )
     
     $currPath = $scriptPath
-    if($scriptPath.Contains("\src\SDKs\") -or $scriptPath.Contains("\src\AzureStack\"))
+    if($scriptPath.Contains("\src\SDKs\") -or $scriptPath.Contains("\src\AzureStack\") -or $scriptPath.Contains("\src\Profiles\"))
     {
-        while(![string]::IsNullOrEmpty($currPath) -and !(($currPath.EndsWith("\src\SDKs") -or $currPath.EndsWith("\src\AzureStack")) -and $(Test-Path "$currPath\..\..\.gitignore")))
+        while(![string]::IsNullOrEmpty($currPath) -and !(($currPath.EndsWith("\src\SDKs") -or $currPath.EndsWith("\src\AzureStack") -or $currPath.EndsWith("\src\Profiles")) -and $(Test-Path "$currPath\..\..\.gitignore")))
         {
             $currPath = $(Split-Path $currPath -parent)
         }
@@ -28,7 +28,7 @@ function Get-SdkRepoRootDirectory {
 function Get-InvokingScriptPath {
     $arr =$($(Get-PSCallStack).InvocationInfo.PSCommandPath)
     foreach ($p in $arr) {
-        if(![string]::IsNullOrEmpty($p) -and ($p.Contains("\src\SDKs") -or $p.Contains("\src\AzureStack")))
+        if(![string]::IsNullOrEmpty($p) -and ($p.Contains("\src\SDKs") -or $p.Contains("\src\AzureStack") -or $p.Contains("\src\Profiles")))
         {
             return $(Split-Path $p -Parent)
         }
@@ -354,13 +354,13 @@ function Start-AutoRestCodeGeneration {
     )
 
     if(-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
     }
     elseif (-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)){
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
     }
     else {
         # default path which is the root directory of the RP in sdk repo
@@ -369,7 +369,7 @@ function Start-AutoRestCodeGeneration {
         {
             Write-Error "Could not find default output directory since script is not run from a sdk repo, please provide one!"
         }
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
+        Start-CodeGeneration -ResourceProvider $ResourceProvider -SdkDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -SpecsRepoFork $SpecsRepoFork -SpecsRepoName $SpecsRepoName -SpecsRepoBranch $SpecsRepoBranch -SdkGenerationType $SdkGenerationType -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
     }
 }
 
@@ -393,12 +393,9 @@ function Start-AutoRestCodeGeneration {
 .PARAMETER LocalConfigFilePath
     The local Rest Spec config file for which to generate the sdk
 
-.PARAMETER SdkRootDirectory
-    The root path in csharp-sdks-folder in config file where to generate the code
-
-.PARAMETER SdkGenerationDirectory
-    The path that where the code will be generate (overrides output-folder specified in config file)
-    
+.PARAMETER SdkDirectory
+    The exact path where the SDK will get generated (ignores csharp-sdk-folder specified in the config file)
+   
 .PARAMETER Namespace
     The C# namespace for sdk to generate
 
@@ -424,13 +421,7 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [Parameter(Mandatory = $false)]
         [string] $AutoRestVersion = "latest",
 
-        [Parameter(ParameterSetName="sdkRootDir", Mandatory = $false, HelpMessage="The root directory equivalent to csharp-sdks-folder in config file. Eg.: Code will be generated in SdkRootDirectory/Compute/Management.Compute/Generated")]
-        [string] $SdkRootDirectory,
-
-        [Parameter(ParameterSetName="sdkOutputDir", Mandatory=$false, HelpMessage="The final directory where generrated code will go. Eg.: Code will be generated in sdkGenerationDirectory/Generated/")]
-        [string] $SdkGenerationDirectory,
-
-        [Parameter(ParameterSetName="sdkOutputDirLegacy", Mandatory=$false, HelpMessage="Legacy parameter same as SdkRootDirectory")]
+        [Parameter(Mandatory=$true, HelpMessage="Exact path where the sdk will get generated")]
         [string] $SdkDirectory,
 
         [Parameter(Mandatory = $false)]
@@ -444,19 +435,7 @@ function Start-AutoRestCodeGenerationWithLocalConfig {
         [string] $AutoRestCodeGenerationFlags
     )
 
-    if (-not [string]::IsNullOrWhiteSpace($SdkDirectory)) {
-        $SdkRootDirectory = $SdkDirectory
-    }
-    if(-not [string]::IsNullOrWhiteSpace($SdkRootDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkRootDirectory $SdkRootDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
-    }
-    elseif(-not [string]::IsNullOrWhiteSpace($SdkGenerationDirectory)) {
-        Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkGenerationDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
-    }
-    else
-    {
-        Write-Error "Please provide an output directory for the generated code"
-    }
+    Start-CodeGeneration -ResourceProvider $ResourceProvider -LocalConfigFilePath $LocalConfigFilePath -SdkGenerationDirectory $SdkDirectory -Namespace $Namespace -ConfigFileTag $ConfigFileTag -AutoRestVersion $AutoRestVersion -AutoRestCodeGenerationFlags $AutoRestCodeGenerationFlags
 }
 
 function Start-CodeGeneration {
