@@ -5,14 +5,12 @@
 ## Version 1.1.0
 
 ###  Feature Additions
-
 * Added support for sharing self-hosted integration runtime across data factories and subscriptions
 * Added support for Databricks Spark Jar and Databricks Spark Python activities
 
 ## Version 1.0.0
 
 ### Feature Additions
-
 * Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/en-us/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/en-us/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
         -	The API 'removeNode’ on IR has been removed and replaced with DELETE API on IR node.
         -	The API 'POST pipelineRuns’ was renamed to 'POST queryPipelineRuns’ and 'PipelineRunFilterParameters’ was renamed to 'RunFilterParameters’.
@@ -31,7 +29,6 @@
 ## Version 0.8.0-preview
 
 ### Feature Additions
-
 * Added Configure factory repository operation
 * Updated QuickBooks LinkedService to expose consumerKey and consumerSecret properties
 * Updated Several model types from SecretBase to Object
@@ -40,7 +37,6 @@
 ## Version 0.7.0-preview
 
 ### Feature Additions
-
 * Added execution parameters and connection managers property on ExecuteSSISPackage Activity
 * Updated PostgreSql, MySql llinked service to use full connection string instead of server, database, schema, username and password
 * Removed the schema from DB2 linked service
