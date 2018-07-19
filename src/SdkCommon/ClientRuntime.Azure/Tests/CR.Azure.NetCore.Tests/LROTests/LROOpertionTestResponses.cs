@@ -280,6 +280,454 @@ namespace CR.Azure.NetCore.Tests
         #endregion
 
         #region Provisioning States
+        internal static IEnumerable<HttpResponseMessage> Location201FinalGet404WithEmptyStringProviState()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                      {}  
+                    ")
+            };
+            response1.Headers.Add("Location", @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01");
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": ""Deleting"",
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": null,
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(@"
+                    {}
+                ")
+            };
+            yield return response4;
+        }
+
+        internal static IEnumerable<HttpResponseMessage> Location201FinalGet404WithEmptyProviState()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                      {}  
+                    ")
+            };
+            response1.Headers.Add("Location", @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01");
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": ""Deleting"",
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": """",
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(@"
+                    {}
+                ")
+            };
+            yield return response4;
+        }
+
+        internal static IEnumerable<HttpResponseMessage> Location201FinalGet404WithNoValueProviState()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                      {}  
+                    ")
+            };
+            response1.Headers.Add("Location", @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01");
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": ""Deleting"",
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": ,
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(@"
+                    {}
+                ")
+            };
+            yield return response4;
+        }
+
+        internal static IEnumerable<HttpResponseMessage> Location201FinalGet404WithNullStringProviState()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                      {}  
+                    ")
+            };
+            response1.Headers.Add("Location", @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01");
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": ""Deleting"",
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": NULL,
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(@"
+                    {}
+                ")
+            };
+            yield return response4;
+        }
+
+        internal static IEnumerable<HttpResponseMessage> Location201FinalGet404WithMissingProviState()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.Created)
+            {
+                Content = new StringContent(@"
+                      {}  
+                    ")
+            };
+            response1.Headers.Add("Location", @"https://management.azure.com/subscriptions/c9cbd920-c00c-427c-852b-8aaf38badaeb/resourceGroups/RedisCreateUpdate2536/providers/Microsoft.Cache/redis/RedisCreateUpdate9076?api-version=2017-10-01");
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""provisioningState"": ""Deleting"",
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response2;
+
+            var response3 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisCreateUpdate3324/providers/Microsoft.Cache/Redis/RedisCreateUpdate7534"",
+                    ""location"": ""West Central US"",
+                    ""name"": ""RedisCreateUpdate7534"",
+                    ""type"": ""Microsoft.Cache/Redis"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""redisVersion"": ""3.2.7"",
+                        ""sku"": {
+                            ""name"": ""Basic"",
+                            ""family"": ""C"",
+                            ""capacity"": 0
+                        },
+                        ""enableNonSslPort"": false,
+                        ""redisConfiguration"": {
+                            ""maxclients"": ""256"",
+                            ""maxmemory-reserved"": ""2"",
+                            ""maxfragmentationmemory-reserved"": ""12"",
+                            ""maxmemory-delta"": ""2""
+                        },
+                        ""accessKeys"": null,
+                        ""hostName"": ""RedisCreateUpdate7534.redis.cache.windows.net"",
+                        ""port"": 6379,
+                        ""sslPort"": 6380,
+                        ""linkedServers"": []
+                        }
+                    }        
+                ")
+            };
+            yield return response3;
+
+            var response4 = new HttpResponseMessage(HttpStatusCode.NotFound)
+            {
+                Content = new StringContent(@"
+                    {}
+                ")
+            };
+            yield return response4;
+        }
 
         #endregion
 
@@ -1459,7 +1907,6 @@ namespace CR.Azure.NetCore.Tests
 
     static class LROOperationPatchTestResponses
     {
-
         static internal IEnumerable<HttpResponseMessage> ServiceCustomResponse()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Created)
