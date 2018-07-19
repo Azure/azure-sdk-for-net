@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace CR.Azure.NetCore.Tests
+namespace HttpRecorder.Tests.MockResponse
 {
     using System;
     using System.Collections.Generic;

@@ -4,12 +4,12 @@
     <PackageId>Microsoft.Rest.ClientRuntime.Azure</PackageId>
     <Description>Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation.</Description>
     <AssemblyTitle>Client Runtime for Microsoft Azure Libraries</AssemblyTitle>
-    <Version>3.3.12</Version>
+    <Version>3.3.13</Version>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
     <PackageTags>Microsoft Azure AutoRest ClientRuntime REST  $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Ability to honor multiple LRO operation headers (Async-Operation/Location header)        
+        Fixing handling of provisiong state edge case scenario during LRO
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
