@@ -996,7 +996,6 @@ namespace Microsoft.Azure.Search
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
             _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.Properties.Add(nameof(Client.SearchServiceName), Client.SearchServiceName);
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)

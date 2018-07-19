@@ -202,7 +202,6 @@ namespace Microsoft.Azure.Search
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}";
             ApiVersion = "2017-11-11-Preview";
             SearchDnsSuffix = "search.windows.net";
-            SearchServiceName = "{searchServiceName}";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
