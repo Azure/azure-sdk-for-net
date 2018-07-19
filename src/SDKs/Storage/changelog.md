@@ -1,6 +1,10 @@
 ## Microsoft.Azure.Management.Storage release notes
 
-### Changes in 7.3.0-preview
+### Changes in 8.1.0-preview
+
+- Support HDFS feature 
+
+### Changes in 8.0.0-preview
 
 - Support Management Policy feature 
 - Upgrade to rest api version 2018-03-01-preview
