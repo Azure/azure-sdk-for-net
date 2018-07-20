@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="RunTest" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Scope>SDKs\Compute</Scope>
+  </PropertyGroup>
+
+
+  <Target Name="PackageScopeProject" DependsOnTargets="DebugTest">
+    
+    <CallTarget Targets="CategorizeProjects" />
+    <CallTarget Targets="PrePackageTasks" />
+
+    <Message Text="Current scope is $(Scope)"/>
+  </Target>
+
+  <Target Name="DebugTest" Condition=" '$(DebugTest)' == 'true' ">
+    <DebugTask/>
+  </Target>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('build.proj'))" />
+</Project>

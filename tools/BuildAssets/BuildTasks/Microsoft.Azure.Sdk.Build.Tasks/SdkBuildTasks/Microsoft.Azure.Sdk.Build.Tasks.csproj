@@ -1,0 +1,35 @@
+﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Sdk.Build.Tasks</PackageId>
+    <Description>Provides .NET SDK Build tools tasks</Description>
+    <AssemblyTitle>Microsoft.Azure.Sdk.Build.Tasks</AssemblyTitle>
+    <AssemblyName>Microsoft.Azure.Sdk.Build.Tasks</AssemblyName>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+   <PropertyGroup>
+  	<TargetFrameworks>net46</TargetFrameworks>
+  </PropertyGroup> 
+  
+  <PropertyGroup Condition="'$(CmdLineBuild)' == 'true'">
+    <TaskBinaryOutput>bin\$(Configuration)\</TaskBinaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CmdLineBuild)' != 'true'">
+    <TaskBinaryOutput>..\..\..\tasks</TaskBinaryOutput>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <OutputPath>$(TaskBinaryOutput)</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="StaticAnalysisTasks\**" />
+    <EmbeddedResource Remove="StaticAnalysisTasks\**" />
+    <None Remove="StaticAnalysisTasks\**" />
+  </ItemGroup>  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build" Version="15.7.179" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="15.7.179" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.7.179" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.7.179" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+</Project>
