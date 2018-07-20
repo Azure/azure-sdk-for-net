@@ -11,7 +11,7 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release is adding availability set list by subscription API and Standard SSD disk.
+        This is a public release of the Azure Compute SDK. Included with this release is adding availability set list by subscription API and Standard SSD disk, fixing RunCommand API, and adding missing ScaleSet properties.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
