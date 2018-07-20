@@ -19,8 +19,8 @@ namespace Microsoft.Azure.Management.IotCentral
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("IoTCentral", "Apps", "2017-07-01-privatepreview"),
-                new Tuple<string, string, string>("IoTCentral", "Operations", "2017-07-01-privatepreview"),
+                new Tuple<string, string, string>("IoTCentral", "Apps", "2018-09-01"),
+                new Tuple<string, string, string>("IoTCentral", "Operations", "2018-09-01"),
               }.AsEnumerable();
           }
       }
