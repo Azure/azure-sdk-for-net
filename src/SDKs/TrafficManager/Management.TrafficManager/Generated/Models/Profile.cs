@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// profile. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="trafficRoutingMethod">The traffic routing method of
         /// the Traffic Manager profile. Possible values include:
-        /// 'Performance', 'Priority', 'Weighted', 'Geographic'</param>
+        /// 'Performance', 'Priority', 'Weighted', 'Geographic', 'MultiValue',
+        /// 'Subnet'</param>
         /// <param name="dnsConfig">The DNS settings of the Traffic Manager
         /// profile.</param>
         /// <param name="monitorConfig">The endpoint monitoring settings of the
@@ -58,7 +59,9 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// Null, indicates 'Disabled'. Enabling this feature will increase the
         /// cost of the Traffic Manage profile. Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Profile(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string profileStatus = default(string), string trafficRoutingMethod = default(string), DnsConfig dnsConfig = default(DnsConfig), MonitorConfig monitorConfig = default(MonitorConfig), IList<Endpoint> endpoints = default(IList<Endpoint>), string trafficViewEnrollmentStatus = default(string))
+        /// <param name="maxReturn">Maximum number of endpoints to be returned
+        /// for MultiValue routing type.</param>
+        public Profile(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), ProfileStatus? profileStatus = default(ProfileStatus?), TrafficRoutingMethod? trafficRoutingMethod = default(TrafficRoutingMethod?), DnsConfig dnsConfig = default(DnsConfig), MonitorConfig monitorConfig = default(MonitorConfig), IList<Endpoint> endpoints = default(IList<Endpoint>), TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default(TrafficViewEnrollmentStatus?), long? maxReturn = default(long?))
             : base(id, name, type, tags, location)
         {
             ProfileStatus = profileStatus;
@@ -67,6 +70,7 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
             MonitorConfig = monitorConfig;
             Endpoints = endpoints;
             TrafficViewEnrollmentStatus = trafficViewEnrollmentStatus;
+            MaxReturn = maxReturn;
             CustomInit();
         }
 
@@ -80,15 +84,15 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.profileStatus")]
-        public string ProfileStatus { get; set; }
+        public ProfileStatus? ProfileStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the traffic routing method of the Traffic Manager
         /// profile. Possible values include: 'Performance', 'Priority',
-        /// 'Weighted', 'Geographic'
+        /// 'Weighted', 'Geographic', 'MultiValue', 'Subnet'
         /// </summary>
         [JsonProperty(PropertyName = "properties.trafficRoutingMethod")]
-        public string TrafficRoutingMethod { get; set; }
+        public TrafficRoutingMethod? TrafficRoutingMethod { get; set; }
 
         /// <summary>
         /// Gets or sets the DNS settings of the Traffic Manager profile.
@@ -117,7 +121,14 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.trafficViewEnrollmentStatus")]
-        public string TrafficViewEnrollmentStatus { get; set; }
+        public TrafficViewEnrollmentStatus? TrafficViewEnrollmentStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum number of endpoints to be returned for
+        /// MultiValue routing type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxReturn")]
+        public long? MaxReturn { get; set; }
 
     }
 }
