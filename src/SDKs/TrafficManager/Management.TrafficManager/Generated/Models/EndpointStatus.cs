@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for EndpointStatus.
     /// </summary>
-    public static class EndpointStatus
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(EndpointStatusConverter))]
+    public struct EndpointStatus : System.IEquatable<EndpointStatus>
     {
-        public const string Enabled = "Enabled";
-        public const string Disabled = "Disabled";
+        private EndpointStatus(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly EndpointStatus Enabled = "Enabled";
+
+        public static readonly EndpointStatus Disabled = "Disabled";
+
+
+        /// <summary>
+        /// Underlying value of enum EndpointStatus
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for EndpointStatus
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type EndpointStatus
+        /// </summary>
+        public bool Equals(EndpointStatus e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to EndpointStatus
+        /// </summary>
+        public static implicit operator EndpointStatus(string value)
+        {
+            return new EndpointStatus(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert EndpointStatus to string
+        /// </summary>
+        public static implicit operator string(EndpointStatus e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum EndpointStatus
+        /// </summary>
+        public static bool operator == (EndpointStatus e1, EndpointStatus e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum EndpointStatus
+        /// </summary>
+        public static bool operator != (EndpointStatus e1, EndpointStatus e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for EndpointStatus
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is EndpointStatus && Equals((EndpointStatus)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode EndpointStatus
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
