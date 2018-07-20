@@ -3,8 +3,8 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/trafficmanager/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\GitHub\azure-sdk-for-net-pr-psSdkJson6\src\SDKs
-2018-07-20 00:08:25 UTC
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/trafficmanager/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\GitHub\AllenFork\azure-sdk-for-net\src\SDKs
+2018-07-20 17:50:43 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
