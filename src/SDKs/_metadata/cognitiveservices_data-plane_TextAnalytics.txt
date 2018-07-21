@@ -1,17 +1,20 @@
-﻿Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TextAnalytics/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\src\azure-sdk-for-net\tools\..\src\SDKs\
-2018-05-04 22:15:22 UTC
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TextAnalytics/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=E:\azure-sdk-for-net\src\SDKs\CognitiveServices\dataPlane\Language\TextAnalytics\TextAnalytics\Generated\TextAnalytics
+2018-07-06 00:48:29 UTC
 1) azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      05a2275ab4aa098f93575f89d6d7876b0e4d8d89
+Commit:      6a9b980b104d37e495f77e82a7aaf32e342e7a1c
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\assafi.REDMOND\AppData\Roaming\npm  `-- autorest@2.0.4262
+Bootstrapper version:    autorest@2.0.4280
 
 
 Latest installed version:    
-.\tools\generate.ps1 was invoked by generate.ps1
 
 

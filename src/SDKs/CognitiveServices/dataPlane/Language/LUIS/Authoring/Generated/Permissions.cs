@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     /// <summary>
     /// Permissions operations.
     /// </summary>
-    public partial class Permissions : IServiceOperations<LuisAuthoringAPI>, IPermissions
+    public partial class Permissions : IServiceOperations<LUISAuthoringClient>, IPermissions
     {
         /// <summary>
         /// Initializes a new instance of the Permissions class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public Permissions(LuisAuthoringAPI client)
+        public Permissions(LUISAuthoringClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Gets a reference to the LuisAuthoringAPI
+        /// Gets a reference to the LUISAuthoringClient
         /// </summary>
-        public LuisAuthoringAPI Client { get; private set; }
+        public LUISAuthoringClient Client { get; private set; }
 
         /// <summary>
         /// Gets the list of user emails that have permissions to access your
@@ -86,9 +86,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/permissions";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/permissions").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -240,9 +239,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "Add", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/permissions";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/permissions").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -400,9 +398,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/permissions";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/permissions").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -560,9 +557,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/permissions";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/permissions").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();

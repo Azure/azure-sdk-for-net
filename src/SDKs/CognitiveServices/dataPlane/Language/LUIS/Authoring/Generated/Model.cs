@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     /// <summary>
     /// Model operations.
     /// </summary>
-    public partial class Model : IServiceOperations<LuisAuthoringAPI>, IModel
+    public partial class Model : IServiceOperations<LUISAuthoringClient>, IModel
     {
         /// <summary>
         /// Initializes a new instance of the Model class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public Model(LuisAuthoringAPI client)
+        public Model(LUISAuthoringClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Gets a reference to the LuisAuthoringAPI
+        /// Gets a reference to the LUISAuthoringClient
         /// </summary>
-        public LuisAuthoringAPI Client { get; private set; }
+        public LUISAuthoringClient Client { get; private set; }
 
         /// <summary>
         /// Adds an intent classifier to the application.
@@ -107,9 +107,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddIntent", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/intents").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -280,9 +279,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListIntents", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/intents").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -455,9 +453,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -635,9 +632,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListEntities", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -810,9 +806,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddHierarchicalEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -990,9 +985,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListHierarchicalEntities", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -1165,9 +1159,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddCompositeEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -1345,9 +1338,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListCompositeEntities", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -1532,9 +1524,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListClosedLists", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -1708,9 +1699,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddClosedList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -1876,9 +1866,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddPrebuilt", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -2056,9 +2045,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListPrebuilts", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -2223,9 +2211,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListPrebuiltEntities", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/listprebuilts";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/listprebuilts").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -2397,9 +2384,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListModels", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/models";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/models").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -2592,9 +2578,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ExamplesMethod", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/models/{modelId}/examples";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/models/{modelId}/examples").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{modelId}", System.Uri.EscapeDataString(modelId));
@@ -2764,9 +2749,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetIntent", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/intents/{intentId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
@@ -2931,9 +2915,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateIntent", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/intents/{intentId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
@@ -3101,9 +3084,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteIntent", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/intents/{intentId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
@@ -3269,9 +3251,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -3436,9 +3417,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -3601,9 +3581,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -3760,9 +3739,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -3927,9 +3905,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateHierarchicalEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -4092,9 +4069,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteHierarchicalEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -4251,9 +4227,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetCompositeEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -4418,9 +4393,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateCompositeEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -4583,9 +4557,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteCompositeEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -4742,9 +4715,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetClosedList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
@@ -4909,9 +4881,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateClosedList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
@@ -5082,9 +5053,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "PatchClosedList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
@@ -5247,9 +5217,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteClosedList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
@@ -5406,9 +5375,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPrebuilt", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{prebuiltId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts/{prebuiltId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{prebuiltId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(prebuiltId, Client.SerializationSettings).Trim('"')));
@@ -5565,9 +5533,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeletePrebuilt", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{prebuiltId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts/{prebuiltId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{prebuiltId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(prebuiltId, Client.SerializationSettings).Trim('"')));
@@ -5728,9 +5695,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteSubList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists/{subListId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists/{subListId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
@@ -5901,9 +5867,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSubList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists/{subListId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists/{subListId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
@@ -6079,9 +6044,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetIntentSuggestions", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/intents/{intentId}/suggest";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/intents/{intentId}/suggest").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{intentId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(intentId, Client.SerializationSettings).Trim('"')));
@@ -6260,9 +6224,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntitySuggestions", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/suggest";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}/suggest").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -6436,9 +6399,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddSubList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{clEntityId}/sublists").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{clEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(clEntityId, Client.SerializationSettings).Trim('"')));
@@ -6606,9 +6568,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltDomain", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltdomains";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltdomains").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -6775,9 +6736,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltIntent", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltintents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltintents").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -6935,9 +6895,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListCustomPrebuiltIntents", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltintents";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltintents").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -7098,9 +7057,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddCustomPrebuiltEntity", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -7258,9 +7216,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListCustomPrebuiltEntities", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -7412,9 +7369,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "ListCustomPrebuiltModels", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltmodels";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltmodels").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -7574,9 +7530,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteCustomPrebuiltDomain", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltdomains/{domainName}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltdomains/{domainName}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{domainName}", System.Uri.EscapeDataString(domainName));
@@ -7737,9 +7692,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -7909,9 +7863,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -8079,9 +8032,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children/{hChildId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -8247,9 +8199,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddHierarchicalEntityChild", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/children").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -8420,9 +8371,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddCompositeEntityChild", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/children";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/children").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -8589,9 +8539,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteCompositeEntityChild", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/children/{cChildId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/children/{cChildId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -8765,9 +8714,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetRegexEntityInfos", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -8941,9 +8889,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreateRegexEntityModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -9121,9 +9068,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPatternAnyEntityInfos", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -9297,9 +9243,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreatePatternAnyEntityModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -9461,9 +9406,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -9628,9 +9572,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreateEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -9793,9 +9736,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPrebuiltEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -9960,9 +9902,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreatePrebuiltEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -10125,9 +10066,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetClosedListEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -10292,9 +10232,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreateClosedListEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -10457,9 +10396,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetRegexEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -10624,9 +10562,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreateRegexEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -10789,9 +10726,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetCompositeEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -10956,9 +10892,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreateCompositeEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -11121,9 +11056,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPatternAnyEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -11288,9 +11222,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreatePatternAnyEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -11453,9 +11386,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -11620,9 +11552,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreateHierarchicalEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -11785,9 +11716,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetCustomPrebuiltEntityRoles", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -11952,9 +11882,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "CreateCustomPrebuiltEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -12117,9 +12046,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetExplicitList", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -12284,9 +12212,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "AddExplicitListItem", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -12449,9 +12376,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetRegexEntityEntityInfo", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{regexEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{regexEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{regexEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(regexEntityId, Client.SerializationSettings).Trim('"')));
@@ -12616,9 +12542,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateRegexEntityModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{regexEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{regexEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{regexEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(regexEntityId, Client.SerializationSettings).Trim('"')));
@@ -12781,9 +12706,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteRegexEntityModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{regexEntityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{regexEntityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{regexEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(regexEntityId, Client.SerializationSettings).Trim('"')));
@@ -12940,9 +12864,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPatternAnyEntityInfo", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -13107,9 +13030,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdatePatternAnyEntityModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -13272,9 +13194,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeletePatternAnyEntityModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -13435,9 +13356,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -13607,9 +13527,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -13777,9 +13696,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/entities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/entities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -13941,9 +13859,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPrebuiltEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -14113,9 +14030,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdatePrebuiltEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -14283,9 +14199,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeletePrebuiltEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/prebuilts/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -14447,9 +14362,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetClosedListEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -14619,9 +14533,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateClosedListEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -14789,9 +14702,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteClosedListEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/closedlists/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -14953,9 +14865,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetRegexEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -15125,9 +15036,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateRegexEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -15295,9 +15205,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteRegexEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/regexentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -15459,9 +15368,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetCompositeEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -15631,9 +15539,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateCompositeEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -15801,9 +15708,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteCompositeEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/compositeentities/{cEntityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{cEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(cEntityId, Client.SerializationSettings).Trim('"')));
@@ -15965,9 +15871,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetPatternAnyEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -16137,9 +16042,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdatePatternAnyEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -16307,9 +16211,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeletePatternAnyEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -16471,9 +16374,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetHierarchicalEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -16643,9 +16545,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateHierarchicalEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -16813,9 +16714,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteHierarchicalEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/hierarchicalentities/{hEntityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{hEntityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(hEntityId, Client.SerializationSettings).Trim('"')));
@@ -16977,9 +16877,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetCustomEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -17149,9 +17048,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateCustomPrebuiltEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -17319,9 +17217,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteCustomEntityRole", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles/{roleId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/customprebuiltentities/{entityId}/roles/{roleId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -17483,9 +17380,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "GetExplicitListItem", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist/{itemId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist/{itemId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -17655,9 +17551,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateExplicitListItem", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist/{itemId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist/{itemId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));
@@ -17825,9 +17720,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteExplicitListItem", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist/{itemId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "apps/{appId}/versions/{versionId}/patternanyentities/{entityId}/explicitlist/{itemId}").ToString();
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{entityId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(entityId, Client.SerializationSettings).Trim('"')));

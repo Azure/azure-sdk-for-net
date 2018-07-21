@@ -8,6 +8,7 @@ using Microsoft.AzureStack.Management.Subscriptions.Admin.Models;
 using System;
 using Xunit;
 using System.Linq;
+using Subscriptions.Tests.src.Helpers;
 
 namespace Subscriptions.Tests
 {
@@ -80,15 +81,15 @@ namespace Subscriptions.Tests
         //Test assumes that there is a delegated provider(reseller) subscription
         public void TestCreateUpdateThenDeleteOfferDelegation() {
             RunTest((client) => {
-                var offer = client.Offers.ListAll().Where(o => !o.DisplayName.Equals("offersub")).First();
-                var subscription = client.Subscriptions.List(new Microsoft.Rest.Azure.OData.ODataQuery<Subscription>("providerNamespace eq 'Microsoft.Subscriptions'")).First();
+                var offer = client.Offers.Get(TestContext.ResourceGroupName, TestContext.OfferToDelegateName);
+                var subscription = client.Subscriptions.Get(TestContext.DelegatedProviderSubscriptionId);
                 var resourceGroup = Common.GetResourceGroupFromId(offer.Id);
                 var offerDelegationName = "testOfferDelegation";
 
                 var offerDelegation = new OfferDelegation()
-                                {
-                                    SubscriptionId = subscription.SubscriptionId,
-                                    Location = "local",
+                {
+                    SubscriptionId = subscription.SubscriptionId,
+                    Location = TestContext.LocationName,
                 };
 
                 var result = client.OfferDelegations.CreateOrUpdate(resourceGroup, offer.Name, offerDelegationName, offerDelegation);

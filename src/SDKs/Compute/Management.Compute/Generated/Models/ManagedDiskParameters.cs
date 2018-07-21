@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="storageAccountType">Specifies the storage account type
-        /// for the managed disk. Possible values are: Standard_LRS or
-        /// Premium_LRS. Possible values include: 'Standard_LRS',
-        /// 'Premium_LRS'</param>
-        public ManagedDiskParameters(string id = default(string), string storageAccountType = default(string))
+        /// for the managed disk. Possible values are: Standard_LRS,
+        /// Premium_LRS, and StandardSSD_LRS. Possible values include:
+        /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
+        public ManagedDiskParameters(string id = default(string), StorageAccountTypes? storageAccountType = default(StorageAccountTypes?))
             : base(id)
         {
             StorageAccountType = storageAccountType;
@@ -48,11 +48,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the storage account type for the managed
-        /// disk. Possible values are: Standard_LRS or Premium_LRS. Possible
-        /// values include: 'Standard_LRS', 'Premium_LRS'
+        /// disk. Possible values are: Standard_LRS, Premium_LRS, and
+        /// StandardSSD_LRS. Possible values include: 'Standard_LRS',
+        /// 'Premium_LRS', 'StandardSSD_LRS'
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountType")]
-        public string StorageAccountType { get; set; }
+        public StorageAccountTypes? StorageAccountType { get; set; }
 
     }
 }

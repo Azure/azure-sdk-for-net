@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     /// <summary>
     /// FaceOperations operations.
     /// </summary>
-    public partial class FaceOperations : IServiceOperations<FaceAPI>, IFaceOperations
+    public partial class FaceOperations : IServiceOperations<FaceClient>, IFaceOperations
     {
         /// <summary>
         /// Initializes a new instance of the FaceOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public FaceOperations(FaceAPI client)
+        public FaceOperations(FaceClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Gets a reference to the FaceAPI
+        /// Gets a reference to the FaceClient
         /// </summary>
-        public FaceAPI Client { get; private set; }
+        public FaceClient Client { get; private set; }
 
         /// <summary>
         /// Given query face's faceId, find the similar-looking faces from a faceId
@@ -140,9 +140,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "FindSimilar", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "findsimilars";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "findsimilars").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -307,9 +306,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Group", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "group";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "group").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -512,9 +510,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Identify", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "identify";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "identify").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -663,9 +660,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "VerifyFaceToFace", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "verify").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -777,6 +773,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// with faceIds, landmarks, and attributes.
         /// </summary>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='returnFaceId'>
         /// A value indicating whether the operation should return faceIds of detected
@@ -840,9 +837,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "DetectWithUrl", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "detect").ToString();
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {
@@ -1038,9 +1034,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "VerifyFaceToPerson", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "verify").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1211,9 +1206,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "DetectWithStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "detect").ToString();
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {

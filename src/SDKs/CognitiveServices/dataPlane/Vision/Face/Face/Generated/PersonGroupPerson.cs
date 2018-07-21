@@ -25,7 +25,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     /// <summary>
     /// PersonGroupPerson operations.
     /// </summary>
-    public partial class PersonGroupPerson : IServiceOperations<FaceAPI>, IPersonGroupPerson
+    public partial class PersonGroupPerson : IServiceOperations<FaceClient>, IPersonGroupPerson
     {
         /// <summary>
         /// Initializes a new instance of the PersonGroupPerson class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public PersonGroupPerson(FaceAPI client)
+        public PersonGroupPerson(FaceClient client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// Gets a reference to the FaceAPI
+        /// Gets a reference to the FaceClient
         /// </summary>
-        public FaceAPI Client { get; private set; }
+        public FaceClient Client { get; private set; }
 
         /// <summary>
         /// Create a new person in a specified person group.
@@ -133,9 +133,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -318,9 +317,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             List<string> _queryParameters = new List<string>();
             if (start != null)
@@ -493,9 +491,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -641,9 +638,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -830,9 +826,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -985,9 +980,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteFace", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
@@ -1138,9 +1132,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "GetFace", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
@@ -1321,9 +1314,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateFace", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}/persistedFaces/{persistedFaceId}").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
@@ -1426,6 +1418,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Id referencing a particular person.
         /// </param>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='userData'>
         /// User-specified data about the face for any purpose. The maximum length is
@@ -1508,9 +1501,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "AddPersonFaceFromUrl", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}/persistedFaces").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
@@ -1721,9 +1713,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "AddPersonFaceFromStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persongroups/{personGroupId}/persons/{personId}/persistedFaces";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(Client.AzureRegion, Client.SerializationSettings).Trim('"'));
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "persongroups/{personGroupId}/persons/{personId}/persistedFaces").ToString();
             _url = _url.Replace("{personGroupId}", System.Uri.EscapeDataString(personGroupId));
             _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();

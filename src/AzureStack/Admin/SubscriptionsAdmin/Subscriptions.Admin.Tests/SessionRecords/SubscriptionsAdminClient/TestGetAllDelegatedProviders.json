@@ -1,26 +1,26 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/delegatedProviders?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
+      "RequestUri": "/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/providers/Microsoft.Subscriptions.Admin/delegatedProviders?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVlYzRkMzktOGRlYS00ZDI2LWEzNzMtYzE3NmVjNTM3MTdhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnM/YXBpLXZlcnNpb249MjAxNS0xMS0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b63f024-ba4c-4e01-b391-d090cdee4daf"
+          "37a51f89-03a7-4a95-a5d9-960cad547339"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26201.01",
+          "FxVersion/4.6.26328.01",
           "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/00aedb65-a937-4345-9d8f-8ea86361e3ad\",\r\n      \"subscriptionId\": \"00aedb65-a937-4345-9d8f-8ea86361e3ad\",\r\n      \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n      \"displayName\": \"updated del name 222\",\r\n      \"owner\": \"tenantadmin1@msazurestack.onmicrosoft.com\",\r\n      \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n      \"routingResourceManagerType\": \"Default\",\r\n      \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n      \"state\": \"Enabled\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/2f7b2bb9-3e98-41b1-9f3a-aeecb63e0266\",\r\n      \"subscriptionId\": \"2f7b2bb9-3e98-41b1-9f3a-aeecb63e0266\",\r\n      \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n      \"displayName\": \"pssub1\",\r\n      \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n      \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n      \"routingResourceManagerType\": \"Default\",\r\n      \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n      \"state\": \"Enabled\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/8f3bb5ac-cfc3-49f8-9f4e-57386dce5152\",\r\n      \"subscriptionId\": \"8f3bb5ac-cfc3-49f8-9f4e-57386dce5152\",\r\n      \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n      \"displayName\": \"pssub2-2\",\r\n      \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n      \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n      \"routingResourceManagerType\": \"Default\",\r\n      \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n      \"state\": \"Enabled\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/5726af45-76ac-4bc0-a7d3-6ff1da8be4de\",\r\n      \"subscriptionId\": \"5726af45-76ac-4bc0-a7d3-6ff1da8be4de\",\r\n      \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n      \"displayName\": \"pssub5-1\",\r\n      \"owner\": \"tenantadmin1@msazurestack.onmicrosoft.com\",\r\n      \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n      \"routingResourceManagerType\": \"Default\",\r\n      \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n      \"state\": \"Enabled\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/providers/Microsoft.Subscriptions.Admin/subscriptions/798568b7-c6f1-4bf7-bb8f-2c8bebc7c777\",\r\n      \"subscriptionId\": \"798568b7-c6f1-4bf7-bb8f-2c8bebc7c777\",\r\n      \"delegatedProviderSubscriptionId\": \"45ec4d39-8dea-4d26-a373-c176ec53717a\",\r\n      \"displayName\": \"s2\",\r\n      \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n      \"tenantId\": \"d9b782d5-d098-4374-8f2c-3907cc34611c\",\r\n      \"routingResourceManagerType\": \"Default\",\r\n      \"offerId\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/resourceGroups/rg/providers/Microsoft.Subscriptions.Admin/offers/o2\",\r\n      \"state\": \"Enabled\"\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/providers/Microsoft.Subscriptions.Admin/subscriptions/4e81ef7e-c0db-431d-abfa-29f982a8e549\",\r\n      \"subscriptionId\": \"4e81ef7e-c0db-431d-abfa-29f982a8e549\",\r\n      \"delegatedProviderSubscriptionId\": \"45ec4d39-8dea-4d26-a373-c176ec53717a\",\r\n      \"displayName\": \"s3\",\r\n      \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n      \"tenantId\": \"d9b782d5-d098-4374-8f2c-3907cc34611c\",\r\n      \"routingResourceManagerType\": \"Default\",\r\n      \"offerId\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/resourceGroups/rg/providers/Microsoft.Subscriptions.Admin/offers/o2\",\r\n      \"state\": \"Enabled\"\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "2465"
+          "1197"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,22 +32,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Apr 2018 18:02:12 GMT"
+          "Thu, 28 Jun 2018 16:12:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14797"
+          "14786"
         ],
         "x-ms-request-id": [
-          "bb17acb8-a34c-4351-9b4d-ccb66cbf1229"
+          "5ab3c74d-7f01-4b5e-9a54-d9e354f5c39a"
         ],
         "x-ms-correlation-request-id": [
-          "bb17acb8-a34c-4351-9b4d-ccb66cbf1229"
+          "5ab3c74d-7f01-4b5e-9a54-d9e354f5c39a"
         ],
         "x-ms-routing-request-id": [
-          "REDMOND:20180410T180212Z:bb17acb8-a34c-4351-9b4d-ccb66cbf1229"
+          "LOCAL:20180628T161230Z:5ab3c74d-7f01-4b5e-9a54-d9e354f5c39a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -59,26 +59,26 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/delegatedProviders/00aedb65-a937-4345-9d8f-8ea86361e3ad?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnMvMDBhZWRiNjUtYTkzNy00MzQ1LTlkOGYtOGVhODYzNjFlM2FkP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/providers/Microsoft.Subscriptions.Admin/delegatedProviders/798568b7-c6f1-4bf7-bb8f-2c8bebc7c777?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVlYzRkMzktOGRlYS00ZDI2LWEzNzMtYzE3NmVjNTM3MTdhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnMvNzk4NTY4YjctYzZmMS00YmY3LWJiOGYtMmM4YmViYzdjNzc3P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b25c1b05-3e13-40f9-be11-be09acef9af2"
+          "fc9dd48e-2f4d-4e5e-b8f2-bb611880b4ca"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26201.01",
+          "FxVersion/4.6.26328.01",
           "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/00aedb65-a937-4345-9d8f-8ea86361e3ad\",\r\n  \"subscriptionId\": \"00aedb65-a937-4345-9d8f-8ea86361e3ad\",\r\n  \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n  \"displayName\": \"updated del name 222\",\r\n  \"owner\": \"tenantadmin1@msazurestack.onmicrosoft.com\",\r\n  \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n  \"routingResourceManagerType\": \"Default\",\r\n  \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n  \"state\": \"Enabled\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/providers/Microsoft.Subscriptions.Admin/subscriptions/798568b7-c6f1-4bf7-bb8f-2c8bebc7c777\",\r\n  \"subscriptionId\": \"798568b7-c6f1-4bf7-bb8f-2c8bebc7c777\",\r\n  \"delegatedProviderSubscriptionId\": \"45ec4d39-8dea-4d26-a373-c176ec53717a\",\r\n  \"displayName\": \"s2\",\r\n  \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n  \"tenantId\": \"d9b782d5-d098-4374-8f2c-3907cc34611c\",\r\n  \"routingResourceManagerType\": \"Default\",\r\n  \"offerId\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/resourceGroups/rg/providers/Microsoft.Subscriptions.Admin/offers/o2\",\r\n  \"state\": \"Enabled\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "621"
+          "592"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -90,22 +90,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Apr 2018 18:02:12 GMT"
+          "Thu, 28 Jun 2018 16:12:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14796"
+          "14785"
         ],
         "x-ms-request-id": [
-          "f86b2705-6bd0-4fde-bea2-7d9972f5ef09"
+          "6cf00083-83ee-435e-ab3b-6dadfa741b0c"
         ],
         "x-ms-correlation-request-id": [
-          "f86b2705-6bd0-4fde-bea2-7d9972f5ef09"
+          "6cf00083-83ee-435e-ab3b-6dadfa741b0c"
         ],
         "x-ms-routing-request-id": [
-          "REDMOND:20180410T180212Z:f86b2705-6bd0-4fde-bea2-7d9972f5ef09"
+          "LOCAL:20180628T161231Z:6cf00083-83ee-435e-ab3b-6dadfa741b0c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -117,26 +117,26 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/delegatedProviders/2f7b2bb9-3e98-41b1-9f3a-aeecb63e0266?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnMvMmY3YjJiYjktM2U5OC00MWIxLTlmM2EtYWVlY2I2M2UwMjY2P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/providers/Microsoft.Subscriptions.Admin/delegatedProviders/4e81ef7e-c0db-431d-abfa-29f982a8e549?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDVlYzRkMzktOGRlYS00ZDI2LWEzNzMtYzE3NmVjNTM3MTdhL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnMvNGU4MWVmN2UtYzBkYi00MzFkLWFiZmEtMjlmOTgyYThlNTQ5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "343950ab-e4f3-4d6d-b16f-a595f5ab3cca"
+          "e1ca9c7a-74c1-43e4-ba54-7344b2eb6243"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26201.01",
+          "FxVersion/4.6.26328.01",
           "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/2f7b2bb9-3e98-41b1-9f3a-aeecb63e0266\",\r\n  \"subscriptionId\": \"2f7b2bb9-3e98-41b1-9f3a-aeecb63e0266\",\r\n  \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n  \"displayName\": \"pssub1\",\r\n  \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n  \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n  \"routingResourceManagerType\": \"Default\",\r\n  \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n  \"state\": \"Enabled\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/providers/Microsoft.Subscriptions.Admin/subscriptions/4e81ef7e-c0db-431d-abfa-29f982a8e549\",\r\n  \"subscriptionId\": \"4e81ef7e-c0db-431d-abfa-29f982a8e549\",\r\n  \"delegatedProviderSubscriptionId\": \"45ec4d39-8dea-4d26-a373-c176ec53717a\",\r\n  \"displayName\": \"s3\",\r\n  \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n  \"tenantId\": \"d9b782d5-d098-4374-8f2c-3907cc34611c\",\r\n  \"routingResourceManagerType\": \"Default\",\r\n  \"offerId\": \"/subscriptions/45ec4d39-8dea-4d26-a373-c176ec53717a/resourceGroups/rg/providers/Microsoft.Subscriptions.Admin/offers/o2\",\r\n  \"state\": \"Enabled\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "609"
+          "592"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -148,138 +148,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 10 Apr 2018 18:02:12 GMT"
+          "Thu, 28 Jun 2018 16:12:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14795"
+          "14784"
         ],
         "x-ms-request-id": [
-          "1a282370-0e52-4b80-a455-3eaac317e333"
+          "bb885a4d-69ec-43ae-aa0a-f4b79e3ac36c"
         ],
         "x-ms-correlation-request-id": [
-          "1a282370-0e52-4b80-a455-3eaac317e333"
+          "bb885a4d-69ec-43ae-aa0a-f4b79e3ac36c"
         ],
         "x-ms-routing-request-id": [
-          "REDMOND:20180410T180212Z:1a282370-0e52-4b80-a455-3eaac317e333"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/delegatedProviders/8f3bb5ac-cfc3-49f8-9f4e-57386dce5152?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnMvOGYzYmI1YWMtY2ZjMy00OWY4LTlmNGUtNTczODZkY2U1MTUyP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "acc40fe4-7ab2-4e1e-914d-9015d2dd1264"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/8f3bb5ac-cfc3-49f8-9f4e-57386dce5152\",\r\n  \"subscriptionId\": \"8f3bb5ac-cfc3-49f8-9f4e-57386dce5152\",\r\n  \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n  \"displayName\": \"pssub2-2\",\r\n  \"owner\": \"ciserviceadmin@msazurestack.onmicrosoft.com\",\r\n  \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n  \"routingResourceManagerType\": \"Default\",\r\n  \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n  \"state\": \"Enabled\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "611"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 10 Apr 2018 18:02:12 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14794"
-        ],
-        "x-ms-request-id": [
-          "d967c757-da3e-47b2-bde2-83e9687066de"
-        ],
-        "x-ms-correlation-request-id": [
-          "d967c757-da3e-47b2-bde2-83e9687066de"
-        ],
-        "x-ms-routing-request-id": [
-          "REDMOND:20180410T180212Z:d967c757-da3e-47b2-bde2-83e9687066de"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/delegatedProviders/5726af45-76ac-4bc0-a7d3-6ff1da8be4de?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2MyYTRjODAtZTU5NC00NmViLWI5MjMtOThmZDk4ZDUwMTU1L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3Vic2NyaXB0aW9ucy5BZG1pbi9kZWxlZ2F0ZWRQcm92aWRlcnMvNTcyNmFmNDUtNzZhYy00YmMwLWE3ZDMtNmZmMWRhOGJlNGRlP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "65331750-a1ad-4e8e-9b7b-fc3a8a9d5812"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26201.01",
-          "Microsoft.AzureStack.Management.Subscriptions.Admin.SubscriptionsAdminClient/0.1.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/providers/Microsoft.Subscriptions.Admin/subscriptions/5726af45-76ac-4bc0-a7d3-6ff1da8be4de\",\r\n  \"subscriptionId\": \"5726af45-76ac-4bc0-a7d3-6ff1da8be4de\",\r\n  \"delegatedProviderSubscriptionId\": \"3c2a4c80-e594-46eb-b923-98fd98d50155\",\r\n  \"displayName\": \"pssub5-1\",\r\n  \"owner\": \"tenantadmin1@msazurestack.onmicrosoft.com\",\r\n  \"tenantId\": \"76440dfb-c97c-4fee-8f6c-dff8ddbe816f\",\r\n  \"routingResourceManagerType\": \"Default\",\r\n  \"offerId\": \"/subscriptions/3c2a4c80-e594-46eb-b923-98fd98d50155/resourceGroups/planoffer/providers/Microsoft.Subscriptions.Admin/offers/offersub\",\r\n  \"state\": \"Enabled\"\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "609"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 10 Apr 2018 18:02:12 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14793"
-        ],
-        "x-ms-request-id": [
-          "11919f16-3496-4452-9b44-5e8eec038efd"
-        ],
-        "x-ms-correlation-request-id": [
-          "11919f16-3496-4452-9b44-5e8eec038efd"
-        ],
-        "x-ms-routing-request-id": [
-          "REDMOND:20180410T180212Z:11919f16-3496-4452-9b44-5e8eec038efd"
+          "LOCAL:20180628T161231Z:bb885a4d-69ec-43ae-aa0a-f4b79e3ac36c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -293,6 +177,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "3c2a4c80-e594-46eb-b923-98fd98d50155"
+    "SubscriptionId": "45ec4d39-8dea-4d26-a373-c176ec53717a"
   }
 }

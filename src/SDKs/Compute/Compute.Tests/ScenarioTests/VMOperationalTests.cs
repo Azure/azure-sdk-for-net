@@ -107,9 +107,10 @@ namespace Compute.Tests
                             new RunCommandInputParameter("arg2","value2"),
                         }
                     };
-                    var result = m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
-                    //BUG: RunCommand does not return the result.
-                    //Assert.NotNull(result);
+                    RunCommandResult result = m_CrpClient.VirtualMachines.RunCommand(rg1Name, vm1.Name, runCommandImput);
+                    Assert.NotNull(result);
+                    Assert.NotNull(result.Value);
+                    Assert.True(result.Value.Count > 0);
 
                     m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);

@@ -199,28 +199,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             {
                 CurrentPollingState.Status = GetAzureAsyncResponseState();
             }
-            else
+            else // we assume the polling is happening on locaiton header
             {
                 if (CurrentPollingState.CurrentStatusCode == HttpStatusCode.Accepted)
                 {
                     CurrentPollingState.Status = AzureAsyncOperation.InProgressStatus;
                 }
-                else if (IsCheckingProvisioningStateApplicable()) //Each verb can decide if Provisioning state is applicable and if it needs to be checked
+                else if (IsCheckingProvisioningStateApplicable() == true) //Each verb can decide if Provisioning state is applicable and if it needs to be checked
                 {
-                    // We check if we got provisionState and we get the status from provisioning state
-
-                    // In 202 pattern ProvisioningState may not be present in 
-                    // the response. In that case the assumption is the status is Succeeded.
-                    if (CurrentPollingState.RawBody != null &&
-                        CurrentPollingState.RawBody["properties"] != null &&
-                        CurrentPollingState.RawBody["properties"]["provisioningState"] != null)
-                    {
-                        CurrentPollingState.Status = (string)CurrentPollingState.RawBody["properties"]["provisioningState"];
-                    }
-                    else
-                    {
-                        CurrentPollingState.Status = AzureAsyncOperation.SuccessStatus;
-                    }
+                    CurrentPollingState.Status = GetProvisioningStateFromRawBody();                   
                 }
                 else
                 {
@@ -229,6 +216,56 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             }
             #endregion
         }
+
+        internal string GetProvisioningStateFromRawBody()
+        {
+            string provisioningState = string.Empty;
+
+            // We check if we got provisionState and we get the status from provisioning state
+
+            // In 202 pattern ProvisioningState may not be present in 
+            // the response. In that case the assumption is the status is Succeeded.
+
+            // We call IsCheckingProvisioning here just to make sure this code should be treated as one unit, you always check for provisioning state only if it's applicable
+            if (IsCheckingProvisioningStateApplicable() == true)  // Each verb can decide if Provisioning state is applicable and if it needs to be checked
+            {
+                if (CurrentPollingState.RawBody != null &&
+                        CurrentPollingState.RawBody["properties"] != null &&
+                        CurrentPollingState.RawBody["properties"]["provisioningState"] != null)
+                {
+                    provisioningState = ((string)CurrentPollingState?.RawBody?["properties"]?["provisioningState"])?.Trim();
+                }
+            }
+
+            if(string.IsNullOrEmpty(provisioningState))
+            {
+                provisioningState = AzureAsyncOperation.SuccessStatus.ToString();
+            }
+
+            return provisioningState;
+
+            #region old code
+            //// We check if we got provisionState and we get the status from provisioning state
+
+            //// In 202 pattern ProvisioningState may not be present in 
+            //// the response. In that case the assumption is the status is Succeeded.
+            //if (CurrentPollingState.RawBody != null &&
+            //    CurrentPollingState.RawBody["properties"] != null &&
+            //    CurrentPollingState.RawBody["properties"]["provisioningState"] != null &&
+            //    CurrentPollingState?.RawBody?["properties"]?["provisioningState"]?.HasValues == true)
+            //{
+            //    provisioningState = ((string)CurrentPollingState?.RawBody?["properties"]?["provisioningState"])?.Trim();
+            //}
+
+            //if (string.IsNullOrEmpty(provisioningState))
+            //{
+            //    provisioningState = AzureAsyncOperation.SuccessStatus;
+            //}
+
+            //CurrentPollingState.Status = provisioningState;
+            #endregion
+        }
+
 
         /// <summary>
         /// Each verb will override to define if checking provisioning state is applicable

@@ -18,7 +18,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeImageInStreamTest");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("house.jpg"), FileMode.Open))
                 {
                     ImageAnalysis result = client.AnalyzeImageInStreamAsync(
@@ -56,7 +56,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeImageTest");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     ImageAnalysis result = client.AnalyzeImageAsync(
                         GetTestImageUrl("house.jpg"),
@@ -93,7 +93,7 @@ namespace ComputerVisionSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeImageNullImageTest");
 
-                using (IComputerVisionAPI client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     Assert.ThrowsAsync<ValidationException>(() => client.AnalyzeImageAsync(null));
                 }

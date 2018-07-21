@@ -7,8 +7,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Cognitive Services Language LUIS Authoring")]
 [assembly: AssemblyDescription("Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Authoring API.")]
 
-[assembly: AssemblyVersion("0.9.0")]
-[assembly: AssemblyFileVersion("0.9.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

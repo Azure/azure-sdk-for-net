@@ -54,15 +54,34 @@ namespace Microsoft.Azure.EventGrid
         /// <returns>A list of EventGrid Events</returns>
         public EventGridEvent[] DeserializeEventGridEvents(string requestContent, JsonSerializer jsonSerializer)
         {
-            EventGridEvent[] eventGridEvents = JsonConvert.DeserializeObject<EventGridEvent[]>(requestContent);
+            EventGridEvent[] eventGridEvents = JsonConvert.DeserializeObject<EventGridEvent[]>(requestContent, jsonSerializer.GetJsonSerializerSettings());
             return DeserializeEventGridEventData(eventGridEvents, jsonSerializer);
         }
 
+        /// <summary>
+        /// Deserializes the provided stream using a default JSON serializer that supports all system event types.
+        /// A webhook/function that is consuming events can call this function to deserialize EventGrid events.
+        /// For system events, the Data property of each event in the returned array will be set to the appropriate
+        /// type (e.g. StorageBlobCreatedEventData). For events on custom topics where the type of the Data property
+        /// can be of any type, the calling function will have to first add a custom event mapping before calling this function.
+        /// </summary>
+        /// <param name="requestStream">Request Stream</param>
+        /// <returns>A list of EventGrid Events</returns>
         public EventGridEvent[] DeserializeEventGridEvents(Stream requestStream)
         {
             return this.DeserializeEventGridEvents(requestStream, defaultJsonSerializer);
         }
 
+        /// <summary>
+        /// Deserializes the provided stream using a custom JSON serializer.
+        /// A webhook/function that is consuming events can call this function to deserialize EventGrid events.
+        /// For system events, the Data property of each event in the returned array will be set to the appropriate
+        /// type (e.g. StorageBlobCreatedEventData). For events on custom topics where the type of the Data property
+        /// can be of any type, the calling function will have to first add a custom event mapping before calling this function.
+        /// </summary>
+        /// <param name="requestStream">Request Stream</param>
+        /// <param name="jsonSerializer">JsonSerializer to use for the deserialization.</param>
+        /// <returns>A list of EventGrid Events</returns>
         public EventGridEvent[] DeserializeEventGridEvents(Stream requestStream, JsonSerializer jsonSerializer)
         {
             EventGridEvent[] eventGridEvents = null;
@@ -78,6 +97,11 @@ namespace Microsoft.Azure.EventGrid
             return DeserializeEventGridEventData(eventGridEvents, jsonSerializer);
         }
 
+        /// <summary>
+        /// Adds or updates a custom event mapping that associates an eventType string with the corresponding type of event data.
+        /// </summary>
+        /// <param name="eventType">The event type to register, such as "Contoso.Items.ItemReceived"</param>
+        /// <param name="eventDataType">The type of eventdata corresponding to this eventType, such as typeof(ContosoItemReceivedEventData)</param>
         public void AddOrUpdateCustomEventMapping(string eventType, Type eventDataType)
         {
             this.ValidateEventType(eventType);
@@ -90,36 +114,40 @@ namespace Microsoft.Azure.EventGrid
             this.customEventTypeMapping.AddOrUpdate(
                 eventType,
                 eventDataType,
-                ((key, existingValue) =>
-                {
-                    return eventDataType;
-                }));
+                (_, existingValue) => eventDataType);
         }
 
+        /// <summary>
+        /// Gets information about a custom event mapping.
+        /// </summary>
+        /// <param name="eventType">The registered event type, such as "Contoso.Items.ItemReceived"</param>
+        /// <param name="eventDataType">The type of eventdata corresponding to this eventType, such as typeof(ContosoItemReceivedEventData)</param>
+        /// <returns>True if the specified mapping exists.</returns>
         public bool TryGetCustomEventMapping(string eventType, out Type eventDataType)
         {
             this.ValidateEventType(eventType);
 
-            if (this.customEventTypeMapping.TryGetValue(eventType, out eventDataType))
-            {
-                return true;
-            }
-
-            return false;
+            return this.customEventTypeMapping.TryGetValue(eventType, out eventDataType);
         }
 
-        public IReadOnlyList<KeyValuePair<string, Type>> GetAllCustomEventMappings()
+        /// <summary>
+        /// List all registered custom event mappings.
+        /// </summary>
+        /// <returns>An IEnumerable of mappings</returns>
+        public IEnumerable<KeyValuePair<string, Type>> ListAllCustomEventMappings()
         {
-            var customEventMappings = new List<KeyValuePair<string, Type>>();
-
             foreach (KeyValuePair<string, Type> kvp in this.customEventTypeMapping)
             {
-                customEventMappings.Add(kvp);
+                yield return kvp;
             }
-
-            return customEventMappings.AsReadOnly();
         }
 
+        /// <summary>
+        /// Removes a custom event mapping.
+        /// </summary>
+        /// <param name="eventType">The registered event type, such as "Contoso.Items.ItemReceived"</param>
+        /// <param name="eventDataType">The type of eventdata corresponding to this eventType, such as typeof(ContosoItemReceivedEventData)</param>
+        /// <returns>True if the specified mapping was removed successfully.</returns>
         public bool TryRemoveCustomEventMapping(string eventType, out Type eventDataType)
         {
             this.ValidateEventType(eventType);

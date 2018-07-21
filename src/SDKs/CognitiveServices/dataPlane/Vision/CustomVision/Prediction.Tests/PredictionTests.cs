@@ -16,7 +16,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImage", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionEndpointClient();
+                IPredictionEndpoint client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
                 {
                     ImagePrediction results = client.PredictImageAsync(ProjectId, stream).Result;
@@ -32,7 +32,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImageNoStore", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionEndpointClient();
+                IPredictionEndpoint client = GetPredictionClientClient();
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "test_image.jpg"), FileMode.Open))
                 {
                     ImagePrediction results = client.PredictImageWithNoStoreAsync(ProjectId, stream).Result;
@@ -49,7 +49,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImageUrl", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionEndpointClient();
+                IPredictionEndpoint client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);
 
                 ImagePrediction results = client.PredictImageUrlAsync(ProjectId, url).Result;
@@ -65,7 +65,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "PredictImageUrlNoStore", RecorderMode);
 
-                IPredictionEndpoint client = GetPredictionEndpointClient();
+                IPredictionEndpoint client = GetPredictionClientClient();
                 ImageUrl url = new ImageUrl(testImageUrl);
 
                 ImagePrediction results = client.PredictImageUrlWithNoStoreAsync(ProjectId, url).Result;

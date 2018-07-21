@@ -6,15 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services ComputerVision APIs.</Description>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
-    1) Support for the revised RecognizeText method.  Instead of boolean flag for handwriting recognition, a enumerated mode is provided.
-    2) The scalars for values like confidence, age, etc., are no longer nullable values.  If the containing object exists, the value will be present.
-    3) Hints for image tags are now exposed when examining the result of AnalyzeImage.
-    4) Return type has changed when you request AnalyzeImage with details of landmarks.
+    1) Support customizing service endpoints.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

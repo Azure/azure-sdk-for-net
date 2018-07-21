@@ -182,11 +182,6 @@ namespace Microsoft.Azure.Management.Sql
         IDatabaseUsagesOperations DatabaseUsages { get; }
 
         /// <summary>
-        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
-        /// </summary>
-        IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
-
-        /// <summary>
         /// Gets the IDatabaseAutomaticTuningOperations.
         /// </summary>
         IDatabaseAutomaticTuningOperations DatabaseAutomaticTuning { get; }
@@ -240,6 +235,26 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IVirtualNetworkRulesOperations.
         /// </summary>
         IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
+
+        /// <summary>
+        /// Gets the IExtendedDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedDatabaseBlobAuditingPoliciesOperations ExtendedDatabaseBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IExtendedServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IServerBlobAuditingPoliciesOperations.
+        /// </summary>
+        IServerBlobAuditingPoliciesOperations ServerBlobAuditingPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDatabaseBlobAuditingPoliciesOperations.
+        /// </summary>
+        IDatabaseBlobAuditingPoliciesOperations DatabaseBlobAuditingPolicies { get; }
 
         /// <summary>
         /// Gets the IDatabaseVulnerabilityAssessmentRuleBaselinesOperations.

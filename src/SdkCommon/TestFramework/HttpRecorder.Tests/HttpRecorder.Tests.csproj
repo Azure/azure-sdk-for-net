@@ -12,8 +12,7 @@
     <PackageTags>Http Recorder tests $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    <TestProjectType>true</TestProjectType>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,5 +27,8 @@
     <None Update="SampleData\BinaryData\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>  
+  <ItemGroup>
+    <Folder Include="MockResponse\" />
   </ItemGroup>
 </Project>
