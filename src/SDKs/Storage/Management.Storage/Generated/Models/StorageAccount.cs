@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">Gets the SKU.</param>
         /// <param name="kind">Gets the Kind. Possible values include:
-        /// 'Storage', 'StorageV2', 'BlobStorage'</param>
+        /// 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
+        /// 'BlockBlobStorage'</param>
         /// <param name="identity">The identity of the resource.</param>
         /// <param name="provisioningState">Gets the status of the storage
         /// account at the time the operation was called. Possible values
@@ -128,7 +129,7 @@ namespace Microsoft.Azure.Management.Storage.Models
 
         /// <summary>
         /// Gets the Kind. Possible values include: 'Storage', 'StorageV2',
-        /// 'BlobStorage'
+        /// 'BlobStorage', 'FileStorage', 'BlockBlobStorage'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public Kind? Kind { get; private set; }

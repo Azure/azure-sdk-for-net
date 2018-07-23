@@ -62,7 +62,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="networkRuleSet">Network rule set</param>
         /// <param name="kind">Optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
-        /// include: 'Storage', 'StorageV2', 'BlobStorage'</param>
+        /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
+        /// 'BlockBlobStorage'</param>
         public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Kind? kind = default(Kind?))
         {
             Sku = sku;
@@ -146,7 +147,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets optional. Indicates the type of storage account.
         /// Currently only StorageV2 value supported by server. Possible values
-        /// include: 'Storage', 'StorageV2', 'BlobStorage'
+        /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
+        /// 'BlockBlobStorage'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public Kind? Kind { get; set; }
