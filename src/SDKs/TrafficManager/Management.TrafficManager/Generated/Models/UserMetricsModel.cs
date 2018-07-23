@@ -11,36 +11,38 @@
 namespace Microsoft.Azure.Management.TrafficManager.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The core properties of ARM resources
+    /// Class representing Traffic Manager User Metrics.
     /// </summary>
-    public partial class Resource : IResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class UserMetricsModel : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the UserMetricsModel class.
         /// </summary>
-        public Resource()
+        public UserMetricsModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the UserMetricsModel class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Network/trafficmanagerProfiles.</param>
-        public Resource(string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="key">The key returned by the User Metrics
+        /// operation.</param>
+        public UserMetricsModel(string id = default(string), string name = default(string), string type = default(string), string key = default(string))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
+            Key = key;
             CustomInit();
         }
 
@@ -50,24 +52,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}
+        /// Gets or sets the key returned by the User Metrics operation.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the resource
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource. Ex-
-        /// Microsoft.Network/trafficmanagerProfiles.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        [JsonProperty(PropertyName = "properties.key")]
+        public string Key { get; set; }
 
     }
 }

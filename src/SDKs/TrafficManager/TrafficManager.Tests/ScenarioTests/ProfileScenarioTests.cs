@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using global::TrafficManager.Tests.Helpers;
@@ -25,11 +26,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 string profileName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
-                // Create the profile
-                trafficManagerClient.Profiles.CreateOrUpdate(
-                    resourceGroup.Name, 
-                    profileName,
-                    TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
+                TrafficManagerHelper.CreateOrUpdateDefaultProfileWithExternalEndpoint(
+                    trafficManagerClient,
+                    resourceGroup.Name,
+                    profileName);
 
                 // Get the profile
                 trafficManagerClient.Profiles.Get(
@@ -42,8 +42,6 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
             }
         }
 
-
-
         [Fact]
         public void TrafficViewEnableDisableQuerySizeScope()
         {
@@ -53,45 +51,47 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 
                 string resourceGroupName = TrafficManagerHelper.GetPersistentResourceGroupName();
                 string profileName = TrafficManagerHelper.GetPersistentTrafficViewProfile();
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
-                Profile profile = TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName);
-                profile.Endpoints = null;
-                profile.TrafficViewEnrollmentStatus = "Disabled";
+                Profile profile = TrafficManagerHelper.CreateOrUpdateDefaultProfileWithExternalEndpoint(
+                    trafficManagerClient,
+                    resourceGroup.Name,
+                    profileName);
 
-                profile.Endpoints = new[]
-                {
-                    new Endpoint
-                    {
-                        Id = null,
-                        Name = "My external endpoint",
-                        Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                        TargetResourceId = null,
-                        Target = "foobar.contoso.com",
-                        EndpointLocation = "North Europe",
-                        EndpointStatus = "Enabled"
-                    } 
-                };
-
-                // Create the profile
-                trafficManagerClient.Profiles.CreateOrUpdate(
-                    resourceGroupName,
-                    profileName,
-                    profile);
-
-
-
-
+                bool authorized = true;
+                bool found = true;
                 try
                 {
                     trafficManagerClient.HeatMap.Get(resourceGroupName, profileName);
                 }
                 catch (Microsoft.Rest.Azure.CloudException e)
                 {
-                    Assert.Contains("NotAuthorized", e.Body.Code);
+                    authorized = !e.Body.Code.Contains("NotAuthorized");
+
+                    // 'NotFound' can happen if there were no queries to the endpoint since it was provisioned.
+                    found = !(authorized && e.Body.Code.Contains("NotFound")); // Let's hope you were paying attention in that math logic class.
                 }
 
+                if (!found)
+                {
+                    // Pause, then retry once.
+                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(120));
+                    try
+                    {
+                        trafficManagerClient.HeatMap.Get(resourceGroupName, profileName);
+                    }
+                    catch (Microsoft.Rest.Azure.CloudException e)
+                    {
+                        authorized = !e.Body.Code.Contains("NotAuthorized");
+                    }
+                }
+
+                Assert.False(authorized);
+
+                // Change the enrollment status and update the profile.
+                // Clear the endpoints first; those are not serializable as child objects because they have their own resource info.
                 profile.TrafficViewEnrollmentStatus = "Enabled";
-                // Update the profile
+                profile.Endpoints = null;
                 trafficManagerClient.Profiles.CreateOrUpdate(
                     resourceGroupName,
                     profileName,
@@ -99,27 +99,20 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
 
                 HeatMapModel heatMapModel = trafficManagerClient.HeatMap.Get(resourceGroupName, profileName);
 
-
-
                 Assert.True(heatMapModel.StartTime.Value.CompareTo(System.DateTime.MinValue) > 0, "Invalid start time");
                 Assert.True(heatMapModel.StartTime.Value.CompareTo(heatMapModel.EndTime.Value) <= 0, "Start time smaller than end time");
                 Assert.True(heatMapModel.Endpoints.Count > 0, "Endpoint list empty, Not really an error but can not run test with no heatmap data.");
                 foreach(HeatMapEndpoint ep in heatMapModel.Endpoints)
                 {
-                    Assert.True(ep.EndpointId >= 0, "Endpoint id out of range");
+                    Assert.True((ep.EndpointId ?? -1) >= 0, "Endpoint id null or out of range");
                     Assert.False(string.IsNullOrWhiteSpace(ep.ResourceId), "Resource Id undefined");
                 }
                 foreach(TrafficFlow tf in heatMapModel.TrafficFlows)
                 {
                     Assert.False(string.IsNullOrWhiteSpace(tf.SourceIp), "SourceIp is undefined");
-                    Assert.True(tf.Latitude >= -90.0 && tf.Latitude <= 90.0, "Latitude out of range");
-                    Assert.True(tf.Longitude >= -180.0 && tf.Longitude <= 180.0, "Longitude out of range");
                     foreach(QueryExperience qe in tf.QueryExperiences)
                     {
                         Assert.True(heatMapModel.Endpoints.Where(ep => ep.EndpointId == qe.EndpointId).Count() > 0, "Query Experience does not match an existing endpoint");
-                        Assert.True(qe.QueryCount > 0, "Query count is 0");
-                        Assert.True(qe.Latency >= 0, "Latency out of range");
-
                     }
                 }
 
@@ -154,36 +147,12 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 string profileName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
-                Profile profile = TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName);
-                profile.Endpoints = null;
-                profile.TrafficViewEnrollmentStatus = "Enabled";
-
-                // Create the profile
-                trafficManagerClient.Profiles.CreateOrUpdate(
+                TrafficManagerHelper.CreateOrUpdateDefaultProfileWithExternalEndpoint(
+                    trafficManagerClient,
                     resourceGroup.Name,
                     profileName,
-                    profile);
-
-                profile.Endpoints = new[]
-                {
-                    new Endpoint
-                    {
-                        Id = null,
-                        Name = "My external endpoint",
-                        Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                        TargetResourceId = null,
-                        Target = "foobar.contoso.com",
-                        EndpointLocation = "North Europe",
-                        EndpointStatus = "Enabled"
-                    } 
-                };
-
-                // Create the profile
-                trafficManagerClient.Profiles.CreateOrUpdate(
-                    resourceGroup.Name,
-                    profileName,
-                    profile);
-
+                    "Performance",
+                    "Enabled");
 
                 try
                 {
@@ -207,36 +176,25 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 string profileName = TrafficManagerHelper.GenerateName();
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
-                Profile profile = TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName);
-                profile.Endpoints = null;
-
                 // Create the profile
-                trafficManagerClient.Profiles.CreateOrUpdate(
-                    resourceGroup.Name,
-                    profileName,
-                    profile);
+                Profile profile = TrafficManagerHelper.CreateOrUpdateDefaultEmptyProfile(
+                    trafficManagerClient,
+                    resourceGroupName,
+                    profileName);
 
-                profile.Endpoints = new[]
-                {
-                    new Endpoint
-                    {
-                        Id = null,
-                        Name = "My external endpoint",
-                        Type = "Microsoft.network/TrafficManagerProfiles/ExternalEndpoints",
-                        TargetResourceId = null,
-                        Target = "foobar.contoso.com",
-                        EndpointLocation = "North Europe",
-                        EndpointStatus = "Enabled"
-                    } 
-                };
+                Assert.Equal(0, profile.Endpoints.Count);
 
-                // Create the profile
-                trafficManagerClient.Profiles.CreateOrUpdate(
+                // Create the endpoint and associate it with the resource group and profile.
+                TrafficManagerHelper.CreateOrUpdateDefaultEndpoint(trafficManagerClient, resourceGroupName, profileName);
+
+                // Confirm the endpoint is associated with the profile.
+                Profile updatedProfile = trafficManagerClient.Profiles.Get(
                     resourceGroup.Name,
-                    profileName,
-                    profile);
-                
-                // Delete the profile
+                    profileName);
+
+                Assert.Equal(1, updatedProfile.Endpoints.Count);
+
+                // Delete the profile. The associated endpoint will also be deleted.
                 trafficManagerClient.Profiles.DeleteWithHttpMessagesAsync(resourceGroup.Name, profileName);
                 this.DeleteResourceGroup(context, resourceGroupName);
             }
@@ -258,10 +216,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                     string profileName = TrafficManagerHelper.GenerateName();
                     profileNames.Add(profileName);
 
-                    trafficManagerClient.Profiles.CreateOrUpdate(
-                        resourceGroup.Name,
-                        profileName,
-                        TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
+                    TrafficManagerHelper.CreateOrUpdateDefaultProfileWithExternalEndpoint(
+                        trafficManagerClient,
+                        resourceGroupName,
+                        profileName);
                 }
 
                 IEnumerable<Profile> listResponse = trafficManagerClient.Profiles.ListByResourceGroupWithHttpMessagesAsync(resourceGroup.Name).Result.Body;
@@ -294,10 +252,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                     string profileName = TrafficManagerHelper.GenerateName();
                     profileNames.Add(profileName);
 
-                    trafficManagerClient.Profiles.CreateOrUpdate(
-                        resourceGroup.Name,
-                        profileName,
-                        TrafficManagerHelper.GenerateDefaultProfileWithExternalEndpoint(profileName));
+                    TrafficManagerHelper.CreateOrUpdateDefaultProfileWithExternalEndpoint(
+                        trafficManagerClient,
+                        resourceGroupName,
+                        profileName);
                 }
 
                 IEnumerable<Profile> listResponse = trafficManagerClient.Profiles.ListBySubscriptionWithHttpMessagesAsync().Result.Body;
@@ -327,11 +285,10 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                 ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
 
                 // Create the profile
-                var expectedProfile = TrafficManagerHelper.GenerateDefaultProfileWithCustomHeadersAndStatusCodeRanges(profileName);
-                trafficManagerClient.Profiles.CreateOrUpdate(
-                    resourceGroup.Name,
-                    profileName,
-                    expectedProfile);
+                var expectedProfile = TrafficManagerHelper.CreateOrUpdateProfileWithCustomHeadersAndStatusCodeRanges(
+                    trafficManagerClient,
+                    resourceGroupName,
+                    profileName);
 
                 // Get the profile
                 var actualProfile = trafficManagerClient.Profiles.Get(
@@ -359,6 +316,76 @@ namespace Microsoft.Azure.Management.TrafficManager.Testing.ScenarioTests
                         Assert.Equal(expectedProfile.Endpoints[i].CustomHeaders[j].Value, actualProfile.Endpoints[i].CustomHeaders[j].Value);
                     }
                 }
+
+                // Delete the profile
+                trafficManagerClient.Profiles.Delete(resourceGroup.Name, profileName);
+
+                this.DeleteResourceGroup(context, resourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void CrudProfileWithCustomSubnets()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
+
+                string resourceGroupName = TrafficManagerHelper.GenerateName();
+                string profileName = TrafficManagerHelper.GenerateName();
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
+
+                // Create the profile
+                var expectedProfile = TrafficManagerHelper.CreateOrUpdateProfileWithSubnets(
+                    trafficManagerClient,
+                    resourceGroupName,
+                    profileName);
+
+                // Get the profile
+                var actualProfile = trafficManagerClient.Profiles.Get(
+                    resourceGroup.Name,
+                    profileName);
+
+                for (var i = 0; i < expectedProfile.Endpoints.Count; ++i)
+                {
+                    Assert.Equal(2, expectedProfile.Endpoints[i].Subnets.Count);
+                    Assert.Equal($"1.2.{i}.0", expectedProfile.Endpoints[i].Subnets[0].First);
+                    Assert.Equal($"1.2.{i}.250", expectedProfile.Endpoints[i].Subnets[0].Last);
+                    Assert.Equal($"3.4.{i}.0", expectedProfile.Endpoints[i].Subnets[1].First);
+                    Assert.Equal(24, expectedProfile.Endpoints[i].Subnets[1].Scope);
+                }
+
+                // Delete the profile
+                trafficManagerClient.Profiles.Delete(resourceGroup.Name, profileName);
+
+                this.DeleteResourceGroup(context, resourceGroupName);
+            }
+        }
+
+        [Fact]
+        public void CrudProfileWithMultiValue()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                TrafficManagerManagementClient trafficManagerClient = this.GetTrafficManagerManagementClient(context);
+
+                string resourceGroupName = TrafficManagerHelper.GenerateName();
+                string profileName = TrafficManagerHelper.GenerateName();
+                ResourceGroup resourceGroup = this.CreateResourceGroup(context, resourceGroupName);
+
+                // Create the profile
+                var expectedProfile = TrafficManagerHelper.CreateOrUpdateProfileWithMultiValue(
+                    trafficManagerClient,
+                    resourceGroupName,
+                    profileName,
+                    3);
+
+                // Get the profile
+                var actualProfile = trafficManagerClient.Profiles.Get(
+                    resourceGroup.Name,
+                    profileName);
+
+                Assert.Equal(3, expectedProfile.MaxReturn);
 
                 // Delete the profile
                 trafficManagerClient.Profiles.Delete(resourceGroup.Name, profileName);
