@@ -4,10 +4,12 @@
 
 ###  Feature Additions
 
-## Version 1.2.0
+## Version 2.0.0
 
 ###  Feature Additions
-* Updated UserProperties model in Activities
+
+#### Breaking Changes
+* Updated UserProperties type in Activities
 
 ## Version 1.1.0
 
