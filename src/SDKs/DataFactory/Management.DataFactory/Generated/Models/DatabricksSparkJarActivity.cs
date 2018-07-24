@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// method.</param>
         /// <param name="libraries">A list of libraries to be installed on the
         /// cluster that will execute the job.</param>
-        public DatabricksSparkJarActivity(string name, object mainClassName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> parameters = default(IList<object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
+        public DatabricksSparkJarActivity(string name, object mainClassName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> parameters = default(IList<object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             MainClassName = mainClassName;
