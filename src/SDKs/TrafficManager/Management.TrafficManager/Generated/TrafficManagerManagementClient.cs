@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.TrafficManager
         public virtual IHeatMapOperations HeatMap { get; private set; }
 
         /// <summary>
+        /// Gets the ITrafficManagerUserMetricsKeysOperations.
+        /// </summary>
+        public virtual ITrafficManagerUserMetricsKeysOperations TrafficManagerUserMetricsKeys { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the TrafficManagerManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -297,8 +302,9 @@ namespace Microsoft.Azure.Management.TrafficManager
             Profiles = new ProfilesOperations(this);
             GeographicHierarchies = new GeographicHierarchiesOperations(this);
             HeatMap = new HeatMapOperations(this);
+            TrafficManagerUserMetricsKeys = new TrafficManagerUserMetricsKeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01";
+            ApiVersion = "2018-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
