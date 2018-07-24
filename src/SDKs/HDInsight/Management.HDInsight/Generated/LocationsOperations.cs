@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.HDInsight
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ConfigurationsOperations operations.
+    /// LocationsOperations operations.
     /// </summary>
-    internal partial class ConfigurationsOperations : IServiceOperations<HDInsightManagementClient>, IConfigurationsOperations
+    internal partial class LocationsOperations : IServiceOperations<HDInsightManagementClient>, ILocationsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ConfigurationsOperations class.
+        /// Initializes a new instance of the LocationsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ConfigurationsOperations(HDInsightManagementClient client)
+        internal LocationsOperations(HDInsightManagementClient client)
         {
             if (client == null)
             {
@@ -51,44 +51,10 @@ namespace Microsoft.Azure.Management.HDInsight
         public HDInsightManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Gets the capabilities for the specified location.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the cluster.
-        /// </param>
-        /// <param name='configurationName'>
-        /// The name of the cluster configuration.
-        /// </param>
-        /// <param name='parameters'>
-        /// The cluster configurations.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> UpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginUpdateHTTPSettingsWithHttpMessagesAsync(resourceGroupName, clusterName, configurationName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The configuration object for the specified cluster.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the cluster.
-        /// </param>
-        /// <param name='configurationName'>
-        /// The name of the cluster configuration.
+        /// <param name='location'>
+        /// The location.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -111,23 +77,15 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IDictionary<string, string>>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CapabilitiesResult>> GetCapabilitiesWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (resourceGroupName == null)
+            if (location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (clusterName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
-            }
-            if (configurationName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "configurationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (Client.ApiVersion == null)
             {
@@ -140,19 +98,15 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("configurationName", configurationName);
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCapabilities", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/configurations/{configurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{configurationName}", System.Uri.EscapeDataString(configurationName));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -246,7 +200,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IDictionary<string, string>>();
+            var _result = new AzureOperationResponse<CapabilitiesResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -259,7 +213,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CapabilitiesResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -279,19 +233,10 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Lists the usages for the specified location.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the cluster.
-        /// </param>
-        /// <param name='configurationName'>
-        /// The name of the cluster configuration.
-        /// </param>
-        /// <param name='parameters'>
-        /// The cluster configurations.
+        /// <param name='location'>
+        /// The location.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -302,6 +247,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -311,31 +259,19 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginUpdateHTTPSettingsWithHttpMessagesAsync(string resourceGroupName, string clusterName, string configurationName, IDictionary<string, string> parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsagesListResult>> ListUsagesWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (resourceGroupName == null)
+            if (location == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (clusterName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
-            }
-            if (configurationName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "configurationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -344,20 +280,15 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("configurationName", configurationName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("location", location);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdateHTTPSettings", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListUsages", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/configurations/{configurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{configurationName}", System.Uri.EscapeDataString(configurationName));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -370,7 +301,7 @@ namespace Microsoft.Azure.Management.HDInsight
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -401,12 +332,6 @@ namespace Microsoft.Azure.Management.HDInsight
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -427,7 +352,7 @@ namespace Microsoft.Azure.Management.HDInsight
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -457,12 +382,30 @@ namespace Microsoft.Azure.Management.HDInsight
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<UsagesListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<UsagesListResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {

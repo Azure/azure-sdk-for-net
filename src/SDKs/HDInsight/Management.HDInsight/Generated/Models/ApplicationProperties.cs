@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     /// <summary>
     /// The HDInsight cluster application GET response.
     /// </summary>
-    public partial class ApplicationGetProperties
+    public partial class ApplicationProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationGetProperties class.
+        /// Initializes a new instance of the ApplicationProperties class.
         /// </summary>
-        public ApplicationGetProperties()
+        public ApplicationProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationGetProperties class.
+        /// Initializes a new instance of the ApplicationProperties class.
         /// </summary>
         /// <param name="computeProfile">The list of roles in the
         /// cluster.</param>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// identifier.</param>
         /// <param name="additionalProperties">The additional properties for
         /// application.</param>
-        public ApplicationGetProperties(ComputeProfile computeProfile = default(ComputeProfile), IList<RuntimeScriptAction> installScriptActions = default(IList<RuntimeScriptAction>), IList<RuntimeScriptAction> uninstallScriptActions = default(IList<RuntimeScriptAction>), IList<ApplicationGetHttpsEndpoint> httpsEndpoints = default(IList<ApplicationGetHttpsEndpoint>), IList<ApplicationGetEndpoint> sshEndpoints = default(IList<ApplicationGetEndpoint>), string provisioningState = default(string), string applicationType = default(string), string applicationState = default(string), IList<Errors> errors = default(IList<Errors>), string createdDate = default(string), string marketplaceIdentifier = default(string), string additionalProperties = default(string))
+        public ApplicationProperties(ComputeProfile computeProfile = default(ComputeProfile), IList<RuntimeScriptAction> installScriptActions = default(IList<RuntimeScriptAction>), IList<RuntimeScriptAction> uninstallScriptActions = default(IList<RuntimeScriptAction>), IList<ApplicationGetHttpsEndpoint> httpsEndpoints = default(IList<ApplicationGetHttpsEndpoint>), IList<ApplicationGetEndpoint> sshEndpoints = default(IList<ApplicationGetEndpoint>), string provisioningState = default(string), string applicationType = default(string), string applicationState = default(string), IList<Errors> errors = default(IList<Errors>), string createdDate = default(string), string marketplaceIdentifier = default(string), string additionalProperties = default(string))
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;

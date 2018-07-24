@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>3.0.2-preview</Version>
+		<Version>3.0.3-preview</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public preview release of the Azure HDInsight SDK. Added support for MLServices clusters.
+        This is a public preview release of the Azure HDInsight SDK. Added support for ADLS Gen 2.
       ]]>
 		</PackageReleaseNotes>
     

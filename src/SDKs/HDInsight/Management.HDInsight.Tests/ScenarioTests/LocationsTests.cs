@@ -22,7 +22,7 @@ namespace Management.HDInsight.Tests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     [Collection("ScenarioTests")]
-    public class CapabilitiesTests
+    public class LocationsTests
     {
         [Fact]
         public void TestGetCapabilities()
@@ -35,7 +35,7 @@ namespace Management.HDInsight.Tests
                 var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
                 var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(context, handler);
 
-                CapabilitiesResult capabilities = client.Location.GetCapabilities(HDInsightManagementTestUtilities.DefaultLocation);
+                CapabilitiesResult capabilities = client.Locations.GetCapabilities(HDInsightManagementTestUtilities.DefaultLocation);
                 Assert.NotNull(capabilities);
                 Assert.NotNull(capabilities.Features);
                 Assert.NotNull(capabilities.Quota);
@@ -43,6 +43,31 @@ namespace Management.HDInsight.Tests
                 Assert.NotNull(capabilities.Versions);
                 Assert.NotNull(capabilities.VmSizeFilters);
                 Assert.NotNull(capabilities.VmSizes);
+            }
+        }
+
+        [Fact]
+        public void TestGetUsages()
+        {
+            string suiteName = GetType().FullName;
+            string testName = "TestGetUsages";
+
+            using (MockContext context = MockContext.Start(suiteName, testName))
+            {
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(context, handler);
+
+                UsagesListResult usages = client.Locations.ListUsages(HDInsightManagementTestUtilities.DefaultLocation);
+                Assert.NotNull(usages);
+                Assert.NotNull(usages.Value);
+                foreach (Usage usage in usages.Value)
+                {
+                    Assert.NotNull(usage);
+                    Assert.NotNull(usage.CurrentValue);
+                    Assert.NotNull(usage.Limit);
+                    Assert.NotNull(usage.Name);
+                    Assert.NotNull(usage.Unit);
+                }
             }
         }
     }

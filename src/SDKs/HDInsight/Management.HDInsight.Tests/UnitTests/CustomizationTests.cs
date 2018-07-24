@@ -61,12 +61,13 @@ namespace Management.HDInsight.Tests.UnitTests
             string username = "admin";
             string password = "NewPassword123";
             client.Configurations.BeginEnablingHttp(ResourceGroupName, ClusterName, username, password);
-            client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, new HttpConnectivitySettings
-            {
-                EnabledCredential = "true",
-                Password = password,
-                Username = username
-            });
+            client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
+                ConfigurationsConverter.Convert(new HttpConnectivitySettings
+                {
+                    EnabledCredential = "true",
+                    Password = password,
+                    Username = username
+                }));
 
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
         }
@@ -77,10 +78,11 @@ namespace Management.HDInsight.Tests.UnitTests
             HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
 
             client.Configurations.BeginDisablingHttp(ResourceGroupName, ClusterName);
-            client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, new HttpConnectivitySettings
-            {
-                EnabledCredential = "false"
-            });
+            client.Configurations.BeginUpdateHTTPSettings(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
+                ConfigurationsConverter.Convert(new HttpConnectivitySettings
+                {
+                    EnabledCredential = "false"
+                }));
 
             Assert.Equal(handler.Requests[0], handler.Requests[1]);
         }
