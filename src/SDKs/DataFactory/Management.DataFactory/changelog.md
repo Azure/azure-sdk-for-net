@@ -8,7 +8,7 @@
 
 ###  Feature Additions
 
-#### Breaking Changes
+### Breaking Changes
 * Updated UserProperties type in Activities
 
 ## Version 1.1.0
