@@ -42,13 +42,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// applied.</param>
         /// <param name="condition">Condition to be used for filtering the
         /// input.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
-        public FilterActivity(string name, Expression items, Expression condition, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>))
-            : base(name, additionalProperties, description, dependsOn, userProperties)
+        public FilterActivity(string name, Expression items, Expression condition, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>))
+            : base(name, description, dependsOn, userProperties)
         {
             Items = items;
             Condition = condition;

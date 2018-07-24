@@ -41,8 +41,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="pythonFile">The URI of the Python file to be executed.
         /// DBFS paths are supported. Type: string (or Expression with
         /// resultType string).</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
@@ -52,8 +50,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// passed to the Python file.</param>
         /// <param name="libraries">A list of libraries to be installed on the
         /// cluster that will execute the job.</param>
-        public DatabricksSparkPythonActivity(string name, object pythonFile, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> parameters = default(IList<object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
-            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
+        public DatabricksSparkPythonActivity(string name, object pythonFile, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> parameters = default(IList<object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
+            : base(name, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             PythonFile = pythonFile;
             Parameters = parameters;

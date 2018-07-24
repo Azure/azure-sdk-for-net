@@ -42,8 +42,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Boolean. The loop will continue until this expression evaluates to
         /// true</param>
         /// <param name="activities">List of activities to execute.</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
@@ -54,8 +52,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string
         /// (or Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public UntilActivity(string name, Expression expression, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), object timeout = default(object))
-            : base(name, additionalProperties, description, dependsOn, userProperties)
+        public UntilActivity(string name, Expression expression, IList<Activity> activities, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), object timeout = default(object))
+            : base(name, description, dependsOn, userProperties)
         {
             Expression = expression;
             Timeout = timeout;

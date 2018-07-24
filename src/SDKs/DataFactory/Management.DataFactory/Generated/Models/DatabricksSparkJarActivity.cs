@@ -40,8 +40,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// the main method to be executed. This class must be contained in a
         /// JAR provided as a library. Type: string (or Expression with
         /// resultType string).</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
@@ -51,8 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// method.</param>
         /// <param name="libraries">A list of libraries to be installed on the
         /// cluster that will execute the job.</param>
-        public DatabricksSparkJarActivity(string name, object mainClassName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> parameters = default(IList<object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
-            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
+        public DatabricksSparkJarActivity(string name, object mainClassName, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<object> parameters = default(IList<object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
+            : base(name, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             MainClassName = mainClassName;
             Parameters = parameters;

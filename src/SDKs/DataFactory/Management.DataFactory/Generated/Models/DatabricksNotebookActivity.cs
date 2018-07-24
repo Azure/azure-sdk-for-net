@@ -39,8 +39,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="notebookPath">The absolute path of the notebook to be
         /// run in the Databricks Workspace. This path must begin with a slash.
         /// Type: string (or Expression with resultType string).</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
@@ -52,8 +50,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// used.</param>
         /// <param name="libraries">A list of libraries to be installed on the
         /// cluster that will execute the job.</param>
-        public DatabricksNotebookActivity(string name, object notebookPath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> baseParameters = default(IDictionary<string, object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
-            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
+        public DatabricksNotebookActivity(string name, object notebookPath, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> baseParameters = default(IDictionary<string, object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
+            : base(name, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             NotebookPath = notebookPath;
             BaseParameters = baseParameters;
