@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="name">Activity name.</param>
         /// <param name="items">Collection to iterate.</param>
         /// <param name="activities">List of activities to execute .</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
@@ -48,8 +50,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="batchCount">Batch count to be used for controlling the
         /// number of parallel execution (when isSequential is set to
         /// false).</param>
-        public ForEachActivity(string name, Expression items, IList<Activity> activities, string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), bool? isSequential = default(bool?), int? batchCount = default(int?))
-            : base(name, description, dependsOn, userProperties)
+        public ForEachActivity(string name, Expression items, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), bool? isSequential = default(bool?), int? batchCount = default(int?))
+            : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             IsSequential = isSequential;
             BatchCount = batchCount;
