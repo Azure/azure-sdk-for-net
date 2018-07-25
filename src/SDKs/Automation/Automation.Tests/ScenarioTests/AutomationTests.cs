@@ -16,17 +16,17 @@ namespace Automation.Tests.ScenarioTests
 
     public class AutomationTest 
     {
-        [Fact(Skip = "Waiting on webservice deployment")]
+        [Fact]
         public void CanCreateUpdateDeleteRunbook()
         {
             using (var context = MockContext.Start(GetType().FullName))
             {
                 using (var testFixture = new AutomationTestBase(context))
                 {
-                    var runbookName = RunbookDefinition.TestFasterWorkflow.RunbookName;
-                    var runbookContent = RunbookDefinition.TestFasterWorkflow.PsScript;
+                    var runbookName = RunbookDefinition.TestPSScript.RunbookName;
+                    var runbookContent = RunbookDefinition.TestPSScript.PsScript;
 
-                    testFixture.CreateRunbook(runbookName, runbookContent);
+                    testFixture.CreatePSScriptRunbook(runbookName, runbookContent);
                     var runbook = testFixture.GetRunbook(runbookName);
                     Assert.NotNull(runbook);
 
@@ -44,10 +44,11 @@ namespace Automation.Tests.ScenarioTests
                     Assert.False(runbook.LogVerbose);
                     Assert.Equal(runbook.Description, updatedRunbook.Description);
 
-                    var runbookContentV2 = RunbookDefinition.TestFasterWorkflowV2.PsScript;
+                    var runbookContentV2 = RunbookDefinition.TestPSScriptV2.PsScript;
                     testFixture.UpdateRunbookContent(runbookName, runbookContentV2);
-                    string updatedContent = testFixture.GetRunbookContent(runbookName);
-                    Assert.Equal(runbookContentV2, updatedContent);
+                    var updatedContent = testFixture.GetRunbookContent(runbookName);
+                    var reader = new StreamReader(updatedContent);
+                    Assert.Equal(runbookContentV2, reader.ReadToEnd());
 
                     testFixture.DeleteRunbook(runbookName);
 
