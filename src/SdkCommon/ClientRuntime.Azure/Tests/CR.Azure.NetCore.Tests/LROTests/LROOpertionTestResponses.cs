@@ -606,7 +606,7 @@ namespace CR.Azure.NetCore.Tests
                     ""type"": ""Microsoft.Cache/Redis"",
                     ""tags"": {},
                     ""properties"": {
-                        ""provisioningState"": NULL,
+                        ""provisioningState"": null,
                         ""redisVersion"": ""3.2.7"",
                         ""sku"": {
                             ""name"": ""Basic"",
