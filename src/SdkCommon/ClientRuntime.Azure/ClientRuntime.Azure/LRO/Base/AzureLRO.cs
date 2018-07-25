@@ -229,12 +229,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             // We call IsCheckingProvisioning here just to make sure this code should be treated as one unit, you always check for provisioning state only if it's applicable
             if (IsCheckingProvisioningStateApplicable() == true)  // Each verb can decide if Provisioning state is applicable and if it needs to be checked
             {
-                if (CurrentPollingState.RawBody != null &&
-                        CurrentPollingState.RawBody["properties"] != null &&
-                        CurrentPollingState.RawBody["properties"]["provisioningState"] != null)
-                {
-                    provisioningState = ((string)CurrentPollingState?.RawBody?["properties"]?["provisioningState"])?.Trim();
-                }
+                provisioningState = ((string)CurrentPollingState?.RawBody?["properties"]?["provisioningState"])?.Trim();
             }
 
             if(string.IsNullOrEmpty(provisioningState))
