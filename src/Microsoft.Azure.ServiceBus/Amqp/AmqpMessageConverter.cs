@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
         const int GuidSize = 16;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> sbMessages, bool batchable)
+        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> sbMessages)
         {
             if (sbMessages == null)
             {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             if (messageCount == 1 && firstAmqpMessage != null)
             {
-                firstAmqpMessage.Batchable = batchable;
+                firstAmqpMessage.Batchable = true;
                 return firstAmqpMessage;
             }
 
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     firstMessage.ViaPartitionKey;
             }
 
-            amqpMessage.Batchable = batchable;
+            amqpMessage.Batchable = true;
             return amqpMessage;
         }
 

@@ -92,7 +92,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             TransportType transportType = TransportType.Amqp,
             RetryPolicy retryPolicy = null)
             : this(entityPath, null, null, new ServiceBusConnection(endpoint, transportType, retryPolicy) {TokenProvider = tokenProvider}, null, retryPolicy)
-        {            
+        {
             this.OwnsConnection = true;
         }
 
@@ -119,9 +119,9 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <param name="viaEntityPath">The first destination of the message.</param>
         /// <param name="retryPolicy">The <see cref="RetryPolicy"/> that will be used when communicating with Service Bus. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>
-        /// This is mainly to be used when sending messages in a transaction. 
+        /// This is mainly to be used when sending messages in a transaction.
         /// When messages need to be sent across entities in a single transaction, this can be used to ensure
-        /// all the messages land initially in the same entity/partition for local transactions, and then 
+        /// all the messages land initially in the same entity/partition for local transactions, and then
         /// let service bus handle transferring the message to the actual destination.
         /// </remarks>
         public MessageSender(
@@ -524,7 +524,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         async Task OnSendAsync(IList<Message> messageList)
         {
             var timeoutHelper = new TimeoutHelper(this.OperationTimeout, true);
-            using (var amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageList, true))
+            using (var amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageList))
             {
                 SendingAmqpLink amqpLink = null;
                 try
