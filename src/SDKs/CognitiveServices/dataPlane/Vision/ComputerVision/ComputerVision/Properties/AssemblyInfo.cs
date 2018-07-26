@@ -7,7 +7,7 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Cognitive Services ComputerVision SDK")]
 [assembly: AssemblyDescription("Provides access to the Microsoft Cognitive Services ComputerVision APIs.")]
 
-[assembly: AssemblyVersion("3.1.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
 [assembly: AssemblyFileVersion("3.1.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
