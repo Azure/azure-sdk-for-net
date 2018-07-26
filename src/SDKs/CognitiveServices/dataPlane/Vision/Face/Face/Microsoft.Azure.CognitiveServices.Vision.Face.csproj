@@ -6,14 +6,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.Face</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Face APIs.</Description>
-    <Version>2.0.0-preview</Version>
+    <Version>2.1.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Face</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Face;Face API;Face SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     This is a preview release of the Cognitive Services Face SDK.
     
-    1) Support customizing service endpoints.
+    1) Support customizing service endpoints by assigning the endpoint string to FaceClient.Endpoint. The endpoint string can be found on Azure Portal, it should contain only protocol and hostname, for example: https://westus.api.cognitive.microsoft.com
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
