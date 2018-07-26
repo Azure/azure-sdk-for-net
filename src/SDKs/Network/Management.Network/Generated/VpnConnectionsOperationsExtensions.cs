@@ -170,12 +170,15 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VpnGateway.
+            /// </param>
             /// <param name='gatewayName'>
             /// The name of the gateway.
             /// </param>
-            public static IPage<VpnConnection> ListByVpnGateway(this IVpnConnectionsOperations operations, string gatewayName)
+            public static IPage<VpnConnection> ListByVpnGateway(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName)
             {
-                return operations.ListByVpnGatewayAsync(gatewayName).GetAwaiter().GetResult();
+                return operations.ListByVpnGatewayAsync(resourceGroupName, gatewayName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -184,15 +187,18 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VpnGateway.
+            /// </param>
             /// <param name='gatewayName'>
             /// The name of the gateway.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VpnConnection>> ListByVpnGatewayAsync(this IVpnConnectionsOperations operations, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VpnConnection>> ListByVpnGatewayAsync(this IVpnConnectionsOperations operations, string resourceGroupName, string gatewayName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByVpnGatewayWithHttpMessagesAsync(gatewayName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByVpnGatewayWithHttpMessagesAsync(resourceGroupName, gatewayName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
