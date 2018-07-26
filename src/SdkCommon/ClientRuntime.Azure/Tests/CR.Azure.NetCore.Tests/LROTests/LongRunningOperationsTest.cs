@@ -812,7 +812,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             fakeClient.LongRunningOperationRetryTimeout = 1;    // Set LRO retry time out to 1, so that Retry-After can be set during test mode
             var before = DateTime.Now;
             fakeClient.RedisOperations.CreateOrUpdate("rg", "redis", new RedisCreateOrUpdateParameters(), "1234");
-            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(7));
+            Assert.True(DateTime.Now - before >= TimeSpan.FromSeconds(6));
         }
 
         /// <summary>
