@@ -16,7 +16,7 @@
     Note: This package is the successor to the Microsoft.Azure.CognitiveServices.Language NuGet package.
 
     Changes in this release:
-    1. Support customizing service endpoints. 
+    1. Support customizing service endpoints by assigning the endpoint string to TextAnalyticsClient.Endpoint. The endpoint string can be found on Azure Portal, it should contain only protocol and hostname, for example: https://westus.api.cognitive.microsoft.com
     ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
