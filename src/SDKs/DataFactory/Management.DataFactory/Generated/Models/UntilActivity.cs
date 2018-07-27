@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). Type: string
         /// (or Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public UntilActivity(string name, Expression expression, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IDictionary<string, string> userProperties = default(IDictionary<string, string>), object timeout = default(object))
+        public UntilActivity(string name, Expression expression, IList<Activity> activities, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), object timeout = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             Expression = expression;
