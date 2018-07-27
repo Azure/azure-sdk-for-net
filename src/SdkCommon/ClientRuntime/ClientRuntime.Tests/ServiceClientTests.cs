@@ -111,6 +111,22 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         }
 
         [Fact]
+        public void RetryAfterHandleTest()
+        {
+            var http = new FakeHttpHandler();
+            http.NumberOfTimesToFail = 2;
+            http.StatusCodeToReturn = (HttpStatusCode) 429;
+            http.TweakResponse = (response) => { response.Headers.Add("Retry-After", "10"); };
+
+            var fakeClient = new FakeServiceClient(http, new RetryAfterDelegatingHandler());
+            
+            var result = fakeClient.DoStuffSync();
+
+            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+            Assert.Equal(2, http.NumberOfTimesFailedSoFar);
+        }
+
+        [Fact]
         public void FakeSvcClientWithHttpClient()
         {
             HttpClient hc = new HttpClient(new ContosoMessageHandler());
