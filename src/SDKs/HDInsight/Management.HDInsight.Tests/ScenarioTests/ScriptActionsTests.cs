@@ -98,7 +98,7 @@ namespace Management.HDInsight.Tests
                 Assert.Equal("Succeeded", scriptAction.Status);
 
                 //Promote non-persisted script.
-                client.ScriptExecutionHistory.Promote(rgName, clusterName, listHistoryResponse.First().ScriptExecutionId.Value);
+                client.ScriptExecutionHistory.Promote(rgName, clusterName, listHistoryResponse.First().ScriptExecutionId.Value.ToString());
 
                 //Execute failing script action.
                 string failingScriptUri = GetFailingScriptUri(createParams);
