@@ -83,6 +83,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> CreateWithHttpMessagesAsync(string faceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -131,8 +135,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists/{faceListId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -251,6 +256,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<FaceList>> GetWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -278,8 +287,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists/{faceListId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -413,6 +423,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> UpdateWithHttpMessagesAsync(string faceListId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -461,8 +475,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists/{faceListId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -579,6 +594,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> DeleteWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -606,8 +625,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists/{faceListId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -707,11 +727,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -723,8 +753,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -855,6 +886,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse> DeleteFaceWithHttpMessagesAsync(string faceListId, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -883,8 +918,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteFace", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists/{faceListId}/persistedFaces/{persistedFaceId}").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces/{persistedFaceId}";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -1014,6 +1050,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromUrlWithHttpMessagesAsync(string faceListId, string url, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -1060,8 +1100,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromUrl", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists/{faceListId}/persistedFaces").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();
             if (userData != null)
@@ -1227,6 +1268,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<PersistedFace>> AddFaceFromStreamWithHttpMessagesAsync(string faceListId, Stream image, string userData = default(string), IList<int> targetFace = default(IList<int>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceListId");
@@ -1268,8 +1313,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "AddFaceFromStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "facelists/{faceListId}/persistedFaces").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}/persistedFaces";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
             List<string> _queryParameters = new List<string>();
             if (userData != null)

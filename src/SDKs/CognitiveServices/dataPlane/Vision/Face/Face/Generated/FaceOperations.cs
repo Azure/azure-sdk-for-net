@@ -88,11 +88,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<IList<SimilarFace>>> FindSimilarWithHttpMessagesAsync(System.Guid faceId, string faceListId = default(string), IList<System.Guid?> faceIds = default(IList<System.Guid?>), int? maxNumOfCandidatesReturned = 20, FindSimilarMatchMode mode = default(FindSimilarMatchMode), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceListId != null)
             {
                 if (faceListId.Length > 64)
@@ -140,8 +150,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "FindSimilar", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "findsimilars").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "findsimilars";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -278,6 +289,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<GroupResult>> GroupWithHttpMessagesAsync(IList<System.Guid> faceIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (faceIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "faceIds");
@@ -306,8 +321,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Group", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "group").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "group";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -456,6 +472,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<IdentifyResult>>> IdentifyWithHttpMessagesAsync(string personGroupId, IList<System.Guid> faceIds, int? maxNumOfCandidatesReturned = 1, double? confidenceThreshold = default(double?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -510,8 +530,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "Identify", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "identify").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "identify";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -640,11 +661,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<HttpOperationResponse<VerifyResult>> VerifyFaceToFaceWithHttpMessagesAsync(System.Guid faceId1, System.Guid faceId2, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             VerifyFaceToFaceRequest body = new VerifyFaceToFaceRequest();
             body.FaceId1 = faceId1;
             body.FaceId2 = faceId2;
@@ -660,8 +691,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "VerifyFaceToFace", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "verify").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -813,6 +845,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (url == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "url");
@@ -837,8 +873,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "DetectWithUrl", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "detect").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {
@@ -1000,6 +1037,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<VerifyResult>> VerifyFaceToPersonWithHttpMessagesAsync(System.Guid faceId, string personGroupId, System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (personGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "personGroupId");
@@ -1034,8 +1075,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "VerifyFaceToPerson", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "verify").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "verify";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1187,6 +1229,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </return>
         public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (image == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "image");
@@ -1206,8 +1252,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 ServiceClientTracing.Enter(_invocationId, this, "DetectWithStream", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "detect").ToString();
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "detect";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             List<string> _queryParameters = new List<string>();
             if (returnFaceId != null)
             {
