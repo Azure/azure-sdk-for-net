@@ -7,6 +7,7 @@
     <AssemblyName>Microsoft.Azure.Test.HttpRecorder</AssemblyName>
     <PackageId>Microsoft.Azure.Test.HttpRecorder</PackageId>
     <PackageTags>Microsoft AutoRest ClientRuntime HttpRecorder REST;$(CommonNugetPackageTags)</PackageTags>
+    <DefaultItemExcludes>$(DefaultItemExcludes);HttpRecorder.csproj</DefaultItemExcludes>
     <PackageReleaseNotes>
       <![CDATA[
       1) Added support for serialzing binary data
@@ -17,12 +18,10 @@
     <TargetFrameworks>net452;netcoreapp1.1;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   
-  
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
-
     <PackageReference Include="Newtonsoft.Json" Version="6.0.8" />
   </ItemGroup>
 
@@ -30,7 +29,6 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
-
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
   
@@ -42,4 +40,5 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
+  
 </Project>

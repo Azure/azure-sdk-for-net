@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
     
     <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
+    <ProjectReference Include="..\..\ClientRuntime.Azure\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
   </ItemGroup>  
   <ItemGroup>  
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
@@ -27,8 +28,5 @@
     <None Update="SampleData\BinaryData\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>  
-  <ItemGroup>
-    <Folder Include="MockResponse\" />
   </ItemGroup>
 </Project>

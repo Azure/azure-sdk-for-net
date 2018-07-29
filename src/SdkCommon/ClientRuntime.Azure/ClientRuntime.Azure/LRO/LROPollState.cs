@@ -11,6 +11,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -46,7 +47,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
         internal string LastSerializationExceptionMessage { get; set; }
 
-        internal LROPollState(HttpOperationResponse<TResourceBody, TRequestHeaders> response, IAzureClient client) : base(response, client.LongRunningOperationRetryTimeout)
+        internal LROPollState(HttpOperationResponse<TResourceBody, TRequestHeaders> response, IAzureClient client) 
+            : base(response, client.LongRunningOperationRetryTimeout)
         {
             SdkClient = client;
             InitialResponse = response;
@@ -57,7 +59,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 
         internal async Task Poll(Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken)
-        {
+        {   
             await UpdateResourceFromPollingUri(customHeaders, cancellationToken);
 
             #region Error response returned while polling on AsyncOperationHeader
@@ -136,8 +138,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         /// <summary>
         /// Gets a resource from the specified URL.
         /// </summary>
-        /// <param name="client">IAzureClient</param>
-        /// <param name="operationUrl">URL of the resource.</param>
         /// <param name="customHeaders">Headers that will be added to request</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns></returns>
@@ -193,6 +193,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                 ServiceClientTracing.SendRequest(invocationId, httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
+
             HttpResponseMessage httpResponse = await SdkClient.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
             if (shouldTrace)
             {
