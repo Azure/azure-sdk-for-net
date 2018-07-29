@@ -27,6 +27,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Sample Value 2 - Prompt for login credentials:
         /// TEST_CSM_ORGID_AUTHENTICATION=SubscriptionId={subscription-id};AADAuthEndpoint=https://login.windows-ppe.net/;BaseUri=https://api-next.resources.windows-int.net/
         /// </summary>
-        private const string TestCSMOrgIdConnectionStringKey = "TEST_CSM_ORGID_AUTHENTICATION";
+        internal const string TestCSMOrgIdConnectionStringKey = "TEST_CSM_ORGID_AUTHENTICATION";
     }
 }

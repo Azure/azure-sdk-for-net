@@ -5,14 +5,14 @@ namespace HttpRecorder.BinaryData.Tests
 {
     using HttpRecorder.Tests;
     using HttpRecorder.Tests.DelegatingHandlers;
+    using HttpRecorder.Tests.MocServerTests;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.IO;
     using System.Net.Http;
     using Xunit;
-    using HttpRecorder.Tests.MockResponse;
 
-    public class BinaryDataMockServerTests : BaseMockServerTest
+    public class BinaryDataMoqServerTests : MoqServerTestBase
     {
         [Fact]
         public void RecordAndPlayBackAudioData()

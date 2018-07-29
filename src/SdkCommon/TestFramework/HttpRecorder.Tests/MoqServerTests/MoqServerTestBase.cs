@@ -1,20 +1,23 @@
-﻿using Microsoft.Azure.Test.HttpRecorder;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace HttpRecorder.Tests
+namespace HttpRecorder.Tests.MocServerTests
 {
-    public class BaseMockServerTest: IDisposable
+    using Microsoft.Azure.Test.HttpRecorder;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+
+    public class MoqServerTestBase : IDisposable
     {
         private string _currentDir;
 
         protected string CurrentDir { get => _currentDir; set => _currentDir = value; }
 
-        public BaseMockServerTest()
+        public MoqServerTestBase()
         {
             _currentDir = Directory.GetCurrentDirectory();// Environment.CurrentDirectory;
             HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
@@ -67,4 +70,7 @@ namespace HttpRecorder.Tests
             HttpMockServer.RecordsDirectory = "SessionRecords";
         }
     }
+
+
+
 }

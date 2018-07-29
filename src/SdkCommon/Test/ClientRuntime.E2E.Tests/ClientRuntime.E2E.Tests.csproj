@@ -16,15 +16,16 @@
     <PackageReference Include="Microsoft.Azure.Management.Compute" Version="[14.1.0-prerelease]" />
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="[5.0.1-preview,7.0)" />
 
-    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.10.99-Private]" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />
+    <!--<PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.10.99-Private]" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.6.0,2.0.0)" />-->
 
     <!--<ProjectReference Include="..\..\ClientRuntime\ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />-->
     <ProjectReference Include="..\..\ClientRuntime.Azure\ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
-    
-    <!--
     <ProjectReference Include="..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" />
     <ProjectReference Include="..\..\TestFramework\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />
+    
+    <!--
+    
 
     <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.5" />

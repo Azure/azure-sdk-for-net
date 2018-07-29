@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Azure.Test.HttpRecorder.ProcessRecordings;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
@@ -24,11 +25,26 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         //prevent multiple dispose events
         protected bool disposed = false;
         private List<ResourceGroupCleaner> undoHandlers = new List<ResourceGroupCleaner>();
+        private TestEnvironment _testFxEnvironment;
 
         static MockContext()
         {
         }
 
+        internal TestEnvironment TestFxEnvironment
+        {
+            get
+            {
+                if(_testFxEnvironment == null)
+                {
+                    string envStr = Environment.GetEnvironmentVariable(TestEnvironmentFactory.TestCSMOrgIdConnectionStringKey);
+                    _testFxEnvironment = new TestEnvironment(envStr);
+                }
+
+                return _testFxEnvironment;
+            }
+        }
+        
         /// <summary>
         /// Return a new UndoContext
         /// </summary>
@@ -59,7 +75,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <returns>A Service client using credentials and base uri from the current environment</returns>
         public T GetServiceClient<T>(bool internalBaseUri = false, params DelegatingHandler[] handlers) where T : class
         {
-            return GetServiceClient<T>(TestEnvironmentFactory.GetTestEnvironment(), internalBaseUri, handlers);
+            return GetServiceClient<T>(TestFxEnvironment, internalBaseUri, handlers);
         }
 
         /// <summary>
@@ -84,7 +100,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             bool internalBaseUri = false,
             params DelegatingHandler[] handlers) where T : class
         {
-            return GetGraphServiceClient<T>(TestEnvironmentFactory.GetTestEnvironment(), internalBaseUri, handlers);
+            //TestFxEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+            return GetGraphServiceClient<T>(TestFxEnvironment, internalBaseUri, handlers);
         }
 
         /// <summary>
@@ -122,7 +139,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <returns>A Service client using credentials and base uri from the current environment</returns>
         public T GetServiceClientWithCredentials<T>(object credentials, params DelegatingHandler[] handlers) where T : class
         {
-            return GetServiceClientWithCredentials<T>(TestEnvironmentFactory.GetTestEnvironment(), credentials, handlers: handlers);
+            return GetServiceClientWithCredentials<T>(TestFxEnvironment, credentials, handlers: handlers);
         }
         
         /// <summary>
@@ -283,7 +300,17 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
             }
 
-            HttpMockServer.Flush();
+            string recordedFilePath = HttpMockServer.Flush();
+
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                if(TestFxEnvironment.OptimizeRecordedFile == true)
+                {
+                    ProcessRecordedFiles procRecFile = new ProcessRecordedFiles(recordedFilePath);
+                    procRecFile.CompactLroPolling();
+                    procRecFile.SerializeCompactData();
+                }
+            }
         }
 
         private static bool MockServerInHandlers(List<DelegatingHandler> handlers)
