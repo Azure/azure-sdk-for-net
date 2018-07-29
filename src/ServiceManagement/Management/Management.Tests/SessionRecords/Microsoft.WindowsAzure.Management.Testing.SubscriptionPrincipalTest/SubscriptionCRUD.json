@@ -1,0 +1,266 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/bc6a9702-673d-4864-8238-cdf22c0054c4/servicePrincipals",
+      "EncodedRequestUri": "L2JjNmE5NzAyLTY3M2QtNDg2NC04MjM4LWNkZjIyYzAwNTRjNC9zZXJ2aWNlUHJpbmNpcGFscw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2018-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServicePrincipals xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ServicePrincipal>\r\n    <ServicePrincipalId>24d0438b-9245-44c8-b340-cd4e7d5cc583</ServicePrincipalId>\r\n    <Description>sdfdsf</Description>\r\n  </ServicePrincipal>\r\n</ServicePrincipals>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "288"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "4a885e69de8208ee9052d83c79644da2"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 29 Jul 2018 19:20:26 GMT"
+        ],
+        "Server": [
+          "1.0.9.1294",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/bc6a9702-673d-4864-8238-cdf22c0054c4/servicePrincipals",
+      "EncodedRequestUri": "L2JjNmE5NzAyLTY3M2QtNDg2NC04MjM4LWNkZjIyYzAwNTRjNC9zZXJ2aWNlUHJpbmNpcGFscw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2018-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServicePrincipals xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ServicePrincipal>\r\n    <ServicePrincipalId>24d0438b-9245-44c8-b340-cd4e7d5cc583</ServicePrincipalId>\r\n    <Description>sdfdsf</Description>\r\n  </ServicePrincipal>\r\n  <ServicePrincipal>\r\n    <ServicePrincipalId>5d825630-ab8f-4579-8719-8399b692609d</ServicePrincipalId>\r\n  </ServicePrincipal>\r\n</ServicePrincipals>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "402"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "3a379c2c36a6042dbdd292f4369c3526"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 29 Jul 2018 19:20:30 GMT"
+        ],
+        "Server": [
+          "1.0.9.1294",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/bc6a9702-673d-4864-8238-cdf22c0054c4/servicePrincipals",
+      "EncodedRequestUri": "L2JjNmE5NzAyLTY3M2QtNDg2NC04MjM4LWNkZjIyYzAwNTRjNC9zZXJ2aWNlUHJpbmNpcGFscw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2018-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServicePrincipals xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ServicePrincipal>\r\n    <ServicePrincipalId>24d0438b-9245-44c8-b340-cd4e7d5cc583</ServicePrincipalId>\r\n    <Description>sdfdsf</Description>\r\n  </ServicePrincipal>\r\n</ServicePrincipals>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "288"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "31fc3924ccb10223b2f1c99603b3340f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 29 Jul 2018 19:20:58 GMT"
+        ],
+        "Server": [
+          "1.0.9.1294",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/bc6a9702-673d-4864-8238-cdf22c0054c4/servicePrincipals",
+      "EncodedRequestUri": "L2JjNmE5NzAyLTY3M2QtNDg2NC04MjM4LWNkZjIyYzAwNTRjNC9zZXJ2aWNlUHJpbmNpcGFscw==",
+      "RequestMethod": "POST",
+      "RequestBody": "<ServicePrincipal xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <ServicePrincipalId>5d825630-ab8f-4579-8719-8399b692609d</ServicePrincipalId>\r\n</ServicePrincipal>",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/xml"
+        ],
+        "Content-Length": [
+          "170"
+        ],
+        "x-ms-version": [
+          "2018-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f1921f7bf9a1074fafb067e74145a1c3"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 29 Jul 2018 19:20:28 GMT"
+        ],
+        "Server": [
+          "1.0.9.1294",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/bc6a9702-673d-4864-8238-cdf22c0054c4/servicePrincipals/5d825630-ab8f-4579-8719-8399b692609d",
+      "EncodedRequestUri": "L2JjNmE5NzAyLTY3M2QtNDg2NC04MjM4LWNkZjIyYzAwNTRjNC9zZXJ2aWNlUHJpbmNpcGFscy81ZDgyNTYzMC1hYjhmLTQ1NzktODcxOS04Mzk5YjY5MjYwOWQ=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2018-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "<ServicePrincipal xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ServicePrincipalId>5d825630-ab8f-4579-8719-8399b692609d</ServicePrincipalId>\r\n</ServicePrincipal>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "216"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "91c15c3fae0e026fb1587db03a0fdfed"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 29 Jul 2018 19:20:49 GMT"
+        ],
+        "Server": [
+          "1.0.9.1294",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/bc6a9702-673d-4864-8238-cdf22c0054c4/servicePrincipals/5d825630-ab8f-4579-8719-8399b692609d",
+      "EncodedRequestUri": "L2JjNmE5NzAyLTY3M2QtNDg2NC04MjM4LWNkZjIyYzAwNTRjNC9zZXJ2aWNlUHJpbmNpcGFscy81ZDgyNTYzMC1hYjhmLTQ1NzktODcxOS04Mzk5YjY5MjYwOWQ=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2018-06-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "x-ms-servedbyregion": [
+          "ussouth3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "cb6c3ff668d50d49b1a2752b1088ddc5"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 29 Jul 2018 19:20:56 GMT"
+        ],
+        "Server": [
+          "1.0.9.1294",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "bc6a9702-673d-4864-8238-cdf22c0054c4"
+  }
+}

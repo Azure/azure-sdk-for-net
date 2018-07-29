@@ -134,6 +134,14 @@ namespace Microsoft.WindowsAzure.Management
         }
         
         /// <summary>
+        /// Operations for managing service principals for your subscription.
+        /// </summary>
+        ISubscriptionServicePrincipalOperations SubscriptionServicePrincipals
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call Get Operation Status to determine whether the operation
