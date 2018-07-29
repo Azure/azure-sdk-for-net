@@ -2,7 +2,7 @@
 <Project DefaultTargets="CopyGeneratedSources" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <PropertyGroup>
-        <HydraRootDir>..\..\hydra-specs-pr_hitesh\</HydraRootDir>
+        <HydraRootDir>..\..\hydra\</HydraRootDir>
         <SpecDirPrefix>Microsoft.WindowsAzure.</SpecDirPrefix>
         <LocationWildcard>.Specification\Generated\*Client.cs</LocationWildcard>
     </PropertyGroup>
