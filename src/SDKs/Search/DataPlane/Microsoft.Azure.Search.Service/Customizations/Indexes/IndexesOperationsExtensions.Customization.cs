@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search
     {
         /// <summary>
         /// Creates a new Azure Search index or updates an index if it already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -35,11 +36,14 @@ namespace Microsoft.Azure.Search
         /// or longer for very large indexes.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='accessCondition'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
+        /// <returns>
+        /// The index that was created or updated.
+        /// </returns>
         public static Index CreateOrUpdate(this IIndexesOperations operations, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
         {
             return operations.CreateOrUpdateAsync(index, allowIndexDowntime, searchRequestOptions, accessCondition).GetAwaiter().GetResult();
@@ -47,6 +51,7 @@ namespace Microsoft.Azure.Search
 
         /// <summary>
         /// Creates a new Azure Search index or updates an index if it already exists.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Index" />
         /// </summary>
         /// <param name='operations'>
         /// The operations group for this extension method.
@@ -63,14 +68,17 @@ namespace Microsoft.Azure.Search
         /// or longer for very large indexes.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='accessCondition'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <returns>
+        /// The index that was created or updated.
+        /// </returns>
         public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(index, allowIndexDowntime, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
@@ -89,7 +97,7 @@ namespace Microsoft.Azure.Search
         /// The name of the index.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <returns>
         /// <c>true</c> if the index exists; <c>false</c> otherwise.
@@ -112,7 +120,7 @@ namespace Microsoft.Azure.Search
         /// The name of the index.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
@@ -141,7 +149,7 @@ namespace Microsoft.Azure.Search
         /// The operations group for this extension method.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <returns>
         /// The list of all index names for the search service.
@@ -164,7 +172,7 @@ namespace Microsoft.Azure.Search
         /// The operations group for this extension method.
         /// </param>
         /// <param name='searchRequestOptions'>
-        /// Additional parameters for the operation
+        /// Additional parameters for the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
