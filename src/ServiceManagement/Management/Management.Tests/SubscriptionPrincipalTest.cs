@@ -37,8 +37,8 @@ namespace Microsoft.WindowsAzure.Management.Testing
                 // Retrive existing SPN's if any
                 var existingSPNs = mgmt.SubscriptionServicePrincipals.List();
 
-                // Generate a Random SPN Object Id
-                string newSPNObjectId = Guid.NewGuid().ToString();
+                // Random SPN Object Id
+                string newSPNObjectId = "5d825630-ab8f-4579-8719-8399b692609d";
 
                 // Add SPN to subscription
                 mgmt.SubscriptionServicePrincipals.Create(new SubscriptionServicePrincipalCreateParameters(newSPNObjectId));
