@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Az.Auth.Net452.Test
 {
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
 
 
-
-    public class TestBase
+    public class AuthFullDesktopTestBase
     {
-        //private string LiteralCnnString = string.Empty;
-
         private bool IsLiteralDirty = false;
         private string _literalCnnString;
         private ConnectionString _cs;
@@ -86,11 +85,11 @@ namespace Az.Auth.Net452.Test
         }
 
 
-        public TestBase(string connectionString)
+        public AuthFullDesktopTestBase(string connectionString)
         {
             LiteralCnnString = connectionString;
         }
 
-        public TestBase() { LiteralCnnString = string.Empty; }
+        public AuthFullDesktopTestBase() { LiteralCnnString = string.Empty; }
     }
 }
