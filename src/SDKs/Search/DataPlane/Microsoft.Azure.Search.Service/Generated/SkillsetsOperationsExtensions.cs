@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Search
     public static partial class SkillsetsOperationsExtensions
     {
             /// <summary>
-            /// Retrieves a Cognitive Search skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// Retrieves a cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Retrieves a Cognitive Search skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// Retrieves a cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Cognitive Search skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// Creates a new cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -74,8 +74,8 @@ namespace Microsoft.Azure.Search
             /// The name of the skillset to create or update.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more Cognitive Search skills to create or
-            /// update in an Azure Search service.
+            /// The skillset containing one or more cognitive skills to create or update in
+            /// an Azure Search service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Cognitive Search skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// Creates a new cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -96,8 +96,8 @@ namespace Microsoft.Azure.Search
             /// The name of the skillset to create or update.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more Cognitive Search skills to create or
-            /// update in an Azure Search service.
+            /// The skillset containing one or more cognitive skills to create or update in
+            /// an Azure Search service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
@@ -114,8 +114,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes a Cognitive Search skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// Deletes a cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/delete-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,8 +132,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes a Cognitive Search skillset in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// Deletes a cognitive skillset in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/delete-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -153,8 +153,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// List all Cognitive Search skillsets in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// List all cognitive skillsets in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -168,8 +168,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// List all Cognitive Search skillsets in an Azure Search service.
-            /// <see href="https://docs.microsoft.com/azure/search/cognitive-search-tutorial-blob" />
+            /// List all cognitive skillsets in an Azure Search service.
+            /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -189,15 +189,15 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Cognitive Search skillset in an Azure Search service.
+            /// Creates a new cognitive skillset in an Azure Search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/create-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more Cognitive Search skills to create in an
-            /// Azure Search service.
+            /// The skillset containing one or more cognitive skills to create in an Azure
+            /// Search service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
@@ -208,15 +208,15 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new Cognitive Search skillset in an Azure Search service.
+            /// Creates a new cognitive skillset in an Azure Search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/create-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more Cognitive Search skills to create in an
-            /// Azure Search service.
+            /// The skillset containing one or more cognitive skills to create in an Azure
+            /// Search service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation

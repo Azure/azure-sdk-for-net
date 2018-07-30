@@ -16,24 +16,23 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Indicates language code "en" (for English)
         /// </summary>
-        public static readonly ImageAnalysisSkillLanguage en = new ImageAnalysisSkillLanguage("en");
+        public static readonly ImageAnalysisSkillLanguage En = new ImageAnalysisSkillLanguage("en");
 
         /// <summary>
         /// Indicates language code "zh" (for Simplified Chinese)
         /// </summary>
-        public static readonly ImageAnalysisSkillLanguage zh = new ImageAnalysisSkillLanguage("zh");
+        public static readonly ImageAnalysisSkillLanguage Zh = new ImageAnalysisSkillLanguage("zh");
 
-        private ImageAnalysisSkillLanguage(string formatName) : base(formatName)
+        private ImageAnalysisSkillLanguage(string name) : base(name)
         {
             // Base class does all initialization.
         }
 
         /// <summary>
-        /// Creates a new ImageAnalysisSkillLanguage instance, or returns an existing instance if the given name matches that of a
-        /// known synonym format.
+        /// Creates a new ImageAnalysisSkillLanguage instance, or returns an existing instance.
         /// </summary>
-        /// <param name="name">Name of the synonym map format.</param>
-        /// <returns>A ImageAnalysisSkillLanguage instance with the given name.</returns>
+        /// <param name="name">Supported language code.</param>
+        /// <returns>An ImageAnalysisSkillLanguage instance with the given name.</returns>
         public static ImageAnalysisSkillLanguage Create(string name) => Lookup(name) ?? new ImageAnalysisSkillLanguage(name);
 
         /// <summary>

@@ -16,58 +16,57 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Indicates language code "da" (for Danish)
         /// </summary>
-        public static readonly SplitSkillLanguage da = new SplitSkillLanguage("da");
+        public static readonly SplitSkillLanguage Da = new SplitSkillLanguage("da");
 
         /// <summary>
         /// Indicates language code "de" (for German)
         /// </summary>
-        public static readonly SplitSkillLanguage de = new SplitSkillLanguage("de");
+        public static readonly SplitSkillLanguage De = new SplitSkillLanguage("de");
 
         /// <summary>
         /// Indicates language code "en" (for English)
         /// </summary>
-        public static readonly SplitSkillLanguage en = new SplitSkillLanguage("en");
+        public static readonly SplitSkillLanguage En = new SplitSkillLanguage("en");
 
         /// <summary>
         /// Indicates language code "es" (for Spanish)
         /// </summary>
-        public static readonly SplitSkillLanguage es = new SplitSkillLanguage("es");
+        public static readonly SplitSkillLanguage Es = new SplitSkillLanguage("es");
 
         /// <summary>
         /// Indicates language code "fi" (for Finnish)
         /// </summary>
-        public static readonly SplitSkillLanguage fi = new SplitSkillLanguage("fi");
+        public static readonly SplitSkillLanguage Fi = new SplitSkillLanguage("fi");
 
         /// <summary>
         /// Indicates language code "fr" (for French)
         /// </summary>
-        public static readonly SplitSkillLanguage fr = new SplitSkillLanguage("fr");
+        public static readonly SplitSkillLanguage Fr = new SplitSkillLanguage("fr");
 
         /// <summary>
         /// Indicates language code "it" (for Italian)
         /// </summary>
-        public static readonly SplitSkillLanguage it = new SplitSkillLanguage("it");
+        public static readonly SplitSkillLanguage It = new SplitSkillLanguage("it");
 
         /// <summary>
         /// Indicates language code "ko" (for Korean)
         /// </summary>
-        public static readonly SplitSkillLanguage ko = new SplitSkillLanguage("ko");
+        public static readonly SplitSkillLanguage Ko = new SplitSkillLanguage("ko");
 
         /// <summary>
         /// Indicates language code "pt" (for Portuguese)
         /// </summary>
-        public static readonly SplitSkillLanguage pt = new SplitSkillLanguage("pt");
+        public static readonly SplitSkillLanguage Pt = new SplitSkillLanguage("pt");
 
-        private SplitSkillLanguage(string formatName) : base(formatName)
+        private SplitSkillLanguage(string name) : base(name)
         {
             // Base class does all initialization.
         }
 
         /// <summary>
-        /// Creates a new SplitSkillLanguage instance, or returns an existing instance if the given name matches that of a
-        /// known synonym format.
+        /// Creates a new SplitSkillLanguage instance, or returns an existing instance.
         /// </summary>
-        /// <param name="name">Name of the synonym map format.</param>
+        /// <param name="name">Supported language code.</param>
         /// <returns>A SplitSkillLanguage instance with the given name.</returns>
         public static SplitSkillLanguage Create(string name) => Lookup(name) ?? new SplitSkillLanguage(name);
 

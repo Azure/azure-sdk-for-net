@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// The skill extracts text from image files.
+    /// A skill that extracts text from image files.
     /// <see
     /// href="https://docs.microsoft.com/azure/search/cognitive-search-skill-ocr"
     /// />
@@ -37,9 +37,14 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
-        /// <param name="context">The context of the skill.</param>
-        /// <param name="inputs">The inputs of the skill.</param>
-        /// <param name="outputs">The outputs of the skill.</param>
+        /// <param name="context">Represents the level at which operations take
+        /// place, such as the document root or document content (for example,
+        /// /document or /document/content).</param>
+        /// <param name="inputs">Inputs of the skills could be a column in the
+        /// source data set, or the output of an upstream skill.</param>
+        /// <param name="outputs">The output of a skill is either a field in an
+        /// Azure Search index, or a value that can be consumed as an input by
+        /// another skill.</param>
         /// <param name="textExtractionAlgorithm">A value indicating which
         /// algorithm to use for extracting text. Default is printed. Possible
         /// values include: 'printed', 'handwritten'</param>
@@ -47,7 +52,7 @@ namespace Microsoft.Azure.Search.Models
         /// code to use. Default is en.</param>
         /// <param name="shouldDetectOrientation">A value indicating to turn
         /// orientation detection on or not. Default is false.</param>
-        public OcrSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, TextExtractionAlgorithm? textExtractionAlgorithm = default(TextExtractionAlgorithm?), OcrSkillLanguage defaultLanguageCode = default(OcrSkillLanguage), bool? shouldDetectOrientation = default(bool))
+        public OcrSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, TextExtractionAlgorithm? textExtractionAlgorithm = default(TextExtractionAlgorithm?), OcrSkillLanguage defaultLanguageCode = default(OcrSkillLanguage), bool? shouldDetectOrientation = default(bool?))
             : base(description, context, inputs, outputs)
         {
             TextExtractionAlgorithm = textExtractionAlgorithm;
