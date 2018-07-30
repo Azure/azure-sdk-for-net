@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the settings for CNTK (aka Microsoft Cognitive Toolkit) job.
+    /// CNTK (aka Microsoft Cognitive Toolkit) job settings.
     /// </summary>
     public partial class CNTKsettings
     {
@@ -29,18 +29,13 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the CNTKsettings class.
         /// </summary>
-        /// <param name="languageType">Specifies the language type to use for
-        /// launching CNTK (aka Microsoft Cognitive Toolkit) job.</param>
-        /// <param name="configFilePath">Specifies the path of the config
-        /// file.</param>
-        /// <param name="pythonScriptFilePath">The path and file name of the
-        /// python script to execute the job.</param>
-        /// <param name="pythonInterpreterPath">The path to python
-        /// interpreter.</param>
-        /// <param name="commandLineArgs">Command line arguments that needs to
-        /// be passed to the python script or CNTK.exe.</param>
-        /// <param name="processCount">Number of processes parameter that is
-        /// passed to MPI runtime.</param>
+        /// <param name="languageType">Language type.</param>
+        /// <param name="configFilePath">Config file path.</param>
+        /// <param name="pythonScriptFilePath">Python script file path.</param>
+        /// <param name="pythonInterpreterPath">Python interpreter
+        /// path.</param>
+        /// <param name="commandLineArgs">Command line arguments.</param>
+        /// <param name="processCount">Process count.</param>
         public CNTKsettings(string languageType = default(string), string configFilePath = default(string), string pythonScriptFilePath = default(string), string pythonInterpreterPath = default(string), string commandLineArgs = default(string), int? processCount = default(int?))
         {
             LanguageType = languageType;
@@ -58,59 +53,61 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the language type to use for launching CNTK
-        /// (aka Microsoft Cognitive Toolkit) job.
+        /// Gets or sets language type.
         /// </summary>
         /// <remarks>
-        /// Valid values are 'BrainScript' or 'Python'.
+        /// The language to use for launching CNTK (aka Microsoft Cognitive
+        /// Toolkit) job. Valid values are 'BrainScript' or 'Python'.
         /// </remarks>
         [JsonProperty(PropertyName = "languageType")]
         public string LanguageType { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the path of the config file.
+        /// Gets or sets config file path.
         /// </summary>
         /// <remarks>
-        /// This property can be specified only if the languageType is
-        /// 'BrainScript'.
+        /// Specifies the path of the BrainScript config file. This property
+        /// can be specified only if the languageType is 'BrainScript'.
         /// </remarks>
         [JsonProperty(PropertyName = "configFilePath")]
         public string ConfigFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the path and file name of the python script to execute
-        /// the job.
+        /// Gets or sets python script file path.
         /// </summary>
         /// <remarks>
-        /// This property can be specified only if the languageType is
-        /// 'Python'.
+        /// Python script to execute. This property can be specified only if
+        /// the languageType is 'Python'.
         /// </remarks>
         [JsonProperty(PropertyName = "pythonScriptFilePath")]
         public string PythonScriptFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to python interpreter.
+        /// Gets or sets python interpreter path.
         /// </summary>
         /// <remarks>
-        /// This property can be specified only if the languageType is
-        /// 'Python'.
+        /// The path to the Python interpreter. This property can be specified
+        /// only if the languageType is 'Python'.
         /// </remarks>
         [JsonProperty(PropertyName = "pythonInterpreterPath")]
         public string PythonInterpreterPath { get; set; }
 
         /// <summary>
-        /// Gets or sets command line arguments that needs to be passed to the
-        /// python script or CNTK.exe.
+        /// Gets or sets command line arguments.
         /// </summary>
+        /// <remarks>
+        /// Command line arguments that need to be passed to the python script
+        /// or cntk executable.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLineArgs")]
         public string CommandLineArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets number of processes parameter that is passed to MPI
-        /// runtime.
+        /// Gets or sets process count.
         /// </summary>
         /// <remarks>
-        /// The default value for this property is equal to nodeCount property
+        /// Number of processes to launch for the job execution. The default
+        /// value for this property is equal to nodeCount property
         /// </remarks>
         [JsonProperty(PropertyName = "processCount")]
         public int? ProcessCount { get; set; }

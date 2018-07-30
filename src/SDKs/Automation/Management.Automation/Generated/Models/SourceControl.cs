@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.Automation.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -20,7 +19,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the source control.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SourceControl : IResource
+    public partial class SourceControl : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the SourceControl class.
@@ -33,9 +32,10 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the SourceControl class.
         /// </summary>
-        /// <param name="name">Resource name.</param>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="type">Resource type.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="repoUrl">Gets or sets the repo url of the source
         /// control.</param>
         /// <param name="branch">Gets or sets the repo branch of the source
@@ -53,11 +53,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="creationTime">Gets or sets the creation time.</param>
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
-        public SourceControl(string name = default(string), string id = default(string), string type = default(string), string repoUrl = default(string), string branch = default(string), string folderPath = default(string), bool? autoSync = default(bool?), bool? publishRunbook = default(bool?), string sourceType = default(string), string description = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset))
+        public SourceControl(string id = default(string), string name = default(string), string type = default(string), string repoUrl = default(string), string branch = default(string), string folderPath = default(string), bool? autoSync = default(bool?), bool? publishRunbook = default(bool?), string sourceType = default(string), string description = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset))
+            : base(id, name, type)
         {
-            Name = name;
-            Id = id;
-            Type = type;
             RepoUrl = repoUrl;
             Branch = branch;
             FolderPath = folderPath;
@@ -74,24 +72,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
         /// <summary>
         /// Gets or sets the repo url of the source control.

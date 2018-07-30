@@ -1,0 +1,72 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/locations/centralus/alerts/2518710774894070750_EEE23C70-80EF-4A8B-9122-507B0EA8DFFF?api-version=2015-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvbG9jYXRpb25zL2NlbnRyYWx1cy9hbGVydHMvMjUxODcxMDc3NDg5NDA3MDc1MF9FRUUyM0M3MC04MEVGLTRBOEItOTEyMi01MDdCMEVBOERGRkY/YXBpLXZlcnNpb249MjAxNS0wNi0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "fe64d014-144e-4340-9564-bf42ef02008c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/locations/centralus/alerts/2518710774894070750_EEE23C70-80EF-4A8B-9122-507B0EA8DFFF\",\r\n  \"name\": \"2518710774894070750_EEE23C70-80EF-4A8B-9122-507B0EA8DFFF\",\r\n  \"type\": \"Microsoft.Security/Locations/alerts\",\r\n  \"properties\": {\r\n    \"vendorName\": \"Microsoft\",\r\n    \"alertDisplayName\": \"PREVIEW - Spam folder referrer detected\",\r\n    \"alertName\": \"APPS_SpamReferrer\",\r\n    \"detectedTimeUtc\": \"2018-07-10T11:48:30Z\",\r\n    \"description\": \"Azure App Services activity log indicates web activity that was identified as originating from a web site associated with SPAM activity.\\r\\nThis could occur if your web site is compromised and used for spam activity.\",\r\n    \"remediationSteps\": \"Review the URIs in the alert details. Check whether the corresponding files contain malicious or suspicious content. \\r\\nIf they do, escalate the alert to the information security team.\",\r\n    \"actionTaken\": \"Undefined\",\r\n    \"reportedSeverity\": \"High\",\r\n    \"compromisedEntity\": \"testSite2\",\r\n    \"associatedResource\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Web/sites/testSite2\",\r\n    \"subscriptionId\": \"487bb485-b5b0-471e-9c0d-10717612f869\",\r\n    \"instanceId\": \"eee23c70-80ef-4a8b-9122-507b0ea8dfff\",\r\n    \"extendedProperties\": {\r\n      \"sample User Agents\": \"Mozilla/4.0+(compatible;+MSIE+6.0;+Windows+NT+5.1)\",\r\n      \"last Event Time\": \"6/23/2018 4:53:58 PM\",\r\n      \"sample URIs\": \"/acropolis.php, /wp-content/animator.php, /bandpass.php, /wp-content/base.php, /candid.php, /wp-content/uploads/2018/christina.php, /wp-content/climax.php, /wp-content/uploads/conditioning.php, /wp-content/corkscrew.php, /wp-content/uploads/2018/countermeasures.php\",\r\n      \"sample Referer\": \"https://google.com/mail/inbox/spam/\",\r\n      \"resourceType\": \"App Service\",\r\n      \"end Time UTC\": \"2018-07-10T11:53:30.5929249Z\"\r\n    },\r\n    \"state\": \"Dismissed\",\r\n    \"reportedTimeUtc\": \"2018-07-10T16:31:52Z\",\r\n    \"confidenceReasons\": [],\r\n    \"canBeInvestigated\": true,\r\n    \"entities\": []\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 22 Jul 2018 12:52:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "16090f53-08a3-4c33-9c3b-11502f95e6f7"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "749"
+        ],
+        "x-ms-correlation-request-id": [
+          "c561ff6d-8216-40b0-9413-ac91294047a5"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20180722T125245Z:c561ff6d-8216-40b0-9413-ac91294047a5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

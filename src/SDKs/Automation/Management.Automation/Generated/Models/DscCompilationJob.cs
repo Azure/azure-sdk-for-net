@@ -45,7 +45,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="creationTime">Gets the creation time of the
         /// job.</param>
         /// <param name="provisioningState">The current provisioning state of
-        /// the job.</param>
+        /// the job. Possible values include: 'Failed', 'Succeeded',
+        /// 'Suspended', 'Processing'</param>
         /// <param name="runOn">Gets or sets the runOn which specifies the
         /// group name where the job is to be executed.</param>
         /// <param name="status">Gets or sets the status of the job. Possible
@@ -63,7 +64,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// time of the job.</param>
         /// <param name="parameters">Gets or sets the parameters of the
         /// job.</param>
-        public DscCompilationJob(string id = default(string), string name = default(string), string type = default(string), DscConfigurationAssociationProperty configuration = default(DscConfigurationAssociationProperty), string startedBy = default(string), System.Guid jobId = default(System.Guid), System.DateTimeOffset creationTime = default(System.DateTimeOffset), JobProvisioningStateProperty provisioningState = default(JobProvisioningStateProperty), string runOn = default(string), string status = default(string), string statusDetails = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string exception = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), System.DateTimeOffset? lastStatusModifiedTime = default(System.DateTimeOffset?), IDictionary<string, string> parameters = default(IDictionary<string, string>))
+        public DscCompilationJob(string id = default(string), string name = default(string), string type = default(string), DscConfigurationAssociationProperty configuration = default(DscConfigurationAssociationProperty), string startedBy = default(string), System.Guid jobId = default(System.Guid), System.DateTimeOffset creationTime = default(System.DateTimeOffset), string provisioningState = default(string), string runOn = default(string), string status = default(string), string statusDetails = default(string), System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string exception = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), System.DateTimeOffset? lastStatusModifiedTime = default(System.DateTimeOffset?), IDictionary<string, string> parameters = default(IDictionary<string, string>))
             : base(id, name, type)
         {
             Configuration = configuration;
@@ -113,10 +114,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         public System.DateTimeOffset CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets or sets the current provisioning state of the job.
+        /// Gets or sets the current provisioning state of the job. Possible
+        /// values include: 'Failed', 'Succeeded', 'Suspended', 'Processing'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public JobProvisioningStateProperty ProvisioningState { get; set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the runOn which specifies the group name where the job

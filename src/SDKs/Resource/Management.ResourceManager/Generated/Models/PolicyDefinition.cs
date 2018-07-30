@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// rule.</param>
         /// <param name="id">The ID of the policy definition.</param>
         /// <param name="name">The name of the policy definition.</param>
-        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), object parameters = default(object), string id = default(string), string name = default(string))
+        /// <param name="type">The type of the resource
+        /// (Microsoft.Authorization/policyDefinitions).</param>
+        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), object parameters = default(object), string id = default(string), string name = default(string), string type = default(string))
         {
             PolicyType = policyType;
             Mode = mode;
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Parameters = parameters;
             Id = id;
             Name = name;
+            Type = type;
             CustomInit();
         }
 
@@ -125,6 +128,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource
+        /// (Microsoft.Authorization/policyDefinitions).
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }

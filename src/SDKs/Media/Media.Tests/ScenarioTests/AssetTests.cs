@@ -50,7 +50,7 @@ namespace Media.Tests.ScenarioTests
 
                     // Update the asset
                     string alternateId = "1234567890-7865";
-                    Asset input2 = new Asset(description: assetDescription, alternateId: alternateId);
+                    Asset input2 = new Asset(description: assetDescription, alternateId: alternateId, storageAccountName: createdAsset.StorageAccountName, container: createdAsset.Container);
                     Asset updatedByPutAsset = MediaClient.Assets.CreateOrUpdate(ResourceGroup, AccountName, assetName, input2);
                     ValidateAsset(updatedByPutAsset, assetName, assetDescription, input2.AlternateId, AssetStorageEncryptionFormat.None);
 
@@ -106,7 +106,7 @@ namespace Media.Tests.ScenarioTests
             Assert.Equal(expectedStorageEncryptionFormat, asset.StorageEncryptionFormat);
             Assert.NotEqual(Guid.Empty, asset.AssetId);
             //Assert.False(string.IsNullOrEmpty(asset.Container)); // TODO: This is currently not implemented.  Verify it once it is
-            //Assert.False(string.IsNullOrEmpty(asset.StorageAccountName)); // TODO: This is currently not implemented.  Verify it once it is
+            Assert.False(string.IsNullOrEmpty(asset.StorageAccountName));
         }
     }
 }

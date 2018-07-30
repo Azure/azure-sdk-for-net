@@ -6,9 +6,9 @@
     <AssemblyName>BatchAI.Tests</AssemblyName>
     <Description>BatchAI.Tests Class Library</Description>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />

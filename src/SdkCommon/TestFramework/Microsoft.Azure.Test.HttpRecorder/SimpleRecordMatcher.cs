@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
         public string GetMatchingKey(RecordEntry recordEntry)
         {
             return GetMatchingKey(recordEntry.RequestMethod, 
-                (recordEntry.EncodedRequestUri?? Utilities.EncodeUriAsBase64(recordEntry.RequestUri)),
+                (recordEntry.EncodedRequestUri?? RecorderUtilities.EncodeUriAsBase64(recordEntry.RequestUri)),
                 recordEntry.RequestHeaders);
         }
 
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
             {
                 request.Content.Headers.ForEach(h => requestHeaders.Add(h.Key, h.Value.ToList()));
             }
-            return GetMatchingKey(request.Method.Method, Utilities.EncodeUriAsBase64(request.RequestUri), requestHeaders);
+            return GetMatchingKey(request.Method.Method, RecorderUtilities.EncodeUriAsBase64(request.RequestUri), requestHeaders);
         }   
     }
 }

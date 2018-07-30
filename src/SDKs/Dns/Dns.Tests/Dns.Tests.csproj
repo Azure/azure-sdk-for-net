@@ -6,9 +6,9 @@
     <AssemblyName>Dns.Tests</AssemblyName>
     <Description>Dns.Tests Class Library</Description>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="14.0.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />

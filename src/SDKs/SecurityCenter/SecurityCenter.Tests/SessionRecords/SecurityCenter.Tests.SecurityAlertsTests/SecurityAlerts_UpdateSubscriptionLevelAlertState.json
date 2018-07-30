@@ -1,0 +1,63 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/locations/centralus/alerts/2518710774894070750_EEE23C70-80EF-4A8B-9122-507B0EA8DFFF/Dismiss?api-version=2015-06-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvbG9jYXRpb25zL2NlbnRyYWx1cy9hbGVydHMvMjUxODcxMDc3NDg5NDA3MDc1MF9FRUUyM0M3MC04MEVGLTRBOEItOTEyMi01MDdCMEVBOERGRkYvRGlzbWlzcz9hcGktdmVyc2lvbj0yMDE1LTA2LTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a71be648-3c75-46cf-9d18-18ecff8d1afc"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Sun, 22 Jul 2018 12:52:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "79aafcf1-e7ac-4d01-bb5b-44b04f77f44b"
+        ],
+        "x-ms-correlation-request-id": [
+          "79aafcf1-e7ac-4d01-bb5b-44b04f77f44b"
+        ],
+        "x-ms-routing-request-id": [
+          "UKSOUTH:20180722T125250Z:79aafcf1-e7ac-4d01-bb5b-44b04f77f44b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

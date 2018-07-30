@@ -6,10 +6,17 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services CustomVision Training APIs.</Description>
-    <Version>0.10.0-preview</Version>
+    <Version>0.12.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Custom Vision;Custom Vision Training API;Custom Vision Training SDK;Vision;netcore451511</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Cognitive Services Custom Vision Training SDK.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    <![CDATA[
+    This is a preview release of the Cognitive Services Custom Vision Training SDK.
+
+    Changes in this release:
+    1. Support customizing service endpoints. 
+    ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

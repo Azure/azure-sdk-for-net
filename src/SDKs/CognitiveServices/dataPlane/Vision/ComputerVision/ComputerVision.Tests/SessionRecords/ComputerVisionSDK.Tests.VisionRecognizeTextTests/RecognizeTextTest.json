@@ -1,0 +1,220 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v2.0/recognizeText?mode=Printed",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlY29nbml6ZVRleHQ/bW9kZT1QcmludGVk",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/signage.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "188"
+        ],
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 14 Jun 2018 00:34:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/vision/v2.0/textOperations/67f3f0a8-5a7c-47a9-a673-88fe4077a709"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "apim-request-id": [
+          "ef9ad766-25ea-46ed-bdd5-ae5f5bed161b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/vision/v2.0/textOperations/67f3f0a8-5a7c-47a9-a673-88fe4077a709",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zLzY3ZjNmMGE4LTVhN2MtNDdhOS1hNjczLTg4ZmU0MDc3YTcwOQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "20"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 14 Jun 2018 00:34:26 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "apim-request-id": [
+          "afa9f4f5-d5b7-447c-a9d7-f4d4ce37c2a2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/vision/v2.0/textOperations/67f3f0a8-5a7c-47a9-a673-88fe4077a709",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zLzY3ZjNmMGE4LTVhN2MtNDdhOS1hNjczLTg4ZmU0MDc3YTcwOQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "20"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 14 Jun 2018 00:34:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "apim-request-id": [
+          "b54ebdcd-964f-4c36-843a-276612e66ff2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/vision/v2.0/textOperations/67f3f0a8-5a7c-47a9-a673-88fe4077a709",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3RleHRPcGVyYXRpb25zLzY3ZjNmMGE4LTVhN2MtNDdhOS1hNjczLTg4ZmU0MDc3YTcwOQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionAPI/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"recognitionResult\": {\r\n    \"lines\": [\r\n      {\r\n        \"boundingBox\": [\r\n          64,\r\n          41,\r\n          104,\r\n          41,\r\n          106,\r\n          61,\r\n          63,\r\n          60\r\n        ],\r\n        \"text\": \"520\",\r\n        \"words\": [\r\n          {\r\n            \"boundingBox\": [\r\n              66,\r\n              41,\r\n              104,\r\n              41,\r\n              104,\r\n              61,\r\n              66,\r\n              61\r\n            ],\r\n            \"text\": \"520\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"boundingBox\": [\r\n          120,\r\n          30,\r\n          202,\r\n          33,\r\n          201,\r\n          58,\r\n          118,\r\n          54\r\n        ],\r\n        \"text\": \"WEST\",\r\n        \"words\": [\r\n          {\r\n            \"boundingBox\": [\r\n              124,\r\n              31,\r\n              203,\r\n              35,\r\n              202,\r\n              59,\r\n              122,\r\n              56\r\n            ],\r\n            \"text\": \"WEST\"\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"boundingBox\": [\r\n          59,\r\n          101,\r\n          208,\r\n          106,\r\n          206,\r\n          139,\r\n          57,\r\n          133\r\n        ],\r\n        \"text\": \"Seattle\",\r\n        \"words\": [\r\n          {\r\n            \"boundingBox\": [\r\n              64,\r\n              104,\r\n              202,\r\n              109,\r\n              200,\r\n              140,\r\n              63,\r\n              135\r\n            ],\r\n            \"text\": \"Seattle\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "448"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 14 Jun 2018 00:34:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "apim-request-id": [
+          "ba77180a-6f63-4e27-b92b-d79b8ff59adb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

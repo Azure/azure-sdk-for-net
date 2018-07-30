@@ -65,6 +65,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
                     await CurrentPollingState.UpdateResourceFromPollingUri(CustomHeaders, CancelToken);
                 }
             }
+#if DEBUG
+            RemoveLroHeaders(removeOperation:true);
+#endif
         }
 
         protected override void CheckForErrors()

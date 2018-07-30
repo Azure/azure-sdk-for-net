@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Microsoft.Azure.Test.HttpRecorder
 {
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                 {
                     throw new KeyNotFoundException(
                         string.Format("Unable to find a matching HTTP request for URL '{0}'. Calling method {1}().", 
-                            Utilities.DecodeBase64AsUri(key), 
+                            RecorderUtilities.DecodeBase64AsUri(key), 
                             GetCallingMethodName()));
                 }
             }

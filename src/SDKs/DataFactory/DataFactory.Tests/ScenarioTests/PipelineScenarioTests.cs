@@ -31,6 +31,7 @@ namespace DataFactory.Tests.ScenarioTests
             CopyActivity copyActivity = new CopyActivity
             {
                 Name = "ExampleCopyActivity",
+                DataIntegrationUnits = 32,
                 Inputs = new List<DatasetReference>
                             {
                                 new DatasetReference

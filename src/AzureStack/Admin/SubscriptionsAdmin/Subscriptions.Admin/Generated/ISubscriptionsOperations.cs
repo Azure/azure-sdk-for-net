@@ -25,6 +25,45 @@ namespace Microsoft.AzureStack.Management.Subscriptions.Admin
     public partial interface ISubscriptionsOperations
     {
         /// <summary>
+        /// Move subscriptions between delegated provider offers.
+        /// </summary>
+        /// <param name='moveSubscriptionsDefinition'>
+        /// Move subscriptions parameter.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> MoveSubscriptionsWithHttpMessagesAsync(MoveSubscriptionsDefinition moveSubscriptionsDefinition, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Validate that user subscriptions can be moved between delegated
+        /// provider offers.
+        /// </summary>
+        /// <param name='moveSubscriptionsDefinition'>
+        /// Move subscriptions parameter.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ValidateMoveSubscriptionsWithHttpMessagesAsync(MoveSubscriptionsDefinition moveSubscriptionsDefinition, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get the list of subscriptions.
         /// </summary>
         /// <param name='odataQuery'>
@@ -134,5 +173,44 @@ namespace Microsoft.AzureStack.Management.Subscriptions.Admin
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string subscription, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Move subscriptions between delegated provider offers.
+        /// </summary>
+        /// <param name='moveSubscriptionsDefinition'>
+        /// Move subscriptions parameter.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginMoveSubscriptionsWithHttpMessagesAsync(MoveSubscriptionsDefinition moveSubscriptionsDefinition, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Validate that user subscriptions can be moved between delegated
+        /// provider offers.
+        /// </summary>
+        /// <param name='moveSubscriptionsDefinition'>
+        /// Move subscriptions parameter.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginValidateMoveSubscriptionsWithHttpMessagesAsync(MoveSubscriptionsDefinition moveSubscriptionsDefinition, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

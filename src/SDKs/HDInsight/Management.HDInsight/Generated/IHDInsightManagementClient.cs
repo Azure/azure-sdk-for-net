@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Management.HDInsight
         IApplicationsOperations Applications { get; }
 
         /// <summary>
-        /// Gets the ILocationOperations.
+        /// Gets the ILocationsOperations.
         /// </summary>
-        ILocationOperations Location { get; }
+        ILocationsOperations Locations { get; }
 
         /// <summary>
         /// Gets the IConfigurationsOperations.

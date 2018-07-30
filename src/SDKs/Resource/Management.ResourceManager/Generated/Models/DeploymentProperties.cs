@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// both.</param>
         /// <param name="debugSetting">The debug setting of the
         /// deployment.</param>
-        public DeploymentProperties(DeploymentMode mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting))
+        /// <param name="onErrorDeployment">The deployment on error
+        /// behavior.</param>
+        public DeploymentProperties(DeploymentMode mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting), OnErrorDeployment onErrorDeployment = default(OnErrorDeployment))
         {
             Template = template;
             TemplateLink = templateLink;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             ParametersLink = parametersLink;
             Mode = mode;
             DebugSetting = debugSetting;
+            OnErrorDeployment = onErrorDeployment;
             CustomInit();
         }
 
@@ -127,6 +130,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "debugSetting")]
         public DebugSetting DebugSetting { get; set; }
+
+        /// <summary>
+        /// Gets or sets the deployment on error behavior.
+        /// </summary>
+        [JsonProperty(PropertyName = "onErrorDeployment")]
+        public OnErrorDeployment OnErrorDeployment { get; set; }
 
         /// <summary>
         /// Validate the object.

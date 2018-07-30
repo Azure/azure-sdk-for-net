@@ -71,8 +71,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance.
         /// </param>
         /// <param name='apiId'>
-        /// API identifier. Must be unique in the current API Management
-        /// service instance.
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -101,8 +102,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance.
         /// </param>
         /// <param name='apiId'>
-        /// API identifier. Must be unique in the current API Management
-        /// service instance.
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -134,8 +136,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance.
         /// </param>
         /// <param name='apiId'>
-        /// API identifier. Must be unique in the current API Management
-        /// service instance.
+        /// API revision identifier. Must be unique in the current API
+        /// Management service instance. Non-current revision has ;rev=n as a
+        /// suffix where n is the revision number.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

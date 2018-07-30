@@ -1,5 +1,10 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.0.3-preview
+
+- Fixed contract for Error in OperationResultContract
+- Fixed validation for adding Apis to Product
+
 ### Changes in 4.0.2-preview
 
 - Fixed Contract for ErrorResponse for Management Apis

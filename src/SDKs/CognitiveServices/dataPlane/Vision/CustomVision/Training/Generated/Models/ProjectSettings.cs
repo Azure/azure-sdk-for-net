@@ -31,9 +31,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         /// <param name="domainId">Gets or sets the id of the Domain to use
         /// with this project</param>
-        public ProjectSettings(System.Guid domainId = default(System.Guid))
+        /// <param name="classificationType">Gets or sets the classification
+        /// type of the project. Possible values include: 'Multiclass',
+        /// 'Multilabel'</param>
+        public ProjectSettings(System.Guid domainId = default(System.Guid), string classificationType = default(string))
         {
             DomainId = domainId;
+            ClassificationType = classificationType;
             CustomInit();
         }
 
@@ -47,6 +51,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "domainId")]
         public System.Guid DomainId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the classification type of the project. Possible
+        /// values include: 'Multiclass', 'Multilabel'
+        /// </summary>
+        [JsonProperty(PropertyName = "classificationType")]
+        public string ClassificationType { get; set; }
 
     }
 }

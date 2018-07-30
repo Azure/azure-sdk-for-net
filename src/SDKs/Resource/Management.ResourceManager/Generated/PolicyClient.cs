@@ -53,6 +53,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for the operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -75,14 +80,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         public virtual IPolicyAssignmentsOperations PolicyAssignments { get; private set; }
 
         /// <summary>
-        /// Gets the IPolicySetDefinitionsOperations.
-        /// </summary>
-        public virtual IPolicySetDefinitionsOperations PolicySetDefinitions { get; private set; }
-
-        /// <summary>
         /// Gets the IPolicyDefinitionsOperations.
         /// </summary>
         public virtual IPolicyDefinitionsOperations PolicyDefinitions { get; private set; }
+
+        /// <summary>
+        /// Gets the IPolicySetDefinitionsOperations.
+        /// </summary>
+        public virtual IPolicySetDefinitionsOperations PolicySetDefinitions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PolicyClient class.
@@ -286,9 +291,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         private void Initialize()
         {
             PolicyAssignments = new PolicyAssignmentsOperations(this);
-            PolicySetDefinitions = new PolicySetDefinitionsOperations(this);
             PolicyDefinitions = new PolicyDefinitionsOperations(this);
+            PolicySetDefinitions = new PolicySetDefinitionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2018-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

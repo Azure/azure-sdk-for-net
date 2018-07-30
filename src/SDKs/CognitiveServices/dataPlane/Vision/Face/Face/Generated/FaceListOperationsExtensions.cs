@@ -158,6 +158,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// Id referencing a particular face list.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='userData'>
             /// User-specified data about the face for any purpose. The maximum length is

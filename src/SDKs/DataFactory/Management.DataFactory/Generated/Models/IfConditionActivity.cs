@@ -47,14 +47,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
+        /// <param name="userProperties">Activity user properties.</param>
         /// <param name="ifTrueActivities">List of activities to execute if
         /// expression is evaluated to true. This is an optional property and
         /// if not provided, the activity will exit without any action.</param>
         /// <param name="ifFalseActivities">List of activities to execute if
         /// expression is evaluated to false. This is an optional property and
         /// if not provided, the activity will exit without any action.</param>
-        public IfConditionActivity(string name, Expression expression, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<Activity> ifTrueActivities = default(IList<Activity>), IList<Activity> ifFalseActivities = default(IList<Activity>))
-            : base(name, additionalProperties, description, dependsOn)
+        public IfConditionActivity(string name, Expression expression, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), IList<Activity> ifTrueActivities = default(IList<Activity>), IList<Activity> ifFalseActivities = default(IList<Activity>))
+            : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             Expression = expression;
             IfTrueActivities = ifTrueActivities;

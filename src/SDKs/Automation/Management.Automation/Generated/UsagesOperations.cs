@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.Automation
         /// <see href="http://aka.ms/azureautomationsdk/usageoperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name.
+        /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -89,6 +89,14 @@ namespace Microsoft.Azure.Management.Automation
             }
             if (resourceGroupName != null)
             {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");

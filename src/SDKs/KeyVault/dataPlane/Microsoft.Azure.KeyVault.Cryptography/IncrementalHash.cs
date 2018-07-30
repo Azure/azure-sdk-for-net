@@ -4,7 +4,7 @@
 // license information.
 //
 
-#if NET45
+#if FullNetFx
 
 using System;
 using System.Security.Cryptography;

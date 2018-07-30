@@ -7,13 +7,15 @@ namespace Language.Tests
     public abstract class BaseTests
     {
         public static bool IsTestTenant = false;
+        // BaseEndpoint only contains protocol and hostname
+        private static string BaseEndpoint = "https://westus.api.cognitive.microsoft.com";
         private static string SubscriptionKey = "000";
 
-        protected ITextAnalyticsAPI GetClient(DelegatingHandler handler)
+        protected ITextAnalyticsClient GetClient(DelegatingHandler handler)
         {
-            return new TextAnalyticsAPI(new ApiKeyServiceClientCredentials(SubscriptionKey), handlers: handler)
+            return new TextAnalyticsClient(new ApiKeyServiceClientCredentials(SubscriptionKey), handlers: handler)
             {
-                AzureRegion = AzureRegions.Westus
+                Endpoint = BaseEndpoint
             };
         }
     }

@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.DataFactory;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Microsoft.Azure.Test.HttpRecorder;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace DataFactory.Tests.ScenarioTests
     {
         private const string ResourceGroupNamePrefix = "sdktestingadfrg";
         protected const string DataFactoryNamePrefix = "sdktestingfactory";
-        protected const string FactoryLocation = "East US 2";
+        protected const string FactoryLocation = "West US";
         protected static string ClassName = typeof(T).FullName;
 
         protected string ResourceGroupName { get; private set; }
@@ -27,9 +28,16 @@ namespace DataFactory.Tests.ScenarioTests
 
         protected async Task RunTest(Func<DataFactoryManagementClient, Task> initialAction, Func<DataFactoryManagementClient, Task> finallyAction, [CallerMemberName] string methodName = "")
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            const string modeEnvironmentVariableName = "AZURE_TEST_MODE";
+            const string playback = "Playback";
+
             using (MockContext mockContext = MockContext.Start(ClassName, methodName))
             {
+                string mode = Environment.GetEnvironmentVariable(modeEnvironmentVariableName);
+                if (mode != null && mode.Equals(playback, StringComparison.OrdinalIgnoreCase))
+                {
+                    HttpMockServer.Mode = HttpRecorderMode.Playback;
+                }
                 this.ResourceGroupName = TestUtilities.GenerateName(ResourceGroupNamePrefix);
                 this.DataFactoryName = TestUtilities.GenerateName(DataFactoryNamePrefix);
                 this.Client = mockContext.GetServiceClient<DataFactoryManagementClient>(TestEnvironmentFactory.GetTestEnvironment());

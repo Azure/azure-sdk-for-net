@@ -1,1 +1,1 @@
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File "$(split-path $SCRIPT:MyInvocation.MyCommand.Path -parent)\..\..\..\..\tools\generateTool.ps1" -ResourceProvider "azsadmin/resource-manager/infrastructureinsights" -PowershellInvoker  -AutoRestVersion "latest" -SdkRootDirectory $PSScriptRoot
+Start-AutoRestCodeGeneration -ResourceProvider "azsadmin/resource-manager/infrastructureinsights" -AutoRestVersion "latest" -SdkRootDirectory $PSScriptRoot

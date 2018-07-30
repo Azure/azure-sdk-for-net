@@ -7,13 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.0.2-preview</Version>
+		<Version>19.2.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Expose new SKUs for VMSS VPN and ER gateways
-			- Add optional traffic analytics config fields to network watcher
-			- Remove two VirtualNetworkGateways' methods that are not in production
+			- Added missing parameter (resourceGroupName) to VpnConnections.ListByVpnGateway
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

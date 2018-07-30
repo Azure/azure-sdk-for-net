@@ -136,9 +136,14 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='datasetName'>
             /// The dataset name.
             /// </param>
-            public static DatasetResource Get(this IDatasetsOperations operations, string resourceGroupName, string factoryName, string datasetName)
+            /// <param name='ifNoneMatch'>
+            /// ETag of the dataset entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
+            public static DatasetResource Get(this IDatasetsOperations operations, string resourceGroupName, string factoryName, string datasetName, string ifNoneMatch = default(string))
             {
-                return operations.GetAsync(resourceGroupName, factoryName, datasetName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, factoryName, datasetName, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -156,12 +161,17 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='datasetName'>
             /// The dataset name.
             /// </param>
+            /// <param name='ifNoneMatch'>
+            /// ETag of the dataset entity. Should only be specified for get. If the ETag
+            /// matches the existing entity tag, or if * was provided, then no content will
+            /// be returned.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DatasetResource> GetAsync(this IDatasetsOperations operations, string resourceGroupName, string factoryName, string datasetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DatasetResource> GetAsync(this IDatasetsOperations operations, string resourceGroupName, string factoryName, string datasetName, string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, datasetName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, datasetName, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

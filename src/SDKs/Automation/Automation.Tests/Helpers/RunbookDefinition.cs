@@ -38,5 +38,11 @@ namespace Automation.Tests.Helpers
                 get-date
                 start-sleep -s 10
             }");
+
+        public static RunbookDefinition TestPSScript = new RunbookDefinition(
+            "TestPSScript", @"get-date");
+
+        public static RunbookDefinition TestPSScriptV2 = new RunbookDefinition(
+            "TestPSScript", @"get-date; start-sleep -seconds 10");
     }
 }

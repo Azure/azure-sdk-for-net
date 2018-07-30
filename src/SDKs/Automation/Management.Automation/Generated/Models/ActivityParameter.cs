@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Automation.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -56,7 +58,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// remaining command-line arguments that are associated with this
         /// parameter in the form of an array. false if the cmdlet parameter
         /// does not accept all the remaining argument values.</param>
-        public ActivityParameter(string name = default(string), string type = default(string), bool? isMandatory = default(bool?), bool? isDynamic = default(bool?), bool? position = default(bool?), bool? valueFromPipeline = default(bool?), bool? valueFromPipelineByPropertyName = default(bool?), bool? valueFromRemainingArguments = default(bool?))
+        /// <param name="description">Gets or sets the description of the
+        /// activity parameter.</param>
+        /// <param name="validationSet">Gets or sets the validation set of
+        /// activity parameter.</param>
+        public ActivityParameter(string name = default(string), string type = default(string), bool? isMandatory = default(bool?), bool? isDynamic = default(bool?), long? position = default(long?), bool? valueFromPipeline = default(bool?), bool? valueFromPipelineByPropertyName = default(bool?), bool? valueFromRemainingArguments = default(bool?), string description = default(string), IList<ActivityParameterValidationSet> validationSet = default(IList<ActivityParameterValidationSet>))
         {
             Name = name;
             Type = type;
@@ -66,6 +72,8 @@ namespace Microsoft.Azure.Management.Automation.Models
             ValueFromPipeline = valueFromPipeline;
             ValueFromPipelineByPropertyName = valueFromPipelineByPropertyName;
             ValueFromRemainingArguments = valueFromRemainingArguments;
+            Description = description;
+            ValidationSet = validationSet;
             CustomInit();
         }
 
@@ -104,7 +112,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the position of the activity parameter.
         /// </summary>
         [JsonProperty(PropertyName = "position")]
-        public bool? Position { get; set; }
+        public long? Position { get; set; }
 
         /// <summary>
         /// Gets or sets a Boolean value that indicates true if the parameter
@@ -135,6 +143,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "valueFromRemainingArguments")]
         public bool? ValueFromRemainingArguments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description of the activity parameter.
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the validation set of activity parameter.
+        /// </summary>
+        [JsonProperty(PropertyName = "validationSet")]
+        public IList<ActivityParameterValidationSet> ValidationSet { get; set; }
 
     }
 }

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
     /// </summary>
     public class AesKwTests : IClassFixture<TestFixture>
     {
-        public void SetFixture( TestFixture data )
+        internal void SetFixture( TestFixture data )
         {
             // Intentionally empty
         }

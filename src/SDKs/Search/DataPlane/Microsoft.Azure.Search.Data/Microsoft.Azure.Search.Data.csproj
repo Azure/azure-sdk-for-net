@@ -9,6 +9,14 @@
     <VersionPrefix>6.0.0-preview</VersionPrefix>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
   </PropertyGroup>
+
+ 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<!--There are certain projects that needs internals visible for test purpose -->
+		<SignAssembly>true</SignAssembly>
+		<DelaySign>true</DelaySign>
+		<AssemblyOriginatorKeyFile>$(LibraryToolsFolder)\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+	
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
   </ItemGroup>

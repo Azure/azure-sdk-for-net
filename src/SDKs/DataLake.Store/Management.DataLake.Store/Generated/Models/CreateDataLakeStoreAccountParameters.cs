@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// 'Disabled'</param>
         /// <param name="firewallRules">The list of firewall rules associated
         /// with this Data Lake Store account.</param>
+        /// <param name="virtualNetworkRules">The list of virtual network rules
+        /// associated with this Data Lake Store account.</param>
         /// <param name="firewallState">The current state of the IP address
         /// firewall for this Data Lake Store account. Possible values include:
         /// 'Enabled', 'Disabled'</param>
@@ -62,7 +64,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Possible values include: 'Consumption', 'Commitment_1TB',
         /// 'Commitment_10TB', 'Commitment_100TB', 'Commitment_500TB',
         /// 'Commitment_1PB', 'Commitment_5PB'</param>
-        public CreateDataLakeStoreAccountParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionIdentity identity = default(EncryptionIdentity), string defaultGroup = default(string), EncryptionConfig encryptionConfig = default(EncryptionConfig), EncryptionState? encryptionState = default(EncryptionState?), IList<CreateFirewallRuleWithAccountParameters> firewallRules = default(IList<CreateFirewallRuleWithAccountParameters>), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<CreateTrustedIdProviderWithAccountParameters> trustedIdProviders = default(IList<CreateTrustedIdProviderWithAccountParameters>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), TierType? newTier = default(TierType?))
+        public CreateDataLakeStoreAccountParameters(string location, IDictionary<string, string> tags = default(IDictionary<string, string>), EncryptionIdentity identity = default(EncryptionIdentity), string defaultGroup = default(string), EncryptionConfig encryptionConfig = default(EncryptionConfig), EncryptionState? encryptionState = default(EncryptionState?), IList<CreateFirewallRuleWithAccountParameters> firewallRules = default(IList<CreateFirewallRuleWithAccountParameters>), IList<CreateVirtualNetworkRuleWithAccountParameters> virtualNetworkRules = default(IList<CreateVirtualNetworkRuleWithAccountParameters>), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<CreateTrustedIdProviderWithAccountParameters> trustedIdProviders = default(IList<CreateTrustedIdProviderWithAccountParameters>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), TierType? newTier = default(TierType?))
         {
             Location = location;
             Tags = tags;
@@ -71,6 +73,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
             EncryptionConfig = encryptionConfig;
             EncryptionState = encryptionState;
             FirewallRules = firewallRules;
+            VirtualNetworkRules = virtualNetworkRules;
             FirewallState = firewallState;
             FirewallAllowAzureIps = firewallAllowAzureIps;
             TrustedIdProviders = trustedIdProviders;
@@ -128,6 +131,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallRules")]
         public IList<CreateFirewallRuleWithAccountParameters> FirewallRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of virtual network rules associated with this
+        /// Data Lake Store account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkRules")]
+        public IList<CreateVirtualNetworkRuleWithAccountParameters> VirtualNetworkRules { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the IP address firewall for this
@@ -196,13 +206,23 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
                     }
                 }
             }
-            if (TrustedIdProviders != null)
+            if (VirtualNetworkRules != null)
             {
-                foreach (var element1 in TrustedIdProviders)
+                foreach (var element1 in VirtualNetworkRules)
                 {
                     if (element1 != null)
                     {
                         element1.Validate();
+                    }
+                }
+            }
+            if (TrustedIdProviders != null)
+            {
+                foreach (var element2 in TrustedIdProviders)
+                {
+                    if (element2 != null)
+                    {
+                        element2.Validate();
                     }
                 }
             }

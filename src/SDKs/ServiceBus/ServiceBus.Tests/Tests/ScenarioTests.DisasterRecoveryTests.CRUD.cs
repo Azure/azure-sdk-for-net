@@ -147,9 +147,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(getAuthoRuleAliasResponse.Name, getNamespaceAuthorizationRulesResponse.Name);
 
                 var getAuthoruleListKeysResponse = ServiceBusManagementClient.DisasterRecoveryConfigs.ListKeys(resourceGroup, namespaceName, disasterRecoveryName, authorizationRuleName);
-                //Assert.Equal(getAuthoruleListKeysResponse.AliasPrimaryConnectionString, getNamespaceAuthorizationRulesListKeysResponse.AliasPrimaryConnectionString);
-                //Assert.Equal(getAuthoruleListKeysResponse.AliasSecondaryConnectionString, getNamespaceAuthorizationRulesListKeysResponse.AliasSecondaryConnectionString);
-                
+                                
                 var disasterRecoveryGetResponse_Accepted = ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName);
 
                 while (ServiceBusManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, disasterRecoveryName).ProvisioningState != ProvisioningStateDR.Succeeded)

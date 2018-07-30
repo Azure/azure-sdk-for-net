@@ -1,35 +1,36 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "triggerName": "exampleTrigger",
-    "api-version": "2017-09-01-preview"
+    "ifNoneMatch": null,
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:58:22 GMT",
-        "x-ms-request-id": "bef4032e-cc3c-4ae7-b153-d1fdead84665",
+        "Date": "Sat, 16 Jun 2018 00:40:17 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-reads": "14909",
-        "x-ms-correlation-request-id": "ca0d1b97-970b-494d-b7bb-b87692327db0"
+        "x-ms-ratelimit-remaining-subscription-reads": "14987",
+        "x-ms-request-id": "060364d7-7980-4def-8bc1-800552a9b53d",
+        "x-ms-correlation-request-id": "060364d7-7980-4def-8bc1-800552a9b53d"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
         "name": "exampleTrigger",
+        "type": "Microsoft.DataFactory/factories/triggers",
         "properties": {
           "type": "ScheduleTrigger",
           "typeProperties": {
             "recurrence": {
               "frequency": "Minute",
               "interval": 4,
-              "startTime": "2017-09-13T17:57:21.7240518Z",
-              "endTime": "2017-09-13T18:13:21.7240518Z",
+              "startTime": "2018-06-16T00:39:14.905167Z",
+              "endTime": "2018-06-16T00:55:14.905167Z",
               "timeZone": "UTC"
             }
           },
-          "description": "Example description",
           "pipelines": [
             {
               "pipelineReference": {
@@ -43,9 +44,10 @@
               }
             }
           ],
+          "description": "Example description",
           "runtimeState": "Stopped"
         },
-        "etag": "28032ba7-0000-0000-0000-59b971bd0000"
+        "etag": "0a008dd4-0000-0000-0000-5b245c6f0000"
       }
     }
   }

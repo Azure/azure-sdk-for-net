@@ -33,9 +33,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="celebrities">An array of celebrities if any
         /// identified.</param>
-        public CategoryDetail(IList<CelebritiesModel> celebrities = default(IList<CelebritiesModel>))
+        /// <param name="landmarks">An array of landmarks if any
+        /// identified.</param>
+        public CategoryDetail(IList<CelebritiesModel> celebrities = default(IList<CelebritiesModel>), IList<LandmarksModel> landmarks = default(IList<LandmarksModel>))
         {
             Celebrities = celebrities;
+            Landmarks = landmarks;
             CustomInit();
         }
 
@@ -49,6 +52,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         [JsonProperty(PropertyName = "celebrities")]
         public IList<CelebritiesModel> Celebrities { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of landmarks if any identified.
+        /// </summary>
+        [JsonProperty(PropertyName = "landmarks")]
+        public IList<LandmarksModel> Landmarks { get; set; }
 
     }
 }

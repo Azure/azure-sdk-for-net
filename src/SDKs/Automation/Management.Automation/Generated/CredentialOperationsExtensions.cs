@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The name of credential.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the create or update credential operation.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the create or update credential operation.
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the Update credential operation.
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='credentialName'>
             /// The parameters supplied to the Update credential operation.
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             public static IPage<Credential> ListByAutomationAccount(this ICredentialOperations operations, string resourceGroupName, string automationAccountName)
             {
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Automation
             /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

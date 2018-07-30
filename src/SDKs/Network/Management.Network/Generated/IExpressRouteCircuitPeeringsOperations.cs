@@ -50,8 +50,7 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string circuitName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the specified authorization from the specified express route
-        /// circuit.
+        /// Gets the specified peering for the express route circuit.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

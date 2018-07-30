@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
+        /// <param name="userProperties">Activity user properties.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="translator">Copy activity translator. If not
@@ -55,8 +56,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// opened on the source or sink to avoid overloading the data store.
         /// Type: integer (or Expression with resultType integer), minimum:
         /// 0.</param>
-        /// <param name="cloudDataMovementUnits">Maximum number of cloud data
-        /// movement units that can be used to perform this data movement.
+        /// <param name="dataIntegrationUnits">Maximum number of data
+        /// integration units that can be used to perform this data movement.
         /// Type: integer (or Expression with resultType integer), minimum:
         /// 0.</param>
         /// <param name="enableSkipIncompatibleRow">Whether to skip
@@ -66,8 +67,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// row settings when EnableSkipIncompatibleRow is true.</param>
         /// <param name="inputs">List of inputs for the activity.</param>
         /// <param name="outputs">List of outputs for the activity.</param>
-        public CopyActivity(string name, CopySource source, CopySink sink, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), CopyTranslator translator = default(CopyTranslator), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object cloudDataMovementUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
-            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
+        public CopyActivity(string name, CopySource source, CopySink sink, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), CopyTranslator translator = default(CopyTranslator), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object dataIntegrationUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
+            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Source = source;
             Sink = sink;
@@ -75,7 +76,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             EnableStaging = enableStaging;
             StagingSettings = stagingSettings;
             ParallelCopies = parallelCopies;
-            CloudDataMovementUnits = cloudDataMovementUnits;
+            DataIntegrationUnits = dataIntegrationUnits;
             EnableSkipIncompatibleRow = enableSkipIncompatibleRow;
             RedirectIncompatibleRowSettings = redirectIncompatibleRowSettings;
             Inputs = inputs;
@@ -131,12 +132,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object ParallelCopies { get; set; }
 
         /// <summary>
-        /// Gets or sets maximum number of cloud data movement units that can
-        /// be used to perform this data movement. Type: integer (or Expression
+        /// Gets or sets maximum number of data integration units that can be
+        /// used to perform this data movement. Type: integer (or Expression
         /// with resultType integer), minimum: 0.
         /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.cloudDataMovementUnits")]
-        public object CloudDataMovementUnits { get; set; }
+        [JsonProperty(PropertyName = "typeProperties.dataIntegrationUnits")]
+        public object DataIntegrationUnits { get; set; }
 
         /// <summary>
         /// Gets or sets whether to skip incompatible row. Default value is

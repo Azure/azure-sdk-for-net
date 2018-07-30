@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -51,6 +50,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
+        /// <param name="diskSizeGB">Specifies the size of the operating system
+        /// disk in gigabytes. This element can be used to overwrite the size
+        /// of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This
+        /// value cannot be larger than 1023 GB</param>
         /// <param name="osType">This property allows you to specify the type
         /// of the OS that is included in the disk if creating a VM from
         /// user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible
@@ -61,12 +64,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vhdContainers">Specifies the container urls that are
         /// used to store operating system disks for the scale set.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public VirtualMachineScaleSetOSDisk(string createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
+        public VirtualMachineScaleSetOSDisk(DiskCreateOptionTypes createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
         {
             Name = name;
             Caching = caching;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
             CreateOption = createOption;
+            DiskSizeGB = diskSizeGB;
             OsType = osType;
             Image = image;
             VhdContainers = vhdContainers;
@@ -116,7 +120,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Empty', 'Attach'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
-        public string CreateOption { get; set; }
+        public DiskCreateOptionTypes CreateOption { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the size of the operating system disk in
+        /// gigabytes. This element can be used to overwrite the size of the
+        /// disk in a virtual machine image.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This value cannot be larger
+        /// than 1023 GB
+        /// </summary>
+        [JsonProperty(PropertyName = "diskSizeGB")]
+        public int? DiskSizeGB { get; set; }
 
         /// <summary>
         /// Gets or sets this property allows you to specify the type of the OS
@@ -152,15 +166,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (CreateOption == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CreateOption");
-            }
         }
     }
 }

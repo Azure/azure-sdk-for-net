@@ -543,13 +543,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='domainId'>
         /// The id of the domain to use for this project. Defaults to General
         /// </param>
+        /// <param name='classificationType'>
+        /// The type of classifier to create for this project. Possible values
+        /// include: 'Multiclass', 'Multilabel'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a specific project
@@ -786,10 +790,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The iteration id
         /// </param>
         /// <param name='platform'>
-        /// The target platform (coreml or tensorflow)
+        /// The target platform (coreml or tensorflow). Possible values
+        /// include: 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'
         /// </param>
         /// <param name='flavor'>
-        /// The flavor of the target platform (Windows, Linux, ARM, or GPU)
+        /// The flavor of the target platform (Windows, Linux, ARM, or GPU).
+        /// Possible values include: 'Linux', 'Windows'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

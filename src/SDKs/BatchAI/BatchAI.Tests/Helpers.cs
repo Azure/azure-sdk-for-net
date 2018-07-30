@@ -45,11 +45,11 @@ namespace BatchAI.Tests
             return resourcesClient;
         }
 
-        public static void WaitAllNodesToBeIdle(BatchAIManagementClient client, string rgName, string clusterName)
+        public static void WaitAllNodesToBeIdle(BatchAIManagementClient client, string rgName, string wsName, string clusterName)
         {
             while (true)
             {
-                Cluster cluster = client.Clusters.Get(rgName, clusterName);
+                Cluster cluster = client.Clusters.Get(rgName, wsName, clusterName);
                 if (cluster.CurrentNodeCount == cluster.ScaleSettings.Manual.TargetNodeCount &&
                     cluster.CurrentNodeCount == cluster.NodeStateCounts.IdleNodeCount)
                 {
@@ -66,11 +66,11 @@ namespace BatchAI.Tests
             Assert.Equal(cluster.ScaleSettings.Manual.TargetNodeCount, createParams.ScaleSettings.Manual.TargetNodeCount);
         }
         
-        public static void WaitJobSucceeded(BatchAIManagementClient client, string rgName, String jobName)
+        public static void WaitJobSucceeded(BatchAIManagementClient client, string rgName, string wsName, string expName, String jobName)
         {
             while (true)
             {
-                Job job = client.Jobs.Get(rgName, jobName);
+                Job job = client.Jobs.Get(rgName, wsName, expName, jobName);
                 if (job.ExecutionState == ExecutionState.Succeeded ||
                     job.ExecutionState == ExecutionState.Failed)
                 {

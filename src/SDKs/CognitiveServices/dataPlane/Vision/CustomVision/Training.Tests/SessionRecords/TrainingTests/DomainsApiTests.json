@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v2.0/Training/domains",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL2RvbWFpbnM=",
+      "RequestUri": "/customvision/v2.1/Training/domains",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL2RvbWFpbnM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -11,7 +11,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
       "ResponseBody": "[\r\n  {\r\n    \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"name\": \"General\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"c151d5b5-dd07-472a-acc8-15d29dea8518\",\r\n    \"name\": \"Food\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"ca455789-012d-4b50-9fec-5bb63841c793\",\r\n    \"name\": \"Landmarks\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"b30a91ae-e3c1-4f73-a81e-c270bff27c39\",\r\n    \"name\": \"Retail\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"45badf75-3591-4f26-a705-45678d3e9f5f\",\r\n    \"name\": \"Adult\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"name\": \"General (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"b5cfd229-2ac7-4b2b-8d0a-2b0661344894\",\r\n    \"name\": \"Landmarks (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"6b4faeda-8396-481b-9f8b-177b9fa3097f\",\r\n    \"name\": \"Retail (compact)\",\r\n    \"type\": \"Classification\",\r\n    \"exportable\": true,\r\n    \"enabled\": true\r\n  },\r\n  {\r\n    \"id\": \"da2e3a8a-40a5-4171-82f4-58522f70fbc1\",\r\n    \"name\": \"General\",\r\n    \"type\": \"ObjectDetection\",\r\n    \"exportable\": false,\r\n    \"enabled\": true\r\n  }\r\n]",
@@ -23,10 +23,10 @@
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 20:55:20 GMT"
+          "Thu, 12 Jul 2018 15:21:59 GMT"
         ],
         "apim-request-id": [
-          "27f9f61d-ad93-46e1-9e33-421ca200df2a"
+          "c1b7d8a6-b738-4e40-9f04-8116b0283018"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -38,8 +38,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v2.0/Training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4wL1RyYWluaW5nL2RvbWFpbnMvZWU4NWE3NGMtNDA1ZS00YWRjLWJiNDctZmZhOGNhMGM5ZjMx",
+      "RequestUri": "/customvision/v2.1/Training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
+      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4xL1RyYWluaW5nL2RvbWFpbnMvZWU4NWE3NGMtNDA1ZS00YWRjLWJiNDctZmZhOGNhMGM5ZjMx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -48,7 +48,7 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.26011.01",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.TrainingApi/0.12.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n  \"name\": \"General\",\r\n  \"type\": \"Classification\",\r\n  \"exportable\": false,\r\n  \"enabled\": true\r\n}",
@@ -60,10 +60,10 @@
           "application/json; charset=utf-8"
         ],
         "Date": [
-          "Wed, 25 Apr 2018 20:55:20 GMT"
+          "Thu, 12 Jul 2018 15:22:00 GMT"
         ],
         "apim-request-id": [
-          "3b13ebc7-4008-4ac1-b1c9-614013884a8a"
+          "762d35a9-3681-4a1b-86c0-ec74829caf6f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

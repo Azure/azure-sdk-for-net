@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime belong to.</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
-        /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
-        /// 'Offline'</param>
+        /// 'Stopping', 'NeedRegistration', 'Online', 'Limited', 'Offline',
+        /// 'AccessDenied'</param>
         /// <param name="createTime">The time at which the integration runtime
         /// was created, in ISO8601 format.</param>
         /// <param name="taskQueueId">The task queue id of the integration
@@ -74,7 +74,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// version.</param>
         /// <param name="links">The list of linked integration runtimes that
         /// are created to share with this integration runtime.</param>
-        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>))
+        /// <param name="pushedVersion">The version that the integration
+        /// runtime is going to update to.</param>
+        /// <param name="latestVersion">The latest version on download
+        /// center.</param>
+        public SelfHostedIntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string), System.DateTime? createTime = default(System.DateTime?), string taskQueueId = default(string), string internalChannelEncryption = default(string), string version = default(string), IList<SelfHostedIntegrationRuntimeNode> nodes = default(IList<SelfHostedIntegrationRuntimeNode>), System.DateTime? scheduledUpdateDate = default(System.DateTime?), string updateDelayOffset = default(string), string localTimeZoneOffset = default(string), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IList<string> serviceUrls = default(IList<string>), string autoUpdate = default(string), string versionStatus = default(string), IList<LinkedIntegrationRuntime> links = default(IList<LinkedIntegrationRuntime>), string pushedVersion = default(string), string latestVersion = default(string))
             : base(additionalProperties, dataFactoryName, state)
         {
             CreateTime = createTime;
@@ -90,6 +94,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AutoUpdate = autoUpdate;
             VersionStatus = versionStatus;
             Links = links;
+            PushedVersion = pushedVersion;
+            LatestVersion = latestVersion;
             CustomInit();
         }
 
@@ -185,6 +191,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.links")]
         public IList<LinkedIntegrationRuntime> Links { get; set; }
+
+        /// <summary>
+        /// Gets the version that the integration runtime is going to update
+        /// to.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.pushedVersion")]
+        public string PushedVersion { get; private set; }
+
+        /// <summary>
+        /// Gets the latest version on download center.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.latestVersion")]
+        public string LatestVersion { get; private set; }
 
     }
 }

@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// <summary>
     /// Instance of this exception is thrown if access token cannot be acquired. 
     /// </summary>
+#if FullNetFx
+    [Serializable]
+#endif
     public class AzureServiceTokenProviderException : Exception
     {
         internal const string MsiEndpointNotListening = "Unable to connect to the Managed Service Identity (MSI) endpoint. Please check that you are running on an Azure resource that has MSI setup.";
@@ -37,7 +40,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="authority">Authority for which token was expected.</param>
         /// <param name="message">Reason why token could not be acquired.</param>
         internal AzureServiceTokenProviderException(string connectionString, string resource, string authority, string message) : 
-            base($"Parameters: Connectionstring: {connectionString ?? "[No connection string specified]"}, " +
+            base($"Parameters: Connection String: {connectionString ?? "[No connection string specified]"}, " +
                  $"Resource: {resource}, Authority: {authority ?? "[No authority specified]"}. Exception Message: {message}")
         {
         }
