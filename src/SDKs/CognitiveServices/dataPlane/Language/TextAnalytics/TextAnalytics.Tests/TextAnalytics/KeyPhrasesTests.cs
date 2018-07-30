@@ -19,7 +19,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "KeyPhrases");
-                ITextAnalyticsAPI client = GetClient(HttpMockServer.CreateInstance());
+                ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 KeyPhraseBatchResult result = await client.KeyPhrasesAsync(
                     new MultiLanguageBatchInput(
                         new List<MultiLanguageInput>()

@@ -3,13 +3,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Rest.ClientRuntime.Tracing.Tests</PackageId>
     <Description>Test Project for Microsoft Rest ClientRuntime Tracing</Description>
-    <VersionPrefix>2.0.0-preview</VersionPrefix>    
+    <Version>2.0.0-preview</Version>    
     <AssemblyName>Microsoft.Rest.ClientRuntime.Tracing.Tests</AssemblyName>
     <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452</TargetFrameworks>
-    <TestProjectType>true</TestProjectType>
   </PropertyGroup>  
   <ItemGroup>
     <Reference Include="System.Net" />

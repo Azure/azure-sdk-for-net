@@ -7,13 +7,9 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
+  </PropertyGroup>-->  
   
   <ItemGroup>   
     <ProjectReference Include="..\Management.ServiceBus\Microsoft.Azure.Management.ServiceBus.csproj" />

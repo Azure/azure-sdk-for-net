@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// This constant is used as the default package version to place in the user agent.
         /// It should mirror the package version in the project.json file.
         /// </summary>
-        internal const string PackageVersion = "2.4.0-preview";
+        internal const string PackageVersion = "2.4.1-preview";
 
         internal const string DefaultAdlsFileSystemDnsSuffix = "azuredatalakestore.net";
 

@@ -66,6 +66,24 @@ namespace IotHub.Tests.ScenarioTests
                 Assert.True(iotHub.Tags.Count().Equals(2));
                 Assert.Equal("value2", iotHub.Tags["key2"]);
 
+                var subscriptionQuota = this.iotHubClient.ResourceProviderCommon.GetSubscriptionQuota();
+
+                Assert.Equal(2, subscriptionQuota.Value.Count);
+                Assert.Equal(1, subscriptionQuota.Value.FirstOrDefault(x => x.Name.Value.Equals("freeIotHubCount")).Limit);
+                Assert.Equal(100, subscriptionQuota.Value.FirstOrDefault(x => x.Name.Value.Equals("paidIotHubCount")).Limit);
+
+                var endpointHealth = this.iotHubClient.IotHubResource.GetEndpointHealth(IotHubTestUtilities.DefaultResourceGroupName, IotHubTestUtilities.DefaultIotHubName);
+                Assert.Equal(4, endpointHealth.Count());
+                Assert.True(endpointHealth.Any(q => q.EndpointId.Equals("events", StringComparison.OrdinalIgnoreCase)));
+
+                TestAllRoutesInput testAllRoutesInput = new TestAllRoutesInput(RoutingSource.DeviceMessages, new RoutingMessage());
+                TestAllRoutesResult testAllRoutesResult = this.iotHubClient.IotHubResource.TestAllRoutes(testAllRoutesInput, IotHubTestUtilities.DefaultIotHubName, IotHubTestUtilities.DefaultResourceGroupName);
+                Assert.Equal(4, testAllRoutesResult.Routes.Count);
+
+                TestRouteInput testRouteInput = new TestRouteInput(properties.Routing.Routes[0], new RoutingMessage());
+                TestRouteResult testRouteResult = this.iotHubClient.IotHubResource.TestRoute(testRouteInput, IotHubTestUtilities.DefaultIotHubName, IotHubTestUtilities.DefaultResourceGroupName);
+                Assert.Equal("true", testRouteResult.Result);
+
                 // Get quota metrics
                 var quotaMetrics = this.iotHubClient.IotHubResource.GetQuotaMetrics(
                     IotHubTestUtilities.DefaultResourceGroupName,

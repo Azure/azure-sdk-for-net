@@ -30,21 +30,14 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the OutputDirectory class.
         /// </summary>
-        /// <param name="id">The name for the output directory.</param>
-        /// <param name="pathPrefix">The prefix path where the output directory
-        /// will be created.</param>
-        /// <param name="pathSuffix">The suffix path where the output directory
-        /// will be created.</param>
-        /// <param name="type">An enumeration, which specifies the type of job
-        /// output directory.</param>
-        /// <param name="createNew">True to create new directory.</param>
-        public OutputDirectory(string id, string pathPrefix, string pathSuffix = default(string), string type = default(string), bool? createNew = default(bool?))
+        /// <param name="id">ID.</param>
+        /// <param name="pathPrefix">Path prefix.</param>
+        /// <param name="pathSuffix">Path suffix.</param>
+        public OutputDirectory(string id, string pathPrefix, string pathSuffix = default(string))
         {
             Id = id;
             PathPrefix = pathPrefix;
             PathSuffix = pathSuffix;
-            Type = type;
-            CreateNew = createNew;
             CustomInit();
         }
 
@@ -54,32 +47,31 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name for the output directory.
+        /// Gets or sets ID.
         /// </summary>
         /// <remarks>
-        /// The path of the output directory will be available as a value of an
-        /// environment variable with AZ_BATCHAI_OUTPUT_<id> name, where <id>
-        /// is the value of id attribute.
+        /// The ID of the output directory. The job can use
+        /// AZ_BATCHAI_OUTPUT_<id> environment variale to find the directory
+        /// path, where <id> is the value of id attribute.
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the prefix path where the output directory will be
-        /// created.
+        /// Gets or sets path prefix.
         /// </summary>
         /// <remarks>
-        /// NOTE: This is an absolute path to prefix. E.g.
-        /// $AZ_BATCHAI_MOUNT_ROOT/MyNFS/MyLogs. You can find the full path to
-        /// the output directory by combining pathPrefix,
-        /// jobOutputDirectoryPathSegment (reported by get job) and pathSuffix.
+        /// The prefix path where the output directory will be created. Note,
+        /// this is an absolute path to prefix. E.g.
+        /// $AZ_BATCHAI_MOUNT_ROOT/MyNFS/MyLogs. The full path to the output
+        /// directory by combining pathPrefix, jobOutputDirectoryPathSegment
+        /// (reported by get job) and pathSuffix.
         /// </remarks>
         [JsonProperty(PropertyName = "pathPrefix")]
         public string PathPrefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the suffix path where the output directory will be
-        /// created.
+        /// Gets or sets path suffix.
         /// </summary>
         /// <remarks>
         /// The suffix path where the output directory will be created. E.g.
@@ -89,29 +81,6 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// </remarks>
         [JsonProperty(PropertyName = "pathSuffix")]
         public string PathSuffix { get; set; }
-
-        /// <summary>
-        /// Gets or sets an enumeration, which specifies the type of job output
-        /// directory.
-        /// </summary>
-        /// <remarks>
-        /// Default value is Custom. The possible values are Model, Logs,
-        /// Summary, and Custom. Users can use multiple enums for a single
-        /// directory. Eg. outPutType='Model,Logs, Summary'. Possible values
-        /// include: 'model', 'logs', 'summary', 'custom'
-        /// </remarks>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets true to create new directory.
-        /// </summary>
-        /// <remarks>
-        /// Default is true. If false, then the directory is not created and
-        /// can be any directory path that the user specifies.
-        /// </remarks>
-        [JsonProperty(PropertyName = "createNew")]
-        public bool? CreateNew { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using Microsoft.Azure.Management.ResourceManager;
+﻿using System.Net;
+using Microsoft.Azure.Management.ManagementGroups;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using ResourceGroups.Tests;
 
@@ -20,7 +17,7 @@ namespace Resource.Tests.Helpers
             }
 
             var client = context.GetServiceClient<ManagementGroupsAPIClient>(
-                handlers: handler ?? new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK});
+                handlers: handler ?? new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
             return client;
         }

@@ -10,63 +10,14 @@
 
 namespace Microsoft.Azure.Management.BatchAI.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DeallocationOption.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum DeallocationOption
+    public static class DeallocationOption
     {
-        [EnumMember(Value = "requeue")]
-        Requeue,
-        [EnumMember(Value = "terminate")]
-        Terminate,
-        [EnumMember(Value = "waitforjobcompletion")]
-        Waitforjobcompletion,
-        [EnumMember(Value = "unknown")]
-        Unknown
-    }
-    internal static class DeallocationOptionEnumExtension
-    {
-        internal static string ToSerializedValue(this DeallocationOption? value)
-        {
-            return value == null ? null : ((DeallocationOption)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this DeallocationOption value)
-        {
-            switch( value )
-            {
-                case DeallocationOption.Requeue:
-                    return "requeue";
-                case DeallocationOption.Terminate:
-                    return "terminate";
-                case DeallocationOption.Waitforjobcompletion:
-                    return "waitforjobcompletion";
-                case DeallocationOption.Unknown:
-                    return "unknown";
-            }
-            return null;
-        }
-
-        internal static DeallocationOption? ParseDeallocationOption(this string value)
-        {
-            switch( value )
-            {
-                case "requeue":
-                    return DeallocationOption.Requeue;
-                case "terminate":
-                    return DeallocationOption.Terminate;
-                case "waitforjobcompletion":
-                    return DeallocationOption.Waitforjobcompletion;
-                case "unknown":
-                    return DeallocationOption.Unknown;
-            }
-            return null;
-        }
+        public const string Requeue = "requeue";
+        public const string Terminate = "terminate";
+        public const string Waitforjobcompletion = "waitforjobcompletion";
     }
 }

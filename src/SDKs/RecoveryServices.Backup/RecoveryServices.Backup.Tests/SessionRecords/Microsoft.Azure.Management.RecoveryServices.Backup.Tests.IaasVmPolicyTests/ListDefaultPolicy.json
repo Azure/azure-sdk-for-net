@@ -13,7 +13,7 @@
           "35"
         ],
         "x-ms-client-request-id": [
-          "0c422263-4d2d-49d0-9325-230588e583a5"
+          "6b8d0eb1-940e-4f0b-b9bd-6ab379357088"
         ],
         "accept-language": [
           "en-US"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 29 Oct 2017 06:32:42 GMT"
+          "Fri, 22 Jun 2018 16:33:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,16 +47,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "abb97f5e-869c-4e56-aeb4-dcf915f91eec"
+          "ff9a4162-08db-4ddf-97f8-c9b83bf2379d"
         ],
         "x-ms-correlation-request-id": [
-          "abb97f5e-869c-4e56-aeb4-dcf915f91eec"
+          "ff9a4162-08db-4ddf-97f8-c9b83bf2379d"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063243Z:abb97f5e-869c-4e56-aeb4-dcf915f91eec"
+          "SOUTHINDIA:20180622T163334Z:ff9a4162-08db-4ddf-97f8-c9b83bf2379d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
@@ -74,7 +77,7 @@
           "98"
         ],
         "x-ms-client-request-id": [
-          "16f0150b-764c-4af7-9b83-fff9fedaf7e6"
+          "c165b61b-7e44-44db-9c11-fa953abcd24b"
         ],
         "accept-language": [
           "en-US"
@@ -84,10 +87,10 @@
           "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"DefaultPolicyTestVault\",\r\n  \"etag\": \"W/\\\"datetime'2017-10-29T06%3A32%3A47.2538643Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"DefaultPolicyTestVault\",\r\n  \"etag\": \"W/\\\"datetime'2018-06-22T16%3A33%3A37.032252Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "400"
+          "399"
         ],
         "Content-Type": [
           "application/json"
@@ -99,19 +102,22 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 29 Oct 2017 06:32:46 GMT"
+          "Fri, 22 Jun 2018 16:33:36 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-IIS/10.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ],
         "x-ms-request-id": [
-          "1c1814f6-1972-4930-bea2-93d88c7570cb"
+          "6c473088-690e-4205-a97d-3579439991b9"
         ],
         "x-ms-client-request-id": [
-          "16f0150b-764c-4af7-9b83-fff9fedaf7e6"
+          "c165b61b-7e44-44db-9c11-fa953abcd24b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,22 +126,22 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "1c1814f6-1972-4930-bea2-93d88c7570cb"
+          "6c473088-690e-4205-a97d-3579439991b9"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063247Z:1c1814f6-1972-4930-bea2-93d88c7570cb"
+          "SOUTHINDIA:20180622T163337Z:6c473088-690e-4205-a97d-3579439991b9"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
+      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2017-07-01",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b7b91abf-2668-4c03-a9df-d242d210b4bb"
+          "77709b39-e1ff-4833-8e41-596280a27d20"
         ],
         "accept-language": [
           "en-US"
@@ -145,7 +151,7 @@
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/HourlyLogBackup\",\r\n      \"name\": \"HourlyLogBackup\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n      \"properties\": {\r\n        \"backupManagementType\": \"AzureWorkload\",\r\n        \"workLoadType\": \"SQLDataBase\",\r\n        \"settings\": {\r\n          \"timeZone\": \"UTC\",\r\n          \"issqlcompression\": false,\r\n          \"isCompression\": false\r\n        },\r\n        \"subProtectionPolicy\": [\r\n          {\r\n            \"policyType\": \"Full\",\r\n            \"schedulePolicy\": {\r\n              \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n              \"scheduleRunFrequency\": \"Daily\",\r\n              \"scheduleRunTimes\": [\r\n                \"2018-06-23T02:30:00Z\"\r\n              ],\r\n              \"scheduleWeeklyFrequency\": 0\r\n            },\r\n            \"retentionPolicy\": {\r\n              \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n              \"dailySchedule\": {\r\n                \"retentionTimes\": [\r\n                  \"2018-06-23T02:30:00Z\"\r\n                ],\r\n                \"retentionDuration\": {\r\n                  \"count\": 30,\r\n                  \"durationType\": \"Days\"\r\n                }\r\n              }\r\n            }\r\n          },\r\n          {\r\n            \"policyType\": \"Log\",\r\n            \"schedulePolicy\": {\r\n              \"schedulePolicyType\": \"LogSchedulePolicy\",\r\n              \"scheduleFrequencyInMins\": 60\r\n            },\r\n            \"retentionPolicy\": {\r\n              \"retentionPolicyType\": \"SimpleRetentionPolicy\",\r\n              \"retentionDuration\": {\r\n                \"count\": 30,\r\n                \"durationType\": \"Days\"\r\n              }\r\n            }\r\n          }\r\n        ],\r\n        \"protectedItemsCount\": 0\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/DefaultPolicy\",\r\n      \"name\": \"DefaultPolicy\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n      \"properties\": {\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"schedulePolicy\": {\r\n          \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n          \"scheduleRunFrequency\": \"Daily\",\r\n          \"scheduleRunTimes\": [\r\n            \"2018-06-23T02:30:00Z\"\r\n          ],\r\n          \"scheduleWeeklyFrequency\": 0\r\n        },\r\n        \"retentionPolicy\": {\r\n          \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n          \"dailySchedule\": {\r\n            \"retentionTimes\": [\r\n              \"2018-06-23T02:30:00Z\"\r\n            ],\r\n            \"retentionDuration\": {\r\n              \"count\": 30,\r\n              \"durationType\": \"Days\"\r\n            }\r\n          }\r\n        },\r\n        \"protectedItemsCount\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -157,7 +163,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 29 Oct 2017 06:32:48 GMT"
+          "Fri, 22 Jun 2018 16:33:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -166,17 +172,20 @@
           "chunked"
         ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-IIS/10.0"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "474b88e5-d795-4709-a06a-8ba8f8dfd2cc"
+          "b95f7a8a-46e7-4f40-8025-54550efa1337"
         ],
         "x-ms-client-request-id": [
-          "b7b91abf-2668-4c03-a9df-d242d210b4bb",
-          "b7b91abf-2668-4c03-a9df-d242d210b4bb"
+          "77709b39-e1ff-4833-8e41-596280a27d20",
+          "77709b39-e1ff-4833-8e41-596280a27d20"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -185,1033 +194,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14723"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "474b88e5-d795-4709-a06a-8ba8f8dfd2cc"
+          "b95f7a8a-46e7-4f40-8025-54550efa1337"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063248Z:474b88e5-d795-4709-a06a-8ba8f8dfd2cc"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "9984b465-2c17-4e16-ac9a-c686fb075b84"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "45f4f81e-a354-449d-95e4-a85b9326591d"
-        ],
-        "x-ms-client-request-id": [
-          "9984b465-2c17-4e16-ac9a-c686fb075b84",
-          "9984b465-2c17-4e16-ac9a-c686fb075b84"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14722"
-        ],
-        "x-ms-correlation-request-id": [
-          "45f4f81e-a354-449d-95e4-a85b9326591d"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063248Z:45f4f81e-a354-449d-95e4-a85b9326591d"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7b6d2142-7465-4e01-ab1e-efcbe27a4e39"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:48 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "32085f4c-d93b-4cde-9310-0777f0645671"
-        ],
-        "x-ms-client-request-id": [
-          "7b6d2142-7465-4e01-ab1e-efcbe27a4e39",
-          "7b6d2142-7465-4e01-ab1e-efcbe27a4e39"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14721"
-        ],
-        "x-ms-correlation-request-id": [
-          "32085f4c-d93b-4cde-9310-0777f0645671"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063249Z:32085f4c-d93b-4cde-9310-0777f0645671"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "33638e4f-21c0-4454-9bf6-291642b96522"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:49 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "af5ac95c-64f5-4fb5-89c1-3622ddc578b3"
-        ],
-        "x-ms-client-request-id": [
-          "33638e4f-21c0-4454-9bf6-291642b96522",
-          "33638e4f-21c0-4454-9bf6-291642b96522"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14720"
-        ],
-        "x-ms-correlation-request-id": [
-          "af5ac95c-64f5-4fb5-89c1-3622ddc578b3"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063249Z:af5ac95c-64f5-4fb5-89c1-3622ddc578b3"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "6ef9496b-fbe7-4c8c-bca9-8742af96c3bc"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:49 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "b0d250f5-7af3-436b-afb1-1f347138a270"
-        ],
-        "x-ms-client-request-id": [
-          "6ef9496b-fbe7-4c8c-bca9-8742af96c3bc",
-          "6ef9496b-fbe7-4c8c-bca9-8742af96c3bc"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14719"
-        ],
-        "x-ms-correlation-request-id": [
-          "b0d250f5-7af3-436b-afb1-1f347138a270"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063249Z:b0d250f5-7af3-436b-afb1-1f347138a270"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "4caf7d14-c270-4f3e-bced-2017d470698b"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:50 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "fd0bace4-df42-4541-8f2c-4942c3b9141c"
-        ],
-        "x-ms-client-request-id": [
-          "4caf7d14-c270-4f3e-bced-2017d470698b",
-          "4caf7d14-c270-4f3e-bced-2017d470698b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14718"
-        ],
-        "x-ms-correlation-request-id": [
-          "fd0bace4-df42-4541-8f2c-4942c3b9141c"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063250Z:fd0bace4-df42-4541-8f2c-4942c3b9141c"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "06a69b85-66a5-4e78-8e1b-14e5532312ba"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:50 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "a6d5fc2a-9616-4942-b518-2bfc05440cd6"
-        ],
-        "x-ms-client-request-id": [
-          "06a69b85-66a5-4e78-8e1b-14e5532312ba",
-          "06a69b85-66a5-4e78-8e1b-14e5532312ba"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14716"
-        ],
-        "x-ms-correlation-request-id": [
-          "a6d5fc2a-9616-4942-b518-2bfc05440cd6"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063250Z:a6d5fc2a-9616-4942-b518-2bfc05440cd6"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "ebc8479d-61b0-4f13-bf65-6b2814b128f3"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:50 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "ec8272a5-fb5b-4d80-b182-b126624050dd"
-        ],
-        "x-ms-client-request-id": [
-          "ebc8479d-61b0-4f13-bf65-6b2814b128f3",
-          "ebc8479d-61b0-4f13-bf65-6b2814b128f3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14715"
-        ],
-        "x-ms-correlation-request-id": [
-          "ec8272a5-fb5b-4d80-b182-b126624050dd"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063251Z:ec8272a5-fb5b-4d80-b182-b126624050dd"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "73d8fec6-a625-46a9-a22f-ce7df1f20028"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:51 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "8d30d0b3-87c9-4b7e-9664-4a4c210655bc"
-        ],
-        "x-ms-client-request-id": [
-          "73d8fec6-a625-46a9-a22f-ce7df1f20028",
-          "73d8fec6-a625-46a9-a22f-ce7df1f20028"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14714"
-        ],
-        "x-ms-correlation-request-id": [
-          "8d30d0b3-87c9-4b7e-9664-4a4c210655bc"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063251Z:8d30d0b3-87c9-4b7e-9664-4a4c210655bc"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "c0ae4d5e-7c7f-42ac-b1e8-41eb2e835fad"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:51 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "1158866a-2c7b-4068-bfc1-384709d9ebde"
-        ],
-        "x-ms-client-request-id": [
-          "c0ae4d5e-7c7f-42ac-b1e8-41eb2e835fad",
-          "c0ae4d5e-7c7f-42ac-b1e8-41eb2e835fad"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14713"
-        ],
-        "x-ms-correlation-request-id": [
-          "1158866a-2c7b-4068-bfc1-384709d9ebde"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063251Z:1158866a-2c7b-4068-bfc1-384709d9ebde"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "86c4403d-a724-46fc-a2a9-ba628456f97e"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:52 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "03d6d963-f163-4221-b715-550e52f83613"
-        ],
-        "x-ms-client-request-id": [
-          "86c4403d-a724-46fc-a2a9-ba628456f97e",
-          "86c4403d-a724-46fc-a2a9-ba628456f97e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14712"
-        ],
-        "x-ms-correlation-request-id": [
-          "03d6d963-f163-4221-b715-550e52f83613"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063252Z:03d6d963-f163-4221-b715-550e52f83613"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "eec20864-36d1-4859-ba8e-3fc4f257cbb7"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:52 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "00da2f2c-bc62-46b8-bcbf-4e734883b8fb"
-        ],
-        "x-ms-client-request-id": [
-          "eec20864-36d1-4859-ba8e-3fc4f257cbb7",
-          "eec20864-36d1-4859-ba8e-3fc4f257cbb7"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14711"
-        ],
-        "x-ms-correlation-request-id": [
-          "00da2f2c-bc62-46b8-bcbf-4e734883b8fb"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063252Z:00da2f2c-bc62-46b8-bcbf-4e734883b8fb"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "d3e19dc5-2dc2-4eb3-9c84-65d455ecd185"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:52 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "5d9c1738-f307-47ab-9bb2-51f26a4b7d23"
-        ],
-        "x-ms-client-request-id": [
-          "d3e19dc5-2dc2-4eb3-9c84-65d455ecd185",
-          "d3e19dc5-2dc2-4eb3-9c84-65d455ecd185"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14709"
-        ],
-        "x-ms-correlation-request-id": [
-          "5d9c1738-f307-47ab-9bb2-51f26a4b7d23"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063253Z:5d9c1738-f307-47ab-9bb2-51f26a4b7d23"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "b055695c-68fe-469d-9570-a4872694e063"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:53 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "41c129e8-5050-4296-b52c-862740dfc04a"
-        ],
-        "x-ms-client-request-id": [
-          "b055695c-68fe-469d-9570-a4872694e063",
-          "b055695c-68fe-469d-9570-a4872694e063"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14708"
-        ],
-        "x-ms-correlation-request-id": [
-          "41c129e8-5050-4296-b52c-862740dfc04a"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063253Z:41c129e8-5050-4296-b52c-862740dfc04a"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "05fd6388-dab7-4e63-955c-6ef7b2611553"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": []\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:53 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "4d0757ff-c79d-419f-b31d-482b69ab3d12"
-        ],
-        "x-ms-client-request-id": [
-          "05fd6388-dab7-4e63-955c-6ef7b2611553",
-          "05fd6388-dab7-4e63-955c-6ef7b2611553"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14707"
-        ],
-        "x-ms-correlation-request-id": [
-          "4d0757ff-c79d-419f-b31d-482b69ab3d12"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063254Z:4d0757ff-c79d-419f-b31d-482b69ab3d12"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNi0xMi0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "a2c0adb1-51ef-4152-8674-bf7b57eca942"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/DefaultPolicy\",\r\n      \"name\": \"DefaultPolicy\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n      \"properties\": {\r\n        \"backupManagementType\": \"AzureIaasVM\",\r\n        \"schedulePolicy\": {\r\n          \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n          \"scheduleRunFrequency\": \"Daily\",\r\n          \"scheduleRunTimes\": [\r\n            \"2017-10-29T16:30:00Z\"\r\n          ],\r\n          \"scheduleWeeklyFrequency\": 0\r\n        },\r\n        \"retentionPolicy\": {\r\n          \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n          \"dailySchedule\": {\r\n            \"retentionTimes\": [\r\n              \"2017-10-29T16:30:00Z\"\r\n            ],\r\n            \"retentionDuration\": {\r\n              \"count\": 30,\r\n              \"durationType\": \"Days\"\r\n            }\r\n          }\r\n        },\r\n        \"protectedItemsCount\": 0\r\n      }\r\n    }\r\n  ]\r\n}",
-      "ResponseHeaders": {
-        "Content-Type": [
-          "application/json"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 29 Oct 2017 06:32:54 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "1eec8460-f74a-497e-b1c7-e46859f3527c"
-        ],
-        "x-ms-client-request-id": [
-          "a2c0adb1-51ef-4152-8674-bf7b57eca942",
-          "a2c0adb1-51ef-4152-8674-bf7b57eca942"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14706"
-        ],
-        "x-ms-correlation-request-id": [
-          "1eec8460-f74a-497e-b1c7-e46859f3527c"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063254Z:1eec8460-f74a-497e-b1c7-e46859f3527c"
+          "SOUTHINDIA:20180622T163337Z:b95f7a8a-46e7-4f40-8025-54550efa1337"
         ]
       },
       "StatusCode": 200
@@ -1223,7 +212,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7576debc-35ed-47e7-9abe-848d976abcb2"
+          "0a590266-34ac-4483-9520-e87c9dfa082d"
         ],
         "accept-language": [
           "en-US"
@@ -1233,7 +222,7 @@
           "Microsoft.Azure.Management.RecoveryServices.Backup.RecoveryServicesBackupClient/2.1.1.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/DefaultPolicy\",\r\n  \"name\": \"DefaultPolicy\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n  \"properties\": {\r\n    \"backupManagementType\": \"AzureIaasVM\",\r\n    \"schedulePolicy\": {\r\n      \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n      \"scheduleRunFrequency\": \"Daily\",\r\n      \"scheduleRunTimes\": [\r\n        \"2017-10-29T16:30:00Z\"\r\n      ],\r\n      \"scheduleWeeklyFrequency\": 0\r\n    },\r\n    \"retentionPolicy\": {\r\n      \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n      \"dailySchedule\": {\r\n        \"retentionTimes\": [\r\n          \"2017-10-29T16:30:00Z\"\r\n        ],\r\n        \"retentionDuration\": {\r\n          \"count\": 30,\r\n          \"durationType\": \"Days\"\r\n        }\r\n      }\r\n    },\r\n    \"protectedItemsCount\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/DefaultPolicy\",\r\n  \"name\": \"DefaultPolicy\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults/backupPolicies\",\r\n  \"properties\": {\r\n    \"backupManagementType\": \"AzureIaasVM\",\r\n    \"schedulePolicy\": {\r\n      \"schedulePolicyType\": \"SimpleSchedulePolicy\",\r\n      \"scheduleRunFrequency\": \"Daily\",\r\n      \"scheduleRunTimes\": [\r\n        \"2018-06-23T02:30:00Z\"\r\n      ],\r\n      \"scheduleWeeklyFrequency\": 0\r\n    },\r\n    \"retentionPolicy\": {\r\n      \"retentionPolicyType\": \"LongTermRetentionPolicy\",\r\n      \"dailySchedule\": {\r\n        \"retentionTimes\": [\r\n          \"2018-06-23T02:30:00Z\"\r\n        ],\r\n        \"retentionDuration\": {\r\n          \"count\": 30,\r\n          \"durationType\": \"Days\"\r\n        }\r\n      }\r\n    },\r\n    \"protectedItemsCount\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -1245,7 +234,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 29 Oct 2017 06:32:54 GMT"
+          "Fri, 22 Jun 2018 16:33:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1254,17 +243,20 @@
           "chunked"
         ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-IIS/10.0"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "9cfc7749-de12-4171-9505-ee5de7703e73"
+          "9b0b5140-1afe-499c-9450-6825d615427d"
         ],
         "x-ms-client-request-id": [
-          "7576debc-35ed-47e7-9abe-848d976abcb2",
-          "7576debc-35ed-47e7-9abe-848d976abcb2"
+          "0a590266-34ac-4483-9520-e87c9dfa082d",
+          "0a590266-34ac-4483-9520-e87c9dfa082d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1273,13 +265,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14705"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "9cfc7749-de12-4171-9505-ee5de7703e73"
+          "9b0b5140-1afe-499c-9450-6825d615427d"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063255Z:9cfc7749-de12-4171-9505-ee5de7703e73"
+          "SOUTHINDIA:20180622T163337Z:9b0b5140-1afe-499c-9450-6825d615427d"
         ]
       },
       "StatusCode": 200
@@ -1291,7 +283,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1d494566-fe56-42e7-959b-3ec6e69ca83e"
+          "211a36d2-e358-4267-982c-ff2e9fb60b55"
         ],
         "accept-language": [
           "en-US"
@@ -1301,7 +293,7 @@
           "Microsoft.Azure.Management.RecoveryServices.RecoveryServicesClient/4.2.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"southeastasia\",\r\n      \"name\": \"DefaultPolicyTestVault\",\r\n      \"etag\": \"W/\\\"datetime'2017-10-29T06%3A32%3A47.2538643Z'\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"location\": \"southeastasia\",\r\n      \"name\": \"DefaultPolicyTestVault\",\r\n      \"etag\": \"W/\\\"datetime'2018-06-22T16%3A33%3A37.032252Z'\\\"\",\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault\",\r\n      \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n      \"sku\": {\r\n        \"name\": \"Standard\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -1313,7 +305,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 29 Oct 2017 06:32:54 GMT"
+          "Fri, 22 Jun 2018 16:33:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -1322,28 +314,31 @@
           "chunked"
         ],
         "Server": [
-          "Microsoft-IIS/8.0"
+          "Microsoft-IIS/10.0"
         ],
         "Vary": [
           "Accept-Encoding"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "c8af7748-0160-436d-9051-25f792f242b0"
+          "9a2134db-06cc-488d-9907-4ea1ba27d45e"
         ],
         "x-ms-client-request-id": [
-          "1d494566-fe56-42e7-959b-3ec6e69ca83e"
+          "211a36d2-e358-4267-982c-ff2e9fb60b55"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14268"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "c8af7748-0160-436d-9051-25f792f242b0"
+          "9a2134db-06cc-488d-9907-4ea1ba27d45e"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063255Z:c8af7748-0160-436d-9051-25f792f242b0"
+          "SOUTHINDIA:20180622T163338Z:9a2134db-06cc-488d-9907-4ea1ba27d45e"
         ]
       },
       "StatusCode": 200
@@ -1355,7 +350,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fc144d05-f3dd-4821-b40e-4f4c784f2b4d"
+          "3cf37819-d75f-47c8-a983-af151cb836a5"
         ],
         "accept-language": [
           "en-US"
@@ -1377,28 +372,31 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 29 Oct 2017 06:32:56 GMT"
+          "Fri, 22 Jun 2018 16:33:40 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "x-ms-request-id": [
-          "46b6bc46-f0cd-4605-9978-0b1db287d5fc"
+          "3ca00669-b9b9-4ea8-8556-2969d915512f"
         ],
         "x-ms-client-request-id": [
-          "fc144d05-f3dd-4821-b40e-4f4c784f2b4d"
+          "3cf37819-d75f-47c8-a983-af151cb836a5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "46b6bc46-f0cd-4605-9978-0b1db287d5fc"
+          "3ca00669-b9b9-4ea8-8556-2969d915512f"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20171029T063257Z:46b6bc46-f0cd-4605-9978-0b1db287d5fc"
+          "SOUTHINDIA:20180622T163340Z:3ca00669-b9b9-4ea8-8556-2969d915512f"
         ]
       },
       "StatusCode": 200

@@ -641,5 +641,189 @@ namespace Monitor.Tests.Helpers
             }
         }
         #endregion
+
+        #region MetricAlerts
+        public static void AreEqual(IList<MetricAlertResource> exp, IList<MetricAlertResource> act)
+        {
+            if(exp != null)
+            {
+                for(int i=0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricAlertResource exp, MetricAlertResource act)
+        {
+            if(exp != null)
+            {
+                Assert.Equal(exp.Description, act.Description);
+                Assert.Equal(exp.Location, act.Location);
+                Assert.Equal(exp.Severity, act.Severity);
+                Assert.Equal(exp.Enabled, act.Enabled);
+                AreEqual(exp.Scopes, act.Scopes);
+                Assert.Equal(exp.EvaluationFrequency, act.EvaluationFrequency);
+                Assert.Equal(exp.WindowSize, act.WindowSize);
+                AreEqual(exp.Criteria, act.Criteria);
+                Assert.Equal(exp.AutoMitigate, act.AutoMitigate);
+                AreEqual(exp.Actions, act.Actions);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(IList<MetricAlertAction> exp, IList<MetricAlertAction> act)
+        {
+            if(exp != null)
+            {
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricAlertAction exp, MetricAlertAction act)
+        {
+            if(exp != null)
+            {
+                Assert.Equal(exp.ActionGroupId, act.ActionGroupId);
+                AreEqual(exp.WebhookProperties, act.WebhookProperties);
+
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricAlertCriteria exp, MetricAlertCriteria act)
+        {
+            if(exp != null)
+            {
+                if (exp.GetType() == typeof(MetricAlertSingleResourceMultipleMetricCriteria))
+                {
+                    Compare(exp as MetricAlertSingleResourceMultipleMetricCriteria, act as MetricAlertSingleResourceMultipleMetricCriteria);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void Compare(MetricAlertSingleResourceMultipleMetricCriteria exp, MetricAlertSingleResourceMultipleMetricCriteria act)
+        {
+            if(exp != null)
+            {
+                for (int i = 0; i < exp.AllOf.Count; i++)
+                {
+                    AreEqual(exp.AllOf[i], act.AllOf[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricCriteria exp, MetricCriteria act)
+        {
+            if(exp != null)
+            {
+                Assert.Equal(exp.MetricName, act.MetricName);
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.MetricNamespace, act.MetricNamespace);
+                AreEqual(exp.Dimensions, act.Dimensions);
+                Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
+                Assert.Equal(exp.TimeAggregation, act.TimeAggregation);
+                Assert.Equal(exp.Threshold, act.Threshold);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(IList<MetricDimension> exp, IList<MetricDimension> act)
+        {   
+            if(exp != null)
+            {
+                for(int i = 0; i < exp.Count; i++ )
+                {
+                    AreEqual(exp[i], act[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricDimension exp, MetricDimension act)
+        {
+            if(exp != null)
+            {
+                Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.OperatorProperty, act.OperatorProperty);
+                AreEqual(exp.Values, act.Values);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricAlertStatusCollection exp, MetricAlertStatusCollection act)
+        {
+            if(exp != null)
+            {
+                for (int i = 0; i < exp.Value.Count; i++)
+                {
+                    AreEqual(exp.Value[i], act.Value[i]);
+                }
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricAlertStatus exp, MetricAlertStatus act)
+        {
+            if(exp != null)
+            {
+                AreEqual(exp.Properties, act.Properties);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+
+        public static void AreEqual(MetricAlertStatusProperties exp, MetricAlertStatusProperties act)
+        {
+            if(exp != null)
+            {
+                Assert.Equal(exp.Status, act.Status);
+                AreEqual(exp.Dimensions, act.Dimensions);
+            }
+            else
+            {
+                Assert.Null(act);
+            }
+        }
+        #endregion
     }
 }

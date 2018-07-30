@@ -1,0 +1,707 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "108af7a8-bae7-4e19-9e3f-d3895afe613e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/AzGovLiveTest\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"AzGovLiveTest\",\r\n      \"properties\": {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"displayName\": \"GovernanceLiveTest\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5502\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"azsmnet5502\",\r\n      \"properties\": {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"displayName\": \"azsmnet5502\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/AzGovTest8\",\r\n      \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n      \"name\": \"AzGovTest8\",\r\n      \"properties\": {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"displayName\": \"AzGovTestMG no subscription\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "de51d8fe-ebc6-4b13-ae68-55e42fecd55b"
+        ],
+        "x-ms-correlation-request-id": [
+          "de51d8fe-ebc6-4b13-ae68-55e42fecd55b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021123Z:de51d8fe-ebc6-4b13-ae68-55e42fecd55b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/azsmnet5850?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ1ODUwP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet5850\",\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtManagementGroup\",\r\n    \"details\": {\r\n      \"parent\": {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/AzGovLiveTest\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "251"
+        ],
+        "x-ms-client-request-id": [
+          "6a0c7588-2a01-4466-88fc-3b534b72b0f8"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"azsmnet5850\",\r\n  \"status\": \"NotStarted\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "170"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:24 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet5850?api-version=2018-03-01-preview"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "westus2:bbc0160d-3357-4d82-b742-482634a64e03"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.745"
+        ],
+        "request-id": [
+          "7d60c5e0-9cce-4f59-bf1d-81920e1cb8bb"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "36238612-2037-469a-b75b-cfe28f0ce578"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021124Z:36238612-2037-469a-b75b-cfe28f0ce578"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/operationResults/create/managementGroups/azsmnet5850?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2NyZWF0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ1ODUwP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"azsmnet5850\",\r\n  \"status\": \"Succeeded\",\r\n  \"properties\": {\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtManagementGroup\",\r\n    \"details\": {\r\n      \"version\": 1,\r\n      \"updatedTime\": \"2018-06-29T02:11:27.7261787Z\",\r\n      \"updatedBy\": \"094435f3-a5d5-4c38-abfb-238662bec758\",\r\n      \"parent\": {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/AzGovLiveTest\",\r\n        \"name\": \"AzGovLiveTest\",\r\n        \"displayName\": \"GovernanceLiveTest\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "westus2:eecb4669-da62-4cff-be48-040759c13882"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.745"
+        ],
+        "request-id": [
+          "e56fc4b5-08dd-4c3d-bf23-847e3319b395"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "e0db023a-c3d5-45de-a866-b3f3ee8b856b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021134Z:e0db023a-c3d5-45de-a866-b3f3ee8b856b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Authorization/policyDefinitions?api-version=2018-03-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3030f25b-4236-44c9-a0c0-4984c22c2ff2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit SQL DB Level Audit Setting\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Audit DB level audit setting for SQL databases\",\r\n        \"metadata\": {\r\n          \"category\": \"SQL\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {\r\n          \"setting\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Audit Setting\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"enabled\",\r\n              \"disabled\"\r\n            ]\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Sql/servers/databases\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"AuditIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Sql/servers/databases/auditingSettings\",\r\n              \"name\": \"default\",\r\n              \"existenceCondition\": {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"Microsoft.Sql/auditingSettings.state\",\r\n                    \"equals\": \"[parameters('setting')]\"\r\n                  }\r\n                ]\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a12\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"06a78e20-9358-41c9-923c-fb736d382a12\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit VMs that do not use managed disks\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"This policy audits VMs that do not use managed disks\",\r\n        \"metadata\": {\r\n          \"category\": \"Compute\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"anyOf\": [\r\n              {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"type\",\r\n                    \"equals\": \"Microsoft.Compute/virtualMachines\"\r\n                  },\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/virtualMachines/osDisk.uri\",\r\n                    \"exists\": \"True\"\r\n                  }\r\n                ]\r\n              },\r\n              {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"type\",\r\n                    \"equals\": \"Microsoft.Compute/VirtualMachineScaleSets\"\r\n                  },\r\n                  {\r\n                    \"anyOf\": [\r\n                      {\r\n                        \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/osDisk.vhdContainers\",\r\n                        \"exists\": \"True\"\r\n                      },\r\n                      {\r\n                        \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/osdisk.imageUrl\",\r\n                        \"exists\": \"True\"\r\n                      }\r\n                    ]\r\n                  }\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"audit\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"06a78e20-9358-41c9-923c-fb736d382a4d\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy default OMS VM Extension for Windows VMs.\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"NotSpecified\",\r\n        \"description\": \"This policy deploys OMS VM Extensions on Windows VMs, and connects to the selected Log Analytics workspace\",\r\n        \"metadata\": {\r\n          \"category\": \"Compute\"\r\n        },\r\n        \"parameters\": {\r\n          \"logAnalytics\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Log Analytics workspace\",\r\n              \"description\": \"Select Log Analytics workspace from dropdown list\",\r\n              \"strongType\": \"omsWorkspace\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Compute/virtualMachines\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imagePublisher\",\r\n                \"equals\": \"MicrosoftWindowsServer\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imageOffer\",\r\n                \"equals\": \"WindowsServer\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imageSKU\",\r\n                \"in\": [\r\n                  \"2008-R2-SP1\",\r\n                  \"2008-R2-SP1-smalldisk\",\r\n                  \"2012-Datacenter\",\r\n                  \"2012-Datacenter-smalldisk\",\r\n                  \"2012-R2-Datacenter\",\r\n                  \"2012-R2-Datacenter-smalldisk\",\r\n                  \"2016-Datacenter\",\r\n                  \"2016-Datacenter-Server-Core\",\r\n                  \"2016-Datacenter-Server-Core-smalldisk\",\r\n                  \"2016-Datacenter-smalldisk\",\r\n                  \"2016-Datacenter-with-Containers\",\r\n                  \"2016-Datacenter-with-RDSH\"\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deployIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n              \"existenceCondition\": {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/virtualMachines/extensions/type\",\r\n                    \"equals\": \"MicrosoftMonitoringAgent\"\r\n                  },\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/virtualMachines/extensions/publisher\",\r\n                    \"equals\": \"Microsoft.EnterpriseCloud.Monitoring\"\r\n                  }\r\n                ]\r\n              },\r\n              \"deployment\": {\r\n                \"properties\": {\r\n                  \"mode\": \"incremental\",\r\n                  \"template\": {\r\n                    \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                    \"contentVersion\": \"1.0.0.0\",\r\n                    \"parameters\": {\r\n                      \"vmName\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"location\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"logAnalytics\": {\r\n                        \"type\": \"string\"\r\n                      }\r\n                    },\r\n                    \"resources\": [\r\n                      {\r\n                        \"name\": \"[concat(parameters('vmName'),'/omsPolicy')]\",\r\n                        \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n                        \"location\": \"[parameters('location')]\",\r\n                        \"apiVersion\": \"2017-12-01\",\r\n                        \"properties\": {\r\n                          \"publisher\": \"Microsoft.EnterpriseCloud.Monitoring\",\r\n                          \"type\": \"MicrosoftMonitoringAgent\",\r\n                          \"typeHandlerVersion\": \"1.0\",\r\n                          \"autoUpgradeMinorVersion\": true,\r\n                          \"settings\": {\r\n                            \"workspaceId\": \"[reference(parameters('logAnalytics'), '2015-03-20').customerId]\"\r\n                          },\r\n                          \"protectedSettings\": {\r\n                            \"workspaceKey\": \"[listKeys(parameters('logAnalytics'), '2015-03-20').primarySharedKey]\"\r\n                          }\r\n                        }\r\n                      }\r\n                    ],\r\n                    \"outputs\": {\r\n                      \"policy\": {\r\n                        \"type\": \"string\",\r\n                        \"value\": \"[concat('Enabled monitoring for Windows VM', ': ', parameters('vmName'))]\"\r\n                      }\r\n                    }\r\n                  },\r\n                  \"parameters\": {\r\n                    \"vmName\": {\r\n                      \"value\": \"[field('name')]\"\r\n                    },\r\n                    \"location\": {\r\n                      \"value\": \"[field('location')]\"\r\n                    },\r\n                    \"logAnalytics\": {\r\n                      \"value\": \"[parameters('logAnalytics')]\"\r\n                    }\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/0868462e-646c-4fe3-9ced-a733534b6a2c\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"0868462e-646c-4fe3-9ced-a733534b6a2c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor unencrypted VM Disks in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"VMs without an enabled disk encryption will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Compute/virtualMachines\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"encryption\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/0961003e-5a0a-4549-abde-af6a37f2724d\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"0961003e-5a0a-4549-abde-af6a37f2724d\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit resource location matches resource group location\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"Audit that the resource location matches its resource group location\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"location\",\r\n            \"notIn\": [\r\n              \"[resourcegroup().location]\",\r\n              \"global\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"audit\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"0a914e76-4921-4c19-b460-a2d36003525a\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit transparent data encryption status\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"Audit transparent data encryption status for SQL databases\",\r\n        \"metadata\": {\r\n          \"category\": \"SQL\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Sql/servers/databases\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"AuditIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Sql/servers/databases/transparentDataEncryption\",\r\n              \"name\": \"current\",\r\n              \"existenceCondition\": {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"Microsoft.Sql/transparentDataEncryption.status\",\r\n                    \"equals\": \"enabled\"\r\n                  }\r\n                ]\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/17k78e20-9358-41c9-923c-fb736d382a12\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"17k78e20-9358-41c9-923c-fb736d382a12\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Enforce tag and its value\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Enforces a required tag and its value. Does not apply to resource groups.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Name\",\r\n              \"description\": \"Name of the tag, such as 'environment'\"\r\n            }\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Value\",\r\n              \"description\": \"Value of the tag, such as 'production'\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"[concat('tags[', parameters('tagName'), ']')]\",\r\n              \"equals\": \"[parameters('tagValue')]\"\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/1e30110a-5ceb-460c-a204-c1c3969c6d62\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"1e30110a-5ceb-460c-a204-c1c3969c6d62\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor unprotected web application in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Web applications without a Web Application Firewall protection will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Network/publicIPAddresses\",\r\n              \"Microsoft.ClassicCompute/domainNames\",\r\n              \"Microsoft.Web/hostingEnvironments\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"unprotectedWebApplication\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/201ea587-7c90-41c3-910f-c280ae01cfd6\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"201ea587-7c90-41c3-910f-c280ae01cfd6\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy default Microsoft IaaSAntimalware extension for Windows Server\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"This policy deploys a Microsoft IaaSAntimalware extension with a default configuraion when a VM is not configured with the antimalware extension.\",\r\n        \"metadata\": {\r\n          \"category\": \"Compute\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Compute/virtualMachines\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imagePublisher\",\r\n                \"equals\": \"MicrosoftWindowsServer\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imageOffer\",\r\n                \"equals\": \"WindowsServer\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imageSKU\",\r\n                \"in\": [\r\n                  \"2008-R2-SP1\",\r\n                  \"2008-R2-SP1-smalldisk\",\r\n                  \"2012-Datacenter\",\r\n                  \"2012-Datacenter-smalldisk\",\r\n                  \"2012-R2-Datacenter\",\r\n                  \"2012-R2-Datacenter-smalldisk\",\r\n                  \"2016-Datacenter\",\r\n                  \"2016-Datacenter-Server-Core\",\r\n                  \"2016-Datacenter-Server-Core-smalldisk\",\r\n                  \"2016-Datacenter-smalldisk\",\r\n                  \"2016-Datacenter-with-Containers\",\r\n                  \"2016-Datacenter-with-RDSH\"\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deployIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n              \"existenceCondition\": {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/virtualMachines/extensions/type\",\r\n                    \"equals\": \"IaaSAntimalware\"\r\n                  },\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/virtualMachines/extensions/publisher\",\r\n                    \"equals\": \"Microsoft.Azure.Security\"\r\n                  }\r\n                ]\r\n              },\r\n              \"deployment\": {\r\n                \"properties\": {\r\n                  \"mode\": \"incremental\",\r\n                  \"template\": {\r\n                    \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                    \"contentVersion\": \"1.0.0.0\",\r\n                    \"parameters\": {\r\n                      \"vmName\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"location\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"ExclusionsPaths\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"\",\r\n                        \"metadata\": {\r\n                          \"description\": \"Semicolon delimited list of file paths or locations to exclude from scanning\"\r\n                        }\r\n                      },\r\n                      \"ExclusionsExtensions\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"\",\r\n                        \"metadata\": {\r\n                          \"description\": \"Semicolon delimited list of file extensions to exclude from scanning\"\r\n                        }\r\n                      },\r\n                      \"ExclusionsProcesses\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"\",\r\n                        \"metadata\": {\r\n                          \"description\": \"Semicolon delimited list of process names to exclude from scanning\"\r\n                        }\r\n                      },\r\n                      \"RealtimeProtectionEnabled\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"true\",\r\n                        \"metadata\": {\r\n                          \"description\": \"Indicates whether or not real time protection is enabled (default is true)\"\r\n                        }\r\n                      },\r\n                      \"ScheduledScanSettingsIsEnabled\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"false\",\r\n                        \"metadata\": {\r\n                          \"description\": \"Indicates whether or not custom scheduled scan settings are enabled (default is false)\"\r\n                        }\r\n                      },\r\n                      \"ScheduledScanSettingsScanType\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"Quick\",\r\n                        \"metadata\": {\r\n                          \"description\": \"Indicates whether scheduled scan setting type is set to Quick or Full (default is Quick)\"\r\n                        }\r\n                      },\r\n                      \"ScheduledScanSettingsDay\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"7\",\r\n                        \"metadata\": {\r\n                          \"description\": \"Day of the week for scheduled scan (1-Sunday, 2-Monday, ..., 7-Saturday)\"\r\n                        }\r\n                      },\r\n                      \"ScheduledScanSettingsTime\": {\r\n                        \"type\": \"string\",\r\n                        \"defaultValue\": \"120\",\r\n                        \"metadata\": {\r\n                          \"description\": \"When to perform the scheduled scan, measured in minutes from midnight (0-1440). For example: 0 = 12AM, 60 = 1AM, 120 = 2AM.\"\r\n                        }\r\n                      }\r\n                    },\r\n                    \"resources\": [\r\n                      {\r\n                        \"name\": \"[concat(parameters('vmName'),'/IaaSAntimalware')]\",\r\n                        \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n                        \"location\": \"[parameters('location')]\",\r\n                        \"apiVersion\": \"2017-12-01\",\r\n                        \"properties\": {\r\n                          \"publisher\": \"Microsoft.Azure.Security\",\r\n                          \"type\": \"IaaSAntimalware\",\r\n                          \"typeHandlerVersion\": \"1.3\",\r\n                          \"autoUpgradeMinorVersion\": true,\r\n                          \"settings\": {\r\n                            \"AntimalwareEnabled\": true,\r\n                            \"RealtimeProtectionEnabled\": \"[parameters('RealtimeProtectionEnabled')]\",\r\n                            \"ScheduledScanSettings\": {\r\n                              \"isEnabled\": \"[parameters('ScheduledScanSettingsIsEnabled')]\",\r\n                              \"day\": \"[parameters('ScheduledScanSettingsDay')]\",\r\n                              \"time\": \"[parameters('ScheduledScanSettingsTime')]\",\r\n                              \"scanType\": \"[parameters('ScheduledScanSettingsScanType')]\"\r\n                            },\r\n                            \"Exclusions\": {\r\n                              \"Extensions\": \"[parameters('ExclusionsExtensions')]\",\r\n                              \"Paths\": \"[parameters('ExclusionsPaths')]\",\r\n                              \"Processes\": \"[parameters('ExclusionsProcesses')]\"\r\n                            }\r\n                          }\r\n                        }\r\n                      }\r\n                    ]\r\n                  },\r\n                  \"parameters\": {\r\n                    \"vmName\": {\r\n                      \"value\": \"[field('name')]\"\r\n                    },\r\n                    \"location\": {\r\n                      \"value\": \"[field('location')]\"\r\n                    },\r\n                    \"RealtimeProtectionEnabled\": {\r\n                      \"value\": \"true\"\r\n                    },\r\n                    \"ScheduledScanSettingsIsEnabled\": {\r\n                      \"value\": \"true\"\r\n                    }\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/2835b622-407b-4114-9198-6f7064cbe0dc\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"2835b622-407b-4114-9198-6f7064cbe0dc\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Apply tag and its default value\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Applies a required tag and its default value if it is not specified by the user. Does not apply to resource groups.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Name\",\r\n              \"description\": \"Name of the tag, such as 'environment'\"\r\n            }\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Value\",\r\n              \"description\": \"Value of the tag, such as 'production'\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"[concat('tags[', parameters('tagName'), ']')]\",\r\n            \"exists\": \"false\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"append\",\r\n            \"details\": [\r\n              {\r\n                \"field\": \"[concat('tags[', parameters('tagName'), ']')]\",\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/2a0e14a6-b0a6-4fab-991a-187a4f81c498\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"2a0e14a6-b0a6-4fab-991a-187a4f81c498\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy default OMS VM Extension for Ubuntu VMs.\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"NotSpecified\",\r\n        \"description\": \"This policy deploys OMS VM Extensions on Ubuntu VMs, and connects to the selected Log Analytics workspace\",\r\n        \"metadata\": {\r\n          \"category\": \"Compute\"\r\n        },\r\n        \"parameters\": {\r\n          \"logAnalytics\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Log Analytics workspace\",\r\n              \"description\": \"Select Log Analytics workspace from dropdown list\",\r\n              \"strongType\": \"omsWorkspace\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Compute/virtualMachines\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imagePublisher\",\r\n                \"equals\": \"Canonical\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imageOffer\",\r\n                \"equals\": \"UbuntuServer\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Compute/imageSKU\",\r\n                \"in\": [\r\n                  \"14.04.2-LTS\",\r\n                  \"12.04.5-LTS\"\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deployIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n              \"existenceCondition\": {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/virtualMachines/extensions/type\",\r\n                    \"equals\": \"OmsAgentForLinux\"\r\n                  },\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/virtualMachines/extensions/publisher\",\r\n                    \"equals\": \"Microsoft.EnterpriseCloud.Monitoring\"\r\n                  }\r\n                ]\r\n              },\r\n              \"deployment\": {\r\n                \"properties\": {\r\n                  \"mode\": \"incremental\",\r\n                  \"template\": {\r\n                    \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                    \"contentVersion\": \"1.0.0.0\",\r\n                    \"parameters\": {\r\n                      \"vmName\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"location\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"logAnalytics\": {\r\n                        \"type\": \"string\"\r\n                      }\r\n                    },\r\n                    \"resources\": [\r\n                      {\r\n                        \"name\": \"[concat(parameters('vmName'),'/omsPolicy')]\",\r\n                        \"type\": \"Microsoft.Compute/virtualMachines/extensions\",\r\n                        \"location\": \"[parameters('location')]\",\r\n                        \"apiVersion\": \"2017-12-01\",\r\n                        \"properties\": {\r\n                          \"publisher\": \"Microsoft.EnterpriseCloud.Monitoring\",\r\n                          \"type\": \"OmsAgentForLinux\",\r\n                          \"typeHandlerVersion\": \"1.4\",\r\n                          \"autoUpgradeMinorVersion\": true,\r\n                          \"settings\": {\r\n                            \"workspaceId\": \"[reference(parameters('logAnalytics'), '2015-03-20').customerId]\"\r\n                          },\r\n                          \"protectedSettings\": {\r\n                            \"workspaceKey\": \"[listKeys(parameters('logAnalytics'), '2015-03-20').primarySharedKey]\"\r\n                          }\r\n                        }\r\n                      }\r\n                    ],\r\n                    \"outputs\": {\r\n                      \"policy\": {\r\n                        \"type\": \"string\",\r\n                        \"value\": \"[concat('Enabled monitoring for Linux VM', ': ', parameters('vmName'))]\"\r\n                      }\r\n                    }\r\n                  },\r\n                  \"parameters\": {\r\n                    \"vmName\": {\r\n                      \"value\": \"[field('name')]\"\r\n                    },\r\n                    \"location\": {\r\n                      \"value\": \"[field('location')]\"\r\n                    },\r\n                    \"logAnalytics\": {\r\n                      \"value\": \"[parameters('logAnalytics')]\"\r\n                    }\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/3d8640fc-63f6-4734-8dcb-cfd3d8c78f38\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"3d8640fc-63f6-4734-8dcb-cfd3d8c78f38\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor permissive network access in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Network Security Groups with too permissive rules will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Compute/virtualMachines\",\r\n              \"Microsoft.ClassicCompute/virtualMachines\",\r\n              \"Microsoft.Network/virtualNetworks\",\r\n              \"Microsoft.ClassicNetwork/virtualNetworks\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"permissiveNetworkAccess\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/44452482-524f-4bf4-b852-0bff7cc4a3ed\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"44452482-524f-4bf4-b852-0bff7cc4a3ed\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Require SQL Server version 12.0\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy ensures all SQL servers use version 12.0.\",\r\n        \"metadata\": {\r\n          \"category\": \"SQL\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Sql/servers\"\r\n              },\r\n              {\r\n                \"not\": {\r\n                  \"field\": \"Microsoft.Sql/servers/version\",\r\n                  \"equals\": \"12.0\"\r\n                }\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/464dbb85-3d5f-4a1d-bb09-95a9b5dd19cf\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"464dbb85-3d5f-4a1d-bb09-95a9b5dd19cf\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Enforce automatic OS upgrade with app health checks on VMSS\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"This policy enforces usage of automatic OS upgrade with application health checks through health probes, which enables safer rollout by evaluating application health after each OS upgrade batch.\",\r\n        \"metadata\": {\r\n          \"category\": \"Compute\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Compute/virtualMachineScaleSets\"\r\n              },\r\n              {\r\n                \"anyOf\": [\r\n                  {\r\n                    \"not\": {\r\n                      \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/upgradePolicy.automaticOSUpgrade\",\r\n                      \"equals\": \"True\"\r\n                    }\r\n                  },\r\n                  {\r\n                    \"field\": \"Microsoft.Compute/VirtualMachineScaleSets/networkProfile.healthProbe.id\",\r\n                    \"exists\": \"False\"\r\n                  }\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/465f0161-0087-490a-9ad9-ad6217f4f43a\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"465f0161-0087-490a-9ad9-ad6217f4f43a\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor possible app Whitelisting in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Possible Application Whitelist configuration will be monitored by Azure Security Center.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Compute/virtualMachines\",\r\n              \"Microsoft.ClassicCompute/virtualMachines\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"applicationWhitelisting\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/47a6b606-51aa-4496-8bb7-64b11cf66adc\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"47a6b606-51aa-4496-8bb7-64b11cf66adc\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Apply tag and its default value to resource groups\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Applies a required tag and its default value to resource groups if it is not specified by the user.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Name\",\r\n              \"description\": \"Name of the tag, such as 'environment'\"\r\n            }\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Value\",\r\n              \"description\": \"Value of the tag, such as 'production'\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"[concat('tags[', parameters('tagName'), ']')]\",\r\n                \"exists\": \"false\"\r\n              },\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Resources/subscriptions/resourceGroups\"\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"append\",\r\n            \"details\": [\r\n              {\r\n                \"field\": \"[concat('tags[', parameters('tagName'), ']')]\",\r\n                \"value\": \"[parameters('tagValue')]\"\r\n              }\r\n            ]\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/49c88fc8-6fd1-46fd-a676-f12d1d3a4c71\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"49c88fc8-6fd1-46fd-a676-f12d1d3a4c71\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation only in India data centers\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation in the following locations only: West India, South India, Central India\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"location\",\r\n              \"in\": [\r\n                \"westindia\",\r\n                \"southindia\",\r\n                \"centralindia\"\r\n              ]\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/5ee85ce5-e7eb-44d6-b4a2-32a24be1ca54\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"5ee85ce5-e7eb-44d6-b4a2-32a24be1ca54\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Audit missing blob encryption for storage accounts\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"This policy audits storage accounts without blob encryption. It only applies to Microsoft.Storage resource types, not other storage providers.Possible network Just In Time access will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"Audit\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"Audit\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Storage/storageAccounts\"\r\n              },\r\n              {\r\n                \"not\": {\r\n                  \"field\": \"Microsoft.Storage/storageAccounts/enableBlobEncryption\",\r\n                  \"equals\": \"True\"\r\n                }\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/655cb504-bcee-4362-bd4c-402e6aa38759\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"655cb504-bcee-4362-bd4c-402e6aa38759\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Not allowed resource types\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy enables you to specify the resource types that your organization cannot deploy.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"listOfResourceTypesNotAllowed\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"The list of resource types that cannot be deployed.\",\r\n              \"displayName\": \"Not allowed resource types\",\r\n              \"strongType\": \"resourceTypes\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": \"[parameters('listOfResourceTypesNotAllowed')]\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/6c112d4e-5bc7-47ae-a041-ea2d9dccd749\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"6c112d4e-5bc7-47ae-a041-ea2d9dccd749\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation only in Japan data centers\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation in the following locations only: Japan East, Japan West\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"location\",\r\n              \"in\": [\r\n                \"japaneast\",\r\n                \"japanwest\"\r\n              ]\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/6fdb9205-3462-4cfc-87d8-16c7860b53f4\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"6fdb9205-3462-4cfc-87d8-16c7860b53f4\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed storage account SKUs\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy enables you to specify a set of storage account SKUs that your organization can deploy.\",\r\n        \"metadata\": {\r\n          \"category\": \"Storage\"\r\n        },\r\n        \"parameters\": {\r\n          \"listOfAllowedSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"The list of SKUs that can be specified for storage accounts.\",\r\n              \"displayName\": \"Allowed SKUs\",\r\n              \"strongType\": \"StorageSKUs\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Storage/storageAccounts\"\r\n              },\r\n              {\r\n                \"not\": {\r\n                  \"field\": \"Microsoft.Storage/storageAccounts/sku.name\",\r\n                  \"in\": \"[parameters('listOfAllowedSKUs')]\"\r\n                }\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"7433c107-6db4-4ad1-b57a-a76dce0154a1\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor VM Vulnerabilities in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Monitors vulnerabilities detected by Vulnerability Assessment solution and VMs without a Vulnerability Assessment solution in Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Compute/virtualMachines\",\r\n              \"Microsoft.ClassicCompute/virtualMachines\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"vulnerabilityAssessment\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/760a85ff-6162-42b3-8d70-698e268f648c\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"760a85ff-6162-42b3-8d70-698e268f648c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Require blob encryption for storage accounts\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy ensures blob encryption for storage accounts is turned on. It only applies to Microsoft.Storage resource types, not other storage providers.\",\r\n        \"metadata\": {\r\n          \"category\": \"Storage\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Storage/storageAccounts\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.Storage/storageAccounts/enableBlobEncryption\",\r\n                \"equals\": \"false\"\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/7c5a74bf-ae94-4a74-8fcf-644d1e0e6e6f\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"7c5a74bf-ae94-4a74-8fcf-644d1e0e6e6f\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit diagnostic setting\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Audit diagnostic setting for selected resource types\",\r\n        \"metadata\": {\r\n          \"category\": \"Monitoring\"\r\n        },\r\n        \"parameters\": {\r\n          \"listOfResourceTypes\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Resource Types\",\r\n              \"strongType\": \"resourceTypes\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": \"[parameters('listOfResourceTypes')]\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"AuditIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Insights/diagnosticSettings\",\r\n              \"existenceCondition\": {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/logs.enabled\",\r\n                    \"equals\": \"true\"\r\n                  },\r\n                  {\r\n                    \"field\": \"Microsoft.Insights/diagnosticSettings/metrics.enabled\",\r\n                    \"equals\": \"true\"\r\n                  }\r\n                ]\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/7f89b1eb-583c-429a-8828-af049802c1d9\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"7f89b1eb-583c-429a-8828-af049802c1d9\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Deploy SQL DB transparent data encryption\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"Enables transparent data encryption on SQL databases\",\r\n        \"metadata\": {\r\n          \"category\": \"SQL\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Sql/servers/databases\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"DeployIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Sql/servers/databases/transparentDataEncryption\",\r\n              \"name\": \"current\",\r\n              \"existenceCondition\": {\r\n                \"allOf\": [\r\n                  {\r\n                    \"field\": \"Microsoft.Sql/transparentDataEncryption.status\",\r\n                    \"equals\": \"Enabled\"\r\n                  }\r\n                ]\r\n              },\r\n              \"deployment\": {\r\n                \"properties\": {\r\n                  \"mode\": \"incremental\",\r\n                  \"template\": {\r\n                    \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                    \"contentVersion\": \"1.0.0.0\",\r\n                    \"parameters\": {\r\n                      \"fullDbName\": {\r\n                        \"type\": \"string\"\r\n                      }\r\n                    },\r\n                    \"resources\": [\r\n                      {\r\n                        \"name\": \"[concat(parameters('fullDbName'), '/current')]\",\r\n                        \"type\": \"Microsoft.Sql/servers/databases/transparentDataEncryption\",\r\n                        \"apiVersion\": \"2014-04-01\",\r\n                        \"properties\": {\r\n                          \"status\": \"Enabled\"\r\n                        }\r\n                      }\r\n                    ]\r\n                  },\r\n                  \"parameters\": {\r\n                    \"fullDbName\": {\r\n                      \"value\": \"[field('fullName')]\"\r\n                    }\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/86a912f6-9a06-4e26-b447-11b16ba8659f\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"86a912f6-9a06-4e26-b447-11b16ba8659f\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor missing system updates in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Missing security system updates on your servers will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Compute/virtualMachines\",\r\n              \"Microsoft.ClassicCompute/virtualMachines\",\r\n              \"Microsoft.OperationalInsights/workspaces\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"systemUpdates\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/86b3d65f-7626-441e-b690-81a8b71cff60\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"86b3d65f-7626-441e-b690-81a8b71cff60\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Enforce tag and its value on resource groups\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Enforces a required tag and its value on resource groups.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Name\",\r\n              \"description\": \"Name of the tag, such as 'environment'\"\r\n            }\r\n          },\r\n          \"tagValue\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Tag Value\",\r\n              \"description\": \"Value of the tag, such as 'production'\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"[concat('tags[', parameters('tagName'), ']')]\",\r\n                \"notEquals\": \"[parameters('tagValue')]\"\r\n              },\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Resources/subscriptions/resourceGroups\"\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/8ce3da23-7156-49e4-b145-24f95f9dcb46\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"8ce3da23-7156-49e4-b145-24f95f9dcb46\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation only in European data centers\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation in the following locations only: North Europe, West Europe\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"location\",\r\n              \"in\": [\r\n                \"northeurope\",\r\n                \"westeurope\"\r\n              ]\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/94c19f19-8192-48cd-a11b-e37099d3e36b\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"94c19f19-8192-48cd-a11b-e37099d3e36b\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation only in United States data centers\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation in the following locations only: Central US, East US, East US2, North Central US, South Central US, West US\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"location\",\r\n              \"in\": [\r\n                \"centralus\",\r\n                \"eastus\",\r\n                \"eastus2\",\r\n                \"northcentralus\",\r\n                \"southcentralus\",\r\n                \"westus\"\r\n              ]\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/983211ba-f348-4758-983b-21fa29294869\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"983211ba-f348-4758-983b-21fa29294869\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor unprotected network endpoints in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Network endpoints without a Next Generation Firewall's protection will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Network/publicIPAddresses\",\r\n              \"Microsoft.ClassicCompute/domainNames\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"unprotectedNetworkEndpoint\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/9daedab3-fb2d-461e-b861-71790eead4f6\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"9daedab3-fb2d-461e-b861-71790eead4f6\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed resource types\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy enables you to specify the resource types that your organization can deploy.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"listOfResourceTypesAllowed\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"The list of resource types that can be deployed.\",\r\n              \"displayName\": \"Allowed resource types\",\r\n              \"strongType\": \"resourceTypes\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"type\",\r\n              \"in\": \"[parameters('listOfResourceTypesAllowed')]\"\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/a08ec900-254a-4555-9bf5-e42af04b5c5c\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"a08ec900-254a-4555-9bf5-e42af04b5c5c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Audit SQL server level Auditing settings\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"NotSpecified\",\r\n        \"description\": \"Audits the existence of SQL Auditing at the server level\",\r\n        \"metadata\": {\r\n          \"category\": \"SQL\"\r\n        },\r\n        \"parameters\": {\r\n          \"setting\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Desired Auditing setting\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"enabled\",\r\n              \"disabled\"\r\n            ],\r\n            \"defaultValue\": \"enabled\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Sql/servers\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"AuditIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Sql/servers/auditingSettings\",\r\n              \"name\": \"default\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Sql/auditingSettings.state\",\r\n                \"equals\": \"[parameters('setting')]\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"a6fb4358-5bf4-4ad7-ba82-2cd2f41ce5e9\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Enforce encryption on DataLakeStore accounts\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"This policy ensures encryption is enabled on all DataLakeStore accounts\",\r\n        \"metadata\": {\r\n          \"category\": \"Data Lake\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.DataLakeStore/accounts\"\r\n              },\r\n              {\r\n                \"field\": \"Microsoft.DataLakeStore/accounts/encryptionState\",\r\n                \"equals\": \"Disabled\"\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/a7ff3161-0087-490a-9ad9-ad6217f4f43a\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"a7ff3161-0087-490a-9ad9-ad6217f4f43a\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor unencrypted SQL database in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Unencrypted SQL servers or databases will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.SQL/servers\",\r\n              \"Microsoft.SQL/servers/databases\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"encryption\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/a8bef009-a5c9-4d0f-90d7-6018734e8a16\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"a8bef009-a5c9-4d0f-90d7-6018734e8a16\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy network watcher when virtual networks are created\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"This policy creates a network watcher resource in regions with virtual networks. You need to ensure existence of a resource group named networkWatcherRG, which will be used to deploy network watcher instances.\",\r\n        \"metadata\": {\r\n          \"category\": \"Network\"\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Network/virtualNetworks\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"DeployIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Network/networkWatchers\",\r\n              \"resourceGroupName\": \"networkWatcherRG\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"location\",\r\n                \"equals\": \"[field('location')]\"\r\n              },\r\n              \"deployment\": {\r\n                \"properties\": {\r\n                  \"mode\": \"incremental\",\r\n                  \"template\": {\r\n                    \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json\",\r\n                    \"contentVersion\": \"1.0.0.0\",\r\n                    \"parameters\": {\r\n                      \"location\": {\r\n                        \"type\": \"string\"\r\n                      }\r\n                    },\r\n                    \"resources\": [\r\n                      {\r\n                        \"apiVersion\": \"2016-09-01\",\r\n                        \"type\": \"Microsoft.Network/networkWatchers\",\r\n                        \"name\": \"[concat('networkWacher_', parameters('location'))]\",\r\n                        \"location\": \"[parameters('location')]\"\r\n                      }\r\n                    ]\r\n                  },\r\n                  \"parameters\": {\r\n                    \"location\": {\r\n                      \"value\": \"[field('location')]\"\r\n                    }\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/a9b99dd8-06c5-4317-8629-9d86a3c6e7d9\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"a9b99dd8-06c5-4317-8629-9d86a3c6e7d9\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Automatic provisioning of security monitoring agent\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Installs security agent on VMs for advanced security alerts and preventions in Azure Security Center. Applies only for subscriptions that use Azure Security Center.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Compute/virtualMachines\",\r\n              \"Microsoft.ClassicCompute/virtualMachines\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"AuditIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"securityAgent\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/abcc6037-1fc4-47f6-aac5-89706589be24\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"abcc6037-1fc4-47f6-aac5-89706589be24\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation if 'environment' tag value in allowed values\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation if the 'environment' tag is set to one of the following values: production, dev, test, staging\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"tags.environment\",\r\n              \"in\": [\r\n                \"production\",\r\n                \"dev\",\r\n                \"test\",\r\n                \"staging\"\r\n              ]\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/ac7e5fc0-c029-4b12-91d4-a8500ce697f9\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"ac7e5fc0-c029-4b12-91d4-a8500ce697f9\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor missing Endpoint Protection in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Servers without an installed Endpoint Protection agent will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Compute/virtualMachines\",\r\n              \"Microsoft.ClassicCompute/virtualMachines\",\r\n              \"Microsoft.OperationalInsights/workspaces\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"endpointProtection\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/af6cd1bd-1635-48cb-bde7-5b15693900b9\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"af6cd1bd-1635-48cb-bde7-5b15693900b9\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor unaudited SQL database in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"SQL servers and databases which doesn't have SQL auditing turned on will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.SQL/servers\",\r\n              \"Microsoft.SQL/servers/databases\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"auditing\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/af8051bf-258b-44e2-a2bf-165330459f9d\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"af8051bf-258b-44e2-a2bf-165330459f9d\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor possible network JIT access in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Possible network Just In Time access will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Compute/virtualMachines\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"jitNetworkAccess\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/b0f33259-77d7-4c9e-aac6-3aabcfae693c\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"b0f33259-77d7-4c9e-aac6-3aabcfae693c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation only in Asia data centers\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation in the following locations only: East Asia, Southeast Asia, West India, South India, Central India, Japan East, Japan West\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"location\",\r\n              \"in\": [\r\n                \"eastasia\",\r\n                \"southeastasia\",\r\n                \"westindia\",\r\n                \"southindia\",\r\n                \"centralindia\",\r\n                \"japaneast\",\r\n                \"japanwest\"\r\n              ]\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/c1b9cbed-08e3-427d-b9ce-7c535b1e9b94\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"c1b9cbed-08e3-427d-b9ce-7c535b1e9b94\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Apply Diagnostic Settings for Network Security Groups\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"This policy automatically deploys diagnostic settings to network security groups.\",\r\n        \"metadata\": {\r\n          \"category\": \"Monitoring\"\r\n        },\r\n        \"parameters\": {\r\n          \"storagePrefix\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Storage Account Prefix for Regional Storage Account\"\r\n            }\r\n          },\r\n          \"rgName\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Resource Group Name for Storage Account (must exist)\",\r\n              \"description\": \"This resource group must already exist.\",\r\n              \"strongType\": \"ExistingResourceGroups\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Network/networkSecurityGroups\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"DeployIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Insights/diagnosticSettings\",\r\n              \"name\": \"setbypolicy\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"name\",\r\n                \"notlike\": \"*\"\r\n              },\r\n              \"deployment\": {\r\n                \"properties\": {\r\n                  \"mode\": \"incremental\",\r\n                  \"template\": {\r\n                    \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                    \"contentVersion\": \"1.0.0.0\",\r\n                    \"parameters\": {\r\n                      \"location\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"storagePrefix\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"nsgName\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"rgName\": {\r\n                        \"type\": \"string\"\r\n                      }\r\n                    },\r\n                    \"resources\": [\r\n                      {\r\n                        \"type\": \"Microsoft.Network/networkSecurityGroups/providers/diagnosticSettings\",\r\n                        \"name\": \"[concat(parameters('nsgName'),'/Microsoft.Insights/setbypolicy')]\",\r\n                        \"apiVersion\": \"2017-05-01-preview\",\r\n                        \"location\": \"[parameters('location')]\",\r\n                        \"dependsOn\": [\r\n                          \"deployStorageAccount\"\r\n                        ],\r\n                        \"properties\": {\r\n                          \"storageAccountId\": \"[reference('deployStorageAccount').outputs.storageAccountId.value]\",\r\n                          \"logs\": [\r\n                            {\r\n                              \"category\": \"NetworkSecurityGroupEvent\",\r\n                              \"enabled\": true,\r\n                              \"retentionPolicy\": {\r\n                                \"enabled\": false,\r\n                                \"days\": 0\r\n                              }\r\n                            },\r\n                            {\r\n                              \"category\": \"NetworkSecurityGroupRuleCounter\",\r\n                              \"enabled\": true,\r\n                              \"retentionPolicy\": {\r\n                                \"enabled\": false,\r\n                                \"days\": 0\r\n                              }\r\n                            }\r\n                          ]\r\n                        }\r\n                      },\r\n                      {\r\n                        \"apiVersion\": \"2017-05-10\",\r\n                        \"name\": \"deployStorageAccount\",\r\n                        \"type\": \"Microsoft.Resources/deployments\",\r\n                        \"resourceGroup\": \"[parameters('rgName')]\",\r\n                        \"properties\": {\r\n                          \"mode\": \"incremental\",\r\n                          \"parameters\": {\r\n                            \"location\": {\r\n                              \"value\": \"[parameters('location')]\"\r\n                            },\r\n                            \"storagePrefix\": {\r\n                              \"value\": \"[parameters('storagePrefix')]\"\r\n                            }\r\n                          },\r\n                          \"template\": {\r\n                            \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json\",\r\n                            \"contentVersion\": \"1.0.0.0\",\r\n                            \"parameters\": {\r\n                              \"location\": {\r\n                                \"type\": \"string\"\r\n                              },\r\n                              \"storagePrefix\": {\r\n                                \"type\": \"string\"\r\n                              }\r\n                            },\r\n                            \"resources\": [\r\n                              {\r\n                                \"apiVersion\": \"2017-06-01\",\r\n                                \"type\": \"Microsoft.Storage/storageAccounts\",\r\n                                \"name\": \"[concat(parameters('storageprefix'), parameters('location'))]\",\r\n                                \"sku\": {\r\n                                  \"name\": \"Standard_LRS\",\r\n                                  \"tier\": \"Standard\"\r\n                                },\r\n                                \"kind\": \"Storage\",\r\n                                \"location\": \"[parameters('location')]\",\r\n                                \"tags\": {\r\n                                  \"created-by\": \"policy\"\r\n                                },\r\n                                \"scale\": null,\r\n                                \"properties\": {\r\n                                  \"networkAcls\": {\r\n                                    \"bypass\": \"AzureServices\",\r\n                                    \"defaultAction\": \"Allow\",\r\n                                    \"ipRules\": [],\r\n                                    \"virtualNetworkRules\": []\r\n                                  },\r\n                                  \"supportsHttpsTrafficOnly\": false\r\n                                }\r\n                              }\r\n                            ],\r\n                            \"outputs\": {\r\n                              \"storageAccountId\": {\r\n                                \"type\": \"string\",\r\n                                \"value\": \"[resourceId('Microsoft.Storage/storageAccounts',concat(parameters('storagePrefix'), parameters('location')))]\"\r\n                              }\r\n                            }\r\n                          }\r\n                        }\r\n                      }\r\n                    ]\r\n                  },\r\n                  \"parameters\": {\r\n                    \"location\": {\r\n                      \"value\": \"[field('location')]\"\r\n                    },\r\n                    \"storagePrefix\": {\r\n                      \"value\": \"[parameters('storagePrefix')]\"\r\n                    },\r\n                    \"rgName\": {\r\n                      \"value\": \"[parameters('rgName')]\"\r\n                    },\r\n                    \"nsgName\": {\r\n                      \"value\": \"[field('name')]\"\r\n                    }\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/c9c29499-c1d1-4195-99bd-2ec9e3a9dc89\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"c9c29499-c1d1-4195-99bd-2ec9e3a9dc89\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed virtual machine SKUs\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy enables you to specify a set of virtual machine SKUs that your organization can deploy.\",\r\n        \"metadata\": {\r\n          \"category\": \"Compute\"\r\n        },\r\n        \"parameters\": {\r\n          \"listOfAllowedSKUs\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"The list of SKUs that can be specified for virtual machines.\",\r\n              \"displayName\": \"Allowed SKUs\",\r\n              \"strongType\": \"VMSKUs\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Compute/virtualMachines\"\r\n              },\r\n              {\r\n                \"not\": {\r\n                  \"field\": \"Microsoft.Compute/virtualMachines/sku.name\",\r\n                  \"in\": \"[parameters('listOfAllowedSKUs')]\"\r\n                }\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/cccc23c7-8427-4f53-ad12-b6a63eb452b3\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"cccc23c7-8427-4f53-ad12-b6a63eb452b3\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation if 'department' tag set\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation only if the 'department' tag is set\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"tags\",\r\n              \"containsKey\": \"department\"\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/cd8dc879-a2ae-43c3-8211-1877c5755064\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"cd8dc879-a2ae-43c3-8211-1877c5755064\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allow resource creation only in Japan data centers\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"Allows resource creation in the following locations only: Japan East, Japan West\",\r\n        \"metadata\": {\r\n          \"category\": \"General\",\r\n          \"deprecated\": true\r\n        },\r\n        \"parameters\": {},\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"not\": {\r\n              \"field\": \"location\",\r\n              \"in\": [\r\n                \"japaneast\",\r\n                \"japanwest\"\r\n              ]\r\n            }\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"Deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/e01598e8-6538-41ed-95e8-8b29746cd697\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"e01598e8-6538-41ed-95e8-8b29746cd697\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Monitor OS vulnerabilities in Security Center\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"Servers which do not satisfy the configured baseline will be monitored by Azure Security Center as recommendations.\",\r\n        \"metadata\": {\r\n          \"category\": \"Security Center\",\r\n          \"preview\": true\r\n        },\r\n        \"parameters\": {\r\n          \"effect\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Effect\",\r\n              \"description\": \"Enable or disable the execution of the policy\"\r\n            },\r\n            \"allowedValues\": [\r\n              \"AuditIfNotExists\",\r\n              \"Disabled\"\r\n            ],\r\n            \"defaultValue\": \"AuditIfNotExists\"\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"in\": [\r\n              \"Microsoft.Compute/virtualMachines\",\r\n              \"Microsoft.ClassicCompute/virtualMachines\",\r\n              \"Microsoft.OperationalInsights/workspaces\"\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"[parameters('effect')]\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Security/complianceResults\",\r\n              \"name\": \"osVulnerabilities\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Security/complianceResults/resourceStatus\",\r\n                \"equals\": \"Monitored\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/e1e5fd5d-3e4c-4ce1-8661-7d1873ae6b15\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"e1e5fd5d-3e4c-4ce1-8661-7d1873ae6b15\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed locations\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"description\": \"This policy enables you to restrict the locations your organization can specify when deploying resources. Use to enforce your geo-compliance requirements. Excludes resource groups, Microsoft.AzureActiveDirectory/b2cDirectories, and resources that use the 'global' region.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"listOfAllowedLocations\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"The list of locations that can be specified when deploying resources.\",\r\n              \"strongType\": \"location\",\r\n              \"displayName\": \"Allowed locations\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"location\",\r\n                \"notIn\": \"[parameters('listOfAllowedLocations')]\"\r\n              },\r\n              {\r\n                \"field\": \"location\",\r\n                \"notEquals\": \"global\"\r\n              },\r\n              {\r\n                \"field\": \"type\",\r\n                \"notEquals\": \"Microsoft.AzureActiveDirectory/b2cDirectories\"\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"e56962a6-4747-49cd-b67b-bf8b01975c4c\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"Allowed locations for resource groups\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"All\",\r\n        \"description\": \"This policy enables you to restrict the locations your organization can create resource groups in. Use to enforce your geo-compliance requirements.\",\r\n        \"metadata\": {\r\n          \"category\": \"General\"\r\n        },\r\n        \"parameters\": {\r\n          \"listOfAllowedLocations\": {\r\n            \"type\": \"Array\",\r\n            \"metadata\": {\r\n              \"description\": \"The list of locations that resource groups can be created in.\",\r\n              \"strongType\": \"location\",\r\n              \"displayName\": \"Allowed locations\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"allOf\": [\r\n              {\r\n                \"field\": \"location\",\r\n                \"notIn\": \"[parameters('listOfAllowedLocations')]\"\r\n              },\r\n              {\r\n                \"field\": \"type\",\r\n                \"equals\": \"Microsoft.Resources/subscriptions/resourceGroups\"\r\n              }\r\n            ]\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"deny\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/e765b5de-1225-4ba3-bd56-1ac6695af988\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"e765b5de-1225-4ba3-bd56-1ac6695af988\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Deploy Auditing on SQL servers\",\r\n        \"policyType\": \"BuiltIn\",\r\n        \"mode\": \"Indexed\",\r\n        \"description\": \"This policy ensures that Auditing is enabled on SQL Servers for enhanced security & compliance. It will automatically create a storage account in the same region as the SQL server to store audit records.\",\r\n        \"metadata\": {\r\n          \"category\": \"SQL\"\r\n        },\r\n        \"parameters\": {\r\n          \"retentionDays\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"description\": \"The value in days of the retention period (0 indicates unlimited retention)\",\r\n              \"displayName\": \"Retention days (optional, 180 days if unspecified)\"\r\n            },\r\n            \"defaultValue\": \"180\"\r\n          },\r\n          \"storageAccountsResourceGroup\": {\r\n            \"type\": \"String\",\r\n            \"metadata\": {\r\n              \"displayName\": \"Resource group name for storage accounts\",\r\n              \"description\": \"Auditing writes database events to an audit log in your Azure Storage account (a storage account will be created in each region where a SQL Server is created that will be shared by all servers in that region). Important - for proper operation of Auditing do not delete or rename the resource group or the storage accounts.\",\r\n              \"strongType\": \"existingResourceGroups\"\r\n            }\r\n          }\r\n        },\r\n        \"policyRule\": {\r\n          \"if\": {\r\n            \"field\": \"type\",\r\n            \"equals\": \"Microsoft.Sql/servers\"\r\n          },\r\n          \"then\": {\r\n            \"effect\": \"DeployIfNotExists\",\r\n            \"details\": {\r\n              \"type\": \"Microsoft.Sql/servers/auditingSettings\",\r\n              \"name\": \"Default\",\r\n              \"existenceCondition\": {\r\n                \"field\": \"Microsoft.Sql/auditingSettings.state\",\r\n                \"equals\": \"Enabled\"\r\n              },\r\n              \"deployment\": {\r\n                \"properties\": {\r\n                  \"mode\": \"incremental\",\r\n                  \"template\": {\r\n                    \"$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                    \"contentVersion\": \"1.0.0.0\",\r\n                    \"parameters\": {\r\n                      \"serverName\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"auditRetentionDays\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"storageAccountsResourceGroup\": {\r\n                        \"type\": \"string\"\r\n                      },\r\n                      \"location\": {\r\n                        \"type\": \"string\"\r\n                      }\r\n                    },\r\n                    \"variables\": {\r\n                      \"retentionDays\": \"[int(parameters('auditRetentionDays'))]\",\r\n                      \"subscriptionId\": \"[subscription().subscriptionId]\",\r\n                      \"uniqueStorage\": \"[uniqueString(variables('subscriptionId'), parameters('location'), parameters('storageAccountsResourceGroup'))]\",\r\n                      \"locationCode\": \"[substring(parameters('location'), 0, 3)]\",\r\n                      \"storageName\": \"[tolower(concat('sqlaudit', variables('locationCode'), variables('uniqueStorage')))]\",\r\n                      \"createStorageAccountDeploymentName\": \"[concat('sqlServerAuditingStorageAccount-', variables('locationCode'))]\"\r\n                    },\r\n                    \"resources\": [\r\n                      {\r\n                        \"apiVersion\": \"2017-05-10\",\r\n                        \"name\": \"[variables('createStorageAccountDeploymentName')]\",\r\n                        \"type\": \"Microsoft.Resources/deployments\",\r\n                        \"resourceGroup\": \"[parameters('storageAccountsResourceGroup')]\",\r\n                        \"properties\": {\r\n                          \"mode\": \"Incremental\",\r\n                          \"parameters\": {\r\n                            \"location\": {\r\n                              \"value\": \"[parameters('location')]\"\r\n                            },\r\n                            \"storageName\": {\r\n                              \"value\": \"[variables('storageName')]\"\r\n                            }\r\n                          },\r\n                          \"templateLink\": {\r\n                            \"uri\": \"https://raw.githubusercontent.com/Azure/azure-policy/master/samples/SQL/deploy-sql-server-auditing/createStorage.template.json\",\r\n                            \"contentVersion\": \"1.0.0.0\"\r\n                          }\r\n                        }\r\n                      },\r\n                      {\r\n                        \"name\": \"[concat(parameters('serverName'), '/Default')]\",\r\n                        \"type\": \"Microsoft.Sql/servers/auditingSettings\",\r\n                        \"apiVersion\": \"2017-03-01-preview\",\r\n                        \"properties\": {\r\n                          \"state\": \"Enabled\",\r\n                          \"storageEndpoint\": \"[reference(variables('createStorageAccountDeploymentName')).outputs.storageAccountEndPoint.value]\",\r\n                          \"storageAccountAccessKey\": \"[reference(variables('createStorageAccountDeploymentName')).outputs.storageAccountKey.value]\",\r\n                          \"retentionDays\": \"[variables('retentionDays')]\",\r\n                          \"auditActionsAndGroups\": null,\r\n                          \"storageAccountSubscriptionId\": \"[subscription().subscriptionId]\",\r\n                          \"isStorageSecondaryKeyInUse\": false\r\n                        }\r\n                      }\r\n                    ]\r\n                  },\r\n                  \"parameters\": {\r\n                    \"serverName\": {\r\n                      \"value\": \"[field('name')]\"\r\n                    },\r\n                    \"auditRetentionDays\": {\r\n                      \"value\": \"[parameters('retentionDays')]\"\r\n                    },\r\n                    \"storageAccountsResourceGroup\": {\r\n                      \"value\": \"[parameters('storageAccountsResourceGroup')]\"\r\n                    },\r\n                    \"location\": {\r\n                      \"value\": \"[field('location')]\"\r\n                    }\r\n                  }\r\n                }\r\n              }\r\n            }\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/providers/Microsoft.Authorization/policyDefinitions/f4c68484-132f-41f9-9b6d-3e4b1cb55036\",\r\n      \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n      \"name\": \"f4c68484-132f-41f9-9b6d-3e4b1cb55036\"\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:34 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14998"
+        ],
+        "x-ms-request-id": [
+          "westus2:7b594437-8d7b-472a-99f4-d4cb9977a6bc"
+        ],
+        "x-ms-correlation-request-id": [
+          "400c4eb8-26b6-42e2-82cb-856a4ca1b304"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021134Z:400c4eb8-26b6-42e2-82cb-856a4ca1b304"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/azsmnet5850/providers/Microsoft.Authorization/policyAssignments/azsmnet8532?api-version=2018-03-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9henNtbmV0NTg1MC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDg1MzI/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtManagementGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a\",\r\n    \"scope\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "364"
+        ],
+        "x-ms-client-request-id": [
+          "f5dd089f-3f99-488c-919b-e77be59e9ba3"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtManagementGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a\",\r\n    \"scope\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850/providers/Microsoft.Authorization/policyAssignments/azsmnet8532\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet8532\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "513"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus2:ae2b24c2-8a98-4ea3-bed8-6c649a8f2d06"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "af2a2a30-603b-4729-8ce0-69c1a5da4af2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021136Z:af2a2a30-603b-4729-8ce0-69c1a5da4af2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/azsmnet5850/providers/Microsoft.Authorization/policyAssignments/azsmnet8532?api-version=2018-03-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9henNtbmV0NTg1MC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDg1MzI/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "76c0ff57-e4c0-425b-90af-e36d89edb7d9"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtManagementGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a\",\r\n    \"scope\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850/providers/Microsoft.Authorization/policyAssignments/azsmnet8532\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet8532\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:35 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "westus2:6a24271c-fc52-47e3-93c4-098c1792a718"
+        ],
+        "x-ms-correlation-request-id": [
+          "8504296b-0ad7-4c82-a0d2-38942ad34582"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021136Z:8504296b-0ad7-4c82-a0d2-38942ad34582"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//providers/Microsoft.Management/managementGroups/azsmnet5850/providers/Microsoft.Authorization/policyAssignments/azsmnet8532?api-version=2018-03-01",
+      "EncodedRequestUri": "Ly9wcm92aWRlcnMvTWljcm9zb2Z0Lk1hbmFnZW1lbnQvbWFuYWdlbWVudEdyb3Vwcy9henNtbmV0NTg1MC9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDg1MzI/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c7ae031e-e908-402d-ae53-ef30425868e2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.8.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtManagementGroup Policy Assignment\",\r\n    \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/0a914e76-4921-4c19-b460-a2d36003525a\",\r\n    \"scope\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\"\r\n  },\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850/providers/Microsoft.Authorization/policyAssignments/azsmnet8532\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet8532\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "westus2:363231a8-1d29-4a38-aa44-243f4f977969"
+        ],
+        "x-ms-correlation-request-id": [
+          "3903ec69-ff8a-40a9-ada3-e6b08b41582d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021136Z:3903ec69-ff8a-40a9-ada3-e6b08b41582d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/azsmnet5850?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ1ODUwP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7ba5e841-819c-418d-a4d5-e4e90b7ca60f"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"azsmnet5850\",\r\n  \"status\": \"NotStarted\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "170"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet5850?api-version=2018-03-01-preview"
+        ],
+        "Retry-After": [
+          "10"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "x-ms-request-id": [
+          "westus2:acad9b21-50b2-4696-a621-4ed218159a16"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.745"
+        ],
+        "request-id": [
+          "17e97ba3-0428-469d-badc-a15b12233e98"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "241e8cc6-1c44-4519-99d5-b6f507e1d2a0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021139Z:241e8cc6-1c44-4519-99d5-b6f507e1d2a0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet5850?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2RlbGV0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ1ODUwP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"azsmnet5850\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:48 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
+        "x-ms-request-id": [
+          "westus2:3d9466fc-e66a-47d6-ab61-c81b84447a96"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.745"
+        ],
+        "request-id": [
+          "e37bb0fc-8a52-4376-8454-be2f4d09470a"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "8b242589-a54d-44c0-b34c-324eb658e139"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021149Z:8b242589-a54d-44c0-b34c-324eb658e139"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/operationResults/delete/managementGroups/azsmnet5850?api-version=2018-03-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9vcGVyYXRpb25SZXN1bHRzL2RlbGV0ZS9tYW5hZ2VtZW50R3JvdXBzL2F6c21uZXQ1ODUwP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/azsmnet5850\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"azsmnet5850\",\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 29 Jun 2018 02:11:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding",
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14996"
+        ],
+        "x-ms-request-id": [
+          "westus2:be2269b0-8752-4e87-86ba-0da8a6b0fccb"
+        ],
+        "x-ba-restapi": [
+          "1.0.3.745"
+        ],
+        "request-id": [
+          "15b993b4-79f0-43f8-b819-16d39f7bb672"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-correlation-request-id": [
+          "4fe2429a-362f-4ff7-8520-002a1cecd60e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180629T021149Z:4fe2429a-362f-4ff7-8520-002a1cecd60e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCrudPolicyAssignmentAtManagementGroup": [
+      "azsmnet5850",
+      "azsmnet8532"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "e8a0d3c2-c26a-4363-ba6b-f56ac74c5ae0"
+  }
+}

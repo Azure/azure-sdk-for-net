@@ -17,7 +17,7 @@ namespace FaceSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "FaceDetectionWithAttributes");
 
-                IFaceAPI client = GetFaceClient(HttpMockServer.CreateInstance());
+                IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "detection2.jpg"), FileMode.Open))
                 {
                     IList<DetectedFace> faceList = client.Face.DetectWithStreamAsync(
@@ -146,7 +146,7 @@ namespace FaceSDK.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "FaceDetectionNoFace");
 
-                IFaceAPI client = GetFaceClient(HttpMockServer.CreateInstance());
+                IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "NoFace.jpg"), FileMode.Open))
                 {
                     IList<DetectedFace> faceList = client.Face.DetectWithStreamAsync(stream).Result;

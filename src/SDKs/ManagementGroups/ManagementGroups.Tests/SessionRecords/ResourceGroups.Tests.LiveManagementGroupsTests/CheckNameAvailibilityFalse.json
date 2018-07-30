@@ -13,14 +13,14 @@
           "91"
         ],
         "x-ms-client-request-id": [
-          "f9bdfd4d-53c4-4927-bacf-fa2ae8005afe"
+          "4195d30b-2298-4c13-8646-3e881464ed78"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.2.0.0"
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"The group with the specified name already exists\"\r\n}",
@@ -35,7 +35,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 22 May 2018 02:37:36 GMT"
+          "Tue, 03 Jul 2018 19:33:28 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -51,16 +51,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
-          "1197"
+          "1199"
         ],
         "x-ms-request-id": [
-          "eastus:c70edb6b-b2c7-4df2-8862-0ff8ad92f817"
+          "eastus:8f52f4a6-e145-4fe8-814a-4f3f4acef16c"
         ],
         "x-ba-restapi": [
-          "1.0.3.787"
+          "1.0.3.905"
         ],
         "request-id": [
-          "57676c34-24af-4787-aabc-68cf58a19f9c"
+          "8f2570a9-a8b0-4e9e-b106-18330786cdb8"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -69,10 +69,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "ae2b9b9a-4b95-446d-8e78-85f0ee55b37c"
+          "93807dfd-86e2-4ad2-a008-78ca39872462"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180522T023736Z:ae2b9b9a-4b95-446d-8e78-85f0ee55b37c"
+          "NORTHEUROPE:20180703T193328Z:93807dfd-86e2-4ad2-a008-78ca39872462"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

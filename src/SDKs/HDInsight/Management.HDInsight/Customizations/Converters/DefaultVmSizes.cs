@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 {"hadoop", "Standard_D3"},
                 {"spark", "Standard_D12"},
                 {"rserver", "Standard_D12_v2"},
+                {"mlservices", "Standard_D12_v2"},
                 {"InteractiveHive", "Standard_D13_v2"},
                 {"Sandbox", "Standard_D13_V2"}
             };
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.Management.HDInsight
             {
                 {"spark", "Standard_D12"},
                 {"rserver", "Standard_D4_v2"},
+                {"mlservices", "Standard_D4_v2"},
                 {"InteractiveHive", "Standard_D13_v2"},
             };
 

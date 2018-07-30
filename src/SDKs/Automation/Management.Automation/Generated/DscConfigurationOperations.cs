@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='configurationName'>
         /// The configuration name.
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='configurationName'>
         /// The configuration name.
@@ -466,7 +466,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='configurationName'>
         /// The create or update parameters for configuration.
@@ -716,7 +716,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='configurationName'>
         /// The create or update parameters for configuration.
@@ -940,7 +940,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='configurationName'>
         /// The configuration name.
@@ -1154,7 +1154,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Name of an Azure Resource group.
         /// </param>
         /// <param name='automationAccountName'>
-        /// The automation account name.
+        /// The name of the automation account.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.

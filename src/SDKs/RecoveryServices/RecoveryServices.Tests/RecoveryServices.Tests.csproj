@@ -6,9 +6,9 @@
     <AssemblyName>RecoveryServices.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.RecoveryServices" Version="4.1.0-preview" />-->
     

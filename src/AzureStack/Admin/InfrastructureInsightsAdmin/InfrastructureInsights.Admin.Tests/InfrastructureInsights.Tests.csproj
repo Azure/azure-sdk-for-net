@@ -6,9 +6,9 @@
     <AssemblyName>InfrastructureInsights.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\InfrastructureInsights.Admin\Microsoft.AzureStack.Management.InfrastructureInsights.Admin.csproj" />

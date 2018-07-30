@@ -28,6 +28,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the OcrResult class.
         /// </summary>
+        /// <param name="language">The BCP-47 language code of the text in the
+        /// image.</param>
         /// <param name="textAngle">The angle, in degrees, of the detected text
         /// with respect to the closest horizontal or vertical direction. After
         /// rotating the input image clockwise by this angle, the recognized
@@ -46,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// (see textAngle property).</param>
         /// <param name="regions">An array of objects, where each object
         /// represents a region of recognized text.</param>
-        public OcrResult(OcrResult language = default(OcrResult), double? textAngle = default(double?), string orientation = default(string), IList<OcrRegion> regions = default(IList<OcrRegion>))
+        public OcrResult(string language = default(string), double textAngle = default(double), string orientation = default(string), IList<OcrRegion> regions = default(IList<OcrRegion>))
         {
             Language = language;
             TextAngle = textAngle;
@@ -61,9 +63,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the BCP-47 language code of the text in the image.
         /// </summary>
         [JsonProperty(PropertyName = "language")]
-        public OcrResult Language { get; set; }
+        public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets the angle, in degrees, of the detected text with
@@ -79,7 +82,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// correctly.
         /// </summary>
         [JsonProperty(PropertyName = "textAngle")]
-        public double? TextAngle { get; set; }
+        public double TextAngle { get; set; }
 
         /// <summary>
         /// Gets or sets orientation of the text recognized in the image. The

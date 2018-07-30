@@ -44,6 +44,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// encryption Key Vault key.</param>
         /// <param name="firewallRules">The list of firewall rules associated
         /// with this Data Lake Store account.</param>
+        /// <param name="virtualNetworkRules">The list of virtual network rules
+        /// associated with this Data Lake Store account.</param>
         /// <param name="firewallState">The current state of the IP address
         /// firewall for this Data Lake Store account. Disabling the firewall
         /// does not remove existing rules, they will just be ignored until the
@@ -64,12 +66,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Possible values include: 'Consumption', 'Commitment_1TB',
         /// 'Commitment_10TB', 'Commitment_100TB', 'Commitment_500TB',
         /// 'Commitment_1PB', 'Commitment_5PB'</param>
-        public UpdateDataLakeStoreAccountParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultGroup = default(string), UpdateEncryptionConfig encryptionConfig = default(UpdateEncryptionConfig), IList<UpdateFirewallRuleWithAccountParameters> firewallRules = default(IList<UpdateFirewallRuleWithAccountParameters>), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<UpdateTrustedIdProviderWithAccountParameters> trustedIdProviders = default(IList<UpdateTrustedIdProviderWithAccountParameters>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), TierType? newTier = default(TierType?))
+        public UpdateDataLakeStoreAccountParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string defaultGroup = default(string), UpdateEncryptionConfig encryptionConfig = default(UpdateEncryptionConfig), IList<UpdateFirewallRuleWithAccountParameters> firewallRules = default(IList<UpdateFirewallRuleWithAccountParameters>), IList<UpdateVirtualNetworkRuleWithAccountParameters> virtualNetworkRules = default(IList<UpdateVirtualNetworkRuleWithAccountParameters>), FirewallState? firewallState = default(FirewallState?), FirewallAllowAzureIpsState? firewallAllowAzureIps = default(FirewallAllowAzureIpsState?), IList<UpdateTrustedIdProviderWithAccountParameters> trustedIdProviders = default(IList<UpdateTrustedIdProviderWithAccountParameters>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), TierType? newTier = default(TierType?))
         {
             Tags = tags;
             DefaultGroup = defaultGroup;
             EncryptionConfig = encryptionConfig;
             FirewallRules = firewallRules;
+            VirtualNetworkRules = virtualNetworkRules;
             FirewallState = firewallState;
             FirewallAllowAzureIps = firewallAllowAzureIps;
             TrustedIdProviders = trustedIdProviders;
@@ -109,6 +112,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallRules")]
         public IList<UpdateFirewallRuleWithAccountParameters> FirewallRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of virtual network rules associated with this
+        /// Data Lake Store account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetworkRules")]
+        public IList<UpdateVirtualNetworkRuleWithAccountParameters> VirtualNetworkRules { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the IP address firewall for this

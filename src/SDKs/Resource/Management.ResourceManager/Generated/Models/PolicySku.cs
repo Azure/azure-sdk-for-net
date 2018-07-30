@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// The policy sku.
+    /// The policy sku. This property is optional, obsolete, and will be
+    /// ignored.
     /// </summary>
     public partial class PolicySku
     {

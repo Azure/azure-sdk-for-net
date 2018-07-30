@@ -3,11 +3,24 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault</PackageId>
     <Description>Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. Azure Key Vault supports multiple key types and algorithms and enables the use of Hardware Security Modules (HSM) for high value customer keys. In addition, Azure Key Vault allows users to securely store secrets in a Key Vault; secrets are limited size octet objects and Azure Key Vault applies no specific semantics to these objects. A Key Vault may contain a mix of keys and secrets at the same time, and access control for the two types of object is independently controlled. Users, subject to appropriate authorization, may: 1) Manage cryptographic keys using Create, Import, Update, Delete and other operations 2) Manage secrets using Get, Set, Delete and other operations 3) Use cryptographic keys with Sign/Verify, WrapKey/UnwrapKey and Encrypt/Decrypt operations. Operations against Key Vaults are authenticated and authorized using Azure Active Directory. Key Vault now supports certificates, a complex type that makes use of existing key and secret infrastructure for certificate operations. KV certificates also support notification and auto-renewal as well as other management features.</Description>
-    <AssemblyTitle>Microsoft Azure key vault</AssemblyTitle>
-    <VersionPrefix>2.3.2</VersionPrefix>
+    <AssemblyTitle>Microsoft Azure Key Vault</AssemblyTitle>
+    <VersionPrefix>3.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault</AssemblyName>
-    <PackageTags>Microsoft Azure key vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
-    <PackageReleaseNotes>This is a preview release of the Azure Key Vault .NET SDK, based on version 2016-10-01 of the Azure Key Vault REST API. For migration guide from version 1.0, please visit https://azure.microsoft.com/en-us/documentation/articles/key-vault-dotnet2api-release-notes/.</PackageReleaseNotes>
+    <PackageTags>Microsoft Azure Key Vault;Key Vault;REST HTTP client;azureofficial;windowsazureofficial</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        * Moving azure-keyvault to stable API version 7.0
+        * Added elliptic curve key and certificate support
+          * supported curves: P-256, P-384, P-521, P256K
+          * supported algorithms: ES256, ES384, ES512, ES256K
+        * Added certificate backup and restore support
+        * Added managed storage account key backup, restore and soft delete support
+        * Added certificate transparency support
+        
+        Breaking Changes
+          This version introduces breaking changes to the SasDefinition models and KeyVaultClient methods to create, update SasDefinitions
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

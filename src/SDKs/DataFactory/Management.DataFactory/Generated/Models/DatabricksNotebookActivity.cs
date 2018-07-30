@@ -43,17 +43,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
+        /// <param name="userProperties">Activity user properties.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="baseParameters">Base parameters to be used for each
         /// run of this job.If the notebook takes a parameter that is not
         /// specified, the default value from the notebook will be
         /// used.</param>
-        public DatabricksNotebookActivity(string name, object notebookPath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> baseParameters = default(IDictionary<string, object>))
-            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
+        /// <param name="libraries">A list of libraries to be installed on the
+        /// cluster that will execute the job.</param>
+        public DatabricksNotebookActivity(string name, object notebookPath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IDictionary<string, object> baseParameters = default(IDictionary<string, object>), IList<IDictionary<string, object>> libraries = default(IList<IDictionary<string, object>>))
+            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             NotebookPath = notebookPath;
             BaseParameters = baseParameters;
+            Libraries = libraries;
             CustomInit();
         }
 
@@ -77,6 +81,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.baseParameters")]
         public IDictionary<string, object> BaseParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of libraries to be installed on the cluster
+        /// that will execute the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.libraries")]
+        public IList<IDictionary<string, object>> Libraries { get; set; }
 
         /// <summary>
         /// Validate the object.

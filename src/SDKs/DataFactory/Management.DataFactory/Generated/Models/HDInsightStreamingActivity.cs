@@ -50,6 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
+        /// <param name="userProperties">Activity user properties.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="storageLinkedServices">Storage linked service
@@ -66,8 +67,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// values.</param>
         /// <param name="defines">Allows user to specify defines for streaming
         /// job request.</param>
-        public HDInsightStreamingActivity(string name, object mapper, object reducer, object input, object output, IList<object> filePaths, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), LinkedServiceReference fileLinkedService = default(LinkedServiceReference), object combiner = default(object), IList<object> commandEnvironment = default(IList<object>), IDictionary<string, object> defines = default(IDictionary<string, object>))
-            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
+        public HDInsightStreamingActivity(string name, object mapper, object reducer, object input, object output, IList<object> filePaths, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), IList<LinkedServiceReference> storageLinkedServices = default(IList<LinkedServiceReference>), IList<object> arguments = default(IList<object>), string getDebugInfo = default(string), LinkedServiceReference fileLinkedService = default(LinkedServiceReference), object combiner = default(object), IList<object> commandEnvironment = default(IList<object>), IDictionary<string, object> defines = default(IDictionary<string, object>))
+            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;

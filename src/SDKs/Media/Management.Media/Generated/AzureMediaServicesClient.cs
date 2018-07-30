@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.Media
             LiveOutputs = new LiveOutputsOperations(this);
             StreamingEndpoints = new StreamingEndpointsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-30-preview";
+            ApiVersion = "2018-06-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Test.HttpRecorder", "..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj", "{7BC125FA-8B13-4689-BE45-08F01C96CD51}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Rest.ClientRuntime.Azure.Authentication", "..\..\Auth\Az.Auth\Az.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj", "{455C54DE-1122-45C4-9B53-5B2DE44B8938}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +41,15 @@ Global
 		{7BC125FA-8B13-4689-BE45-08F01C96CD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BC125FA-8B13-4689-BE45-08F01C96CD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BC125FA-8B13-4689-BE45-08F01C96CD51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{455C54DE-1122-45C4-9B53-5B2DE44B8938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455C54DE-1122-45C4-9B53-5B2DE44B8938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455C54DE-1122-45C4-9B53-5B2DE44B8938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455C54DE-1122-45C4-9B53-5B2DE44B8938}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06D4BDBC-774F-4087-8FB5-DF64CEF52FF7}
 	EndGlobalSection
 EndGlobal

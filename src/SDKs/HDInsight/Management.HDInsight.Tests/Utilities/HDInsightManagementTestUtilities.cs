@@ -71,7 +71,7 @@ namespace Management.HDInsight.Tests
                         client.Clusters.Get(rgName, clusterName);
                         client.Clusters.BeginDelete(rgName, clusterName);
                     }
-                    catch(CloudException ex)
+                    catch(ErrorResponseException ex)
                     {
                         if (ex.Response.StatusCode != HttpStatusCode.NotFound)
                         {
@@ -99,7 +99,7 @@ namespace Management.HDInsight.Tests
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            return context.GetServiceClient<ResourceManagementClient>(TestEnvironmentFactory.GetTestEnvironment(), false, new DelegatingHandler[] { handler });
+            return context.GetServiceClient<ResourceManagementClient>(false, new DelegatingHandler[] { handler });
         }
 
         public static bool IsRecordMode()

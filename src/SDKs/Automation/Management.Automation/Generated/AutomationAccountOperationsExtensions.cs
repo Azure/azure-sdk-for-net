@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update automation account.
@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update automation account.
@@ -77,10 +77,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Parameters supplied to the create or update automation account.
+            /// The name of the automation account.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create or update automation account.
@@ -98,10 +98,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Parameters supplied to the create or update automation account.
+            /// The name of the automation account.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the create or update automation account.
@@ -125,10 +125,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Automation account name.
+            /// The name of the automation account.
             /// </param>
             public static void Delete(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
             {
@@ -143,10 +143,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// Automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -164,10 +164,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             public static AutomationAccount Get(this IAutomationAccountOperations operations, string resourceGroupName, string automationAccountName)
             {
@@ -182,10 +182,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='automationAccountName'>
-            /// The automation account name.
+            /// The name of the automation account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             public static IPage<AutomationAccount> ListByResourceGroup(this IAutomationAccountOperations operations, string resourceGroupName)
             {
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.Automation
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// Name of an Azure Resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

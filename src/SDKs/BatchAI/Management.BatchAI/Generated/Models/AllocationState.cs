@@ -10,51 +10,13 @@
 
 namespace Microsoft.Azure.Management.BatchAI.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for AllocationState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AllocationState
+    public static class AllocationState
     {
-        [EnumMember(Value = "steady")]
-        Steady,
-        [EnumMember(Value = "resizing")]
-        Resizing
-    }
-    internal static class AllocationStateEnumExtension
-    {
-        internal static string ToSerializedValue(this AllocationState? value)
-        {
-            return value == null ? null : ((AllocationState)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this AllocationState value)
-        {
-            switch( value )
-            {
-                case AllocationState.Steady:
-                    return "steady";
-                case AllocationState.Resizing:
-                    return "resizing";
-            }
-            return null;
-        }
-
-        internal static AllocationState? ParseAllocationState(this string value)
-        {
-            switch( value )
-            {
-                case "steady":
-                    return AllocationState.Steady;
-                case "resizing":
-                    return AllocationState.Resizing;
-            }
-            return null;
-        }
+        public const string Steady = "steady";
+        public const string Resizing = "resizing";
     }
 }

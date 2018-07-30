@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="name">Name of the celebrity.</param>
         /// <param name="confidence">Level of confidence ranging from 0 to
         /// 1.</param>
-        public CelebritiesModel(string name = default(string), double? confidence = default(double?), FaceRectangle faceRectangle = default(FaceRectangle))
+        public CelebritiesModel(string name = default(string), double confidence = default(double), FaceRectangle faceRectangle = default(FaceRectangle))
         {
             Name = name;
             Confidence = confidence;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets level of confidence ranging from 0 to 1.
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
-        public double? Confidence { get; set; }
+        public double Confidence { get; set; }
 
         /// <summary>
         /// </summary>

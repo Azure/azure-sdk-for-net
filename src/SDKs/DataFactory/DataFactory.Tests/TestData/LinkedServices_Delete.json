@@ -1,29 +1,29 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "linkedServiceName": "exampleLinkedService",
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 18:04:28 GMT",
-        "x-ms-request-id": "7383dae8-e077-4472-8f2e-91e1163dcbb2",
+        "Date": "Sat, 16 Jun 2018 00:46:29 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1181",
-        "x-ms-correlation-request-id": "af89dcb6-8a1e-498a-9b0c-3e866bd80f39"
+        "x-ms-ratelimit-remaining-subscription-deletes": "14993",
+        "x-ms-request-id": "f55bd1ad-2ab5-4b94-bca5-01489e1b9d57",
+        "x-ms-correlation-request-id": "f55bd1ad-2ab5-4b94-bca5-01489e1b9d57"
       },
       "body": null
     },
     "204": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 18:04:28 GMT",
-        "x-ms-request-id": "097cab57-d2b8-442d-90f0-2deb5e3733e5",
+        "Date": "Sat, 16 Jun 2018 00:46:29 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1180",
-        "x-ms-correlation-request-id": "3adc7b84-2fbe-4409-9481-bf2bd489f49f"
+        "x-ms-ratelimit-remaining-subscription-deletes": "14992",
+        "x-ms-request-id": "b1456813-e580-4cb0-bb05-ffd6099320e6",
+        "x-ms-correlation-request-id": "b1456813-e580-4cb0-bb05-ffd6099320e6"
       },
       "body": null
     }

@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.HDInsight
         public virtual IApplicationsOperations Applications { get; private set; }
 
         /// <summary>
-        /// Gets the ILocationOperations.
+        /// Gets the ILocationsOperations.
         /// </summary>
-        public virtual ILocationOperations Location { get; private set; }
+        public virtual ILocationsOperations Locations { get; private set; }
 
         /// <summary>
         /// Gets the IConfigurationsOperations.
@@ -318,7 +318,7 @@ namespace Microsoft.Azure.Management.HDInsight
         {
             Clusters = new ClustersOperations(this);
             Applications = new ApplicationsOperations(this);
-            Location = new LocationOperations(this);
+            Locations = new LocationsOperations(this);
             Configurations = new ConfigurationsOperations(this);
             Extension = new ExtensionOperations(this);
             ScriptActions = new ScriptActionsOperations(this);

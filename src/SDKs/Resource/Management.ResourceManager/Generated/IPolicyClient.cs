@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for the operation.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// Gets or sets the preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -70,14 +75,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         IPolicyAssignmentsOperations PolicyAssignments { get; }
 
         /// <summary>
-        /// Gets the IPolicySetDefinitionsOperations.
-        /// </summary>
-        IPolicySetDefinitionsOperations PolicySetDefinitions { get; }
-
-        /// <summary>
         /// Gets the IPolicyDefinitionsOperations.
         /// </summary>
         IPolicyDefinitionsOperations PolicyDefinitions { get; }
+
+        /// <summary>
+        /// Gets the IPolicySetDefinitionsOperations.
+        /// </summary>
+        IPolicySetDefinitionsOperations PolicySetDefinitions { get; }
 
     }
 }

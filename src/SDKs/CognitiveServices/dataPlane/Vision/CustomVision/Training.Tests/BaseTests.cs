@@ -41,7 +41,7 @@
             this.fixture = fixture;
         }
 
-        protected ITrainingApi GetTrainingApiClient()
+        protected ITrainingApi GetTrainingClient()
         {
             ITrainingApi client = new TrainingApi(handlers: HttpMockServer.CreateInstance())
             {
@@ -54,7 +54,7 @@
         public async Task<Guid> CreateTrainedImageClassificationProjectAsync(Guid? domain = null)
         {
 #if RECORD_MODE
-            var client = GetTrainingApiClient();
+            var client = GetTrainingClient();
             var projName = Guid.NewGuid().ToString();
 
             // Create a project
@@ -156,7 +156,7 @@
                 {"scissors_20", new double[] { 0.231617644, 0.08459154, 0.504901946, 0.8480392 } }
             };
 
-            var client = GetTrainingApiClient();
+            var client = GetTrainingClient();
 
             // Find the object detection domain
             var domains = await client.GetDomainsAsync();
@@ -168,6 +168,7 @@
             var existingProject = projects.FirstOrDefault(proj => proj.Name == ObjDetectionProjectName && proj.Settings.DomainId == objDetectionDomain.Id);
             if (existingProject != null)
             {
+                this.fixture.ObjectDetectionProjectId = existingProject.Id;
                 return existingProject.Id;
             }
 
@@ -212,7 +213,7 @@
             HttpMockServer.Flush();
             HttpMockServer.Initialize(HttpMockServer.CallerIdentity, HttpMockServer.TestIdentity, RecorderMode);
 
-            this.fixture.ObjectDetectionProject = project.Id;
+            this.fixture.ObjectDetectionProjectId = project.Id;
             return project.Id;
 #else
             return this.fixture.ObjectDetectionProjectId;
