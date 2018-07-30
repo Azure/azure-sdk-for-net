@@ -1,5 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <PropertyGroup>
+    <Description>Test Project for Microsoft.Rest.ClientRuntime.Azure.Authentication</Description>
+    <Version>1.0.0</Version>
+    <AssemblyName>Az.Auth.NetCore.Tests</AssemblyName>
+    <PackageId>Az.Auth.NetCore.Tests</PackageId>
+    <PackageTags>NetCoreTests AzAuthNetCore Test $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
+  </PropertyGroup>
+  
   <PropertyGroup>    
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
