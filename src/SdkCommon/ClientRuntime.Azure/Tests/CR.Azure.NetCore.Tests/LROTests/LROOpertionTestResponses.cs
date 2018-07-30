@@ -550,6 +550,142 @@ namespace CR.Azure.NetCore.Tests
             yield return response4;
         }
 
+        internal static IEnumerable<HttpResponseMessage> Location200WithNullProviState()
+        {
+            var response1 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                {
+                    ""id"": ""/subscriptions/db5eb68e-73e2-4fa8-b18a-46cd1be4cce5/resourceGroups/rgnemv_c08352411e62/providers/Microsoft.Web/serverfarms/jplan1_cf101472"",
+                    ""name"": ""jplan1_cf101472"",
+                    ""type"": ""Microsoft.Web/serverfarms"",
+                    ""kind"": ""linux"",
+                    ""location"": ""West US"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""serverFarmId"": 17852,
+                        ""name"": ""jplan1_cf101472"",
+                        ""sku"": {
+                            ""name"": ""B1"",
+                            ""tier"": ""Basic"",
+                            ""size"": ""B1"",
+                            ""capacity"": 2
+                        },
+                        ""workerSize"": ""Default"",
+                        ""workerSizeId"": 0,
+                        ""workerTierName"": null,
+                        ""numberOfWorkers"": 2,
+                        ""currentWorkerSize"": ""Default"",
+                        ""currentWorkerSizeId"": 0,
+                        ""currentNumberOfWorkers"": 2,
+                        ""status"": ""Ready"",
+                        ""webSpace"": ""rgnemv_c08352411e62-WestUSwebspace"",
+                        ""subscription"": ""db5eb68e-73e2-4fa8-b18a-46cd1be4cce5"",
+                        ""adminSiteName"": null,
+                        ""hostingEnvironment"": null,
+                        ""hostingEnvironmentProfile"": null,
+                        ""maximumNumberOfWorkers"": 3,
+                        ""planName"": ""VirtualDedicatedPlan"",
+                        ""adminRuntimeSiteName"": null,
+                        ""computeMode"": ""Dedicated"",
+                        ""siteMode"": null,
+                        ""geoRegion"": ""West US"",
+                        ""perSiteScaling"": false,
+                        ""numberOfSites"": 3,
+                        ""hostingEnvironmentId"": null,
+                        ""isSpot"": false,
+                        ""spotExpirationTime"": null,
+                        ""freeOfferExpirationTime"": null,
+                        ""tags"": {},
+                        ""kind"": ""linux"",
+                        ""resourceGroup"": ""rgnemv_c08352411e62"",
+                        ""reserved"": true,
+                        ""isXenon"": false,
+                        ""mdmId"": ""waws-prod-bay-063_17852"",
+                        ""targetWorkerCount"": 0,
+                        ""targetWorkerSizeId"": 0,
+                        ""provisioningState"": null,
+                        ""webSiteId"": null
+                    },
+                    ""sku"": {
+                        ""name"": ""B1"",
+                        ""tier"": ""Basic"",
+                        ""size"": ""B1"",
+                        ""capacity"": 2
+                    }
+                }
+             ")
+            };
+            yield return response1;
+
+            var response2 = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"
+                    {
+                    ""id"": ""/subscriptions/db5eb68e-73e2-4fa8-b18a-46cd1be4cce5/resourceGroups/rgnemv_c08352411e62/providers/Microsoft.Web/serverfarms/jplan1_cf101472"",
+                    ""name"": ""jplan1_cf101472"",
+                    ""type"": ""Microsoft.Web/serverfarms"",
+                    ""kind"": ""linux"",
+                    ""location"": ""West US"",
+                    ""tags"": {},
+                    ""properties"": {
+                        ""serverFarmId"": 17852,
+                        ""name"": ""jplan1_cf101472"",
+                        ""sku"": {
+                            ""name"": ""B1"",
+                            ""tier"": ""Basic"",
+                            ""size"": ""B1"",
+                            ""capacity"": 2
+                        },
+                        ""workerSize"": ""Default"",
+                        ""workerSizeId"": 0,
+                        ""workerTierName"": null,
+                        ""numberOfWorkers"": 2,
+                        ""currentWorkerSize"": ""Default"",
+                        ""currentWorkerSizeId"": 0,
+                        ""currentNumberOfWorkers"": 2,
+                        ""status"": ""Ready"",
+                        ""webSpace"": ""rgnemv_c08352411e62-WestUSwebspace"",
+                        ""subscription"": ""db5eb68e-73e2-4fa8-b18a-46cd1be4cce5"",
+                        ""adminSiteName"": null,
+                        ""hostingEnvironment"": null,
+                        ""hostingEnvironmentProfile"": null,
+                        ""maximumNumberOfWorkers"": 3,
+                        ""planName"": ""VirtualDedicatedPlan"",
+                        ""adminRuntimeSiteName"": null,
+                        ""computeMode"": ""Dedicated"",
+                        ""siteMode"": null,
+                        ""geoRegion"": ""West US"",
+                        ""perSiteScaling"": false,
+                        ""numberOfSites"": 3,
+                        ""hostingEnvironmentId"": null,
+                        ""isSpot"": false,
+                        ""spotExpirationTime"": null,
+                        ""freeOfferExpirationTime"": null,
+                        ""tags"": {},
+                        ""kind"": ""linux"",
+                        ""resourceGroup"": ""rgnemv_c08352411e62"",
+                        ""reserved"": true,
+                        ""isXenon"": false,
+                        ""mdmId"": ""waws-prod-bay-063_17852"",
+                        ""targetWorkerCount"": 0,
+                        ""targetWorkerSizeId"": 0,
+                        ""provisioningState"": null,
+                        ""webSiteId"": null
+                    },
+                    ""sku"": {
+                        ""name"": ""B1"",
+                        ""tier"": ""Basic"",
+                        ""size"": ""B1"",
+                        ""capacity"": 2
+                    }
+                }
+                ")
+            };
+            yield return response2;
+        }
+
+
         internal static IEnumerable<HttpResponseMessage> Location201FinalGet404WithNullStringProviState()
         {
             var response1 = new HttpResponseMessage(HttpStatusCode.Created)
@@ -606,7 +742,7 @@ namespace CR.Azure.NetCore.Tests
                     ""type"": ""Microsoft.Cache/Redis"",
                     ""tags"": {},
                     ""properties"": {
-                        ""provisioningState"": NULL,
+                        ""provisioningState"": null,
                         ""redisVersion"": ""3.2.7"",
                         ""sku"": {
                             ""name"": ""Basic"",
