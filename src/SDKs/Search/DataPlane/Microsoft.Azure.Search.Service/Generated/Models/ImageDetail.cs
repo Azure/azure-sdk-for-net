@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Details.
+    /// Defines values for ImageDetail.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ImageDetail
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Search.Models
         [EnumMember(Value = "landmarks")]
         Landmarks
     }
-    internal static class DetailsEnumExtension
+    internal static class ImageDetailEnumExtension
     {
         internal static string ToSerializedValue(this ImageDetail? value)
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Search.Models
             return null;
         }
 
-        internal static ImageDetail? ParseDetails(this string value)
+        internal static ImageDetail? ParseImageDetail(this string value)
         {
             switch( value )
             {

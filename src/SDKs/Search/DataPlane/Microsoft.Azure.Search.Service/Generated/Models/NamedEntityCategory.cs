@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for Categories.
+    /// Defines values for NamedEntityCategory.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum NamedEntityCategory
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Models
         [EnumMember(Value = "person")]
         Person
     }
-    internal static class CategoriesEnumExtension
+    internal static class NamedEntityCategoryEnumExtension
     {
         internal static string ToSerializedValue(this NamedEntityCategory? value)
         {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Search.Models
             return null;
         }
 
-        internal static NamedEntityCategory? ParseCategories(this string value)
+        internal static NamedEntityCategory? ParseNamedEntityCategory(this string value)
         {
             switch( value )
             {
