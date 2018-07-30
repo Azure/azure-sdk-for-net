@@ -1,11 +1,13 @@
-2017-11-30 23:40:10 UTC
+Executing AutoRest command
+cmd.exe /c autorest.cmd autorest https://github.com/Azure/azure-rest-api-specs/blob/master/specification/hdinsight/resource-manager/readme.md --csharp --csharp-sdks-folder=C:\azuresources\forks\azure-sdk-for-net\tools\..\src\SDKS --version=latest --tag=package-2015-03-preview --reflect-api-versions
+2018-07-24 04:28:03 UTC
 
 1) azure-rest-api-specs repository information
-GitHub user: wawon-msft
-Branch:      current
-Commit:      c8892365cd32383bf040f37b265ce95300357815
+GitHub user: Azure
+Branch:      master
+Commit:      c0cbb2c24667bdba146d863401d9415c724c09bd
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\wawon\AppData\Roaming\npm `-- autorest@2.0.4215  
+Bootstrapper version:    C:\Users\wawon\AppData\Roaming\npm `-- autorest@2.0.4282  
 Latest installed version:    

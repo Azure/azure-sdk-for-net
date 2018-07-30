@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="provider">The service provider:
         /// Microsoft.HDInsight</param>
         /// <param name="resource">The resource on which the operation is
-        /// performed: Cluster, Capabilities, etc.</param>
+        /// performed: Cluster, Applications, etc.</param>
         /// <param name="operation">The operation type: read, write, delete,
         /// etc.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string))
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
 
         /// <summary>
         /// Gets or sets the resource on which the operation is performed:
-        /// Cluster, Capabilities, etc.
+        /// Cluster, Applications, etc.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }

@@ -38,6 +38,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
+        /// <param name="diskSizeGB">Specifies the size of the operating system
+        /// disk in gigabytes. This element can be used to overwrite the size
+        /// of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This
+        /// value cannot be larger than 1023 GB</param>
         /// <param name="image">The Source User Image VirtualHardDisk. This
         /// VirtualHardDisk will be copied before using it to attach to the
         /// Virtual Machine. If SourceImage is provided, the destination
@@ -45,10 +49,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vhdContainers">The list of virtual hard disk container
         /// uris.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public VirtualMachineScaleSetUpdateOSDisk(CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
+        public VirtualMachineScaleSetUpdateOSDisk(CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
         {
             Caching = caching;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
+            DiskSizeGB = diskSizeGB;
             Image = image;
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
@@ -73,6 +78,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "writeAcceleratorEnabled")]
         public bool? WriteAcceleratorEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the size of the operating system disk in
+        /// gigabytes. This element can be used to overwrite the size of the
+        /// disk in a virtual machine image.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This value cannot be larger
+        /// than 1023 GB
+        /// </summary>
+        [JsonProperty(PropertyName = "diskSizeGB")]
+        public int? DiskSizeGB { get; set; }
 
         /// <summary>
         /// Gets or sets the Source User Image VirtualHardDisk. This

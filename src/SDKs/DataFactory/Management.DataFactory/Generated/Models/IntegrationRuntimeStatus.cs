@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime belong to.</param>
         /// <param name="state">The state of integration runtime. Possible
         /// values include: 'Initial', 'Stopped', 'Started', 'Starting',
-        /// 'Stopping', 'NeedRegistration', 'Online', 'Limited',
-        /// 'Offline'</param>
+        /// 'Stopping', 'NeedRegistration', 'Online', 'Limited', 'Offline',
+        /// 'AccessDenied'</param>
         public IntegrationRuntimeStatus(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string dataFactoryName = default(string), string state = default(string))
         {
             AdditionalProperties = additionalProperties;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Gets the state of integration runtime. Possible values include:
         /// 'Initial', 'Stopped', 'Started', 'Starting', 'Stopping',
-        /// 'NeedRegistration', 'Online', 'Limited', 'Offline'
+        /// 'NeedRegistration', 'Online', 'Limited', 'Offline', 'AccessDenied'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; private set; }

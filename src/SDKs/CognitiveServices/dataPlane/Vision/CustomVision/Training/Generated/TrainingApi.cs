@@ -123,7 +123,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </summary>
         private void Initialize()
         {
-            BaseUri = new System.Uri("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Training");
+            BaseUri = new System.Uri("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.1/Training");
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -3827,6 +3827,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='domainId'>
         /// The id of the domain to use for this project. Defaults to General
         /// </param>
+        /// <param name='classificationType'>
+        /// The type of classifier to create for this project. Possible values include:
+        /// 'Multiclass', 'Multilabel'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -3848,7 +3852,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (name == null)
             {
@@ -3868,6 +3872,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("description", description);
                 tracingParameters.Add("domainId", domainId);
+                tracingParameters.Add("classificationType", classificationType);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateProject", tracingParameters);
             }
@@ -3886,6 +3891,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (domainId != null)
             {
                 _queryParameters.Add(string.Format("domainId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(domainId, SerializationSettings).Trim('"'))));
+            }
+            if (classificationType != null)
+            {
+                _queryParameters.Add(string.Format("classificationType={0}", System.Uri.EscapeDataString(classificationType)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -5681,10 +5690,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The iteration id
         /// </param>
         /// <param name='platform'>
-        /// The target platform (coreml or tensorflow)
+        /// The target platform (coreml or tensorflow). Possible values include:
+        /// 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX'
         /// </param>
         /// <param name='flavor'>
-        /// The flavor of the target platform (Windows, Linux, ARM, or GPU)
+        /// The flavor of the target platform (Windows, Linux, ARM, or GPU). Possible
+        /// values include: 'Linux', 'Windows'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

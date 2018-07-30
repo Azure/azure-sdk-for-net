@@ -13,6 +13,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using System.ComponentModel;
 
     /// <summary>
     /// Test Environment class
@@ -69,6 +70,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         public IDictionary<EnvironmentNames, TestEndpoints> EnvEndpoints;
 
+        [DefaultValue(false)]
+        public bool OptimizeRecordedFile { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -86,6 +90,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             ConnectionString = new ConnectionString(connectionString);
             InitTestEndPoints();
 
+            this.OptimizeRecordedFile = this.ConnectionString.GetValue<bool>(ConnectionStringKeys.OptimizeRecordedFileKey);
             this.SubscriptionId = this.ConnectionString.GetValue(ConnectionStringKeys.SubscriptionIdKey);
             this.UserName = this.ConnectionString.GetValue(ConnectionStringKeys.UserIdKey);
             this.Tenant = this.ConnectionString.GetValue(ConnectionStringKeys.AADTenantKey);

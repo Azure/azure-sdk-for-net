@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.ResourceManager
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -25,8 +24,12 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial interface IPolicyDefinitionsOperations
     {
         /// <summary>
-        /// Creates or updates a policy definition.
+        /// Creates or updates a policy definition in a subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation creates or updates a policy definition in the given
+        /// subscription with the given name.
+        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to create.
         /// </param>
@@ -50,8 +53,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<PolicyDefinition>> CreateOrUpdateWithHttpMessagesAsync(string policyDefinitionName, PolicyDefinition parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a policy definition.
+        /// Deletes a policy definition in a subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation deletes the policy definition in the given
+        /// subscription with the given name.
+        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to delete.
         /// </param>
@@ -69,8 +76,12 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string policyDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the policy definition.
+        /// Retrieves a policy definition in a subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation retrieves the policy definition in the given
+        /// subscription with the given name.
+        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to get.
         /// </param>
@@ -91,10 +102,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<PolicyDefinition>> GetWithHttpMessagesAsync(string policyDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the policy definitions for a subscription.
+        /// Retrieves a built-in policy definition.
         /// </summary>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <remarks>
+        /// This operation retrieves the built-in policy definition with the
+        /// given name.
+        /// </remarks>
+        /// <param name='policyDefinitionName'>
+        /// The name of the built-in policy definition to get.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,10 +126,173 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(ODataQuery<PolicyDefinition> odataQuery = default(ODataQuery<PolicyDefinition>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PolicyDefinition>> GetBuiltInWithHttpMessagesAsync(string policyDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the policy definitions for a subscription.
+        /// Creates or updates a policy definition in a management group.
         /// </summary>
+        /// <remarks>
+        /// This operation creates or updates a policy definition in the given
+        /// management group with the given name.
+        /// </remarks>
+        /// <param name='policyDefinitionName'>
+        /// The name of the policy definition to create.
+        /// </param>
+        /// <param name='parameters'>
+        /// The policy definition properties.
+        /// </param>
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PolicyDefinition>> CreateOrUpdateAtManagementGroupWithHttpMessagesAsync(string policyDefinitionName, PolicyDefinition parameters, string managementGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a policy definition in a management group.
+        /// </summary>
+        /// <remarks>
+        /// This operation deletes the policy definition in the given
+        /// management group with the given name.
+        /// </remarks>
+        /// <param name='policyDefinitionName'>
+        /// The name of the policy definition to delete.
+        /// </param>
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteAtManagementGroupWithHttpMessagesAsync(string policyDefinitionName, string managementGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve a policy definition in a management group.
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves the policy definition in the given
+        /// management group with the given name.
+        /// </remarks>
+        /// <param name='policyDefinitionName'>
+        /// The name of the policy definition to get.
+        /// </param>
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<PolicyDefinition>> GetAtManagementGroupWithHttpMessagesAsync(string policyDefinitionName, string managementGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves policy definitions in a subscription
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the policy definitions in a
+        /// given subscription.
+        /// </remarks>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve built-in policy definitions
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the built-in policy
+        /// definitions.
+        /// </remarks>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve policy definitions in a management group
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the policy definitions in a
+        /// given management group.
+        /// </remarks>
+        /// <param name='managementGroupId'>
+        /// The ID of the management group.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListByManagementGroupWithHttpMessagesAsync(string managementGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves policy definitions in a subscription
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the policy definitions in a
+        /// given subscription.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -134,5 +312,57 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve built-in policy definitions
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the built-in policy
+        /// definitions.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieve policy definitions in a management group
+        /// </summary>
+        /// <remarks>
+        /// This operation retrieves a list of all the policy definitions in a
+        /// given management group.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListByManagementGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="width">Image width</param>
         /// <param name="height">Image height</param>
         /// <param name="format">Image format</param>
-        public ImageMetadata(int? width = default(int?), int? height = default(int?), string format = default(string))
+        public ImageMetadata(int width = default(int), int height = default(int), string format = default(string))
         {
             Width = width;
             Height = height;
@@ -49,13 +49,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets image width
         /// </summary>
         [JsonProperty(PropertyName = "width")]
-        public int? Width { get; set; }
+        public int Width { get; set; }
 
         /// <summary>
         /// Gets or sets image height
         /// </summary>
         [JsonProperty(PropertyName = "height")]
-        public int? Height { get; set; }
+        public int Height { get; set; }
 
         /// <summary>
         /// Gets or sets image format

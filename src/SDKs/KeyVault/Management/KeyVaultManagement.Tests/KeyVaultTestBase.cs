@@ -105,6 +105,10 @@ namespace KeyVault.Management.Tests
                 }
             };
 
+            IList < IPRule > ipRules = new List<IPRule>();
+            ipRules.Add(new IPRule() { Value = "10.0.0.0/24" });
+            ipRules.Add(new IPRule() { Value = "1.0.0.0/25" });
+
             vaultProperties = new VaultProperties
             {
                 EnabledForDeployment = true,
@@ -114,6 +118,7 @@ namespace KeyVault.Management.Tests
                 Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
                 TenantId = tenantIdGuid,
                 VaultUri = "",
+                NetworkAcls = new NetworkRuleSet() { Bypass = "AzureServices", DefaultAction = "Allow", IpRules = ipRules, VirtualNetworkRules = null },
                 AccessPolicies = new[] { accPol }
             };
         }

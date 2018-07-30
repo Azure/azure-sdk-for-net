@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for the container to be downloaded.
+    /// Docker container settings.
     /// </summary>
     public partial class ContainerSettings
     {
@@ -30,11 +30,12 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ContainerSettings class.
         /// </summary>
-        /// <param name="imageSourceRegistry">Registry to download the
-        /// container from.</param>
-        public ContainerSettings(ImageSourceRegistry imageSourceRegistry)
+        /// <param name="imageSourceRegistry">Image source registry.</param>
+        /// <param name="shmSize">/dev/shm size.</param>
+        public ContainerSettings(ImageSourceRegistry imageSourceRegistry, string shmSize = default(string))
         {
             ImageSourceRegistry = imageSourceRegistry;
+            ShmSize = shmSize;
             CustomInit();
         }
 
@@ -44,10 +45,24 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets registry to download the container from.
+        /// Gets or sets image source registry.
         /// </summary>
+        /// <remarks>
+        /// Information about docker image and docker registry to download the
+        /// container from.
+        /// </remarks>
         [JsonProperty(PropertyName = "imageSourceRegistry")]
         public ImageSourceRegistry ImageSourceRegistry { get; set; }
+
+        /// <summary>
+        /// Gets or sets /dev/shm size.
+        /// </summary>
+        /// <remarks>
+        /// Size of /dev/shm. Please refer to docker documentation for
+        /// supported argument formats.
+        /// </remarks>
+        [JsonProperty(PropertyName = "shmSize")]
+        public string ShmSize { get; set; }
 
         /// <summary>
         /// Validate the object.

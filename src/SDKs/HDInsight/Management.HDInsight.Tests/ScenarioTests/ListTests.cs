@@ -25,6 +25,7 @@ namespace Management.HDInsight.Tests
     using System.Threading.Tasks;
     using Xunit;
 
+    [Collection("ScenarioTests")]
     public class ListTests
     {
         [Fact]
@@ -44,8 +45,8 @@ namespace Management.HDInsight.Tests
                         Assert.False(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
 
                         // Create one cluster with ADLS so both clusters aren't using the same storage account at the same time
-                        ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
-                        ClusterCreateParameters parameters2 = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl();
+                        ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
+                        ClusterCreateParameters parameters2 = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl(testName);
                         Parallel.Invoke(
                             () => client.Clusters.Create(rgName, clusterName1, parameters1),
                             () => client.Clusters.Create(rgName, clusterName2, parameters2));
@@ -56,9 +57,8 @@ namespace Management.HDInsight.Tests
                     }
                     finally
                     {
-                        Parallel.Invoke(
-                            () => client.Clusters.BeginDelete(rgName, clusterName1),
-                            () => client.Clusters.BeginDelete(rgName, clusterName2));
+                        client.Clusters.BeginDelete(rgName, clusterName1);
+                        client.Clusters.BeginDelete(rgName, clusterName2);
                     }
                 });
         }
@@ -88,8 +88,8 @@ namespace Management.HDInsight.Tests
                     Assert.False(list.Any(c => c.Name.Equals(clusterName2, StringComparison.OrdinalIgnoreCase)));
 
                     // Create one cluster with ADLS so both clusters aren't using the same storage account at the same time
-                    ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
-                    ClusterCreateParameters parameters2 = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl();
+                    ClusterCreateParameters parameters1 = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
+                    ClusterCreateParameters parameters2 = ClusterCreateParametersHelpers.GetCustomCreateParametersForAdl(testName);
                     Parallel.Invoke(
                         () => client.Clusters.Create(rgName1, clusterName1, parameters1),
                         () => client.Clusters.Create(rgName2, clusterName2, parameters2));
@@ -100,9 +100,8 @@ namespace Management.HDInsight.Tests
                 }
                 finally
                 {
-                    Parallel.Invoke(
-                        () => resourceClient.ResourceGroups.BeginDelete(rgName1),
-                        () => resourceClient.ResourceGroups.BeginDelete(rgName2));
+                    resourceClient.ResourceGroups.BeginDelete(rgName1);
+                    resourceClient.ResourceGroups.BeginDelete(rgName2);
                 }
             }
         }

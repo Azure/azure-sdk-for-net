@@ -30,9 +30,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the Key class.
         /// </summary>
         /// <param name="keyName">Automation key name. Possible values include:
-        /// 'primary', 'secondary'</param>
+        /// 'Primary', 'Secondary'</param>
         /// <param name="permissions">Automation key permissions. Possible
-        /// values include: 'Full'</param>
+        /// values include: 'Read', 'Full'</param>
         /// <param name="value">Value of the Automation Key used for
         /// registration.</param>
         public Key(string keyName = default(string), string permissions = default(string), string value = default(string))
@@ -49,24 +49,24 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets automation key name. Possible values include:
-        /// 'primary', 'secondary'
+        /// Gets automation key name. Possible values include: 'Primary',
+        /// 'Secondary'
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
-        public string KeyName { get; set; }
+        [JsonProperty(PropertyName = "KeyName")]
+        public string KeyName { get; private set; }
 
         /// <summary>
-        /// Gets or sets automation key permissions. Possible values include:
+        /// Gets automation key permissions. Possible values include: 'Read',
         /// 'Full'
         /// </summary>
-        [JsonProperty(PropertyName = "permissions")]
-        public string Permissions { get; set; }
+        [JsonProperty(PropertyName = "Permissions")]
+        public string Permissions { get; private set; }
 
         /// <summary>
-        /// Gets or sets value of the Automation Key used for registration.
+        /// Gets value of the Automation Key used for registration.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "Value")]
+        public string Value { get; private set; }
 
     }
 }

@@ -31,7 +31,8 @@ namespace Management.HDInsight.Tests
         private const string ResourceUri = "";
         private const string CertificateFile = @"";
         private const string AdlDefaultStorageAccountName = "";
-        
+
+
 
         // These can be set to anything but all created clusters should be deleted after usage so these aren't secret.
         private const string DefaultContainer = "default";
@@ -42,27 +43,27 @@ namespace Management.HDInsight.Tests
         private const string AdlStorageRootPath = "/clusters/hdi";
         private const string Location = "North Central US";
 
-        public static ClusterCreateParameters GetCustomCreateParametersIaas(bool adlStorage = false)
+        public static ClusterCreateParameters GetCustomCreateParametersIaas(string testName, bool adlStorage = false)
         {
             ClusterCreateParameters clusterparams = new ClusterCreateParameters
             {
                 ClusterSizeInNodes = 3,
                 ClusterType = "Hadoop",
                 WorkerNodeSize = "Large",
-                DefaultStorageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(DefaultContainer),
+                DefaultStorageInfo = adlStorage ? GetDefaultDataLakeStorageInfo() : GetDefaultAzureStorageInfo(testName.ToLowerInvariant()),
                 UserName = HttpUser,
                 Password = HttpPassword,
                 Location = Location,
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
-                Version = "3.5"
+                Version = "3.6"
             };
             return clusterparams;
         }
 
-        public static ClusterCreateParameters GetCustomCreateParametersForAdl()
+        public static ClusterCreateParameters GetCustomCreateParametersForAdl(string clusterName)
         {
-            ClusterCreateParameters createParams = GetCustomCreateParametersIaas(true);
+            ClusterCreateParameters createParams = GetCustomCreateParametersIaas(clusterName, true);
 
             Guid appId = string.IsNullOrEmpty(ApplicationId) ? Guid.NewGuid() : new Guid(ApplicationId);
             Guid tenantId = string.IsNullOrEmpty(AadTenantId) ? Guid.NewGuid(): new Guid(AadTenantId);
@@ -134,7 +135,7 @@ namespace Management.HDInsight.Tests
                 Tags = new Dictionary<string, string>(),
                 Properties = new ClusterCreateProperties
                 {
-                    ClusterVersion = "3.5",
+                    ClusterVersion = "3.6",
                     OsType = OSType.Linux,
                     ClusterDefinition = new ClusterDefinition
                     {

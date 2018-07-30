@@ -7,9 +7,9 @@
     <VersionPrefix>1.0.0-preview</VersionPrefix>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Azure.Management.Relay" Version="0.0.1-preview" />-->
     

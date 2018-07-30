@@ -148,6 +148,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The operations group for this extension method.
             /// </param>
             /// <param name='url'>
+            /// Publicly reachable URL of an image
             /// </param>
             /// <param name='returnFaceId'>
             /// A value indicating whether the operation should return faceIds of detected

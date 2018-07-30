@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the PrivateRegistryCredentials class.
         /// </summary>
-        /// <param name="username">User name to login.</param>
-        /// <param name="password">Password to login.</param>
-        /// <param name="passwordSecretReference">Specifies the location of the
-        /// password, which is a Key Vault Secret.</param>
+        /// <param name="username">User name.</param>
+        /// <param name="password">Password.</param>
+        /// <param name="passwordSecretReference">Password secret
+        /// reference.</param>
         public PrivateRegistryCredentials(string username, string password = default(string), KeyVaultSecretReference passwordSecretReference = default(KeyVaultSecretReference))
         {
             Username = username;
@@ -48,28 +48,32 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets user name to login.
+        /// Gets or sets user name.
         /// </summary>
+        /// <remarks>
+        /// User name to login to the repository.
+        /// </remarks>
         [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
 
         /// <summary>
-        /// Gets or sets password to login.
+        /// Gets or sets password.
         /// </summary>
         /// <remarks>
-        /// One of password or passwordSecretReference must be specified.
+        /// User password to login to the docker repository. One of password or
+        /// passwordSecretReference must be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the location of the password, which is a Key
-        /// Vault Secret.
+        /// Gets or sets password secret reference.
         /// </summary>
         /// <remarks>
-        /// Users can store their secrets in Azure KeyVault and pass it to the
-        /// Batch AI Service to integrate with KeyVault. One of password or
-        /// passwordSecretReference must be specified.
+        /// KeyVault Secret storing the password. Users can store their secrets
+        /// in Azure KeyVault and pass it to the Batch AI service to integrate
+        /// with KeyVault. One of password or passwordSecretReference must be
+        /// specified.
         /// </remarks>
         [JsonProperty(PropertyName = "passwordSecretReference")]
         public KeyVaultSecretReference PasswordSecretReference { get; set; }

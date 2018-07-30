@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/operations?api-version=2017-11-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE3LTExLTAx",
+      "RequestUri": "/providers/Microsoft.Capacity/operations?api-version=2018-06-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE4LTA2LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "426aa259-5f49-4bce-bf2e-682eab5e1c99"
+          "681f15c3-57ad-42b9-8389-c8a10bc7eec4"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.0.0.0"
+          "Microsoft.Azure.Management.Reservations.AzureReservationAPIClient/1.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Create Reservations\",\r\n        \"description\": \"Create any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Update Reservations\",\r\n        \"description\": \"Update any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Delete Reservations\",\r\n        \"description\": \"Delete any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Create Reservations\",\r\n        \"description\": \"Create any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Update Reservations\",\r\n        \"description\": \"Update any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Delete Reservations\",\r\n        \"description\": \"Delete any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/revisions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Create Reservations\",\r\n        \"description\": \"Create any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Update Reservations\",\r\n        \"description\": \"Update any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Delete Reservations\",\r\n        \"description\": \"Delete any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Create Reservations\",\r\n        \"description\": \"Create any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Update Reservations\",\r\n        \"description\": \"Update any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Delete Reservations\",\r\n        \"description\": \"Delete any Reservation\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/reservationorders/reservations/revisions/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Get Reservations\",\r\n        \"description\": \"Read All Reservations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Capacity/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Capacity\",\r\n        \"resource\": \"Reservations\",\r\n        \"operation\": \"Registers the Capacity Resource Provider.\",\r\n        \"description\": \"Registers the Capacity resource provider and enables the creation of Capacity resources.\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -29,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 28 Sep 2017 18:47:40 GMT"
+          "Fri, 08 Jun 2018 16:57:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -45,19 +45,19 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14999"
+          "14997"
         ],
         "x-ms-request-id": [
-          "westus:ccf7527b-4bad-4dbd-91d9-5647bb3e8450"
+          "centralus:c8e155a6-8bbf-459f-a611-fe48d360a76c"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-correlation-request-id": [
-          "21e38e09-911a-4bb6-aabc-26a13ab7f201"
+          "2e29388a-1432-44f7-8aed-ffefed9aa002"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20170928T184741Z:21e38e09-911a-4bb6-aabc-26a13ab7f201"
+          "NORTHEUROPE:20180608T165759Z:2e29388a-1432-44f7-8aed-ffefed9aa002"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -68,6 +68,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "98df3792-7962-4f18-8be2-d5576f122de3"
+    "SubscriptionId": "caadc3f2-e83e-487c-9a14-41f74366467f"
   }
 }

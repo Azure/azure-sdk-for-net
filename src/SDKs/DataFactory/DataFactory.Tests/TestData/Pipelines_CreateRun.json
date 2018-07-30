@@ -1,27 +1,28 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "pipelineName": "examplePipeline",
+    "referencePipelineRunId": null,
     "parameters": {
       "OutputBlobNameList": [
         "exampleoutput.csv"
       ]
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
-    "202": {
+    "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:58 GMT",
-        "x-ms-request-id": "a420e4fd-ebe9-4758-8db7-852b4d06245e",
+        "Date": "Sat, 16 Jun 2018 00:37:48 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1180",
-        "x-ms-correlation-request-id": "15d0c07a-603f-42c7-98ba-872b0eff2326"
+        "x-ms-ratelimit-remaining-subscription-writes": "1190",
+        "x-ms-request-id": "5c2b442b-d360-43ec-9268-f923f88f31fd",
+        "x-ms-correlation-request-id": "5c2b442b-d360-43ec-9268-f923f88f31fd"
       },
       "body": {
-        "runId": "a420e4fd-ebe9-4758-8db7-852b4d06245e"
+        "runId": "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b"
       }
     }
   }

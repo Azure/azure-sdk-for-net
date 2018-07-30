@@ -50,12 +50,18 @@
 
                 // Delete both
                 this.automationClient.SoftwareUpdateConfigurations.Delete(ResourceGroupName, AutomationAccountName, updateConfigurationName_01);
-                getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_01);
-                Assert.Null(getResult);
 
+                Assert.Throws<ErrorResponseException>(() =>
+                {
+                    this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_01);
+                });
+                
                 this.automationClient.SoftwareUpdateConfigurations.Delete(ResourceGroupName, AutomationAccountName, updateConfigurationName_02);
-                getResult = this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_02);
-                Assert.Null(getResult);
+
+                Assert.Throws<ErrorResponseException>(() =>
+                {
+                    this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_02);
+                });
             }
         }
 

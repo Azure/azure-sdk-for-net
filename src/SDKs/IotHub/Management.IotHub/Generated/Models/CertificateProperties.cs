@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// time.</param>
         /// <param name="updated">The certificate's last update date and
         /// time.</param>
-        public CertificateProperties(string subject = default(string), System.DateTime? expiry = default(System.DateTime?), string thumbprint = default(string), bool? isVerified = default(bool?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?))
+        /// <param name="certificate">The certificate content</param>
+        public CertificateProperties(string subject = default(string), System.DateTime? expiry = default(System.DateTime?), string thumbprint = default(string), bool? isVerified = default(bool?), System.DateTime? created = default(System.DateTime?), System.DateTime? updated = default(System.DateTime?), string certificate = default(string))
         {
             Subject = subject;
             Expiry = expiry;
@@ -49,6 +50,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
             IsVerified = isVerified;
             Created = created;
             Updated = updated;
+            Certificate = certificate;
             CustomInit();
         }
 
@@ -95,6 +97,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [JsonProperty(PropertyName = "updated")]
         public System.DateTime? Updated { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the certificate content
+        /// </summary>
+        [JsonProperty(PropertyName = "certificate")]
+        public string Certificate { get; set; }
 
     }
 }

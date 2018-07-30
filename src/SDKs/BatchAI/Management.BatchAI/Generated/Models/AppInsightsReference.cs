@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies Azure Application Insights information for performance
-    /// counters reporting.
+    /// Azure Application Insights information for performance counters
+    /// reporting.
     /// </summary>
     public partial class AppInsightsReference
     {
@@ -31,13 +31,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the AppInsightsReference class.
         /// </summary>
-        /// <param name="component">Specifies the Azure Application Insights
-        /// component resource id.</param>
-        /// <param name="instrumentationKey">Value of the Azure Application
-        /// Insights instrumentation key.</param>
-        /// <param name="instrumentationKeySecretReference">Specifies a
-        /// KeyVault Secret containing Azure Application Insights
-        /// instrumentation key.</param>
+        /// <param name="component">Component ID.</param>
+        /// <param name="instrumentationKey">Instrumentation Key.</param>
+        /// <param name="instrumentationKeySecretReference">Instrumentation key
+        /// KeyVault Secret reference.</param>
         public AppInsightsReference(ResourceId component, string instrumentationKey = default(string), KeyVaultSecretReference instrumentationKeySecretReference = default(KeyVaultSecretReference))
         {
             Component = component;
@@ -52,27 +49,30 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the Azure Application Insights component
-        /// resource id.
+        /// Gets or sets component ID.
         /// </summary>
+        /// <remarks>
+        /// Azure Application Insights component resource ID.
+        /// </remarks>
         [JsonProperty(PropertyName = "component")]
         public ResourceId Component { get; set; }
 
         /// <summary>
-        /// Gets or sets value of the Azure Application Insights
-        /// instrumentation key.
+        /// Gets or sets instrumentation Key.
         /// </summary>
+        /// <remarks>
+        /// Value of the Azure Application Insights instrumentation key.
+        /// </remarks>
         [JsonProperty(PropertyName = "instrumentationKey")]
         public string InstrumentationKey { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies a KeyVault Secret containing Azure
-        /// Application Insights instrumentation key.
+        /// Gets or sets instrumentation key KeyVault Secret reference.
         /// </summary>
         /// <remarks>
-        /// Specifies KeyVault Store and Secret which contains Azure
-        /// Application Insights instrumentation key. One of instumentationKey
-        /// or instrumentationKeySecretReference must be specified.
+        /// KeyVault Store and Secret which contains Azure Application Insights
+        /// instrumentation key. One of instrumentationKey or
+        /// instrumentationKeySecretReference must be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "instrumentationKeySecretReference")]
         public KeyVaultSecretReference InstrumentationKeySecretReference { get; set; }

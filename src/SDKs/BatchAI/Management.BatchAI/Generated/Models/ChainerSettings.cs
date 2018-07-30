@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies the settings for Chainer job.
+    /// Chainer job settings.
     /// </summary>
     public partial class ChainerSettings
     {
@@ -30,14 +30,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the ChainerSettings class.
         /// </summary>
-        /// <param name="pythonScriptFilePath">The path and file name of the
-        /// python script to execute the job.</param>
-        /// <param name="pythonInterpreterPath">The path to python
-        /// interpreter.</param>
-        /// <param name="commandLineArgs">Command line arguments that needs to
-        /// be passed to the python script</param>
-        /// <param name="processCount">Number of processes parameter that is
-        /// passed to MPI runtime.</param>
+        /// <param name="pythonScriptFilePath">Python script file path.</param>
+        /// <param name="pythonInterpreterPath">Python interpreter
+        /// path.</param>
+        /// <param name="commandLineArgs">Command line arguments.</param>
+        /// <param name="processCount">Process count.</param>
         public ChainerSettings(string pythonScriptFilePath, string pythonInterpreterPath = default(string), string commandLineArgs = default(string), int? processCount = default(int?))
         {
             PythonScriptFilePath = pythonScriptFilePath;
@@ -53,31 +50,38 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the path and file name of the python script to execute
-        /// the job.
+        /// Gets or sets python script file path.
         /// </summary>
+        /// <remarks>
+        /// The python script to execute.
+        /// </remarks>
         [JsonProperty(PropertyName = "pythonScriptFilePath")]
         public string PythonScriptFilePath { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to python interpreter.
+        /// Gets or sets python interpreter path.
         /// </summary>
+        /// <remarks>
+        /// The path to the Python interpreter.
+        /// </remarks>
         [JsonProperty(PropertyName = "pythonInterpreterPath")]
         public string PythonInterpreterPath { get; set; }
 
         /// <summary>
-        /// Gets or sets command line arguments that needs to be passed to the
-        /// python script
+        /// Gets or sets command line arguments.
         /// </summary>
+        /// <remarks>
+        /// Command line arguments that need to be passed to the python script.
+        /// </remarks>
         [JsonProperty(PropertyName = "commandLineArgs")]
         public string CommandLineArgs { get; set; }
 
         /// <summary>
-        /// Gets or sets number of processes parameter that is passed to MPI
-        /// runtime.
+        /// Gets or sets process count.
         /// </summary>
         /// <remarks>
-        /// The default value for this property is equal to nodeCount property
+        /// Number of processes to launch for the job execution. The default
+        /// value for this property is equal to nodeCount property
         /// </remarks>
         [JsonProperty(PropertyName = "processCount")]
         public int? ProcessCount { get; set; }

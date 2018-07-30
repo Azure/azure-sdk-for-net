@@ -6,9 +6,9 @@
     <AssemblyName>PolicyInsights.Tests</AssemblyName>
     <Version>1.0.0</Version>
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
   <ItemGroup>
     <ProjectReference Include="..\Management.PolicyInsights\Microsoft.Azure.Management.PolicyInsights.csproj" />
   </ItemGroup>

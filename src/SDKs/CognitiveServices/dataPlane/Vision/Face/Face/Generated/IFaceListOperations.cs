@@ -132,6 +132,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing face from a face list (given by a
@@ -166,6 +169,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Id referencing a particular face list.
         /// </param>
         /// <param name='url'>
+        /// Publicly reachable URL of an image
         /// </param>
         /// <param name='userData'>
         /// User-specified data about the face for any purpose. The maximum

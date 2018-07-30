@@ -18,8 +18,8 @@ namespace ResourceGroups.Tests
 {
     public class LiveResourceTests : TestBase
     {
-        const string WebResourceProviderVersion = "2014-04-01";
-        const string StoreResourceProviderVersion = "2014-04-01-preview";
+        const string WebResourceProviderVersion = "2016-08-01";
+        const string SendGridResourceProviderVersion = "2015-01-01";
 
         string ResourceGroupLocation
         {
@@ -49,35 +49,6 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
-        public void CleanupAllResources()
-        {
-            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
-
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                var client = GetResourceManagementClient(context, handler);
-                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
-
-                var groups = client.ResourceGroups.List();
-                foreach (var group in groups)
-                {
-                    var resources = client.Resources.ListByResourceGroup(group.Name, new ODataQuery<GenericResourceFilter>(r => r.ResourceType == "Microsoft.Web/sites"));
-                    foreach (var resource in resources)
-                    {
-                        client.Resources.Delete(group.Name, 
-                            CreateResourceIdentity(resource).ResourceProviderNamespace, 
-                            string.Empty,
-                            CreateResourceIdentity(resource).ResourceType,
-                            resource.Name,
-                            CreateResourceIdentity(resource).ResourceProviderApiVersion);
-                    }
-                    client.ResourceGroups.BeginDelete(group.Name);
-                }
-            }
-
-        }
-
-        [Fact]
         public void CreateResourceWithPlan()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -86,34 +57,35 @@ namespace ResourceGroups.Tests
             {
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
+                string password = TestUtilities.GenerateName("p@ss");
                 var client = GetResourceManagementClient(context, handler);
-                string mySqlLocation = GetMySqlLocation(client);
+                string mySqlLocation = "centralus";
                 var groupIdentity = new ResourceIdentity
                     {
                         ResourceName = resourceName,
-                        ResourceProviderNamespace = "SuccessBricks.ClearDB",
-                        ResourceType = "databases",
-                        ResourceProviderApiVersion = StoreResourceProviderVersion
+                        ResourceProviderNamespace = "Sendgrid.Email",
+                        ResourceType = "accounts",
+                        ResourceProviderApiVersion = SendGridResourceProviderVersion
                     };
 
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
-                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = this.ResourceGroupLocation });
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "centralus" });
                 var createOrUpdateResult = client.Resources.CreateOrUpdate(groupName, groupIdentity.ResourceProviderNamespace, "", groupIdentity.ResourceType, 
                     groupIdentity.ResourceName, groupIdentity.ResourceProviderApiVersion, 
                     new GenericResource
                     {
                         Location = mySqlLocation,
-                        Plan = new Plan {Name = "Free"},
-                        Tags = new Dictionary<string, string> { { "provision_source", "RMS" } }
+                        Plan = new Plan {Name = "free", Publisher= "Sendgrid",Product= "sendgrid_azure",PromotionCode="" },
+                        Tags = new Dictionary<string, string> { { "provision_source", "RMS" } },
+                        Properties = JObject.Parse("{'password':'" + password + "','acceptMarketingEmails':false,'email':'tiano@email.com'}"),
                     }
                 );
 
-                Assert.Equal(resourceName, createOrUpdateResult.Name);
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, createOrUpdateResult.Location),
                     string.Format("Resource location for resource '{0}' does not match expected location '{1}'", createOrUpdateResult.Location, mySqlLocation));
                 Assert.NotNull(createOrUpdateResult.Plan);
-                Assert.Equal("Free", createOrUpdateResult.Plan.Name);
+                Assert.Equal("free", createOrUpdateResult.Plan.Name);
 
                 var getResult = client.Resources.Get(groupName, groupIdentity.ResourceProviderNamespace,
                     "", groupIdentity.ResourceType, groupIdentity.ResourceName, groupIdentity.ResourceProviderApiVersion);
@@ -122,7 +94,7 @@ namespace ResourceGroups.Tests
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, getResult.Location),
                     string.Format("Resource location for resource '{0}' does not match expected location '{1}'", getResult.Location, mySqlLocation));
                 Assert.NotNull(getResult.Plan);
-                Assert.Equal("Free", getResult.Plan.Name);
+                Assert.Equal("free", getResult.Plan.Name);
             }
         }
 
@@ -348,7 +320,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                string subscriptionId = "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505";
+                string subscriptionId = "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b";
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(context, handler);

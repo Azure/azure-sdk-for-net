@@ -6,9 +6,9 @@
     <AssemblyName>Storage.Admin.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
     <ProjectReference Include="..\Storage.Admin\Microsoft.AzureStack.Management.Storage.Admin.csproj" />

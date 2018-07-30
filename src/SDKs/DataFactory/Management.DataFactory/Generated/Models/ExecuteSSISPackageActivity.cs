@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
+        /// <param name="userProperties">Activity user properties.</param>
         /// <param name="linkedServiceName">Linked service reference.</param>
         /// <param name="policy">Activity policy.</param>
         /// <param name="runtime">Specifies the runtime to execute SSIS
@@ -61,8 +62,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection managers to execute the SSIS package.</param>
         /// <param name="propertyOverrides">The property overrides to execute
         /// the SSIS package.</param>
-        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), string runtime = default(string), string loggingLevel = default(string), string environmentPath = default(string), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>))
-            : base(name, additionalProperties, description, dependsOn, linkedServiceName, policy)
+        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), string runtime = default(string), string loggingLevel = default(string), string environmentPath = default(string), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>))
+            : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
             Runtime = runtime;

@@ -32,12 +32,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// 'Failed', 'Done'</param>
         /// <param name="flavor">Possible values include: 'Linux',
         /// 'Windows'</param>
-        public Export(string platform = default(string), string status = default(string), string downloadUri = default(string), string flavor = default(string))
+        public Export(string platform = default(string), string status = default(string), string downloadUri = default(string), string flavor = default(string), bool newerVersionAvailable = default(bool))
         {
             Platform = platform;
             Status = status;
             DownloadUri = downloadUri;
             Flavor = flavor;
+            NewerVersionAvailable = newerVersionAvailable;
             CustomInit();
         }
 
@@ -69,6 +70,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "flavor")]
         public string Flavor { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "newerVersionAvailable")]
+        public bool NewerVersionAvailable { get; private set; }
 
     }
 }

@@ -84,6 +84,11 @@ namespace Microsoft.Azure.Management.IotHub
         public virtual IIotHubResourceOperations IotHubResource { get; private set; }
 
         /// <summary>
+        /// Gets the IResourceProviderCommonOperations.
+        /// </summary>
+        public virtual IResourceProviderCommonOperations ResourceProviderCommon { get; private set; }
+
+        /// <summary>
         /// Gets the ICertificatesOperations.
         /// </summary>
         public virtual ICertificatesOperations Certificates { get; private set; }
@@ -291,6 +296,7 @@ namespace Microsoft.Azure.Management.IotHub
         {
             Operations = new Operations(this);
             IotHubResource = new IotHubResourceOperations(this);
+            ResourceProviderCommon = new ResourceProviderCommonOperations(this);
             Certificates = new CertificatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-04-01";

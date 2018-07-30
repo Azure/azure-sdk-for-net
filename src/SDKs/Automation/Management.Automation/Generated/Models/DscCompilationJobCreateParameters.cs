@@ -39,18 +39,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="configuration">Gets or sets the configuration.</param>
         /// <param name="parameters">Gets or sets the parameters of the
         /// job.</param>
-        /// <param name="newNodeConfigurationBuildVersionRequired">If a new
-        /// build version of NodeConfiguration is required.</param>
+        /// <param name="incrementNodeConfigurationBuild">If a new build
+        /// version of NodeConfiguration is required.</param>
         /// <param name="name">Gets or sets name of the resource.</param>
         /// <param name="location">Gets or sets the location of the
         /// resource.</param>
         /// <param name="tags">Gets or sets the tags attached to the
         /// resource.</param>
-        public DscCompilationJobCreateParameters(DscConfigurationAssociationProperty configuration, IDictionary<string, string> parameters = default(IDictionary<string, string>), bool? newNodeConfigurationBuildVersionRequired = default(bool?), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DscCompilationJobCreateParameters(DscConfigurationAssociationProperty configuration, IDictionary<string, string> parameters = default(IDictionary<string, string>), bool? incrementNodeConfigurationBuild = default(bool?), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Configuration = configuration;
             Parameters = parameters;
-            NewNodeConfigurationBuildVersionRequired = newNodeConfigurationBuildVersionRequired;
+            IncrementNodeConfigurationBuild = incrementNodeConfigurationBuild;
             Name = name;
             Location = location;
             Tags = tags;
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets if a new build version of NodeConfiguration is
         /// required.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.newNodeConfigurationBuildVersionRequired")]
-        public bool? NewNodeConfigurationBuildVersionRequired { get; set; }
+        [JsonProperty(PropertyName = "properties.incrementNodeConfigurationBuild")]
+        public bool? IncrementNodeConfigurationBuild { get; set; }
 
         /// <summary>
         /// Gets or sets name of the resource.

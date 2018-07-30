@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "datasetName": "exampleDataset",
@@ -35,20 +35,21 @@
         }
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:54 GMT",
-        "x-ms-request-id": "a8bb197f-b00f-4add-a847-59f6aa0315ab",
+        "Date": "Sat, 16 Jun 2018 00:37:38 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1184",
-        "x-ms-correlation-request-id": "acdb3257-c6cb-44f1-8e14-afa3ebf471fa"
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "ce95d6dd-c04d-4b02-b7ad-fe79c9b26df0",
+        "x-ms-correlation-request-id": "ce95d6dd-c04d-4b02-b7ad-fe79c9b26df0"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/datasets/exampleDataset",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/datasets/exampleDataset",
         "name": "exampleDataset",
+        "type": "Microsoft.DataFactory/factories/datasets",
         "properties": {
           "type": "AzureBlob",
           "typeProperties": {
@@ -77,7 +78,7 @@
             }
           }
         },
-        "etag": "28031ea7-0000-0000-0000-59b9712a0000"
+        "etag": "0a0066d4-0000-0000-0000-5b245bd20000"
       }
     }
   }

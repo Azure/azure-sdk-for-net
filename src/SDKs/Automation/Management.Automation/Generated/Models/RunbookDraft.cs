@@ -15,9 +15,6 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Definition of the runbook type.
-    /// </summary>
     public partial class RunbookDraft
     {
         /// <summary>
