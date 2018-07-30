@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             Tags = new TagsOperations(this);
             DeploymentOperations = new DeploymentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-05-10";
+            ApiVersion = "2018-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

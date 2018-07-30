@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "linkedServiceName": "exampleLinkedService",
@@ -10,38 +10,40 @@
         "type": "AzureStorage",
         "typeProperties": {
           "connectionString": {
-            "value": "DefaultEndpointsProtocol=https;AccountName=examplestorageaccount;AccountKey=<storage key>",
-            "type": "SecureString"
+            "type": "SecureString",
+            "value": "DefaultEndpointsProtocol=https;AccountName=examplestorageaccount;AccountKey=<storage key>"
           }
         },
         "description": "Example description"
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:55:53 GMT",
-        "x-ms-request-id": "1b67d903-bb60-42b1-a91a-3aec5ab6f3a5",
+        "Date": "Sat, 16 Jun 2018 00:37:36 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1185",
-        "x-ms-correlation-request-id": "5fe435da-a93c-498d-aee3-8118de9ef4aa"
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "53ad9761-ecdf-43ed-916f-878a5fb92cb0",
+        "x-ms-correlation-request-id": "53ad9761-ecdf-43ed-916f-878a5fb92cb0"
       },
       "body": {
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/linkedservices/exampleLinkedService",
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/linkedservices/exampleLinkedService",
         "name": "exampleLinkedService",
+        "type": "Microsoft.DataFactory/factories/linkedservices",
         "properties": {
           "type": "AzureStorage",
           "typeProperties": {
             "connectionString": {
-              "value": "**********",
-              "type": "SecureString"
-            }
+              "type": "SecureString",
+              "value": "**********"
+            },
+            "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRGLURPR0ZPT0QtWUFOWkhBTkctV1VfMGI2M2EyMmYtMGEzNC00NDg2LWIzMDktNzM0NTlkODUyY2Q1Ig0KfQ=="
           },
           "description": "Example description"
         },
-        "etag": "28031da7-0000-0000-0000-59b971290000"
+        "etag": "0a0064d4-0000-0000-0000-5b245bd00000"
       }
     }
   }

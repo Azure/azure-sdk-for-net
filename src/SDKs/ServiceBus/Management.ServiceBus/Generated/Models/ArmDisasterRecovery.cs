@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Alias(Disaster Recovery configuration) - possible values 'Accepted'
         /// or 'Succeeded' or 'Failed'. Possible values include: 'Accepted',
         /// 'Succeeded', 'Failed'</param>
+        /// <param name="pendingReplicationOperationsCount">Number of entities
+        /// pending to be replicated.</param>
         /// <param name="partnerNamespace">ARM Id of the Primary/Secondary
         /// eventhub namespace name, which is part of GEO DR pairning</param>
         /// <param name="alternateName">Primary/Secondary eventhub namespace
@@ -48,10 +50,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. Possible
         /// values include: 'Primary', 'PrimaryNotReplicating',
         /// 'Secondary'</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?))
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), long? pendingReplicationOperationsCount = default(long?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
+            PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             PartnerNamespace = partnerNamespace;
             AlternateName = alternateName;
             Role = role;
@@ -71,6 +74,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public ProvisioningStateDR? ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets number of entities pending to be replicated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pendingReplicationOperationsCount")]
+        public long? PendingReplicationOperationsCount { get; private set; }
 
         /// <summary>
         /// Gets or sets ARM Id of the Primary/Secondary eventhub namespace

@@ -32,7 +32,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteProject", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription).Result;
 
                 Assert.Contains(projName, newProject.Name);
@@ -61,7 +61,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateDeleteProjectWithDomain", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
                 var newProject = await client.CreateProjectAsync(projName, projDescription, FoodDomain);
 
                 Assert.Contains(projName, newProject.Name);
@@ -83,7 +83,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImageFromUrl", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
                 var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
                 var urlImages = new ImageUrlCreateEntry[] { new ImageUrlCreateEntry(imageUrl) };
@@ -113,7 +113,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromFiles", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
                 var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
                 var fileName = Path.Combine("TestImages", "tag1", dataFileName);
@@ -144,7 +144,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromData", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
                 var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
                 var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "tag1", dataFileName), FileMode.Open))
@@ -171,7 +171,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ProjectRetrieval", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var newProject = await client.CreateProjectAsync(projName, projDescription, FoodDomain);
                 var projects = await client.GetProjectsAsync();
@@ -197,7 +197,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "TagRetrieval", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var newProject = await client.CreateProjectAsync("TagRetrievalTest", projDescription, GeneralDomain);
                 var numTags = 4;
@@ -230,7 +230,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DomainsApiTests", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var domains = client.GetDomainsAsync().Result;
                 Assert.Equal(9, domains.Count);
@@ -257,7 +257,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteTag", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var projectId = (await client.CreateProjectAsync(projName)).Id;
 
@@ -297,7 +297,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var iterations = await client.GetIterationsAsync(projectId);
 
@@ -337,7 +337,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var iterations = client.GetIterationsAsync(projectId).Result;
 
@@ -373,7 +373,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync(ExportableDomain);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var iterations = await client.GetIterationsAsync(projectId);
                 var exportableIteration = iterations.FirstOrDefault(e => e.Exportable);
@@ -384,6 +384,7 @@
                 Assert.Equal("Exporting", export.Status);
                 Assert.Null(export.DownloadUri);
                 Assert.Equal("TensorFlow", export.Platform);
+                Assert.False(export.NewerVersionAvailable);
 
                 while (export.Status != "Done")
                 {
@@ -408,7 +409,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 // Remove the last iteration so we can retrain
                 var iterations = await client.GetIterationsAsync(projectId);
@@ -421,7 +422,7 @@
                 Assert.NotEqual(iterationToDelete.Id, trainedIteration.Id);
                 Assert.NotEqual(Guid.Empty, trainedIteration.Id);
                 Assert.False(trainedIteration.IsDefault);
-                Assert.Equal("Staging", trainedIteration.Status);
+                Assert.True("Staging" == trainedIteration.Status || "Training" == trainedIteration.Status);
                 Assert.False(trainedIteration.Exportable);
 
                 await client.DeleteProjectAsync(projectId);
@@ -437,7 +438,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var images = client.GetTaggedImagesAsync(projectId).Result;
                 var tag1 = images[0].Tags[0].TagId;
@@ -473,7 +474,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var images = client.GetUntaggedImagesAsync(projectId).Result;
                 Assert.Equal(0, images.Count);
@@ -491,7 +492,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var untaggedImages = client.GetUntaggedImagesAsync(projectId).Result;
                 Assert.Equal(0, untaggedImages.Count);
@@ -525,7 +526,7 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DeleteImages", RecorderMode);
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var projectId = (await client.CreateProjectAsync(projName)).Id;
 
@@ -551,7 +552,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", dataFileName), FileMode.Open))
                 {
@@ -586,7 +587,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
                 var predictionResult = client.QuickTestImageUrlAsync(projectId, new ImageUrl(imageUrl)).Result;
@@ -610,7 +611,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var token = new PredictionQueryToken()
                 {
@@ -641,7 +642,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var token = new PredictionQueryToken()
                 {
@@ -664,7 +665,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var tags = await client.GetTagsAsync(projectId);
                 var imagesForTag = await client.GetTaggedImagesAsync(projectId, null, new List<string>(new string[] { tags[0].Id.ToString() }));
@@ -698,7 +699,7 @@
 
                 var projectId = await CreateTrainedImageClassificationProjectAsync();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var taggedImageCount = await client.GetTaggedImageCountAsync(projectId);
                 Assert.Equal(10, taggedImageCount);
@@ -723,7 +724,7 @@
 
                 var projectId = await CreateTrainedObjDetectionProject();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var images = await client.GetTaggedImagesAsync(projectId);
                 foreach (var img in images)
@@ -747,7 +748,7 @@
 
                 var projectId = await CreateTrainedObjDetectionProject();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 var existingImage = (await client.GetTaggedImagesAsync(projectId)).First();
                 Assert.NotNull(existingImage);
@@ -799,7 +800,7 @@
 
                 var projectId = await CreateTrainedObjDetectionProject();
 
-                ITrainingApi client = GetTrainingApiClient();
+                ITrainingApi client = GetTrainingClient();
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "od_test_image.jpg"), FileMode.Open))
                 {

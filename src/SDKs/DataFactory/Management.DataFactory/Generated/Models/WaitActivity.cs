@@ -41,8 +41,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// message are deserialized this collection</param>
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
-        public WaitActivity(string name, int waitTimeInSeconds, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>))
-            : base(name, additionalProperties, description, dependsOn)
+        /// <param name="userProperties">Activity user properties.</param>
+        public WaitActivity(string name, int waitTimeInSeconds, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>))
+            : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             CustomInit();

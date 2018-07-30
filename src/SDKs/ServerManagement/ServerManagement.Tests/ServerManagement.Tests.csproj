@@ -6,12 +6,12 @@
     <AssemblyName>ServerManagement.Tests</AssemblyName>
     <VersionPrefix>1.0.0-preview</VersionPrefix>    
   </PropertyGroup>
-  <PropertyGroup>
+  <!--<PropertyGroup>
     <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
   <ItemGroup>
-    <PackageReference Include="System.Security.Principal" Version="4.0.1" />
+    <PackageReference Include="System.Security.Principal" Version="4.3.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="4.0.0" />
     <PackageReference Include="System.IO.Packaging" Version="4.0.0" />
     <PackageReference Include="System.ServiceProcess.ServiceController" Version="4.1.0" />

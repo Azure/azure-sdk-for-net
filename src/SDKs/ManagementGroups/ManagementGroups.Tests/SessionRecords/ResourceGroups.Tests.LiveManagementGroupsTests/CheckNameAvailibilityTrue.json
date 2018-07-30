@@ -13,14 +13,14 @@
           "91"
         ],
         "x-ms-client-request-id": [
-          "bdd2af0c-9a3f-4e15-88fe-f23534af2fa6"
+          "ec726300-96c1-46f8-8101-ece9ff026b33"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.2.0.0"
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"nameAvailable\": true\r\n}",
@@ -35,7 +35,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 22 May 2018 02:37:33 GMT"
+          "Tue, 03 Jul 2018 19:46:41 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -54,13 +54,13 @@
           "1198"
         ],
         "x-ms-request-id": [
-          "eastus:ba6541b4-0e89-4c27-b88b-dfb2fa5ae235"
+          "eastus:57bd3b2b-2e0a-4045-aab3-658301fbc0f9"
         ],
         "x-ba-restapi": [
-          "1.0.3.787"
+          "1.0.3.905"
         ],
         "request-id": [
-          "d5b22c09-4e0a-4099-8e1b-5f0f7312c66e"
+          "df8dc837-4c51-4c42-b221-0891128a80d8"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -69,10 +69,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "e489cd54-a5a5-46eb-882a-5b6bdb9159a1"
+          "7962cd8c-3945-4944-a22d-e9d5e35df39c"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180522T023734Z:e489cd54-a5a5-46eb-882a-5b6bdb9159a1"
+          "NORTHEUROPE:20180703T194642Z:7962cd8c-3945-4944-a22d-e9d5e35df39c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database for which the blob audit policy is defined.
+        /// The name of the database.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string blobAuditingPolicyName = "default";
-            string apiVersion = "2015-05-01-preview";
+            string apiVersion = "2017-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -268,8 +268,7 @@ namespace Microsoft.Azure.Management.Sql
         /// The name of the server.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database for which the blob auditing policy will be
-        /// defined.
+        /// The name of the database.
         /// </param>
         /// <param name='parameters'>
         /// The database blob auditing policy.
@@ -322,7 +321,7 @@ namespace Microsoft.Azure.Management.Sql
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
             string blobAuditingPolicyName = "default";
-            string apiVersion = "2015-05-01-preview";
+            string apiVersion = "2017-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -3,6 +3,7 @@
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
     using System;
+    using System.ComponentModel;
 
     /// <summary>
     /// This class represents KeyNames for all the keys currently supported in Connection string    
@@ -56,6 +57,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Environment name
         /// </summary>
         public const string EnvironmentKey = "Environment";
+
+        public const string OptimizeRecordedFileKey = "OptimizeRecordedFile";
 
         #region Tokens
         /// <summary>

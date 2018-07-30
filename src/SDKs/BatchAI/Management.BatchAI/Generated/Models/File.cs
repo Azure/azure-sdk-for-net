@@ -32,19 +32,15 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the File class.
         /// </summary>
-        /// <param name="name">Name of the file.</param>
-        /// <param name="isDirectory">Indicates if the file is a
-        /// directory.</param>
-        /// <param name="downloadUrl">Will contain an URL to download the
-        /// corresponding file. The downloadUrl is not returned for
-        /// directories.</param>
-        /// <param name="lastModified">The time at which the file was last
-        /// modified.</param>
-        /// <param name="contentLength">The file size.</param>
-        public File(string name, bool isDirectory, string downloadUrl = default(string), System.DateTime? lastModified = default(System.DateTime?), long? contentLength = default(long?))
+        /// <param name="name">Name.</param>
+        /// <param name="fileType">File type.</param>
+        /// <param name="downloadUrl">Download URL.</param>
+        /// <param name="lastModified">Last modified time.</param>
+        /// <param name="contentLength">Content length.</param>
+        public File(string name = default(string), string fileType = default(string), string downloadUrl = default(string), System.DateTime? lastModified = default(System.DateTime?), long? contentLength = default(long?))
         {
             Name = name;
-            IsDirectory = isDirectory;
+            FileType = fileType;
             DownloadUrl = downloadUrl;
             LastModified = lastModified;
             ContentLength = contentLength;
@@ -57,54 +53,51 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the file.
+        /// Gets name.
         /// </summary>
+        /// <remarks>
+        /// Name of the file.
+        /// </remarks>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets indicates if the file is a directory.
+        /// Gets file type.
         /// </summary>
-        [JsonProperty(PropertyName = "isDirectory")]
-        public bool IsDirectory { get; set; }
+        /// <remarks>
+        /// Type of the file. Possible values are file and directory. Possible
+        /// values include: 'file', 'directory'
+        /// </remarks>
+        [JsonProperty(PropertyName = "fileType")]
+        public string FileType { get; private set; }
 
         /// <summary>
-        /// Gets or sets will contain an URL to download the corresponding
-        /// file. The downloadUrl is not returned for directories.
+        /// Gets download URL.
         /// </summary>
+        /// <remarks>
+        /// URL to download the corresponding file. The downloadUrl is not
+        /// returned for directories.
+        /// </remarks>
         [JsonProperty(PropertyName = "downloadUrl")]
-        public string DownloadUrl { get; set; }
+        public string DownloadUrl { get; private set; }
 
         /// <summary>
-        /// Gets or sets the time at which the file was last modified.
+        /// Gets last modified time.
         /// </summary>
         /// <remarks>
         /// The time at which the file was last modified.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.lastModified")]
-        public System.DateTime? LastModified { get; set; }
+        public System.DateTime? LastModified { get; private set; }
 
         /// <summary>
-        /// Gets or sets the file size.
+        /// Gets content length.
         /// </summary>
         /// <remarks>
-        /// The file size.
+        /// The file of the size.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.contentLength")]
-        public long? ContentLength { get; set; }
+        public long? ContentLength { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
     }
 }

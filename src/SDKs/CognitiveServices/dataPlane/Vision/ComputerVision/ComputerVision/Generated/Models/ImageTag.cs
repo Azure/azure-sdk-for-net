@@ -32,10 +32,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="name">The tag value</param>
         /// <param name="confidence">The level of confidence the service has in
         /// the caption</param>
-        public ImageTag(string name = default(string), double? confidence = default(double?))
+        /// <param name="hint">Optional categorization for the tag</param>
+        public ImageTag(string name = default(string), double confidence = default(double), string hint = default(string))
         {
             Name = name;
             Confidence = confidence;
+            Hint = hint;
             CustomInit();
         }
 
@@ -54,7 +56,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// Gets or sets the level of confidence the service has in the caption
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
-        public double? Confidence { get; set; }
+        public double Confidence { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional categorization for the tag
+        /// </summary>
+        [JsonProperty(PropertyName = "hint")]
+        public string Hint { get; set; }
 
     }
 }

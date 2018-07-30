@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/resourcegroups/csmrg8914?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFlMjNkNDQtNWY4NC00ZjJmLTkwOGYtZTNiZDMxOTUyNDNkL3Jlc291cmNlZ3JvdXBzL2NzbXJnODkxND9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg1681?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMTY4MT9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
       "RequestHeaders": {
@@ -13,17 +13,17 @@
           "33"
         ],
         "x-ms-client-request-id": [
-          "37c9f405-11ca-4f9b-93b5-8270ec4e4149"
+          "f2019195-f47a-4f4e-bbd5-77f916a3c1df"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.0.0-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/resourceGroups/csmrg8914\",\r\n  \"name\": \"csmrg8914\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg1681\",\r\n  \"name\": \"csmrg1681\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "175"
@@ -38,7 +38,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 May 2017 20:48:22 GMT"
+          "Thu, 07 Jun 2018 01:05:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -47,23 +47,26 @@
           "1196"
         ],
         "x-ms-request-id": [
-          "c5ea06ad-3ce4-401a-bda3-fcddf482f300"
+          "112c4cd3-2151-421c-a75a-2c18d7163133"
         ],
         "x-ms-correlation-request-id": [
-          "c5ea06ad-3ce4-401a-bda3-fcddf482f300"
+          "112c4cd3-2151-421c-a75a-2c18d7163133"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20170501T204822Z:c5ea06ad-3ce4-401a-bda3-fcddf482f300"
+          "WESTUS2:20180607T010553Z:112c4cd3-2151-421c-a75a-2c18d7163133"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/11e23d44-5f84-4f2f-908f-e3bd3195243d/resourcegroups/csmrg8914/providers/Microsoft.Resources/deployments/csmd6280/validate?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTFlMjNkNDQtNWY4NC00ZjJmLTkwOGYtZTNiZDMxOTUyNDNkL3Jlc291cmNlZ3JvdXBzL2NzbXJnODkxNC9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc21kNjI4MC92YWxpZGF0ZT9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg1681/providers/Microsoft.Resources/deployments/csmd5317/validate?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMTY4MS9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc21kNTMxNy92YWxpZGF0ZT9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://testtemplates.blob.core.windows.net/templates/bad-website-1.js\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"value\": \"mctest0101\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"value\": \"mctest0101\"\r\n      },\r\n      \"siteMode\": {\r\n        \"value\": \"Limited\"\r\n      },\r\n      \"computeMode\": {\r\n        \"value\": \"Shared\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"value\": \"North Europe\"\r\n      },\r\n      \"sku\": {\r\n        \"value\": \"Free\"\r\n      },\r\n      \"workerSize\": {\r\n        \"value\": \"0\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
@@ -74,14 +77,14 @@
           "626"
         ],
         "x-ms-client-request-id": [
-          "34baaa36-eb49-4601-a9b5-d7c56f788ffa"
+          "a9554bf1-d516-41bd-8d2f-0c7f58d76971"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25009.03",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.0.0-preview"
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.7.0.0"
         ]
       },
       "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidTemplate\",\r\n    \"message\": \"Deployment template validation failed: 'The template parameters 'hostingPlanName, siteMode, computeMode, siteLocation, sku, workerSize' in the parameters file are not valid; they are not present in the original template and can therefore not be provided at deployment time. The only supported parameters for this template are 'siteName'. Please see https://aka.ms/arm-deploy/#parameter-file for usage details.'.\"\r\n  }\r\n}",
@@ -99,7 +102,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 01 May 2017 20:48:23 GMT"
+          "Thu, 07 Jun 2018 01:05:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -111,16 +114,19 @@
           "1195"
         ],
         "x-ms-request-id": [
-          "73adb664-113b-453a-a269-a4eb38c5ea4a"
+          "58eaab1d-679a-4ba1-8280-8c78bf4dffe8"
         ],
         "x-ms-correlation-request-id": [
-          "73adb664-113b-453a-a269-a4eb38c5ea4a"
+          "58eaab1d-679a-4ba1-8280-8c78bf4dffe8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20170501T204823Z:73adb664-113b-453a-a269-a4eb38c5ea4a"
+          "WESTUS2:20180607T010554Z:58eaab1d-679a-4ba1-8280-8c78bf4dffe8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
         ]
       },
       "StatusCode": 400
@@ -128,11 +134,11 @@
   ],
   "Names": {
     "ValidateBadDeployment": [
-      "csmrg8914",
-      "csmd6280"
+      "csmrg1681",
+      "csmd5317"
     ]
   },
   "Variables": {
-    "SubscriptionId": "11e23d44-5f84-4f2f-908f-e3bd3195243d"
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
   }
 }

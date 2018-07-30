@@ -138,9 +138,14 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='integrationRuntimeName'>
             /// The integration runtime name.
             /// </param>
-            public static IntegrationRuntimeResource Get(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName)
+            /// <param name='ifNoneMatch'>
+            /// ETag of the integration runtime entity. Should only be specified for get.
+            /// If the ETag matches the existing entity tag, or if * was provided, then no
+            /// content will be returned.
+            /// </param>
+            public static IntegrationRuntimeResource Get(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch = default(string))
             {
-                return operations.GetAsync(resourceGroupName, factoryName, integrationRuntimeName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, factoryName, integrationRuntimeName, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,12 +163,17 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='integrationRuntimeName'>
             /// The integration runtime name.
             /// </param>
+            /// <param name='ifNoneMatch'>
+            /// ETag of the integration runtime entity. Should only be specified for get.
+            /// If the ETag matches the existing entity tag, or if * was provided, then no
+            /// content will be returned.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationRuntimeResource> GetAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationRuntimeResource> GetAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -187,7 +197,7 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='updateIntegrationRuntimeRequest'>
             /// The parameters for updating an integration runtime.
             /// </param>
-            public static IntegrationRuntimeStatusResponse Update(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest)
+            public static IntegrationRuntimeResource Update(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest)
             {
                 return operations.UpdateAsync(resourceGroupName, factoryName, integrationRuntimeName, updateIntegrationRuntimeRequest).GetAwaiter().GetResult();
             }
@@ -213,7 +223,7 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IntegrationRuntimeStatusResponse> UpdateAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IntegrationRuntimeResource> UpdateAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, updateIntegrationRuntimeRequest, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -546,55 +556,6 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
-            /// Remove a node from integration runtime.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='factoryName'>
-            /// The factory name.
-            /// </param>
-            /// <param name='integrationRuntimeName'>
-            /// The integration runtime name.
-            /// </param>
-            /// <param name='removeNodeParameters'>
-            /// The name of the node to be removed from an integration runtime.
-            /// </param>
-            public static void RemoveNode(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimeRemoveNodeRequest removeNodeParameters)
-            {
-                operations.RemoveNodeAsync(resourceGroupName, factoryName, integrationRuntimeName, removeNodeParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Remove a node from integration runtime.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='factoryName'>
-            /// The factory name.
-            /// </param>
-            /// <param name='integrationRuntimeName'>
-            /// The integration runtime name.
-            /// </param>
-            /// <param name='removeNodeParameters'>
-            /// The name of the node to be removed from an integration runtime.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RemoveNodeAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimeRemoveNodeRequest removeNodeParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RemoveNodeWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, removeNodeParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Force the integration runtime to synchronize credentials across integration
             /// runtime nodes, and this will override the credentials across all worker
             /// nodes with those available on the dispatcher node. If you already have the
@@ -734,6 +695,57 @@ namespace Microsoft.Azure.Management.DataFactory
             public static async Task UpgradeAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpgradeWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Remove all linked integration runtimes under specific data factory in a
+            /// self-hosted integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='linkedIntegrationRuntimeRequest'>
+            /// The data factory name for the linked integration runtime.
+            /// </param>
+            public static void RemoveLinks(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, LinkedIntegrationRuntimeRequest linkedIntegrationRuntimeRequest)
+            {
+                operations.RemoveLinksAsync(resourceGroupName, factoryName, integrationRuntimeName, linkedIntegrationRuntimeRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove all linked integration runtimes under specific data factory in a
+            /// self-hosted integration runtime.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='integrationRuntimeName'>
+            /// The integration runtime name.
+            /// </param>
+            /// <param name='linkedIntegrationRuntimeRequest'>
+            /// The data factory name for the linked integration runtime.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RemoveLinksAsync(this IIntegrationRuntimesOperations operations, string resourceGroupName, string factoryName, string integrationRuntimeName, LinkedIntegrationRuntimeRequest linkedIntegrationRuntimeRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RemoveLinksWithHttpMessagesAsync(resourceGroupName, factoryName, integrationRuntimeName, linkedIntegrationRuntimeRequest, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

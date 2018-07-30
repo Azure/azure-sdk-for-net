@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Settings for OS image.
+    /// VM configuration.
     /// </summary>
     public partial class VirtualMachineConfiguration
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// Initializes a new instance of the VirtualMachineConfiguration
         /// class.
         /// </summary>
-        /// <param name="imageReference">Reference to OS image.</param>
+        /// <param name="imageReference">Image reference.</param>
         public VirtualMachineConfiguration(ImageReference imageReference = default(ImageReference))
         {
             ImageReference = imageReference;
@@ -44,8 +44,11 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reference to OS image.
+        /// Gets or sets image reference.
         /// </summary>
+        /// <remarks>
+        /// OS image reference for cluster nodes.
+        /// </remarks>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 

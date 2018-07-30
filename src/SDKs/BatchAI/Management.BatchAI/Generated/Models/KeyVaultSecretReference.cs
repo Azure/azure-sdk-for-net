@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a reference to Key Vault Secret.
+    /// Key Vault Secret reference.
     /// </summary>
     public partial class KeyVaultSecretReference
     {
@@ -30,10 +30,8 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the KeyVaultSecretReference class.
         /// </summary>
-        /// <param name="sourceVault">Fully qualified resource Id for the Key
-        /// Vault.</param>
-        /// <param name="secretUrl">The URL referencing a secret in a Key
-        /// Vault.</param>
+        /// <param name="sourceVault">Key Vault resource identifier.</param>
+        /// <param name="secretUrl">Secret URL.</param>
         public KeyVaultSecretReference(ResourceId sourceVault, string secretUrl)
         {
             SourceVault = sourceVault;
@@ -47,14 +45,20 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets fully qualified resource Id for the Key Vault.
+        /// Gets or sets key Vault resource identifier.
         /// </summary>
+        /// <remarks>
+        /// Fully qualified resource indentifier of the Key Vault.
+        /// </remarks>
         [JsonProperty(PropertyName = "sourceVault")]
         public ResourceId SourceVault { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL referencing a secret in a Key Vault.
+        /// Gets or sets secret URL.
         /// </summary>
+        /// <remarks>
+        /// The URL referencing a secret in the Key Vault.
+        /// </remarks>
         [JsonProperty(PropertyName = "secretUrl")]
         public string SecretUrl { get; set; }
 

@@ -119,5 +119,10 @@ namespace Microsoft.Azure.Management.DataFactory
         /// </summary>
         ITriggersOperations Triggers { get; }
 
+        /// <summary>
+        /// Gets the ITriggerRunsOperations.
+        /// </summary>
+        ITriggerRunsOperations TriggerRuns { get; }
+
     }
 }

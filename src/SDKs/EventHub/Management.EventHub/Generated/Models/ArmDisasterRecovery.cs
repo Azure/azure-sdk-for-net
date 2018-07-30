@@ -48,13 +48,16 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. Possible
         /// values include: 'Primary', 'PrimaryNotReplicating',
         /// 'Secondary'</param>
-        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?))
+        /// <param name="pendingReplicationOperationsCount">Number of entities
+        /// pending to be replicated.</param>
+        public ArmDisasterRecovery(string id = default(string), string name = default(string), string type = default(string), ProvisioningStateDR? provisioningState = default(ProvisioningStateDR?), string partnerNamespace = default(string), string alternateName = default(string), RoleDisasterRecovery? role = default(RoleDisasterRecovery?), long? pendingReplicationOperationsCount = default(long?))
             : base(id, name, type)
         {
             ProvisioningState = provisioningState;
             PartnerNamespace = partnerNamespace;
             AlternateName = alternateName;
             Role = role;
+            PendingReplicationOperationsCount = pendingReplicationOperationsCount;
             CustomInit();
         }
 
@@ -93,6 +96,12 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.role")]
         public RoleDisasterRecovery? Role { get; private set; }
+
+        /// <summary>
+        /// Gets number of entities pending to be replicated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pendingReplicationOperationsCount")]
+        public long? PendingReplicationOperationsCount { get; private set; }
 
     }
 }

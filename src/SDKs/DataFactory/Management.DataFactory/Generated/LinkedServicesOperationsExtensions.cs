@@ -136,9 +136,14 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='linkedServiceName'>
             /// The linked service name.
             /// </param>
-            public static LinkedServiceResource Get(this ILinkedServicesOperations operations, string resourceGroupName, string factoryName, string linkedServiceName)
+            /// <param name='ifNoneMatch'>
+            /// ETag of the linked service entity. Should only be specified for get. If the
+            /// ETag matches the existing entity tag, or if * was provided, then no content
+            /// will be returned.
+            /// </param>
+            public static LinkedServiceResource Get(this ILinkedServicesOperations operations, string resourceGroupName, string factoryName, string linkedServiceName, string ifNoneMatch = default(string))
             {
-                return operations.GetAsync(resourceGroupName, factoryName, linkedServiceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, factoryName, linkedServiceName, ifNoneMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -156,12 +161,17 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='linkedServiceName'>
             /// The linked service name.
             /// </param>
+            /// <param name='ifNoneMatch'>
+            /// ETag of the linked service entity. Should only be specified for get. If the
+            /// ETag matches the existing entity tag, or if * was provided, then no content
+            /// will be returned.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LinkedServiceResource> GetAsync(this ILinkedServicesOperations operations, string resourceGroupName, string factoryName, string linkedServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LinkedServiceResource> GetAsync(this ILinkedServicesOperations operations, string resourceGroupName, string factoryName, string linkedServiceName, string ifNoneMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, linkedServiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, factoryName, linkedServiceName, ifNoneMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -17,7 +17,7 @@ For a full list of packages available for download in this repository, please se
 ### Prerequisites:
   Install VS 2017 (Professional or higher) + VS2017 Update 1
   (https://www.visualstudio.com/).
-  To know more about VS 2017 and it's project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
+  To know more about VS 2017 and its project system (https://docs.microsoft.com/en-us/visualstudio/#pivot=workloads&panel=windows)
 
 ### Directory Restructure
 Directory structure has been simplified and consolidated in fewer directories
@@ -85,7 +85,7 @@ In "SDKs\< RPName >", you will find projects for services that have already been
     - The file 'generate.cmd', used to generate library code for the given service, can also be found in this project
   - Services also contain a project for their tests
 
-### Branches: vs17Dev vs. master
+### Branches: psSdkJson6 vs. master
 
 The **psSdkJson6** branch contains the code generated from AutoRest tool.
 
@@ -110,12 +110,36 @@ The **master** branch contains the code generated from Hydra/Hyak.
  9.  A Pull request of your Azure SDK for .NET changes against **psSdkJson6** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
  11. Both the pull requests will be reviewed and merged by the Azure SDK team
 
+### New Resource Provider
+1. If you have never created an SDK for your service before, you will need the following things to get your SDK in the repo
+2. Follow the standard process described above.
+3. Directory names helps in using basic heuristics in finding projects as well it's associated test projects during CI process.
+4. Create a new directory (name of your service e.g. Compute, Storage etc)
+5. If you have a data plane as well as management plane follow the following directory structure.
+ - `SDKs\<RPName>\management\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
+ - `SDKs\<RPName\management\<RPName>.Tests\Management.<RPName>.Tests.csproj`
+ - `SDKs\<RPName>\dataplane\Microsoft.Azure.<RPName>\Microsoft.Azure.<RPName>.csproj`
+ - `SDKs\<RPName\dataplane\Microsoft.Azure.<RPName>.Tests\Microsoft.Azure.<RPName>.Tests.csproj`
+6. If you only have management plane SDK then have the following directory structure
+ - `SDKs\<RPName>\Management.<RPName>\Microsoft.Azure.Management.<RPName>.csproj`
+ - `SDKs\<RPName\<RPName>.Tests\Management.<RPName>.Tests.csproj`
+7. Copy .csproj from any other .csproj and update the following information in the new .csproj
+ - PackageId
+ - Description
+ - AssemblyTitle
+ - AssemblyName
+ - Version
+ - PackageTags
+ - PackageReleaseNotes (this is important because this information is displayed on www.nuget.org when your nuget package is published
+8. Copy existing generate.ps1 file from another dirctory and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
+During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
+
 ### Code Review Process
 
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
 
 - Prior to issuing the pull request:
-  - All code must have completed any necessary legal signoff for being publically viewable (Patent review, JSR review, etc.)
+  - All code must have completed any necessary legal signoff for being publicly viewable (Patent review, JSR review, etc.)
   - The changes cannot break any existing functional/unit tests that are part of the central repository.
     - This includes all tests, even those not associated with the given feature area.
   - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team

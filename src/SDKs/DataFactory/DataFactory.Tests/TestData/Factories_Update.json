@@ -1,6 +1,6 @@
 {
   "parameters": {
-    "subscriptionId": "12345678-1234-1234-12345678abc",
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
     "resourceGroupName": "exampleResourceGroup",
     "factoryName": "exampleFactoryName",
     "factoryUpdateParameters": {
@@ -8,30 +8,31 @@
         "exampleTag": "exampleValue"
       }
     },
-    "api-version": "2017-09-01-preview"
+    "api-version": "2018-06-01"
   },
   "responses": {
     "200": {
       "headers": {
-        "Date": "Wed, 13 Sep 2017 17:33:55 GMT",
-        "x-ms-request-id": "3223701f-ce33-4a58-bb14-d3d53569d4f0",
+        "Date": "Tue, 19 Jun 2018 05:41:50 GMT",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-correlation-request-id": "ec4ce622-a1dd-4c49-a324-17e8d4d1fe83"
+        "x-ms-ratelimit-remaining-subscription-writes": "1192",
+        "x-ms-request-id": "699c67a6-fef5-40c9-bc73-d571d09783c3",
+        "x-ms-correlation-request-id": "699c67a6-fef5-40c9-bc73-d571d09783c3"
       },
       "body": {
         "name": "exampleFactoryName",
-        "tags": {
-          "exampleTag": "exampleValue"
-        },
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+        "type": "Microsoft.DataFactory/factories",
         "properties": {
           "provisioningState": "Succeeded",
-          "createTime": "2017-09-13T17:33:54.0294655Z",
-          "version": "2017-09-01-preview"
+          "createTime": "2018-06-19T05:41:50.0041314Z",
+          "version": "2018-06-01"
         },
-        "id": "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/exampleresourcegroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
-        "type": "Microsoft.DataFactory/factories",
-        "location": "East US"
+        "eTag": "\"00003f04-0000-0000-0000-5b28979e0000\"",
+        "location": "East US",
+        "tags": {
+          "exampleTag": "exampleValue"
+        }
       }
     }
   }

@@ -49,7 +49,7 @@ namespace Compute.Tests
 
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
                     ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
-                    
+
                     m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
                 }
                 finally

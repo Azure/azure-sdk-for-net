@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ffb52c33-1c83-4bba-ad32-a2a0f6ab4eac"
+          "9c5b7dc7-024b-47d4-8111-b1e45de19f58"
         ],
         "Cache-Control": [
           "no-cache"
@@ -17,10 +17,10 @@
         ],
         "User-Agent": [
           "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.2.0.0"
+          "Microsoft.Azure.Management.ManagementGroups.ManagementGroupsAPIClient/1.1.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"TestGroup1\",\r\n  \"properties\": {\r\n    \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n    \"displayName\": \"TestGroup1\",\r\n    \"details\": {\r\n      \"version\": 1,\r\n      \"updatedTime\": \"2018-05-03T21:17:25.9866005Z\",\r\n      \"updatedBy\": \"823969e2-f8c1-4add-8526-62544e2f96b2\",\r\n      \"parent\": {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"name\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"b1af47f1-138c-4ed2-8bba-119041b95450\"\r\n      }\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1\",\r\n        \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n        \"name\": \"TestGroup1Child1\",\r\n        \"displayName\": \"TestGroup1->Child1\",\r\n        \"children\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1Child1\",\r\n            \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n            \"name\": \"TestGroup1Child1Child1\",\r\n            \"displayName\": \"TestGroup1->Child1->Child1\",\r\n            \"children\": [\r\n              {\r\n                \"id\": \"/subscriptions/7635efed-eeec-4c03-885d-fa004067132a\",\r\n                \"type\": \"/subscriptions\",\r\n                \"name\": \"7635efed-eeec-4c03-885d-fa004067132a\",\r\n                \"displayName\": \"Pay-As-You-Go\"\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1\",\r\n  \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n  \"name\": \"TestGroup1\",\r\n  \"properties\": {\r\n    \"tenantId\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n    \"displayName\": \"TestGroup1\",\r\n    \"details\": {\r\n      \"version\": 1,\r\n      \"updatedTime\": \"2018-05-03T21:17:25.9866005Z\",\r\n      \"updatedBy\": \"823969e2-f8c1-4add-8526-62544e2f96b2\",\r\n      \"parent\": {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"name\": \"b1af47f1-138c-4ed2-8bba-119041b95450\",\r\n        \"displayName\": \"b1af47f1-138c-4ed2-8bba-119041b95450\"\r\n      }\r\n    },\r\n    \"children\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1\",\r\n        \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n        \"name\": \"TestGroup1Child1\",\r\n        \"displayName\": \"TestGroup1->Child1\",\r\n        \"children\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/TestGroup1Child1Child1\",\r\n            \"type\": \"/providers/Microsoft.Management/managementGroups\",\r\n            \"name\": \"TestGroup1Child1Child1\",\r\n            \"displayName\": \"TestGroup1->Child1->Child1\",\r\n            \"children\": [\r\n              {\r\n                \"id\": \"/subscriptions/7635efed-eeec-4c03-885d-fa004067132a\",\r\n                \"type\": \"/subscriptions\",\r\n                \"name\": \"7635efed-eeec-4c03-885d-fa004067132a\",\r\n                \"displayName\": \"Pay-As-You-Go\"\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"id\": \"/subscriptions/394ae65d-9e71-4462-930f-3332dedf845c\",\r\n            \"type\": \"/subscriptions\",\r\n            \"name\": \"394ae65d-9e71-4462-930f-3332dedf845c\",\r\n            \"displayName\": \"Pay-As-You-Go\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -32,7 +32,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 22 May 2018 02:35:31 GMT"
+          "Tue, 03 Jul 2018 19:38:04 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -48,16 +48,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
+          "14999"
         ],
         "x-ms-request-id": [
-          "eastus:c2ead1cf-af1d-419a-91e9-72d4657e9790"
+          "eastus:e022ecdf-4781-493a-9efe-4e99f5c17667"
         ],
         "x-ba-restapi": [
-          "1.0.3.787"
+          "1.0.3.905"
         ],
         "request-id": [
-          "66a36e43-05b6-4e60-a2ca-e444a6ac9831"
+          "1a31c74f-bc4c-48ed-8248-7d3d1a952ae7"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -66,10 +66,10 @@
           "ASP.NET"
         ],
         "x-ms-correlation-request-id": [
-          "25d6081b-fd68-4b2b-8c49-572bf3b12e0b"
+          "c3986021-ec8d-472f-a4bf-06f7babd70b0"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20180522T023531Z:25d6081b-fd68-4b2b-8c49-572bf3b12e0b"
+          "NORTHEUROPE:20180703T193805Z:c3986021-ec8d-472f-a4bf-06f7babd70b0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"

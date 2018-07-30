@@ -11,10 +11,10 @@ namespace DataFactory.Tests.Utils
         // The constants are example values used when writing captured example json.
         // The properties are actual values used when capturing example json, read from a json config file.
 
-        public const string ExampleTenantId = "12345678-1234-1234-123456789abc";
-        public const string ExampleClientId = "12345678-1234-1234-123456789abc";
+        public const string ExampleTenantId = "12345678-1234-1234-1234-123456789abc";
+        public const string ExampleClientId = "12345678-1234-1234-1234-123456789abc";
         public const string ExampleClientSecret = "examplePassword";
-        public const string ExampleSubId = "12345678-1234-1234-12345678abc";
+        public const string ExampleSubId = "12345678-1234-1234-1234-12345678abc";
         public const string ExampleResourceGroupName = "exampleResourceGroup";
         public const string ExampleFactoryName = "exampleFactoryName";
         public const string ExampleFactoryLocation = "East US";

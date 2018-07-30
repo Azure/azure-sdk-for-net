@@ -19,6 +19,7 @@ namespace Management.HDInsight.Tests
     using Microsoft.Azure.Management.HDInsight;
     using Microsoft.Azure.Management.HDInsight.Models;
 
+    [Collection("ScenarioTests")]
     public class OMSTests
     {
         private const string WorkspaceId = "1d364e89-bb71-4503-aa3d-a23535aea7bd";
@@ -31,7 +32,7 @@ namespace Management.HDInsight.Tests
             string testName = "TestOMSOnRunningCluster";
             string suiteName = GetType().FullName;
 
-            ClusterCreateParameters createParams = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas();
+            ClusterCreateParameters createParams = ClusterCreateParametersHelpers.GetCustomCreateParametersIaas(testName);
             createParams.Version = "3.6";
             createParams.ClusterType = "Spark";
 

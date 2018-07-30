@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the ScheduleAssociationProperty
         /// class.
         /// </summary>
-        /// <param name="name">Gets or sets the name of the schedule.</param>
+        /// <param name="name">Gets or sets the name of the Schedule.</param>
         public ScheduleAssociationProperty(string name = default(string))
         {
             Name = name;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the schedule.
+        /// Gets or sets the name of the Schedule.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -10,12 +10,11 @@
 
 namespace Microsoft.Azure.Management.BatchAI.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Contains remote login details to SSH/RDP to a compute node in cluster.
+    /// Login details to SSH to a compute node in cluster.
     /// </summary>
     public partial class RemoteLoginInformation
     {
@@ -30,10 +29,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the RemoteLoginInformation class.
         /// </summary>
-        /// <param name="nodeId">Id of the compute node</param>
-        /// <param name="ipAddress">ip address</param>
-        /// <param name="port">port number</param>
-        public RemoteLoginInformation(string nodeId, string ipAddress, double port)
+        /// <param name="nodeId">Node ID.</param>
+        /// <param name="ipAddress">IP address.</param>
+        /// <param name="port">Port.</param>
+        public RemoteLoginInformation(string nodeId = default(string), string ipAddress = default(string), double? port = default(double?))
         {
             NodeId = nodeId;
             IpAddress = ipAddress;
@@ -47,39 +46,31 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets id of the compute node
+        /// Gets node ID.
         /// </summary>
+        /// <remarks>
+        /// ID of the compute node.
+        /// </remarks>
         [JsonProperty(PropertyName = "nodeId")]
-        public string NodeId { get; set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
-        /// Gets or sets ip address
+        /// Gets IP address.
         /// </summary>
+        /// <remarks>
+        /// Public IP address of the compute node.
+        /// </remarks>
         [JsonProperty(PropertyName = "ipAddress")]
-        public string IpAddress { get; set; }
+        public string IpAddress { get; private set; }
 
         /// <summary>
-        /// Gets or sets port number
+        /// Gets port.
         /// </summary>
+        /// <remarks>
+        /// SSH port number of the node.
+        /// </remarks>
         [JsonProperty(PropertyName = "port")]
-        public double Port { get; set; }
+        public double? Port { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (NodeId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NodeId");
-            }
-            if (IpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IpAddress");
-            }
-        }
     }
 }

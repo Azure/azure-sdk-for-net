@@ -6,9 +6,9 @@
         <AssemblyName>Update.Admin.Tests</AssemblyName>
         <VersionPrefix>1.0.0</VersionPrefix>
     </PropertyGroup>
-    <PropertyGroup>
+    <!--<PropertyGroup>
         <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
-    </PropertyGroup>
+    </PropertyGroup>-->
     <ItemGroup>
         <ProjectReference Include="..\Update.Admin\Microsoft.AzureStack.Management.Update.Admin.csproj" />
     </ItemGroup>

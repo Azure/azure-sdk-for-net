@@ -3,18 +3,18 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.KeyVault.WebKey.Tests</PackageId>
     <Description>Microsoft.Azure.KeyVault.WebKey.Tests Class Library</Description>
-    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionPrefix>3.0.0-alpha</VersionPrefix>
     <AssemblyName>Microsoft.Azure.KeyVault.WebKey.Tests</AssemblyName>    
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>  
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <ProjectReference Include="..\Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.csproj" />
   </ItemGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <DefineConstants>$(DefineConstants);NETCOREAPP11</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <DefineConstants>$(DefineConstants);NETCOREAPP20</DefineConstants>
     <DebugType>portable</DebugType>
   </PropertyGroup>
 

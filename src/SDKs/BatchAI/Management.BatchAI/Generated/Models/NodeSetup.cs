@@ -14,9 +14,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// Use this to prepare the VM. NOTE: The volumes specified in mountVolumes
-    /// are mounted first and then the setupTask is run. Therefore the setup
-    /// task can use local mountPaths in its execution.
+    /// Node setup settings.
     /// </summary>
     public partial class NodeSetup
     {
@@ -31,16 +29,10 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the NodeSetup class.
         /// </summary>
-        /// <param name="setupTask">Specifies a setup task which can be used to
-        /// customize the compute nodes of the cluster. The NodeSetup task runs
-        /// everytime a VM is rebooted. For that reason the task code needs to
-        /// be idempotent. Generally it is used to either download static data
-        /// that is required for all jobs that run on the cluster VMs or to
-        /// download/install software.</param>
-        /// <param name="mountVolumes">Information on shared volumes to be used
-        /// by jobs.</param>
-        /// <param name="performanceCountersSettings">Specifies settings for
-        /// performance counters collecting and uploading.</param>
+        /// <param name="setupTask">Setup task.</param>
+        /// <param name="mountVolumes">Mount volumes.</param>
+        /// <param name="performanceCountersSettings">Performance counters
+        /// settings.</param>
         public NodeSetup(SetupTask setupTask = default(SetupTask), MountVolumes mountVolumes = default(MountVolumes), PerformanceCountersSettings performanceCountersSettings = default(PerformanceCountersSettings))
         {
             SetupTask = setupTask;
@@ -55,31 +47,35 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies a setup task which can be used to customize
-        /// the compute nodes of the cluster. The NodeSetup task runs everytime
-        /// a VM is rebooted. For that reason the task code needs to be
-        /// idempotent. Generally it is used to either download static data
-        /// that is required for all jobs that run on the cluster VMs or to
-        /// download/install software.
+        /// Gets or sets setup task.
         /// </summary>
+        /// <remarks>
+        /// Setup task to run on cluster nodes when nodes got created or
+        /// rebooted. The setup task code needs to be idempotent. Generally the
+        /// setup task is used to download static data that is required for all
+        /// jobs that run on the cluster VMs and/or to download/install
+        /// software.
+        /// </remarks>
         [JsonProperty(PropertyName = "setupTask")]
         public SetupTask SetupTask { get; set; }
 
         /// <summary>
-        /// Gets or sets information on shared volumes to be used by jobs.
+        /// Gets or sets mount volumes.
         /// </summary>
         /// <remarks>
-        /// Specified mount volumes will be available to all jobs executing on
-        /// the cluster. The volumes will be mounted at location specified by
-        /// $AZ_BATCHAI_MOUNT_ROOT environment variable.
+        /// Mount volumes to be available to setup task and all jobs executing
+        /// on the cluster. The volumes will be mounted at location specified
+        /// by $AZ_BATCHAI_MOUNT_ROOT environment variable.
         /// </remarks>
         [JsonProperty(PropertyName = "mountVolumes")]
         public MountVolumes MountVolumes { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies settings for performance counters collecting
-        /// and uploading.
+        /// Gets or sets performance counters settings.
         /// </summary>
+        /// <remarks>
+        /// Settings for performance counters collecting and uploading.
+        /// </remarks>
         [JsonProperty(PropertyName = "performanceCountersSettings")]
         public PerformanceCountersSettings PerformanceCountersSettings { get; set; }
 

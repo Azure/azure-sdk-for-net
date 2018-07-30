@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.EventHub</PackageId>
 		<Description>Provides developers with a library to create and manage all Azure Event Hubs resources. Note: This client library is for EventHub under Azure Resource Manager.</Description>
-		<Version>2.1.0</Version>
+		<Version>2.2.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
 		<PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-		This change adds $skip and $top support to Entity list calls in Eventhub .NET management client.
-		1) $skip and $top parameters (query) for the list calls to support fetch the required number of entities in list calls
+		Event Hubs:
+		1) Added property pendingReplicationOperationsCount to GeoDR
 	  ]]>
 		</PackageReleaseNotes>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

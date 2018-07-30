@@ -125,6 +125,11 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual ITriggersOperations Triggers { get; private set; }
 
         /// <summary>
+        /// Gets the ITriggerRunsOperations.
+        /// </summary>
+        public virtual ITriggerRunsOperations TriggerRuns { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -335,8 +340,9 @@ namespace Microsoft.Azure.Management.DataFactory
             PipelineRuns = new PipelineRunsOperations(this);
             ActivityRuns = new ActivityRunsOperations(this);
             Triggers = new TriggersOperations(this);
+            TriggerRuns = new TriggerRunsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2017-09-01-preview";
+            ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -368,6 +374,8 @@ namespace Microsoft.Azure.Management.DataFactory
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SecretBase>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SecretBase>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FactoryRepoConfiguration>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FactoryRepoConfiguration>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntime>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<IntegrationRuntime>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<IntegrationRuntimeStatus>("type"));
@@ -392,8 +400,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyTranslator>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySink>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeProperties>("authorizationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeProperties>("authorizationType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

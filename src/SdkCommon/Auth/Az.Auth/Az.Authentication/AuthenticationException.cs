@@ -55,7 +55,7 @@ namespace Microsoft.Rest.Azure.Authentication
         /// <param name="message">The exception message</param>
         /// <param name="innerException">The inner AdalException with additional details</param>
         internal AuthenticationException(string message, AdalException innerException) : 
-            base(string.Format(CultureInfo.CurrentCulture, message, innerException.Message), innerException)
+            base(string.Format(CultureInfo.CurrentCulture, message, (innerException == null)? string.Empty : innerException?.Message ), innerException)
         {
         }
 

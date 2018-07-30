@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machines in a low priority scale set.
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2017-10-30-preview.
         /// Possible values include: 'Deallocate', 'Delete'</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string))
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), VirtualMachinePriorityTypes? priority = default(VirtualMachinePriorityTypes?), VirtualMachineEvictionPolicyTypes? evictionPolicy = default(VirtualMachineEvictionPolicyTypes?))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2017-10-30-preview. Possible values include: 'Regular', 'Low'
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
-        public string Priority { get; set; }
+        public VirtualMachinePriorityTypes? Priority { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the eviction policy for virtual machines in
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2017-10-30-preview. Possible values include: 'Deallocate', 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "evictionPolicy")]
-        public string EvictionPolicy { get; set; }
+        public VirtualMachineEvictionPolicyTypes? EvictionPolicy { get; set; }
 
         /// <summary>
         /// Validate the object.

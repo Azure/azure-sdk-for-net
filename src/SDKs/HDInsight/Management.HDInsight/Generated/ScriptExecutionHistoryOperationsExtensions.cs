@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.HDInsight
             /// The name of the cluster.
             /// </param>
             /// <param name='scriptExecutionId'>
-            /// The script execution ID.
+            /// The script execution Id
             /// </param>
-            public static void Promote(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, long scriptExecutionId)
+            public static void Promote(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, string scriptExecutionId)
             {
                 operations.PromoteAsync(resourceGroupName, clusterName, scriptExecutionId).GetAwaiter().GetResult();
             }
@@ -94,12 +94,12 @@ namespace Microsoft.Azure.Management.HDInsight
             /// The name of the cluster.
             /// </param>
             /// <param name='scriptExecutionId'>
-            /// The script execution ID.
+            /// The script execution Id
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PromoteAsync(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, long scriptExecutionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PromoteAsync(this IScriptExecutionHistoryOperations operations, string resourceGroupName, string clusterName, string scriptExecutionId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.PromoteWithHttpMessagesAsync(resourceGroupName, clusterName, scriptExecutionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

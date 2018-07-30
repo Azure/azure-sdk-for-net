@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// include: 'Unknown', 'FourCC'</param>
         /// <param name="operation">Track property condition operation.
         /// Possible values include: 'Unknown', 'Equal'</param>
-        /// <param name="value">Track proprty value</param>
+        /// <param name="value">Track property value</param>
         public TrackPropertyCondition(TrackPropertyType property, TrackPropertyCompareOperation operation, string value = default(string))
         {
             Property = property;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public TrackPropertyCompareOperation Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets track proprty value
+        /// Gets or sets track property value
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }

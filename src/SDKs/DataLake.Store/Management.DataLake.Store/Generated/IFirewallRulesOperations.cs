@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         Task<AzureOperationResponse<FirewallRule>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, string firewallRuleName, UpdateFirewallRuleParameters parameters = default(UpdateFirewallRuleParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified firewall rule from the specified Data Lake
-        /// Store account
+        /// Store account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the Azure resource group.

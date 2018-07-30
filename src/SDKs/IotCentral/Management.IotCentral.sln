@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotCentral.Tests", "IotCentral.Tests\IotCentral.Tests.csproj", "{DD48424F-23AE-4CAA-A8C6-78ED453203FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.IotCentral", "Management.IotCentral\Microsoft.Azure.Management.IotCentral.csproj", "{6D87768F-C148-4850-AA06-B6D0E0319563}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD48424F-23AE-4CAA-A8C6-78ED453203FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD48424F-23AE-4CAA-A8C6-78ED453203FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD48424F-23AE-4CAA-A8C6-78ED453203FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD48424F-23AE-4CAA-A8C6-78ED453203FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D87768F-C148-4850-AA06-B6D0E0319563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D87768F-C148-4850-AA06-B6D0E0319563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D87768F-C148-4850-AA06-B6D0E0319563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D87768F-C148-4850-AA06-B6D0E0319563}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

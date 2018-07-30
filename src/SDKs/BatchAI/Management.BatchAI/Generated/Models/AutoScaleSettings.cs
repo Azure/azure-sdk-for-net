@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
     using System.Linq;
 
     /// <summary>
-    /// The system automatically scales the cluster up and down (within
-    /// minimumNodeCount and maximumNodeCount) based on the pending and running
-    /// jobs on the cluster.
+    /// Auto-scale settings for the cluster. The system automatically scales
+    /// the cluster up and down (within minimumNodeCount and maximumNodeCount)
+    /// based on the number of queued and running jobs assigned to the cluster.
     /// </summary>
     public partial class AutoScaleSettings
     {
@@ -31,13 +31,9 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// <summary>
         /// Initializes a new instance of the AutoScaleSettings class.
         /// </summary>
-        /// <param name="minimumNodeCount">Specifies the minimum number of
-        /// compute nodes the cluster can have.</param>
-        /// <param name="maximumNodeCount">Specifies the maximum number of
-        /// compute nodes the cluster can have.</param>
-        /// <param name="initialNodeCount">Specifies the number of compute
-        /// nodes to allocate on cluster creation. Note that this value is used
-        /// only during cluster creation.</param>
+        /// <param name="minimumNodeCount">Minimum node count.</param>
+        /// <param name="maximumNodeCount">Maximum node count.</param>
+        /// <param name="initialNodeCount">Initial node count.</param>
         public AutoScaleSettings(int minimumNodeCount, int maximumNodeCount, int? initialNodeCount = default(int?))
         {
             MinimumNodeCount = minimumNodeCount;
@@ -52,24 +48,33 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the minimum number of compute nodes the
-        /// cluster can have.
+        /// Gets or sets minimum node count.
         /// </summary>
+        /// <remarks>
+        /// The minimum number of compute nodes the Batch AI service will try
+        /// to allocate for the cluster. Note, the actual number of nodes can
+        /// be less than the specified value if the subscription has not enough
+        /// quota to fulfill the request.
+        /// </remarks>
         [JsonProperty(PropertyName = "minimumNodeCount")]
         public int MinimumNodeCount { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the maximum number of compute nodes the
-        /// cluster can have.
+        /// Gets or sets maximum node count.
         /// </summary>
+        /// <remarks>
+        /// The maximum number of compute nodes the cluster can have.
+        /// </remarks>
         [JsonProperty(PropertyName = "maximumNodeCount")]
         public int MaximumNodeCount { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the number of compute nodes to allocate on
-        /// cluster creation. Note that this value is used only during cluster
-        /// creation.
+        /// Gets or sets initial node count.
         /// </summary>
+        /// <remarks>
+        /// The number of compute nodes to allocate on cluster creation. Note
+        /// that this value is used only during cluster creation. Default: 0.
+        /// </remarks>
         [JsonProperty(PropertyName = "initialNodeCount")]
         public int? InitialNodeCount { get; set; }
 

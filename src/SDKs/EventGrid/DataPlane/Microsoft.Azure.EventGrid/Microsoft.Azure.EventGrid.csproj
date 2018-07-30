@@ -5,11 +5,11 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.EventGrid</PackageId>
-		<Description>This library can be used to publish events to Azure Event Grid. It also defines the event schemas for the events published to EventGrid by various Azure services. </Description>
-		<Version>1.3.0</Version>
+		<Description>This library can be used to publish events to Azure Event Grid and to consume events delivered by EventGrid. It also defines the event schemas for the events published to EventGrid by various Azure services. </Description>
+		<Version>1.4.0</Version>
 		<AssemblyName>Microsoft.Azure.EventGrid</AssemblyName>
 		<PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
-		<PackageReleaseNotes>Added support for consuming EventGrid subscription validation events, ServiceBus events and Azure Media events.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added EventGridSubscriber class which provides functionality for consuming EventGrid events.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

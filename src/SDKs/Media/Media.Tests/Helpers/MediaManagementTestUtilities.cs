@@ -22,8 +22,6 @@ namespace Media.Tests.Helpers
         // These should be filled in only if test tenant is true
         public static string certName = null;
         public static string certPassword = null;
-        private static string testSubscription = null;
-        private static Uri testUri = null;
         public static SkuName DefaultSkuName = SkuName.StandardGRS;
         public static Kind DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>

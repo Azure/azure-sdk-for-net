@@ -45,10 +45,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="computePolicies">The list of compute policies
         /// associated with this account.</param>
         /// <param name="firewallRules">The list of firewall rules associated
-        /// with this Data Lake Analytics account.</param>
+        /// with this account.</param>
         /// <param name="firewallState">The current state of the IP address
-        /// firewall for this Data Lake Analytics account. Possible values
-        /// include: 'Enabled', 'Disabled'</param>
+        /// firewall for this account. Disabling the firewall does not remove
+        /// existing rules, they will just be ignored until the firewall is
+        /// re-enabled. Possible values include: 'Enabled', 'Disabled'</param>
         /// <param name="firewallAllowAzureIps">The current state of allowing
         /// or disallowing IPs originating within Azure through the firewall.
         /// If the firewall is disabled, this is not enforced. Possible values
@@ -120,16 +121,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public IList<UpdateComputePolicyWithAccountParameters> ComputePolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of firewall rules associated with this Data
-        /// Lake Analytics account.
+        /// Gets or sets the list of firewall rules associated with this
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallRules")]
         public IList<UpdateFirewallRuleWithAccountParameters> FirewallRules { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the IP address firewall for this
-        /// Data Lake Analytics account. Possible values include: 'Enabled',
-        /// 'Disabled'
+        /// account. Disabling the firewall does not remove existing rules,
+        /// they will just be ignored until the firewall is re-enabled.
+        /// Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallState")]
         public FirewallState? FirewallState { get; set; }

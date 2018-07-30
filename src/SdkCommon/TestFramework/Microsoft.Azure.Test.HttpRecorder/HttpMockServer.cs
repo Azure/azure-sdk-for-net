@@ -9,7 +9,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Reflection;
 
 namespace Microsoft.Azure.Test.HttpRecorder
 {
@@ -63,21 +62,23 @@ namespace Microsoft.Azure.Test.HttpRecorder
             servers = new List<HttpMockServer>();
             records = new Records(Matcher);
             Variables = new Dictionary<string, string>();
+            string location = string.Empty;
 
+#if FullNetFx
             var asmCollection = AppDomain.CurrentDomain.GetAssemblies();
 
-            foreach(Assembly asm in asmCollection)
+            foreach (Assembly asm in asmCollection)
             {
-                if(asm.GetType(CallerIdentity) != null)
-                {   
-#if FullNetFx
-                    string location = asm.Location;
-#else
-                    string location = AppContext.BaseDirectory;
-#endif
-                    RecordsDirectory = Path.Combine(location, RecordsDirectory);
+                if (asm.GetType(CallerIdentity) != null)
+                {
+                    location = asm.Location;
+                    break;
                 }
             }
+#elif netcoreapp11 || netcoreapp20
+            location = AppContext.BaseDirectory;
+#endif
+            RecordsDirectory = Path.Combine(location, RecordsDirectory);
 
             if (Mode == HttpRecorderMode.Playback)
             {
@@ -141,7 +142,7 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     {
                         throw new InvalidOperationException(string.Format(
                             "Queue empty for request {0}",
-                            Utilities.DecodeBase64AsUri(key)));
+                            RecorderUtilities.DecodeBase64AsUri(key)));
                     }
 
                     var result = queue.Dequeue().GetResponse();
@@ -272,11 +273,16 @@ namespace Microsoft.Azure.Test.HttpRecorder
             }
         }
 
-        public static void Flush(string outputPath = null)
+        public static string Flush(string outputPath = null)
         {
+            string fileName = string.Empty;
             if (Mode == HttpRecorderMode.Record && records.Count > 0)
             {
                 RecordEntryPack pack = new RecordEntryPack();
+                string perfImpactFileName = string.Empty;
+                string fileDirectory = outputPath ?? RecordsDirectory;
+                fileDirectory = Path.Combine(fileDirectory, CallerIdentity);
+                RecorderUtilities.EnsureDirectoryExists(fileDirectory);
 
                 lock (records)
                 {
@@ -288,23 +294,17 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     }
                 }
 
+                fileName = (TestIdentity ?? "record") + ".json";                
+                fileName = Path.Combine(fileDirectory, fileName);
                 pack.Variables = Variables;
-
-                string fileDirectory = outputPath ?? RecordsDirectory;
-                string fileName = (TestIdentity ?? "record") + ".json";
-
-                fileDirectory = Path.Combine(fileDirectory, CallerIdentity);
-
-                Utilities.EnsureDirectoryExists(fileDirectory);
-                
                 pack.Names = names.Names;
 
-                fileName = Path.Combine(fileDirectory, fileName);
-                 
                 pack.Serialize(fileName);
             }
 
             servers.ForEach(s => s.Dispose());
+
+            return fileName;
         }
 
         public static HttpRecorderMode GetCurrentMode()
@@ -328,6 +328,5 @@ namespace Microsoft.Azure.Test.HttpRecorder
 
             return mode;
         }
-
     }
 }

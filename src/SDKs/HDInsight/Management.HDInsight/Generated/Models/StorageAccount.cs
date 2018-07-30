@@ -32,14 +32,17 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="name">The name of the storage account.</param>
         /// <param name="isDefault">Whether or not the storage account is the
         /// default storage account.</param>
-        /// <param name="container">The container in the storage
-        /// account.</param>
+        /// <param name="container">The container in the storage account, only
+        /// to be specified for WASB storage accounts.</param>
+        /// <param name="fileSystem">The filesystem, only to be specified for
+        /// Azure Data Lake Storage Gen 2.</param>
         /// <param name="key">The storage account access key.</param>
-        public StorageAccount(string name = default(string), bool? isDefault = default(bool?), string container = default(string), string key = default(string))
+        public StorageAccount(string name = default(string), bool? isDefault = default(bool?), string container = default(string), string fileSystem = default(string), string key = default(string))
         {
             Name = name;
             IsDefault = isDefault;
             Container = container;
+            FileSystem = fileSystem;
             Key = key;
             CustomInit();
         }
@@ -63,10 +66,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public bool? IsDefault { get; set; }
 
         /// <summary>
-        /// Gets or sets the container in the storage account.
+        /// Gets or sets the container in the storage account, only to be
+        /// specified for WASB storage accounts.
         /// </summary>
         [JsonProperty(PropertyName = "container")]
         public string Container { get; set; }
+
+        /// <summary>
+        /// Gets or sets the filesystem, only to be specified for Azure Data
+        /// Lake Storage Gen 2.
+        /// </summary>
+        [JsonProperty(PropertyName = "fileSystem")]
+        public string FileSystem { get; set; }
 
         /// <summary>
         /// Gets or sets the storage account access key.

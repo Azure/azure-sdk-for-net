@@ -5,6 +5,7 @@
 
 using Microsoft.AzureStack.Management.Subscriptions.Admin;
 using Microsoft.AzureStack.Management.Subscriptions.Admin.Models;
+using Subscriptions.Tests.src.Helpers;
 using System;
 using Xunit;
 
@@ -12,7 +13,6 @@ namespace Subscriptions.Tests
 {
     public class DirectoryTenantTests : SubscriptionsTestBase
     {
-
         private void ValidateDirectoryTenant(DirectoryTenant item) {
             // Resource
             Assert.NotNull(item);
@@ -39,7 +39,7 @@ namespace Subscriptions.Tests
         [Fact]
         public void TestListDirectoryTenants() {
             RunTest((client) => {
-                var directoryTenants = client.DirectoryTenants.List("System.redmond");
+                var directoryTenants = client.DirectoryTenants.List(TestContext.InfrastructureResourceGroupName);
                 directoryTenants.ForEach(client.DirectoryTenants.ListNext, ValidateDirectoryTenant);
             });
         }
@@ -47,9 +47,9 @@ namespace Subscriptions.Tests
         [Fact]
         public void TestGetAllDirectoryTenants() {
             RunTest((client) => {
-                var directoryTenants = client.DirectoryTenants.List("System.redmond");
+                var directoryTenants = client.DirectoryTenants.List(TestContext.InfrastructureResourceGroupName);
                 directoryTenants.ForEach(client.DirectoryTenants.ListNext, (tenant) => {
-                    var result = client.DirectoryTenants.Get("System.redmond", tenant.Name);
+                    var result = client.DirectoryTenants.Get(TestContext.InfrastructureResourceGroupName, tenant.Name);
                     AssertSame(tenant, result);
                 });
             });
@@ -58,8 +58,8 @@ namespace Subscriptions.Tests
         [Fact]
         public void TestGetDirectoryTenant() {
             RunTest((client) => {
-                var tenant = client.DirectoryTenants.List("System.redmond").GetFirst();
-                var result = client.DirectoryTenants.Get("System.redmond", tenant.Name);
+                var tenant = client.DirectoryTenants.List(TestContext.InfrastructureResourceGroupName).GetFirst();
+                var result = client.DirectoryTenants.Get(TestContext.InfrastructureResourceGroupName, tenant.Name);
                 AssertSame(tenant, result);
             });
         }

@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// 'Complete'</param>
         /// <param name="debugSetting">The debug setting of the
         /// deployment.</param>
-        public DeploymentPropertiesExtended(string provisioningState = default(string), string correlationId = default(string), System.DateTime? timestamp = default(System.DateTime?), object outputs = default(object), IList<Provider> providers = default(IList<Provider>), IList<Dependency> dependencies = default(IList<Dependency>), object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting))
+        /// <param name="onErrorDeployment">The deployment on error
+        /// behavior.</param>
+        public DeploymentPropertiesExtended(string provisioningState = default(string), string correlationId = default(string), System.DateTime? timestamp = default(System.DateTime?), object outputs = default(object), IList<Provider> providers = default(IList<Provider>), IList<Dependency> dependencies = default(IList<Dependency>), object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting), OnErrorDeploymentExtended onErrorDeployment = default(OnErrorDeploymentExtended))
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             ParametersLink = parametersLink;
             Mode = mode;
             DebugSetting = debugSetting;
+            OnErrorDeployment = onErrorDeployment;
             CustomInit();
         }
 
@@ -157,6 +160,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "debugSetting")]
         public DebugSetting DebugSetting { get; set; }
+
+        /// <summary>
+        /// Gets or sets the deployment on error behavior.
+        /// </summary>
+        [JsonProperty(PropertyName = "onErrorDeployment")]
+        public OnErrorDeploymentExtended OnErrorDeployment { get; set; }
 
         /// <summary>
         /// Validate the object.
